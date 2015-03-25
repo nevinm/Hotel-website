@@ -10,16 +10,62 @@
 
      <title>Meisterdish</title>
 
-    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/btns.min.css">
     <link rel="stylesheet" type="text/css" href="css/fontello.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 
 <body>
-	<h1>Sample page</h1>
-	<a href="#" class="btn">A Button<a>
-	<i class="icon-basket"></i>
+    <div id="mainWrapper">
+        <header id="header">
+            <div class="contentArea">
+                <a href=""><img class="pullLeft" src="images/logo.png" alt="MeisterDish"></a>
+                <ul id="menu" class="pullRight">
+                    <li>
+                        <a href="/">THE MENU</a>
+                    </li>
+                    <li>
+                        <a href="/">HOW IT WORKS</a>
+                    </li>
+                    <li>
+                        <a href="/">PARTNERS</a>
+                    </li>
+                    <li class="bold">
+                        <a href="/">LOG IN</a>
+                    </li>
+                    <li class="bold">
+                        <a href="/">SIGN UP</a>
+                    </li>
+                    <li>
+                        <a href="/"><img src="images/cart_icon.png"></a>
+                    </li>
+                </ul>
+            </div>   
+        </header>
+        <div id="page_container"></div>
+        <footer id="footer">
+            <div class="footerContent">
+                <ul class="footer-links">
+                    <li class="socialMedia" id="facebook"></li>
+                    <li class="socialMedia" id="twitter"></li>
+                    <li class="socialMedia" id="instagram"></li>
+                    <li class="socialMedia" id="pinterest"></li>
+                </ul>
+                <ul>
+                    <li>
+                        <a href="">Contact</a>
+                    </li>
+                    <li>
+                        <a href="">Privacy & Terms</a>
+                    </li>
+                    <li >
+                        <a href="">Help</a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+    </div>
 	<script type="text/javascript" src='js/jquery.min.js'></script>
 	<script type="text/javascript" src='js/ajax_reusable.js'></script>
 </body>
