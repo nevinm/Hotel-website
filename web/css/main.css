@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+/*==============================*\
+			&CONTENTS
+\*==============================*/
+
+/*
+FONT-FACE
+COMMON
+HEADER
+*/
+
+/*==============================*\
+			&FONT-FACE
+\*==============================*/
+
+@font-face {
+	font-family: 'ProximaNova-regular';
+	src: url('../fonts/Proxima Nova/ProximaNova-Regular.otf');
+	font-weight: normal;
+	font-style: normal;
+	font-variant:normal;
+}
+@font-face {
+	font-family: 'ProximaNova-semibold';
+	src: url('../fonts/Proxima Nova/ProximaNova-Semibold.otf');
+	font-weight: normal;
+	font-style: normal;
+	font-variant:normal;
+}
+@font-face {
+	font-family: 'BrandonGrotesque-Black';
+	src: url('../fonts/Brandon Grotesque/BrandonGrotesque-Black.otf');
+	font-weight: normal;
+	font-style: normal;
+	font-variant:normal;
+}
+@font-face {
+	font-family: 'BrandonGrotesque-Regular';
+	src: url('../fonts/Brandon Grotesque/BrandonGrotesque-Regular.otf');
+	font-weight: normal;
+	font-style: normal;
+	font-variant:normal;
+}
+@font-face {
+	font-family: 'BrandonGrotesque-Bold';
+	src: url('../fonts/Brandon Grotesque/BrandonGrotesque-Bold.otf');
+	font-weight: normal;
+	font-style: normal;
+	font-variant:normal;
+}
+
+/*==============================*\
+		   &SPRITE-IMAGE
+\*==============================*/
+
+.facebook-button{
+	background: url('imgs/social_icon_sprite.png') no-repeat -1px 0;
+	background-size: 32px 8px;
+	width: 5px;
+	height: 8px;
+}
+
+
