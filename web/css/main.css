@@ -61,4 +61,75 @@ HEADER
 	height: 8px;
 }
 
+#pageWrapper{
+	float: left;
+	width: 100%;
+	background: #f3f3f3;
+	min-height: 100%;
+}
+.contentArea{
+	max-width: 980px;
+	width: 100%;
+	margin: 0 auto;
+}
 
+.subMenu{
+	width: 100%;
+	float: left;
+	border-bottom: 1px solid #ededed;
+	background: #fff;
+}
+
+.subMenu ul li{
+	display: inline-block;
+	width: 105px;
+	text-align: center;
+}
+
+.subMenu ul li a{
+
+	padding: 20px 0;
+	display: block;
+	font-size: 16px;
+}
+
+.subMenu ul li a:hover,.subMenu ul li a.activeOption{
+	border-bottom: 4px solid #a9d77b;
+	padding: 20px 0 16px 0;
+	font-weight: bold;
+}
+
+.subMenuFilter{
+	float: right;
+	padding: 20px 0 20px 30px;
+	background: left center url(../images/slices/filter_icon.png) no-repeat;
+}
+.pullLeft{
+	float: left;
+}
+.pullRight{
+	float: right;
+}
+.listContainer{
+	float: left;
+	width: 100%;
+	margin: 75px 0;
+}
+.listItems{
+	width: 32%;
+	margin: 0 0 60px 2%;
+	float: left;
+}
+.listContainer div:nth-child(3n+1){
+	margin-left: 0;
+}
+.thumbnail{
+	min-width: 100%;
+	height: 230px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+.listItemDetails{
+	float: left;
+	width: 100%;
+}
