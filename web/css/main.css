@@ -8,6 +8,7 @@
 FONT-FACE
 COMMON
 HEADER
+FOOTER
 */
 
 /*==============================*\
@@ -36,6 +37,13 @@ HEADER
 	font-variant:normal;
 }
 @font-face {
+	font-family: 'BrandonGrotesque-Light';
+	src: url('../fonts/Brandon Grotesque/BrandonGrotesque-Light.otf');
+	font-weight: normal;
+	font-style: normal;
+	font-variant:normal;
+}
+@font-face {
 	font-family: 'BrandonGrotesque-Regular';
 	src: url('../fonts/Brandon Grotesque/BrandonGrotesque-Regular.otf');
 	font-weight: normal;
@@ -51,14 +59,106 @@ HEADER
 }
 
 /*==============================*\
-		   &SPRITE-IMAGE
+			&common
 \*==============================*/
-
-.facebook-button{
-	background: url('imgs/social_icon_sprite.png') no-repeat -1px 0;
-	background-size: 32px 8px;
-	width: 5px;
-	height: 8px;
+#mainWrapper{
+	width:100%;
+	padding: 10px;
+	float: left;
 }
+.pullLeft{
+	float: left;
+}
+.pullRight{
+	float: right;
+}
+.bold{
+	font-weight: bold;
+}
+
+/*==============================*\
+			&HEADER
+\*==============================*/
+#header{
+	float: left;
+	width: 98.5%;
+	opacity:0.85;
+	/*-webkit-filter:blur(15px);*/
+	padding: 18px 0;
+	position: fixed;
+	background-color: rgba(255, 255, 255, 0.85);
+}
+.contentArea{
+	max-width: 980px;
+	width: 100%;
+	margin: 0 auto;
+}
+ul#menu{
+	margin: 0;
+}
+#menu li{
+	display: inline-block;
+	font-size: 13px;
+	font-family: 'BrandonGrotesque-Light';
+}
+#menu li a{
+	margin: 5px 20px 0 0;
+	display: block;
+	color: black;
+}
+
+/*==============================*\
+			&FOOTER
+\*==============================*/
+#footer{
+	width: 98.5%;
+	position: fixed;
+	bottom: 0px;
+	padding: 20px 0;
+}
+#footer ul{
+	text-align: center;
+	margin: 0;
+}
+#footer ul li{
+	display: inline-block;
+	font-family: 'ProximaNova-semibold';
+	font-size: 12px;
+	cursor: pointer;
+}
+#footer ul li a{
+	margin: 0 40px 0 0;
+	color: #9B9B9B;
+}
+.footer-links{
+	text-align: center;
+}
+.socialMedia{
+	background-image: url('../images/social_icon_sprite.png');
+	background-repeat: no-repeat;
+	margin: 0 22px 15px 0;
+}
+#facebook{
+	background-position:-3px 0;
+	width: 10px;
+	height: 16px;
+}
+#twitter{
+	background-position: -16px 0;
+	width: 16px;
+	height: 16px;
+}
+#instagram{
+	background-position: -32px 0;
+	width: 16px;
+	height: 16px;
+}
+#pinterest{
+	background-position: -49px 0;
+	width: 14px;
+	height: 16px;
+}
+
+
 
 
