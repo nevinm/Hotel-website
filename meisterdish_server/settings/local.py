@@ -1,6 +1,4 @@
-# Django settings for rounding_app project.
 import os
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -18,3 +16,4 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+

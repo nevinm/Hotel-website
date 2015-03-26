@@ -6,7 +6,7 @@ else:
     from local import *
 
 DEBUG = DEBUG
-
+print DEBUG, "nazz\n\n\n\n"
 ADMINS = (
      ('Abdul Nasar', 'nasarp@qburst.com'),
 )
@@ -87,7 +87,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'rounding_app.urls'
+ROOT_URLCONF = 'meisterdish_server.urls'
 
 #WSGI_APPLICATION = 'rounding_app.wsgi.application'
 
@@ -160,3 +160,8 @@ DEFAULT_FROM_EMAIL = 'AppForMyPatients<noreply@appformypatients.com>'
 SERVER_EMAIL = "abcd@google.com"
 """
 SESSION_EXPIRY = 5 * 60 # 5 mins
+
+PAYMENT_METHODS = (
+                   ('CC', 'Credit Card'),
+                   ('PP', 'PayPal'),
+                   )
