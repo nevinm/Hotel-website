@@ -239,10 +239,19 @@ h4{
 /*==============================*\
 			&common
 \*==============================*/
+html,body{
+	height:100%;
+}
 #mainWrapper{
-	width:100%;
-	padding: 10px;
-	float: left;
+	width: 100%;
+	padding: 0 10px 0 10px;
+	overflow: hidden;
+	min-height: 100%;
+	margin-bottom: -120px;
+}
+.mainWrapper:after {
+	content: "";
+	display: block;
 }
 .pullLeft{
 	float: left;
@@ -259,12 +268,15 @@ h4{
 \*==============================*/
 #header{
 	float: left;
-	width: 98.5%;
+	width: 100%;
 	opacity:0.85;
 	/*-webkit-filter:blur(15px);*/
 	padding: 18px 0;
 	position: fixed;
 	background-color: rgba(255, 255, 255, 0.85);
+	border-right:10px solid #FFFFFF;
+	border-left:10px solid #FFFFFF;
+	left: 0;
 }
 .contentArea{
 	max-width: 980px;
@@ -284,14 +296,22 @@ h4{
 	display: block;
 	color: black;
 }
+span.icon-menu{
+	display: none;
+	font-size: 30px;
+	color: #818181;
+	margin: 3px 0 0 0;
+	cursor: pointer;
+}
 
 /*==============================*\
 			&FOOTER
 \*==============================*/
+#footer,.mainWrapper:after {
+  height: 120px; 
+}
 #footer{
-	width: 98.5%;
-	position: fixed;
-	bottom: 0px;
+	width: 100%;
 	padding: 20px 0;
 }
 #footer ul{
