@@ -12,6 +12,7 @@ BUTTONS-MODULE
 COMMON
 HEADER
 FOOTER
+SLIDER
 */
 
 /*==============================*\
@@ -190,9 +191,10 @@ h4{
 	min-width: 100px;
 	font-size: 12pt;
 	line-height: 35px;
+	padding: 0 15px;
 }
 .btn-small-extended{
-	padding: 0 18px;
+	
 }
 .btn-small-secondary,.btn-medium-secondary,.btn-large-secondary{
 	color: #6b6b6b;
@@ -205,9 +207,9 @@ h4{
 	min-width: 120px;
 	font-size: 14pt;
 	line-height: 40px;
+	padding: 0 18px;
 }
 .btn-medium-extended{
-	padding: 0 18px;
 }
 /*large*/
 .btn-large-primary, .btn-large-extended , .btn-large-secondary{
@@ -215,9 +217,9 @@ h4{
 	min-width: 130px;
 	font-size: 16pt;
 	line-height: 45px;
+	padding: 0 20px;
 }
 .btn-large-extended{
-	padding: 0 20px;
 }
 /*btn hover/active etc*/
 .btn.btn-small-secondary:hover,.btn.btn-medium-secondary:hover,.btn.btn-large-secondary:hover{
@@ -297,6 +299,7 @@ h4{
 	bottom: 0px;
 	padding: 20px 0;
 }
+
 #footer ul{
 	text-align: center;
 	margin: 0;
@@ -340,3 +343,31 @@ h4{
 	height: 16px;
 }
 
+
+/*==============================*\
+			&SLIDER
+\*==============================*/
+
+#fullpage img{
+	display: block;
+	max-width: 100%;
+  	height: auto;
+}
+.sliderfooter{
+	position: relative !important;
+}
+.map-image{
+	height: 85% !important;
+	width: 100%
+}
+.slide-description{
+	  position: absolute;
+	  top: 50%;
+	  margin-left: 4%;
+}
+.slide-description .body-text-small{
+	font-weight: bold;
+}
+.slide-description h3{
+	text-transform: uppercase;
+}
