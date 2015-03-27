@@ -241,12 +241,15 @@ h4{
 /*==============================*\
 			&common
 \*==============================*/
+html,body{
+	height:100%;
+}
 #mainWrapper{
-	width:100%;
-	padding: 10px;
-	padding-top: 0;
+	width: 100%;
+	padding: 0 10px 0 10px;
 	float: left;
 }
+
 .pullLeft{
 	float: left;
 }
@@ -262,14 +265,16 @@ h4{
 \*==============================*/
 #header{
 	float: left;
-	width: 98.5%;
-	top: 0;
+	width: 100%;
 	opacity:0.85;
-	z-index: 1000;
 	/*-webkit-filter:blur(15px);*/
 	padding: 18px 0;
 	position: fixed;
 	background-color: rgba(255, 255, 255, 0.85);
+	border-right:10px solid #FFFFFF;
+	border-left:10px solid #FFFFFF;
+	left: 0;
+	z-index: 999;
 }
 .contentArea{
 	max-width: 980px;
@@ -288,6 +293,13 @@ h4{
 	margin: 5px 20px 0 0;
 	display: block;
 	color: black;
+}
+span.icon-menu{
+	display: none;
+	font-size: 30px;
+	color: #818181;
+	margin: 3px 0 0 0;
+	cursor: pointer;
 }
 
 /*==============================*\
@@ -341,6 +353,9 @@ h4{
 	background-position: -49px 0;
 	width: 14px;
 	height: 16px;
+}
+.sliderfooter{
+	position: relative !important;
 }
 
 #pageWrapper{
@@ -425,10 +440,13 @@ h4{
 	  position: absolute;
 	  top: 50%;
 	  margin-left: 4%;
-}
+	}
 .slide-description .body-text-small{
 	font-weight: bold;
 }
 .slide-description h3{
 	text-transform: uppercase;
 }
+
+
+

@@ -1,5 +1,4 @@
 
-
 $(document).ready(function() {
     $('#fullpage').fullpage({
     	css3: true,
@@ -8,6 +7,9 @@ $(document).ready(function() {
     	slidesNavigation: true,
     	controlArrows: false,
     	navigation:true
-
     });
+    $('.icon-menu').on("click",function (e){
+    	e.stopPropagation(); 
+		$('.navMenu').slideToggle();
+	});
 });
