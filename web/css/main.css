@@ -12,6 +12,7 @@ BUTTONS-MODULE
 COMMON
 HEADER
 FOOTER
+SLIDER
 */
 
 /*==============================*\
@@ -190,9 +191,10 @@ h4{
 	min-width: 100px;
 	font-size: 12pt;
 	line-height: 35px;
+	padding: 0 15px;
 }
 .btn-small-extended{
-	padding: 0 18px;
+	
 }
 .btn-small-secondary,.btn-medium-secondary,.btn-large-secondary{
 	color: #6b6b6b;
@@ -205,9 +207,9 @@ h4{
 	min-width: 120px;
 	font-size: 14pt;
 	line-height: 40px;
+	padding: 0 18px;
 }
 .btn-medium-extended{
-	padding: 0 18px;
 }
 /*large*/
 .btn-large-primary, .btn-large-extended , .btn-large-secondary{
@@ -215,9 +217,9 @@ h4{
 	min-width: 130px;
 	font-size: 16pt;
 	line-height: 45px;
+	padding: 0 20px;
 }
 .btn-large-extended{
-	padding: 0 20px;
 }
 /*btn hover/active etc*/
 .btn.btn-small-secondary:hover,.btn.btn-medium-secondary:hover,.btn.btn-large-secondary:hover{
@@ -242,6 +244,7 @@ h4{
 #mainWrapper{
 	width:100%;
 	padding: 10px;
+	padding-top: 0;
 	float: left;
 }
 .pullLeft{
@@ -260,7 +263,9 @@ h4{
 #header{
 	float: left;
 	width: 98.5%;
+	top: 0;
 	opacity:0.85;
+	z-index: 1000;
 	/*-webkit-filter:blur(15px);*/
 	padding: 18px 0;
 	position: fixed;
@@ -294,6 +299,7 @@ h4{
 	bottom: 0px;
 	padding: 20px 0;
 }
+
 #footer ul{
 	text-align: center;
 	margin: 0;
@@ -336,16 +342,12 @@ h4{
 	width: 14px;
 	height: 16px;
 }
+
 #pageWrapper{
 	float: left;
 	width: 100%;
 	background: #f3f3f3;
 	min-height: 100%;
-}
-.contentArea{
-	max-width: 980px;
-	width: 100%;
-	margin: 0 auto;
 }
 
 .subMenu{
@@ -379,12 +381,6 @@ h4{
 	padding: 20px 0 20px 30px;
 	background: left center url(../images/slices/filter_icon.png) no-repeat;
 }
-.pullLeft{
-	float: left;
-}
-.pullRight{
-	float: right;
-}
 .listContainer{
 	float: left;
 	width: 100%;
@@ -407,4 +403,32 @@ h4{
 .listItemDetails{
 	float: left;
 	width: 100%;
+}
+
+/*==============================*\
+			&SLIDER
+\*==============================*/
+
+#fullpage img{
+	display: block;
+	max-width: 100%;
+  	height: auto;
+}
+.sliderfooter{
+	position: relative !important;
+}
+.map-image{
+	height: 85% !important;
+	width: 100%
+}
+.slide-description{
+	  position: absolute;
+	  top: 50%;
+	  margin-left: 4%;
+}
+.slide-description .body-text-small{
+	font-weight: bold;
+}
+.slide-description h3{
+	text-transform: uppercase;
 }
