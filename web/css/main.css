@@ -12,6 +12,7 @@ BUTTONS-MODULE
 COMMON
 HEADER
 FOOTER
+SLIDER
 */
 
 /*==============================*\
@@ -102,29 +103,32 @@ FOOTER
 /*==============================*\
 	&HEADINGS AND BODY-MODULE
 \*==============================*/
+h1,h2,h3{
+	text-transform: uppercase;
+}
 h1{
-	font-family: 'BrandonGrotesque-Medium';
+	font-family: 'BrandonGrotesque-Bold';
 	font-size: 35px;
 	letter-spacing: 2px;
   	line-height: 50px;
   	margin-bottom: 5px;
 }
 h2{
-	font-family: 'BrandonGrotesque-Medium';
-	font-size: 24pt;
+	font-family: 'BrandonGrotesque-Bold';
+	font-size: 24px;
 	letter-spacing: 2px;
     line-height: 50px;
     margin-bottom: 5px;
 }
 h3{
-	font-size: 20pt;
+	font-size: 20px;
 	font-family: 'BrandonGrotesque-Regular';
-	letter-spacing: 2px;
+	letter-spacing: 1.5px;
 	line-height: 50px;
 	margin-bottom: 5px;
 }
 h4{
-	font-size: 16pt;
+	font-size: 16px;
 	font-family: 'BrandonGrotesque-Black';
 	letter-spacing: 2px;
 	line-height: 50px;
@@ -188,11 +192,12 @@ h4{
 .btn-small-primary, .btn-small-extended , .btn-small-secondary{
 	height: 35px;
 	min-width: 100px;
-	font-size: 12pt;
+	font-size: 12px;
 	line-height: 35px;
+	padding: 0 15px;
 }
 .btn-small-extended{
-	padding: 0 18px;
+	
 }
 .btn-small-secondary,.btn-medium-secondary,.btn-large-secondary{
 	color: #6b6b6b;
@@ -203,21 +208,21 @@ h4{
 .btn-medium-primary, .btn-medium-extended , .btn-medium-secondary{
 	height: 40px;
 	min-width: 120px;
-	font-size: 14pt;
+	font-size: 14px;
 	line-height: 40px;
+	padding: 0 18px;
 }
 .btn-medium-extended{
-	padding: 0 18px;
 }
 /*large*/
 .btn-large-primary, .btn-large-extended , .btn-large-secondary{
 	height: 45px;
 	min-width: 130px;
-	font-size: 16pt;
+	font-size: 16px;
 	line-height: 45px;
+	padding: 0 20px;
 }
 .btn-large-extended{
-	padding: 0 20px;
 }
 /*btn hover/active etc*/
 .btn.btn-small-secondary:hover,.btn.btn-medium-secondary:hover,.btn.btn-large-secondary:hover{
@@ -239,11 +244,15 @@ h4{
 /*==============================*\
 			&common
 \*==============================*/
+html,body{
+	height:100%;
+}
 #mainWrapper{
-	width:100%;
-	padding: 10px;
+	width: 100%;
+	padding: 0 10px 0 10px;
 	float: left;
 }
+
 .pullLeft{
 	float: left;
 }
@@ -259,12 +268,16 @@ h4{
 \*==============================*/
 #header{
 	float: left;
-	width: 98.5%;
+	width: 100%;
 	opacity:0.85;
 	/*-webkit-filter:blur(15px);*/
 	padding: 18px 0;
 	position: fixed;
 	background-color: rgba(255, 255, 255, 0.85);
+	border-right:10px solid #FFFFFF;
+	border-left:10px solid #FFFFFF;
+	left: 0;
+	z-index: 999;
 }
 .contentArea{
 	max-width: 980px;
@@ -284,6 +297,13 @@ h4{
 	display: block;
 	color: black;
 }
+span.icon-menu{
+	display: none;
+	font-size: 30px;
+	color: #818181;
+	margin: 3px 0 0 0;
+	cursor: pointer;
+}
 
 /*==============================*\
 			&FOOTER
@@ -294,6 +314,7 @@ h4{
 	bottom: 0px;
 	padding: 20px 0;
 }
+
 #footer ul{
 	text-align: center;
 	margin: 0;
@@ -336,4 +357,68 @@ h4{
 	width: 14px;
 	height: 16px;
 }
+
+
+/*==============================*\
+			&SLIDER
+\*==============================*/
+
+/*#fullpage img{
+	display: block;
+	max-width: 100%;
+  	height: auto;
+}*/
+#fullpage img{
+	float: left;
+}
+.sliderfooter{
+	position: relative !important;
+}
+.map-image{
+	height: 85%;
+	width: 100%
+}
+.slide-description{
+	  position: absolute;
+	  top: 50%;
+	  margin-left: 4%;
+	}
+.slide-description .body-text-small{
+	font-weight: bold;
+}
+.slide-description h3{
+	text-transform: uppercase;
+}
+
+/*#slide1{
+    background: url(../images/homepageslider/homepage_11.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#slide2{
+    background: url(../images/homepageslider/homepage_12.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#section2{
+	background: url(../images/homepageslider/homepage_14.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#section3{
+	background: url(../images/homepageslider/homepage_13.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}*/
+
+
+
 
