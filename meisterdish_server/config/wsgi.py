@@ -1,14 +1,25 @@
-"""
-WSGI config for meisterdish_server project.
+import os, sys, site
 
-It exposes the WSGI callable as a module-level variable named ``application``.
+VIRTUAL_ENV_PATH = ['/home/user/env/meisterdish/lib/python2.7/site-packages']
+prev_sys_path = list(sys.path)
+# Add each new site-packages directory.
+for directory in VIRTUAL_ENV_PATH:
+  site.addsitedir(directory)
 
-For more information on this file, see
-https://docs.djangoproject.com/en/1.7/howto/deployment/wsgi/
-"""
+# Reorder sys.path so new directories at the front.
+new_sys_path = []
+for item in list(sys.path):
+    if item not in prev_sys_path:
+        new_sys_path.append(item)
+        sys.path.remove(item)
+sys.path[:0] = new_sys_path
 
-import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meisterdish_server.settings")
 
+path = '/home/user/python/meisterdish/meisterdish_server/'
+if path not in sys.path:
+    sys.path.append(path)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+#application = django.core.handlers.wsgi.WSGIHandler()
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
