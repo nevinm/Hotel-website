@@ -74,12 +74,15 @@ SLIDER
 \*==============================*/
 .light-green{
 	background-color: #B8E986;
+	border-color: #B8E986;
 }
 .medium-green{
 	background-color: #A9D77B;
+	border-color: #A9D77B;
 }
 .dark-green{
 	background-color: #8EC657;
+	border-color: #8EC657;
 }
 .black{
 	color: #1A1A1A;
@@ -250,7 +253,6 @@ html,body{
 #mainWrapper{
 	width: 100%;
 	padding: 0 10px 0 10px;
-	float: left;
 }
 
 .pullLeft{
@@ -309,6 +311,7 @@ span.icon-menu{
 			&FOOTER
 \*==============================*/
 #footer{
+	opacity: 0; 
 	width: 98.5%;
 	position: fixed;
 	bottom: 0px;
@@ -363,24 +366,13 @@ span.icon-menu{
 			&SLIDER
 \*==============================*/
 
-/*#fullpage img{
-	display: block;
-	max-width: 100%;
-  	height: auto;
-}*/
 #fullpage img{
 	float: left;
+	width: 100%;
 }
-.sliderfooter{
-	position: relative !important;
-}
-.map-image{
-	height: 85%;
-	width: 100%
-}
-.slide-description{
+#slide1 .slide-description{
 	  position: absolute;
-	  top: 50%;
+	  top: 33%;
 	  margin-left: 4%;
 	}
 .slide-description .body-text-small{
@@ -389,36 +381,24 @@ span.icon-menu{
 .slide-description h3{
 	text-transform: uppercase;
 }
-
-/*#slide1{
-    background: url(../images/homepageslider/homepage_11.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+#section2 .slide-description{
+	position: absolute;
+  	top: 64%;
+  	margin-left: 20%;
 }
-#slide2{
-    background: url(../images/homepageslider/homepage_12.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+#section3 .slide-description{
+	position: absolute;
+  	top: 38%;
+  	margin-left: 10%;
 }
-#section2{
-	background: url(../images/homepageslider/homepage_14.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+#zip-code{
+	width: 130px;
+  	height: 45px;
+  	margin-top: -4px;
+    padding: 0px 10px;
+    margin-right: 5px;
+    color: #9B9B9B;
 }
-#section3{
-	background: url(../images/homepageslider/homepage_13.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}*/
-
 
 
 
