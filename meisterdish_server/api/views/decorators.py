@@ -17,7 +17,7 @@ def check_input(method):
                         #return func(req, *args, **kwargs) #Nazz
                         session = SessionStore(session_key=session_key)
                         if session and 'user' in session :
-                            if "user_id" in req and int(req['user_id'] != session['user'].id):
+                            if "user_id" in req and int(req['user_id'] != session['user']["id"]):
                                 log.error('API : USER in session and request does not match. : '+req["user_id"])
                                 return custom_error('You are not authorized.')
                             else:

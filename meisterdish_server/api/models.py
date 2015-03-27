@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
 from settings import PAYMENT_METHODS
-from cms.utils.conf import default
+
 months = ((1, 'January'),
           (2, 'February'),
           (3, 'March'),
@@ -37,12 +37,12 @@ class User(models.Model):
     is_admin = models.BooleanField(default=False)
     
     facebook_login = models.BooleanField(default=False)
-    credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
+    credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)], default=0)
     
     need_sms_notification = models.BooleanField(default=True)
     created = models.DateTimeField()
     
-    def save(self):
+    def save(self, *args, **kwargs):
         if not self.id:
             self.created = datetime.datetime.now()
         super(User, self).save(*args, **kwargs)
@@ -189,10 +189,10 @@ class Order(models.Model):
                       (1, "Order placed, but not delivered."),
                       (2, "Delivered"),
                       )
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
+    created = models.DateTimeField(null=True)
+    updated = models.DateTimeField(null=True)
     
-    def save(self):
+    def save(self, *args, **kwargs):
         if not self.id:
             self.created = datetime.datetime.now()
         self.updated = datetime.datetime.now()
@@ -208,7 +208,12 @@ class GiftCard(models.Model):
 
 class GiftCardRedemption(models.Model):
     gift_card = models.ForeignKey(GiftCard, related_name="redemption")
-    time = models.DateTimeField(default=datetime.datetime.now())
+    time = models.DateTimeField(null=True)
+    
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = datetime.datetime.now()
+        super(User, self).save(*args, **kwargs)
     
     def __unicode__(self):
         return self.gift_card.code + " : " + str(self.time)

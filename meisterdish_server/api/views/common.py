@@ -4,7 +4,7 @@ from api.models import *
 import json as simplejson
 import md5
 import logging 
-from settings import SESSION_EXPIRY, BASE_URL, BASE_DIR
+import settings
 from datetime import datetime
 from django.db.models import Q
 from django.template.loader import render_to_string
@@ -30,7 +30,7 @@ def login(request, data):
         try:
             user = User.objects.get(username=username)
             if not user.is_active:
-                raise Exception("The user is not active. Please activate the account using the link from verification email.")
+                return json_response({"status":-1, "message":"The user is not active. Please activate the account using the link from verification email."})
 
             if md5.new(password).hexdigest() == user.password:
                 log.info(user.username + "logged in")
@@ -45,7 +45,7 @@ def login(request, data):
                 if str(remember) == "1":
                     session.set_expiry = 0
                 else:
-                    session.set_expiry = SESSION_EXPIRY
+                    session.set_expiry = settings.SESSION_EXPIRY
                 session.save()
                 log.info(username+" logged in ..")
                 return json_response({"status":1, "message": "Logged in succesfully", "user":user_dic, "session_key":session.session_key})
@@ -84,9 +84,9 @@ def signup(request, data):
         email = data['email'].strip()
         first_name = data['first_name'].strip()
         last_name = data['last_name'].strip()
-        phone = data['phone'].strip()
+        mobile = data['mobile'].strip()
         
-        if username == '' or password == '' or first_name == '' or last_name == '' or email == '' or phone == '':
+        if username == '' or password == '' or first_name == '' or last_name == '' or email == '' or mobile == '':
             log.error(username + " : Sign up failed. Fill required fields.")
             raise Exception("Please fill in all the required fields")
         
@@ -99,20 +99,20 @@ def signup(request, data):
             user.password = md5.new(password).hexdigest()
             user.first_name = first_name
             user.last_name = last_name
-            user.phone = phone
+            user.mobile = mobile
             user.save()
             
             user_dic = {"id":user.id,
                                   "email":user.email,
                                   "first_name":user.first_name,
                                   "last_name":user.last_name,
-                                  "phone" : user.phone,
+                                  "mobile" : user.mobile,
                                   }
             
             log.info(user.username + " signed up")
             session = SessionStore()
             session["user"] = user_dic
-            sessionset_expiry = SESSION_EXPIRY
+            sessionset_expiry = settings.SESSION_EXPIRY
             session.save()
             
             log.info(username + " : Signed up ")
@@ -134,7 +134,7 @@ def send_user_verification_mail(user):
         from libraries import mail
     
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
-        link = BASE_URL + 'verify_user/'+token+"/"
+        link = settings.BASE_DIR + 'verify_user/'+token+"/"
         user.user_verify_token = token
         user.save()
         
@@ -188,7 +188,7 @@ def forgot_password(request, data):
         from libraries import mail
         
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
-        link = BASE_URL + 'forgot_password/'+token+"/"
+        link = settings.BASE_DIR + 'forgot_password/'+token+"/"
         user.password_reset_token = token
         user.save()
         
@@ -268,14 +268,14 @@ def change_password(request, data):
 @check_input('POST')
 def get_profile(request, data):
     try:
-        user_id = data['user_id'].strip()
+        user_id = data['user_id']
         user = User.objects.get(pk=user_id)
         if not user.is_active:
             raise Exception("The user is not active.")
         
         cart_items = Meal.objects.filter(cartitem__cart__user=user)
         meals = []
-        if cart_items.length:
+        if cart_items.count:
             for meal in cart_items:
                 meals.append({
                               'id' : meal.id,
@@ -295,7 +295,7 @@ def get_profile(request, data):
                      "profile_image" : settings.MEDIA_URL + user.profile_image,
                      "is_admin" : user.is_admin,
                      "meals_in_cart" : meals,
-                     "meals_in_cart_count" : count(meals),
+                     "meals_in_cart_count" : len(meals),
                      "credits" : user.credits,
                      "sms_notification" : user.need_sms_notification,
                      
@@ -305,13 +305,13 @@ def get_profile(request, data):
         log.error("Profile request with no user_id")
         return json_response({"status":-1, "message":"Invalid input."})
     except Exception as e:
-        log.error("Get profile : " + user_id + " :Exception: "+e.message)
-        return json_response({"status":-1, "message":message})
+        log.error("Get profile :Exception: "+e.message)
+        return json_response({"status":-1, "message":e.message})
 
 @check_input('POST')
 def edit_profile(request, data):
     try:
-        user_id = data["user_id"].strip()
+        user_id = data["user_id"]
         user = User.objects.get(pk=user_id)
         
         first_name = data['first_name'].strip()
@@ -331,7 +331,7 @@ def edit_profile(request, data):
         log.info("user : " + user.username + " : updated profile")
         return json_response({"status":1, "message":"Profile updated successfully."})
     except Exception as e:
-        log.error("user id : " + user_id + " : profile update failed : "+e.message)
+        log.error("user id : " + str(user_id) + " : profile update failed : "+e.message)
         return json_response({"status":-1, "message":"Failed to update profile."})
 
 def json_response(response, wrap=False):
