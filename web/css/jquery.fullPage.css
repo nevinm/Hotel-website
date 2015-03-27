@@ -200,3 +200,9 @@ html, body {
 #fp-nav ul li .fp-tooltip.left {
     left: 20px;
 }
+
+@media screen and (max-width: 1024px){
+    .fp-section,.fp-section.fp-table,.fp-slide.fp-table,.fp-tableCell,.map-image{
+          height: auto !important;
+    }
+}
