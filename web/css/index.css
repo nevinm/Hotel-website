@@ -69,7 +69,14 @@ SLIDER
 /*==============================*\
 			&SLIDER
 \*==============================*/
-
+#main-slider-wrapper{
+	width: 100%;
+	border-right: 10px solid #fff;
+	border-left: 10px solid #fff;
+	float: left;
+	background-color: #f1f1f1;
+	min-height: 100%;
+}
 #fullpage img{
 	float: left;
 	width: 100%;
@@ -98,6 +105,7 @@ SLIDER
 #zip-code{
 	width: 130px;
   	height: 45px;
+  	text-align: center;
   	margin-top: -4px;
     padding: 0px 10px;
     margin-right: 5px;

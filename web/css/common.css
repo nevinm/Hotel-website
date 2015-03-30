@@ -378,28 +378,6 @@ span.icon-menu{
 }
 
 /*==============================*\
-			&SLIDER
-\*==============================*/
-
-#fullpage img{
-	display: block;
-	max-width: 100%;
-  	height: auto;
-}
-.sliderfooter{
-	position: relative !important;
-}
-.map-image{
-	height: 85% !important;
-	width: 100%
-}
-.slide-description{
-	  position: absolute;
-	  top: 50%;
-	  margin-left: 4%;
-}
-
-/*==============================*\
 		&NAVBAR RESPONSIVE
 \*==============================*/
 
