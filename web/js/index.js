@@ -26,11 +26,11 @@ $(document).ready(function() {
                 $("#section3 .fp-tableCell").height(lastSectionHeight);
                 footerCorrected = true;
             }
-            $("#footer").css({
+            $("#slider-footer").css({
                 "opacity": 1
             });
         } else {
-            $("#footer").css({
+            $("#slider-footer").css({
                 "opacity": 0
             });
         }
