@@ -24,6 +24,18 @@ class Role(models.Model):
     
     def __init__(self):
         return self.name
+class State(models.Model):
+    name = models.CharField(max_length=30)
+    state_code = models.CharField(max_length=3, unique=True)
+    def __unicode__(self):
+        return self.name
+
+class City(models.Model):
+    name = models.CharField(max_length=30)
+    state = models.ForeignKey(State)
+    state_code = models.CharField(max_length=3, unique=True)
+    def __unicode__(self):
+        return self.name
 
 class User(models.Model):
     fb_user_id = models.CharField(max_length=20, null=True, default="")
@@ -36,7 +48,7 @@ class User(models.Model):
     email = models.EmailField(max_length=30, unique=True)
     mobile = models.CharField(max_length=15, null=True)
     profile_image = models.CharField(max_length=50, null=True)
-    primary_address = models.ForeignKey(Address)
+    primary_address = models.ForeignKey('Address', related_name="primary_address", null=True)
 
     user_verify_token = models.CharField(max_length=20, null=True, default="")
     password_reset_token = models.CharField(max_length=20, null=True, default="")
@@ -57,21 +69,8 @@ class User(models.Model):
     def __unicode__(self):
         return self.username
 
-class State(models.Model):
-    name = models.CharField(max_length=30)
-    state_code = models.CharField(max_length=3, unique=True)
-    def __unicode__(self):
-        return self.name
-
-class City(models.Model):
-    name = models.CharField(max_length=30)
-    state = models.ForeignKey(State)
-    state_code = models.CharField(max_length=3, unique=True)
-    def __unicode__(self):
-        return self.name
-
 class Address(models.Model):
-    user = models.ForeignKey(User, related_name="address")
+    user = models.ForeignKey(User, related_name="user_address")
     name = models.CharField(max_length=50)
     is_business = models.BooleanField(default=False)
     street = models.CharField(max_length=50)
@@ -79,9 +78,11 @@ class Address(models.Model):
     city = models.ForeignKey(City)
     zip = models.CharField(max_length=10)
     phone = models.CharField(max_length=15)
-    
+
     def __unicode__(self):
         return self.user.username + " : " + self.name
+    
+
 """
 class CreditCardDetails(models.Model):
     user = models.ForeignKey(User, related_name="cc_details")
@@ -130,7 +131,7 @@ class Meal(models.Model):
     description = models.TextField(max_length=1024)
     preparation_time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     type = models.ForeignKey(MealType)
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, null=True)
     
     nutrients = models.ManyToManyField(Nutrient, through="MealNutrient")
     ingredients = models.ManyToManyField(Ingredient, through="MealIngredient")
