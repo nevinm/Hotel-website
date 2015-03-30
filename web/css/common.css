@@ -310,6 +310,16 @@ span.icon-menu{
 	margin: 3px 0 0 0;
 	cursor: pointer;
 }
+.cart {
+  position: relative;
+}
+.count {
+  position: absolute;
+  border: 7px solid #DDDDDD;
+  border-radius: 7px;
+  top: -6px;
+  right: -6px;
+}
 
 /*==============================*\
 		&NAVBAR RESPONSIVE
