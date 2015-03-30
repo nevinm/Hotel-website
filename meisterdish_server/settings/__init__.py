@@ -6,7 +6,9 @@ else:
     from local import *
 
 DEBUG = DEBUG
-print DEBUG, "nazz\n\n\n\n"
+BASE_URL = BASE_URL
+BASE_DIR = BASE_DIR
+
 ADMINS = (
      ('Abdul Nasar', 'nasarp@qburst.com'),
 )
@@ -39,14 +41,14 @@ USE_L10N = True
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL ='/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
 
-STATIC_ROOT = BASE_DIR + 'static/'
+STATIC_ROOT = BASE_DIR + '/static/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
@@ -95,6 +97,8 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    BASE_DIR+"/templates",
+
 )
 
 INSTALLED_APPS = (
@@ -150,15 +154,15 @@ LOGGING = {
     }
 }
 
-"""
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'afmpmail2@gmail.com'
 EMAIL_HOST_PASSWORD = 'afmp@123mail2'
 DEFAULT_FROM_EMAIL = 'AppForMyPatients<noreply@appformypatients.com>'
-SERVER_EMAIL = "abcd@google.com"
-"""
+
+
 SESSION_EXPIRY = 5 * 60 # 5 mins
 
 PAYMENT_METHODS = (

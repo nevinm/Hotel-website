@@ -90,3 +90,26 @@
 	color: #a9d77b;
 	font-size: 19px;
 }
+
+@media only screen and (min-width: 768px)and (max-width:1024px){
+	.listItems{
+  		width: 49%;
+		margin: 0 0 60px 2%;
+		float: left;
+  	}
+  	.listContainer div:nth-child(2n+1){
+		margin-left: 0;
+	}
+	.thumbnail{
+		height: 270px;
+	}
+	.listContainer{
+		margin: 40px 0 0 0;
+	}
+}
+
+@media only screen and (min-width: 1025px){
+	.listContainer div:nth-child(3n+1){
+		margin-left: 0;
+	}
+}

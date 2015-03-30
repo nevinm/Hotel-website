@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
 from settings import PAYMENT_METHODS
+
 months = ((1, 'January'),
           (2, 'February'),
           (3, 'March'),
@@ -21,18 +22,31 @@ years = [(y,y) for y in range(2000, cy+10)]
 
 class User(models.Model):
     username = models.CharField(unique=True, max_length=15)
-    password = models.CharField(max_length=25)
+    password = models.CharField(max_length=50)
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
-    zip = models.CharField(max_length=10)
+    zip = models.CharField(max_length=10, null=True)
     email = models.EmailField(max_length=30)
-    mobile = models.CharField(max_length=15)
-    dob = models.DateField()
-    profile_image = models.CharField(max_length=50)
+    mobile = models.CharField(max_length=15, null=True)
+    profile_image = models.CharField(max_length=50, null=True)
     
+    user_verify_token = models.CharField(max_length=20, null=True, default="")
+    password_reset_token = models.CharField(max_length=20, null=True, default="")
+
     is_active = models.BooleanField(default=False)
-    created = models.DateTimeField(default=datetime.datetime.now())
+    is_admin = models.BooleanField(default=False)
     
+    facebook_login = models.BooleanField(default=False)
+    credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)], default=0)
+    
+    need_sms_notification = models.BooleanField(default=True)
+    created = models.DateTimeField()
+    
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = datetime.datetime.now()
+        super(User, self).save(*args, **kwargs)
+        
     def __unicode__(self):
         return self.username
 
@@ -158,7 +172,7 @@ class Cart(models.Model):
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart)
-    meal = models.ForeignKey(Meal)
+    meal = models.ForeignKey(Meal, related_name="cartitem")
     quantity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
 class Order(models.Model):
@@ -175,7 +189,14 @@ class Order(models.Model):
                       (1, "Order placed, but not delivered."),
                       (2, "Delivered"),
                       )
-    created = models.DateTimeField(default=datetime.datetime.now())
+    created = models.DateTimeField(null=True)
+    updated = models.DateTimeField(null=True)
+    
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = datetime.datetime.now()
+        self.updated = datetime.datetime.now()
+        super(Order, self).save(*args, **kwargs)
     
 class GiftCard(models.Model):
     user = models.ForeignKey(User)
@@ -187,7 +208,12 @@ class GiftCard(models.Model):
 
 class GiftCardRedemption(models.Model):
     gift_card = models.ForeignKey(GiftCard, related_name="redemption")
-    time = models.DateTimeField(default=datetime.datetime.now())
+    time = models.DateTimeField(null=True)
+    
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = datetime.datetime.now()
+        super(User, self).save(*args, **kwargs)
     
     def __unicode__(self):
         return self.gift_card.code + " : " + str(self.time)
