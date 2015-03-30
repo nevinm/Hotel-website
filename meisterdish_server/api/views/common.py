@@ -19,21 +19,21 @@ def home(request):
 @check_input('POST')
 def login(request, data):
     try:
-        username = data['username'].strip()
+        email = data['username'].strip()
         password = data['password'].strip()
         remember = data['remember'].strip()
         
-        if username == '' or password == '':
-            log.error("Empty username or password.")
-            raise Exception("Invalid username or password")
+        if email == '' or password == '':
+            log.error("Empty email or password.")
+            raise Exception("Invalid email or password")
         
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.get(email=username)
             if not user.is_active:
                 return json_response({"status":-1, "message":"The user is not active. Please activate the account using the link from verification email."})
 
             if md5.new(password).hexdigest() == user.password:
-                log.info(user.username + "logged in")
+                log.info(user.email + "logged in")
                 user_dic = {"id":user.id,
                                   "email":user.email,
                                   "first_name":user.first_name,
@@ -47,19 +47,19 @@ def login(request, data):
                 else:
                     session.set_expiry = settings.SESSION_EXPIRY
                 session.save()
-                log.info(username+" logged in ..")
+                log.info(email+" logged in ..")
                 return json_response({"status":1, "message": "Logged in succesfully", "user":user_dic, "session_key":session.session_key})
             else:
-                log.error("Login: Invalid username/password combination : "+username)
-                raise Exception("Invalid username/password combination")
+                log.error("Login: Invalid email/password combination : "+username)
+                raise Exception("Invalid email/password combination")
         except Exception as e:
             log.error(username + " : Login  : "+str(e))
             raise Exception("An error has occurred. Please try again later.")
     except KeyError as e:
-        log.error("Login : " + username + " : " + str(e) + " missing" )
+        log.error("Login : " + email + " : " + str(e) + " missing" )
         return json_response({"status":-1, "message":str(e) + " is missing."})
     except Exception as e:
-        log.error("Login : " + username + " : " + str(e))
+        log.error("Login : " + email + " : " + str(e))
         return json_response({"status":-1, "message":e.message})
 
 @check_input('POST')
@@ -79,23 +79,21 @@ def logout(request, data):
 @check_input('POST')
 def signup(request, data):
     try:
-        username = data['username'].strip()
         password = data['password'].strip()
         email = data['email'].strip()
         first_name = data['first_name'].strip()
         last_name = data['last_name'].strip()
         mobile = data['mobile'].strip()
         
-        if username == '' or password == '' or first_name == '' or last_name == '' or email == '' or mobile == '':
-            log.error(username + " : Sign up failed. Fill required fields.")
+        if password == '' or first_name == '' or last_name == '' or email == '' or mobile == '':
+            log.error(email + " : Sign up failed. Fill required fields.")
             raise Exception("Please fill in all the required fields")
         
-        if User.objects.filter(Q(username=username) | Q(email=email)).exists():
-            raise Exception("Username or email already exists")
+        if User.objects.filter(email=email).exists():
+            raise Exception("email already exists")
         try:
             user = User()
             user.email = email
-            user.username = username
             user.password = md5.new(password).hexdigest()
             user.first_name = first_name
             user.last_name = last_name
@@ -109,19 +107,19 @@ def signup(request, data):
                                   "mobile" : user.mobile,
                                   }
             
-            log.info(user.username + " signed up")
+            log.info(user.email + " signed up")
             session = SessionStore()
             session["user"] = user_dic
             sessionset_expiry = settings.SESSION_EXPIRY
             session.save()
             
-            log.info(username + " : Signed up ")
+            log.info(email + " : Signed up ")
             if send_user_verification_mail(user):
                 return json_response({"status":1, "message": "Succesfully signed up", "user":user_dic, "session_key":session.session_key})
             else:
                 return json_response({"status":-1, "message": "An error has occurred in sending verification mail. Please try later.", "user":user_dic, "session_key":session.session_key})
         except Exception as e:
-            log.error(username + " : Failed to sign up "+e.message)
+            log.error(email + " : Failed to sign up "+e.message)
             raise Exception("Failed to sign up. Please try again later")
     except KeyError as field:
         return json_response({"status":-1, "message":"Invalid input"})
@@ -142,7 +140,7 @@ def send_user_verification_mail(user):
                "email" : user.email,
                "link" : link,
                "name" : user.last_name + " " + user.first_name,
-               "username" : user.username,
+               "username" : email,
                }
         msg = render_to_string('verify_user_email_template.html', dic)
     
@@ -164,7 +162,7 @@ def verify_user(request, data):
         user.is_active=True
         user.save()
         
-        log.info("Password reset for user "+user.username)
+        log.info("Password reset for user "+user.email)
         return json_response({"status":1, "message":"The user has been activated."})
     
     except KeyError as field:
@@ -196,7 +194,7 @@ def forgot_password(request, data):
                "email" : email,
                "link" : link,
                "name" : user.last_name + " " + user.first_name,
-               "username" : user.username,
+               "username" : email,
                }
         msg = render_to_string('forgot_password_email_template.html', dic)
 
@@ -226,7 +224,7 @@ def reset_password(request, data):
         user.password = md5.new(new_password).hexdigest()
         user.save()
         
-        log.info("Password reset for user "+user.username)
+        log.info("Password reset for user "+user.email)
         return json_response({"status":1, "message":"Password has been reset."})
     
     except KeyError as field:
@@ -259,7 +257,7 @@ def change_password(request, data):
         user.password_reset = False
         user.save()
         
-        log.info("user : " + user.username + " : changed password")
+        log.info("user : " + user.email + " : changed password")
         return json_response({"status":1, "message":"Password changed successfully."})
     except Exception as e:
         log.error("user id : " + user_id + " : change password failed : "+e.message)
@@ -291,7 +289,6 @@ def get_profile(request, data):
                      "name" : (user.last_name + " "+ user.first_name).title(),
                      "email" : user.email,
                      "mobile" : user.mobile,
-                     "username" : user.username,
                      "profile_image" : settings.MEDIA_URL + user.profile_image,
                      "is_admin" : user.is_admin,
                      "meals_in_cart" : meals,
@@ -328,7 +325,7 @@ def edit_profile(request, data):
         user.need_sms_notification = sms
         user.save()
         
-        log.info("user : " + user.username + " : updated profile")
+        log.info("user : " + user.email + " : updated profile")
         return json_response({"status":1, "message":"Profile updated successfully."})
     except Exception as e:
         log.error("user id : " + str(user_id) + " : profile update failed : "+e.message)
