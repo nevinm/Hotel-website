@@ -19,22 +19,29 @@ months = ((1, 'January'),
 cy = datetime.date.today().year
 years = [(y,y) for y in range(2000, cy+10)]
 
+class Role(models.Model):
+    name = models.CharField(max_length=20)
+    
+    def __init__(self):
+        return self.name
 
 class User(models.Model):
-    username = models.CharField(unique=True, max_length=15)
+    fb_user_id = models.CharField(max_length=20, null=True, default="")
     password = models.CharField(max_length=50)
+    
+    role = models.ForeignKey(Role)
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
     zip = models.CharField(max_length=10, null=True)
-    email = models.EmailField(max_length=30)
+    email = models.EmailField(max_length=30, unique=True)
     mobile = models.CharField(max_length=15, null=True)
     profile_image = models.CharField(max_length=50, null=True)
-    
+    primary_address = models.ForeignKey(Address)
+
     user_verify_token = models.CharField(max_length=20, null=True, default="")
     password_reset_token = models.CharField(max_length=20, null=True, default="")
 
     is_active = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
     
     facebook_login = models.BooleanField(default=False)
     credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)], default=0)
@@ -123,10 +130,11 @@ class Meal(models.Model):
     description = models.TextField(max_length=1024)
     preparation_time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     type = models.ForeignKey(MealType)
+    category = models.ForeignKey(Category)
     
     nutrients = models.ManyToManyField(Nutrient, through="MealNutrient")
     ingredients = models.ManyToManyField(Ingredient, through="MealIngredient")
-    pre_requisites = models.ManyToManyField(PreRequisite, through="MealPreRequisite")
+    pre_requisites = models.TextField(max_length=1024, null=True)
     
     price = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
@@ -135,6 +143,15 @@ class Meal(models.Model):
     def __unicode__(self):
         return self.name
 
+class MealRating(models.Model):
+    meal = models.ForeignKey(Meal)
+    user = models.ForeignKey(User)
+    rating = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+    comment = models.TextField(max_length=200)
+    
+    def __init__(self):
+        return self.rating
+    
 class MealNutrient(models.Model):
     meal = models.ForeignKey(Meal)
     nutrient = models.ForeignKey(Nutrient)
@@ -176,11 +193,18 @@ class CartItem(models.Model):
     quantity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
 class Order(models.Model):
+    order_num = models.CharField(max_length=20)
+    transaction_id = models.CharField(max_length=30)
+    
     cart = models.ForeignKey(Cart)
     total_amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
+    total_tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
     tip = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(1000)])
+    grand_total = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
+    
     delivery_address = models.ForeignKey(Address, related_name="delivery_address")
     billing_address = models.ForeignKey(Address, related_name="billing_address")
+    
     delivery_time = models.CharField(max_length=20)
     driver_instructions = models.TextField(max_length=1024, null=True)
     
