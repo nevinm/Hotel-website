@@ -446,6 +446,12 @@ span.icon-menu{
   	.logo{
   		padding-left: 10px;
   	}
+  	.cart{
+  		margin-right: 25px;
+		  margin-top: 9px;
+		  margin-left: 25px;
+  		
+  	}
 }
 @media only screen and (min-width: 1025px){
 	.navMenu{
