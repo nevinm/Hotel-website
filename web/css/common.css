@@ -261,6 +261,14 @@ html,body{
 	min-height: 100%;
 	margin-bottom: -143px;
 }
+#account-mainWrapper{
+	width: 100%;
+	border-right: 10px solid #fff;
+	border-left: 10px solid #fff;
+	float: left;
+	background-color: #f1f1f1;
+	min-height: 100%;
+}
 #mainWrapper:after{
 	height: 143px;
 	content: "";
@@ -310,9 +318,12 @@ html,body{
 	font-family: 'BrandonGrotesque-Light';
 }
 #menu li a{
-	margin: 5px 20px 0 0;
+	margin: 0 20px 0 0;
 	display: block;
-	color: black;
+}
+.logo {
+  width: 262px;
+  height: 29px;
 }
 span.icon-menu{
 	display: none;
@@ -320,6 +331,24 @@ span.icon-menu{
 	color: #818181;
 	margin: 3px 0 0 0;
 	cursor: pointer;
+}
+.cart {
+	position: relative;
+    margin-top: 5px;
+}
+.count {
+	font-family: 'BrandonGrotesque-Bold';
+	position: absolute;
+	border-radius: 50%;
+	top: -6px;
+	right: -6px;
+	color: white;
+	background-color: #c7c7c7;
+	width: 14px;
+	height: 14px;
+	padding: 3px;
+	line-height: 9px;
+	font-size: 15px;
 }
 
 /*==============================*\
