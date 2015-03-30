@@ -11,6 +11,7 @@ HEADINGS-MODULE
 BUTTONS-MODULE
 COMMON
 HEADER
+FOOTER
 NAVBAR RESPONSIVE
 */
 
@@ -249,14 +250,22 @@ h4{
 \*==============================*/
 html,body{
 	height:100%;
+	overflow: inherit;
 }
 #mainWrapper{
 	width: 100%;
-	float: left;
-	min-height: 100%;
-	background-color: #f1f1f1;
 	border-right: 10px solid #fff;
 	border-left: 10px solid #fff;
+	float: left;
+	background-color: #f1f1f1;
+	min-height: 100%;
+	margin-bottom: -143px;
+}
+#mainWrapper:after{
+	height: 143px;
+	content: "";
+	float: left;
+	width: 100%;
 }
 
 .pullLeft{
@@ -280,8 +289,8 @@ html,body{
 	padding: 18px 0;
 	position: fixed;
 	background-color: rgba(255, 255, 255, 0.85);
-	border-right:10px solid #FFFFFF;
-	border-left:10px solid #FFFFFF;
+	border-right:10px solid #fff;
+	border-left:10px solid #fff;
 	left: 0;
 	z-index: 999;
 }
@@ -319,6 +328,63 @@ span.icon-menu{
   border-radius: 7px;
   top: -6px;
   right: -6px;
+}
+
+/*==============================*\
+			&FOOTER
+\*==============================*/
+#footer{
+	width: 100%;
+	float: left;
+	padding: 45px 0;
+	height: 143px;
+	background: #fff;
+}
+
+#footer ul{
+	text-align: center;
+	margin: 0;
+}
+#footer ul li{
+	display: inline-block;
+	font-family: 'ProximaNova-semibold';
+	font-size: 12px;
+	cursor: pointer;
+}
+#footer ul li a{
+	margin: 0 40px 0 0;
+	color: #9B9B9B;
+}
+.footer-links{
+	text-align: center;
+}
+.socialMedia{
+	background-image: url('../images/social_icon_sprite.png');
+	background-repeat: no-repeat;
+	margin: 0 22px 15px 0;
+}
+#facebook{
+	background-position:-3px 0;
+	width: 10px;
+	height: 16px;
+}
+#twitter{
+	background-position: -16px 0;
+	width: 16px;
+	height: 16px;
+}
+#instagram{
+	background-position: -32px 0;
+	width: 16px;
+	height: 16px;
+}
+#pinterest{
+	background-position: -49px 0;
+	width: 14px;
+	height: 16px;
+}
+.sliderfooter{
+	position: relative !important;
 }
 
 /*==============================*\
