@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+/*==============================*\
+			&CONTENTS
+\*==============================*/
+
+/*
+SLIDER-FOOTER
+SLIDER
+*/
+
+
+/*==============================*\
+			&slider-footer
+\*==============================*/
+/*Footer is Unique to the slider as it differs from the other common footers */
+#slider-footer{
+	opacity: 0; 
+	width: 98.5%;
+	position: fixed;
+	bottom: 0px;
+	padding: 20px 0;
+}
+
+#slider-footer ul{
+	text-align: center;
+	margin: 0;
+}
+#slider-footer ul li{
+	display: inline-block;
+	font-family: 'ProximaNova-semibold';
+	font-size: 12px;
+	cursor: pointer;
+}
+#slider-footer ul li a{
+	margin: 0 40px 0 0;
+	color: #9B9B9B;
+}
+.footer-links{
+	text-align: center;
+}
+.socialMedia{
+	background-image: url('../images/social_icon_sprite.png');
+	background-repeat: no-repeat;
+	margin: 0 22px 15px 0;
+}
+#facebook{
+	background-position:-3px 0;
+	width: 10px;
+	height: 16px;
+}
+#twitter{
+	background-position: -16px 0;
+	width: 16px;
+	height: 16px;
+}
+#instagram{
+	background-position: -32px 0;
+	width: 16px;
+	height: 16px;
+}
+#pinterest{
+	background-position: -49px 0;
+	width: 14px;
+	height: 16px;
+}
+
+
+/*==============================*\
+			&SLIDER
+\*==============================*/
+
+#fullpage img{
+	float: left;
+	width: 100%;
+}
+#slide1 .slide-description{
+	  position: absolute;
+	  top: 33%;
+	  margin-left: 4%;
+	}
+.slide-description .body-text-small{
+	font-weight: bold;
+}
+.slide-description h3{
+	text-transform: uppercase;
+}
+#section2 .slide-description{
+	position: absolute;
+  	top: 64%;
+  	margin-left: 20%;
+}
+#section3 .slide-description{
+	position: absolute;
+  	top: 38%;
+  	margin-left: 10%;
+}
+#zip-code{
+	width: 130px;
+  	height: 45px;
+  	margin-top: -4px;
+    padding: 0px 10px;
+    margin-right: 5px;
+    color: #9B9B9B;
+}
+
+
+
