@@ -1,0 +1,129 @@
+
+/*==============================*\
+		  &PAGE-CONTAINER
+\*==============================*/
+#page-container{
+	float: left;
+	width: 100%;
+	height: 100%;
+	margin-top: 73px;
+}
+.account-container{
+	background-color: #ffffff;
+	border: 1px solid #ADADAD;
+	border-radius: 3px;
+	margin-top: 40px;
+	float: left;
+	width: 100%;
+}
+.account-header{
+	border-bottom: 1px solid #ADADAD;
+	padding: 10px 10px 10px 20px;
+	background-color: #f7f7f7;
+}
+.account-settings{
+	padding: 10px 10px 150px 20px;
+}
+.content{
+	padding: 10px 10px 10px 10px;
+}
+.sub-content1{
+	float: left;
+	margin-right: 150px;
+}
+.logout {
+	width: 75%;
+	margin: 0 auto;
+	text-align: right;
+	padding-top: 30px;
+}
+
+/*==================================*\
+			&ACCORDION
+\*==================================*/
+ul.accordion-content li {
+  display: inline-block;
+  padding: 20px;
+}
+.accordion-header{
+	border-bottom: 1px solid #ADADAD;
+	border-top: 1px solid #ADADAD;
+	padding-left: 20px;
+	cursor: pointer;
+}
+.accordion-content{
+	display: none;
+}
+.row{
+	display: table;
+	border-spacing: 10px 10px;
+	border-collapse: separate;
+}
+.accordion-subcontent{
+	display: table-cell;
+	vertical-align: top;
+}
+p1{
+	font-weight: bold;
+	color: #000;
+	float: left;
+	width: 100%;
+}
+p2{
+	float: left;
+	padding-top: 15px;
+}
+p2 span{
+	width: 100%;
+	float: left;
+}
+
+/*==================================*\
+			&FORM
+\*==================================*/
+.account-wrapper{
+	width: 75%;
+	margin: 0 auto;
+}
+form.form{
+	width: 60%;
+}
+.first-name,.last-name,.phone-num{
+	width: 250px;
+	float: left;
+	padding: 20px;
+}
+input.arrange{
+	width: 100%;
+  border-radius: 3px;
+  border: 1px solid #ADADAD;
+  padding: 8px;
+  background-color:#f1f1f1; 
+}
+input[type="text"]
+{
+    font-family:'ProximaNova-regular';
+    color: #9B9B9B;
+}
+label{
+	width: 100%;
+}
+.notify,.update-button {
+  width: 100%;
+  float: left;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+ 
+/*==================================*\
+			&email-form
+\*==================================*/
+.new-email,.retype-email{
+	width: 300px;
+	padding: 10px 20px;
+}
+span.body-text-small{
+	padding: 10px 20px;
+	float: left;
+}

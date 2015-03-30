@@ -12,7 +12,7 @@ BUTTONS-MODULE
 COMMON
 HEADER
 FOOTER
-SLIDER
+NAVBAR RESPONSIVE
 */
 
 /*==============================*\
@@ -74,12 +74,15 @@ SLIDER
 \*==============================*/
 .light-green{
 	background-color: #B8E986;
+	border-color: #B8E986;
 }
 .medium-green{
 	background-color: #A9D77B;
+	border-color: #A9D77B;
 }
 .dark-green{
 	background-color: #8EC657;
+	border-color: #8EC657;
 }
 .black{
 	color: #1A1A1A;
@@ -126,10 +129,11 @@ h3{
 	letter-spacing: 1.5px;
 	line-height: 50px;
 	margin-bottom: 5px;
+	color: #9B9B9B;
 }
 h4{
 	font-size: 16px;
-	font-family: 'BrandonGrotesque-Black';
+	font-family: 'BrandonGrotesque-Regular';
 	letter-spacing: 2px;
 	line-height: 50px;
 	margin-bottom: 5px;
@@ -246,11 +250,22 @@ h4{
 \*==============================*/
 html,body{
 	height:100%;
+	overflow: inherit;
 }
 #mainWrapper{
 	width: 100%;
-	padding: 0 10px 0 10px;
+	border-right: 10px solid #fff;
+	border-left: 10px solid #fff;
 	float: left;
+	background-color: #f1f1f1;
+	min-height: 100%;
+	margin-bottom: -143px;
+}
+#mainWrapper:after{
+	height: 143px;
+	content: "";
+	float: left;
+	width: 100%;
 }
 
 .pullLeft{
@@ -274,8 +289,8 @@ html,body{
 	padding: 18px 0;
 	position: fixed;
 	background-color: rgba(255, 255, 255, 0.85);
-	border-right:10px solid #FFFFFF;
-	border-left:10px solid #FFFFFF;
+	border-right:10px solid #fff;
+	border-left:10px solid #fff;
 	left: 0;
 	z-index: 999;
 }
@@ -309,10 +324,11 @@ span.icon-menu{
 			&FOOTER
 \*==============================*/
 #footer{
-	width: 98.5%;
-	position: fixed;
-	bottom: 0px;
-	padding: 20px 0;
+	width: 100%;
+	float: left;
+	padding: 45px 0;
+	height: 143px;
+	background: #fff;
 }
 
 #footer ul{
@@ -357,68 +373,51 @@ span.icon-menu{
 	width: 14px;
 	height: 16px;
 }
-
-
-/*==============================*\
-			&SLIDER
-\*==============================*/
-
-/*#fullpage img{
-	display: block;
-	max-width: 100%;
-  	height: auto;
-}*/
-#fullpage img{
-	float: left;
-}
 .sliderfooter{
 	position: relative !important;
 }
-.map-image{
-	height: 85%;
-	width: 100%
-}
-.slide-description{
-	  position: absolute;
-	  top: 50%;
-	  margin-left: 4%;
+
+/*==============================*\
+		&NAVBAR RESPONSIVE
+\*==============================*/
+
+@media only screen and (min-width: 768px)and (max-width:1024px){
+  	ul#menu{
+  		display: none;
+  	}
+  	.navMenu {
+		width: 100%;
+		position: absolute;
+		background: rgba(255,255,255,.85);
+		/* height: 211px; */
+		top: 73px;
+		z-index: 99;
+		left: 0;
+    }
+
+	.navMenu ul li{
+		list-style-type: none;
+		font-family: 'BrandonGrotesque-Regular';
+		font-size: 12px;
+		cursor: pointer;
+		padding: 14px;
+		border-bottom: 1px solid #A3A2A2; 
 	}
-.slide-description .body-text-small{
-	font-weight: bold;
+	.navMenu ul li a{
+		color: black;
+	}
+	.navMenu ul li a:hover{
+		color: #8EC657;
+	}
+  	span.icon-menu{
+  		display: block;
+  	}
+  	.logo{
+  		padding-left: 10px;
+  	}
 }
-.slide-description h3{
-	text-transform: uppercase;
+@media only screen and (min-width: 1025px){
+	.navMenu{
+		display: none !important;
+	}
 }
-
-/*#slide1{
-    background: url(../images/homepageslider/homepage_11.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-#slide2{
-    background: url(../images/homepageslider/homepage_12.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-#section2{
-	background: url(../images/homepageslider/homepage_14.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-#section3{
-	background: url(../images/homepageslider/homepage_13.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}*/
-
-
-
-
