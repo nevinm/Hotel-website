@@ -14,6 +14,9 @@ SLIDER
 			&slider-footer
 \*==============================*/
 /*Footer is Unique to the slider as it differs from the other common footers */
+.slider-footer{
+	padding: 20px 0 !important;
+}
 #slider-footer{
 	opacity: 0; 
 	width: 98.5%;

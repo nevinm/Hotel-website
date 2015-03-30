@@ -292,11 +292,13 @@ html,body{
 #header{
 	float: left;
 	width: 100%;
-	opacity:0.85;
+	/*opacity:0.85;*/
 	/*-webkit-filter:blur(15px);*/
 	padding: 18px 0;
 	position: fixed;
-	background-color: rgba(255, 255, 255, 0.85);
+	background-color: transparent;
+	background-repeat-x: inherit;
+	background-image: url('../images/white.png');
 	border-right:10px solid #fff;
 	border-left:10px solid #fff;
 	left: 0;
@@ -402,9 +404,9 @@ span.icon-menu{
 	width: 14px;
 	height: 16px;
 }
-.sliderfooter{
+/*.sliderfooter{
 	position: relative !important;
-}
+}*/
 
 /*==============================*\
 		&NAVBAR RESPONSIVE
