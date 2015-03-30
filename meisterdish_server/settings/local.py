@@ -3,15 +3,15 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-BASE_URL = 'http://10.7.1.64:86/'
+BASE_URL = 'http://meisterdish.qburst.com/backend/'
 URL_PREFIX = ''
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'meisterdish',
-        'USER': 'pacs',
-        'PASSWORD': 'pacs',
+        'NAME': 'dmeisterdish',
+        'USER': 'umeisterdish',
+        'PASSWORD': 'kF#Ghj63@L',
         'HOST': 'localhost',
         'PORT': '5432',
     }
