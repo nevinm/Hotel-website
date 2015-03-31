@@ -83,9 +83,8 @@ def signup(request, data):
         email = data['email'].strip()
         first_name = data['first_name'].strip()
         last_name = data['last_name'].strip()
-        mobile = data['mobile'].strip()
         
-        if password == '' or first_name == '' or last_name == '' or email == '' or mobile == '':
+        if password == '' or first_name == '' or last_name == '' or email == '':
             log.error(email + " : Sign up failed. Fill required fields.")
             raise Exception("Please fill in all the required fields")
         
@@ -97,7 +96,6 @@ def signup(request, data):
             user.password = md5.new(password).hexdigest()
             user.first_name = first_name
             user.last_name = last_name
-            user.mobile = mobile
             user.role = Role.objects.get(pk=2)
             user.save()
             
@@ -105,7 +103,6 @@ def signup(request, data):
                                   "email":user.email,
                                   "first_name":user.first_name,
                                   "last_name":user.last_name,
-                                  "mobile" : user.mobile,
                                   }
             
             log.info(user.email + " signed up")
