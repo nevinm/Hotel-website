@@ -10,4 +10,15 @@
 .login-wrapper{
 	margin: 0 auto;
   	border: 1px solid black;
+  	width: 400px;
+}
+.login-wrapper h3{
+	color: #6B6B6B;
+}
+.header-small{
+  border-bottom: 1px solid #D0D0D0;
+  height: 46px;
+  padding-left: 35px;
+  background-color: #f7f7f7;
+  color: #454545;
 }

@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/fontello.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <link rel="stylesheet" type="text/css" href="../css/user_entry.css">
 </head>
 
 <body>
@@ -65,15 +65,28 @@
         </header>
         <div id="page-container">
             <div class='login-wrapper'>
-                <div class='login-header'>
-                    <form id='login' accept-charset='UTF-8'>
+                <div class="header-small">
+                        <h4>LOGIN</h4>
+                </div>
+                <div class="facebook-signup">
+                        <span class="signup-message">DON'T HAVE AN ACCOUNT?</span><span class="signup-link">SIGNUP</span>
+                        <div class="fb-login-button"></div>
+                </div>
+                <span class="or">OR</span>
+                <form id='login' accept-charset='UTF-8'>
+                    <div class="username-wrapper">
                         <label for='username'>UserName:</label>
                         <input type='text' name='username' id='username' maxlength="50" />
+                    </div>
+                    <div class='password-wrapper'>
                         <label for='password'>Password:</label>
                         <input type='password' name='password' id='password' maxlength="50" />
+                    </div>
+                    <span class='forgot-password'>Forgot your password?</span>
+                    <div class=='login-button'>
                         <button type='button' name='Submit'>Submit</button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
