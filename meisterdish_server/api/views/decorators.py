@@ -12,7 +12,7 @@ def check_input(method):
                 req = json_request(request)
                 if req is not None:
                     log.info('API : '+func.__name__+', Input: '+str(req))
-                    if func.__name__ not in ['login','signup', 'forgot_password', 'logout', 'reset_password']:
+                    if func.__name__ not in ['login','signup', 'forgot_password', 'logout', 'reset_password', 'verify_user']:
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
                         session = SessionStore(session_key=session_key)
                         if session and 'user' in session :
@@ -39,10 +39,12 @@ def check_input(method):
 
 def json_request(request):
     if (request.method == 'GET'):
-        req = request.GET.get('data')
+        req = request.GET
+        if not req:
+            req='{"a":"b"}'
     else:
         req = request.body
-
+    
     if (req):
         try:
             return simplejson.loads(req, "ISO-8859-1")

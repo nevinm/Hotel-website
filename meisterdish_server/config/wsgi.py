@@ -1,6 +1,6 @@
 import os, sys, site
 
-VIRTUAL_ENV_PATH = ['/home/meisterdish/env/meisterdish/lib/python2.7/site-packages']
+VIRTUAL_ENV_PATH = ['/home/user/env/meisterdish/lib/python2.7/site-packages']
 prev_sys_path = list(sys.path)
 # Add each new site-packages directory.
 for directory in VIRTUAL_ENV_PATH:
@@ -15,7 +15,7 @@ for item in list(sys.path):
 sys.path[:0] = new_sys_path
 
 
-path = '/home/meisterdish/public_html/meisterdish/meisterdish_server/'
+path = '/home/user/python/meisterdish/meisterdish_server/'
 if path not in sys.path:
     sys.path.append(path)
 

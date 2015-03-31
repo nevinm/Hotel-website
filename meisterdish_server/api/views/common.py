@@ -28,7 +28,7 @@ def login(request, data):
             raise Exception("Invalid email or password")
         
         try:
-            user = User.objects.get(email=username)
+            user = User.objects.get(role__id=2, email=username)
             if not user.is_active:
                 return json_response({"status":-1, "message":"The user is not active. Please activate the account using the link from verification email."})
 
@@ -98,6 +98,7 @@ def signup(request, data):
             user.first_name = first_name
             user.last_name = last_name
             user.mobile = mobile
+            user.role = Role.objects.get(pk=2)
             user.save()
             
             user_dic = {"id":user.id,
@@ -153,9 +154,8 @@ def send_user_verification_mail(user):
 
 @check_input('GET')
 def verify_user(request, data, token):
-    return HttpResponse(token)
     try:
-        token = data['token'].strip()
+        token = token.strip()
         
         user = User.objects.get(user_verify_token=token)
         
@@ -164,7 +164,7 @@ def verify_user(request, data, token):
         user.save()
         
         log.info("Password reset for user "+user.email)
-        return json_response({"status":1, "message":"The user has been activated."})
+        return HttpResponseRediredct(request.META['HTTP_HOST'] + "/login.html?verify=true")
     
     except KeyError as field:
         log.error("Reset password request missing "+field.message)
