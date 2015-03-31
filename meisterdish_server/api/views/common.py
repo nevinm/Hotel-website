@@ -64,7 +64,7 @@ def login(request, data):
 
 @check_input('POST')
 def logout(request, data):
-    if 'session_key' not in data:
+    if 'HTTP_SESSION_KEY' not in request.META:
         log.error("API:logout, Invalid session.")
         response = {'status': -1, "message": "Invalid session."}
     else:
@@ -240,7 +240,7 @@ def reset_password(request, data):
 @check_input('POST')
 def change_password(request, data):
     try:
-        session = SessionStore(session_key=data['session_key'])
+        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
         user = User.objects.get(pk=session['user']['id'])
         
         user_id = data['user_id'].strip()
