@@ -23,12 +23,20 @@ def login(request, data):
         password = data['password'].strip()
         remember = str(data['remember']).strip()
         
+        is_admin = 0
+        if 'is_admin' in data:
+            is_admin = data['is_admin']
+        
         if email == '' or password == '':
             log.error("Empty email or password.")
             raise Exception("Invalid email or password")
         
         try:
-            user = User.objects.get(role__id=2, email=email)
+            if is_admin == 1:
+                user = User.objects.get(email=email, role__id=1)
+            else:
+                user = User.objects.get(email=email, role__id=2)
+                
             if not user.is_active:
                 return json_response({"status":-1, "message":"The user is not active. Please activate the account using the link from verification email."})
 
@@ -38,6 +46,7 @@ def login(request, data):
                                   "email":user.email,
                                   "first_name":user.first_name,
                                   "last_name":user.last_name,
+                                  "role" : user.role.id,
                                   }
                 
                 session = SessionStore()
@@ -165,13 +174,15 @@ def verify_user(request, data, token):
     
     except KeyError as field:
         log.error("Reset password request missing "+field.message)
-        return json_response({"status":-1, "message":"Invalid input"})
+        return HttpResponseRediredct(request.META['HTTP_HOST'] + "/login.html?verify=false")
+
     except User.DoesNotExist:
         log.error("Reset password : No user found with given token")
-        return json_response({"status":-1, "message":"Invalid token"})
+        return HttpResponseRediredct(request.META['HTTP_HOST'] + "/login.html?verify=false")
+
     except Exception as e:
         log.error("Validate token : Exception : "+e.message)
-        return json_response({"status":-1, "message":"Failed to verify user. Please try again later."})
+        return HttpResponseRediredct(request.META['HTTP_HOST'] + "/login.html?verify=false")
 
 @check_input('POST')
 def forgot_password(request, data):
