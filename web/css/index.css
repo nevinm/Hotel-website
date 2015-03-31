@@ -80,9 +80,22 @@ SLIDER
 	background-color: #f1f1f1;
 	min-height: 100%;
 }
+#fullpage{
+	position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+}
 #fullpage img{
-	float: left;
-	width: 100%;
+	position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  min-width: 50%;
+  min-height: 50%;
 }
 #slide1 .slide-description{
 	  position: absolute;
@@ -114,6 +127,22 @@ SLIDER
     margin-right: 5px;
     color: #9B9B9B;
 }
-
+/*.slide{
+	position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+}
+.slide img{
+	position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  min-width: 50%;
+  min-height: 50%;
+}*/
 
 

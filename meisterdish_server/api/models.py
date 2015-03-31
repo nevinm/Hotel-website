@@ -22,8 +22,9 @@ years = [(y,y) for y in range(2000, cy+10)]
 class Role(models.Model):
     name = models.CharField(max_length=20)
     
-    def __init__(self):
+    def __unicode__(self):
         return self.name
+    
 class State(models.Model):
     name = models.CharField(max_length=30)
     state_code = models.CharField(max_length=3, unique=True)
@@ -48,7 +49,6 @@ class User(models.Model):
     email = models.EmailField(max_length=30, unique=True)
     mobile = models.CharField(max_length=15, null=True)
     profile_image = models.CharField(max_length=50, null=True)
-    primary_address = models.ForeignKey('Address', related_name="primary_address", null=True)
 
     user_verify_token = models.CharField(max_length=20, null=True, default="")
     password_reset_token = models.CharField(max_length=20, null=True, default="")
@@ -67,12 +67,12 @@ class User(models.Model):
         super(User, self).save(*args, **kwargs)
         
     def __unicode__(self):
-        return self.username
+        return self.email
 
 class Address(models.Model):
     user = models.ForeignKey(User, related_name="user_address")
     name = models.CharField(max_length=50)
-    is_business = models.BooleanField(default=False)
+    is_primary = models.BooleanField(default=False)
     street = models.CharField(max_length=50)
     building = models.CharField(max_length=50)
     city = models.ForeignKey(City)
@@ -80,7 +80,7 @@ class Address(models.Model):
     phone = models.CharField(max_length=15)
 
     def __unicode__(self):
-        return self.user.username + " : " + self.name
+        return self.user.email + " : " + self.name
     
 
 """
@@ -92,7 +92,7 @@ class CreditCardDetails(models.Model):
     expiry_year = models.CharField(choices=years)
 
     def __unicode__(self):
-        return self.user.username + " : " + self.card_no[-4:]
+        return self.user.email + " : " + self.card_no[-4:]
 """
 
 class Category(models.Model):
@@ -116,11 +116,6 @@ class Nutrient(models.Model):
         return self.name
     
 class Ingredient(models.Model):
-    name = models.CharField(max_length=20)
-    def __unicode__(self):
-        return self.name
-    
-class PreRequisite(models.Model):
     name = models.CharField(max_length=20)
     def __unicode__(self):
         return self.name
@@ -170,21 +165,21 @@ class MealIngredient(models.Model):
     
     def __unicode__(self):
         return self.meal.name + " - " + self.ingredient.name
-    
-class MealPreRequisite(models.Model):
-    meal = models.ForeignKey(Meal)
-    prerequisite = models.ForeignKey(PreRequisite)
-    content = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
-    unit = models.CharField(max_length=10)
-    
-    def __unicode__(self):
-        return self.meal.name + " - " + self.prerequisite.name
         
 class Payment(models.Model):
     methods = PAYMENT_METHODS
     payment_type = models.CharField(choices=methods, max_length=2)
-    transaction_id = models.CharField(max_length=35)
+    data = models.TextField(max_length=1024, null=True)
+    status = models.BooleanField(default=False)
+    created = models.DateTimeField(null=True)
+    updated = models.DateTimeField(null=True)
     
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = datetime.datetime.now()
+        self.updated = datetime.datetime.now()
+        super(Payment, self).save(*args, **kwargs)
+        
 class Cart(models.Model):
     user = models.ForeignKey(User)
 
@@ -214,6 +209,9 @@ class Order(models.Model):
                       (1, "Order placed, but not delivered."),
                       (2, "Delivered"),
                       )
+    
+    status = models.BooleanField(default=True)
+    
     created = models.DateTimeField(null=True)
     updated = models.DateTimeField(null=True)
     
@@ -229,7 +227,7 @@ class GiftCard(models.Model):
     credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     
     def __unicode__(self):
-        return self.user.username + " : " + self.code
+        return self.user.email + " : " + self.code
 
 class GiftCardRedemption(models.Model):
     gift_card = models.ForeignKey(GiftCard, related_name="redemption")

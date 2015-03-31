@@ -48,5 +48,22 @@ function onEndAjaxRequest() {
     // e.g. hide spinner
 }
 
-
+//How to use the ajax reusable component
+ // var callback = {
+ //      success: function(data, textStatus) {
+ //            debugger;         
+ //      },
+ //      failure: function(XMLHttpRequest, textStatus, errorThrown) {
+ //         alert('Error making AJAX call: ' + XMLHttpRequest.statusText + ' (' + XMLHttpRequest.status + ')');
+ //      }
+ //   }
+ 
+ //   function makeAjaxCall() {
+ //      url='http://meisterdish.qburst.com/backend/api/logout/';
+ //      data={
+ //         "session_key": "z1vmorqut58cotzgrrmjadwjmeuhyvht"
+ //      };
+ //      var ajaxHttpSender = new AjaxHttpSender();
+ //      ajaxHttpSender.sendPost(url, callback);
+ //   }
 

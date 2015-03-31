@@ -21,14 +21,14 @@ def login(request, data):
     try:
         email = data['username'].strip()
         password = data['password'].strip()
-        remember = data['remember'].strip()
+        remember = str(data['remember']).strip()
         
         if email == '' or password == '':
             log.error("Empty email or password.")
             raise Exception("Invalid email or password")
         
         try:
-            user = User.objects.get(email=username)
+            user = User.objects.get(role__id=2, email=email)
             if not user.is_active:
                 return json_response({"status":-1, "message":"The user is not active. Please activate the account using the link from verification email."})
 
@@ -50,21 +50,21 @@ def login(request, data):
                 log.info(email+" logged in ..")
                 return json_response({"status":1, "message": "Logged in succesfully", "user":user_dic, "session_key":session.session_key})
             else:
-                log.error("Login: Invalid email/password combination : "+username)
+                log.error("Login: Invalid email/password combination")
                 raise Exception("Invalid email/password combination")
         except Exception as e:
-            log.error(username + " : Login  : "+str(e))
+            log.error("Login  : "+str(e))
             raise Exception("An error has occurred. Please try again later.")
     except KeyError as e:
-        log.error("Login : " + email + " : " + str(e) + " missing" )
-        return json_response({"status":-1, "message":str(e) + " is missing."})
+        log.error("Login :" + str(e) + " missing" )
+        return json_response({"status":-1, "message":"Please fill all the fields."})
     except Exception as e:
-        log.error("Login : " + email + " : " + str(e))
+        log.error("Login : " + str(e))
         return json_response({"status":-1, "message":e.message})
 
 @check_input('POST')
 def logout(request, data):
-    if 'session_key' not in data:
+    if 'HTTP_SESSION_KEY' not in request.META:
         log.error("API:logout, Invalid session.")
         response = {'status': -1, "message": "Invalid session."}
     else:
@@ -98,6 +98,7 @@ def signup(request, data):
             user.first_name = first_name
             user.last_name = last_name
             user.mobile = mobile
+            user.role = Role.objects.get(pk=2)
             user.save()
             
             user_dic = {"id":user.id,
@@ -132,7 +133,7 @@ def send_user_verification_mail(user):
         from libraries import mail
     
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
-        link = settings.BASE_DIR + 'verify_user/'+token+"/"
+        link = settings.BASE_URL + 'verify_user/'+token+"/"
         user.user_verify_token = token
         user.save()
         
@@ -140,7 +141,7 @@ def send_user_verification_mail(user):
                "email" : user.email,
                "link" : link,
                "name" : user.last_name + " " + user.first_name,
-               "username" : email,
+               "username" : user.email,
                }
         msg = render_to_string('verify_user_email_template.html', dic)
     
@@ -151,10 +152,10 @@ def send_user_verification_mail(user):
         return False
     return True
 
-@check_input('POST')
-def verify_user(request, data):
+@check_input('GET')
+def verify_user(request, data, token):
     try:
-        token = data['token'].strip()
+        token = token.strip()
         
         user = User.objects.get(user_verify_token=token)
         
@@ -163,7 +164,7 @@ def verify_user(request, data):
         user.save()
         
         log.info("Password reset for user "+user.email)
-        return json_response({"status":1, "message":"The user has been activated."})
+        return HttpResponseRediredct(request.META['HTTP_HOST'] + "/login.html?verify=true")
     
     except KeyError as field:
         log.error("Reset password request missing "+field.message)
@@ -178,7 +179,7 @@ def verify_user(request, data):
 @check_input('POST')
 def forgot_password(request, data):
     try:
-        email = data['email']
+        email = data['email'].strip()
         
         user = User.objects.get(email=email)
         
@@ -186,7 +187,7 @@ def forgot_password(request, data):
         from libraries import mail
         
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
-        link = settings.BASE_DIR + 'forgot_password/'+token+"/"
+        link = settings.BASE_URL + 'forgot_password/'+token+"/"
         user.password_reset_token = token
         user.save()
         
@@ -194,7 +195,7 @@ def forgot_password(request, data):
                "email" : email,
                "link" : link,
                "name" : user.last_name + " " + user.first_name,
-               "username" : email,
+               "username" : user.email,
                }
         msg = render_to_string('forgot_password_email_template.html', dic)
 
@@ -240,7 +241,7 @@ def reset_password(request, data):
 @check_input('POST')
 def change_password(request, data):
     try:
-        session = SessionStore(session_key=data['session_key'])
+        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
         user = User.objects.get(pk=session['user']['id'])
         
         user_id = data['user_id'].strip()
@@ -266,8 +267,9 @@ def change_password(request, data):
 @check_input('POST')
 def get_profile(request, data):
     try:
-        user_id = data['user_id']
-        user = User.objects.get(pk=user_id)
+        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
+        user = User.objects.get(pk=session['user']['id'])
+        
         if not user.is_active:
             raise Exception("The user is not active.")
         
@@ -308,20 +310,22 @@ def get_profile(request, data):
 @check_input('POST')
 def edit_profile(request, data):
     try:
-        user_id = data["user_id"]
-        user = User.objects.get(pk=user_id)
+        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
+        user = User.objects.get(pk=session['user']['id'])
         
-        first_name = data['first_name'].strip()
-        last_name = data['last_name'].strip()
-        mobile = data['mobile'].strip()
+        if 'first_name' in data:
+            user.first_name = data['first_name'].strip()
+        
+        if 'last_name' in data:    
+            user.last_name = data['last_name'].strip()
+        
+        if 'mobile' in data:
+            user.mobile = data['mobile'].strip()
         
         sms = False
         if "sms_notification" in data and data['sms_notification']=='1':
             sms = True
-            
-        user.first_name = first_name
-        user.last_name = last_name
-        user.mobile = mobile
+        
         user.need_sms_notification = sms
         user.save()
         
