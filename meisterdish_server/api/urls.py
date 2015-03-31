@@ -2,8 +2,8 @@ from django.conf.urls import patterns, include, url
 from api import views
 urlpatterns = patterns('',
     url(r'^$', views.home, name='home'),
+    url(r'^cms/', include('api.cms_urls')),
     url(r'^signup/$', views.signup, name='signup'),
-    url(r'^verify_user/(?P<token>[A-Za-z\d]+)/$', views.verify_user, name='verify_user'),
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^forgot_password/$', views.forgot_password, name='forgot_password'),

@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from api import views
 
 urlpatterns = patterns('',
     # Examples:
@@ -8,4 +9,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include('api.urls')),
+    url(r'^verify_user/(?P<token>[A-Za-z\d]+)/$', views.verify_user, name='verify_user'),
 )
