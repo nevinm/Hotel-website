@@ -141,7 +141,7 @@ def send_user_verification_mail(user):
                "email" : user.email,
                "link" : link,
                "name" : user.last_name + " " + user.first_name,
-               "username" : email,
+               "username" : user.email,
                }
         msg = render_to_string('verify_user_email_template.html', dic)
     
@@ -267,8 +267,9 @@ def change_password(request, data):
 @check_input('POST')
 def get_profile(request, data):
     try:
-        user_id = data['user_id']
-        user = User.objects.get(pk=user_id)
+        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
+        user = User.objects.get(pk=session['user']['id'])
+        
         if not user.is_active:
             raise Exception("The user is not active.")
         
@@ -309,20 +310,22 @@ def get_profile(request, data):
 @check_input('POST')
 def edit_profile(request, data):
     try:
-        user_id = data["user_id"]
-        user = User.objects.get(pk=user_id)
+        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
+        user = User.objects.get(pk=session['user']['id'])
         
-        first_name = data['first_name'].strip()
-        last_name = data['last_name'].strip()
-        mobile = data['mobile'].strip()
+        if 'first_name' in data:
+            user.first_name = data['first_name'].strip()
+        
+        if 'last_name' in data:    
+            user.last_name = data['last_name'].strip()
+        
+        if 'mobile' in data:
+            user.mobile = data['mobile'].strip()
         
         sms = False
         if "sms_notification" in data and data['sms_notification']=='1':
             sms = True
-            
-        user.first_name = first_name
-        user.last_name = last_name
-        user.mobile = mobile
+        
         user.need_sms_notification = sms
         user.save()
         
