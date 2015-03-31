@@ -13,5 +13,3 @@ urlpatterns = patterns('',
     url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
     
 )
-
-url(r'^verify_user//', ),
