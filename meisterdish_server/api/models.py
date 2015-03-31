@@ -22,8 +22,9 @@ years = [(y,y) for y in range(2000, cy+10)]
 class Role(models.Model):
     name = models.CharField(max_length=20)
     
-    def __init__(self):
+    def __unicode__(self):
         return self.name
+    
 class State(models.Model):
     name = models.CharField(max_length=30)
     state_code = models.CharField(max_length=3, unique=True)

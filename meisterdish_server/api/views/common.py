@@ -132,7 +132,7 @@ def send_user_verification_mail(user):
         from libraries import mail
     
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
-        link = settings.BASE_DIR + 'verify_user/'+token+"/"
+        link = settings.BASE_URL + 'verify_user/'+token+"/"
         user.user_verify_token = token
         user.save()
         
@@ -151,8 +151,9 @@ def send_user_verification_mail(user):
         return False
     return True
 
-@check_input('POST')
-def verify_user(request, data):
+@check_input('GET')
+def verify_user(request, data, token):
+    return HttpResponse(token)
     try:
         token = data['token'].strip()
         
@@ -186,7 +187,7 @@ def forgot_password(request, data):
         from libraries import mail
         
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
-        link = settings.BASE_DIR + 'forgot_password/'+token+"/"
+        link = settings.BASE_URL + 'forgot_password/'+token+"/"
         user.password_reset_token = token
         user.save()
         
