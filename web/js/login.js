@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    var baseURL = 'http://meisterdish.qburst.com/backend/api/';
 
     //Login process
     var loginCallback = {
@@ -14,6 +13,7 @@ $(document).ready(function() {
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
 
+    //login form submit
     $("#login button").on('click', function(){
         loggingIn();
     });

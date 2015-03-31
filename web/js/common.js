@@ -1,3 +1,4 @@
+var baseURL = 'http://meisterdish.qburst.com/backend/api/';
 //If already logged in
 var $userentry=$('.user-entry');
 function checkLoggedIn(){
