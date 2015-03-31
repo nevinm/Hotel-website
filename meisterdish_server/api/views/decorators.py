@@ -13,7 +13,7 @@ def check_input(method):
                 if req is not None:
                     log.info('API : '+func.__name__+', Input: '+str(req))
                     if func.__name__ not in ['login','signup', 'forgot_password', 'logout', 'reset_password']:
-                        session_key = req.get('HTTP_SESSION_KEY', None)
+                        session_key = request.META.get('HTTP_SESSION_KEY', None)
                         session = SessionStore(session_key=session_key)
                         if session and 'user' in session :
                             if "user_id" in req and int(req['user_id'] != session['user']["id"]):
