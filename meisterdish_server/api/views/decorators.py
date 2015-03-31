@@ -8,7 +8,7 @@ log = logging.getLogger('api')
 def check_input(method):
     def wrapper(func):
         def inner_decorator(request, *args, **kwargs):
-            if request.method == method:
+            if request.method.upper() == method:
                 req = json_request(request)
                 if req is not None:
                     log.info('API : '+func.__name__+', Input: '+str(req))
