@@ -119,11 +119,6 @@ class Ingredient(models.Model):
     name = models.CharField(max_length=20)
     def __unicode__(self):
         return self.name
-    
-class PreRequisite(models.Model):
-    name = models.CharField(max_length=20)
-    def __unicode__(self):
-        return self.name
 
 class Meal(models.Model):
     name = models.CharField(max_length=30)
@@ -170,15 +165,6 @@ class MealIngredient(models.Model):
     
     def __unicode__(self):
         return self.meal.name + " - " + self.ingredient.name
-    
-class MealPreRequisite(models.Model):
-    meal = models.ForeignKey(Meal)
-    prerequisite = models.ForeignKey(PreRequisite)
-    content = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
-    unit = models.CharField(max_length=10)
-    
-    def __unicode__(self):
-        return self.meal.name + " - " + self.prerequisite.name
         
 class Payment(models.Model):
     methods = PAYMENT_METHODS
@@ -214,6 +200,8 @@ class Order(models.Model):
                       (1, "Order placed, but not delivered."),
                       (2, "Delivered"),
                       )
+    status = models.BooleanField(default=True)
+    
     created = models.DateTimeField(null=True)
     updated = models.DateTimeField(null=True)
     
