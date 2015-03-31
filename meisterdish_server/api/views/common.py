@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from django.contrib.sessions.backends.db import SessionStore
 from api.models import *
 import json as simplejson
