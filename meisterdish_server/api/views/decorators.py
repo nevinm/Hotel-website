@@ -8,13 +8,13 @@ log = logging.getLogger('api')
 def check_input(method):
     def wrapper(func):
         def inner_decorator(request, *args, **kwargs):
-            if request.method.upper() == method:
+            if request.method.upper() == method.upper():
                 req = json_request(request)
                 if req is not None:
                     log.info('API : '+func.__name__+', Input: '+str(req))
                     if func.__name__ not in ['login','signup', 'forgot_password', 'logout', 'reset_password']:
-                        session_key = req.get('session_key', None)
-                        #return func(req, *args, **kwargs) #Nazz
+                        #session_key = req.get('session_key', None)
+                        session_key = request.META.get('session_key', None)
                         session = SessionStore(session_key=session_key)
                         if session and 'user' in session :
                             if "user_id" in req and int(req['user_id'] != session['user']["id"]):

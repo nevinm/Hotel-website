@@ -48,7 +48,6 @@ class User(models.Model):
     email = models.EmailField(max_length=30, unique=True)
     mobile = models.CharField(max_length=15, null=True)
     profile_image = models.CharField(max_length=50, null=True)
-    primary_address = models.ForeignKey('Address', related_name="primary_address", null=True)
 
     user_verify_token = models.CharField(max_length=20, null=True, default="")
     password_reset_token = models.CharField(max_length=20, null=True, default="")
@@ -72,7 +71,7 @@ class User(models.Model):
 class Address(models.Model):
     user = models.ForeignKey(User, related_name="user_address")
     name = models.CharField(max_length=50)
-    is_business = models.BooleanField(default=False)
+    is_primary = models.BooleanField(default=False)
     street = models.CharField(max_length=50)
     building = models.CharField(max_length=50)
     city = models.ForeignKey(City)
@@ -169,8 +168,17 @@ class MealIngredient(models.Model):
 class Payment(models.Model):
     methods = PAYMENT_METHODS
     payment_type = models.CharField(choices=methods, max_length=2)
-    transaction_id = models.CharField(max_length=35)
+    data = models.TextField(max_length=1024, null=True)
+    status = models.BooleanField(default=False)
+    created = models.DateTimeField(null=True)
+    updated = models.DateTimeField(null=True)
     
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = datetime.datetime.now()
+        self.updated = datetime.datetime.now()
+        super(Payment, self).save(*args, **kwargs)
+        
 class Cart(models.Model):
     user = models.ForeignKey(User)
 
@@ -200,6 +208,7 @@ class Order(models.Model):
                       (1, "Order placed, but not delivered."),
                       (2, "Delivered"),
                       )
+    
     status = models.BooleanField(default=True)
     
     created = models.DateTimeField(null=True)
