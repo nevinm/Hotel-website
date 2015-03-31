@@ -285,7 +285,9 @@ html,body{
 .bold{
 	font-weight: bold;
 }
-
+.hide{
+	visibility: hidden;
+}
 /*==============================*\
 			&HEADER
 \*==============================*/
@@ -319,6 +321,7 @@ html,body{
 	font-size: 13px;
 	font-family: 'BrandonGrotesque-Light';
 	padding-right:10px; 
+	text-transform: uppercase;
 }
 #menu li a{
 	margin: 0 20px 0 0;
@@ -353,7 +356,7 @@ span.icon-menu{
 	line-height: 9px;
 	font-size: 15px;
 }
-.topPadding{
+.menuPadding{
 	padding-top: 6px;
 }
 
