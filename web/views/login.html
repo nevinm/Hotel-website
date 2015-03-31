@@ -7,19 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-     <title>Meisterdish</title>
-
+    <title>Meisterdish - Login</title>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/fontello.css">
-    <link rel="stylesheet" type="text/css" href="../css/jquery.fullPage.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/account.css">
-
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
 </head>
 
 <body>
-    <div id="account-mainWrapper">
+    <div id="login-wrapper">
         <header id="header">
             <div class="contentArea">
                 <a href="../index.html"><img class="pullLeft logo" src="../images/logo.png" alt="MeisterDish"></a>
@@ -28,7 +24,7 @@
                     <img src="../images/cart_icon.png">
                 </div>
                 <span class="icon-menu pullRight"></span>
-                <div class="navMenu"style="display:none">
+                <div class="navMenu" style="display:none">
                     <ul>
                         <li>
                             <a href="menu.html">THE MENU</a>
@@ -39,7 +35,7 @@
                         <li>
                             <a href="">PARTNERS</a>
                         </li>
-                        <li >
+                        <li>
                             <a href="/">LOG IN</a>
                         </li>
                         <li>
@@ -47,7 +43,7 @@
                         </li>
                     </ul>
                 </div>
-                <ul id="menu" class="pullRight" style="padding-top:6px">
+                <ul id="menu" class="pullRight">
                     <li>
                         <a href="menu.html">THE MENU</a>
                     </li>
@@ -61,47 +57,27 @@
                         <a href="">JOHN SMITH</a>
                     </li>
                 </ul>
-            </div>   
+            </div>
         </header>
         <div id="page-container">
-            <div class="accountNav">
-                <div class="logout body-text-bold">
-                    <a id='logout' href="">LOG OUT</a>
+            <div class='login-wrapper'>
+                <div class='login-header'>
+                    <form id='login' accept-charset='UTF-8'>
+                        <label for='username'>UserName:</label>
+                        <input type='text' name='username' id='username' maxlength="50" />
+                        <label for='password'>Password:</label>
+                        <input type='password' name='password' id='password' maxlength="50" />
+                        <button type='button' name='Submit'>Submit</button>
+                    </form>
                 </div>
             </div>
-            <div class="account-wrapper">
-            <div class="account-container">
-                <div class="account-header">
-                    <h2>JOHN SMITH'S ACCOUNT</h2>
-                    <div class="body-text-small">
-                        ACCOUNT CREDIT: $0.00
-                    </div>
-                </div>
-                <div class="account-settings">
-                    <h3>ACCOUNT SETTINGS</h3>
-                    <div class="content">
-                        <ul class="sub-content1 body-text-small">
-                            <li>CONTACT</li>
-                            <li>EMAIL</li>
-                            <li>PASSWORD</li>
-                            <li>DELIVERY ADDRESS</li>
-                        </ul>
-                        <ul class="sub-content2 body-text-small">
-                            <li>PAYMENT METHODS</li>
-                            <li>GIFT CARDS</li>
-                            <li>ORDER HISTORY</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            </div>     
         </div>
     </div>
-	<script type="text/javascript" src='../js/jquery.min.js'></script>
-	<script type="text/javascript" src='../js/jquery.fullPage.min.js'></script>
-	<script type="text/javascript" src='../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../js/jquery.min.js'></script>
+    <script type="text/javascript" src='../js/jquery.fullPage.min.js'></script>
     <script type="text/javascript" src='../js/common.js'></script>
-    <script type="text/javascript" src='../js/account.js'></script>
+    <script type="text/javascript" src='../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../js/login.js'></script>
 </body>
 
 </html>
