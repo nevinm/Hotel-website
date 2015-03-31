@@ -23,6 +23,7 @@ AjaxHttpSender.prototype.sendPost = function(url, data, callback) {
    $.ajax({
       url: url,
       type: 'POST',
+      // header: header,
       data: data,
       beforeSend: function() {
          onStartAjaxRequest();
@@ -48,17 +49,4 @@ function onEndAjaxRequest() {
 }
 
 
-//How to use the ajax reusable component
- var callback = {
-      success: function(data, textStatus) {
-         $('#content').html(data);
-      },
-      failure: function(XMLHttpRequest, textStatus, errorThrown) {
-         alert('Error making AJAX call: ' + XMLHttpRequest.statusText + ' (' + XMLHttpRequest.status + ')');
-      }
-   }
- 
-   function makeAjaxCall() {
-      var ajaxHttpSender = new AjaxHttpSender();
-      ajaxHttpSender.sendGet(url, callback);
-   }
+
