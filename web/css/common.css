@@ -312,7 +312,7 @@ html,body{
 }
 #menu{
 	margin: 0;
-	height: 45px;
+	height: 45px; 
 }
 #menu li{
 	display: inline-block;
@@ -346,7 +346,7 @@ span.icon-menu{
 	top: -6px;
 	right: -6px;
 	color: white;
-	background-color: #c7c7c7;
+	background-color: #A9D77B;
 	width: 14px;
 	height: 14px;
 	padding: 3px;

@@ -49,16 +49,33 @@ function onEndAjaxRequest() {
 
 
 //How to use the ajax reusable component
- var callback = {
-      success: function(data, textStatus) {
-         $('#content').html(data);
-      },
-      failure: function(XMLHttpRequest, textStatus, errorThrown) {
-         alert('Error making AJAX call: ' + XMLHttpRequest.statusText + ' (' + XMLHttpRequest.status + ')');
-      }
-   }
+ // var callback = {
+ //      success: function(data, textStatus) {
+ //            debugger;         
+ //      },
+ //      failure: function(XMLHttpRequest, textStatus, errorThrown) {
+ //         alert('Error making AJAX call: ' + XMLHttpRequest.statusText + ' (' + XMLHttpRequest.status + ')');
+ //      }
+ //   }
  
-   function makeAjaxCall() {
-      var ajaxHttpSender = new AjaxHttpSender();
-      ajaxHttpSender.sendGet(url, callback);
-   }
+ //   function makeAjaxCall() {
+ //      url='http://meisterdish.qburst.com/backend/api/logout/';
+ //      data={
+ //         "session_key": "z1vmorqut58cotzgrrmjadwjmeuhyvht"
+ //      };
+ //      var ajaxHttpSender = new AjaxHttpSender();
+ //      ajaxHttpSender.sendPost(url, callback);
+ //   }
+
+var data={
+         "session_key": "z1vmorqut58cotzgrrmjadwjmeuhyvht"
+      };
+ $.ajax({
+  type: "POST",
+  url: 'http://meisterdish.qburst.com/backend/api/logout/',
+  data: data,
+  success: function(data){
+   console.log(data);
+   },
+   dataType: 'jsonp'
+});
