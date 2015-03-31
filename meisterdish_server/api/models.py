@@ -67,7 +67,7 @@ class User(models.Model):
         super(User, self).save(*args, **kwargs)
         
     def __unicode__(self):
-        return self.username
+        return self.email
 
 class Address(models.Model):
     user = models.ForeignKey(User, related_name="user_address")
@@ -80,7 +80,7 @@ class Address(models.Model):
     phone = models.CharField(max_length=15)
 
     def __unicode__(self):
-        return self.user.username + " : " + self.name
+        return self.user.email + " : " + self.name
     
 
 """
@@ -92,7 +92,7 @@ class CreditCardDetails(models.Model):
     expiry_year = models.CharField(choices=years)
 
     def __unicode__(self):
-        return self.user.username + " : " + self.card_no[-4:]
+        return self.user.email + " : " + self.card_no[-4:]
 """
 
 class Category(models.Model):
@@ -227,7 +227,7 @@ class GiftCard(models.Model):
     credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     
     def __unicode__(self):
-        return self.user.username + " : " + self.code
+        return self.user.email + " : " + self.code
 
 class GiftCardRedemption(models.Model):
     gift_card = models.ForeignKey(GiftCard, related_name="redemption")
