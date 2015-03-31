@@ -79,17 +79,17 @@ ul.accordion-content li {
 	vertical-align: top;
 	padding-left: 10px;
 }
-p1{
+.order-head{
 	font-weight: bold;
 	color: #000;
 	float: left;
 	width: 100%;
 }
-p2{
+.order-content{
 	float: left;
 	padding-top: 15px;
 }
-p2 span{
+.order-content span{
 	width: 100%;
 	float: left;
 }
@@ -117,7 +117,7 @@ input.arrange{
   padding: 8px;
   background-color:#f1f1f1; 
 }
-input[type="text"]
+input[type="text"],input[type="email"],input[type="password"]
 {
     font-family:'ProximaNova-regular';
     color: #9B9B9B;
@@ -132,7 +132,7 @@ label{
   padding-top: 10px;
   padding-bottom: 30px;
 }
- input[type="checkbox"]{
+ .notify input[type="checkbox"]{
  	float: left;
  }
 /*==================================*\
@@ -169,6 +169,14 @@ span.body-text-small{
 .signup-wrapper{
 	width: 400px;
 }
+.signup-container{
+	background-color: #ffffff;
+	border: 1px solid #D0D0D0;
+	border-radius: 3px;
+	margin-top: 40px;
+	float: left;
+	width: 100%;
+}
 .header-small {
   border-bottom: 1px solid #D0D0D0;
   height: 46px;
@@ -192,7 +200,7 @@ span.or {
   font-family: 'BrandonGrotesque-Bold';
   padding-bottom: 30px;
 }
-form.signup-formContainer {
+form.signup-formcontainer {
   padding-left: 35px;
   width: 100%;
   float: left;
@@ -204,7 +212,7 @@ form.signup-formContainer {
   padding-right: 20px;
 }
 .email-wrapper {
-  width: 60%;
+   width: 65%;
   float: left;
   padding:10px 0px; 
 }
@@ -215,4 +223,40 @@ form.signup-formContainer {
 	width: 100%;
 	float: left;
 	padding: 50px 0px 20px 0px;
+}
+
+/*==================================*\
+			&RESET PASSWORD
+\*==================================*/
+.resetpassword-container{
+	background-color: #ffffff;
+	border: 1px solid #D0D0D0;
+	border-radius: 3px;
+	margin-top: 40px;
+	float: left;
+	width: 100%;
+}
+.resetpassword-form{
+	float: left;
+	width: 100%;
+	padding-top: 35px;
+}
+.resetpassword-container .content{
+	float: left;
+	padding: 35px 0px 35px 35px;
+}
+.reset-input{
+	width: 90%;
+}
+.reset-button{
+	width: 100%;
+	float: left;
+	padding-top: 35px;
+}
+span.heading {
+  font-family: 'BrandonGrotesque-bold';
+  font-size: 12px;
+}
+.content span.caption{
+	padding-top: 3px;
 }

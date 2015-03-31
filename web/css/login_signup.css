@@ -22,3 +22,100 @@
   background-color: #f7f7f7;
   color: #454545;
 }
+/*==================================*\
+      &SIGNUP
+\*==================================*/
+.signup-wrapper{
+  width: 400px;
+}
+.signup-container{
+  background-color: #ffffff;
+  border: 1px solid #D0D0D0;
+  border-radius: 3px;
+  margin-top: 40px;
+  float: left;
+  width: 100%;
+}
+.header-small {
+  border-bottom: 1px solid #D0D0D0;
+  height: 46px;
+  padding-left: 35px;
+  background-color: #f7f7f7;
+  color: #454545;
+}
+.facebook-signup{
+  font-family: 'BrandonGrotesque-Bold';
+  font-size: 12px;
+  padding: 30px 0 30px 35px;
+  color: #737475;
+}
+span.login-link {
+  color: #A9D77B;
+  padding-left: 10px;
+  }
+span.or {
+  color: #5A5555;
+  padding-left: 35px;
+  font-family: 'BrandonGrotesque-Bold';
+  padding-bottom: 30px;
+}
+form.signup-formcontainer {
+  padding-left: 35px;
+  width: 100%;
+  float: left;
+  padding-top: 30px;
+}
+.signup-input {
+  width: 164px;
+  float: left;
+  padding-right: 20px;
+}
+.email-wrapper {
+   width: 65%;
+  float: left;
+  padding:10px 0px; 
+}
+#signup-email,#signup-password{
+  width: 201px;
+}
+.login-button{
+  width: 100%;
+  float: left;
+  padding: 50px 0px 20px 0px;
+}
+
+/*==================================*\
+      &RESET PASSWORD
+\*==================================*/
+.resetpassword-container{
+  background-color: #ffffff;
+  border: 1px solid #D0D0D0;
+  border-radius: 3px;
+  margin-top: 40px;
+  float: left;
+  width: 100%;
+}
+.resetpassword-form{
+  float: left;
+  width: 100%;
+  padding-top: 35px;
+}
+.resetpassword-container .content{
+  float: left;
+  padding: 35px 0px 35px 35px;
+}
+.reset-input{
+  width: 90%;
+}
+.reset-button{
+  width: 100%;
+  float: left;
+  padding-top: 35px;
+}
+span.heading {
+  font-family: 'BrandonGrotesque-bold';
+  font-size: 12px;
+}
+.content span.caption{
+  padding-top: 3px;
+}
