@@ -21,14 +21,14 @@ def login(request, data):
     try:
         email = data['username'].strip()
         password = data['password'].strip()
-        remember = data['remember'].strip()
+        remember = str(data['remember']).strip()
         
         if email == '' or password == '':
             log.error("Empty email or password.")
             raise Exception("Invalid email or password")
         
         try:
-            user = User.objects.get(role__id=2, email=username)
+            user = User.objects.get(role__id=2, email=email)
             if not user.is_active:
                 return json_response({"status":-1, "message":"The user is not active. Please activate the account using the link from verification email."})
 
@@ -50,16 +50,16 @@ def login(request, data):
                 log.info(email+" logged in ..")
                 return json_response({"status":1, "message": "Logged in succesfully", "user":user_dic, "session_key":session.session_key})
             else:
-                log.error("Login: Invalid email/password combination : "+username)
+                log.error("Login: Invalid email/password combination")
                 raise Exception("Invalid email/password combination")
         except Exception as e:
-            log.error(username + " : Login  : "+str(e))
+            log.error("Login  : "+str(e))
             raise Exception("An error has occurred. Please try again later.")
     except KeyError as e:
-        log.error("Login : " + email + " : " + str(e) + " missing" )
-        return json_response({"status":-1, "message":str(e) + " is missing."})
+        log.error("Login :" + str(e) + " missing" )
+        return json_response({"status":-1, "message":"Please fill all the fields."})
     except Exception as e:
-        log.error("Login : " + email + " : " + str(e))
+        log.error("Login : " + str(e))
         return json_response({"status":-1, "message":e.message})
 
 @check_input('POST')
@@ -179,7 +179,7 @@ def verify_user(request, data, token):
 @check_input('POST')
 def forgot_password(request, data):
     try:
-        email = data['email']
+        email = data['email'].strip()
         
         user = User.objects.get(email=email)
         
@@ -195,7 +195,7 @@ def forgot_password(request, data):
                "email" : email,
                "link" : link,
                "name" : user.last_name + " " + user.first_name,
-               "username" : email,
+               "username" : user.email,
                }
         msg = render_to_string('forgot_password_email_template.html', dic)
 
