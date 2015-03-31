@@ -303,6 +303,7 @@ html,body{
 	border-left:10px solid #fff;
 	left: 0;
 	z-index: 999;
+	height: 73px;
 }
 .contentArea{
 	max-width: 980px;
@@ -311,11 +312,13 @@ html,body{
 }
 #menu{
 	margin: 0;
+	height: 45px;
 }
 #menu li{
 	display: inline-block;
 	font-size: 13px;
 	font-family: 'BrandonGrotesque-Light';
+	padding-right:10px; 
 }
 #menu li a{
 	margin: 0 20px 0 0;
@@ -349,6 +352,9 @@ span.icon-menu{
 	padding: 3px;
 	line-height: 9px;
 	font-size: 15px;
+}
+.topPadding{
+	padding-top: 6px;
 }
 
 /*==============================*\

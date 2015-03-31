@@ -105,7 +105,7 @@ form.form{
 	width: 60%;
 	padding-left: 20px;
 }
-.first-name,.last-name,.phone-num{
+.first-name,.last-name,.phone-num,.redeem{
 	width: 250px;
 	float: left;
 	padding: 20px;
@@ -148,4 +148,17 @@ span.body-text-small{
 }
 .notify span.body-text-small{
 	padding: 0;
+}
+
+/*==================================*\
+			&GIFTCARD PAGE
+\*==================================*/
+.giftcard-buttons {
+  float: left;
+  width: 100%;
+  padding: 20px 0px 100px 20px;
+}
+.redeem-button {
+  float: left;
+  padding-right: 35px;
 }
