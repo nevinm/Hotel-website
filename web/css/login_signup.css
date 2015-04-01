@@ -37,7 +37,9 @@
 .username-wrapper input, .password-wrapper input{
   width: 60%;
 }
-
+.fb-signupButton img{
+  
+}
 /*==================================*\
       &SIGNUP
 \*==================================*/
@@ -97,7 +99,7 @@ form.signup-formcontainer {
 .login-button{
   width: 100%;
   float: left;
-  padding: 50px 0px 20px 0px;
+  padding: 10px 0px 20px 0px;
 }
 
 /*==================================*\
