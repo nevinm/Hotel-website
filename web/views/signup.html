@@ -65,7 +65,7 @@
         </header>
         <div id="page-container">
             <div class="account-wrapper signup-wrapper">
-                <div class="account-container ">
+                <div class="signup-container">
                     <div class="header-small">
                         <h4>SIGN UP</h4>
                     </div>
@@ -74,27 +74,27 @@
                         <div class="fb-signupButton"></div>
                     </div>
                     <span class="or">OR</span>
-                    <form class="signup-formContainer">
+                    <form class="signup-formcontainer">
                         <div class="signup-input">
                             <label class="body-text-small">First Name</label>
-                            <input class="arrange" type="text" name="firstname"></input>
+                            <input class="arrange" type="text" name="firstname" id="signup-firstname"></input>
                         </div>
                         <div class="signup-input">
                             <label class="body-text-small">Last Name</label>
-                            <input class="arrange" type="text" name="lastname"></input>
+                            <input class="arrange" type="text" name="lastname" id="signup-lastname"></input>
                         </div>
                         <div class="email-wrapper">
                             <div class="signup-input">
                                 <label class="body-text-small" name="email">Email</label>
                                 <input class="arrange" type="email" id="signup-email"></input>
                             </div>
-                            <div class="signup-input" style="width:100%;">
+                            <div class="signup-input" style="width:100%;padding-top:10px">
                                 <label class="body-text-small" name="password">Password (Minimum 6 Characters)</label>
                                 <input class="arrange" type="password" id="signup-password"></input>
                             </div>
                         </div>
                         <div class="login-button">
-                            <a href="#" class="btn btn-large-primary medium-green">LOGIN</a>
+                            <a href="#" class="btn btn-large-primary medium-green" id="signup-button">SIGNUP</a>
                         </div>
                     </form>
                 </div>
@@ -105,6 +105,7 @@
 	<script type="text/javascript" src='../js/jquery.fullPage.min.js'></script>
 	<script type="text/javascript" src='../js/ajax_reusable.js'></script>
     <script type="text/javascript" src='../js/account.js'></script>
+    <script type="text/javascript" src='../js/signup.js'></script>
 </body>
 
 </html>

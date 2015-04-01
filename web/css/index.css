@@ -80,7 +80,7 @@ SLIDER
 	background-color: #f1f1f1;
 	min-height: 100%;
 }
-#fullpage{
+/*#fullpage{
 	position: fixed;
   top: -50%;
   left: -50%;
@@ -96,7 +96,7 @@ SLIDER
   margin: auto;
   min-width: 50%;
   min-height: 50%;
-}
+}*/
 #slide1 .slide-description{
 	  position: absolute;
 	  top: 33%;
