@@ -5,4 +5,6 @@ urlpatterns = patterns('',
     url(r'^get_categories/$', cms.get_categories, name='get_categories'),
     url(r'^add_category/$', cms.add_category, name='add_category'),
     url(r'^remove_category/$', cms.remove_category, name='remove_category'),
+    
+    url(r'^get_users/$', cms.get_users, name='get_users'),
 )

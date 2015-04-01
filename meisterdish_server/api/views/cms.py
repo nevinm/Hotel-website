@@ -66,6 +66,30 @@ def remove_category(request, data):
         log.error("Failed to remove category : "+e.message)
         return json_response({"status":-1, "message":"Failed to remove category"})
 
+@check_input('POST', True)
+def get_users(request, data):
+    try:
+        limit = settings.PER_PAGE
+        
+        user_list = []
+        users = User.objects.all()
+        count = users.count()
+        for user in users:
+            user_list.append({
+                              "id" : user.id,
+                              "name" : (user.last_name + " "+ user.first_name).title(),
+                              "email" : user.email,
+                              "mobile" : user.mobile,
+                              "profile_image" : settings.MEDIA_URL + user.profile_image,
+                              "is_admin":True if user.role.id == 1 else False,
+                              "credits" : user.credits,
+                              })
+        
+        return json_response({"status":1, "user_list":user_list})
+    except Exception as e:
+        log.error("User list "+ e.message)
+        return custom_error("Failed to retrieve user list.")
+    
 def json_response(response, wrap=False):
     if (wrap == True):
         final_response = {"data" : response}

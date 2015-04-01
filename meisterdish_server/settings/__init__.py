@@ -190,3 +190,4 @@ PAYMENT_METHODS = (
                    ('CC', 'Credit Card'),
                    ('PP', 'PayPal'),
                    )
+PER_PAGE = 20

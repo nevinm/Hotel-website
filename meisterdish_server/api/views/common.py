@@ -19,50 +19,60 @@ def home(request):
 def login(request, data):
     try:
         email = data['username'].strip()
-        password = data['password'].strip()
-        remember = str(data['remember']).strip()
+        valid = False
         
-        is_admin = 0
-        if 'is_admin' in data:
-            is_admin = data['is_admin']
-        
-        if email == '' or password == '':
-            log.error("Empty email or password.")
-            raise Exception("Invalid email or password")
-        
-        try:
-            if is_admin == 1:
+        if "password" in data:
+            password = data['password'].strip()
+            remember = str(data['remember']).strip()
+            if email == '' or password == '':
+                log.error("Empty email or password.")
+                raise Exception("Invalid email or password")
+            
+            if 'is_admin' in data and data['is_admin'] == 1:
                 user = User.objects.get(email=email, role__id=1)
             else:
                 user = User.objects.get(email=email, role__id=2)
                 
+            if md5.new(password).hexdigest() == user.password:
+                valid = True
+            else:
+                return custom_error("Invalid email or password.")
+                
+        else:
+            try:
+                fb_id = data["fb_id"].strip()
+                user = User.objects.get(fb_user_id=fb_id, email=email)
+            except:
+                return custom_error("No user found with the given details")
+            else:
+                valid = True
+        
+        if valid:
             if not user.is_active:
                 return json_response({"status":-1, "message":"The user is not active. Please activate the account using the link from verification email."})
-
-            if md5.new(password).hexdigest() == user.password:
-                log.info(user.email + "logged in")
-                user_dic = {"id":user.id,
-                                  "email":user.email,
-                                  "first_name":user.first_name,
-                                  "last_name":user.last_name,
-                                  "role" : user.role.id,
-                                  }
+            log.info(user.email + "logged in")
+            
                 
-                session = SessionStore()
-                session["user"] = user_dic
-                if str(remember) == "1":
-                    session.set_expiry = 0
-                else:
-                    session.set_expiry = settings.SESSION_EXPIRY
-                session.save()
-                log.info(email+" logged in ..")
-                return json_response({"status":1, "message": "Logged in succesfully", "user":user_dic, "session_key":session.session_key})
+            user_dic = {"id":user.id,
+                              "email":user.email,
+                              "first_name":user.first_name,
+                              "last_name":user.last_name,
+                              "role" : user.role.id,
+                              }
+            
+            session = SessionStore()
+            session["user"] = user_dic
+            if str(remember) == "1":
+                session.set_expiry = 0
             else:
-                log.error("Login: Invalid email/password combination")
-                raise Exception("Invalid email/password combination")
-        except Exception as e:
-            log.error("Login  : "+str(e))
-            raise Exception("Either email or password is incorrect.")
+                session.set_expiry = settings.SESSION_EXPIRY
+            session.save()
+            log.info(email+" logged in ..")
+            return json_response({"status":1, "message": "Logged in succesfully", "user":user_dic, "session_key":session.session_key})
+        else:
+            log.error("Login failed")
+            raise Exception("Login failed")
+    
     except KeyError as e:
         log.error("Login :" + str(e) + " missing" )
         return json_response({"status":-1, "message":"Please fill all the fields."})
