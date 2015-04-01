@@ -1,4 +1,11 @@
 $(document).ready(function() {
+    function redirectIfLoggedIn(){
+        if (localStorage['loggedIn'] == 'true') 
+        {
+            window.location.href='../index.html';
+        }
+        else{}
+    }
 
     //Login process
     var loginCallback = {
@@ -9,12 +16,13 @@ $(document).ready(function() {
             localStorage['session_key']=userDetails.session_key;
             localStorage['loggedIn']=true;
             checkLoggedIn();
+            window.location.href = 'menu.html'
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
 
     //login form submit
-    $("#login button").on('click', function(){
+    $("#login-form a.btn").on('click', function(){
         loggingIn();
     });
 
@@ -27,11 +35,12 @@ $(document).ready(function() {
             "password" : password,
             "remember" : remember
         },
-        header= JSON.stringify(header);
         data=JSON.stringify(userData);
-        $("#login")[0].reset();
+        $("#login-form")[0].reset();
         var loginInstance = new AjaxHttpSender();
-        loginInstance.sendPost(url, data, loginCallback);
+        loginInstance.sendPost(url, header, data, loginCallback);
     }
+
+    redirectIfLoggedIn();
 });
 

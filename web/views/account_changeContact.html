@@ -28,7 +28,7 @@
                     <img src="../images/cart_icon.png">
                 </div>
                 <span class="icon-menu pullRight"></span>
-                <div class="navMenu"style="display:none">
+                <div class="navMenu" style="display:none">
                     <ul>
                         <li>
                             <a href="menu.html">THE MENU</a>
@@ -39,15 +39,15 @@
                         <li>
                             <a href="">PARTNERS</a>
                         </li>
-                        <li >
-                            <a href="/">LOG IN</a>
+                        <li>
+                            <a href="login.html">LOG IN</a>
                         </li>
                         <li>
-                            <a href="/">SIGN UP</a>
+                            <a href="signup.html">SIGN UP</a>
                         </li>
                     </ul>
                 </div>
-                <ul id="menu" class="pullRight" style="padding-top:6px">
+                <ul id="menu" class="pullRight">
                     <li>
                         <a href="menu.html">THE MENU</a>
                     </li>
@@ -57,8 +57,14 @@
                     <li>
                         <a href="">PARTNERS</a>
                     </li>
-                    <li class="bold">
-                        <a href="">JOHN SMITH</a>
+                    <li class="bold login-signup">
+                        <a href="login.html">LOG IN</a>
+                    </li>
+                    <li class='login-signup'>
+                        <a href="signup.html" class="btn btn-small-secondary">SIGN UP</a>
+                    </li>
+                    <li id="navbar-username" class="bold">
+                        <a href='account_main.html'></a>
                     </li>
                 </ul>
             </div>   
@@ -69,8 +75,8 @@
                     <img src="../images/back_arrow.png">
                     <span><a href="account_main.html">BACK TO ACCOUNT</a></span>
                 </div>
-                <div class="logout body-text-bold">
-                    <a href="">LOG OUT</a>
+               <div class="logout body-text-bold">
+                    <a id='logout'>LOG OUT</a>
                 </div>
             </div>
             <div class="account-wrapper">
@@ -78,7 +84,7 @@
                 <div class="account-header">
                     <h3 style="color:#000;font-size:20px">CHANGE YOUR CONTACT DETAILS</h3>
                 </div>
-                <form class="form">
+                <form class="form" id='change-contact'>
                     <div class="first-name">
                         <label class="body-text-small">First Name</label>
                         <input class="arrange" type="text" name="firstname"></input>
@@ -88,14 +94,14 @@
                     <input class="arrange" type="text" name="lastname"></input>
                     </div>
                     <div class="phone-num">
-                    <label class="body-text-small" name="phonenumber">Phone Number</label>
-                    <input class="arrange" type="number"></input>
+                    <label class="body-text-small">Phone Number</label>
+                    <input class="arrange" type="number" name="phonenumber"></input>
                     </div>
                     <div class="notify">
                         <input type="checkbox" name="notification"><span class="body-text-small">Allow SMS Notifications?</span></input>
                     </div>
                     <div class="update-button">
-                        <a href="#" class="btn btn-large-primary medium-green">UPDATE</a>
+                        <a href="#" id='update' class="btn btn-large-primary medium-green">UPDATE</a>
                     </div>
                 </form>
                 </div>
@@ -105,6 +111,7 @@
 	<script type="text/javascript" src='../js/jquery.min.js'></script>
 	<script type="text/javascript" src='../js/jquery.fullPage.min.js'></script>
 	<script type="text/javascript" src='../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../js/common.js'></script>
     <script type="text/javascript" src='../js/account.js'></script>
 </body>
 

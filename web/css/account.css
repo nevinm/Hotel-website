@@ -110,21 +110,6 @@ form.form{
 	float: left;
 	padding: 20px;
 }
-input.arrange{
-	width: 100%;
-  border-radius: 3px;
-  border: 1px solid #D0D0D0;
-  padding: 8px;
-  background-color:#f1f1f1; 
-}
-input[type="text"],input[type="email"],input[type="password"]
-{
-    font-family:'ProximaNova-regular';
-    color: #9B9B9B;
-}
-label{
-	width: 100%;
-}
 .notify,.update-button {
   width: 100%;
   float: left;

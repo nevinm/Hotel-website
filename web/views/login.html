@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div id="login-wrapper">
+    <div id="login-container">
         <header id="header">
             <div class="contentArea">
                 <a href="../index.html"><img class="pullLeft logo" src="../images/logo.png" alt="MeisterDish"></a>
@@ -36,10 +36,10 @@
                             <a href="">PARTNERS</a>
                         </li>
                         <li>
-                            <a href="/">LOG IN</a>
+                            <a href="login.html">LOG IN</a>
                         </li>
                         <li>
-                            <a href="/">SIGN UP</a>
+                            <a href="signup.html">SIGN UP</a>
                         </li>
                     </ul>
                 </div>
@@ -53,38 +53,44 @@
                     <li>
                         <a href="">PARTNERS</a>
                     </li>
-                    <li class="bold user-entry">
-                        <a href="#">LOG IN</a>
+                    <li class="bold login-signup">
+                        <a href="login.html">LOG IN</a>
                     </li>
-                    <li class='user-entry'>
-                        <a href="#" class="btn btn-small-secondary">SIGN UP</a>
+                    <li class='login-signup'>
+                        <a href="signup.html" class="btn btn-small-secondary">SIGN UP</a>
                     </li>
-                    <li id="navbar-username" class="bold"></li>
+                    <li id="navbar-username" class="bold">
+                        <a href='account_main.html'></a>
+                    </li>
                 </ul>
             </div>
         </header>
         <div id="page-container">
             <div class='login-wrapper'>
                 <div class="header-small">
-                        <h4>LOGIN</h4>
+                        <h4>LOG IN</h4>
                 </div>
-                <div class="facebook-signup">
-                        <span class="signup-message">DON'T HAVE AN ACCOUNT?</span><span class="signup-link">SIGNUP</span>
+                <div class="facebook-login">
+                        <span class="signup-message">DON'T HAVE AN ACCOUNT?</span>
+                        <span class="login-link">SIGNUP</span>
                         <div class="fb-login-button"></div>
                 </div>
                 <span class="or">OR</span>
-                <form id='login' accept-charset='UTF-8'>
+                <form id='login-form' accept-charset='UTF-8'>
                     <div class="username-wrapper">
-                        <label for='username'>UserName:</label>
-                        <input type='text' name='username' id='username' maxlength="50" />
+                        <label class="body-text-small" for='username'>Email:</label>
+                        <input class="arrange" type='text' name='username' id='username' maxlength="50" />
                     </div>
                     <div class='password-wrapper'>
-                        <label for='password'>Password:</label>
-                        <input type='password' name='password' id='password' maxlength="50" />
+                        <label class="body-text-small" for='password'>Password:</label>
+                        <input class="arrange" type='password' name='password' id='password' maxlength="50" />
                     </div>
-                    <span class='forgot-password'>Forgot your password?</span>
-                    <div class=='login-button'>
-                        <button type='button' name='Submit'>Submit</button>
+                    <span class='forgot-password body-text-small'>Forgot your password?</span>
+                    <div class="notify">
+                        <input type="checkbox" name="notification"><span class="body-text-small">Is Admin?</span>
+                    </div>
+                    <div class='login-button'>
+                      <a href="#" class="btn btn-large-primary medium-green" name='Submit' id="signup-button">LOGIN</a>
                     </div>
                 </form>
             </div>
