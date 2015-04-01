@@ -168,6 +168,10 @@ LOGGING = {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },
+        'api_user': {
+            'handlers': ['logfile'],
+            'level': 'DEBUG'
+        },
     }
 }
 
@@ -186,3 +190,4 @@ PAYMENT_METHODS = (
                    ('CC', 'Credit Card'),
                    ('PP', 'PayPal'),
                    )
+PER_PAGE = 20

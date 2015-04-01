@@ -7,11 +7,20 @@
   height: 100%;	
   margin-top: 100px;
 }
+#login-container{
+  width: 100%;
+  border-right: 10px solid #fff;
+  border-left: 10px solid #fff;
+  float: left;
+  background-color: #f1f1f1;
+  min-height: 100%;
+}
 .login-wrapper{
 	margin: 0 auto;
-	border: 1px solid black;
+	border: 1px solid #D0D0D0;
 	width: 400px;
   overflow: auto;
+  background-color: #fff;
 }
 .login-wrapper h3{
 	color: #6B6B6B;
@@ -45,6 +54,7 @@
 \*==================================*/
 .signup-wrapper{
   width: 400px;
+  margin: 0 auto;
 }
 .signup-container{
   background-color: #ffffff;
@@ -105,7 +115,7 @@ form.signup-formcontainer {
 /*==================================*\
       &RESET PASSWORD
 \*==================================*/
-.forgotpassword-container{
+.forgotpassword-container,.resetsuccess-container,.resetpassword-container,.signupfail-container{
   background-color: #ffffff;
   border: 1px solid #D0D0D0;
   border-radius: 3px;
@@ -113,19 +123,20 @@ form.signup-formcontainer {
   float: left;
   width: 100%;
 }
-#forgotpassword-form{
+#forgotpassword-form,.resetpassword-form{
   float: left;
   width: 100%;
   padding-top: 35px;
 }
-.forgotpassword-container .content{
+.forgotpassword-container .content,.resetpassword-container .content,.resetsuccess-container .content,.signupfail-container .content{
   float: left;
   padding: 35px 0px 35px 35px;
 }
+
 .reset-input{
   width: 90%;
 }
-.forgot-button{
+.forgot-button,.reset-button{
   width: 100%;
   float: left;
   padding-top: 35px;
@@ -145,3 +156,19 @@ span.heading {
 form#resetpassword-form {
   padding-top: 20px;
 }
+.reset-wrapper,.forgot-wrapper,.signupfail-wrapper{
+  width: 400px;
+  margin: 0 auto;
+}
+.signupfail-container .content .caption{
+  padding: 20px 0;
+}
+.signupfail-container .content .caption span{
+      float: left;
+      width: 100%;
+      padding-top:2px;
+  }
+  .signupfail-container .content .heading{
+    font-size: 16px;
+    font-family: "BrandonGrotesque-Regular"
+  }

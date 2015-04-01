@@ -25,19 +25,28 @@ class Role(models.Model):
     def __unicode__(self):
         return self.name
     
+class Country(models.Model):
+    name = models.CharField(max_length=30)
+    country_code = models.CharField(max_length=3, unique=True)
+    
+    def __unicode__(self):
+        return self.name
+    
 class State(models.Model):
     name = models.CharField(max_length=30)
+    country = models.ForeignKey(Country, to_field='country_code')
     state_code = models.CharField(max_length=3, unique=True)
+    
     def __unicode__(self):
         return self.name
-
+    
 class City(models.Model):
     name = models.CharField(max_length=30)
-    state = models.ForeignKey(State)
-    state_code = models.CharField(max_length=3, unique=True)
+    state = models.ForeignKey(State, to_field='state_code')
+    
     def __unicode__(self):
         return self.name
-
+    
 class User(models.Model):
     fb_user_id = models.CharField(max_length=20, null=True, default="")
     password = models.CharField(max_length=50)
@@ -45,7 +54,7 @@ class User(models.Model):
     role = models.ForeignKey(Role)
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
-    zip = models.CharField(max_length=10, null=True)
+    
     email = models.EmailField(max_length=30, unique=True)
     mobile = models.CharField(max_length=15, null=True)
     profile_image = models.CharField(max_length=50, null=True)

@@ -304,6 +304,19 @@ label{
 	width: 100%;
 	float: left;
 }
+#page-container{
+  float: left;
+  width: 100%;
+  height: 100%;	
+  margin-top: 100px;
+}
+.header-small {
+  border-bottom: 1px solid #D0D0D0;
+  height: 46px;
+  padding-left: 35px;
+  background-color: #f7f7f7;
+  color: #454545;
+}
 /*==============================*\
 			&HEADER
 \*==============================*/
@@ -432,6 +445,22 @@ span.icon-menu{
 /*.sliderfooter{
 	position: relative !important;
 }*/
+
+
+/*==============================*\
+			&POPUP
+\*==============================*/
+.bk-overlay{
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background:#000;
+	top:0;
+	left: 0;
+	opacity: 0.6;
+	z-index: 999;
+}
+
 
 /*==============================*\
 		&NAVBAR RESPONSIVE
