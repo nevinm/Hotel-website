@@ -19,11 +19,11 @@ AjaxHttpSender.prototype.sendGet = function(url, callback) {
    });
 }
  
-AjaxHttpSender.prototype.sendPost = function(url, data, callback) {
+AjaxHttpSender.prototype.sendPost = function(url, header ,data, callback) {
    $.ajax({
       url: url,
       type: 'POST',
-      // header: header,
+      headers: header,
       data: data,
       beforeSend: function() {
          onStartAjaxRequest();

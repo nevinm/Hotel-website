@@ -1,12 +1,18 @@
 $(document).ready(function() {
-	var baseURL = 'http://meisterdish.qburst.com/backend/api/';
-
+	function redirectIfLoggedIn(){
+        if (localStorage['loggedIn'] == 'true') 
+        {
+            window.location.href='../index.html';
+        }
+        else{
+        }
+    }
 	//signup process
 	var signupCallback = {
 		success: function(data,textStatus){
-			debugger;
-			console.log(data);
 			$('.signup-formcontainer')[0].reset();
+			alert("Please proceed to login.");
+			window.location.href='login.html';
 		},
 		failure:function(XMLHttpRequest, textStatus, errorThrown){}
 	}
@@ -15,7 +21,7 @@ $(document).ready(function() {
 	});
 
 	function signingup () {
-		var url = baseURL+'/signup/';
+		var url = baseURL+'signup/';
 		header = {};
 		var password = $('#signup-password').val();
 		var first_name = $('#signup-firstname').val();
@@ -28,11 +34,11 @@ $(document).ready(function() {
 			"last_name": last_name,
 			"email": email 
 		}
-		 header= JSON.stringify(header);
 		 data=JSON.stringify(userInfo);
 
 		 var signupInstance = new AjaxHttpSender();
-		 signupInstance.sendPost(url,data,signupCallback);
+		 signupInstance.sendPost(url, header ,data,signupCallback);
 	}
-
+	
+    redirectIfLoggedIn();
 });

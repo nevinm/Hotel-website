@@ -1,14 +1,16 @@
+var baseURL = 'http://meisterdish.qburst.com/backend/api/';
 //If already logged in
-var $userentry=$('.user-entry');
+var $userentry=$('.login-signup');
 function checkLoggedIn(){
 	if (localStorage['loggedIn'] == 'true') 
 	{
         $userentry.hide();
-        $('#navbar-username').text(localStorage['username']);
+        $('#navbar-username a').append(localStorage['username']);
         $('#menu').addClass('menuPadding');
     }
     else{
     	$userentry.show();
+    	$("#logout").hide();
     	$('#menu').removeClass('menuPadding');
     }
 }
@@ -16,13 +18,14 @@ function checkLoggedIn(){
 $(document).ready(function() {
     //Logout process
     $("#logout").on('click', function() {
-    	$('#navbar-username').text('');
+    	$('#navbar-username a').text('');
         $userentry.show();
         $('#menu').removeClass('menuPadding');
         $(".logout").addClass('hide');
         localStorage.removeItem('username');
         localStorage.removeItem('session_key');
         localStorage['loggedIn']=false;
+        window.location.href='../index.html';
     });
 
     // &NAVMENU - RESPONSIVE

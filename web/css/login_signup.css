@@ -7,10 +7,20 @@
   height: 100%;	
   margin-top: 100px;
 }
+#login-container{
+  width: 100%;
+  border-right: 10px solid #fff;
+  border-left: 10px solid #fff;
+  float: left;
+  background-color: #f1f1f1;
+  min-height: 100%;
+}
 .login-wrapper{
 	margin: 0 auto;
-  	border: 1px solid black;
-  	width: 400px;
+	border: 1px solid #D0D0D0;
+	width: 400px;
+  overflow: auto;
+  background-color: #fff;
 }
 .login-wrapper h3{
 	color: #6B6B6B;
@@ -22,11 +32,27 @@
   background-color: #f7f7f7;
   color: #454545;
 }
+#login-form{
+  padding-left: 35px;
+  width: 100%;
+  float: left;
+  padding-top: 30px;
+}
+.username-wrapper, .password-wrapper{
+  width: 100%;
+  float: left;
+  padding-right: 20px;
+}
+.username-wrapper input, .password-wrapper input{
+  width: 60%;
+}
+
 /*==================================*\
       &SIGNUP
 \*==================================*/
 .signup-wrapper{
   width: 400px;
+  margin: 0 auto;
 }
 .signup-container{
   background-color: #ffffff;
@@ -43,7 +69,7 @@
   background-color: #f7f7f7;
   color: #454545;
 }
-.facebook-signup{
+.facebook-signup,.facebook-login{
   font-family: 'BrandonGrotesque-Bold';
   font-size: 12px;
   padding: 30px 0 30px 35px;
@@ -87,7 +113,7 @@ form.signup-formcontainer {
 /*==================================*\
       &RESET PASSWORD
 \*==================================*/
-.resetpassword-container{
+.forgotpassword-container,.resetsuccess-container,.resetpassword-container,.signupfail-container{
   background-color: #ffffff;
   border: 1px solid #D0D0D0;
   border-radius: 3px;
@@ -95,19 +121,20 @@ form.signup-formcontainer {
   float: left;
   width: 100%;
 }
-.resetpassword-form{
+#forgotpassword-form,.resetpassword-form{
   float: left;
   width: 100%;
   padding-top: 35px;
 }
-.resetpassword-container .content{
+.forgotpassword-container .content,.resetpassword-container .content,.resetsuccess-container .content,.signupfail-container .content{
   float: left;
   padding: 35px 0px 35px 35px;
 }
+
 .reset-input{
   width: 90%;
 }
-.reset-button{
+.forgot-button,.reset-button{
   width: 100%;
   float: left;
   padding-top: 35px;
@@ -119,3 +146,27 @@ span.heading {
 .content span.caption{
   padding-top: 3px;
 }
+
+#resetpassword-form .reset-input{
+  width: 240px;
+  padding-top: 10px;
+}
+form#resetpassword-form {
+  padding-top: 20px;
+}
+.reset-wrapper,.forgot-wrapper,.signupfail-wrapper{
+  width: 400px;
+  margin: 0 auto;
+}
+.signupfail-container .content .caption{
+  padding: 20px 0;
+}
+.signupfail-container .content .caption span{
+      float: left;
+      width: 100%;
+      padding-top:2px;
+  }
+  .signupfail-container .content .heading{
+    font-size: 16px;
+    font-family: "BrandonGrotesque-Regular"
+  }
