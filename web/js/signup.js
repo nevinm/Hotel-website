@@ -12,7 +12,7 @@ $(document).ready(function() {
 		success: function(data,textStatus){
 			$('.signup-formcontainer')[0].reset();
 			alert("Please proceed to login.");
-			window.location.href=''
+			window.location.href='login.html';
 		},
 		failure:function(XMLHttpRequest, textStatus, errorThrown){}
 	}
