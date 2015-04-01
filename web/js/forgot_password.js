@@ -3,28 +3,27 @@ $(document).ready(function() {
 
     //send email
     var forgotPasswordCallback = {
-        success: function(data,textStatus){
+        success: function(data, textStatus) {
+            alert("Sent to your email");
             $('#forgotpassword-form')[0].reset();
         },
-        failure:function(XMLHttpRequest, textStatus, errorThrown){}
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
-    $('#forgotpassword-button').on('click',function(){
+    $('#forgotpassword-button').on('click', function() {
         sendEmail();
     });
 
-    function sendEmail () {
-        var url = baseURL+'/forgot_password/';
-        header = {};
-        var email = $('#forgotpassword-email').val();
-
-        var userInfo = {          
-            "email": email 
+    function sendEmail() {
+        var url = baseURL + '/forgot_password/';
+        header = {},
+        email = $('#forgotpassword-email').val(),
+        userInfo = {
+            "email": email
         }
-         header = JSON.stringify(header);
-         data = JSON.stringify(userInfo);
+        data = JSON.stringify(userInfo);
 
-         var forgotpasswordInstance = new AjaxHttpSender();
-         forgotpasswordInstance.sendPost(url,data,forgotPasswordCallback);
+        var forgotpasswordInstance = new AjaxHttpSender();
+        forgotpasswordInstance.sendPost(url, header, data, forgotPasswordCallback);
     }
 
 });
