@@ -63,7 +63,7 @@ def login(request, data):
                 raise Exception("Invalid email/password combination")
         except Exception as e:
             log.error("Login  : "+str(e))
-            raise Exception("An error has occurred. Please try again later.")
+            raise Exception("Either email or password is incorrect.")
     except KeyError as e:
         log.error("Login :" + str(e) + " missing" )
         return json_response({"status":-1, "message":"Please fill all the fields."})
@@ -77,7 +77,7 @@ def logout(request, data):
         log.error("API:logout, Invalid session.")
         response = {'status': -1, "message": "Invalid session."}
     else:
-        session = SessionStore(session_key=data['session_key'])
+        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
         if 'user' in session:
             del session['user']
         session.flush()
@@ -116,6 +116,7 @@ def signup(request, data):
                                   "email":user.email,
                                   "first_name":user.first_name,
                                   "last_name":user.last_name,
+                                  "role":user.role.id,
                                   }
             
             log.info(user.email + " signed up")
@@ -173,15 +174,15 @@ def verify_user(request, data, token):
         user.is_active=True
         user.save()
         
-        log.info("Password reset for user "+user.email)
+        log.info("Verified user "+user.email)
         return HttpResponseRediredct(request.META['HTTP_HOST'] + "/login.html?verify=true")
     
     except KeyError as field:
-        log.error("Reset password request missing "+field.message)
+        log.error("verify request request missing "+field.message)
         return HttpResponseRediredct(request.META['HTTP_HOST'] + "/login.html?verify=false")
 
     except User.DoesNotExist:
-        log.error("Reset password : No user found with given token")
+        log.error("Verify : No user found with given token")
         return HttpResponseRediredct(request.META['HTTP_HOST'] + "/login.html?verify=false")
 
     except Exception as e:
