@@ -1,7 +1,6 @@
 $(document).ready(function() {
     
 
-    var baseURL = 'http://meisterdish.qburst.com/backend/api/';
     var token = window.location.href.split("=")[1],
                                         password,
                                         newpassword ,
@@ -10,6 +9,7 @@ $(document).ready(function() {
     var resetPasswordCallback = {
         success: function(data,textStatus){
             $('#resetpassword-form')[0].reset();
+            window.location.href='reset_passwordsuccess.html';
         },
         failure:function(XMLHttpRequest, textStatus, errorThrown){}
     }
@@ -29,17 +29,16 @@ $(document).ready(function() {
     });
 
     function resetingPassword (password,token) {
-        var url = baseURL+'/reset_password/';
+        var url = baseURL+'reset_password/';
         header = {};
         var userInfo = { 
             "token":token,         
             "password": password 
         }
-         header= JSON.stringify(header);
          data=JSON.stringify(userInfo);
 
          var resetpasswordInstance = new AjaxHttpSender();
-         resetpasswordInstance.sendPost(url,data,resetPasswordCallback);
+         resetpasswordInstance.sendPost(url,header,data,resetPasswordCallback);
     }
 
 });
