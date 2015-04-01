@@ -12,4 +12,10 @@ urlpatterns = patterns('',
     url(r'^get_profile/$', views.get_profile, name='get_profile'),
     url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
     
+    url(r'^add_address/$', views.add_address, name='add_address'),
+    url(r'^remove_address/$', views.remove_address, name='remove_address'),
+    
+    url(r'^get_states/$', views.get_states, name='get_states'),
+    url(r'^get_cities/$', views.get_cities, name='get_cities'),
+    
 )
