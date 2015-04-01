@@ -93,6 +93,10 @@ def signup(request, data):
         first_name = data['first_name'].strip()
         last_name = data['last_name'].strip()
         
+        fb = False
+        if 'fb_id' in data:
+            fb_id = data['fb_id']
+            fb = True
         if password == '' or first_name == '' or last_name == '' or email == '':
             log.error(email + " : Sign up failed. Fill required fields.")
             raise Exception("Please fill in all the required fields")
@@ -195,7 +199,8 @@ def forgot_password(request, data):
         from libraries import mail
         
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
-        link = settings.BASE_URL + 'forgot_password/'+token+"/"
+        #link = settings.BASE_URL + 'password_reset_return/'+token+"/"
+        link = "http://10.1.4.87/MeisterDish/meisterdish/web/views/reset_password.html?token="+token
         user.password_reset_token = token
         user.save()
         
