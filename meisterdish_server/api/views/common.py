@@ -12,7 +12,6 @@ from decorators import *
 
 log = logging.getLogger('api')
 
-
 def home(request):
     return HttpResponse("Welcome to Meisterdish")
 
@@ -94,9 +93,11 @@ def signup(request, data):
         last_name = data['last_name'].strip()
         
         fb = False
+        fb_id = ""
         if 'fb_id' in data:
             fb_id = data['fb_id']
             fb = True
+            
         if password == '' or first_name == '' or last_name == '' or email == '':
             log.error(email + " : Sign up failed. Fill required fields.")
             raise Exception("Please fill in all the required fields")
@@ -110,6 +111,7 @@ def signup(request, data):
             user.first_name = first_name
             user.last_name = last_name
             user.role = Role.objects.get(pk=2)
+            user.fb_user_id = fb_id
             user.save()
             
             user_dic = {"id":user.id,
@@ -299,19 +301,33 @@ def get_profile(request, data):
                               'tax' : meal.tax,
                               'image_url':meal.image_url,
                               })
-
+        address_list = []
+        addresses = Address.objects.filter(user=user)
+        for add in addresses:
+            address_list.append({
+                                 "id":add.id,
+                                 "name":add.name,
+                                 "is_primary":1 if add.is_primary else 0,
+                                 "street":add.street,
+                                 "building":add.building,
+                                 "city":add.city.name,
+                                 "state":add.city.state.name,
+                                 "zip":add.zip,
+                                 "phone":add.phone,
+                                 })
+            
         user_data = {
                      "id" : user.id,
                      "name" : (user.last_name + " "+ user.first_name).title(),
                      "email" : user.email,
                      "mobile" : user.mobile,
                      "profile_image" : settings.MEDIA_URL + user.profile_image,
-                     "is_admin" : user.is_admin,
+                     "is_admin":True if user.role.id == 1 else False,
                      "meals_in_cart" : meals,
                      "meals_in_cart_count" : len(meals),
                      "credits" : user.credits,
                      "sms_notification" : user.need_sms_notification,
-                     
+                     "address_list" : address_list,
                      }
         return json_response(user_data)
     except KeyError as e:
@@ -349,6 +365,55 @@ def edit_profile(request, data):
         log.error("user id : " + str(user_id) + " : profile update failed : "+e.message)
         return json_response({"status":-1, "message":"Failed to update profile."})
 
+@check_input('POST')
+def get_cities(request, data):
+    try:
+        city_list = []
+        limit = 20
+        
+        cities = City.objects.filter(state__id=data["state_id"])
+            
+        if "search" in data:
+            search = data["search"].strip()
+            cities = cities.filter(name__istartswith=search)
+        
+        cities = cities[:limit]
+        for c in cities:
+            city_list.append({
+                              "id":c.id,
+                              "name":c.name,
+                              "state_id":c.state.id,
+                              "state": c.state.name,
+                              })
+        return json_response({"status":1, "city_list":city_list})
+    except Exception as e:
+        log.error("Failed to send city list : " + e.message)
+        return custom_error("Failed to retrieve city list.")
+    
+@check_input('POST')
+def get_states(request, data):
+    try:
+        state_list = []
+        if not "country_id" in data:
+            data["country_id"] = 1
+        states = State.objects.filter(country__id=data["country_id"])
+        
+        if "search" in data:
+            search = data["search"].strip()
+            states = State.objects.filter(name__istartswith=search)
+            
+        for s in states:
+            state_list.append({
+                              "id":s.id,
+                              "name":s.name,
+                              "country_id":s.country.id,
+                              "country": s.country.name,
+                              })
+        return json_response({"status":1, "state_list":state_list})
+    except Exception as e:
+        log.error("Failed to send state list : " + e.message)
+        return custom_error("Failed to retrieve state list.")
+    
 def json_response(response, wrap=False):
     if (wrap == True):
         final_response = {"data" : response}
@@ -357,6 +422,6 @@ def json_response(response, wrap=False):
     header_res = HttpResponse(simplejson.dumps(final_response))
     return header_res
 
-def custom_error(messages, wrap=False):
-    return json_response({'status' : -1, 'message' : messages, 'errorCode' : 200 , 'data':{'status' : -1, 'message' : messages, 'errorCode' : 200}}, wrap)
+def custom_error(message):
+    return json_response({'status' : -1, 'message' : message})
 

@@ -168,6 +168,10 @@ LOGGING = {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },
+        'api_user': {
+            'handlers': ['logfile'],
+            'level': 'DEBUG'
+        },
     }
 }
 

@@ -74,7 +74,7 @@ def json_response(response, wrap=False):
     header_res = HttpResponse(simplejson.dumps(final_response))
     return header_res
 
-def custom_error(messages, wrap=False):
-    return json_response({'status' : -1, 'message' : messages, 'errorCode' : 200 , 'data':{'status' : -1, 'message' : messages, 'errorCode' : 200}}, wrap)
+def custom_error(message):
+    return json_response({'status' : -1, 'message' : message})
 
 
