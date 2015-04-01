@@ -103,7 +103,7 @@ form.signup-formcontainer {
 /*==================================*\
       &RESET PASSWORD
 \*==================================*/
-.resetpassword-container{
+.forgotpassword-container{
   background-color: #ffffff;
   border: 1px solid #D0D0D0;
   border-radius: 3px;
@@ -111,19 +111,19 @@ form.signup-formcontainer {
   float: left;
   width: 100%;
 }
-.resetpassword-form{
+#forgotpassword-form{
   float: left;
   width: 100%;
   padding-top: 35px;
 }
-.resetpassword-container .content{
+.forgotpassword-container .content{
   float: left;
   padding: 35px 0px 35px 35px;
 }
 .reset-input{
   width: 90%;
 }
-.reset-button{
+.forgot-button{
   width: 100%;
   float: left;
   padding-top: 35px;
@@ -134,4 +134,12 @@ span.heading {
 }
 .content span.caption{
   padding-top: 3px;
+}
+
+#resetpassword-form .reset-input{
+  width: 240px;
+  padding-top: 10px;
+}
+form#resetpassword-form {
+  padding-top: 20px;
 }
