@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     
     url(r'^add_address/$', views.add_address, name='add_address'),
     url(r'^remove_address/$', views.remove_address, name='remove_address'),
-    url(r'^update_address/?P<address_id>[0-9]+/$', views.update_address, name='update_address'),
+    url(r'^update_address/(?P<address_id>[0-9]+)/$', views.update_address, name='update_address'),
     
     url(r'^get_states/$', views.get_states, name='get_states'),
     url(r'^get_cities/$', views.get_cities, name='get_cities'),
