@@ -70,6 +70,8 @@ class User(models.Model):
     gift_cards = models.ManyToManyField("GiftCard", null=True)
     
     need_sms_notification = models.BooleanField(default=True)
+    deleted = models.BooleanField(default=False)
+    
     created = models.DateTimeField()
     
     def save(self, *args, **kwargs):

@@ -95,6 +95,23 @@ def remove_category(request, data):
         return json_response({"status":-1, "message":"Failed to remove category"})
 
 @check_input('POST', True)
+def update_category(request, data):
+    try:
+        name = data["category"].strip()
+        id = data["id"]
+        try:
+            cat = Category.objects.get(name__iexact=name)
+            return custom_error("Category name already exists")
+        except:
+            cat = Category.objects.get(id=id)
+            cat.name = name
+            cat.save()
+            return json_response({"status":1, "message":"Updated Category"})
+    except Exception as e:
+        log.error("Failed to update category : "+e.message)
+        return json_response({"status":-1, "message":"Failed to update category"})
+    
+@check_input('POST', True)
 def get_users(request, data):
     try:
         limit = settings.PER_PAGE
@@ -103,14 +120,13 @@ def get_users(request, data):
             page = data["nextPage"]
                     
         user_list = []
-        users = User.objects
+        users = User.objects.filter(deleted=False)
         total_count = users.count()
          
         if "search" in data:
             search = data["search"]
             users = users.filter(Q(first_name__istartswith=search)| Q(last_name__istartswith=search))
-        else:
-            users = users.all()
+        
         actual_count = users.count()
         try:
             paginator = Paginator(users, limit)
@@ -157,14 +173,13 @@ def get_users_2(request, data):
             page = data["nextPage"]
                     
         user_list = []
-        users = User.objects
+        users = User.objects.filter(deleted=False)
         total_count = users.count()
          
         if "search" in data:
             search = data["search"]
             users = users.filter(Q(first_name__istartswith=search)| Q(last_name__istartswith=search))
-        else:
-            users = users.all()
+        
         actual_count = users.count()
         try:
             paginator = Paginator(users, limit)
@@ -204,6 +219,35 @@ def get_users_2(request, data):
     except KeyError as e:
         log.error("User list "+ e.message)
         return custom_error("Failed to retrieve users list.")
+
+@check_input('POST', True)
+def delete_user(request, data):
+    try:
+        user = User.objects.get(id=str(data['id']).strip())
+        user.deleted = True
+        user.save()
+        return json_response({"status":1, "message":"Deleted user"})
+    except Exception as e:
+        log.error("Failed to remove user : "+e.message)
+        return custom_error("Failed to delete user")
+    
+@check_input('POST', True)
+def update_user(request, data):
+    try:
+        id = data['id']
+        mobile = data['mobile'].strip()
+        first_name = data['first_name'].strip()
+        last_name = data['last_name'].strip()
+        
+        user = User.objects.get(id=id)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.mobile = mobile
+        user.save()
+        return json_response({"status":1, "message":"Updated user"})
+    except Exception as e:
+        log.error("Failed to update user : "+e.message)
+        return custom_error("Failed to update user")
     
 def json_response(response, wrap=False):
     if (wrap == True):
