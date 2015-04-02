@@ -119,5 +119,24 @@ def remove_address(request, data):
         log.error("Failed to delete Address : "+e.message)
         return custom_error("Failed to remove address")
 
+@check_input('POST')
+def redeem_gift_card(request, data):
+    session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
+    user = User.objects.get(pk=session['user']['id'])
+    try:
+        code = data["code"].strip()
+        try:
+            gift_card = user.gift_cards.get(code=code)
+        except Exception as e:
+            return custom_error("Invalid gift card code entered.")
+        else:
+            credits = gift_card.credits
+            user.credits = user.credits + credits
+            user.gift_cards.remove(gift_card)
+            user.save()
+            gift_card.delete()
+        return json_response({"status":1, "message": " Success, $"+str(credits) +" have been added to your credits."})
+    except Exception as e:
+        return custom_error("Failed to delete gift card "+e.message)
 def custom_error(message):
     return json_response({'status' : -1, 'message' : message})

@@ -73,7 +73,14 @@ def get_users(request, data):
         
         user_list = []
         users = User.objects.all()
-        count = users.count()
+        total_count = users.count()
+         
+        if "search" in data:
+            search = data["search"]
+            users = users.filter(Q(first_name__istartswith=search)| Q(last_name__istartswith=search))
+        
+        display_count = users.count()
+        
         for user in users:
             user_list.append({
                               "id" : user.id,
@@ -85,7 +92,11 @@ def get_users(request, data):
                               "credits" : user.credits,
                               })
         
-        return json_response({"status":1, "aaData":user_list})
+        return json_response({"status":1, 
+                              "aaData":user_list, 
+                              "iTotalRecords":total_count, 
+                              "iTotalDisplayRecords":display_count,
+                              })
     except Exception as e:
         log.error("User list "+ e.message)
         return custom_error("Failed to retrieve user list.")
