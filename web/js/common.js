@@ -69,6 +69,10 @@ $(document).ready(function() {
                     minlength: 2,
                     maxlength: 15,
                 },
+                oldpassword:{
+                    required: true,
+                    minlength: 4
+                },
                 password: {
                     required: true,
                     minlength: 4
@@ -81,6 +85,11 @@ $(document).ready(function() {
                     required: true,
                     minlength: 4,
                     equalTo: "#newpassword"
+                },
+                repassword: {
+                    required:true,
+                    minlength:4,
+                    equalTo: "#new-password"
                 }
             },
             messages: {
@@ -109,6 +118,11 @@ $(document).ready(function() {
                     required: "Please provide a password",
                     minlength: "password shoudn't be short",
                     equalTo: "password doesn't match"
+                },
+                repassword:{
+                    required:"Please provide a password",
+                    minlength:"password shoudn't be short",
+                    equalTo:"password doesn't match"
                 },
                 email: "enter a valid email address"
             }
