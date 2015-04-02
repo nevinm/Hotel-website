@@ -47,6 +47,8 @@ def json_request(request):
             req='{"a":"b"}'
     else:
         req = request.body
+        if not req:
+            req='{"a":"b"}'
     
     if (req):
         try:
