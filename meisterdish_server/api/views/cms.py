@@ -85,7 +85,7 @@ def get_users(request, data):
                               "credits" : user.credits,
                               })
         
-        return json_response({"status":1, "user_list":user_list})
+        return json_response({"status":1, "data":user_list})
     except Exception as e:
         log.error("User list "+ e.message)
         return custom_error("Failed to retrieve user list.")
