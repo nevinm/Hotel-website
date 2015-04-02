@@ -274,12 +274,9 @@ def change_password(request, data):
         session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
         user = User.objects.get(pk=session['user']['id'])
         
-        user_id = data['user_id'].strip()
+        user_id = user.id
         old_password = data['old_password'].strip()
         new_password = data['new_password'].strip()
-        
-        if int(user_id) != user.id:
-            return json_response({"status":-1, "message":"You are not authorized."})
         
         if  md5.new(old_password).hexdigest() != user.password:
             return json_response({"status":-1, "message":"The current password you have entered is incorrect."})
@@ -291,7 +288,7 @@ def change_password(request, data):
         log.info("user : " + user.email + " : changed password")
         return json_response({"status":1, "message":"Password changed successfully."})
     except Exception as e:
-        log.error("user id : " + user_id + " : change password failed : "+e.message)
+        log.error( "Change password failed : "+e.message)
         return json_response({"status":-1, "message":"Failed to change the password."})
 
 @check_input('POST')
