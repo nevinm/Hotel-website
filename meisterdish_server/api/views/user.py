@@ -56,7 +56,7 @@ def add_address(request, data):
         return custom_error("Failed to add address : "+e.message)
 
 @check_input('POST')
-def update_address(request, data, id):
+def update_address(request, data, address_id):
     try:
         session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
         user = User.objects.get(pk=session['user']['id'])
@@ -72,7 +72,7 @@ def update_address(request, data, id):
             is_primary = True
         
         try:
-            add = Address.objects.get(id=id, user=user)
+            add = Address.objects.get(id=address_id, user=user)
             add.user = user
         except Exception as e:
             log.error("Updated address "+e.message)
@@ -96,13 +96,13 @@ def update_address(request, data, id):
                 primary.is_primary=False
                 primary.save()
                 
-        return json_response({"status":1, "message":"Added Address", "id":add.id})
+        return json_response({"status":1, "message":"Updated Address", "id":add.id})
     except KeyError as e:
         log.error("Add address failed : "+e.message)
-        return custom_error("Failed to add address. ")
+        return custom_error("Failed to update address. ")
     except Exception as e:
         log.error("Add address failed: "+e.message)
-        return custom_error("Failed to add address : "+e.message)
+        return custom_error("Failed to update address : "+e.message)
 
 @check_input('POST')
 def remove_address(request, data):
@@ -119,5 +119,24 @@ def remove_address(request, data):
         log.error("Failed to delete Address : "+e.message)
         return custom_error("Failed to remove address")
 
+@check_input('POST')
+def redeem_gift_card(request, data):
+    session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
+    user = User.objects.get(pk=session['user']['id'])
+    try:
+        code = data["code"].strip()
+        try:
+            gift_card = user.gift_cards.get(code=code)
+        except Exception as e:
+            return custom_error("Invalid gift card code entered.")
+        else:
+            credits = gift_card.credits
+            user.credits = user.credits + credits
+            user.gift_cards.remove(gift_card)
+            user.save()
+            gift_card.delete()
+        return json_response({"status":1, "message": " Success, $"+str(credits) +" have been added to your credits."})
+    except Exception as e:
+        return custom_error("Failed to delete gift card "+e.message)
 def custom_error(message):
     return json_response({'status' : -1, 'message' : message})
