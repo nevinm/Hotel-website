@@ -96,6 +96,8 @@ def get_users(request, data):
                               "aaData":user_list, 
                               "iTotalRecords":total_count, 
                               "iTotalDisplayRecords":display_count,
+                              "sEcho":1,
+                              
                               })
     except Exception as e:
         log.error("User list "+ e.message)
