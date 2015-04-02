@@ -99,6 +99,7 @@ CORS_ALLOW_HEADERS = (
         'authorization',
         'x-csrftoken',
         'session-key',
+        'page',
     )
 
 ROOT_URLCONF = 'meisterdish_server.urls'
