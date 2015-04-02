@@ -67,7 +67,7 @@ class User(models.Model):
     facebook_login = models.BooleanField(default=False)
     credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)], default=0)
     
-    gift_cards = models.ManyToManyField("GiftCard")
+    gift_cards = models.ManyToManyField("GiftCard", null=True)
     
     need_sms_notification = models.BooleanField(default=True)
     created = models.DateTimeField()

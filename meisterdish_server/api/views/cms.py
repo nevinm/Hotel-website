@@ -9,7 +9,7 @@ from datetime import datetime
 from django.db.models import Q
 from django.template.loader import render_to_string
 from decorators import *
-
+from django.core.paginator import Paginator
 log = logging.getLogger('cms_api')
 
 
@@ -70,7 +70,8 @@ def remove_category(request, data):
 def get_users(request, data):
     try:
         limit = settings.PER_PAGE
-        
+        page = request.GET.get("page",1)
+                    
         user_list = []
         users = User.objects.all()
         total_count = users.count()
@@ -79,9 +80,15 @@ def get_users(request, data):
             search = data["search"]
             users = users.filter(Q(first_name__istartswith=search)| Q(last_name__istartswith=search))
         
-        display_count = users.count()
+        actual_count = users.count()
+        try:
+            paginator = Paginator(users, limit)
+            users = paginator.page(page)
+        except Exception as e:
+            log.error("user list pagination : " + e.message)
+            custom_error("There was an error listing users.")
         
-        for user in users:
+        for user in users.object_list:
             user_list.append({
                               "id" : user.id,
                               "name" : (user.last_name + " "+ user.first_name).title(),
@@ -93,18 +100,17 @@ def get_users(request, data):
                               })
         
         return json_response({
-                              "aaData":user_list, 
-                              "iTotalRecords":total_count, 
-                              "iTotalDisplayRecords":display_count,
-                              "sEcho":"",
-                              
+                              "status":1,
+                              "aaData": user_list,
+                              "total_count":total_count,
+                              "actual_count":actual_count,
+                              "num_pages" : paginator.num_pages,
+                              "page_range" : paginator.page_range,   
                               })
-    except Exception as e:
+        
+    except KeyError as e:
         log.error("User list "+ e.message)
-        return json_response({"aaData":[], 
-                              "iTotalRecords":0, 
-                              "iTotalDisplayRecords":0,
-                              "sEcho":"",})
+        return custom_error("Failed to retrieve users list.")
     
 def json_response(response, wrap=False):
     if (wrap == True):
