@@ -43,11 +43,12 @@ def check_input(method, admin=False):
 def json_request(request):
     if (request.method == 'GET'):
         req = request.GET
-        if not req:
-            req='{"a":"b"}'
     else:
         req = request.body
-    log.info(req) #Raw input
+    
+    if not req:
+        req='{"a":"b"}'
+
     if (req):
         try:
             return simplejson.loads(req, "ISO-8859-1")
