@@ -291,7 +291,7 @@ def change_password(request, data):
         log.info("user : " + user.email + " : changed password")
         return json_response({"status":1, "message":"Password changed successfully."})
     except Exception as e:
-        log.error("user id : " + user_id + " : change password failed : "+e.message)
+        log.error( "Change password failed : "+e.message)
         return json_response({"status":-1, "message":"Failed to change the password."})
 
 @check_input('POST')
