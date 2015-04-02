@@ -92,16 +92,19 @@ def get_users(request, data):
                               "credits" : user.credits,
                               })
         
-        return json_response({"status":1, 
+        return json_response({
                               "aaData":user_list, 
                               "iTotalRecords":total_count, 
                               "iTotalDisplayRecords":display_count,
-                              "sEcho":1,
+                              "sEcho":"",
                               
                               })
     except Exception as e:
         log.error("User list "+ e.message)
-        return custom_error("Failed to retrieve user list.")
+        return json_response({"aaData":[], 
+                              "iTotalRecords":0, 
+                              "iTotalDisplayRecords":0,
+                              "sEcho":"",})
     
 def json_response(response, wrap=False):
     if (wrap == True):
