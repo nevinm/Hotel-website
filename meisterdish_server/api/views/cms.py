@@ -80,7 +80,7 @@ def get_users(request, data):
                               "name" : (user.last_name + " "+ user.first_name).title(),
                               "email" : user.email,
                               "mobile" : user.mobile,
-                              "profile_image" : settings.MEDIA_URL + user.profile_image,
+                              "profile_image" : settings.MEDIA_URL + str(user.profile_image),
                               "is_admin":True if user.role.id == 1 else False,
                               "credits" : user.credits,
                               })
