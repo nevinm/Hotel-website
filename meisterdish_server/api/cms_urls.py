@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'^remove_category/$', cms.remove_category, name='remove_category'),
     
     url(r'^get_users/$', cms.get_users, name='get_users'),
+    url(r'^get_users_2/$', cms.get_users_2, name='get_users_2'),
 )

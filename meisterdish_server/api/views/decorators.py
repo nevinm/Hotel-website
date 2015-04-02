@@ -43,6 +43,7 @@ def check_input(method, admin=False):
 def json_request(request):
     if (request.method == 'GET'):
         req = request.GET
+        return req
     else:
         req = request.body
     
