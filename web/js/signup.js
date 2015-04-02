@@ -11,13 +11,22 @@ $(document).ready(function() {
 	var signupCallback = {
 		success: function(data,textStatus){
 			$('.signup-formcontainer')[0].reset();
-			alert("Please proceed to login.");
+			userDetails = JSON.parse(data);
+			if(userDetails.status == -1){
+				showPopup(userDetails);
+			}
+			else{
 			window.location.href='login.html';
+			}
 		},
 		failure:function(XMLHttpRequest, textStatus, errorThrown){}
 	}
-	$('#signup-button').on('click',function(){
-		signingup();
+	$('#signup-button').on('click',function(e){
+			e.preventDefault();
+		   if($('form').valid()){
+		   		signingup();
+   			}
+		
 	});
 
 	function signingup () {
