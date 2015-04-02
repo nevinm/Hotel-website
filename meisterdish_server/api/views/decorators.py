@@ -47,7 +47,7 @@ def json_request(request):
             req='{"a":"b"}'
     else:
         req = request.body
-    
+    log.info(req) #Raw input
     if (req):
         try:
             return simplejson.loads(req, "ISO-8859-1")
