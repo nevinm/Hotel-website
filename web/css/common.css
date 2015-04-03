@@ -259,7 +259,7 @@ html,body{
 	float: left;
 	background-color: #f1f1f1;
 	min-height: 100%;
-	/*margin-bottom: -143px;*/
+	margin-bottom: -143px;
 }
 #account-mainWrapper{
 	width: 100%;
@@ -269,12 +269,12 @@ html,body{
 	background-color: #f1f1f1;
 	min-height: 100%;
 }
-/*#mainWrapper:after{
+#mainWrapper:after{
 	height: 143px;
 	content: "";
 	float: left;
 	width: 100%;
-}*/
+}
 
 .pullLeft{
 	float: left;
@@ -393,14 +393,11 @@ span.icon-menu{
 			&FOOTER
 \*==============================*/
 #footer{
-   width: 100%;
-   float: left;
-   position: absolute;
-   left: 0;
-   bottom: 0;
-   padding-top: 20px;
-   height: 175px;
-   background: #fff;
+	width: 100%;
+	float: left;
+	padding: 45px 0;
+	height: 143px;
+	background: #fff;
 }
 
 #footer ul{

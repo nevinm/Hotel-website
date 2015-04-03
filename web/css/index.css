@@ -18,12 +18,14 @@ SLIDER
 	padding: 20px 0 !important;
 }*/
 #slider-footer{
-	opacity: 0; 
-	width: 98.5%;
-	position: fixed;
-	bottom: 0px;
-	padding: 20px 0;
-}
+   width: 100%;
+   float: left;
+   position: absolute;
+   left: 0;
+   bottom: 0;
+   padding-top: 20px;
+   height: 175px;
+   background: #fff;}
 
 #slider-footer ul{
 	text-align: center;
