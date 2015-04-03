@@ -10,8 +10,8 @@
     <title>Meisterdish - Admin</title>
     <link rel="stylesheet" type="text/css" href="../../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../../css/fontello.css">
-    <link rel="stylesheet" type="text/css" href="../../css/common.css">
     <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
+    <link rel="stylesheet" type="text/css" href="../../css/common.css">
     <link rel="stylesheet" type="text/css" href="css/admin.css">
 </head>
 
@@ -24,10 +24,10 @@
             </div>
             <ul id="menu" class="pullRight">
                     <li>
-                        <a href="dashboard.html">USER LIST</a>
+                        <a href="#">USER LIST</a>
                     </li>
                     <li>
-                        <a href="#">CATEGORIES</a>
+                        <a href="categories.html">CATEGORIES</a>
                     </li>
                     <li class="bold login-signup">
                         <a href="">LOG IN</a>
@@ -47,17 +47,21 @@
                         <a id='logout'>LOG OUT</a>
                     </div>
                 </div>
-                <table id='categories' cellpadding="10" width='100%'>
+                <table id="userlist" class="display" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Categories</th>
+                            <th>Name</th>
+                            <th>Mobile</th>
+                            <th>Profile Image</th>
+                            <th>Id</th>
+                            <th>Credits</th>
+                            <th>Is Admin</th>
+                            <th>Email</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
-                <br>
-                <button id='add-category'>Add Categories</button>
+                <button id='add-category'>Add Users</button>
                 <div class='pagination'></div>
                 <div class='add-category-container'>
                     <div class='add-category-inner-container'>
@@ -71,10 +75,10 @@
         </div>
     </div>
     <script type="text/javascript" src='../../js/jquery.min.js'></script>
-    <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
     <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
+    <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
     <script type="text/javascript" src='../../js/common.js'></script>
-    <script type="text/javascript" src='js/categories.js'></script>
+    <script type="text/javascript" src='js/userlist.js'></script>
 </body>
 
 </html>
