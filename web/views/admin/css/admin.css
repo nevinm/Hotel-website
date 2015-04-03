@@ -11,7 +11,11 @@
 }
 .adminlogin-wrapper{
 	width: 400px;
-  margin: 0 auto;
+  	margin: 0 auto;
+    margin-top: 100px;
+}
+.admin-inner-wrapper{
+	margin-top: 150px;
 }
 .header-small {
   border-bottom: 1px solid #D0D0D0;
@@ -55,6 +59,7 @@
 }
 table, th, td {
     border: 1px solid black;
+    padding: 10px;
     border-collapse: collapse;
 }
 tbody, thead{
@@ -65,16 +70,18 @@ tbody, thead{
 }
 .add-category-container{
   display: none;
-  position:absolute;
-  left:0;
-  border-radius: 5px;
-  right:0;
-  margin-left:auto;
-  margin-right:auto;
-  text-align: center;
-  height: 100px;
   width: 400px;
+  position: absolute;
+  left: 50%;
+  margin-left: -200px;
+  border-radius: 5px;
+  background:rgb(247, 249, 249);
+  text-align: center;
+  height: auto;
   border: 1px solid black;
+}
+.add-category-inner-container{
+	padding: 10px 0px;
 }
 .add-category-container input{
 	margin-top: 10px;
@@ -97,7 +104,8 @@ tbody, thead{
   padding: 11px;
   height: 50px;
   top: 110px;
-  left: 46%;
+  margin-left: -100px;
+  left: 50%;
   text-align: center;
   border: 1px solid black;
 }
