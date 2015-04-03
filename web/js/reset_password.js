@@ -9,26 +9,30 @@ $(document).ready(function() {
     var resetPasswordCallback = {
         success: function(data,textStatus){
             $('#resetpassword-form')[0].reset();
+            userDetails = JSON.parse(data);
+            if(userDetails.status == -1){
+                showPopup(userDetails);
+            }
+            else{
             window.location.href='reset_passwordsuccess.html';
+            }
         },
         failure:function(XMLHttpRequest, textStatus, errorThrown){}
     }
     
 
-    $('#resetpassword-button').on('click',function(){   
-        newpassword = $('#newpassword').val();
-        confirmpassword=  $('#confirm-newpassword').val();
-        
-        if( newpassword ==  confirmpassword){
+    $('#resetpassword-button').on('click',function(e){   
+        e.preventDefault();
+        if($('form').valid()){
+            newpassword = $('#newpassword').val();
+            confirmpassword=  $('#confirm-newpassword').val();
             password = newpassword;
             resetingPassword(password,token);
-        }
-        else{
-            alert("password doesn't match");
-        }
+            }
     });
 
     function resetingPassword (password,token) {
+        alert("asd");
         var url = baseURL+'reset_password/';
         header = {};
         var userInfo = { 

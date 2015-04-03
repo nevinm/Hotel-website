@@ -139,15 +139,19 @@ def signup(request, data):
             
             log.info(email + " : Signed up ")
             if send_user_verification_mail(user):
+                log.info("Sent verification mail to " + user.email)
                 return json_response({"status":1, "message": "Succesfully signed up", "user":user_dic, "session_key":session.session_key})
             else:
+                log.error("Failed to send user verification mail : ")
                 return json_response({"status":-1, "message": "An error has occurred in sending verification mail. Please try later.", "user":user_dic, "session_key":session.session_key})
         except Exception as e:
             log.error(email + " : Failed to sign up "+e.message)
             raise Exception("Failed to sign up. Please try again later")
     except KeyError as field:
+        log.error("failed to signup "+str(field) + "missing")
         return json_response({"status":-1, "message":"Invalid input"})
     except Exception as e:
+        log.error("failed to signup "+e.message)
         return json_response({"status":-1, "message":e.message})
 
 def send_user_verification_mail(user):
@@ -168,7 +172,7 @@ def send_user_verification_mail(user):
                }
         msg = render_to_string('verify_user_email_template.html', dic)
     
-        mail([user.email], 'Verify you account for Meisterdish', msg )
+        mail([user.email], 'Verify your account for Meisterdish', msg )
         log.info("Sent verification mail to " + user.email)
     except Exception as e:
         log.error("Failed to send user verification mail : "+ e.message)
@@ -270,12 +274,9 @@ def change_password(request, data):
         session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
         user = User.objects.get(pk=session['user']['id'])
         
-        user_id = data['user_id'].strip()
+        user_id = user.id
         old_password = data['old_password'].strip()
         new_password = data['new_password'].strip()
-        
-        if int(user_id) != user.id:
-            return json_response({"status":-1, "message":"You are not authorized."})
         
         if  md5.new(old_password).hexdigest() != user.password:
             return json_response({"status":-1, "message":"The current password you have entered is incorrect."})
@@ -287,7 +288,7 @@ def change_password(request, data):
         log.info("user : " + user.email + " : changed password")
         return json_response({"status":1, "message":"Password changed successfully."})
     except Exception as e:
-        log.error("user id : " + user_id + " : change password failed : "+e.message)
+        log.error( "Change password failed : "+e.message)
         return json_response({"status":-1, "message":"Failed to change the password."})
 
 @check_input('POST')

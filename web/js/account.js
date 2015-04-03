@@ -54,5 +54,39 @@ $(document).ready(function() {
         changeContactInstance.sendPost(url, header, data, editContactCallback);
     }
 
+    //Change password API process
+    var changePasswordCallback = {
+        success: function(data,textStatus){
+            console.log(data);
+        },
+        failure:function(XMLHttpRequest, textStatus, errorThrown){}
+    }
+    $('#updateButton').on('click',function(e){
+        e.preventDefault();
+        if($('form').valid()){
+            changePassword();
+            }
+    });
+
+    function changePassword(){
+        alert("ASd");
+        var oldpassword = $('#old-password').val(),
+            newpassword = $('#new-password').val(),
+            confirmpassword = $('#confirm-password').val(),
+            remember = 1,
+            header = {
+            "session-key": localStorage["session_key"]
+            },
+            url = baseURL + "change_password/",
+
+            userData = {
+                "old_password": oldpassword,
+                "new_password": newpassword
+            },
+            data =  JSON.stringify(userData);
+            var changePasswordInstance = new AjaxHttpSender();
+            changePasswordInstance.sendPost(url, header, data, changePasswordCallback);
+         }
+
     redirectIfLoggedIn();
 });

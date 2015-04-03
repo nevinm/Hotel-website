@@ -67,7 +67,11 @@ class User(models.Model):
     facebook_login = models.BooleanField(default=False)
     credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)], default=0)
     
+    gift_cards = models.ManyToManyField("GiftCard", null=True)
+    
     need_sms_notification = models.BooleanField(default=True)
+    deleted = models.BooleanField(default=False)
+    
     created = models.DateTimeField()
     
     def save(self, *args, **kwargs):
@@ -231,21 +235,21 @@ class Order(models.Model):
         super(Order, self).save(*args, **kwargs)
     
 class GiftCard(models.Model):
-    user = models.ForeignKey(User)
     code = models.CharField(max_length=10)
     credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     
     def __unicode__(self):
-        return self.user.email + " : " + self.code
+        return self.code
 
 class GiftCardRedemption(models.Model):
+    user = models.ForeignKey(User)
     gift_card = models.ForeignKey(GiftCard, related_name="redemption")
     time = models.DateTimeField(null=True)
     
     def save(self, *args, **kwargs):
         if not self.id:
             self.created = datetime.datetime.now()
-        super(User, self).save(*args, **kwargs)
+        super(GiftCardRedemption, self).save(*args, **kwargs)
     
     def __unicode__(self):
         return self.gift_card.code + " : " + str(self.time)

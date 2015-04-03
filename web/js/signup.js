@@ -4,18 +4,28 @@ $(document).ready(function() {
                 window.location.href = '../index.html';
             } else {}
         }
-        //signup process
-    var signupCallback = {
-        success: function(data, textStatus) {
-            $('.signup-formcontainer')[0].reset();
-            alert("Please proceed to login.");
-            window.location.href = 'login.html';
-        },
-        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-    }
-    $('#signup-button').on('click', function() {
-        signingup();
-    });
+
+	//signup process
+	var signupCallback = {
+		success: function(data,textStatus){
+			$('.signup-formcontainer')[0].reset();
+			userDetails = JSON.parse(data);
+			if(userDetails.status == -1){
+				showPopup(userDetails);
+			}
+			else{
+			window.location.href='login.html';
+			}
+		},
+		failure:function(XMLHttpRequest, textStatus, errorThrown){}
+	}
+	$('#signup-button').on('click',function(e){
+			e.preventDefault();
+		   if($('form').valid()){
+		   		signingup();
+   			}
+		
+	});
 
     function signingup() {
         var url = baseURL + 'signup/',

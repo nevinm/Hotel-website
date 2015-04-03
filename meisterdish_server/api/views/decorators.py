@@ -43,10 +43,11 @@ def check_input(method, admin=False):
 def json_request(request):
     if (request.method == 'GET'):
         req = request.GET
-        if not req:
-            req='{"a":"b"}'
+        return req
     else:
         req = request.body
+        if not req:
+            req='{"a":"b"}'
     
     if (req):
         try:

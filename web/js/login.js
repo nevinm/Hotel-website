@@ -15,14 +15,19 @@
 
     //Login process
     var loginCallback = {
-        success: function(data, textStatus) {
-            var userDetails = JSON.parse(data),
-            user_name = userDetails.user.first_name+ ' '+ userDetails.user.last_name;
-            localStorage['username']=user_name;
-            localStorage['session_key']=userDetails.session_key;
-            localStorage['loggedIn']=true;
-            checkLoggedIn();
-            window.location.href = 'menu.html'
+        success: function(data, textStatus) { 
+            userDetails = JSON.parse(data);
+            if(userDetails.status == -1){
+                showPopup(userDetails);
+            }
+            else{
+                var user_name = userDetails.user.first_name+ ' '+ userDetails.user.last_name;
+                localStorage['username']=user_name;
+                localStorage['session_key']=userDetails.session_key;
+                localStorage['loggedIn']=true;
+                checkLoggedIn();
+                window.location.href = 'menu.html'
+            }
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
@@ -38,7 +43,8 @@
 $(document).ready(function() {
 
     //login form submit
-    $("#login-form a.btn").on('click', function(){
+    $("#login-button").on('click', function(e){
+        e.preventDefault();
         loggingIn();
     });
 
