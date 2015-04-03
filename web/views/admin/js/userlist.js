@@ -24,6 +24,29 @@ $(document).ready(function() {
         //By deafault call 1 as starting.
     getUserlist(1);
 
+     // Activate User
+    // var activateUserCallback = {
+    //     success: function(data, textStatus) {
+    //         var activateUserData = JSON.parse(data);
+    //         populateUserlist(activateUserData);
+    //     },
+    //     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    // }
+
+    // function activateUser() {
+    //     var url = baseURL + 'cms/get_users/';
+    //     header = {
+    //             "session-key": localStorage['admin_session_key']
+    //         },
+    //         params = {
+    //             "nextPage": nextPage
+    //         },
+    //         data = JSON.stringify(params);
+
+    //     var getUserlistInstance = new AjaxHttpSender();
+    //     getUserlistInstance.sendPost(url, header, data, activateUserCallback);
+    // }
+
     function populateUserlist(userListData) {
         $("#userlist tbody").empty()
         $.each(userListData.aaData, function(key, value) {
@@ -35,8 +58,9 @@ $(document).ready(function() {
                 "<td class='is_admin'>" + value.is_admin + "</td>" +
                 "<td class='mobile'>" + value.mobile + "</td>" +
                 "<td class='profile_image'>" + value.profile_image + "</td>" +
+                "<td class='profile_image'><button class='status down'>Activated</button></td>" +
                 "</tr>");
-            
+
             $(".pagination").pagination({
                 items: userListData.total_count,
                 itemsOnPage: userListData.per_page,
@@ -47,6 +71,17 @@ $(document).ready(function() {
                 }
             });
         })
+            
+            $(".status").click(function() { 
+                if($(this).hasClass("down")){
+                    $(this).removeClass("down");
+                    $(this).text("Deactivated");               
+                }
+                else{
+                    $(this).addClass("down");
+                    $(this).text("Activated");
+                }
+            });
     }
  })
    

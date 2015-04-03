@@ -109,3 +109,24 @@ tbody, thead{
   text-align: center;
   border: 1px solid black;
 }
+
+/*Userlist page*/
+.status{
+	background: #ccc;
+    cursor: pointer;
+    background-color:red;
+    border-top: solid 2px #eaeaea;
+    border-left: solid 2px #eaeaea;
+    border-bottom: solid 2px #777;
+    border-right: solid 2px #777;
+    padding: 5px 5px;  
+	color: white;
+}
+.status.down{
+	background: #bbb;
+    border-top: solid 2px #777;
+    border-left: solid 2px #777;
+    border-bottom:solid 2px  #eaeaea;
+    border-right: solid 2px #eaeaea;
+    background-color:green;
+}

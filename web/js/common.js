@@ -146,6 +146,7 @@ $(document).ready(function() {
             }
         });
     });
+
 $.validator.addMethod('letters', function(value) {
        return value.match(/^[- a-zA-Z]+$/);
-   });
+});
