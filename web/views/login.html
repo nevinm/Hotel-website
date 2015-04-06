@@ -77,7 +77,10 @@
                                     SIGNUP
                             </a>
                         </span>
-                        <div class="fb-login-button"></div>
+                        <div class="fb-signupButton">
+                            <a onclick="checkLoginState();"><img src="../images/fb_login.png" border="0" alt=""></a>
+                            <div id='status'></div>
+                        </div>
                 </div>
                 <span class="or">OR</span>
                 <form id='login-form' accept-charset='UTF-8'>
@@ -91,7 +94,6 @@
                     </div>
                     <span class='forgot-password body-text-small'><a href="forgot_password.html">Forgot your password?</a></span>
                     <div class="notify">
-                        <input type="checkbox" name="notification"><span class="body-text-small">Is Admin?</span>
                     </div>
                     <div class='login-button'>
                       <input class="btn btn-large-primary medium-green" type='Submit' id="login-button" value="LOGIN">
@@ -119,6 +121,7 @@
     <script type="text/javascript" src='../js/jquery.validate.min.js'></script>
     <script type="text/javascript" src='../js/common.js'></script> 
     <script type="text/javascript" src='../js/login.js'></script>
+    <script type="text/javascript" src='../js/fb_access.js'></script>
 </body>
 
 </html>
