@@ -146,6 +146,7 @@ def get_users(request, data):
                               "profile_image" : settings.MEDIA_URL + str(user.profile_image),
                               "is_admin":True if user.role.id == 1 else False,
                               "credits" : user.credits,
+                              "is_active":True if user.is_active else False,
                               })
         
         return json_response({
@@ -199,6 +200,7 @@ def get_users_2(request, data):
                               "profile_image" : settings.MEDIA_URL + str(user.profile_image),
                               "is_admin":True if user.role.id == 1 else False,
                               "credits" : user.credits,
+                              "is_active":True if user.is_active else False,
                               })
         
         return json_response({
