@@ -145,7 +145,7 @@ def get_users(request, data):
                               "mobile" : "Not Available" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
                               "profile_image" : "Not Available" if str(user.profile_image).strip() == "" else settings.MEDIA_URL + str(user.profile_image),
                               "is_admin": "Yes" if user.role.id == 1 else "No",
-                              "credits" : user.credits,
+                              "credits" : "$ "+str(user.credits),
                               "is_active": user.is_active,
                               })
         
@@ -199,7 +199,7 @@ def get_users_2(request, data):
                               "mobile" : "Not Available" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
                               "profile_image" : "Not Available" if str(user.profile_image).strip() == "" else settings.MEDIA_URL + str(user.profile_image),
                               "is_admin": "Yes" if user.role.id == 1 else "No",
-                              "credits" : user.credits,
+                              "credits" : "$ "+str(user.credits),
                               "is_active": user.is_active,
                               })
         
