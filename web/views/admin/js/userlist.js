@@ -1,5 +1,6 @@
 redirectIfAdminLoggedIn();
 $(document).ready(function() {
+    var userActive;
     //Get UserList
     var getUserlistCallback = {
         success: function(data, textStatus) {
@@ -27,10 +28,16 @@ $(document).ready(function() {
 
     // Activate User
     var updateUserStatusCallback = {
-        success: function(data, textStatus) {
+        success: function(data, textStatus){
             var updateUserStatusData = JSON.parse(data);
             debugger;
-            populateUserlist(updateUserStatusData);
+            if(updateUserStatusData.is_active==false){
+                userActive=false;
+            }
+            else{
+                userActive=true;
+            }
+            // populateUserlist(updateUserStatusData);
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
@@ -42,7 +49,7 @@ $(document).ready(function() {
             },
             params = {
                 "id": id,
-                'status':status
+                'is_active': status
             },
             data = JSON.stringify(params);
 
@@ -63,41 +70,39 @@ $(document).ready(function() {
                 "<td class='profile_image'>" + value.profile_image + "</td>" +
                 "</tr>");
 
-                if(value.is_active){
-                    $("tbody .row:last").append("<td class='profile_image'><button data-id='"+value.id+"' class='status down'>Activate</button></td>");
-                }else{
-                    $("tbody .row:last").append("<td class='profile_image'><button data-id='"+value.id+"' class='status'>Deactivate</button></td>")
-                }
+            if (value.is_active) {
+                $("tbody .row:last").append("<td class='profile_image'><button data-id='" + value.id + "' class='status down'>Activate</button></td>");
+            } else {
+                $("tbody .row:last").append("<td class='profile_image'><button data-id='" + value.id + "' class='status'>Deactivate</button></td>")
+            }
         })
-            $(".pagination").pagination({
-                items: userListData.total_count,
-                itemsOnPage: userListData.per_page,
-                currentPage: userListData.current_page,
-                cssStyle: 'light-theme',
-                onPageClick: function(pageNumber, event) {
-                    getUserlist(pageNumber);
-                }
-            });
-            
-            $(".status").click(function() {
-                var id, status;
-                if($(this).hasClass("down")){
-                    debugger;
-                    id=$(this).data().id;
-                    status=0;
-                    updateUserStatus(id, status);              
-                    $(this).removeClass("down");
-                    $(this).text("Deactivate"); 
-                }
-                else{
-                    id=$(this).data().id;
-                    status=1;
-                    debugger;
-                    updateUserStatus(id, status)
-                    $(this).addClass("down");
-                    $(this).text("Activate");
-                }
-            });
+        $(".pagination").pagination({
+            items: userListData.total_count,
+            itemsOnPage: userListData.per_page,
+            currentPage: userListData.current_page,
+            cssStyle: 'light-theme',
+            onPageClick: function(pageNumber, event) {
+                getUserlist(pageNumber);
+            }
+        });
+
+        $(".status").click(function() {
+            var id, status;
+            if ($(this).hasClass("down")) {
+                id = $(this).data().id;
+                status = false;
+                updateUserStatus(id, status);
+                $(this).removeClass("down");
+                $(this).text("Deactivate");
+             
+                
+            } else {
+                id = $(this).data().id;
+                status = true;
+                updateUserStatus(id, status)
+   $(this).addClass("down");
+                $(this).text("Activate");
+            }
+        });
     }
- })
-   
+})
