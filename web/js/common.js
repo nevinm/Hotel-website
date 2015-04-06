@@ -51,6 +51,9 @@ $(document).ready(function() {
     }
     $('#close').on("click",function(){
         $('.popup-wrapper').hide();
+        if($(".facebook-login").length){
+            window.location.href='menu.html'
+        }
     });
    
    

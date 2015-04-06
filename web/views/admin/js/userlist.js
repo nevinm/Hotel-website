@@ -26,16 +26,16 @@ $(document).ready(function() {
     getUserlist(1);
 
     // Activate User
-    var activateUserCallback = {
+    var updateUserStatusCallback = {
         success: function(data, textStatus) {
-            var activateUserData = JSON.parse(data);
+            var updateUserStatusData = JSON.parse(data);
             debugger;
-            populateUserlist(activateUserData);
+            populateUserlist(updateUserStatusData);
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
 
-    function activateUser(id, status) {
+    function updateUserStatus(id, status) {
         var url = baseURL + 'cms/change_user_status/';
         header = {
                 "session-key": localStorage['session_key']
@@ -47,7 +47,7 @@ $(document).ready(function() {
             data = JSON.stringify(params);
 
         var getUserlistInstance = new AjaxHttpSender();
-        getUserlistInstance.sendPost(url, header, data, activateUserCallback);
+        getUserlistInstance.sendPost(url, header, data, updateUserStatusCallback);
     }
 
     function populateUserlist(userListData) {
@@ -64,9 +64,9 @@ $(document).ready(function() {
                 "</tr>");
 
                 if(value.is_active){
-                    $("tbody .row:last").append("<td class='profile_image'><button data-id='"+value.id+"' class='status down'>Activated</button></td>");
+                    $("tbody .row:last").append("<td class='profile_image'><button data-id='"+value.id+"' class='status down'>Activate</button></td>");
                 }else{
-                    $("tbody .row:last").append("<td class='profile_image'><button data-id='"+value.id+"' class='status'>Deactivated</button></td>")
+                    $("tbody .row:last").append("<td class='profile_image'><button data-id='"+value.id+"' class='status'>Deactivate</button></td>")
                 }
         })
             $(".pagination").pagination({
@@ -85,16 +85,17 @@ $(document).ready(function() {
                     debugger;
                     id=$(this).data().id;
                     status=0;
-                    // activateUser(id, status);              
+                    updateUserStatus(id, status);              
                     $(this).removeClass("down");
-                    $(this).text("Deactivated"); 
+                    $(this).text("Deactivate"); 
                 }
                 else{
                     id=$(this).data().id;
                     status=1;
-                    // activateUser(id, status)
+                    debugger;
+                    updateUserStatus(id, status)
                     $(this).addClass("down");
-                    $(this).text("Activated");
+                    $(this).text("Activate");
                 }
             });
     }

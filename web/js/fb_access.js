@@ -55,6 +55,39 @@
 
   };
 
+var loginFBCallback = {
+    success: function(data,textStatus){
+      debugger;
+      userDetails = JSON.parse(data);
+      if(userDetails.status == -1){
+        showPopup(userDetails);
+      }
+      else{
+        showPopup(userDetails);
+        var user_name = userDetails.user.first_name+ ' '+ userDetails.user.last_name;
+        localStorage['username']=user_name;
+        localStorage['session_key']=userDetails.session_key;
+        localStorage['loggedIn']=true;
+        checkLoggedIn();
+      }
+    },
+    failure:function(XMLHttpRequest, textStatus, errorThrown){}
+  }
+
+function loginFB(fb_id, email) {
+    var url = baseURL + 'login/',
+        header = {};
+      var userInfo = {
+          "username": email,
+          "fb_id": fb_id,
+          "remember":1
+      },
+    data = JSON.stringify(userInfo);
+
+    var loginFBInstance = new AjaxHttpSender();
+    loginFBInstance.sendPost(url, header, data, loginFBCallback);
+}
+
   // Load the SDK asynchronously
   (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -69,9 +102,7 @@
   function testAPI() {
     FB.api('/me', function(response) {
       if($('title').text().split('-')[1]==' Login'){
-        $("#username").val(response.email);
-        $("#username").val(response.email);
-        $("#login-button").trigger("click");
+          loginFB(response.id, response.email)
       }
       else{
         localStorage['fb-id']=JSON.stringify(response.id);

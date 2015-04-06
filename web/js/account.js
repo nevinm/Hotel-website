@@ -67,6 +67,9 @@ $(document).ready(function() {
         success: function(data, textStatus) {
             userDetails = JSON.parse(data);
             showPopup(userDetails);
+            newName=$("#change-contact").find("input[name=firstname]").val();
+            $('#navbar-username a').text(newName);
+            localStorage['username']=newName;
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
