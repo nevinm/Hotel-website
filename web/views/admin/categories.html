@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Meisterdish - Admin</title>
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../css/fontello.css">
+    <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
+    <link rel="stylesheet" type="text/css" href="../../css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+</head>
+
+<body>
+    <div id="admin-mainWrapper">
+        <header id="header">
+            <div class="contentArea">
+                <a href="../../index.html"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
+                </a>
+            </div>
+            <ul id="menu" class="pullRight">
+                    <li>
+                        <a href="userlist.html">USER LIST</a>
+                    </li>
+                    <li>
+                        <a href="#">CATEGORIES</a>
+                    </li>
+                    <li class="bold login-signup">
+                        <a href="">LOG IN</a>
+                    </li>
+                    <li class='login-signup'>
+                        <a href="" class="btn btn-small-secondary">SIGN UP</a>
+                    </li>
+                    <li id="navbar-username" class="bold">
+                        <a href='#'></a>
+                    </li>
+                </ul>
+        </header>
+        <div id="page-container">
+            <div class='admin-inner-wrapper'>
+                <div class="accountNav">
+                    <div class="logout body-text-bold">
+                        <a id='logout'>LOG OUT</a>
+                    </div>
+                </div>
+                <table id='categories' cellpadding="10" width='100%'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Categories</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <br>
+                <button id='add-category'>Add Categories</button>
+                <div class='pagination'></div>
+                <div class='add-category-container'>
+                    <div class='add-category-inner-container'>
+                        <input class='new-category' type='text' placeholder='Add Category'></input>
+                        <button id='add-confirm'>Add</button>
+                        <button id='add-cancel'>Cancel</button>
+                    </div>
+                </div>
+                <div class='update-category-container'>
+                    <div class='add-category-inner-container'>
+                        <input class='new-category' data-id='' type='text' placeholder='Add Category'></input>
+                        <button id='update-confirm'>Update</button>
+                        <button id='update-cancel'>Cancel</button>
+                    </div>
+                </div>
+                <div class='add-status'></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src='../../js/jquery.min.js'></script>
+    <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
+    <script type="text/javascript" src='../../js/jquery.validate.min.js'></script>
+    <script type="text/javascript" src='../../js/common.js'></script>
+    <script type="text/javascript" src='js/categories.js'></script>
+</body>
+
+</html>

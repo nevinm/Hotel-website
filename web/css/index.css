@@ -14,16 +14,18 @@ SLIDER
 			&slider-footer
 \*==============================*/
 /*Footer is Unique to the slider as it differs from the other common footers */
-.slider-footer{
+/*.slider-footer{
 	padding: 20px 0 !important;
-}
+}*/
 #slider-footer{
-	opacity: 0; 
-	width: 98.5%;
-	position: fixed;
-	bottom: 0px;
-	padding: 20px 0;
-}
+   width: 100%;
+   float: left;
+   position: absolute;
+   left: 0;
+   bottom: 0;
+   padding-top: 20px;
+   height: 175px;
+   background: #fff;}
 
 #slider-footer ul{
 	text-align: center;
@@ -80,28 +82,11 @@ SLIDER
 	background-color: #f1f1f1;
 	min-height: 100%;
 }
-/*#fullpage{
-	position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-}
-#fullpage img{
-	position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  min-width: 50%;
-  min-height: 50%;
-}*/
 #slide1 .slide-description{
 	  position: absolute;
 	  top: 33%;
 	  margin-left: 4%;
-	}
+}
 .slide-description .body-text-small{
 	font-weight: bold;
 }
@@ -109,9 +94,9 @@ SLIDER
 	text-transform: uppercase;
 }
 #section2 .slide-description{
-	position: absolute;
-  	top: 64%;
-  	margin-left: 20%;
+    position: absolute;
+    top: 47%;
+    margin-left: 6%;
 }
 #section3 .slide-description{
 	position: absolute;
@@ -127,22 +112,36 @@ SLIDER
     margin-right: 5px;
     color: #9B9B9B;
 }
-/*.slide{
-	position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+
+#section0,
+#section1,
+#section2,
+#section3{
+	background-size: cover;
 }
-.slide img{
-	position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  min-width: 50%;
-  min-height: 50%;
-}*/
 
-
+#slide1{
+	background: url(../images/homepageslider/homepage_1.jpg) center top no-repeat;
+	background-position: fixed;
+	padding: 6% 0 0 0;
+}
+#slide2{
+	background: url(../images/homepageslider/homepage_12.jpg) center top no-repeat;
+	background-position: fixed;
+	padding: 6% 0 0 0;
+}
+#slide3{
+	background: url(../images/homepageslider/homepage_2.jpg) center top no-repeat;
+	background-position: fixed;
+	padding: 30% 0 0 0;
+}
+#slide4{
+	background: url(../images/homepageslider/homepage_14.jpg) center top no-repeat;
+	background-position: fixed;
+	padding: 30% 0 0 0;
+}
+#section3{
+	background: url(../images/homepageslider/map_banner.jpg) center top no-repeat;
+	background-position: fixed;
+	padding: 6% 0 0 0;
+}

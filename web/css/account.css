@@ -53,6 +53,9 @@
   bottom: 7px;
   left: 35px;
 }
+.account-settings li{
+	margin-bottom: 10px;
+}
 /*==================================*\
 			&ACCORDION
 \*==================================*/
@@ -125,7 +128,7 @@ form.form{
 \*==================================*/
 .new-email,.retype-email,.password{
 	width: 300px;
-	padding: 20px 20px;
+	position: relative;
 }
 span.body-text-small{
 	padding: 10px 20px;

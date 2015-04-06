@@ -1,10 +1,16 @@
-$(document).ready(function() {
-    function redirectIfLoggedIn(){
-        if (localStorage['loggedIn'] == 'true') 
-        {
-            window.location.href='../index.html';
-        }
-        else{}
+    function loggingIn() {
+        var url = baseURL + "login/", header = {};
+        var username = $("#username").val(),
+        password=$("#password").val(), remember=1,
+        userData={
+            "username" : username,
+            "password" : password,
+            "remember" : remember
+        },
+        data=JSON.stringify(userData);
+        $("#login-form")[0].reset();
+        var loginInstance = new AjaxHttpSender();
+        loginInstance.sendPost(url, header, data, loginCallback);
     }
 
     //Login process
@@ -26,27 +32,20 @@ $(document).ready(function() {
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
 
+    function redirectIfLoggedIn(){
+        if (localStorage['loggedIn'] == 'true') 
+        {
+            window.location.href='../index.html';
+        }
+        else{}
+    }
+    redirectIfLoggedIn();
+
+$(document).ready(function() {
     //login form submit
     $("#login-button").on('click', function(e){
         e.preventDefault();
         loggingIn();
     });
-
-    function loggingIn() {
-        var url = baseURL + "login/", header = {};
-        var username = $("#username").val(),
-        password=$("#password").val(), remember=1,
-        userData={
-            "username" : username,
-            "password" : password,
-            "remember" : remember
-        },
-        data=JSON.stringify(userData);
-        $("#login-form")[0].reset();
-        var loginInstance = new AjaxHttpSender();
-        loginInstance.sendPost(url, header, data, loginCallback);
-    }
-
-    redirectIfLoggedIn();
 });
 

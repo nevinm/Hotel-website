@@ -1,6 +1,9 @@
 /*=======================*\
 	   &ADMIN-LOGIN
 \*=======================*/
+input[type="text"], input[type="email"], input[type="password"]{
+	color: black;
+}
 #admin-mainWrapper{
 	width: 100%;
 	border-right: 10px solid #fff;
@@ -11,7 +14,11 @@
 }
 .adminlogin-wrapper{
 	width: 400px;
-  margin: 0 auto;
+  	margin: 0 auto;
+    margin-top: 100px;
+}
+.admin-inner-wrapper{
+	margin-top: 150px;
 }
 .header-small {
   border-bottom: 1px solid #D0D0D0;
@@ -43,4 +50,87 @@
 }
 .adminlogin-container .button{
 	padding-bottom: 20px;
+}
+.logout{
+	margin-left: 85%;
+}
+
+
+/*Category Page*/
+#categories{
+	margin-top: 50px;
+}
+#categories .update{
+	float: right;
+	margin-right: 10px;
+}
+table, th, td {
+    border: 1px solid black;
+    padding: 10px;
+    border-collapse: collapse;
+}
+tbody, thead{
+	text-align: center;
+}
+.pagination{
+	float: right;
+}
+.add-category-container, .update-category-container{
+  display: none;
+  width: 400px;
+  position: absolute;
+  left: 50%;
+  margin-left: -200px;
+  border-radius: 5px;
+  background:rgb(247, 249, 249);
+  text-align: center;
+  height: auto;
+  border: 1px solid black;
+}
+.add-category-inner-container{
+	padding: 10px 0px;
+}
+.add-category-container input{
+	margin-top: 10px;
+	width: 80%;
+	height: 35px;
+}
+.add-category-container button{
+	width: 30%;
+	height: 30px;
+	margin-top: 10px;
+}
+.add-status{
+  position: absolute;
+  display: none;
+  border-radius: 5px;
+  width: 200px;
+  padding: 11px;
+  height: 50px;
+  top: 110px;
+  margin-left: -100px;
+  left: 50%;
+  text-align: center;
+  border: 1px solid black;
+}
+
+/*Userlist page*/
+.status{
+	background: #ccc;
+    cursor: pointer;
+    background-color:red;
+    border-top: solid 2px #eaeaea;
+    border-left: solid 2px #eaeaea;
+    border-bottom: solid 2px #777;
+    border-right: solid 2px #777;
+    padding: 5px 5px;  
+	color: white;
+}
+.status.down{
+	background: #bbb;
+    border-top: solid 2px #777;
+    border-left: solid 2px #777;
+    border-bottom:solid 2px  #eaeaea;
+    border-right: solid 2px #eaeaea;
+    background-color:green;
 }

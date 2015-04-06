@@ -16,6 +16,7 @@
 	width: 400px;
   overflow: auto;
   background-color: #fff;
+  margin-top: 100px;
 }
 .login-wrapper h3{
 	color: #6B6B6B;
@@ -42,13 +43,23 @@
 .username-wrapper input, .password-wrapper input{
   width: 60%;
 }
-
+.fb-signupButton img{
+  
+}
+span.forgot-password{
+  margin: 10px 0px;
+  float: left;
+}
+.password-wrapper label{
+  margin: 10px 0px;
+}
 /*==================================*\
       &SIGNUP
 \*==================================*/
 .signup-wrapper{
   width: 400px;
   margin: 0 auto;
+  margin-top: 100px;
 }
 .signup-container{
   background-color: #ffffff;
@@ -57,10 +68,13 @@
   float: left;
   width: 100%;
 }
+.fb-signupButton{
+  margin-top: 10px;
+}
 .facebook-signup,.facebook-login{
   font-family: 'BrandonGrotesque-Bold';
   font-size: 12px;
-  padding: 30px 0 30px 35px;
+  padding: 20px 0 10px 35px;
   color: #737475;
 }
 span.login-link {
@@ -92,6 +106,7 @@ form.signup-formcontainer {
 .login-button{
   width: 100%;
   float: left;
+  /*padding: 10px 0px 20px 0px;*/
   padding: 10px 0;
 }
 .email-wrapper .signup-input:nth-child(2){
@@ -99,7 +114,6 @@ form.signup-formcontainer {
 }
 .email-wrapper .signup-input{
     width: 235px;
-
 }
 
 /*==================================*\
