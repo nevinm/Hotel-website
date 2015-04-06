@@ -59,9 +59,9 @@ $(document).ready(function() {
     }
     $('#close').on("click",function(){
         $('.popup-wrapper').hide();
-        if($(".signup-redirect")){
-            window.location.href = 'login.html'
-        }
+        // if($(".signup-redirect")){
+        //     window.location.href = 'login.html'
+        // }
     });
    
    
