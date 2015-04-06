@@ -5,14 +5,14 @@ var baseURL = 'http://meisterdish.qburst.com/backend/api/',
 var $userentry = $('.login-signup');
 
 function checkLoggedIn() {
-    if(currentPage== "Meisterdish - Admin"){
-        if(localStorage['admin_loggedIn'] == 'true'){
-            $userentry.hide();
-            $('#navbar-username a').text(localStorage['admin_username']);
-        }
-    }
-    else{
-        if (localStorage['loggedIn'] == 'true') {
+    // if(currentPage== "Meisterdish - Admin"){
+    // if(localStorage['loggedIn'] == 'true'){
+    //     $userentry.hide();
+    //     $('#navbar-username a').text(localStorage['admin_username']);
+    // }
+    // }
+    // else{
+        if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
             $userentry.hide();
             $('#navbar-username a').text(localStorage['username']);
             $(".account-header h2").text(localStorage['username'] + "'S ACCOUNT");
@@ -22,19 +22,12 @@ function checkLoggedIn() {
             $("#logout").hide();
             $('#menu').removeClass('menuPadding');
         }
-    }
-
+    // }
 }
 
 $(document).ready(function() {
     //Logout process
     $("#logout").on('click', function() {
-        if(currentPage== "Meisterdish - Admin"){
-            localStorage.removeItem('admin_username');
-            localStorage.removeItem('admin_session_key');
-            localStorage['admin_loggedIn'] = false;
-            window.location.href= '../../index.html';
-        } else {
             $('#navbar-username a').text('');
             $userentry.show();
             $('#menu').removeClass('menuPadding');
@@ -42,6 +35,10 @@ $(document).ready(function() {
             localStorage.removeItem('username');
             localStorage.removeItem('session_key');
             localStorage['loggedIn'] = false;
+            localStorage['admin_loggedIn'] = false;
+        if(currentPage== "Meisterdish - Admin"){
+            window.location.href= '../../index.html';
+        } else {
             window.location.href = '../index.html';
         }
     });

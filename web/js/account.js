@@ -1,5 +1,5 @@
 function redirectIfLoggedIn() {
-    if (localStorage['loggedIn'] == 'true') {} else {
+    if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {} else {
         window.location.href = '../index.html';
     }
 }
@@ -12,14 +12,25 @@ function dollarConvert(value) {
 function profileAutoPopulate(){
     var userDetails= JSON.parse(localStorage['user_profile']);
     if(currentPage=='Meisterdish - Change Contact'){
-        $("#change-contact input[name='firstname']").val(userDetails.name);
+        $("#change-contact input[name='firstname']").val(userDetails.first_name);
+        $("#change-contact input[name='lastname']").val(userDetails.last_name);
         $("#change-contact input[name='phonenumber']").val(userDetails.mobile);
+    }
+}
+
+function showAdminLink(){
+    if(localStorage['admin_loggedIn']=='true'){
+        $(".admin-button").show();
+    }
+    else{
+        $(".admin-button").hide();
     }
 }
     //Get profile API process
 var getProfileCallback = {
     success: function(data, textStatus) {
         // if (data.status == 1) {
+            localStorage['user_profile']=data;
             var userDetails = JSON.parse(data);
             $(".cart span").text(userDetails.meals_in_cart_count);
             $(".account-credit").text(dollarConvert(userDetails.credits));
@@ -128,4 +139,5 @@ $(document).ready(function() {
     redirectIfLoggedIn();
     getProfile();
     profileAutoPopulate();
+    showAdminLink();
 });

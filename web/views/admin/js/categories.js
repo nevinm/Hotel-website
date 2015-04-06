@@ -1,3 +1,4 @@
+redirectIfAdminLoggedIn();
 $(document).ready(function() {
     //Get Categories
     var getCategoriesCallback = {
@@ -11,7 +12,7 @@ $(document).ready(function() {
     function getCategories(nextPage) {
             var url = baseURL + 'cms/get_categories/';
             header = {
-                    "session-key": localStorage['admin_session_key']
+                    "session-key": localStorage['session_key']
                 },
                 params = {
                     "nextPage": nextPage
@@ -43,7 +44,7 @@ $(document).ready(function() {
         if (confirm('Are you sure you want to delete this category?')) {
             var url = baseURL + 'cms/remove_category/';
             header = {
-                    "session-key": localStorage['admin_session_key']
+                    "session-key": localStorage['session_key']
                 },
                 params = {
                     "id": id
@@ -73,7 +74,7 @@ $(document).ready(function() {
     function updateCategories(id, category) {
         var url = baseURL + 'cms/update_category/';
         header = {
-                "session-key": localStorage['admin_session_key']
+                "session-key": localStorage['session_key']
             },
             params = {
                 "id": id,
@@ -113,7 +114,6 @@ $(document).ready(function() {
         success: function(data, textStatus) {
             var data = JSON.parse(data);
             if (data.status) {
-                debugger;
                 totalPage=$('.pagination').pagination('getPagesCount');
                 $(".add-status").text("Status:" + data.message);
                 $(".add-status").show();
@@ -134,7 +134,7 @@ $(document).ready(function() {
         var newCategory = $(".new-category").val(),
             url = baseURL + 'cms/add_category/',
             header = {
-                "session-key": localStorage['admin_session_key']
+                "session-key": localStorage['session_key']
             },
             params = {
                 "category": newCategory
