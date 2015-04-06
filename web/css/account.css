@@ -11,15 +11,17 @@
 .account-container{
 	background-color: #ffffff;
 	border: 1px solid #D0D0D0;
-	border-radius: 3px;
+	border-radius: 5px;
 	margin-top: 40px;
 	float: left;
 	width: 100%;
+	box-shadow: 0 0 7px rgb(202, 202, 202);
 }
 .account-header{
-	border-bottom: 1px solid #ADADAD;
+	border-bottom: 1px solid #D0D0D0;
 	padding: 10px 10px 10px 20px;
 	background-color: #f7f7f7;
+	border-radius: 7px 7px 0 0;
 }
 .account-settings{
 	padding: 10px 10px 150px 20px;
@@ -44,6 +46,7 @@
   width: 75%;
   margin: 0 auto;
   padding-top: 23px;
+  overflow: auto;
 }
 .backNav {
   float: left;
@@ -52,10 +55,10 @@
 .backNav span {
   font-family: 'BrandonGrotesque-Regular';
   font-size: 18px;
-  position: absolute;
+  position: relative;
   width: 188px;
   bottom: 7px;
-  left: 35px;
+  left: 10px;
 }
 .account-settings li{
 	margin-bottom: 10px;
@@ -107,6 +110,7 @@ ul.accordion-content li {
 .account-wrapper{
 	width: 75%;
 	margin: 0 auto;
+	overflow: auto;
 }
 form.form{
 	width: 60%;
@@ -137,11 +141,14 @@ form.form{
  #change-password .password{
  	padding-top: 15px;
  }
+ #changecontact-container,#changeemail-container,#changepassword-container {
+  width: 400px;
+}
 /*==================================*\
 			&email-form
 \*==================================*/
 .new-email,.retype-email,.password{
-	width: 300px;
+	width: 280px;
 	position: relative;
 }
 span.body-text-small{
@@ -174,12 +181,9 @@ span.body-text-small{
 	padding-top: 20px;
 	padding-left: 20px;
 }
-#change-contact .last-name{
-	margin-left: 45px;
-}
-#change-contact .phone-num{
+#change-contact .phone-num,.last-name{
 	padding-top: 10px;
-	width: 100%;
+
 }
 #change-contact .phone-num .arrange{
 	width: 270px;
@@ -192,6 +196,7 @@ span.body-text-small{
 \*==================================*/
 #change-email span.body-text-small{
 	padding-left: 0px;
+	width: 357px;
 }
 #change-email{
 	padding-top: 20px;
