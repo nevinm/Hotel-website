@@ -9,6 +9,7 @@ from datetime import datetime
 from django.db.models import Q
 from django.template.loader import render_to_string
 from decorators import *
+import sys, traceback
 
 log = logging.getLogger('api')
 
@@ -181,6 +182,7 @@ def send_user_verification_mail(user):
 
 @check_input('GET')
 def verify_user(request, data, token):
+    login_url = settings.SITE_URL + "views/login.html"
     try:
         token = token.strip()
         
@@ -191,19 +193,19 @@ def verify_user(request, data, token):
         user.save()
         
         log.info("Verified user "+user.email)
-        return HttpResponseRedirect("http://"+request.META['HTTP_HOST'] + "/login.html?verify=true")
+        return HttpResponseRedirect(login_url+"?verify=true")
     
     except KeyError as field:
         log.error("verify request request missing "+field.message)
-        return HttpResponseRedirect("http://"+request.META['HTTP_HOST'] + "/login.html?verify=false")
+        return HttpResponseRedirect(login_url+"?verify=false")
 
     except User.DoesNotExist:
         log.error("Verify : No user found with given token")
-        return HttpResponseRedirect("http://"+request.META['HTTP_HOST'] + "/login.html?verify=false")
+        return HttpResponseRedirect(login_url+"?verify=false")
 
     except Exception as e:
         log.error("Validate token : Exception : "+e.message)
-        return HttpResponseRedirect("http://"+request.META['HTTP_HOST'] + "/login.html?verify=false")
+        return HttpResponseRedirect(login_url+"?verify=false")
 
 @check_input('POST')
 def forgot_password(request, data):
@@ -217,7 +219,7 @@ def forgot_password(request, data):
         
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
         #link = settings.BASE_URL + 'password_reset_return/'+token+"/"
-        link = "http://10.1.4.87/MeisterDish/meisterdish/web/views/reset_password.html?token="+token
+        link = settings.SITE_URL+"views/reset_password.html?token="+token
         user.password_reset_token = token
         user.save()
         
@@ -333,7 +335,7 @@ def get_profile(request, data):
                      "name" : (user.last_name + " "+ user.first_name).title(),
                      "email" : user.email,
                      "mobile" : user.mobile,
-                     "profile_image" : settings.MEDIA_URL + user.profile_image,
+                     "profile_image" : settings.MEDIA_URL + str(user.profile_image),
                      "is_admin":True if user.role.id == 1 else False,
                      "meals_in_cart" : meals,
                      "meals_in_cart_count" : len(meals),
@@ -348,8 +350,8 @@ def get_profile(request, data):
         log.error("Profile request with no user_id")
         return custom_error("Invalid input.")
     except Exception as e:
-        log.error("Get profile :Exception: "+e.message)
-        return custom_error(e.message)
+        log.error("Get profile :Exception: "+e.message + traceback.tb_lineno(sys.exc_info()[2]))
+        return custom_error("Failed to retrieve profile details.")
 
 @check_input('POST')
 def edit_profile(request, data):

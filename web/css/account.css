@@ -134,6 +134,9 @@ form.form{
  	padding-left: 0px;
  	padding-top: 20px;
  }
+ #change-password .password{
+ 	padding-top: 15px;
+ }
 /*==================================*\
 			&email-form
 \*==================================*/
@@ -183,4 +186,16 @@ span.body-text-small{
 }
 #change-contact .notify,.update-button{
 	padding-left: 0px;
+}
+/*==================================*\
+			&CHANGE-EMAIL
+\*==================================*/
+#change-email span.body-text-small{
+	padding-left: 0px;
+}
+#change-email{
+	padding-top: 20px;
+}
+#change-email .retype-email{
+	padding-top: 15px;
 }
