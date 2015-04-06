@@ -427,6 +427,26 @@ def get_states(request, data):
     except Exception as e:
         log.error("Failed to send state list : " + e.message)
         return custom_error("Failed to retrieve state list.")
+
+@check_input('POST')
+def change_email(request, data):
+    try:
+        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
+        user = User.objects.get(pk=session['user']['id'])
+        
+        email = data["email"].strip()
+        
+        if user.email == email:
+            raise Exception("Please enter a different email.")
+        elif User.objects.filter(email=email).exists():
+            raise Exception("Email already exists for another user.")
+        else:
+            user.email = email
+            user.save()
+            return json_response({"status":1, "message":"changed email address"})
+    except Exception as e:
+        log.error("Failed to change email : " + e.message)
+        return custom_error("Failed to change email.")
     
 def json_response(response, wrap=False):
     if (wrap == True):

@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^change_password/$', views.change_password, name='change_password'),
     url(r'^get_profile/$', views.get_profile, name='get_profile'),
     url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
+    url(r'^change_email/$', views.change_email, name='change_email'),
     
     url(r'^add_address/$', views.add_address, name='add_address'),
     url(r'^remove_address/$', views.remove_address, name='remove_address'),
