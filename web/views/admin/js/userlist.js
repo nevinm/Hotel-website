@@ -25,28 +25,30 @@ $(document).ready(function() {
         //By deafault call 1 as starting.
     getUserlist(1);
 
-     // Activate User
-    // var activateUserCallback = {
-    //     success: function(data, textStatus) {
-    //         var activateUserData = JSON.parse(data);
-    //         populateUserlist(activateUserData);
-    //     },
-    //     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-    // }
+    // Activate User
+    var activateUserCallback = {
+        success: function(data, textStatus) {
+            var activateUserData = JSON.parse(data);
+            debugger;
+            populateUserlist(activateUserData);
+        },
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    }
 
-    // function activateUser() {
-    //     var url = baseURL + 'cms/get_users/';
-    //     header = {
-    //             "session-key": localStorage['session_key']
-    //         },
-    //         params = {
-    //             "nextPage": nextPage
-    //         },
-    //         data = JSON.stringify(params);
+    function activateUser(id, status) {
+        var url = baseURL + 'cms/change_user_status/';
+        header = {
+                "session-key": localStorage['session_key']
+            },
+            params = {
+                "id": id,
+                'status':status
+            },
+            data = JSON.stringify(params);
 
-    //     var getUserlistInstance = new AjaxHttpSender();
-    //     getUserlistInstance.sendPost(url, header, data, activateUserCallback);
-    // }
+        var getUserlistInstance = new AjaxHttpSender();
+        getUserlistInstance.sendPost(url, header, data, activateUserCallback);
+    }
 
     function populateUserlist(userListData) {
         $("#userlist tbody").empty()
@@ -62,9 +64,9 @@ $(document).ready(function() {
                 "</tr>");
 
                 if(value.is_active){
-                    $("tbody .row:last").append("<td class='profile_image'><button class='status down'>Activated</button></td>");
+                    $("tbody .row:last").append("<td class='profile_image'><button data-id='"+value.id+"' class='status down'>Activated</button></td>");
                 }else{
-                    $("tbody .row:last").append("<td class='profile_image'><button class='status'>Deactivated</button></td>")
+                    $("tbody .row:last").append("<td class='profile_image'><button data-id='"+value.id+"' class='status'>Deactivated</button></td>")
                 }
         })
             $(".pagination").pagination({
@@ -77,12 +79,20 @@ $(document).ready(function() {
                 }
             });
             
-            $(".status").click(function() { 
+            $(".status").click(function() {
+                var id, status;
                 if($(this).hasClass("down")){
+                    debugger;
+                    id=$(this).data().id;
+                    status=0;
+                    // activateUser(id, status);              
                     $(this).removeClass("down");
-                    $(this).text("Deactivated");               
+                    $(this).text("Deactivated"); 
                 }
                 else{
+                    id=$(this).data().id;
+                    status=1;
+                    // activateUser(id, status)
                     $(this).addClass("down");
                     $(this).text("Activated");
                 }
