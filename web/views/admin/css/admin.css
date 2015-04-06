@@ -57,6 +57,9 @@ input[type="text"], input[type="email"], input[type="password"]{
 
 
 /*Category Page*/
+.admin-inner-wrapper h2{
+    text-align: center
+}
 #categories{
 	margin-top: 50px;
 }
@@ -109,7 +112,7 @@ tbody, thead{
   height: 50px;
   top: 110px;
   margin-left: -100px;
-  left: 50%;
+  left: 10%;
   text-align: center;
   border: 1px solid black;
 }

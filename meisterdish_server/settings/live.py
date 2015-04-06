@@ -5,7 +5,8 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-BASE_URL = 'http://10.7.1.64:82/'
+BASE_URL = 'http://meisterdish.com/'
+SITE_URL = 'http://meisterdish.com/'
 URL_PREFIX = ''
 
 DATABASES = {
