@@ -73,7 +73,7 @@ def login(request, data):
             return json_response({"status":1, "message": "Logged in succesfully", "user":user_dic, "session_key":session.session_key})
         else:
             log.error("Login failed")
-            raise Exception("Login failed")
+            raise Exception("Login failed. Please try again later.")
     
     except KeyError as e:
         log.error("Login :" + str(e) + " missing" )
