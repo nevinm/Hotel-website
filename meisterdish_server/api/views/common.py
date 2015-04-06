@@ -47,6 +47,7 @@ def login(request, data):
                 return custom_error("No user found with the given details")
             else:
                 valid = True
+            remember = 0
         
         if valid:
             if not user.is_active:
