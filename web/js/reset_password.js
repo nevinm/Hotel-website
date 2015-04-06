@@ -32,7 +32,6 @@ $(document).ready(function() {
     });
 
     function resetingPassword (password,token) {
-        alert("asd");
         var url = baseURL+'reset_password/';
         header = {};
         var userInfo = { 
