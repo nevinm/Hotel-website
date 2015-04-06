@@ -257,7 +257,7 @@ html,body{
 	border-right: 10px solid #fff;
 	border-left: 10px solid #fff;
 	float: left;
-	background-color: #f1f1f1;
+	background-image: url(../images/bg.jpg);
 	min-height: 100%;
 	margin-bottom: -143px;
 	overflow-x:hidden;
@@ -267,7 +267,7 @@ html,body{
 	border-right: 10px solid #fff;
 	border-left: 10px solid #fff;
 	float: left;
-	background-color: #f1f1f1;
+	background-image:  url(../images/bg.jpg);
 	min-height: 100%;
 }
 #mainWrapper:after{
@@ -530,7 +530,7 @@ span.icon-menu{
 #signup-firstname-error,#signup-lastname-error,#signup-email-error,#signup-password-error,
 #username-error,#password-error,#forgotpassword-email-error,#confirm-newpassword-error,
 #newpassword-error,#new-password-error,#confirm-password-error,#old-password-error,
-#firstname-error,#lastname-error,#phonenumber-error{
+#firstname-error,#lastname-error,#phonenumber-error,#new-email-error,#confirmEmail-error{
 	color: #ff7878;
 	background: white;
 	position: absolute;

@@ -70,9 +70,7 @@ $(document).ready(function() {
     //Change contact API process
     var editContactCallback = {
         success: function(data, textStatus) {
-            console.log(data);
             userDetails = JSON.parse(data);
-            console.log(userDetails);
             showPopup(userDetails);
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -86,7 +84,6 @@ $(document).ready(function() {
     });
 
     function editContact() {
-        alert("editcontact");
         var url = baseURL + "edit_profile/",
             $changeContactForm = $("#change-contact"),
             first_name = $changeContactForm.find("input[name=firstname]").val(),
@@ -112,6 +109,7 @@ $(document).ready(function() {
             console.log(data);
             userDetails = JSON.parse(data);
             showPopup(userDetails);
+            $('#change-password')[0].reset();
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
@@ -146,3 +144,34 @@ $(document).ready(function() {
     profileAutoPopulate();
     showAdminLink();
 });
+
+//Change email API process
+var changeEmailCallback = {
+    success: function(data,textStatus){
+            userDetails = JSON.parse(data);
+            showPopup(userDetails);
+            $('#change-email')[0].reset();
+        },
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    }
+
+$('#update-email').on('click',function(e){
+    e.preventDefault();
+    if($('form').valid()){
+        changeEmail();
+    }
+});
+
+function changeEmail(){
+    var url = baseURL + "change_email/",
+        newemail = $('#change-email').find('input[name=email]').val(),
+        header = {
+                "session-key": localStorage["session_key"]
+            },
+        userData = {
+            "email":newemail
+        },
+        data = JSON.stringify(userData);debugger;
+        var changeEmailInstance = new AjaxHttpSender();
+        changeEmailInstance.sendPost(url, header, data, changeEmailCallback);
+}

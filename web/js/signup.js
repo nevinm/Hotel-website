@@ -15,14 +15,14 @@ $(document).ready(function() {
 			}
 			else{
 				showPopup(userDetails);
-			// window.location.href='login.html';
+			window.location.href='login.html';
 			}
 		},
 		failure:function(XMLHttpRequest, textStatus, errorThrown){}
 	}
 	$('#signup-button').on('click',function(e){
 			e.preventDefault();
-		   if($('form').valid()){
+		   	if($('form').valid()){
 		   		signingup();
    			}
 		
@@ -35,16 +35,16 @@ $(document).ready(function() {
             first_name = $('#signup-firstname').val(),
             last_name = $('#signup-lastname').val(),
             email = $('#signup-email').val();
-        if(localStorage["fb-id"]){
-       		fbId = JSON.parse(localStorage["fb-id"]);
-		}
+        	if(localStorage["fb-id"]){
+       			fbId = JSON.parse(localStorage["fb-id"]);
+			}
 		var userInfo = {
 	            "password": password,
 	            "first_name": first_name,
 	            "last_name": last_name,
 	            "email": email,
 	            "fb_id": fbId
-	        }
+	        },
 	    data = JSON.stringify(userInfo);
             
 

@@ -5,13 +5,6 @@ var baseURL = 'http://meisterdish.qburst.com/backend/api/',
 var $userentry = $('.login-signup');
 
 function checkLoggedIn() {
-    // if(currentPage== "Meisterdish - Admin"){
-    // if(localStorage['loggedIn'] == 'true'){
-    //     $userentry.hide();
-    //     $('#navbar-username a').text(localStorage['admin_username']);
-    // }
-    // }
-    // else{
         if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
             $userentry.hide();
             $('#navbar-username a').text(localStorage['username']);
@@ -22,7 +15,6 @@ function checkLoggedIn() {
             $("#logout").hide();
             $('#menu').removeClass('menuPadding');
         }
-    // }
 }
 
 $(document).ready(function() {
@@ -59,9 +51,6 @@ $(document).ready(function() {
     }
     $('#close').on("click",function(){
         $('.popup-wrapper').hide();
-        if($(".signup-redirect")){
-            window.location.href = 'login.html'
-        }
     });
    
    
@@ -97,6 +86,11 @@ $(document).ready(function() {
                 email: {
                     required: true,
                     email: true
+                },
+                confirmEmail:{
+                    required:true,
+                    email:true,
+                    equalTo:"#new-email"
                 },
                 phonenumber: {
                     required:true,
@@ -145,6 +139,10 @@ $(document).ready(function() {
                     required:"Please provide a password",
                     minlength:"password shoudn't be less than 6",
                     equalTo:"password doesn't match"
+                },
+                confirmEmail:{
+                     equalTo:"email doesn't match",
+                     required:"please provide email"
                 },
                 email: "enter a valid email address"
             }
