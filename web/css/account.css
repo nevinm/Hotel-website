@@ -204,3 +204,27 @@ span.body-text-small{
 #change-email .retype-email{
 	padding-top: 15px;
 }
+
+/*==================================*\
+			&CHANGE-ADDRESS
+\*==================================*/
+#editaddress-container .account-header{
+	font-size: 14px;
+	font-family: 'BrandonGrotesque-Bold';
+	padding: 10px 0 10px 20px; 
+}
+#editaddress-container .content{
+	display: table;
+}
+#editaddress-container .content .row{
+	display: table-row;
+}
+#editaddress-container .content ol li{
+	display: table-cell;
+	list-style-type: decimal;
+}
+#editaddress-container .content ol li span{
+	width: 100%;
+	float: left;
+
+}
