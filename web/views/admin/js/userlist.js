@@ -1,3 +1,4 @@
+redirectIfAdminLoggedIn();
 $(document).ready(function() {
     //Get UserList
     var getUserlistCallback = {
@@ -11,7 +12,7 @@ $(document).ready(function() {
     function getUserlist(nextPage) {
             var url = baseURL + 'cms/get_users/';
             header = {
-                    "session-key": localStorage['admin_session_key']
+                    "session-key": localStorage['session_key']
                 },
                 params = {
                     "nextPage": nextPage
@@ -36,7 +37,7 @@ $(document).ready(function() {
     // function activateUser() {
     //     var url = baseURL + 'cms/get_users/';
     //     header = {
-    //             "session-key": localStorage['admin_session_key']
+    //             "session-key": localStorage['session_key']
     //         },
     //         params = {
     //             "nextPage": nextPage
@@ -50,7 +51,7 @@ $(document).ready(function() {
     function populateUserlist(userListData) {
         $("#userlist tbody").empty()
         $.each(userListData.aaData, function(key, value) {
-            $("#userlist tbody").append("<tr>" +
+            $("#userlist tbody").append("<tr class='row'>" +
                 "<td class='id'>" + value.id + "</td>" +
                 "<td class='name'>" + value.name + "</td>" +
                 "<td class='credits'>" + value.credits + "</td>" +
@@ -58,9 +59,14 @@ $(document).ready(function() {
                 "<td class='is_admin'>" + value.is_admin + "</td>" +
                 "<td class='mobile'>" + value.mobile + "</td>" +
                 "<td class='profile_image'>" + value.profile_image + "</td>" +
-                "<td class='profile_image'><button class='status down'>Activated</button></td>" +
                 "</tr>");
 
+                if(value.is_active){
+                    $("tbody .row:last").append("<td class='profile_image'><button class='status down'>Activated</button></td>");
+                }else{
+                    $("tbody .row:last").append("<td class='profile_image'><button class='status'>Deactivated</button></td>")
+                }
+        })
             $(".pagination").pagination({
                 items: userListData.total_count,
                 itemsOnPage: userListData.per_page,
@@ -70,7 +76,6 @@ $(document).ready(function() {
                     getUserlist(pageNumber);
                 }
             });
-        })
             
             $(".status").click(function() { 
                 if($(this).hasClass("down")){
