@@ -7,7 +7,7 @@
   border-right: 10px solid #fff;
   border-left: 10px solid #fff;
   float: left;
-  background-color: #f1f1f1;
+  background-image:  url(../images/bg.jpg);
   min-height: 100%;
 }
 .login-wrapper{

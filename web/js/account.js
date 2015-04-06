@@ -29,13 +29,13 @@ function showAdminLink(){
     //Get profile API process
 var getProfileCallback = {
     success: function(data, textStatus) {
-        // if (data.status == 1) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
             localStorage['user_profile']=data;
-            var userDetails = JSON.parse(data);
             $(".cart span").text(userDetails.meals_in_cart_count);
             $(".account-credit").text(dollarConvert(userDetails.credits));
-        // }
-         // else {}
+        }
+         else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }

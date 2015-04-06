@@ -77,8 +77,8 @@ def login(request, data):
         log.error("Login :" + str(e) + " missing" )
         return json_response({"status":-1, "message":"Please fill all the fields."})
     except Exception as e:
-        log.error("Login : " + str(e))
-        return json_response({"status":-1, "message":e.message})
+        log.error("Login : " + e.message)
+        return json_response({"status":-1, "message": "Login failed. Please try again later."})
 
 @check_input('POST')
 def logout(request, data):
@@ -140,7 +140,7 @@ def signup(request, data):
             log.info(email + " : Signed up ")
             if send_user_verification_mail(user):
                 log.info("Sent verification mail to " + user.email)
-                return json_response({"status":1, "message": "Succesfully signed up", "user":user_dic, "session_key":session.session_key})
+                return json_response({"status":1, "message": "A verification email has been sent to you email("+email+"). Please follow the link in verification email to activate your account.", "user":user_dic, "session_key":session.session_key})
             else:
                 log.error("Failed to send user verification mail : ")
                 return custom_error("An error has occurred in sending verification mail. Please try later.")
@@ -191,19 +191,19 @@ def verify_user(request, data, token):
         user.save()
         
         log.info("Verified user "+user.email)
-        return HttpResponseRediredct(request.META['HTTP_HOST'] + "/login.html?verify=true")
+        return HttpResponseRedirect("http://"+request.META['HTTP_HOST'] + "/login.html?verify=true")
     
     except KeyError as field:
         log.error("verify request request missing "+field.message)
-        return HttpResponseRediredct(request.META['HTTP_HOST'] + "/login.html?verify=false")
+        return HttpResponseRedirect("http://"+request.META['HTTP_HOST'] + "/login.html?verify=false")
 
     except User.DoesNotExist:
         log.error("Verify : No user found with given token")
-        return HttpResponseRediredct(request.META['HTTP_HOST'] + "/login.html?verify=false")
+        return HttpResponseRedirect("http://"+request.META['HTTP_HOST'] + "/login.html?verify=false")
 
     except Exception as e:
         log.error("Validate token : Exception : "+e.message)
-        return HttpResponseRediredct(request.META['HTTP_HOST'] + "/login.html?verify=false")
+        return HttpResponseRedirect("http://"+request.META['HTTP_HOST'] + "/login.html?verify=false")
 
 @check_input('POST')
 def forgot_password(request, data):
@@ -443,7 +443,7 @@ def change_email(request, data):
         else:
             user.email = email
             user.save()
-            return json_response({"status":1, "message":"changed email address"})
+            return json_response({"status":1, "message":"Updated email address"})
     except Exception as e:
         log.error("Failed to change email : " + e.message)
         return custom_error("Failed to change email.")
