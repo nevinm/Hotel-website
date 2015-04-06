@@ -1,12 +1,10 @@
 var baseURL = 'http://meisterdish.qburst.com/backend/api/', 
-    userDetails;
+    userDetails, currentPage=$("title").text();
 
 //If already logged in
 var $userentry = $('.login-signup');
 
 function checkLoggedIn() {
-    currentPage=$("title").text();
-
     if(currentPage== "Meisterdish - Admin"){
         if(localStorage['admin_loggedIn'] == 'true'){
             $userentry.hide();
@@ -17,6 +15,7 @@ function checkLoggedIn() {
         if (localStorage['loggedIn'] == 'true') {
             $userentry.hide();
             $('#navbar-username a').text(localStorage['username']);
+            $(".account-header h2").text(localStorage['username'] + "'S ACCOUNT");
             $('#menu').addClass('menuPadding');
         } else {
             $userentry.show();
@@ -30,7 +29,7 @@ function checkLoggedIn() {
 $(document).ready(function() {
     //Logout process
     $("#logout").on('click', function() {
-        if (localStorage['admin_loggedIn'] == "true") {
+        if(currentPage== "Meisterdish - Admin"){
             localStorage.removeItem('admin_username');
             localStorage.removeItem('admin_session_key');
             localStorage['admin_loggedIn'] = false;
@@ -41,7 +40,6 @@ $(document).ready(function() {
             $('#menu').removeClass('menuPadding');
             $(".logout").addClass('hide');
             localStorage.removeItem('username');
-
             localStorage.removeItem('session_key');
             localStorage['loggedIn'] = false;
             window.location.href = '../index.html';
@@ -64,6 +62,9 @@ $(document).ready(function() {
     }
     $('#close').on("click",function(){
         $('.popup-wrapper').hide();
+        if($(".signup-redirect")){
+            window.location.href = 'login.html'
+        }
     });
    
    
@@ -90,11 +91,11 @@ $(document).ready(function() {
                 },
                 oldpassword:{
                     required: true,
-                    minlength: 4
+                    minlength: 6
                 },
                 password: {
                     required: true,
-                    minlength: 4
+                    minlength: 6
                 },
                 email: {
                     required: true,
@@ -102,12 +103,12 @@ $(document).ready(function() {
                 },
                 confirmpassword: {
                     required: true,
-                    minlength: 4,
+                    minlength: 6,
                     equalTo: "#newpassword"
                 },
                 repassword: {
                     required:true,
-                    minlength:4,
+                    minlength:6,
                     equalTo: "#new-password"
                 }
             },
@@ -126,7 +127,7 @@ $(document).ready(function() {
                 },
                 password: {
                     required: "Please provide a password",
-                    minlength: "password shoudn't be short"
+                    minlength: "password shoudn't be less than 6"
                 },
                 username:{
                     required: "Plaese enter username",
@@ -135,12 +136,12 @@ $(document).ready(function() {
                 },
                 confirmpassword: {
                     required: "Please provide a password",
-                    minlength: "password shoudn't be short",
+                    minlength: "password shoudn't be less than 6",
                     equalTo: "password doesn't match"
                 },
                 repassword:{
                     required:"Please provide a password",
-                    minlength:"password shoudn't be short",
+                    minlength:"password shoudn't be less than 6",
                     equalTo:"password doesn't match"
                 },
                 email: "enter a valid email address"

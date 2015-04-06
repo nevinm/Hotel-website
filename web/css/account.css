@@ -53,6 +53,9 @@
   bottom: 7px;
   left: 35px;
 }
+.account-settings li{
+	margin-bottom: 10px;
+}
 /*==================================*\
 			&ACCORDION
 \*==================================*/
