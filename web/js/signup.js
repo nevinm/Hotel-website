@@ -30,20 +30,23 @@ $(document).ready(function() {
 
     function signingup() {
         var url = baseURL + 'signup/',
-            header = {},
+            header = {},fbId='',
             password = $('#signup-password').val(),
             first_name = $('#signup-firstname').val(),
             last_name = $('#signup-lastname').val(),
-            email = $('#signup-email').val(),
-            fdId = JSON.parse(localStorage["fb-id"]);
-			var userInfo = {
+            email = $('#signup-email').val();
+        if(localStorage["fb-id"]){
+       		fbId = JSON.parse(localStorage["fb-id"]);
+		}
+		var userInfo = {
 	            "password": password,
 	            "first_name": first_name,
 	            "last_name": last_name,
 	            "email": email,
-	            "fb_id": fdId
+	            "fb_id": fbId
 	        }
-	        data = JSON.stringify(userInfo);
+	    data = JSON.stringify(userInfo);
+            
 
         var signupInstance = new AjaxHttpSender();
         signupInstance.sendPost(url, header, data, signupCallback);

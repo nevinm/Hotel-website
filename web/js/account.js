@@ -70,16 +70,23 @@ $(document).ready(function() {
     //Change contact API process
     var editContactCallback = {
         success: function(data, textStatus) {
-            alert("Success")
+            console.log(data);
+            userDetails = JSON.parse(data);
+            console.log(userDetails);
+            showPopup(userDetails);
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
 
-    $("#change-contact #update").on('click', function() {
-        editContact();
+    $("#change-contact #updateButton").on('click', function(e) {
+        e.preventDefault();
+        if($('form#change-contact').valid()){
+            editContact();
+        }
     });
 
     function editContact() {
+        alert("editcontact");
         var url = baseURL + "edit_profile/",
             $changeContactForm = $("#change-contact"),
             first_name = $changeContactForm.find("input[name=firstname]").val(),
@@ -94,23 +101,21 @@ $(document).ready(function() {
                 "last_name": last_name,
                 "mobile": mobile_number
             },
-            data = JSON.stringify(userData);
-        $changeContactForm[0].reset();
+        data = JSON.stringify(userData);
         var changeContactInstance = new AjaxHttpSender();
         changeContactInstance.sendPost(url, header, data, editContactCallback);
     }
 
     //Change password API process
     var changePasswordCallback = {
-        success: function(data, textStatus) {
-            if (JSON.parse(data).status == 1) {
-                console.log(data);
-                alert("Password change success")
-            }
+        success: function(data,textStatus){
+            console.log(data);
+            userDetails = JSON.parse(data);
+            showPopup(userDetails);
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
-    $('#updateButton').on('click', function(e) {
+    $('#updatepassword').on('click',function(e){
         e.preventDefault();
         if ($('form').valid()) {
             changePassword();
