@@ -248,7 +248,20 @@ def update_user(request, data):
     except Exception as e:
         log.error("Failed to update user : "+e.message)
         return custom_error("Failed to update user")
-    
+
+@check_input('POST', True)
+def change_user_status(request, data):
+    try:
+        id = data['id']
+        status = data['status']
+        user_status = True if status == 1 else False
+        user = User.objects.get(id=id)
+        user.is_active = user_status
+        user.save()
+    except Exception as e:
+        log.error("Failed to change user status : "+e.message)
+        return custom_error("Failed to change user status")
+        
 def json_response(response, wrap=False):
     if (wrap == True):
         final_response = {"data" : response}
