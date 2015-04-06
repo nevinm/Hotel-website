@@ -67,7 +67,6 @@ $(document).ready(function() {
         success: function(data, textStatus) {
             userDetails = JSON.parse(data);
             showPopup(userDetails);
-            $('#change-contact')[0].reset();
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }

@@ -255,11 +255,13 @@ def update_user(request, data):
 def change_user_status(request, data):
     try:
         id = data['id']
-        status = data['status']
+        status = data['is_active']
         user_status = True if status == 1 else False
         user = User.objects.get(id=id)
         user.is_active = user_status
         user.save()
+        msg = "Activated user" if user.is_active else "Deactivated user."
+        return json_response({"status":1, "is_active":user.is_active, "message" : msg})
     except Exception as e:
         log.error("Failed to change user status : "+e.message)
         return custom_error("Failed to change user status")
