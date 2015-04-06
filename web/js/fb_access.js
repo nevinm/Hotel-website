@@ -57,7 +57,6 @@
 
 var loginFBCallback = {
     success: function(data,textStatus){
-      debugger;
       userDetails = JSON.parse(data);
       if(userDetails.status == -1){
         showPopup(userDetails);

@@ -28,14 +28,12 @@ $(document).ready(function() {
 
     // Activate User
     var updateUserStatusCallback = {
-        success: function(data, textStatus){
+        success: function(data, textStatus) {
             var updateUserStatusData = JSON.parse(data);
-            debugger;
-            if(updateUserStatusData.is_active==false){
-                userActive=false;
-            }
-            else{
-                userActive=true;
+            if (updateUserStatusData.is_active == false) {
+                userActive = false;
+            } else {
+                userActive = true;
             }
             // populateUserlist(updateUserStatusData);
         },
@@ -68,12 +66,13 @@ $(document).ready(function() {
                 "<td class='is_admin'>" + value.is_admin + "</td>" +
                 "<td class='mobile'>" + value.mobile + "</td>" +
                 "<td class='profile_image'>" + value.profile_image + "</td>" +
+                "<td align='center' class='delete-user'><a data-id='" + value.id + "'class='cross'></a></td>" +
                 "</tr>");
 
             if (value.is_active) {
-                $("tbody .row:last").append("<td class='profile_image'><button data-id='" + value.id + "' class='status down'>Activate</button></td>");
+                $("tbody .row:last").append("<td class='profile_image'><button data-id='" + value.id + "' class='status down'>Active</button></td>");
             } else {
-                $("tbody .row:last").append("<td class='profile_image'><button data-id='" + value.id + "' class='status'>Deactivate</button></td>")
+                $("tbody .row:last").append("<td class='profile_image'><button data-id='" + value.id + "' class='status'>Inactive</button></td>")
             }
         })
         $(".pagination").pagination({
@@ -93,16 +92,50 @@ $(document).ready(function() {
                 status = false;
                 updateUserStatus(id, status);
                 $(this).removeClass("down");
-                $(this).text("Deactivate");
-             
-                
+                $(this).text("Inactive");
             } else {
                 id = $(this).data().id;
                 status = true;
                 updateUserStatus(id, status)
-   $(this).addClass("down");
-                $(this).text("Activate");
+                $(this).addClass("down");
+                $(this).text("Active");
             }
         });
+    }
+
+    $(document).on('click', '.cross', function() {
+        var deleteId = $(this).data().id;
+        removeUsers(deleteId);
+    });
+
+    //Remove Users
+    var removeUsersCallback = {
+        success: function(data, textStatus) {
+            var usersData = JSON.parse(data);
+            debugger;
+            if (usersData.status == 1) {
+                currentPage = $('.pagination').pagination('getCurrentPage');
+                getUserlist(currentPage);
+            } else {
+                alert("Something went wrong")
+            }
+        },
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    }
+
+    function removeUsers(id) {
+        if (confirm('Are you sure you want to delete this user?')) {
+            var url = baseURL + 'cms/delete_user/';
+            header = {
+                    "session-key": localStorage['session_key']
+                },
+                params = {
+                    "id": id
+                },
+                data = JSON.stringify(params);
+
+            var removeUsersInstance = new AjaxHttpSender();
+            removeUsersInstance.sendPost(url, header, data, removeUsersCallback);
+        } else {}
     }
 })
