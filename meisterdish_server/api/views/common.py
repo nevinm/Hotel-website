@@ -47,6 +47,7 @@ def login(request, data):
                 return custom_error("No user found with the given details")
             else:
                 valid = True
+            remember = 0
         
         if valid:
             if not user.is_active:
@@ -141,7 +142,7 @@ def signup(request, data):
             log.info(email + " : Signed up ")
             if send_user_verification_mail(user):
                 log.info("Sent verification mail to " + user.email)
-                return json_response({"status":1, "message": "A verification email has been sent to you email("+email+"). Please follow the link in verification email to activate your account.", "user":user_dic, "session_key":session.session_key})
+                return json_response({"status":1, "message": "A verification email has been sent to you email ("+email+"). Please follow the link in verification email to activate your account.", "user":user_dic, "session_key":session.session_key})
             else:
                 log.error("Failed to send user verification mail : ")
                 return custom_error("An error has occurred in sending verification mail. Please try later.")
