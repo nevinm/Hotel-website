@@ -208,6 +208,9 @@ span.body-text-small{
 /*==================================*\
 			&CHANGE-ADDRESS
 \*==================================*/
+div#editaddress-container {
+  margin-top: 10px;
+}
 #editaddress-container .account-header{
 	font-size: 14px;
 	font-family: 'BrandonGrotesque-Bold';
@@ -215,16 +218,46 @@ span.body-text-small{
 }
 #editaddress-container .content{
 	display: table;
+	 border-spacing: 40px 10px;
+	 font-family: 'ProximaNova-regular';
+	 font-size: 12px;
+	 color: #9B9B9B;
+	 list-style-type: decimal;
+
 }
-#editaddress-container .content .row{
+#editaddress-container .content .tablerow{
 	display: table-row;
+	padding-bottom: 20px;
 }
 #editaddress-container .content ol li{
 	display: table-cell;
 	list-style-type: decimal;
+	letter-spacing: 1px;
+	vertical-align: top;
 }
 #editaddress-container .content ol li span{
-	width: 100%;
+	width: 150px;
 	float: left;
+	padding: 8px 0;
 
+}
+#editaddress-container .content ol li span:last-child{
+	font-family: 'BrandonGrotesque-Bold';
+	color:#A9D77B;
+	padding-top: 20px;
+	width: 240px;
+}
+.address .button{
+	width: 100px;
+	float: right;
+}
+.address .edit-button,.remove-button{
+	float: right;
+}
+.button-changeaddress{
+	padding-left: 50px;
+	padding-bottom: 10px;
+}
+.button-changeaddress .btn:last-child{
+	margin-left: 20px;
 }
