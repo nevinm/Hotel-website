@@ -57,7 +57,7 @@ class User(models.Model):
     
     email = models.EmailField(max_length=30, unique=True)
     mobile = models.CharField(max_length=15, null=True)
-    profile_image = models.CharField(max_length=50, null=True)
+    profile_image = models.CharField(max_length=50, null=True, default="")
 
     user_verify_token = models.CharField(max_length=20, null=True, default="")
     password_reset_token = models.CharField(max_length=20, null=True, default="")
