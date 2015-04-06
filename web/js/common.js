@@ -16,6 +16,24 @@ function checkLoggedIn() {
             $('#menu').removeClass('menuPadding');
         }
 }
+function verifyAccount(){
+    var verify_url = window.location.href;
+    var search_verify = verify_url.indexOf("verify");
+    if(search_verify != -1){
+        var trueMessage = {
+            'message' : "Account is verified, proceed to login"
+        }
+        var falseMessage={
+            'message':"account is not verified"
+        }
+        if(verify_url.split("?")[1].split("=")[1] == "true"){
+            showPopup(trueMessage);
+        }
+        else{
+            showPopup(falseMessage);
+        }
+    }
+}
 
 $(document).ready(function() {
     //Logout process
@@ -41,6 +59,7 @@ $(document).ready(function() {
     });
 
     checkLoggedIn();
+    verifyAccount();
 });
     
     //SHOW POPUP
