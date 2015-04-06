@@ -15,7 +15,6 @@ $(document).ready(function() {
 			}
 			else{
 				showPopup(userDetails);
-			window.location.href='login.html';
 			}
 		},
 		failure:function(XMLHttpRequest, textStatus, errorThrown){}
