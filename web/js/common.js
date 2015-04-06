@@ -100,6 +100,11 @@ $(document).ready(function() {
                     required: true,
                     email: true
                 },
+                phonenumber: {
+                    required:true,
+                    minlength:10,
+                    number :true
+                },
                 confirmpassword: {
                     required: true,
                     minlength: 4,

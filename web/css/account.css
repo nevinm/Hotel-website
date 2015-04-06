@@ -108,7 +108,7 @@ form.form{
 .first-name,.last-name,.phone-num,.redeem{
 	width: 270px;
 	float: left;
-	padding: 20px;
+	position: relative;
 }
 .notify,.update-button {
   width: 100%;
@@ -119,6 +119,13 @@ form.form{
 }
  .notify input[type="checkbox"]{
  	float: left;
+ }
+ .changepassword-container{
+ 	padding: 20px 0px 20px 0px;
+ }
+ .changepassword-container .update-button{
+ 	padding-left: 0px;
+ 	padding-top: 20px;
  }
 /*==================================*\
 			&email-form
@@ -148,3 +155,25 @@ span.body-text-small{
   padding-right: 35px;
 }
 
+/*==================================*\
+			&EDIT-CONTACT
+\*==================================*/
+#change-contact{
+	width: 65%;
+	float: left;
+	padding-top: 20px;
+	padding-left: 20px;
+}
+#change-contact .last-name{
+	margin-left: 45px;
+}
+#change-contact .phone-num{
+	padding-top: 10px;
+	width: 100%;
+}
+#change-contact .phone-num .arrange{
+	width: 270px;
+}
+#change-contact .notify,.update-button{
+	padding-left: 0px;
+}

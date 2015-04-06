@@ -24,16 +24,30 @@ $(document).ready(function() {
     //Change contact API process
     var editContactCallback = {
         success: function(data, textStatus) {
-           alert("Success")
+            console.log(data);
+            userDetails = JSON.parse(data);
+            console.log(userDetails);
+
+            // if(userDetails.status == -1){
+                showPopup(userDetails);
+            // }
+            // else{
+            //     showPopup(userDetails);
+            //     window.location.href = 'account.html';
+            // }
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
 
-    $("#change-contact #update").on('click', function() {
-        editContact();
+    $("#change-contact #updateButton").on('click', function(e) {
+        e.preventDefault();
+        if($('form#change-contact').valid()){
+            editContact();
+        }
     });
 
     function editContact() {
+        alert("editcontact");
         var url = baseURL + "edit_profile/",
         $changeContactForm = $("#change-contact");
         first_name = $changeContactForm.find("input[name=firstname]").val(),
@@ -49,7 +63,6 @@ $(document).ready(function() {
                 "mobile": mobile_number
             },
         data = JSON.stringify(userData);
-        $changeContactForm[0].reset();
         var changeContactInstance = new AjaxHttpSender();
         changeContactInstance.sendPost(url, header, data, editContactCallback);
     }
@@ -58,10 +71,12 @@ $(document).ready(function() {
     var changePasswordCallback = {
         success: function(data,textStatus){
             console.log(data);
+            userDetails = JSON.parse(data);
+            showPopup(userDetails);
         },
         failure:function(XMLHttpRequest, textStatus, errorThrown){}
     }
-    $('#updateButton').on('click',function(e){
+    $('#updatepassword').on('click',function(e){
         e.preventDefault();
         if($('form').valid()){
             changePassword();
@@ -69,7 +84,6 @@ $(document).ready(function() {
     });
 
     function changePassword(){
-        alert("ASd");
         var oldpassword = $('#old-password').val(),
             newpassword = $('#new-password').val(),
             confirmpassword = $('#confirm-password').val(),
