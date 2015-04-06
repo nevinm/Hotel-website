@@ -192,19 +192,19 @@ def verify_user(request, data, token):
         user.save()
         
         log.info("Verified user "+user.email)
-        return HttpResponseRedirect(login_url+"/?verify=true")
+        return HttpResponseRedirect(login_url+"?verify=true")
     
     except KeyError as field:
         log.error("verify request request missing "+field.message)
-        return HttpResponseRedirect(login_url+"/?verify=false")
+        return HttpResponseRedirect(login_url+"?verify=false")
 
     except User.DoesNotExist:
         log.error("Verify : No user found with given token")
-        return HttpResponseRedirect(login_url+"/?verify=false")
+        return HttpResponseRedirect(login_url+"?verify=false")
 
     except Exception as e:
         log.error("Validate token : Exception : "+e.message)
-        return HttpResponseRedirect(login_url+"/?verify=false")
+        return HttpResponseRedirect(login_url+"?verify=false")
 
 @check_input('POST')
 def forgot_password(request, data):
