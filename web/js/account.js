@@ -70,11 +70,8 @@ $(document).ready(function() {
     //Change contact API process
     var editContactCallback = {
         success: function(data, textStatus) {
-            console.log(data);
             userDetails = JSON.parse(data);
-            console.log(userDetails);
             showPopup(userDetails);
-            $('#change-contact')[0].reset();
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
