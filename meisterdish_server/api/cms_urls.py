@@ -10,5 +10,7 @@ urlpatterns = patterns('',
     url(r'^delete_user/$', cms.delete_user, name='delete_user'),
     url(r'^update_user/$', cms.update_user, name='update_user'),
     url(r'^get_users/$', cms.get_users, name='get_users'),
+    url(r'^change_user_status/$', cms.change_user_status, name='change_user_status'),
+    
     url(r'^get_users_2/$', cms.get_users_2, name='get_users_2'),
 )

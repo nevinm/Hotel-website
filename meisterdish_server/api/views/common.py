@@ -143,16 +143,16 @@ def signup(request, data):
                 return json_response({"status":1, "message": "Succesfully signed up", "user":user_dic, "session_key":session.session_key})
             else:
                 log.error("Failed to send user verification mail : ")
-                return json_response({"status":-1, "message": "An error has occurred in sending verification mail. Please try later.", "user":user_dic, "session_key":session.session_key})
+                return custom_error("An error has occurred in sending verification mail. Please try later.")
         except Exception as e:
             log.error(email + " : Failed to sign up "+e.message)
             raise Exception("Failed to sign up. Please try again later")
     except KeyError as field:
         log.error("failed to signup "+str(field) + "missing")
-        return json_response({"status":-1, "message":"Invalid input"})
+        return custom_error("Invalid input")
     except Exception as e:
         log.error("failed to signup "+e.message)
-        return json_response({"status":-1, "message":e.message})
+        return custom_error(e.message)
 
 def send_user_verification_mail(user):
     try:
@@ -233,13 +233,13 @@ def forgot_password(request, data):
         
     except KeyError as field:
         log.error("Forgot password request missing "+field.message)
-        return json_response({"status":-1, "message":"Invalid input"})
+        return custom_error("Invalid input")
     except User.DoesNotExist as e:
         log.error("Forgot password request with non-existing email: "+email)
-        return json_response({"status":-1, "message":"No user exists with the given email address."})
+        return custom_error("No user exists with the given email address.")
     except Exception as e:
         log.error("Failed to send the password reset email : "+e.message)
-        return json_response({"status":-1, "message":"Failed to send the password reset email"})
+        return custom_error("Failed to send the password reset email")
     else:
         log.info("Reset password mail sent to : "+email)
         return json_response({"status":1, "message":"Password reset link has been sent to "+user.email})
@@ -260,13 +260,13 @@ def reset_password(request, data):
     
     except KeyError as field:
         log.error("Reset password request missing "+field.message)
-        return json_response({"status":-1, "message":"Invalid input"})
+        return custom_error("Invalid input")
     except User.DoesNotExist:
         log.error("Reset password : No user found with given token")
-        return json_response({"status":-1, "message":"Invalid token"})
+        return custom_error("Invalid token")
     except Exception as e:
         log.error("Validate token : Exception : "+e.message)
-        return json_response({"status":-1, "message":"Failed to reset password. Please try again later."})
+        return custom_error("Failed to reset password. Please try again later.")
 
 @check_input('POST')
 def change_password(request, data):
@@ -279,7 +279,7 @@ def change_password(request, data):
         new_password = data['new_password'].strip()
         
         if  md5.new(old_password).hexdigest() != user.password:
-            return json_response({"status":-1, "message":"The current password you have entered is incorrect."})
+            return custom_error("The current password you have entered is incorrect.")
         
         user.password = md5.new(new_password).hexdigest()
         user.password_reset = False
@@ -289,7 +289,7 @@ def change_password(request, data):
         return json_response({"status":1, "message":"Password changed successfully."})
     except Exception as e:
         log.error( "Change password failed : "+e.message)
-        return json_response({"status":-1, "message":"Failed to change the password."})
+        return custom_error("Failed to change the password.")
 
 @check_input('POST')
 def get_profile(request, data):
@@ -328,6 +328,7 @@ def get_profile(request, data):
                                  })
             
         user_data = {
+                     "status":1,
                      "id" : user.id,
                      "name" : (user.last_name + " "+ user.first_name).title(),
                      "email" : user.email,
@@ -339,14 +340,16 @@ def get_profile(request, data):
                      "credits" : user.credits,
                      "sms_notification" : user.need_sms_notification,
                      "address_list" : address_list,
+                     "first_name" : user.first_name.title(),
+                     "last_name" : user.last_name.title(),
                      }
         return json_response(user_data)
     except KeyError as e:
         log.error("Profile request with no user_id")
-        return json_response({"status":-1, "message":"Invalid input."})
+        return custom_error("Invalid input.")
     except Exception as e:
         log.error("Get profile :Exception: "+e.message)
-        return json_response({"status":-1, "message":e.message})
+        return custom_error(e.message)
 
 @check_input('POST')
 def edit_profile(request, data):
@@ -374,7 +377,7 @@ def edit_profile(request, data):
         return json_response({"status":1, "message":"Profile updated successfully."})
     except Exception as e:
         log.error("user id : " + str(user_id) + " : profile update failed : "+e.message)
-        return json_response({"status":-1, "message":"Failed to update profile."})
+        return custom_error("Failed to update profile.")
 
 @check_input('POST')
 def get_cities(request, data):
