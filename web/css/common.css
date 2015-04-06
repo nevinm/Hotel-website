@@ -333,6 +333,9 @@ label{
 .cross:before{
 	content: "×";
 }
+.container-adjust{
+	margin-top: 100px
+}
 /*==============================*\
 			&HEADER
 \*==============================*/

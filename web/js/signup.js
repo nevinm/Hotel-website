@@ -14,7 +14,8 @@ $(document).ready(function() {
 				showPopup(userDetails);
 			}
 			else{
-			window.location.href='login.html';
+				showPopup(userDetails);
+			// window.location.href='login.html';
 			}
 		},
 		failure:function(XMLHttpRequest, textStatus, errorThrown){}

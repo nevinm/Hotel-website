@@ -31,10 +31,14 @@
 	float: left;
 	margin-right: 150px;
 }
-.logout {
+.logout, .admin-button {
 	float: right;
 	padding-top: 6px;
+	margin-left: 30px;
 	font-size: 14px;
+}
+.admin-button{
+	display: none;
 }
 .accountNav {
   width: 75%;
@@ -52,6 +56,9 @@
   width: 188px;
   bottom: 7px;
   left: 35px;
+}
+.account-settings li{
+	margin-bottom: 10px;
 }
 /*==================================*\
 			&ACCORDION

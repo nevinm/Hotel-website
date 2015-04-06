@@ -1,12 +1,21 @@
+function redirectIfAdminLoggedIn(){
+        if (localStorage['admin_loggedIn'] == 'true') 
+        {
+            
+        }
+        else{window.location.href='index.html';}
+    }
+    
 $(document).ready(function() {
       //Admin Login
     var adminCallback = {
             success: function(data, textStatus) {
                 var adminDetails = JSON.parse(data),
                 userName = adminDetails.user.first_name+ ' '+ adminDetails.user.last_name;
-                localStorage['admin_username']=userName;
-                localStorage['admin_session_key']=adminDetails.session_key;
+                localStorage['username']=userName;
+                localStorage['session_key']=adminDetails.session_key;
                 localStorage['admin_loggedIn']=true;
+                localStorage['loggedIn']=false;
                 // checkLoggedIn();
                 window.location.href = 'categories.html'
             },
@@ -33,7 +42,7 @@ $(document).ready(function() {
             var loginAdminInstance = new AjaxHttpSender();
             loginAdminInstance.sendPost(url, header, data, adminCallback);
         }
-        $("#signup-button").on('click',function(){
+        $("#login-button").on('click',function(){
             adminLogin();
         });
 });

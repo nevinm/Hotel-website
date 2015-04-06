@@ -69,9 +69,9 @@
   function testAPI() {
     FB.api('/me', function(response) {
       if($('title').text().split('-')[1]==' Login'){
-        debugger;
         $("#username").val(response.email);
         $("#username").val(response.email);
+        $("#login-button").trigger("click");
       }
       else{
         localStorage['fb-id']=JSON.stringify(response.id);
@@ -79,7 +79,5 @@
         $('#signup-lastname').val(response.last_name);      
         $('#signup-email').val(response.email);      
       }
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
     });
   }

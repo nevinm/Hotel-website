@@ -23,7 +23,7 @@
             <div class="contentArea">
                 <a href="../index.html"><img class="pullLeft logo" src="../images/logo.png" alt="MeisterDish"></a>
                 <div class="cart pullRight">
-                    <span class="count">0</span>
+                    <span class="count"></span>
                     <img src="../images/cart_icon.png">
                 </div>
                 <span class="icon-menu pullRight"></span>
@@ -73,13 +73,16 @@
                 <div class="logout body-text-bold">
                     <a id='logout'>LOG OUT</a>
                 </div>
+                <div class="admin-button body-text-bold">
+                    <a href='admin/categories.html' id="admin-redirect">Admin Page</a>
+                </div>
             </div>
             <div class="account-wrapper">
             <div class="account-container">
                 <div class="account-header">
-                    <h2>JOHN SMITH'S ACCOUNT</h2>
+                    <h2></h2>
                     <div class="body-text-small">
-                        ACCOUNT CREDIT: $0.00
+                        ACCOUNT CREDIT: <span class='account-credit'></span>
                     </div>
                 </div>
                 <div class="account-settings">
@@ -88,7 +91,7 @@
                         <ul class="sub-content1 body-text-small">
                             <li><a href='change_contact.html'>CONTACT</a></li>
                             <li><a href='change_email.html'>EMAIL</a></li>
-                            <li><a href='change_password.html'>PASSWORD</li>
+                            <li><a href='change_password.html'>PASSWORD</a></li>
                             <li>DELIVERY ADDRESS</li>
                         </ul>
                         <ul class="sub-content2 body-text-small">
@@ -104,6 +107,7 @@
     </div>
 	<script type="text/javascript" src='../js/jquery.min.js'></script>
 	<script type="text/javascript" src='../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../js/jquery.validate.min.js'></script>
     <script type="text/javascript" src='../js/common.js'></script>
     <script type="text/javascript" src='../js/account.js'></script>
 </body>

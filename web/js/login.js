@@ -8,7 +8,6 @@
             "remember" : remember
         },
         data=JSON.stringify(userData);
-        $("#login-form")[0].reset();
         var loginInstance = new AjaxHttpSender();
         loginInstance.sendPost(url, header, data, loginCallback);
     }
@@ -21,6 +20,7 @@
                 showPopup(userDetails);
             }
             else{
+                $("#login-form")[0].reset();
                 var user_name = userDetails.user.first_name+ ' '+ userDetails.user.last_name;
                 localStorage['username']=user_name;
                 localStorage['session_key']=userDetails.session_key;
@@ -40,14 +40,12 @@
         else{}
     }
     redirectIfLoggedIn();
-$(document).ready(function() {
 
+$(document).ready(function() {
     //login form submit
     $("#login-button").on('click', function(e){
         e.preventDefault();
         loggingIn();
     });
-
-
 });
 

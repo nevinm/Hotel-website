@@ -1,12 +1,58 @@
-    function redirectIfLoggedIn(){
-        if (localStorage['loggedIn'] == 'true') 
-        {
-            
-        }
-        else{
-            window.location.href='../index.html';
-        }
+function redirectIfLoggedIn() {
+    if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {} else {
+        window.location.href = '../index.html';
     }
+}
+
+function dollarConvert(value) {
+    var dollarValue = "$" + value + ".00";
+        return dollarValue;
+}
+
+function profileAutoPopulate(){
+    var userDetails= JSON.parse(localStorage['user_profile']);
+    if(currentPage=='Meisterdish - Change Contact'){
+        $("#change-contact input[name='firstname']").val(userDetails.first_name);
+        $("#change-contact input[name='lastname']").val(userDetails.last_name);
+        $("#change-contact input[name='phonenumber']").val(userDetails.mobile);
+    }
+}
+
+function showAdminLink(){
+    if(localStorage['admin_loggedIn']=='true'){
+        $(".admin-button").show();
+    }
+    else{
+        $(".admin-button").hide();
+    }
+}
+    //Get profile API process
+var getProfileCallback = {
+    success: function(data, textStatus) {
+        // if (data.status == 1) {
+            localStorage['user_profile']=data;
+            var userDetails = JSON.parse(data);
+            $(".cart span").text(userDetails.meals_in_cart_count);
+            $(".account-credit").text(dollarConvert(userDetails.credits));
+        // }
+         // else {}
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function getProfile() {
+    var url = baseURL + "get_profile/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+            "get": 1
+        };
+    data = JSON.stringify(userData);
+    var getProfileInstance = new AjaxHttpSender();
+    getProfileInstance.sendPost(url, header, data, getProfileCallback);
+}
+
 $(document).ready(function() {
     // &ACCORDION
     $(".accordion-header").click(function() {
@@ -27,14 +73,7 @@ $(document).ready(function() {
             console.log(data);
             userDetails = JSON.parse(data);
             console.log(userDetails);
-
-            // if(userDetails.status == -1){
-                showPopup(userDetails);
-            // }
-            // else{
-            //     showPopup(userDetails);
-            //     window.location.href = 'account.html';
-            // }
+            showPopup(userDetails);
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
@@ -49,15 +88,15 @@ $(document).ready(function() {
     function editContact() {
         alert("editcontact");
         var url = baseURL + "edit_profile/",
-        $changeContactForm = $("#change-contact");
-        first_name = $changeContactForm.find("input[name=firstname]").val(),
-        last_name = $changeContactForm.find("input[name=lastname]").val(),
-        mobile_number = $changeContactForm.find("input[name=phonenumber]").val(),
-        remember = 1,
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        userData = {
+            $changeContactForm = $("#change-contact"),
+            first_name = $changeContactForm.find("input[name=firstname]").val(),
+            last_name = $changeContactForm.find("input[name=lastname]").val(),
+            mobile_number = $changeContactForm.find("input[name=phonenumber]").val(),
+            remember = 1,
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+            userData = {
                 "first_name": first_name,
                 "last_name": last_name,
                 "mobile": mobile_number
@@ -74,22 +113,22 @@ $(document).ready(function() {
             userDetails = JSON.parse(data);
             showPopup(userDetails);
         },
-        failure:function(XMLHttpRequest, textStatus, errorThrown){}
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
     $('#updatepassword').on('click',function(e){
         e.preventDefault();
-        if($('form').valid()){
+        if ($('form').valid()) {
             changePassword();
-            }
+        }
     });
 
-    function changePassword(){
+    function changePassword() {
         var oldpassword = $('#old-password').val(),
             newpassword = $('#new-password').val(),
             confirmpassword = $('#confirm-password').val(),
             remember = 1,
             header = {
-            "session-key": localStorage["session_key"]
+                "session-key": localStorage["session_key"]
             },
             url = baseURL + "change_password/",
 
@@ -97,10 +136,13 @@ $(document).ready(function() {
                 "old_password": oldpassword,
                 "new_password": newpassword
             },
-            data =  JSON.stringify(userData);
-            var changePasswordInstance = new AjaxHttpSender();
-            changePasswordInstance.sendPost(url, header, data, changePasswordCallback);
-         }
+            data = JSON.stringify(userData);
+        var changePasswordInstance = new AjaxHttpSender();
+        changePasswordInstance.sendPost(url, header, data, changePasswordCallback);
+    }
 
     redirectIfLoggedIn();
+    getProfile();
+    profileAutoPopulate();
+    showAdminLink();
 });
