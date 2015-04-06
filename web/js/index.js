@@ -5,8 +5,4 @@ $(document).ready(function() {
         controlArrows: false,
         navigation: true,
     });
-
-    $('.icon-menu').on("click", function() {
-        $('.navMenu').slideToggle();
-    });
 });

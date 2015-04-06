@@ -62,17 +62,10 @@ $(document).ready(function() {
         }
     });
 
-    // &NAVMENU - RESPONSIVE
-    $('.icon-menu').on("click", function() {
-        $('.navMenu').slideToggle();
-    });
-
     //Change contact API process
     var editContactCallback = {
         success: function(data, textStatus) {
-            console.log(data);
             userDetails = JSON.parse(data);
-            console.log(userDetails);
             showPopup(userDetails);
             $('#change-contact')[0].reset();
         },
@@ -109,7 +102,6 @@ $(document).ready(function() {
     //Change password API process
     var changePasswordCallback = {
         success: function(data,textStatus){
-            console.log(data);
             userDetails = JSON.parse(data);
             showPopup(userDetails);
             $('#change-password')[0].reset();
