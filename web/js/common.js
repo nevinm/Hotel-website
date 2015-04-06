@@ -18,7 +18,7 @@ function checkLoggedIn() {
 }
 function verifyAccount(){
     var verify_url = window.location.href;
-    var search_verify = verify.indexOf("verify");
+    var search_verify = verify_url.indexOf("verify");
     if(search_verify != -1){
         var trueMessage = {
             'message' : "Account is verified, proceed to login"
