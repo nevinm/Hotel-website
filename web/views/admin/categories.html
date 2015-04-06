@@ -24,7 +24,7 @@
             </div>
             <ul id="menu" class="pullRight">
                     <li>
-                        <a href="dashboard.html">USER LIST</a>
+                        <a href="userlist.html">USER LIST</a>
                     </li>
                     <li>
                         <a href="#">CATEGORIES</a>
@@ -36,7 +36,7 @@
                         <a href="" class="btn btn-small-secondary">SIGN UP</a>
                     </li>
                     <li id="navbar-username" class="bold">
-                        <a href=''></a>
+                        <a href='#'></a>
                     </li>
                 </ul>
         </header>
@@ -61,9 +61,16 @@
                 <div class='pagination'></div>
                 <div class='add-category-container'>
                     <div class='add-category-inner-container'>
-                        <input id='new-category' type='text' placeholder='Add Category'></input>
+                        <input class='new-category' type='text' placeholder='Add Category'></input>
                         <button id='add-confirm'>Add</button>
                         <button id='add-cancel'>Cancel</button>
+                    </div>
+                </div>
+                <div class='update-category-container'>
+                    <div class='add-category-inner-container'>
+                        <input class='new-category' data-id='' type='text' placeholder='Add Category'></input>
+                        <button id='update-confirm'>Update</button>
+                        <button id='update-cancel'>Cancel</button>
                     </div>
                 </div>
                 <div class='add-status'></div>

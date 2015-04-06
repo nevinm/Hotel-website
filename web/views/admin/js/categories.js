@@ -8,7 +8,6 @@ $(document).ready(function() {
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
 
-
     function getCategories(nextPage) {
             var url = baseURL + 'cms/get_categories/';
             header = {
@@ -25,34 +24,103 @@ $(document).ready(function() {
         //By deafault call 1 as starting.
     getCategories(1);
 
+    //Remove Categories
+    var removeCategoriesCallback = {
+        success: function(data, textStatus) {
+            var categoriesData = JSON.parse(data);
+            if (categoriesData.status == 1) {
+                alert(categoriesData.message);
+                currentPage = $('.pagination').pagination('getCurrentPage');
+                getCategories(currentPage);
+            } else {
+                alert("Something went wrong")
+            }
+        },
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    }
+
+    function removeCategories(id) {
+        if (confirm('Are you sure you want to delete this category?')) {
+            var url = baseURL + 'cms/remove_category/';
+            header = {
+                    "session-key": localStorage['admin_session_key']
+                },
+                params = {
+                    "id": id
+                },
+                data = JSON.stringify(params);
+
+            var removeCategoriesInstance = new AjaxHttpSender();
+            removeCategoriesInstance.sendPost(url, header, data, removeCategoriesCallback);
+        } else {}
+    }
+
+    //Update Categories
+    var updateCategoriesCallback = {
+        success: function(data, textStatus) {
+            var categoriesData = JSON.parse(data);
+            if (categoriesData.status == 1) {
+                totalPage=$('.pagination').pagination('getPagesCount');
+                $('.pagination').pagination('selectPage', totalPage);
+                $(".new-category").val("");
+            } else {
+                alert("Something went wrong")
+            }
+        },
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    }
+
+    function updateCategories(id, category) {
+        var url = baseURL + 'cms/update_category/';
+        header = {
+                "session-key": localStorage['admin_session_key']
+            },
+            params = {
+                "id": id,
+                "category": category
+            },
+            data = JSON.stringify(params);
+
+        var updateCategoriesInstance = new AjaxHttpSender();
+        updateCategoriesInstance.sendPost(url, header, data, updateCategoriesCallback);
+    }
+
+
     function populateCategories(categoriesData) {
-        $("#categories tbody").empty()
+        $("#categories tbody").empty();
         $.each(categoriesData.aaData, function(key, value) {
             $("#categories tbody").append("<tr>" +
                 "<td class='id'>" + value.id + "</td>" +
-                "<td class='category'>" + value.name + "</td>" +
+                "<td class='category' data-name='" + value.name + "'>" + value.name +
+                "<a data-id='" + value.id + "'class='cross'></a>" +
+                "<button class='update' type='button' data-id='" + value.id + "'>Update</button></td>" +
                 "</tr>");
-            $(".pagination").pagination({
-                items: categoriesData.total_count,
-                itemsOnPage: categoriesData.per_page,
-                currentPage: categoriesData.current_page,
-                cssStyle: 'light-theme',
-                onPageClick: function(pageNumber, event) {
-                    getCategories(pageNumber);
-                }
-            });
         })
+        $(".pagination").pagination({
+            items: categoriesData.total_count,
+            itemsOnPage: categoriesData.per_page,
+            currentPage: categoriesData.current_page,
+            cssStyle: 'light-theme',
+            onPageClick: function(pageNumber, event) {
+                getCategories(pageNumber);
+            }
+        });
+
     }
 
+    //Add category
     var addCategoriesCallback = {
         success: function(data, textStatus) {
             var data = JSON.parse(data);
             if (data.status) {
-                $(".add-status").text("Status:"+data.message);
-        		$(".add-status").show();
-                $("#new-category").val("");
+                debugger;
+                totalPage=$('.pagination').pagination('getPagesCount');
+                $(".add-status").text("Status:" + data.message);
+                $(".add-status").show();
+                $(".new-category").val("");
+                $('.pagination').pagination('selectPage', totalPage);
             } else {
-                $(".add-status").text("Status:"+data.message);
+                $(".add-status").text("Status:" + data.message);
             }
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -62,10 +130,10 @@ $(document).ready(function() {
 
 
     function addCategories() {
-   		$(".add-status").hide();
-        newCategory = $("#new-category").val();
-        var url = baseURL + 'cms/add_category/';
-        header = {
+        $(".add-status").hide();
+        var newCategory = $(".new-category").val(),
+            url = baseURL + 'cms/add_category/',
+            header = {
                 "session-key": localStorage['admin_session_key']
             },
             params = {
@@ -78,21 +146,39 @@ $(document).ready(function() {
     }
 
     function hideAddCategory() {
-   		$(".add-status").hide();
-        $(".add-category-container").removeClass("showAddCategory");
+        $(".add-status").hide();
+        $(".add-category-container, .update-category-container").hide();
     }
-    
+
     $("#add-category").on('click', function() {
-	        $(".add-category-container").addClass("showAddCategory");
+        $(".add-category-container, .update-category-container").hide();
+        $(".add-category-container").show();
     });
 
-    $("#add-cancel").on('click', hideAddCategory);
-    $("#add-confirm").on('click', function(){
-    	if($("#new-category").val().length===0){
-			$(".add-status").text("No category present");
-    	}
-    	else{
-    	addCategories();
-    	}
+    $("#add-cancel, #update-cancel").on('click', hideAddCategory);
+    $("#add-confirm").on('click', function() {
+        if ($(".new-category").val().length === 0) {
+            $(".add-status").text("No category present");
+        } else {
+            addCategories();
+        }
+    });
+    $("#update-confirm").on('click', function() {
+        var newCategory = $(".update-category-container .new-category").val(),
+            Id=$(".update-category-container .new-category").attr('data-id');
+            updateCategories(Id,newCategory);
+    })
+
+    $(document).on('click', '.cross', function() {
+        var deleteId = $(this).data().id;
+        removeCategories(deleteId);
+    });
+    $(document).on('click', '.update', function() {
+        $(".add-category-container, .update-category-container").hide();
+        var updateId = $(this).data().id,
+            initialCategory = $(this).closest(".category").data().name;
+        $(".update-category-container").show();
+        $(".update-category-container .new-category").attr("data-id",updateId);
+        $(".update-category-container .new-category").val(initialCategory);
     });
 });

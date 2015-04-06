@@ -1,6 +1,9 @@
 /*=======================*\
 	   &ADMIN-LOGIN
 \*=======================*/
+input[type="text"], input[type="email"], input[type="password"]{
+	color: black;
+}
 #admin-mainWrapper{
 	width: 100%;
 	border-right: 10px solid #fff;
@@ -57,6 +60,10 @@
 #categories{
 	margin-top: 50px;
 }
+#categories .update{
+	float: right;
+	margin-right: 10px;
+}
 table, th, td {
     border: 1px solid black;
     padding: 10px;
@@ -68,7 +75,7 @@ tbody, thead{
 .pagination{
 	float: right;
 }
-.add-category-container{
+.add-category-container, .update-category-container{
   display: none;
   width: 400px;
   position: absolute;
@@ -92,9 +99,6 @@ tbody, thead{
 	width: 30%;
 	height: 30px;
 	margin-top: 10px;
-}
-.showAddCategory{
-	display: block;
 }
 .add-status{
   position: absolute;

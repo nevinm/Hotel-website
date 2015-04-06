@@ -1,5 +1,6 @@
 var baseURL = 'http://meisterdish.qburst.com/backend/api/', 
-                                                userDetails;
+    userDetails;
+
 //If already logged in
 var $userentry = $('.login-signup');
 
@@ -147,6 +148,8 @@ $(document).ready(function() {
         });
     });
 
-$.validator.addMethod('letters', function(value) {
-       return value.match(/^[- a-zA-Z]+$/);
-});
+if($.validator){
+    $.validator.addMethod('letters', function(value) {
+           return value.match(/^[- a-zA-Z]+$/);
+    });
+}
