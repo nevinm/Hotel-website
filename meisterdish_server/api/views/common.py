@@ -222,7 +222,7 @@ def verify_user(request, data, token):
 @check_input('GET')
 def verify_email(request, data, token):
     login_url = settings.SITE_URL + "views/login.html"
-    login_url = "http://10.1.4.87/MeisterDish/meisterdish/web/views/login.html"
+    login_url = "http://10.1.4.87/MeisterDish/meisterdish/web/views/menu.html"
     try:
         token = token.strip()
         
