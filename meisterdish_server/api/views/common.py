@@ -500,6 +500,15 @@ def change_email(request, data):
         log.error("Failed to change email : " + e.message)
         return custom_error("Failed to change email.")
 
+@check_input('POST')
+def upload_profile_picture(request, data):
+    try:
+        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
+        user = User.objects.get(pk=session['user']['id'])
+        
+    except Exception as e:
+        log.error("Failed to change email : " + e.message)
+        return custom_error("Failed to change email.")
 
 def json_response(response, wrap=False):
     if (wrap == True):
