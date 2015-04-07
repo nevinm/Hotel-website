@@ -180,11 +180,12 @@ def send_user_verification_mail(user, change_email=False, email=""):
         if change_email:
             msg = render_to_string('verify_email_email_template.html', dic)
             sub = 'Verify your email for Meisterdish'
+            to_email = email
         else:
             msg = render_to_string('verify_user_email_template.html', dic)
             sub = 'Verify your account for Meisterdish'
-            
-        mail([user.email], sub, msg )
+            to_email = user.email
+        mail([email], sub, msg )
         log.info("Sent verification mail to " + user.email)
     except Exception as e:
         log.error("Failed to send user verification mail : "+ e.message)
