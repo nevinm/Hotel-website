@@ -336,6 +336,9 @@ label{
 .container-adjust{
 	margin-top: 100px
 }
+.show{
+	display: block !important;
+}
 /*==============================*\
 			&HEADER
 \*==============================*/

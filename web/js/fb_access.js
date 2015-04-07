@@ -8,14 +8,14 @@
       // Logged into your app and Facebook.
       testAPI();
     } else if (response.status === 'not_authorized') {
+       fbLogin();
       // The person is logged into Facebook, but not your app.
       document.getElementById('status').innerHTML = 'Please log ' +
         'into this app.';
     } else {
+       fbLogin();
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
     }
   }
 
@@ -32,7 +32,8 @@
   FB.init({
     appId      : '736537916455826',
     cookie     : true,  // enable cookies to allow the server to access 
-                        // the session
+    oauth   : true,
+    status  : true, // check login status
     xfbml      : true,  // parse social plugins on this page
     version    : 'v2.2' // use version 2.2
   });
@@ -110,4 +111,17 @@ function loginFB(fb_id, email) {
         $('#signup-email').val(response.email);      
       }
     });
+  }
+
+function fbLogin() {
+      FB.login(function(response) {
+
+          if (response.authResponse) {
+              testAPI();
+          } else {
+              console.log('User cancelled login or did not fully authorize.');
+          }
+      }, {
+          scope: 'publish_stream,email'
+      });
   }
