@@ -88,7 +88,7 @@
                             <ol>
                                 <!-- <li class="address">
                                     <div class = "button">
-                                        <a href="#" class=" edit-button btn btn-small-secondary">EDIT</a>
+                                        <a href="#" class=" edit-button btn btn-small-secondary" id="edit-address">EDIT</a>
                                     </div>
                                     <div class="address-content">
                                         <span>John Smith</span>
@@ -101,7 +101,7 @@
 
                                 <li class="address">
                                    <div class = "button">
-                                        <a href="#" class=" edit-button btn btn-small-secondary">EDIT</a>
+                                        <a href="#" class=" edit-button btn btn-small-secondary" id="edit-address">EDIT</a>
                                         <a href="#" class="remove-button btn btn-small-secondary">REMOVE</a>
                                     </div>
                                     <div class="address-content">
@@ -111,11 +111,11 @@
                                         <span>917-123-4567</span>
                                         <span>MAKE THIS YOUR PRIMARY ADDRESS</span>
                                     </div>
-                                </li> -->
+                                </li>
 
-                                <!-- <li class="address">
+                                <li class="address">
                                     <div class = "button">
-                                        <a href="#" class=" edit-button btn btn-small-secondary">EDIT</a>
+                                        <a href="#" class=" edit-button btn btn-small-secondary" id="edit-address">EDIT</a>
                                         <a href="#" class="remove-button btn btn-small-secondary">REMOVE</a>
                                     </div>
                                     <div class="address-content">
@@ -128,7 +128,7 @@
                                 </li>
                                 <li class="address">
                                     <div class = "button">
-                                        <a href="#" class=" edit-button btn btn-small-secondary">EDIT</a>
+                                        <a href="#" class=" edit-button btn btn-small-secondary" id="edit-address">EDIT</a>
                                         <a href="#" class="remove-button btn btn-small-secondary">REMOVE</a>
                                     </div>
                                     <div class="address-content">
@@ -158,6 +158,7 @@
                             <input type="text" name="fullname" placeholder="Full Name" class="popup-input">
                             <input type="text" name="phonenum" placeholder="Phone" class="popup-input">
                             <input type="text" name="zip" class="popup-input" placeholder="zip">
+                            <input type="text" name="state" class="popup-input" placeholder="state">
                             <select>
                                 <option selected>city</option>
                                 <option>city 1</option>
@@ -168,7 +169,8 @@
                             <input type="text" name="street" class="popup-input" placeholder="street">
                             <input type="text" name="building" class="popup-input" placeholder="building">
                             <div class="button">
-                                <a href="#" class="btn btn-small-primary medium-green" >ADD</a>
+                                <a href="#" class="btn btn-small-primary medium-green" id="addpopup-data">ADD</a>
+                                <a href="#" class="btn btn-small-primary medium-green" id="savepopup-data">SAVE</a>
                                 <a href="#" class="btn btn-small-primary medium-green" id="cancel">CANCEL</a>
                             </div>
                         </form>
