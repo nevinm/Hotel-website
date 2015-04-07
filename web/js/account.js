@@ -172,3 +172,12 @@ function changeEmail(){
         var changeEmailInstance = new AjaxHttpSender();
         changeEmailInstance.sendPost(url, header, data, changeEmailCallback);
 }
+
+//show addaddress popup 
+
+$('#add-address').on("click",function(){
+    $(".addresspopup-wrapper").show();
+});
+$('#cancel').on("click",function(){
+    $(".addresspopup-wrapper").hide();
+});

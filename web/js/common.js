@@ -70,12 +70,12 @@ $(document).ready(function() {
     }
     $('#close').on("click",function(){
         $('.popup-wrapper').hide();
-        if($(".facebook-login").length){
+        if(localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn']=='true'){
             window.location.href='menu.html'
         }
-        if ($('.facebook-signup').length) {
-            window.location.href='login.html';
-        }
+        // if ($('.facebook-signup').length) {
+        //     window.location.href='login.html';
+        // }
     });
    
    
