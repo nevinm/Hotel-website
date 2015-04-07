@@ -185,8 +185,8 @@ def send_user_verification_mail(user, change_email=False, email=""):
             msg = render_to_string('verify_user_email_template.html', dic)
             sub = 'Verify your account for Meisterdish'
             to_email = user.email
-        mail([email], sub, msg )
-        log.info("Sent verification mail to " + user.email)
+        mail([to_email], sub, msg )
+        log.info("Sent verification mail to " + to_email)
     except Exception as e:
         log.error("Failed to send user verification mail : "+ e.message)
         return False
@@ -235,20 +235,19 @@ def verify_email(request, data, token):
         user.save()
         
         log.info("Verified email "+user.email)
-        return HttpResponseRedirect(login_url+"?verify=true")
+        return HttpResponseRedirect(login_url+"?ve=true")
     
     except KeyError as field:
         log.error("verify email request missing "+field.message)
-        return HttpResponseRedirect(login_url+"?verify=false")
+        return HttpResponseRedirect(login_url+"?ve=false")
 
     except User.DoesNotExist:
         log.error("Verify : No user found with given token")
-        return HttpResponseRedirect(login_url+"?verify=false")
+        return HttpResponseRedirect(login_url+"?ve=false")
 
     except Exception as e:
         log.error("Validate token : Exception : "+e.message)
-        return HttpResponseRedirect(login_url+"?verify=false")
-
+        return HttpResponseRedirect(login_url+"?ve=false")
 
 @check_input('POST')
 def forgot_password(request, data):
