@@ -73,6 +73,9 @@ $(document).ready(function() {
         if($(".facebook-login").length){
             window.location.href='menu.html'
         }
+        if ($('.facebook-signup').length) {
+            window.location.href='login.html';
+        }
     });
    
    

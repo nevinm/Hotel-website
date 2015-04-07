@@ -208,23 +208,108 @@ span.body-text-small{
 /*==================================*\
 			&CHANGE-ADDRESS
 \*==================================*/
+div#editaddress-container {
+  margin-top: 10px;
+}
 #editaddress-container .account-header{
 	font-size: 14px;
 	font-family: 'BrandonGrotesque-Bold';
 	padding: 10px 0 10px 20px; 
 }
 #editaddress-container .content{
-	display: table;
+	 font-family: 'ProximaNova-regular';
+	 font-size: 12px;
+	 color: #9B9B9B;
+	 list-style-type: decimal;
+	 width: 100%;
+	 float: left;
 }
-#editaddress-container .content .row{
-	display: table-row;
+.content .address{
+	width: 33.33%;
+	float: left;
+	padding: 14px;
 }
-#editaddress-container .content ol li{
-	display: table-cell;
-	list-style-type: decimal;
+.address-content{
+	width: 150px;
+	float: left;
 }
 #editaddress-container .content ol li span{
 	width: 100%;
 	float: left;
+	padding: 8px 0;
 
+}
+#editaddress-container .content ol li span:last-child{
+	font-family: 'BrandonGrotesque-Bold';
+	padding-top: 20px;
+	width: 240px;
+}
+span.green{
+	color:#A9D77B;
+}
+.address .button{
+	width: 100px;
+	float: right;
+}
+.address .edit-button,.remove-button{
+	float: right;
+}
+.button-changeaddress{
+	width: 100%;
+	float: left;
+	padding-left: 24px;
+}
+.button-changeaddress .btn:last-child{
+	margin-left: 20px;
+}
+.non-primary-address, .primary-address{
+	display: none;
+}
+
+/*==================================*\
+			&PROFILE-PICTURE
+\*==================================*/
+.profile-pic-container{
+	float: left;
+	width: 100%;
+}
+.profile-pic-container span{
+	border-spacing: 40px 10px;
+	font-family: 'ProximaNova-regular';
+	font-size: 12px;
+	color: #9B9B9B;
+}
+.profile-pic{
+	position: relative;
+	width: 25%;
+	float: left;
+}
+.profile-pic img{
+    max-width:100% !important;
+    height:auto;
+    display:block;
+}
+.choose-pic-overlay{
+	position: absolute;
+	bottom: 1px;
+	width: 100%;
+	color: rgb(228, 215, 215);
+	background-color: gray;
+	text-align: center;
+	font-family: 'BrandonGrotesque-Regular';
+	cursor: pointer;
+	display: none;
+	z-index: 100;
+}
+.profile-pic:hover .choose-pic-overlay {
+	display: block;
+}
+.upload-image-container{
+	float: left;
+	display: block;
+	width: 25%;
+	margin-left: 50px;
+}
+.upload-file-container{
+	padding: 20px 0px;
 }

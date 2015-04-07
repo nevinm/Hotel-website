@@ -168,7 +168,7 @@ function changeEmail(){
         userData = {
             "email":newemail
         },
-        data = JSON.stringify(userData);debugger;
+        data = JSON.stringify(userData);
         var changeEmailInstance = new AjaxHttpSender();
         changeEmailInstance.sendPost(url, header, data, changeEmailCallback);
 }
