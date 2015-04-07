@@ -12,7 +12,7 @@ def check_input(method, admin=False):
                 req = json_request(request)
                 if req is not None:
                     log.info('API : '+func.__name__+', Input: '+str(req))
-                    if func.__name__ not in ['login','signup', 'forgot_password', 'logout', 'reset_password', 'verify_user']:
+                    if func.__name__ not in ['login','signup', 'forgot_password', 'logout', 'reset_password', 'verify_user', 'verify_email']:
                         common_apis = ["get_profile"]
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
                         session = SessionStore(session_key=session_key)

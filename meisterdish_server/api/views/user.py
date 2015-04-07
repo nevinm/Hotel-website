@@ -9,7 +9,7 @@ from datetime import datetime
 from django.db.models import Q
 from django.template.loader import render_to_string
 from decorators import *
-
+from common import json_response, custom_error
 log = logging.getLogger('api_user')
 
 @check_input('POST')
@@ -114,7 +114,7 @@ def remove_address(request, data):
         if add.user.id != session['user']['id']:
             return custom_error("You are not auhorized to delete this address")
         add.delete()
-        return json_response({"status":1, "message":"Deleted Address and related entries."})
+        return json_response({"status":1, "message":"Successfully Deleted Address.", "id":address_id})
     except Exception as e:
         log.error("Failed to delete Address : "+e.message)
         return custom_error("Failed to remove address")
@@ -137,6 +137,5 @@ def redeem_gift_card(request, data):
             gift_card.delete()
         return json_response({"status":1, "message": " Success, $"+str(credits) +" have been added to your credits."})
     except Exception as e:
-        return custom_error("Failed to delete gift card "+e.message)
-def custom_error(message):
-    return json_response({'status' : -1, 'message' : message})
+        log.error("Redeem gift card error : " + e.message)
+        return custom_error("Failed to redeem gift card ")
