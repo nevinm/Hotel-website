@@ -142,7 +142,7 @@ def signup(request, data):
             log.info(email + " : Signed up ")
             if send_user_verification_mail(user):
                 log.info("Sent verification mail to " + user.email)
-                return json_response({"status":1, "message": "A verification email has been sent to you email ("+email+"). Please follow the link in verification email to activate your account.", "user":user_dic, "session_key":session.session_key})
+                return json_response({"status":1, "message": "A verification email has been sent to your email ("+email+"). Please follow the link in verification email to activate your account.", "user":user_dic, "session_key":session.session_key})
             else:
                 log.error("Failed to send user verification mail : ")
                 return custom_error("An error has occurred in sending verification mail. Please try later.")
@@ -156,13 +156,18 @@ def signup(request, data):
         log.error("failed to signup "+e.message)
         return custom_error(e.message)
 
-def send_user_verification_mail(user):
+def send_user_verification_mail(user, change_email=False, email=""):
     try:
         import string, random
         from libraries import mail
     
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
-        link = settings.BASE_URL + 'verify_user/'+token+"/"
+        if change_email:
+            link = settings.BASE_URL + 'verify_email/'+token+"/"
+            token = token + "-"+email
+        else:
+            link = settings.BASE_URL + 'verify_user/'+token+"/"
+        
         user.user_verify_token = token
         user.save()
         
@@ -172,9 +177,14 @@ def send_user_verification_mail(user):
                "name" : user.last_name + " " + user.first_name,
                "username" : user.email,
                }
-        msg = render_to_string('verify_user_email_template.html', dic)
-    
-        mail([user.email], 'Verify your account for Meisterdish', msg )
+        if change_email:
+            msg = render_to_string('verify_email_email_template.html', dic)
+            sub = 'Verify your email for Meisterdish'
+        else:
+            msg = render_to_string('verify_user_email_template.html', dic)
+            sub = 'Verify your account for Meisterdish'
+            
+        mail([user.email], sub, msg )
         log.info("Sent verification mail to " + user.email)
     except Exception as e:
         log.error("Failed to send user verification mail : "+ e.message)
@@ -207,6 +217,37 @@ def verify_user(request, data, token):
     except Exception as e:
         log.error("Validate token : Exception : "+e.message)
         return HttpResponseRedirect(login_url+"?verify=false")
+
+@check_input('GET')
+def verify_email(request, data, token):
+    login_url = settings.SITE_URL + "views/login.html"
+    try:
+        token = token.strip()
+        
+        user = User.objects.get(user_verify_token__startswith=token)
+        
+        token = user.user_verify_token[0:20]
+        email = user.user_verify_token[20:].strip("-")
+        
+        user.user_verify_token = ""
+        user.email = email
+        user.save()
+        
+        log.info("Verified email "+user.email)
+        return HttpResponseRedirect(login_url+"?verify=true")
+    
+    except KeyError as field:
+        log.error("verify email request missing "+field.message)
+        return HttpResponseRedirect(login_url+"?verify=false")
+
+    except User.DoesNotExist:
+        log.error("Verify : No user found with given token")
+        return HttpResponseRedirect(login_url+"?verify=false")
+
+    except Exception as e:
+        log.error("Validate token : Exception : "+e.message)
+        return HttpResponseRedirect(login_url+"?verify=false")
+
 
 @check_input('POST')
 def forgot_password(request, data):
@@ -444,13 +485,21 @@ def change_email(request, data):
         elif User.objects.filter(email=email).exists():
             raise Exception("Email already exists for another user.")
         else:
+            if send_user_verification_mail(user, True, email):
+                log.info("Sent verification mail to " + email)
+                return json_response({"status":1, "message": "A verification email has been sent to your email ("+email+"). Please follow the link in verification email to verify."})
+            else:
+                log.error("Failed to send user verification mail : "+email)
+                return custom_error("An error has occurred in sending verification mail. Please try later.")
+
             user.email = email
             user.save()
             return json_response({"status":1, "message":"Updated email address"})
     except Exception as e:
         log.error("Failed to change email : " + e.message)
         return custom_error("Failed to change email.")
-    
+
+
 def json_response(response, wrap=False):
     if (wrap == True):
         final_response = {"data" : response}
