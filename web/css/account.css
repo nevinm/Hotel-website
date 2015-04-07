@@ -321,9 +321,8 @@ span.green{
 }
 .addresspopup {
   position: absolute;
-  top: 50%;
+  top: 40%;
   width: 300px;
-  height: 400px;
   left: 50%;
   margin-left: -100px;
   margin-top: -200px;
@@ -354,6 +353,9 @@ input.popup-input {
   padding: 7px;
   border: 1px solid;
   margin-bottom: 15px;
+}
+.addaddress-popup .button{
+	padding: 10px 0;
 }
 select{
 	width: 262px;

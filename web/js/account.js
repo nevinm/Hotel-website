@@ -177,7 +177,16 @@ function changeEmail(){
 
 $('#add-address').on("click",function(){
     $(".addresspopup-wrapper").show();
+    $("#savepopup-data").hide();
+    $("#addpopup-data").show();
 });
 $('#cancel').on("click",function(){
     $(".addresspopup-wrapper").hide();
 });
+
+//show edit address popup
+$('#edit-address').on("click",function(){
+    $(".addresspopup-wrapper").show();
+    $("#addpopup-data").hide();
+    $("#savepopup-data").show();
+})
