@@ -185,7 +185,7 @@ $('#cancel').on("click",function(){
 });
 
 //show edit address popup
-$('#edit-address').on("click",function(){
+$(document).on("click",".edit-address",function(){
     $(".addresspopup-wrapper").show();
     $("#addpopup-data").hide();
     $("#savepopup-data").show();
