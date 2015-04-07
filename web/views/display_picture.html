@@ -18,16 +18,16 @@
 </head>
 
 <body>
-    <div id="mainWrapper">
+    <div id="account-mainWrapper">
         <header id="header">
             <div class="contentArea">
                 <a href="../index.html"><img class="pullLeft logo" src="../images/logo.png" alt="MeisterDish"></a>
                 <div class="cart pullRight">
-                    <span class="count">0</span>
+                    <span class="count"></span>
                     <img src="../images/cart_icon.png">
                 </div>
                 <span class="icon-menu pullRight"></span>
-                <div class="navMenu" style="display:none">
+                <div class="navMenu"style="display:none">
                     <ul>
                         <li>
                             <a href="menu.html">THE MENU</a>
@@ -38,15 +38,15 @@
                         <li>
                             <a href="">PARTNERS</a>
                         </li>
-                        <li>
-                            <a href="login.html">LOG IN</a>
+                        <li >
+                            <a href="/">LOG IN</a>
                         </li>
                         <li>
-                            <a href="signup.html">SIGN UP</a>
+                            <a href="/">SIGN UP</a>
                         </li>
                     </ul>
                 </div>
-                <ul id="menu" class="pullRight">
+               <ul id="menu" class="pullRight">
                     <li>
                         <a href="menu.html">THE MENU</a>
                     </li>
@@ -70,10 +70,6 @@
         </header>
         <div id="page-container">
             <div class="accountNav">
-                <div class="backNav">
-                    <img src="../images/back_arrow.png">
-                    <span><a href="#">BACK TO ACCOUNT</a></span>
-                </div>
                 <div class="logout body-text-bold">
                     <a id='logout'>LOG OUT</a>
                 </div>
@@ -82,47 +78,37 @@
                 </div>
             </div>
             <div class="account-wrapper">
-                <div class="account-container" id="editaddress-container">  
-                    <div class="account-header">MANAGE YOUR DELIVERY ADDRESSES</div>
-                    <div class="content">
-                            <ol class="row">
-                                <li class="address">
-                                    <!-- <span class="index">1.</span> -->
-                                    <span>John Smith</span>
-                                    <span>123 East 12th St, PH1A</span>
-                                    <span>New York, NY 10001</span>
-                                    <span>917-123-4567</span>
-                                </li>
-                                <li>
-                                    <span>John Smith</span>
-                                    <span>123 East 12th St, PH1A</span>
-                                    <span>New York, NY 10001</span>
-                                    <span>917-123-4567</span>
-                                </li>
-                                <li>
-                                    <span>John Smith</span>
-                                    <span>123 East 12th St, PH1A</span>
-                                    <span>New York, NY 10001</span>
-                                    <span>917-123-4567</span>
-                                </li>
-                            </ol>
-                            <ol class="row">
-                                <li>
-                                    <span>John Smith</span>
-                                    <span>123 East 12th St, PH1A</span>
-                                    <span>New York, NY 10001</span>
-                                    <span>917-123-4567</span>
-                                </li>
-                            </ol>
+            <div class="account-container">
+                <div class="account-header">
+                    <h2></h2>
+                    <div class="body-text-small">
+                        ACCOUNT CREDIT: <span class='account-credit'></span>
                     </div>
                 </div>
-
+                <div class="account-settings">
+                   <div class='profile-pic-container'>
+                       <div class='profile-pic'>
+                           <img id='display-pic' src='../images/blank-person.png'/>
+                           <div class='choose-pic-overlay'>Change Photo</div>
+                       </div>
+                       <div class='upload-image-container'>
+                           <h4>YOUR PROFILE PHOTO</h4>
+                            <h4>UPLOAD A PHOTO</h4>
+                            <div class='upload-file-container'>
+                                <input type='file'/>
+                                <span>JPG OR PNG 2MB maximum.</span>
+                            </div>
+                            <a href="#" class="btn btn-large-primary medium-green">UPDATE</a>
+                       </div>
+                   </div>
+                </div>
+            </div>
             </div>     
         </div>
     </div>
 	<script type="text/javascript" src='../js/jquery.min.js'></script>
-    <script type="text/javascript" src='../js/jquery.validate.min.js'></script>
 	<script type="text/javascript" src='../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../js/jquery.validate.min.js'></script>
     <script type="text/javascript" src='../js/common.js'></script>
     <script type="text/javascript" src='../js/account.js'></script>
 </body>

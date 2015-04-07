@@ -168,7 +168,25 @@ function changeEmail(){
         userData = {
             "email":newemail
         },
-        data = JSON.stringify(userData);debugger;
+        data = JSON.stringify(userData);
         var changeEmailInstance = new AjaxHttpSender();
         changeEmailInstance.sendPost(url, header, data, changeEmailCallback);
 }
+
+//show addaddress popup 
+
+$('#add-address').on("click",function(){
+    $(".addresspopup-wrapper").show();
+    $("#savepopup-data").hide();
+    $("#addpopup-data").show();
+});
+$('#cancel').on("click",function(){
+    $(".addresspopup-wrapper").hide();
+});
+
+//show edit address popup
+$('#edit-address').on("click",function(){
+    $(".addresspopup-wrapper").show();
+    $("#addpopup-data").hide();
+    $("#savepopup-data").show();
+})

@@ -30,7 +30,6 @@ $(document).ready(function() {
         success: function(data, textStatus) {
             var categoriesData = JSON.parse(data);
             if (categoriesData.status == 1) {
-                alert(categoriesData.message);
                 currentPage = $('.pagination').pagination('getCurrentPage');
                 getCategories(currentPage);
             } else {

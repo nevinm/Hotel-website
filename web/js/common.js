@@ -18,7 +18,7 @@ function checkLoggedIn() {
 }
 function verifyAccount(){
     var verify_url = window.location.href;
-    var search_verify = verify.indexOf("verify");
+    var search_verify = verify_url.indexOf("verify");
     if(search_verify != -1){
         var trueMessage = {
             'message' : "Account is verified, proceed to login"
@@ -70,9 +70,12 @@ $(document).ready(function() {
     }
     $('#close').on("click",function(){
         $('.popup-wrapper').hide();
-        if($(".facebook-login").length){
-            window.location.href='menu.html'
+        if(localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn']=='true'){
+            window.location.href='menu.html';
         }
+        // if ($('.facebook-signup').length) {
+        //     window.location.href='login.html';
+        // }
     });
    
    
