@@ -29,7 +29,7 @@ $(document).on('click', '.remove-button', function() {
 });
 
 function autoPopulateAdressess() {
-    $("#editaddress-container ol").empty();
+    // $("#editaddress-container ol").empty();
     var userProfile = JSON.parse(localStorage['user_profile']);
     $.each(userProfile.address_list, function(key, value) {
         var userProfile = JSON.parse(localStorage['user_profile']);

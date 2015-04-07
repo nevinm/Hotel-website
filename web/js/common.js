@@ -1,6 +1,5 @@
-var baseURL = 'http://meisterdish.qburst.com/backend/api/', 
+var baseURL = 'http://meisterdish.qburst.com/backend/api/',
     userDetails, currentPage=$("title").text();
-
 //If already logged in
 var $userentry = $('.login-signup');
 
@@ -19,6 +18,23 @@ function checkLoggedIn() {
 function verifyAccount(){
     var verify_url = window.location.href;
     var search_verify = verify_url.indexOf("verify");
+    var search_ve = verify_url.indexOf("ve");
+    
+    //email vaerification
+    if(search_ve !=-1){
+        var truemessage = {
+            'message' :"Your email is verified"
+        }
+        var falsemessage = {
+            'message':"email is not verified"
+        }
+        if(verify_url.split("?")[1].split("=")[1] == "true"){
+            showPopup(truemessage);
+        }
+        else{
+            showPopup(falsemessage);
+        }
+    }
     if(search_verify != -1){
         var trueMessage = {
             'message' : "Account is verified, proceed to login"
@@ -38,6 +54,9 @@ function verifyAccount(){
 $(document).ready(function() {
     //Logout process
     $("#logout").on('click', function() {
+        logingOut();
+        });
+        function logingOut(){
             $('#navbar-username a').text('');
             $userentry.show();
             $('#menu').removeClass('menuPadding');
@@ -51,8 +70,8 @@ $(document).ready(function() {
         } else {
             window.location.href = '../index.html';
         }
-    });
-
+   
+    }
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
         $('.navMenu').slideToggle();
@@ -67,16 +86,25 @@ $(document).ready(function() {
         var message = data.message;
         $('.popup-container .content span').text(message);
         $('.popup-wrapper').show();
-    }
+    
     $('#close').on("click",function(){
         $('.popup-wrapper').hide();
-        if(localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn']=='true'){
-            window.location.href='menu.html';
+        if(currentPage=="Meisterdish - Signup"){
+            if(localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn']=='true'){
+                window.location.href='menu.html';
+            }
         }
+        // if(currentPage="Meisterdish -Change Email"){
+        //     window.location.href = "account.html";
+        // }
+        // if(localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn']=='true'){
+        //     window.location.href='menu.html';
+        // }
         // if ($('.facebook-signup').length) {
         //     window.location.href='login.html';
         // }
-    });
+    })
+}
    
    
     //JQuery Validation   

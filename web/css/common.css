@@ -611,10 +611,23 @@ span.icon-menu{
 		  margin-left: 25px;
   		
   	}
-  	/*DELIVERY ADDRESS*/
+  	
 }
 @media only screen and (min-width: 1025px){
 	.navMenu{
 		display: none !important;
 	}
+}
+@media only screen and (max-width: 1177px){
+	/*DELIVERY ADDRESS*/
+	.content .address{
+		width: 50% !important;
+	}
+	.address-content {
+  		width: 50% !important;
+  	}
+  	.btn-small-secondary{
+  		height: 31px !important;
+  		min-width: 88px !important;
+  	}
 }
