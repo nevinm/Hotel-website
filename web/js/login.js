@@ -39,7 +39,7 @@
         }
         else{}
     }
-    redirectIfLoggedIn();
+    // redirectIfLoggedIn();
 
 $(document).ready(function() {
     //login form submit
