@@ -114,7 +114,7 @@ def remove_address(request, data):
         if add.user.id != session['user']['id']:
             return custom_error("You are not auhorized to delete this address")
         add.delete()
-        return json_response({"status":1, "message":"Deleted Address and related entries."})
+        return json_response({"status":1, "message":"Successfully Deleted Address.", "id":address_id})
     except Exception as e:
         log.error("Failed to delete Address : "+e.message)
         return custom_error("Failed to remove address")
