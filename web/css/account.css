@@ -262,6 +262,9 @@ span.green{
 .button-changeaddress .btn:last-child{
 	margin-left: 20px;
 }
+.non-primary-address, .primary-address{
+	display: none;
+}
 
 /*==================================*\
 			&PROFILE-PICTURE
