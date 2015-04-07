@@ -261,3 +261,51 @@ div#editaddress-container {
 .button-changeaddress .btn:last-child{
 	margin-left: 20px;
 }
+
+/*==================================*\
+			&PROFILE-PICTURE
+\*==================================*/
+.profile-pic-container{
+	float: left;
+	width: 100%;
+}
+.profile-pic-container span{
+	border-spacing: 40px 10px;
+	font-family: 'ProximaNova-regular';
+	font-size: 12px;
+	color: #9B9B9B;
+}
+.profile-pic{
+	position: relative;
+	width: 25%;
+	float: left;
+}
+.profile-pic img{
+    max-width:100% !important;
+    height:auto;
+    display:block;
+}
+.choose-pic-overlay{
+	position: absolute;
+	bottom: 1px;
+	width: 100%;
+	color: rgb(228, 215, 215);
+	background-color: gray;
+	text-align: center;
+	font-family: 'BrandonGrotesque-Regular';
+	cursor: pointer;
+	display: none;
+	z-index: 100;
+}
+.profile-pic:hover .choose-pic-overlay {
+	display: block;
+}
+.upload-image-container{
+	float: left;
+	display: block;
+	width: 25%;
+	margin-left: 50px;
+}
+.upload-file-container{
+	padding: 20px 0px;
+}
