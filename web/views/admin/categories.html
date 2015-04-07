@@ -47,34 +47,40 @@
                         <a id='logout'>LOG OUT</a>
                     </div>
                 </div>
-                <h2>CATEGORIES MANAGEMENT   </h2>
-                <table id='categories' cellpadding="10" width='100%'>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Categories</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-                <br>
-                <button id='add-category'>Add Categories</button>
-                <div class='pagination'></div>
-                <div class='add-category-container'>
-                    <div class='add-category-inner-container'>
-                        <input class='new-category' type='text' placeholder='Add Category'></input>
-                        <button id='add-confirm'>Add</button>
-                        <button id='add-cancel'>Cancel</button>
+                <div class="admin-page-container">
+                    <div class="admin-header">
+                        <h2>CATEGORIES MANAGEMENT</h2>
+                    </div>
+                    <table id='categories' cellpadding="10" width='100%'>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Categories</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <br>
+                    <div class="admin-nav">
+                        <a id="add-category" class="btn btn-small-secondary">Add Categories</a>
+                        <div class='pagination'></div>
+                        <div class='add-category-container'>
+                            <div class='add-category-inner-container'>
+                                <input class='new-category' type='text' placeholder='Add Category'></input>
+                                <button id='add-confirm'>Add</button>
+                                <button id='add-cancel'>Cancel</button>
+                            </div>
+                        </div>
+                        <div class='update-category-container'>
+                            <div class='add-category-inner-container'>
+                                <input class='new-category' data-id='' type='text' placeholder='Add Category'></input>
+                                <button id='update-confirm'>Update</button>
+                                <button id='update-cancel'>Cancel</button>
+                            </div>
+                        </div>
+                        <div class='add-status'></div>
                     </div>
                 </div>
-                <div class='update-category-container'>
-                    <div class='add-category-inner-container'>
-                        <input class='new-category' data-id='' type='text' placeholder='Add Category'></input>
-                        <button id='update-confirm'>Update</button>
-                        <button id='update-cancel'>Cancel</button>
-                    </div>
-                </div>
-                <div class='add-status'></div>
             </div>
         </div>
     </div>

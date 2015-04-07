@@ -52,7 +52,7 @@ input[type="text"], input[type="email"], input[type="password"]{
 	padding-bottom: 20px;
 }
 .logout{
-	margin-left: 85%;
+	/*margin-left: 85%;*/
 }
 
 
@@ -68,12 +68,24 @@ input[type="text"], input[type="email"], input[type="password"]{
 	margin-right: 10px;
 }
 table, th, td {
-    border: 1px solid black;
+    border: 1px solid #d0d0d0;
     padding: 10px;
     border-collapse: collapse;
+    background-color:#f7f7f7;
+    font-family: 'BrandonGrotesque-Regular';
 }
 tbody, thead{
 	text-align: center;
+}
+.accountNav{
+  width: 90%;
+  margin: 0 auto;
+  text-align: right;
+}
+.admin-nav{
+  width: 80%;
+  margin: 0 auto;
+  padding: 15px 0;
 }
 .pagination{
 	float: right;
@@ -116,8 +128,30 @@ tbody, thead{
   text-align: center;
   border: 1px solid black;
 }
-
+.admin-page-container {
+  width: 90%;
+  margin: 0 auto;
+  background-color: #fff;
+  border:1px solid #d0d0d0;
+  border-radius: 3px;
+  overflow: auto;
+}
+.admin-header {
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #D0D0D0;
+  border-radius: 3px 3px 0 0;
+}
+.admin-page-container table{
+  width: 80%;
+  margin: 0 auto;
+  padding-bottom: 10px;
+}
 /*Userlist page*/
+table#userlist{
+  width: 90%;
+  margin-top: 20px;
+
+}
 .status{
 	background: #ccc;
   cursor: pointer;
