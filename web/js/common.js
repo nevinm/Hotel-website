@@ -28,7 +28,7 @@ function verifyAccount(){
         var falsemessage = {
             'message':"email is not verified"
         }
-        if(verify_url.split("?")[1].split("=")[1] == "true"){
+        if(verify_url.split("?")[1].split("=")[1]=="true"){
             showPopup(truemessage);
         }
         else{
@@ -43,6 +43,7 @@ function verifyAccount(){
             'message':"account is not verified"
         }
         if(verify_url.split("?")[1].split("=")[1] == "true"){
+            debugger;
             showPopup(trueMessage);
         }
         else{
@@ -123,6 +124,12 @@ $(document).ready(function() {
                     maxlength: 15,
                     letters: true
                 },
+                Fullname: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 20,
+                    letters: true
+                },
                 username:{
                     required: true,
                     minlength: 2,
@@ -159,6 +166,12 @@ $(document).ready(function() {
                     required:true,
                     minlength:6,
                     equalTo: "#new-password"
+                },
+                zip :{
+                    required:true
+                },
+                state :{
+                    required:true
                 }
             },
             messages: {
@@ -197,7 +210,9 @@ $(document).ready(function() {
                      equalTo:"email doesn't match",
                      required:"please provide email"
                 },
-                email: "enter a valid email address"
+                email : "enter a valid email address",
+                state :"State is required",
+                zip : "Provide a zip code"
             }
         });
     });
