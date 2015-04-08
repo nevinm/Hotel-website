@@ -17,11 +17,11 @@ function checkLoggedIn() {
 }
 function verifyAccount(){
     var verify_url = window.location.href;
-    var search_verify = verify_url.indexOf("verify");
-    var search_ve = verify_url.indexOf("ve");
+    var search_verify = verify_url.indexOf("account_verify");
+    var search_ve = verify_url.indexOf("email_verify");
     
     //email vaerification
-    if(search_ve !=-1){
+    if(search_ve!=-1 && search_ve!=undefined ){
         var truemessage = {
             'message' :"Your email is verified"
         }
@@ -35,7 +35,7 @@ function verifyAccount(){
             showPopup(falsemessage);
         }
     }
-    if(search_verify != -1){
+    if(search_verify!=-1 && search_verify!=undefined){
         var trueMessage = {
             'message' : "Account is verified, proceed to login"
         }

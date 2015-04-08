@@ -155,7 +155,7 @@
                     <div class="container">
                         <form class="addaddress-popup">
                             <input type="text" name="fullname" placeholder="Full Name" class="popup-input">
-                            <input type="text" name="phonenum" placeholder="Phone" class="popup-input">
+                            <input type="text" name="phonenumber" placeholder="Phone" class="popup-input">
                             <input type="text" name="zip" class="popup-input" placeholder="zip code">
                             <input type="text" name="state" class="popup-input" placeholder="state">
                             <select>
@@ -169,11 +169,26 @@
                             <input type="text" name="building" class="popup-input" placeholder="Building"><br>
                             <input type="checkbox" name="is-primary" class="popup-input checkbox"><span class='checkbox-span'>Set Primary Address</span>
                             <div class="button">
-                                <a href="#" class="btn btn-small-primary medium-green" id="addpopup-data">ADD</a>
-                                <a href="#" class="btn btn-small-primary medium-green" data-id='' id="savepopup-data">SAVE</a>
+                                <input class="btn btn-small-primary medium-green" id="addpopup-data" type="submit" value="ADD">
+                                <input class="btn btn-small-primary medium-green" id="savepopup-data" value="SAVE" type="submit">
                                 <a href="#" class="btn btn-small-primary medium-green" id="cancel">CANCEL</a>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>  
+            <div class="popup-wrapper">
+                <div class="bk-overlay"></div>
+                <div class="popup">
+                    <div class="header"></div>
+                    <div class="popup-container">
+                        <div class="content">
+                             <span>Are you sure want to remove this address </span>
+                        </div>
+                        <div class="button">
+                            <a href="#" class="btn btn-small-secondary" id="yes-button">YES</a>
+                            <a href="#" class="btn btn-small-secondary" id="no-button">NO</a>
+                        </div>
                     </div>
                 </div>
             </div>    
