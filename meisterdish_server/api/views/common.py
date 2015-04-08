@@ -205,19 +205,19 @@ def verify_user(request, data, token):
         user.save()
         
         log.info("Verified user "+user.email)
-        return HttpResponseRedirect(login_url+"?verify=true")
+        return HttpResponseRedirect(login_url+"?account_verify=true")
     
     except KeyError as field:
         log.error("verify request request missing "+field.message)
-        return HttpResponseRedirect(login_url+"?verify=false")
+        return HttpResponseRedirect(login_url+"?account_verify=false")
 
     except User.DoesNotExist:
         log.error("Verify : No user found with given token")
-        return HttpResponseRedirect(login_url+"?verify=false")
+        return HttpResponseRedirect(login_url+"?account_verify=false")
 
     except Exception as e:
         log.error("Validate token : Exception : "+e.message)
-        return HttpResponseRedirect(login_url+"?verify=false")
+        return HttpResponseRedirect(login_url+"?account_verify=false")
 
 @check_input('GET')
 def verify_email(request, data, token):
@@ -236,19 +236,19 @@ def verify_email(request, data, token):
         user.save()
         
         log.info("Verified email "+user.email)
-        return HttpResponseRedirect(login_url+"?ve=true")
+        return HttpResponseRedirect(login_url+"?email_verify=true")
     
     except KeyError as field:
         log.error("verify email request missing "+field.message)
-        return HttpResponseRedirect(login_url+"?ve=false")
+        return HttpResponseRedirect(login_url+"?email_verify=false")
 
     except User.DoesNotExist:
         log.error("Verify : No user found with given token")
-        return HttpResponseRedirect(login_url+"?ve=false")
+        return HttpResponseRedirect(login_url+"?email_verify=false")
 
     except Exception as e:
         log.error("Validate token : Exception : "+e.message)
-        return HttpResponseRedirect(login_url+"?ve=false")
+        return HttpResponseRedirect(login_url+"?email_verify=false")
 
 @check_input('POST')
 def forgot_password(request, data):
@@ -314,10 +314,8 @@ def reset_password(request, data):
         return custom_error("Failed to reset password. Please try again later.")
 
 @check_input('POST')
-def change_password(request, data):
+def change_password(request, data, user):
     try:
-        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
-        user = User.objects.get(pk=session['user']['id'])
         
         user_id = user.id
         old_password = data['old_password'].strip()
@@ -337,11 +335,8 @@ def change_password(request, data):
         return custom_error("Failed to change the password.")
 
 @check_input('POST')
-def get_profile(request, data):
+def get_profile(request, data, user):
     try:
-        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
-        user = User.objects.get(pk=session['user']['id'])
-        
         if not user.is_active:
             raise Exception("The user is not active.")
         
@@ -397,11 +392,8 @@ def get_profile(request, data):
         return custom_error("Failed to retrieve profile details.")
 
 @check_input('POST')
-def edit_profile(request, data):
+def edit_profile(request, data, user):
     try:
-        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
-        user = User.objects.get(pk=session['user']['id'])
-        
         if 'first_name' in data:
             user.first_name = data['first_name'].strip()
         
@@ -425,7 +417,7 @@ def edit_profile(request, data):
         return custom_error("Failed to update profile.")
 
 @check_input('POST')
-def get_cities(request, data):
+def get_cities(request, data, user):
     try:
         city_list = []
         limit = 20
@@ -450,7 +442,7 @@ def get_cities(request, data):
         return custom_error("Failed to retrieve city list.")
     
 @check_input('POST')
-def get_states(request, data):
+def get_states(request, data, user):
     try:
         state_list = []
         if not "country_id" in data:
@@ -474,11 +466,8 @@ def get_states(request, data):
         return custom_error("Failed to retrieve state list.")
 
 @check_input('POST')
-def change_email(request, data):
+def change_email(request, data, user):
     try:
-        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
-        user = User.objects.get(pk=session['user']['id'])
-        
         email = data["email"].strip()
         
         if user.email == email:
@@ -501,22 +490,8 @@ def change_email(request, data):
         return custom_error("Failed to change email.")
 
 @check_input('POST')
-def upload_profile_picture(request, data):
+def get_address_list(request, data, user):
     try:
-        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
-        user = User.objects.get(pk=session['user']['id'])
-        
-    except Exception as e:
-        log.error("Failed to change email : " + e.message)
-        return custom_error("Failed to change email.")
-
-
-@check_input('POST')
-def get_address_list(request, data):
-    try:
-        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
-        user = User.objects.get(pk=session['user']['id'])
-        
         address_list = []
         addresses = Address.objects.filter(user=user)
         for add in addresses:
@@ -538,15 +513,50 @@ def get_address_list(request, data):
         log.error("Failed to send address list : " + e.message)
         return custom_error("Failed to retrieve address list")
 
+@check_input('POST')
+def upload_picture(request, data, user):
+    try:
+        if request.FILES == None:
+            return custom_error('Please upload a valid file')
+        
+        file = request.FILES[u'files[]']
+        wrapped_file = UploadedFile(file)
+        filename = wrapped_file.name
+        file_size = wrapped_file.file.size
+        log.info ('File upload : "'+str(filename)+'"')
 
-def json_response(response, wrap=False):
-    if (wrap == True):
-        final_response = {"data" : response}
-    else:
-        final_response = response
-    header_res = HttpResponse(simplejson.dumps(final_response))
-    return header_res
+        image = Image()
+        image.title=str(filename)
+        image.image=file
+        image.save()
+        log.info('File saving done')
+        
+        im = get_thumbnail(image, "80x80", quality=50)
+        image.thumb = im
+        image.save()
+        log.info('Saved thumbnail')
+        #getting url for photo deletion
+        file_delete_url = '/delete/'
+        
+        #getting file url here
+        file_url = '/'
+        log.info("Created thumbnail")
+        return json_response({"name":filename, 
+                       "size":file_size, 
+                       "url":file.url,
+                       "thumbnail_url":im.url,
+                       "delete_url":file_delete_url+str(image.pk)+'/', 
+                       "delete_type":"POST",})
+    except Exception as e:
+        log.error("Failed to upload profile picture : " + e.message)
+        return custom_error("Failed to upload profile picture. Please try again later.")
 
-def custom_error(message):
-    return json_response({'status' : -1, 'message' : message})
-
+@check_input('POST')
+def delete_profile_image(request, pk):
+    try:
+        image = get_object_or_404(Image, pk=pk)
+        image.delete()
+        return json_response({"status":1, "message":"Deleted image", "id":pk})
+    except Exception as e:
+        log.error("Failed to delete image " + e.message)
+        return custom_error("Failed to delete image. Please try again later.")
