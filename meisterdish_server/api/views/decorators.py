@@ -56,16 +56,8 @@ def json_request(request):
         return req
     else:
         req = request.body
-<<<<<<< HEAD
-    
-    if not req:
-        req='{"a":"b"}'
-
-=======
         if not req:
             req='{"a":"b"}'
-        
->>>>>>> 83850479a6ec26e6a731a3136e6b98035a16600f
     if (req):
         try:
             if request.FILES:
