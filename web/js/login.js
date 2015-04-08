@@ -45,7 +45,9 @@ $(document).ready(function() {
     //login form submit
     $("#login-button").on('click', function(e){
         e.preventDefault();
-        loggingIn();
+        if($('form').valid()){
+            loggingIn();
+        } 
     });
 });
 
