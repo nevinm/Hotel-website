@@ -1,9 +1,11 @@
+   
     // Remove address API
     var removeAddressCallback = {
         success: function(data, textStatus) {
             var userDetails = JSON.parse(data);
             if (userDetails.status == 1) {
                 getAddress();
+                isAddress();
             } else {}
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -24,8 +26,15 @@
     }
 
     $(document).on('click', '.remove-address', function() {
+        $(".popup-wrapper").show();
         var deleteId = $(this).data().id;
-        removeAddress(deleteId);
+        $('#yes-button').on('click',function(){
+            $(".popup-wrapper").hide();
+            removeAddress(deleteId);
+        });
+        $('#no-button').on('click',function(){
+            $(".popup-wrapper").hide();
+        });
     });
 
     var getAddressCallback = {
@@ -124,8 +133,9 @@
         addAddressInstance.sendPost(url, header, data, addAddressCallback);
     }
 
-    $("#addpopup-data").on('click', function() {
-        addAddress();
+    $("#addpopup-data").on('click', function(e) {
+        e.preventDefault();
+        if($('form').valid){addAddress();}
     })
 
 
@@ -181,7 +191,22 @@
         editAddressInstance.sendPost(url, header, data, editAddressCallback);
     }
 
-    $("#savepopup-data").on('click', function() {
+    $("#savepopup-data").on('click', function(e) {
+        e.preventDefault();
         var currentId = $(this).data().id;
-        editAddress(currentId);
+        if($('form').valid){
+            editAddress(currentId);
+        }
     })
+//check is ther any addresses exist 
+// 
+function isAddress(){
+   if ($('#editaddress-container .content ol').is(':empty'))
+    {
+         $('#editaddress-container .content .message').show();
+    } 
+    else{
+        $('#editaddress-container .content .message').hide();
+    }
+}
+setTimeout(isAddress, 3000);

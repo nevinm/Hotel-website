@@ -124,7 +124,7 @@ $(document).ready(function() {
                     maxlength: 15,
                     letters: true
                 },
-                Fullname: {
+                fullname: {
                     required: true,
                     minlength: 2,
                     maxlength: 20,
@@ -168,10 +168,20 @@ $(document).ready(function() {
                     equalTo: "#new-password"
                 },
                 zip :{
-                    required:true
+                    required:true,
+                    number :true
                 },
                 state :{
-                    required:true
+                    required:true,
+                    letters: true
+                },
+                street:{
+                    required:true,
+                    letters: true
+                },
+                building:{
+                    required:true,
+                    letters: true
                 }
             },
             messages: {
@@ -211,8 +221,10 @@ $(document).ready(function() {
                      required:"please provide email"
                 },
                 email : "enter a valid email address",
-                state :"State is required",
-                zip : "Provide a zip code"
+                state :"state is invalid",
+                zip : "Invalid zip code",
+                street :"Invalid street name",
+                 building:"invalid"
             }
         });
     });

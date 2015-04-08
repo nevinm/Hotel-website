@@ -533,7 +533,10 @@ span.icon-menu{
 #signup-firstname-error,#signup-lastname-error,#signup-email-error,#signup-password-error,
 #username-error,#password-error,#forgotpassword-email-error,#confirm-newpassword-error,
 #newpassword-error,#new-password-error,#confirm-password-error,#old-password-error,
-#firstname-error,#lastname-error,#phonenumber-error,#new-email-error,#confirmEmail-error{
+#firstname-error,#lastname-error,#phonenumber-error,#new-email-error,#confirmEmail-error,
+#fullname-error,#phonenumber-error,
+#zip-error,#state-error,#street-error.#building-error
+{
 	color: #ff7878;
 	background: white;
 	position: absolute;
