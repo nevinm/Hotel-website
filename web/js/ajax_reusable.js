@@ -19,7 +19,7 @@ AjaxHttpSender.prototype.sendGet = function(url, callback) {
    });
 }
  
-AjaxHttpSender.prototype.sendPost = function(url, header ,data, callback) {
+AjaxHttpSender.prototype.sendPost = function(url, header ,data, callback, flag) {
    $.ajax({
       url: url,
       type: 'POST',
@@ -32,7 +32,7 @@ AjaxHttpSender.prototype.sendPost = function(url, header ,data, callback) {
          callback.failure(XMLHttpRequest, textStatus, errorThrown);
       },
       success: function(data, textStatus) {
-         callback.success(data, textStatus);
+         callback.success(data, textStatus, flag);
       },
       complete: function (XMLHttpRequest, textStatus) {
          onEndAjaxRequest();
