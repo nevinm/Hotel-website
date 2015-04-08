@@ -1,8 +1,5 @@
-from django.http import HttpResponse, HttpResponseNotAllowed
-from django.contrib.sessions.backends.db import SessionStore
+from django.http import HttpResponse
 from api.models import *
-import json as simplejson
-import md5
 import logging 
 import settings
 from datetime import datetime
@@ -12,12 +9,11 @@ from decorators import *
 from django.core.paginator import Paginator
 log = logging.getLogger('cms_api')
 
-
 def home(request):
     return HttpResponse("Welcome to Meisterdish CMS")
 
 @check_input('POST', True)
-def get_categories(request, data):
+def get_categories(request, data, user):
     try:
         limit = settings.PER_PAGE
         page = 1
@@ -65,7 +61,7 @@ def get_categories(request, data):
         return json_response({"status":-1, "message":"Failed to retrieve category list"})
 
 @check_input('POST', True)
-def add_category(request, data):
+def add_category(request, data, user):
     try:
         cat_name = data['category'].strip()
         try:
@@ -81,7 +77,7 @@ def add_category(request, data):
         return json_response({"status":-1, "message":"Failed to add category"})
 
 @check_input('POST', True)
-def remove_category(request, data):
+def remove_category(request, data, user):
     try:
         if "category" in data:
             cat = Category.objects.get(name__iexact=str(data['category']).strip())
@@ -95,7 +91,7 @@ def remove_category(request, data):
         return json_response({"status":-1, "message":"Failed to remove category"})
 
 @check_input('POST', True)
-def update_category(request, data):
+def update_category(request, data, user):
     try:
         name = data["category"].strip()
         id = data["id"]
@@ -112,7 +108,7 @@ def update_category(request, data):
         return json_response({"status":-1, "message":"Failed to update category"})
     
 @check_input('POST', True)
-def get_users(request, data):
+def get_users(request, data, user):
     try:
         limit = settings.PER_PAGE
         page = 1
@@ -166,7 +162,7 @@ def get_users(request, data):
 
 #For data table
 @check_input('POST', True)
-def get_users_2(request, data):
+def get_users_2(request, data, user):
     try:
         limit = settings.PER_PAGE
         page = 1
@@ -223,7 +219,7 @@ def get_users_2(request, data):
         return custom_error("Failed to retrieve users list.")
 
 @check_input('POST', True)
-def delete_user(request, data):
+def delete_user(request, data, session_user):
     try:
         user = User.objects.get(id=str(data['id']).strip())
         user.deleted = True
@@ -234,7 +230,7 @@ def delete_user(request, data):
         return custom_error("Failed to delete user")
     
 @check_input('POST', True)
-def update_user(request, data):
+def update_user(request, data, session_user):
     try:
         id = data['id']
         mobile = data['mobile'].strip()
@@ -252,7 +248,7 @@ def update_user(request, data):
         return custom_error("Failed to update user")
 
 @check_input('POST', True)
-def change_user_status(request, data):
+def change_user_status(request, data, session_user):
     try:
         id = data['id']
         status = data['is_active']
@@ -265,16 +261,6 @@ def change_user_status(request, data):
     except Exception as e:
         log.error("Failed to change user status : "+e.message)
         return custom_error("Failed to change user status")
-        
-def json_response(response, wrap=False):
-    if (wrap == True):
-        final_response = {"data" : response}
-    else:
-        final_response = response
-    header_res = HttpResponse(simplejson.dumps(final_response))
-    return header_res
 
-def custom_error(message):
-    return json_response({'status' : -1, 'message' : message})
 
 

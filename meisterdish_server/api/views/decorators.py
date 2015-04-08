@@ -12,7 +12,13 @@ def check_input(method, admin=False):
                 req = json_request(request)
                 if req is not None:
                     log.info('API : '+func.__name__+', Input: '+str(req))
-                    if func.__name__ not in ['login','signup', 'forgot_password', 'logout', 'reset_password', 'verify_user', 'verify_email']:
+                    if func.__name__ not in ['login',
+                                             'signup', 
+                                             'forgot_password', 
+                                             'logout', 
+                                             'reset_password', 
+                                             'verify_user', 
+                                             'verify_email']:
                         common_apis = ["get_profile"]
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
                         session = SessionStore(session_key=session_key)
@@ -24,7 +30,8 @@ def check_input(method, admin=False):
                                 log.error('API : User requesting admin only features.'+session["user"]["email"] +str(session["user"]["role"]))
                                 return custom_error('You are not authorized.')
                             else:
-                                return func(request, req, *args, **kwargs)
+                                user = User.objects.get(pk=session['user']['id'])
+                                return func(request, req, user, *args, **kwargs)
                         else:
                             message = 'The session is invalid. Please login again.'
                             log.error('API : '+func.__name__+', Invalid session:Rejected')
@@ -63,9 +70,13 @@ def json_request(request):
     else:
         return None
 
-
-def json_response(message):
-    return HttpResponse(simplejson.dumps(message), content_type="application/json")
+def json_response(response, wrap=False):
+    if (wrap == True):
+        final_response = {"data" : response}
+    else:
+        final_response = response
+    header_res = HttpResponse(simplejson.dumps(final_response))
+    return header_res
 
 def custom_error(message):
     return json_response({'status' : -1, 'message' : message})
