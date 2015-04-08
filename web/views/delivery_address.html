@@ -86,7 +86,7 @@
                     <div class="account-header">MANAGE YOUR DELIVERY ADDRESSES</div>
                     <div class="content">
                             <ol>
-                                <li class="address">
+                                <!-- <li class="address">
                                     <div class = "button">
                                         <a href="#" class=" edit-button btn btn-small-secondary" id="edit-address">EDIT</a>
                                     </div>
@@ -138,7 +138,7 @@
                                         <span>917-123-4567</span>
                                         <span>MAKE THIS YOUR PRIMARY ADDRESS</span>
                                     </div>
-                                </li>
+                                </li> -->
                             </ol>
                     </div>
                      <div class="button-changeaddress">
@@ -152,29 +152,29 @@
               <div class="bk-overlay"></div>
               <div class="addresspopup">
                 <div class="header">ADDRESS</div>
-               <!--  <img src="../images/close-exit-stop-button-icon.png" class="popup-close"> -->
                     <div class="container">
                         <form class="addaddress-popup">
                             <input type="text" name="fullname" placeholder="Full Name" class="popup-input">
                             <input type="text" name="phonenum" placeholder="Phone" class="popup-input">
-                            <input type="text" name="zip" class="popup-input" placeholder="zip">
+                            <input type="text" name="zip" class="popup-input" placeholder="zip code">
                             <input type="text" name="state" class="popup-input" placeholder="state">
                             <select>
-                                <option selected>city</option>
+                                <option selected>City</option>
                                 <option>city 1</option>
                                 <option>city 2</option>
                                 <option>city 3</option>
                                 <option>city 4</option>
                             </select>
-                            <input type="text" name="street" class="popup-input" placeholder="street">
-                            <input type="text" name="building" class="popup-input" placeholder="building">
+                            <input type="text" name="street" class="popup-input" placeholder="Street">
+                            <input type="text" name="building" class="popup-input" placeholder="Building"><br>
+                            <input type="checkbox" name="is-primary" class="popup-input checkbox"><span class='checkbox-span'>Set Primary Address</span>
                             <div class="button">
                                 <a href="#" class="btn btn-small-primary medium-green" id="addpopup-data">ADD</a>
-                                <a href="#" class="btn btn-small-primary medium-green" id="savepopup-data">SAVE</a>
+                                <a href="#" class="btn btn-small-primary medium-green" data-id='' id="savepopup-data">SAVE</a>
                                 <a href="#" class="btn btn-small-primary medium-green" id="cancel">CANCEL</a>
                             </div>
                         </form>
-                </div>
+                    </div>
                 </div>
             </div>    
         </div>

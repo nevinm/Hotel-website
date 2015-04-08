@@ -6,36 +6,34 @@ function redirectIfLoggedIn() {
 
 function dollarConvert(value) {
     var dollarValue = "$" + value + ".00";
-        return dollarValue;
+    return dollarValue;
 }
 
-function profileAutoPopulate(){
-    var userDetails= JSON.parse(localStorage['user_profile']);
-    if(currentPage=='Meisterdish - Change Contact'){
+function profileAutoPopulate() {
+    var userDetails = JSON.parse(localStorage['user_profile']);
+    if (currentPage == 'Meisterdish - Change Contact') {
         $("#change-contact input[name='firstname']").val(userDetails.first_name);
         $("#change-contact input[name='lastname']").val(userDetails.last_name);
         $("#change-contact input[name='phonenumber']").val(userDetails.mobile);
     }
 }
 
-function showAdminLink(){
-    if(localStorage['admin_loggedIn']=='true'){
-        $(".admin-button").show();
+function showAdminLink() {
+        if (localStorage['admin_loggedIn'] == 'true') {
+            $(".admin-button").show();
+        } else {
+            $(".admin-button").hide();
+        }
     }
-    else{
-        $(".admin-button").hide();
-    }
-}
     //Get profile API process
 var getProfileCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
-            localStorage['user_profile']=data;
+            localStorage['user_profile'] = data;
             $(".cart span").text(userDetails.meals_in_cart_count);
             $(".account-credit").text(dollarConvert(userDetails.credits));
-        }
-         else {}
+        } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -67,16 +65,16 @@ $(document).ready(function() {
         success: function(data, textStatus) {
             userDetails = JSON.parse(data);
             showPopup(userDetails);
-            newName=$("#change-contact").find("input[name=firstname]").val();
+            newName = $("#change-contact").find("input[name=firstname]").val();
             $('#navbar-username a').text(newName);
-            localStorage['username']=newName;
+            localStorage['username'] = newName;
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
 
     $("#change-contact #updateButton").on('click', function(e) {
         e.preventDefault();
-        if($('form#change-contact').valid()){
+        if ($('form#change-contact').valid()) {
             editContact();
         }
     });
@@ -96,21 +94,21 @@ $(document).ready(function() {
                 "last_name": last_name,
                 "mobile": mobile_number
             },
-        data = JSON.stringify(userData);
+            data = JSON.stringify(userData);
         var changeContactInstance = new AjaxHttpSender();
         changeContactInstance.sendPost(url, header, data, editContactCallback);
     }
 
     //Change password API process
     var changePasswordCallback = {
-        success: function(data,textStatus){
+        success: function(data, textStatus) {
             userDetails = JSON.parse(data);
             showPopup(userDetails);
             $('#change-password')[0].reset();
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
-    $('#updatepassword').on('click',function(e){
+    $('#updatepassword').on('click', function(e) {
         e.preventDefault();
         if ($('form').valid()) {
             changePassword();
@@ -144,48 +142,51 @@ $(document).ready(function() {
 
 //Change email API process
 var changeEmailCallback = {
-    success: function(data,textStatus){
-            userDetails = JSON.parse(data);
-            showPopup(userDetails);
-            $('#change-email')[0].reset();
-        },
-        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-    }
+    success: function(data, textStatus) {
+        userDetails = JSON.parse(data);
+        showPopup(userDetails);
+        $('#change-email')[0].reset();
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
 
-$('#update-email').on('click',function(e){
+$('#update-email').on('click', function(e) {
     e.preventDefault();
-    if($('form').valid()){
+    if ($('form').valid()) {
         changeEmail();
     }
 });
 
-function changeEmail(){
+function changeEmail() {
     var url = baseURL + "change_email/",
         newemail = $('#change-email').find('input[name=email]').val(),
         header = {
-                "session-key": localStorage["session_key"]
-            },
+            "session-key": localStorage["session_key"]
+        },
         userData = {
-            "email":newemail
+            "email": newemail
         },
         data = JSON.stringify(userData);
-        var changeEmailInstance = new AjaxHttpSender();
-        changeEmailInstance.sendPost(url, header, data, changeEmailCallback);
+    var changeEmailInstance = new AjaxHttpSender();
+    changeEmailInstance.sendPost(url, header, data, changeEmailCallback);
 }
 
 //show addaddress popup 
 
-$('#add-address').on("click",function(){
+$('#add-address').on("click", function() {
     $(".addresspopup-wrapper").show();
     $("#savepopup-data").hide();
     $("#addpopup-data").show();
 });
-$('#cancel').on("click",function(){
+$('#cancel').on("click", function() {
     $(".addresspopup-wrapper").hide();
 });
 
 //show edit address popup
-$('#edit-address').on("click",function(){
+$(document).on("click", ".edit-address", function() {
+    currentId = $(this).data().id;
+    $("#savepopup-data").attr("data-id", currentId);
+    populateAdressToForm(currentId);
     $(".addresspopup-wrapper").show();
     $("#addpopup-data").hide();
     $("#savepopup-data").show();
