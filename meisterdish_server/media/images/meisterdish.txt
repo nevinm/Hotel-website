@@ -1,0 +1,21 @@
+We have created subdomian meisterdish.qburst.com.
+
+Url: meisterdish.qburst.com
+
+HTTP Authentication       
+User name: 98ur5t9@
+Password: 9@98ur5t
+
+SFTP Access Details
+ip: 54.251.44.26
+User: meisterdish
+Password: 9XGTsh@%C8
+
+Databse
+Database: dmeisterdish
+User: umeisterdish
+password: kF#Ghj63@L
+
+
+bgchf12ks0vu558g90jt721vm29lmfna
+

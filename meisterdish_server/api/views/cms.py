@@ -139,7 +139,8 @@ def get_users(request, data, user):
                               "name" : (user.last_name + " "+ user.first_name).title(),
                               "email" : user.email,
                               "mobile" : "Not Available" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
-                              "profile_image" : "Not Available" if str(user.profile_image).strip() == "" else settings.MEDIA_URL + str(user.profile_image),
+                              "profile_image" : "Not Available" if user.profile_image is None else user.profile_image.image.url,
+                              "profile_image_thumb" : "Not Available" if user.profile_image is None else user.profile_image.thumb.url,
                               "is_admin": "Yes" if user.role.id == 1 else "No",
                               "credits" : "$ "+str(user.credits),
                               "is_active": user.is_active,
@@ -154,64 +155,6 @@ def get_users(request, data, user):
                               "page_range" : paginator.page_range,
                               "current_page":page,
                               "per_page" : limit,
-                              })
-        
-    except KeyError as e:
-        log.error("User list "+ e.message)
-        return custom_error("Failed to retrieve users list.")
-
-#For data table
-@check_input('POST', True)
-def get_users_2(request, data, user):
-    try:
-        limit = settings.PER_PAGE
-        page = 1
-        if "nextPage" in data and type(data["nextPage"]) == type(2):
-            page = data["nextPage"]
-                    
-        user_list = []
-        users = User.objects.filter(deleted=False)
-        total_count = users.count()
-         
-        if "search" in data:
-            search = data["search"]
-            users = users.filter(Q(first_name__istartswith=search)| Q(last_name__istartswith=search))
-        
-        actual_count = users.count()
-        try:
-            paginator = Paginator(users, limit)
-            if page <1 or page > paginator.page_range:
-                page = 1
-            users = paginator.page(page)
-        except Exception as e:
-            log.error("user list pagination : " + e.message)
-            custom_error("There was an error listing users.")
-        
-        for user in users.object_list:
-            user_list.append({
-                              "id" : user.id,
-                              "name" : (user.last_name + " "+ user.first_name).title(),
-                              "email" : user.email,
-                              "mobile" : "Not Available" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
-                              "profile_image" : "Not Available" if str(user.profile_image).strip() == "" else settings.MEDIA_URL + str(user.profile_image),
-                              "is_admin": "Yes" if user.role.id == 1 else "No",
-                              "credits" : "$ "+str(user.credits),
-                              "is_active": user.is_active,
-                              })
-        
-        return json_response({
-                              "aaData": user_list,
-                              "iTotalRecords":total_count,
-                              "iTotalDisplayRecords":actual_count,
-                              "sEcho":"",
-                              #"status":1,
-                              #"total_count":total_count,
-                              #"actual_count":actual_count,
-                              #"num_pages" : paginator.num_pages,
-                              #"page_range" : paginator.page_range,
-                              #"current_page":page,
-                              #"per_page" : limit,
-                              
                               })
         
     except KeyError as e:
@@ -262,5 +205,69 @@ def change_user_status(request, data, session_user):
         log.error("Failed to change user status : "+e.message)
         return custom_error("Failed to change user status")
 
-
-
+@check_input('POST', True)
+def get_meals(request, data, user):
+    try:
+        limit = settings.PER_PAGE
+        page = 1
+        if "nextPage" in data and type(data["nextPage"]) == type(2):
+            page = data["nextPage"]
+                    
+        meal_list = []
+        meals = Meal.objects.filter(deleted=False)
+        total_count = meals.count()
+         
+        if "search" in data:
+            search = data["search"]
+            meals = meals.filter(Q(name__istartswith=search)| Q(description__istartswith=search))
+        
+        if "category_id" in data:
+            cat = Category.objects.get(pk=data["category_id"])
+            meals = meals.filter(category=cat)
+        
+        if "type_id" in data:
+            type = MealType.objects.get(pk=data["type_id"])
+            meals = meals.filter(type=type)
+            
+        actual_count = meals.count()
+        try:
+            paginator = Paginator(meals, limit)
+            if page <1 or page > paginator.page_range:
+                page = 1
+            meals = paginator.page(page)
+        except Exception as e:
+            log.error("meal list pagination : " + e.message)
+            custom_error("There was an error listing meals.")
+        
+        for meal in meals.object_list:
+            meal_images = []
+            for img in meal.images:
+                meal_images.append({
+                                    "id":img.id,
+                                    "url":img.image.url,
+                                    "thumb_url" : img.thumb.url
+                                    })
+            meal_list.append({
+                              "id":meal.id,
+                              "name":meal.name,
+                              "description":meal.description,
+                              "images":meal_images,
+                              "available":1 if meal.available else 0,
+                              "category":meal.category.name.title(),
+                              "meal_type":meal.type.name.title(),
+                              "preparation_time":meal.preparation_time,
+                              "price":meal.price,
+                              "tax":meal.tax,
+                              })
+        return json_response({"staus":1, 
+                              "aaData":meal_list,
+                              "total_count":total_count,
+                              "actual_count":actual_count,
+                              "num_pages" : paginator.num_pages,
+                              "page_range" : paginator.page_range,
+                              "current_page":page,
+                              "per_page" : limit,
+                              })
+    except Exception as e:
+        log.error("Failed to list meals : "+e.message)
+        return custom_error("Failed to list meals")
