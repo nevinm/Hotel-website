@@ -9,15 +9,11 @@ from datetime import datetime
 from django.db.models import Q
 from django.template.loader import render_to_string
 from decorators import *
-from common import json_response, custom_error
 log = logging.getLogger('api_user')
 
 @check_input('POST')
-def add_address(request, data):
+def add_address(request, data, user):
     try:
-        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
-        user = User.objects.get(pk=session['user']['id'])
-    
         name = data["name"].strip()
         street = data["street"].strip()
         building = data["building"].strip()
@@ -56,11 +52,8 @@ def add_address(request, data):
         return custom_error("Failed to add address : "+e.message)
 
 @check_input('POST')
-def update_address(request, data, address_id):
+def update_address(request, data, user, address_id):
     try:
-        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
-        user = User.objects.get(pk=session['user']['id'])
-    
         name = data["name"].strip()
         street = data["street"].strip()
         building = data["building"].strip()
@@ -105,13 +98,11 @@ def update_address(request, data, address_id):
         return custom_error("Failed to update address : "+e.message)
 
 @check_input('POST')
-def remove_address(request, data):
+def remove_address(request, data, user):
     try:
-        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
-        
         address_id = data['id']
         add = Address.objects.get(id=address_id)
-        if add.user.id != session['user']['id']:
+        if add.user.id != user.id:
             return custom_error("You are not auhorized to delete this address")
         add.delete()
         return json_response({"status":1, "message":"Successfully Deleted Address.", "id":address_id})
@@ -120,9 +111,7 @@ def remove_address(request, data):
         return custom_error("Failed to remove address")
 
 @check_input('POST')
-def redeem_gift_card(request, data):
-    session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
-    user = User.objects.get(pk=session['user']['id'])
+def redeem_gift_card(request, data, user):
     try:
         code = data["code"].strip()
         try:
