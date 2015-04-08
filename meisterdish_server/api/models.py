@@ -63,7 +63,7 @@ class Image(models.Model):
         from django.core.files.uploadedfile import SimpleUploadedFile
         import os
  
-        THUMBNAIL_SIZE = (99, 66)
+        THUMBNAIL_SIZE = (300, 300)
  
         DJANGO_TYPE = self.image.file.content_type
  
@@ -192,7 +192,7 @@ class Ingredient(models.Model):
 
 class Meal(models.Model):
     name = models.CharField(max_length=30)
-    image_url = models.CharField(max_length=30)
+    images = models.ManyToManyField(Image, related_name="meal")
     description = models.TextField(max_length=1024)
     preparation_time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     type = models.ForeignKey(MealType)
@@ -205,7 +205,7 @@ class Meal(models.Model):
     price = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     
-    available = models.BooleanField(default=False)
+    available = models.BooleanField(default=True)
     def __unicode__(self):
         return self.name
 

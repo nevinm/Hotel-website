@@ -27,18 +27,23 @@ function showAdminLink() {
     }
     //Get profile API process
 var getProfileCallback = {
-    success: function(data, textStatus) {
+    success: function(data, textStatus, profileId) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
             localStorage['user_profile'] = data;
             $(".cart span").text(userDetails.meals_in_cart_count);
             $(".account-credit").text(dollarConvert(userDetails.credits));
-        } else {}
+            if(profileId){
+                $("#"+profileId).attr('src',userDetails.profile_image);
+            }
+        } 
+
+        else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getProfile() {
+function getProfile(profileId) {
     var url = baseURL + "get_profile/",
         header = {
             "session-key": localStorage["session_key"]
@@ -48,7 +53,7 @@ function getProfile() {
         };
     data = JSON.stringify(userData);
     var getProfileInstance = new AjaxHttpSender();
-    getProfileInstance.sendPost(url, header, data, getProfileCallback);
+    getProfileInstance.sendPost(url, header, data, getProfileCallback, profileId);
 }
 
 $(document).ready(function() {
