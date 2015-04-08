@@ -104,7 +104,6 @@ class Image(models.Model):
         self.updated = datetime.datetime.now()
         super(Image, self).save(force_update=force_update)
         
->>>>>>> 83850479a6ec26e6a731a3136e6b98035a16600f
 class User(models.Model):
     fb_user_id = models.CharField(max_length=20, null=True, blank=True, default="")
     password = models.CharField(max_length=50)
