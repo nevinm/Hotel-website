@@ -521,7 +521,7 @@ def get_address_list(request, data, user):
         return custom_error("Failed to retrieve address list")
 
 @check_input('POST')
-def upload_picture(request, data, user=None):
+def upload_picture(request, data, user):
     try:
         from django.core.files.uploadedfile import UploadedFile
 
@@ -543,7 +543,12 @@ def upload_picture(request, data, user=None):
         delete_url = '/delete/'+str(image.pk)+'/'
         
         log.info("Created thumbnail")
-        return json_response({"name":filename, 
+        user.profile_image = image
+        user.save()
+        return json_response({
+                       "status":1,
+                       "message" : "Sucessfully changed the profile picture.",
+                       "name":filename, 
                        "size":file_size, 
                        "url":image.image.url,
                        "thumbnail_url":image.thumb.url,
