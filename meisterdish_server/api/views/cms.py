@@ -221,6 +221,14 @@ def get_meals(request, data, user):
             search = data["search"]
             meals = meals.filter(Q(name__istartswith=search)| Q(description__istartswith=search))
         
+        if "category_id" in data:
+            cat = Category.objects.get(pk=data["category_id"])
+            meals = meals.filter(category=cat)
+        
+        if "type_id" in data:
+            type = MealType.objects.get(pk=data["type_id"])
+            meals = meals.filter(type=type)
+            
         actual_count = meals.count()
         try:
             paginator = Paginator(meals, limit)
