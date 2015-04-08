@@ -128,3 +128,19 @@ def redeem_gift_card(request, data, user):
     except Exception as e:
         log.error("Redeem gift card error : " + e.message)
         return custom_error("Failed to redeem gift card ")
+
+@check_input('POST')
+def get_categories(request, data, user):
+    try:
+        cats = Category.objects.all()
+        cat_list = []
+        for cat in cats:
+            cat_list.append({
+                             "id":cat.id,
+                             "name":cat.name.title()
+                             })
+        return json_response({"status":1, "categories":cat_list})
+    except Exception as e:
+        log.error("get categories : " + e.message)
+        return custom_error("Failed to list categories ")
+    
