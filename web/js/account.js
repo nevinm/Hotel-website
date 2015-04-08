@@ -174,6 +174,7 @@ function changeEmail() {
 //show addaddress popup 
 
 $('#add-address').on("click", function() {
+    $(".addaddress-popup")[0].reset();
     $(".addresspopup-wrapper").show();
     $("#savepopup-data").hide();
     $("#addpopup-data").show();
@@ -186,7 +187,7 @@ $('#cancel').on("click", function() {
 $(document).on("click", ".edit-address", function() {
     currentId = $(this).data().id;
     $("#savepopup-data").attr("data-id", currentId);
-    populateAdressToForm(currentId);
+    populateAddressToForm(currentId);
     $(".addresspopup-wrapper").show();
     $("#addpopup-data").hide();
     $("#savepopup-data").show();

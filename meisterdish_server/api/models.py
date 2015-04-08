@@ -48,9 +48,63 @@ class City(models.Model):
         return self.name
 class Image(models.Model):
     title = models.CharField(default="", max_length=100)    
-    image = models.FileField(upload_to="media/images/")
-    thumb = models.FileField(upload_to="media/images/")
-
+    image = models.FileField(upload_to="images/")
+    thumb = models.FileField(upload_to="images/", null=True, blank=True)
+    
+    created = models.DateTimeField(null=True)
+    updated = models.DateTimeField(null=True)
+    
+    def create_thumbnail(self):
+        if not self.image:
+            return
+ 
+        from PIL import Image
+        from cStringIO import StringIO
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        import os
+ 
+        THUMBNAIL_SIZE = (99, 66)
+ 
+        DJANGO_TYPE = self.image.file.content_type
+ 
+        if DJANGO_TYPE == 'image/jpeg':
+            PIL_TYPE = 'jpeg'
+            FILE_EXTENSION = 'jpg'
+        elif DJANGO_TYPE == 'image/png':
+            PIL_TYPE = 'png'
+            FILE_EXTENSION = 'png'
+        elif DJANGO_TYPE == 'image/gif':
+            PIL_TYPE = 'gif'
+            FILE_EXTENSION = 'gif'
+            
+        image = Image.open(StringIO(self.image.read()))
+ 
+        image.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
+ 
+        temp_handle = StringIO()
+        image.save(temp_handle, PIL_TYPE)
+        temp_handle.seek(0)
+ 
+        suf = SimpleUploadedFile(os.path.split(self.image.name)[-1],
+                temp_handle.read(), content_type=DJANGO_TYPE)
+        
+        self.thumb.save(
+            '%s_thumbnail.%s' % (os.path.splitext(suf.name)[0], FILE_EXTENSION),
+            suf,
+            save=False
+        )
+ 
+    def save(self, *args, **kwargs):
+        self.create_thumbnail()
+        force_update = False
+        if self.id:
+            force_update = True
+        else:
+            self.created = datetime.datetime.now()
+        self.updated = datetime.datetime.now()
+        super(Image, self).save(force_update=force_update)
+        
+>>>>>>> 83850479a6ec26e6a731a3136e6b98035a16600f
 class User(models.Model):
     fb_user_id = models.CharField(max_length=20, null=True, blank=True, default="")
     password = models.CharField(max_length=50)

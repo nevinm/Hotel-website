@@ -19,7 +19,8 @@ def check_input(method, admin=False):
                                              'logout', 
                                              'reset_password', 
                                              'verify_user', 
-                                             'verify_email']:
+                                             'verify_email',
+                                             'upload_picture',]:
                         common_apis = ["get_profile"]
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
                         session = SessionStore(session_key=session_key)
@@ -55,18 +56,24 @@ def json_request(request):
         return req
     else:
         req = request.body
+<<<<<<< HEAD
     
     if not req:
         req='{"a":"b"}'
 
+=======
+        if not req:
+            req='{"a":"b"}'
+        
+>>>>>>> 83850479a6ec26e6a731a3136e6b98035a16600f
     if (req):
         try:
-            return simplejson.loads(req, "ISO-8859-1")
-        except Exception as name:
-            try:
-                return simplejson.loads(unicode(opener.open(request), "ISO-8859-1"))
-            except:
-                return None
+            if request.FILES:
+                return request.POST
+            else:
+                return simplejson.loads(req, "ISO-8859-1")
+        except Exception as e:
+            log.error("Error json-decoding input : " +e.message)
             return None
     else:
         return None

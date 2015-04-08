@@ -403,6 +403,13 @@ def edit_profile(request, data, user):
         if 'mobile' in data:
             user.mobile = data['mobile'].strip()
         
+        try:
+            if "profile_picture_id" in data:
+                user.profile_image = Image.objects.get(pk=data['profile_picture_id'].strip())
+        except Exception as e:
+            log.error("Failed to get the profile picture "+e.message)
+            return custom_error("The Profile image does not exist. Please try again.")
+        
         sms = False
         if "sms_notification" in data and data['sms_notification']=='1':
             sms = True
@@ -514,8 +521,10 @@ def get_address_list(request, data, user):
         return custom_error("Failed to retrieve address list")
 
 @check_input('POST')
-def upload_picture(request, data, user):
+def upload_picture(request, data, user=None):
     try:
+        from django.core.files.uploadedfile import UploadedFile
+
         if request.FILES == None:
             return custom_error('Please upload a valid file')
         
@@ -531,28 +540,20 @@ def upload_picture(request, data, user):
         image.save()
         log.info('File saving done')
         
-        im = get_thumbnail(image, "80x80", quality=50)
-        image.thumb = im
-        image.save()
-        log.info('Saved thumbnail')
-        #getting url for photo deletion
-        file_delete_url = '/delete/'
+        delete_url = '/delete/'+str(image.pk)+'/'
         
-        #getting file url here
-        file_url = '/'
         log.info("Created thumbnail")
         return json_response({"name":filename, 
                        "size":file_size, 
-                       "url":file.url,
-                       "thumbnail_url":im.url,
-                       "delete_url":file_delete_url+str(image.pk)+'/', 
-                       "delete_type":"POST",})
-    except Exception as e:
-        log.error("Failed to upload profile picture : " + e.message)
-        return custom_error("Failed to upload profile picture. Please try again later.")
+                       "url":image.image.url,
+                       "thumbnail_url":image.thumb.url,
+                       })
+    except KeyError as e:
+        log.error("Failed to upload picture : " + e.message)
+        return custom_error("Failed to upload picture. Please try again later.")
 
 @check_input('POST')
-def delete_profile_image(request, pk):
+def delete_image(request, data, user, pk):
     try:
         image = get_object_or_404(Image, pk=pk)
         image.delete()
