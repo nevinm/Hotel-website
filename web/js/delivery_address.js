@@ -10,7 +10,6 @@
     }
 
     function removeAddress(id) {
-        console.log("Are you sure you want to remove?");
         var url = baseURL + "remove_address/",
             header = {
                 "session-key": localStorage["session_key"]
@@ -22,11 +21,6 @@
         var removeAddressInstance = new AjaxHttpSender();
         removeAddressInstance.sendPost(url, header, data, removeAddressCallback);
     }
-
-    $(document).on('click', '.remove-address', function() {
-        var deleteId = $(this).data().id;
-        removeAddress(deleteId);
-    });
 
     var getAddressCallback = {
         success: function(data, textStatus) {
@@ -40,7 +34,6 @@
     }
 
     function getAddress(id) {
-        console.log("Are you sure you want to remove?");
         var url = baseURL + "get_address_list/",
             header = {
                 "session-key": localStorage["session_key"]
@@ -75,8 +68,6 @@
             }
         });
     }
-
-    getAddress();
 
     //Add address API
     var addAddressCallback = {
@@ -119,15 +110,10 @@
                 "building": newAddress.building,
                 "is_primary": newAddress.is_primary
             };
-        debugger;
         data = JSON.stringify(userData);
         var addAddressInstance = new AjaxHttpSender();
         addAddressInstance.sendPost(url, header, data, addAddressCallback);
     }
-
-    $("#addpopup-data").on('click', function() {
-        addAddress();
-    })
 
     //Edit address API
     var editAddressCallback = {
@@ -146,10 +132,10 @@
             deliveryAddressList = JSON.parse(localStorage['delivery_addressess']);
         $.each(deliveryAddressList.address_list, function(key, value){
             if(value.id == id){
+                $addressPopup.find(".state-selector").val(value.state_id);
                 $addressPopup.find("input[name*='fullname']").val(value.name);
                 $addressPopup.find("input[name*='phonenumber']").val(value.phone);
                 $addressPopup.find("input[name*='zip']").val(value.zip);
-                $addressPopup.find(".state-selector").val(value.state_id);
                 $addressPopup.find("input[name*='street']").val(value.street);
                 $addressPopup.find("input[name*='building']").val(value.building);
                 if(value.is_primary==1){
@@ -157,7 +143,11 @@
                 }else{
                     $addressPopup.find("input[type*='checkbox']").prop("checked", false);
                 }
-                $addressPopup.find(".city-selector").val(value.city_id);
+                getCities(value.state_id , value.city_id);
+                // $addressPopup.find(".city-selector option").load(function(){
+                    // $addressPopup.find(".city-selector").val(value.city_id);
+                // })
+
             }
         });
     }
@@ -181,13 +171,7 @@
         var editAddressInstance = new AjaxHttpSender();
         editAddressInstance.sendPost(url, header, data, editAddressCallback);
     }
-
-    $("#savepopup-data").on('click', function() {
-        var currentId = $(this).data().id;
-        editAddress(currentId);
-    });
-
-
+   
 // Get states API
     var getStatesCallback = {
         success: function(data, textStatus) {
@@ -220,21 +204,25 @@
 
     // Get City API
     var getCitiesCallback = {
-        success: function(data, textStatus) {
+        success: function(data, textStatus, cityId) {
             var cityList = JSON.parse(data);
             if (cityList.status == 1) {
+                $('.city-selector').empty();
                 $.each(cityList.city_list, function (index, value) {
                     $('.city-selector').append($('<option/>', { 
                         value: value.id ,
                         text : value.name,
                     }));
-                });  
+                }); 
+                if(cityId){
+                    $('.city-selector').val(cityId);
+                }
             } else {}
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
 
-    function getCities(stateId) {
+    function getCities(stateId , cityId) {
         var url = baseURL + "get_cities/",
             header = {
                 "session-key": localStorage["session_key"]
@@ -244,13 +232,33 @@
             };
         data = JSON.stringify(userData);
         var getCitiesInstance = new AjaxHttpSender();
-        getCitiesInstance.sendPost(url, header, data, getCitiesCallback);
+        getCitiesInstance.sendPost(url, header, data, getCitiesCallback, cityId);
     }
 
-    $(document).on('change', '.state-selector', function(){
-        var stateSelectedId = $(this).val();
-        getCities(stateSelectedId);        
-    });
 
-   
-    getStates();
+   $(document).ready(function(){
+        $(document).on('change', '.state-selector', function(){
+            var stateSelectedId = $(this).val();
+            getCities(stateSelectedId);        
+        });
+
+         $("#savepopup-data").on('click', function(e) {
+            e.preventDefault();
+            var currentId = $(this).data().id;
+            editAddress(currentId);
+        });
+
+        $("#addpopup-data").on('click', function(e) {
+            e.preventDefault();
+            addAddress();
+        });
+
+        $(document).on('click', '.remove-address', function() {
+            var deleteId = $(this).data().id;
+            removeAddress(deleteId);
+        });
+
+        getStates();
+        getAddress();
+   });
+    
