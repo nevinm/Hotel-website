@@ -205,19 +205,19 @@ def verify_user(request, data, token):
         user.save()
         
         log.info("Verified user "+user.email)
-        return HttpResponseRedirect(login_url+"?verify=true")
+        return HttpResponseRedirect(login_url+"?account_verify=true")
     
     except KeyError as field:
         log.error("verify request request missing "+field.message)
-        return HttpResponseRedirect(login_url+"?verify=false")
+        return HttpResponseRedirect(login_url+"?account_verify=false")
 
     except User.DoesNotExist:
         log.error("Verify : No user found with given token")
-        return HttpResponseRedirect(login_url+"?verify=false")
+        return HttpResponseRedirect(login_url+"?account_verify=false")
 
     except Exception as e:
         log.error("Validate token : Exception : "+e.message)
-        return HttpResponseRedirect(login_url+"?verify=false")
+        return HttpResponseRedirect(login_url+"?account_verify=false")
 
 @check_input('GET')
 def verify_email(request, data, token):
@@ -236,19 +236,19 @@ def verify_email(request, data, token):
         user.save()
         
         log.info("Verified email "+user.email)
-        return HttpResponseRedirect(login_url+"?ve=true")
+        return HttpResponseRedirect(login_url+"?email_verify=true")
     
     except KeyError as field:
         log.error("verify email request missing "+field.message)
-        return HttpResponseRedirect(login_url+"?ve=false")
+        return HttpResponseRedirect(login_url+"?email_verify=false")
 
     except User.DoesNotExist:
         log.error("Verify : No user found with given token")
-        return HttpResponseRedirect(login_url+"?ve=false")
+        return HttpResponseRedirect(login_url+"?email_verify=false")
 
     except Exception as e:
         log.error("Validate token : Exception : "+e.message)
-        return HttpResponseRedirect(login_url+"?ve=false")
+        return HttpResponseRedirect(login_url+"?email_verify=false")
 
 @check_input('POST')
 def forgot_password(request, data):
@@ -490,52 +490,6 @@ def change_email(request, data, user):
         return custom_error("Failed to change email.")
 
 @check_input('POST')
-def upload_picture(request, data, user):
-    try:
-        if request.FILES == None:
-            return custom_error('Please upload a valid file')
-        
-        file = request.FILES[u'files[]']
-        wrapped_file = UploadedFile(file)
-        filename = wrapped_file.name
-        file_size = wrapped_file.file.size
-        log.info ('File upload : "'+str(filename)+'"')
-
-        image = Image()
-        image.title=str(filename)
-        image.image=file
-        image.save()
-        log.info('File saving done')
-        
-        im = get_thumbnail(image, "80x80", quality=50)
-        image.thumb = im
-        image.save()
-        log.info('Saved thumbnail')
-        
-        #getting url for photo deletion
-        file_delete_url = '/delete/'
-        
-        #getting file url here
-        file_url = '/'
-        log.info()
-        return json_response({"name":filename, 
-                       "size":file_size, 
-                       "url":file.url,
-                       "thumbnail_url":im.url,
-                       "delete_url":file_delete_url+str(image.pk)+'/', 
-                       "delete_type":"POST",})
-    except Exception as e:
-        log.error("Failed to upload profile picture : " + e.message)
-        return custom_error("Failed to upload profile picture. Please try again later.")
-
-@check_input('POST')
-def upload_profile_picture(request, data, user):
-    try:
-        
-            
-    
-
-@check_input('POST')
 def get_address_list(request, data, user):
     try:
         address_list = []
@@ -559,3 +513,50 @@ def get_address_list(request, data, user):
         log.error("Failed to send address list : " + e.message)
         return custom_error("Failed to retrieve address list")
 
+@check_input('POST')
+def upload_picture(request, data, user):
+    try:
+        if request.FILES == None:
+            return custom_error('Please upload a valid file')
+        
+        file = request.FILES[u'files[]']
+        wrapped_file = UploadedFile(file)
+        filename = wrapped_file.name
+        file_size = wrapped_file.file.size
+        log.info ('File upload : "'+str(filename)+'"')
+
+        image = Image()
+        image.title=str(filename)
+        image.image=file
+        image.save()
+        log.info('File saving done')
+        
+        im = get_thumbnail(image, "80x80", quality=50)
+        image.thumb = im
+        image.save()
+        log.info('Saved thumbnail')
+        #getting url for photo deletion
+        file_delete_url = '/delete/'
+        
+        #getting file url here
+        file_url = '/'
+        log.info("Created thumbnail")
+        return json_response({"name":filename, 
+                       "size":file_size, 
+                       "url":file.url,
+                       "thumbnail_url":im.url,
+                       "delete_url":file_delete_url+str(image.pk)+'/', 
+                       "delete_type":"POST",})
+    except Exception as e:
+        log.error("Failed to upload profile picture : " + e.message)
+        return custom_error("Failed to upload profile picture. Please try again later.")
+
+@check_input('POST')
+def delete_profile_image(request, pk):
+    try:
+        image = get_object_or_404(Image, pk=pk)
+        image.delete()
+        return json_response({"status":1, "message":"Deleted image", "id":pk})
+    except Exception as e:
+        log.error("Failed to delete image " + e.message)
+        return custom_error("Failed to delete image. Please try again later.")
