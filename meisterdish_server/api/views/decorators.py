@@ -3,6 +3,7 @@ import json as simplejson
 from django.contrib.sessions.backends.db import SessionStore
 from functools import wraps
 import logging
+from api.models import User
 log = logging.getLogger('api')
 
 def check_input(method, admin=False):

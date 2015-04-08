@@ -169,19 +169,24 @@ $(document).ready(function() {
                 },
                 zip :{
                     required:true,
-                    number :true
+                    number :true,
+                    minlength:6
                 },
-                state :{
-                    required:true,
-                    letters: true
+                state:{
+                    required:true
+                },
+                city:{
+                    required:true
                 },
                 street:{
                     required:true,
-                    letters: true
+                    letters: true,
+                    minlength:4
                 },
                 building:{
                     required:true,
-                    letters: true
+                    letters: true,
+                    minlength:2
                 }
             },
             messages: {
@@ -193,6 +198,12 @@ $(document).ready(function() {
                 },
                 lastname: {
                     required: "Please enter your last name",
+                    letters: "Name should contain only alphabets",
+                    minlength: "Name should contain atleast 2 characters",
+                    maxlength: "Name should not contain more than 15 charcters"
+                },
+                fullname: {
+                    required: "Please enter your first name",
                     letters: "Name should contain only alphabets",
                     minlength: "Name should contain atleast 2 characters",
                     maxlength: "Name should not contain more than 15 charcters"
@@ -221,10 +232,11 @@ $(document).ready(function() {
                      required:"please provide email"
                 },
                 email : "enter a valid email address",
-                state :"state is invalid",
-                zip : "Invalid zip code",
-                street :"Invalid street name",
-                 building:"invalid"
+                zip : "provide a valid zip code",
+                street :"provide a valid street address",
+                building:"Provide a valid building name",
+                state: "please fill the required field",
+                city:"please fill the required field"
             }
         });
     });

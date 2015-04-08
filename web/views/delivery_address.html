@@ -86,7 +86,7 @@
                     <div class="account-header">MANAGE YOUR DELIVERY ADDRESSES</div>
                     <div class="content">
                         <div class="message">
-                            <h3 style="text-align:center">THERE ARE CuRRENTLY NO DELIVERY ADDRESSES ADDED</h3>
+                            <span>There are currently no delivery address added..</span>
                         </div>
                         <ol></ol>
                     </div>
@@ -103,19 +103,32 @@
                 <div class="header">ADDRESS</div>
                     <div class="container">
                         <form class="addaddress-popup">
-                            <input type="text" name="fullname" placeholder="Full Name" class="popup-input">
-                            <input type="text" name="phonenumber" placeholder="Phone" class="popup-input">
-                            <input type="text" name="zip" class="popup-input" placeholder="zip code">
-                            <input type="text" name="state" class="popup-input" placeholder="state">
-                            <select>
-                                <option selected>City</option>
-                                <option>city 1</option>
-                                <option>city 2</option>
-                                <option>city 3</option>
-                                <option>city 4</option>
-                            </select>
-                            <input type="text" name="street" class="popup-input" placeholder="Street">
-                            <input type="text" name="building" class="popup-input" placeholder="Building"><br>
+                            <div class="forminput-wrapper">
+                                <input type="text" name="fullname" placeholder="Full Name" class="popup-input">
+                            </div>
+                            <div class="forminput-wrapper">
+                                <input type="text" name="phonenumber" placeholder="Phone" class="popup-input">
+                            </div>
+                            <div class="forminput-wrapper">
+                                <input type="text" name="zip" class="popup-input" placeholder="zip code">
+                            </div>
+                            <div class="forminput-wrapper">
+                                <select class='state-selector' name="state">
+                                    <option value="">State</option>
+                                </select>
+                            </div>
+                            <div class="forminput-wrapper">
+                                <select class='city-selector' name="city">
+                                    <option value="">City</option>
+                                </select>
+                            </div>
+                            <div class="forminput-wrapper">
+                                <input type="text" name="street" class="popup-input" placeholder="Street">
+                            </div>
+                            <div class="forminput-wrapper">
+                                <input type="text" name="building" class="popup-input" placeholder="Building">
+                            </div>
+                            <br>
                             <input type="checkbox" name="is-primary" class="popup-input checkbox"><span class='checkbox-span'>Set Primary Address</span>
                             <div class="button">
                                 <input class="btn btn-small-primary medium-green" id="addpopup-data" type="submit" value="ADD">
