@@ -144,10 +144,6 @@
                     $addressPopup.find("input[type*='checkbox']").prop("checked", false);
                 }
                 getCities(value.state_id , value.city_id);
-                // $addressPopup.find(".city-selector option").load(function(){
-                    // $addressPopup.find(".city-selector").val(value.city_id);
-                // })
-
             }
         });
     }
