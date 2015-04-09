@@ -2,6 +2,9 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
 from settings import PAYMENT_METHODS
+import logging
+log = logging.getLogger('model')
+import sys, traceback
 
 months = ((1, 'January'),
           (2, 'February'),
@@ -62,37 +65,40 @@ class Image(models.Model):
         from cStringIO import StringIO
         from django.core.files.uploadedfile import SimpleUploadedFile
         import os
- 
-        THUMBNAIL_SIZE = (300, 300)
         try:
-            DJANGO_TYPE = self.image.file.content_type
+            THUMBNAIL_SIZE = (300, 300)
+            try:
+                DJANGO_TYPE = self.image.file.content_type
+                
+                if DJANGO_TYPE == 'image/jpeg':
+                    PIL_TYPE = 'jpeg'
+                    FILE_EXTENSION = 'jpg'
+                elif DJANGO_TYPE == 'image/png':
+                    PIL_TYPE = 'png'
+                    FILE_EXTENSION = 'png'
+                elif DJANGO_TYPE == 'image/gif':
+                    PIL_TYPE = 'gif'
+                    FILE_EXTENSION = 'gif'
+            except:
+                PIL_TYPE = os.path.splitext(str(self.image.file))[1].strip('.')
+                FILE_EXTENSION = PIL_TYPE
+                if PIL_TYPE.upper() == "JPG":
+                    PIL_TYPE = 'jpeg'
+                DJANGO_TYPE = "image/+"+PIL_TYPE
+                
+            image = Image.open(StringIO(self.image.read()))
+     
+            image.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
+     
+            temp_handle = StringIO()
             
-            if DJANGO_TYPE == 'image/jpeg':
-                PIL_TYPE = 'jpeg'
-                FILE_EXTENSION = 'jpg'
-            elif DJANGO_TYPE == 'image/png':
-                PIL_TYPE = 'png'
-                FILE_EXTENSION = 'png'
-            elif DJANGO_TYPE == 'image/gif':
-                PIL_TYPE = 'gif'
-                FILE_EXTENSION = 'gif'
-        except:
-            PIL_TYPE = os.path.splitext(str(self.image.file).split('?')[0])[1].strip('.')
-            FILE_EXTENSION = PIL_TYPE
-            if PIL_TYPE.upper() == "JPG":
-                PIL_TYPE = 'jpeg'
-            DJANGO_TYPE = "image/+"+PIL_TYPE
-            
-        image = Image.open(StringIO(self.image.read()))
- 
-        image.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
- 
-        temp_handle = StringIO()
-        image.save(temp_handle, PIL_TYPE)
-        temp_handle.seek(0)
- 
-        suf = SimpleUploadedFile(os.path.split(self.image.name)[-1],
-                temp_handle.read(), content_type=DJANGO_TYPE)
+            image.save(temp_handle, PIL_TYPE)
+            temp_handle.seek(0)
+     
+            suf = SimpleUploadedFile(os.path.split(self.image.name)[-1],
+                    temp_handle.read(), content_type=DJANGO_TYPE)
+        except KeyError as e:
+            log.error(e.message +"-"+ str(traceback.tb_lineno(sys.exc_info()[2])))
         
         self.thumb.save(
             '%s_thumbnail.%s' % (os.path.splitext(suf.name)[0], FILE_EXTENSION),
@@ -106,7 +112,7 @@ class Image(models.Model):
         import urllib
         result = urllib.urlretrieve(url)
         self.image.save(
-                os.path.basename(url),
+                os.path.basename(url.split('?')[0]),
                 File(open(result[0]))
                 )
         super(Image, self).save()
