@@ -1,3 +1,37 @@
+/*checkbox */
+.filter-drop-down label {
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px;
+}
+.filter-drop-down label:before {
+    content:"";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 1px;
+    background-color: #F7EEEE;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    border-radius: 3px;
+}
+.filter-drop-down input[type=checkbox] {
+    display: none;
+}
+.filter-drop-down input[type=checkbox]:checked + label:before {
+    content:"\2714";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: #f3f3f3;
+    text-align: center;
+    line-height: 15px;
+    background-color: #969696;
+  	color: #F7EBEB;
+}
+
+
 /*==============================*\
 			&MENU
 \*==============================*/
@@ -10,30 +44,87 @@
 	color: #5a5a5a;
 }
 
-.subMenu ul li{
+.subMenu ul li.menu-categories-list{
 	display: inline-block;
+	border-left: 1px solid #F3F3F3;
 	width: 105px;
 	text-align: center;
 }
+.subMenu ul li.menu-categories-list:last-child{
+	border-right: 1px solid #F3F3F3;
+}
 
-.subMenu ul li a{
+.subMenu ul li.menu-categories-list a{
 	text-transform: uppercase;
 	padding: 20px 0;
 	display: block;
 	font-size: 16px;
 }
 
-.subMenu ul li a:hover,.subMenu ul li a.activeOption{
-	border-bottom: 4px solid #a9d77b;
+.subMenu ul li.menu-categories-list a.menu-categories:hover,.subMenu ul li.menu-categories-list a.activeOption{
+	border-bottom: 2px solid #a9d77b;
 	padding: 20px 0 16px 0;
+	background-color: #F9F9F9;
 	font-weight: bold;
 	color: #1a1a1a;
 }
 
 .subMenuFilter{
 	float: right;
-	padding: 20px 0 20px 30px;
-	background: left center url(../images/filter_icon.png) no-repeat;
+	padding: 18px 0 !important;
+}
+.filter-container{
+	padding: 0 15px;
+	cursor: pointer;
+}
+.filter-container .arrow-down{
+	position: relative;
+	top: 24px;
+	margin: 0 5px;
+}
+.filter-menu-label {
+	width: 77px !important;
+	margin: 0 auto;
+	overflow: auto;
+	display: block!important;
+}
+.filter-center{
+	position: relative;
+}
+.filter-drop-down{
+	background-color: white;
+	width: 150px;
+	position: absolute;
+	top: 55px;
+	right: -15px;
+	display: none;
+}
+
+.filter-drop-down input[type='checkbox']{
+	float: left;
+	margin: 5px 0;
+}
+.filter-drop-down ul li{
+	padding: 10px 0;
+	overflow: hidden;
+}
+.filter-drop-down ul li:hover{
+	background-color: #F0F0F0;
+}
+.filter-drop-down ul li div{
+	padding: 0px 15px;
+}
+.filter-container:hover{
+	border-bottom: 2px solid #a9d77b;
+	background-color: #F9F9F9;
+	box-sizing:border-box;
+	font-weight: bold;
+	color: #1a1a1a;
+}
+
+.filter-container:hover .filter-drop-down{
+	display: block;
+	font-weight: normal;
 }
 .listContainer{
 	float: left;
