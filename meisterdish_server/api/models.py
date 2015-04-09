@@ -219,7 +219,7 @@ class Meal(models.Model):
     name = models.CharField(max_length=30)
     images = models.ManyToManyField(Image, related_name="meal")
     description = models.TextField(max_length=1024)
-    preparation_time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    preparation_time = models.CharField(max_length=30)
     type = models.ForeignKey(MealType)
     category = models.ForeignKey(Category, null=True)
     

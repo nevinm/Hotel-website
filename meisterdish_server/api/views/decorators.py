@@ -65,6 +65,10 @@ def json_request(request):
     if (req):
         try:
             if request.FILES:
+                log.info("BODY")
+                log.info(req)
+                log.info("POST")
+                log.info(request.POST)
                 return request.POST
             else:
                 return simplejson.loads(req, "ISO-8859-1")
