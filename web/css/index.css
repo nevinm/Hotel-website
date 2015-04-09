@@ -121,7 +121,7 @@ SLIDER
 }
 
 #slide1{
-	background: url(../images/homepageslider/homepage_1.jpg) center top no-repeat;
+	background: url(../images/homepageslider/homepage_1.jpg) 65% 50% no-repeat;
 	background-position: fixed;
 	padding: 6% 0 0 0;
 }

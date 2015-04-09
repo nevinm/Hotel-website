@@ -2,6 +2,9 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
 from settings import PAYMENT_METHODS
+import logging
+log = logging.getLogger('model')
+import sys, traceback
 
 months = ((1, 'January'),
           (2, 'February'),
@@ -63,38 +66,58 @@ class Image(models.Model):
         from cStringIO import StringIO
         from django.core.files.uploadedfile import SimpleUploadedFile
         import os
- 
-        THUMBNAIL_SIZE = (300, 300)
- 
-        DJANGO_TYPE = self.image.file.content_type
- 
-        if DJANGO_TYPE == 'image/jpeg':
-            PIL_TYPE = 'jpeg'
-            FILE_EXTENSION = 'jpg'
-        elif DJANGO_TYPE == 'image/png':
-            PIL_TYPE = 'png'
-            FILE_EXTENSION = 'png'
-        elif DJANGO_TYPE == 'image/gif':
-            PIL_TYPE = 'gif'
-            FILE_EXTENSION = 'gif'
+        try:
+            THUMBNAIL_SIZE = (300, 300)
+            try:
+                DJANGO_TYPE = self.image.file.content_type
+                
+                if DJANGO_TYPE == 'image/jpeg':
+                    PIL_TYPE = 'jpeg'
+                    FILE_EXTENSION = 'jpg'
+                elif DJANGO_TYPE == 'image/png':
+                    PIL_TYPE = 'png'
+                    FILE_EXTENSION = 'png'
+                elif DJANGO_TYPE == 'image/gif':
+                    PIL_TYPE = 'gif'
+                    FILE_EXTENSION = 'gif'
+            except:
+                PIL_TYPE = os.path.splitext(str(self.image.file))[1].strip('.')
+                FILE_EXTENSION = PIL_TYPE
+                if PIL_TYPE.upper() == "JPG":
+                    PIL_TYPE = 'jpeg'
+                DJANGO_TYPE = "image/+"+PIL_TYPE
+                
+            image = Image.open(StringIO(self.image.read()))
+     
+            image.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
+     
+            temp_handle = StringIO()
             
-        image = Image.open(StringIO(self.image.read()))
- 
-        image.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
- 
-        temp_handle = StringIO()
-        image.save(temp_handle, PIL_TYPE)
-        temp_handle.seek(0)
- 
-        suf = SimpleUploadedFile(os.path.split(self.image.name)[-1],
-                temp_handle.read(), content_type=DJANGO_TYPE)
+            image.save(temp_handle, PIL_TYPE)
+            temp_handle.seek(0)
+     
+            suf = SimpleUploadedFile(os.path.split(self.image.name)[-1],
+                    temp_handle.read(), content_type=DJANGO_TYPE)
+        except KeyError as e:
+            log.error(e.message +"-"+ str(traceback.tb_lineno(sys.exc_info()[2])))
         
         self.thumb.save(
             '%s_thumbnail.%s' % (os.path.splitext(suf.name)[0], FILE_EXTENSION),
             suf,
             save=False
         )
- 
+    
+    def save_image_from_url(self, url):
+        import os
+        from django.core.files import File
+        import urllib
+        result = urllib.urlretrieve(url)
+        self.image.save(
+                os.path.basename(url.split('?')[0]),
+                File(open(result[0]))
+                )
+        super(Image, self).save()
+    
     def save(self, *args, **kwargs):
         self.create_thumbnail()
         force_update = False
@@ -168,15 +191,16 @@ class CreditCardDetails(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=25)
+    is_hidden = models.BooleanField(default=False)
+    is_deleted =  models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.name
 
 class MealType(models.Model):
-    """ These can be used to filter meals. 
-        Examples : vegan, non-vegan, piscatarious etc..
-    """
     name = models.CharField(max_length=25)
+    is_hidden = models.BooleanField(default=False)
+    is_deleted =  models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.name
@@ -195,7 +219,7 @@ class Meal(models.Model):
     name = models.CharField(max_length=30)
     images = models.ManyToManyField(Image, related_name="meal")
     description = models.TextField(max_length=1024)
-    preparation_time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    preparation_time = models.CharField(max_length=30)
     type = models.ForeignKey(MealType)
     category = models.ForeignKey(Category, null=True)
     
@@ -206,6 +230,7 @@ class Meal(models.Model):
     price = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     
+    is_deleted = models.BooleanField(default=False)
     available = models.BooleanField(default=True)
     def __unicode__(self):
         return self.name

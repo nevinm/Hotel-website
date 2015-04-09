@@ -31,7 +31,11 @@ def check_input(method, admin=False):
                                 log.error('API : User requesting admin only features.'+session["user"]["email"] +str(session["user"]["role"]))
                                 return custom_error('You are not authorized.')
                             else:
-                                user = User.objects.get(pk=session['user']['id'])
+                                try:
+                                    user = User.objects.get(pk=session['user']['id'])
+                                except Exception as e:
+                                    log.error("No user in session !!" + str(session['user']['id']))
+                                    return custom_error("This user is no more available. Please login again.")
                                 return func(request, req, user, *args, **kwargs)
                         else:
                             message = 'The session is invalid. Please login again.'

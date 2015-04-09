@@ -32,16 +32,8 @@
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
 
-    function redirectIfLoggedIn(){
-        if (localStorage['loggedIn'] == 'true') 
-        {
-            window.location.href='../index.html';
-        }
-        else{}
-    }
-    // redirectIfLoggedIn();
-
 $(document).ready(function() {
+    redirectIfLoggedIn();
     //login form submit
     $("#login-button").on('click', function(e){
         e.preventDefault();

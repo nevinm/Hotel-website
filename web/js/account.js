@@ -34,7 +34,12 @@ var getProfileCallback = {
             $(".cart span").text(userDetails.meals_in_cart_count);
             $(".account-credit").text(dollarConvert(userDetails.credits));
             if(profileId){
-                $("#"+profileId).attr('src',userDetails.profile_image_thumb);
+                if(userDetails.profile_image_thumb!= "Not Available"){
+                    $("#"+profileId).attr('src',userDetails.profile_image_thumb);
+                }
+                else{
+                    $("#"+profileId).attr('src','../images/blank-person.png');
+                }
             }
         } 
         else {}
