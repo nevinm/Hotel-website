@@ -268,7 +268,7 @@ def get_meals(request, data, user):
                               "current_page":page,
                               "per_page" : limit,
                               })
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to list meals : "+e.message)
         return custom_error("Failed to list meals")
     
