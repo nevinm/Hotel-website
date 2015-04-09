@@ -275,6 +275,7 @@ def get_meals(request, data, user):
 @check_input('POST', True)
 def create_meal(request, data, user):
     try:
+        """
         "name":meal.name,
         "description":meal.description,
         "images":meal_images,
@@ -284,6 +285,6 @@ def create_meal(request, data, user):
         "preparation_time":meal.preparation_time,
         "price":meal.price,
         "tax":meal.tax,
-        
+        """
     except:
-        
+        pass
