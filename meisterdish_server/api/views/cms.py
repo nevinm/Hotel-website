@@ -275,16 +275,53 @@ def get_meals(request, data, user):
 @check_input('POST', True)
 def create_meal(request, data, user):
     try:
-        """
-        "name":meal.name,
-        "description":meal.description,
-        "images":meal_images,
-        "available":1 if meal.available else 0,
-        "category":meal.category.name.title(),
-        "meal_type":meal.type.name.title(),
-        "preparation_time":meal.preparation_time,
-        "price":meal.price,
-        "tax":meal.tax,
-        """
-    except:
-        pass
+        name = data['name'].strip()
+        desc = data['description'].strip()
+        preparation_time = data['preparation_time'].strip()
+        price = data['price'].strip()
+        tax = data['tax'].strip()
+        available = data['available']
+        pre_req = data ['pre_requesites']
+        nutrients = data['nutrients']
+        ingredients = data['ingredeints']
+        
+        if len(name) < 4 or len(desc)<10 or float(price) <=0 or float(tax) <0 :
+            return custom_error("Please enter valid details.")
+        
+        meal = Meal()
+        meal.name = name.capitalize()
+        meal.description = desc.captitalize()
+        meal.preparation_time = preparation_time
+        meal.price = price
+        meal.tax = tax
+        meal.available = bool(available)
+        meal.pre_requisites = pre_req
+        
+        try:
+            meal.category=Category.objects.get(is_hidden=False, is_deleted=False, pk=data['category_id'])
+        except:
+            return custom_error("The selected category does not exist, or is not available.")
+        
+        try:
+            meal.type = MealType.objects.get(is_hidden=False, is_deleted=False, pk=data['filter_id'])
+        except:
+            return custom_error("The selected Meal Filter does not exist, or is not available.")
+        meal.save()
+        
+        for nut in nutrients:
+            try:
+                meal.nutrients.add(Nutrient.get(pk=nut))
+            except:
+                meal.delete()
+                return custom_error("Some nutrients are currently unavailable")
+        
+        for ing in ingredients:
+            try:
+                meal.ingredients.add(Ingredient.get(pk=ing))
+            except:
+                meal.delete() 
+                return custom_error("Some ingredients are currently unavailable")
+        return json_response({"status":1, "message":"The meal has been successfully created.", "id":meal.id})
+    except Exception as e:
+        log.error("Failed to create meals : "+e.message)
+        return custom_error("Failed to create meal. Please try again later.")
