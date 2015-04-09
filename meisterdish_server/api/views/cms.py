@@ -217,15 +217,15 @@ def get_meals(request, data, user):
         meals = Meal.objects.filter(is_deleted=False)
         total_count = meals.count()
          
-        if "search" in data:
+        if "search" in data and data['search'].strip() != '':
             search = data["search"]
             meals = meals.filter(Q(name__istartswith=search)| Q(description__istartswith=search))
         
-        if "category_id" in data:
+        if "category_id" in data and str(data['category_id']) != '':
             cat = Category.objects.get(pk=data["category_id"])
             meals = meals.filter(category=cat)
         
-        if "type_id" in data:
+        if "type_id" in data and str(data['type_id']) != '':
             type = MealType.objects.get(pk=data["type_id"])
             meals = meals.filter(type=type)
             
