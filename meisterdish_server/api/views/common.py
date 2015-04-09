@@ -389,7 +389,7 @@ def get_profile(request, data, user):
         log.error("Profile request with no user_id")
         return custom_error("Invalid input.")
     except Exception as e:
-        log.error("Get profile :Exception: "+e.message + traceback.tb_lineno(sys.exc_info()[2]))
+        log.error("Get profile :Exception: "+e.message + str(traceback.tb_lineno(sys.exc_info()[2])))
         return custom_error("Failed to retrieve profile details.")
 
 @check_input('POST')
