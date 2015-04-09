@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from decorators import *
 from django.core.paginator import Paginator
+from django.core.files.uploadedfile import UploadedFile
 log = logging.getLogger('cms_api')
 
 def home(request):
@@ -276,35 +277,20 @@ def get_meals(request, data, user):
 @check_input('POST', True)
 def create_meal(request, data, user):
     try:
-        for f in request.FILES.getlist('files'):
-            wrapped_file = UploadedFile(f)
-            filename = wrapped_file.name
-            file_size = wrapped_file.file.size
-            log.info ('meal image upload : "'+str(filename)+'"')
-    
-            image = Image()
-            image.title=str(filename)
-            image.image=file
-            image.save()
-            log.info('Meal image saved')
-            
-        return HttpResponse("done")
         name = data['name'].strip()
         desc = data['description'].strip()
         preparation_time = data['preparation_time'].strip()
         price = data['price'].strip()
         tax = data['tax'].strip()
         available = data['available']
-        pre_req = data ['pre_requesites']
-        nutrients = data['nutrients']
-        ingredients = data['ingredeints']
+        pre_req = data ['pre_requisites']
         
         if len(name) < 4 or len(desc)<10 or float(price) <=0 or float(tax) <0 :
             return custom_error("Please enter valid details.")
         
         meal = Meal()
-        meal.name = name.capitalize()
-        meal.description = desc.captitalize()
+        meal.name = name.title()
+        meal.description = desc
         meal.preparation_time = preparation_time
         meal.price = price
         meal.tax = tax
@@ -322,19 +308,21 @@ def create_meal(request, data, user):
             return custom_error("The selected Meal Filter does not exist, or is not available.")
         meal.save()
         
-        for nut in nutrients:
-            try:
-                meal.nutrients.add(Nutrient.get(pk=nut))
-            except:
-                meal.delete()
-                return custom_error("Some nutrients are currently unavailable")
+        if 'nutrients' in data:
+            for nut in data.getlist("nutrients"):
+                try:
+                    meal.nutrients.add(Nutrient.get(pk=int(nut)))
+                except:
+                    meal.delete()
+                    return custom_error("Some nutrients are currently unavailable")
         
-        for ing in ingredients:
-            try:
-                meal.ingredients.add(Ingredient.get(pk=ing))
-            except:
-                meal.delete() 
-                return custom_error("Some ingredients are currently unavailable")
+        if 'ingredients' in data:
+            for ing in data.getlist('ingredients'):
+                try:
+                    meal.ingredients.add(Ingredient.get(pk=int(ing)))
+                except:
+                    meal.delete() 
+                    return custom_error("Some ingredients are currently unavailable")
         
         for f in request.FILES.getlist('files'):
             wrapped_file = UploadedFile(f)
@@ -344,12 +332,12 @@ def create_meal(request, data, user):
     
             image = Image()
             image.title=str(filename)
-            image.image=file
+            image.image=f
             image.save()
             log.info('Meal image saved')
             meal.images.add(image)
         meal.save()
         return json_response({"status":1, "message":"The meal has been successfully created.", "id":meal.id})
-    except Exception as e:
+    except IOError as e:
         log.error("Failed to create meals : "+e.message)
         return custom_error("Failed to create meal. Please try again later.")

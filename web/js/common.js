@@ -3,6 +3,12 @@ var baseURL = 'http://meisterdish.qburst.com/backend/api/',
 //If already logged in
 var $userentry = $('.login-signup');
 
+function redirectIfLoggedIn() {
+    if (localStorage['loggedIn'] == 'true') {
+        window.location.href = '../index.html';
+    } else {}
+}
+
 function checkLoggedIn() {
         if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
             $userentry.hide();
@@ -15,12 +21,13 @@ function checkLoggedIn() {
             $('#menu').removeClass('menuPadding');
         }
 }
+
 function verifyAccount(){
     var verify_url = window.location.href;
     var search_verify = verify_url.indexOf("account_verify");
     var search_ve = verify_url.indexOf("email_verify");
     
-    //email vaerification
+    //email verification
     if(search_ve!=-1 && search_ve!=undefined ){
         var truemessage = {
             'message' :"Your email is verified"
@@ -52,35 +59,25 @@ function verifyAccount(){
     }
 }
 
-$(document).ready(function() {
-    //Logout process
-    $("#logout").on('click', function() {
-        logingOut();
-        });
-        function logingOut(){
-            $('#navbar-username a').text('');
-            $userentry.show();
-            $('#menu').removeClass('menuPadding');
-            $(".logout").addClass('hide');
-            localStorage.removeItem('username');
-            localStorage.removeItem('session_key');
-            localStorage['loggedIn'] = false;
-            localStorage['admin_loggedIn'] = false;
-        if(currentPage== "Meisterdish - Admin"){
-            window.location.href= '../../index.html';
-        } else {
-            window.location.href = '../index.html';
-        }
-   
+function logingOut(){
+    $('#navbar-username a').text('');
+    $userentry.show();
+    $('#menu').removeClass('menuPadding');
+    $(".logout").addClass('hide');
+    localStorage.removeItem('username');
+    localStorage.removeItem('session_key');
+    localStorage.removeItem('fb-id');
+    localStorage.removeItem('user_profile');
+    localStorage.removeItem('fb-image');
+    localStorage['loggedIn'] = false;
+    localStorage['admin_loggedIn'] = false;
+    if(currentPage== "Meisterdish - Admin"){
+        window.location.href= '../../index.html';
+    } else {
+        window.location.href = '../index.html';
     }
-    // &NAVMENU - RESPONSIVE
-    $('.icon-menu').on("click", function() {
-        $('.navMenu').slideToggle();
-    });
+}
 
-    checkLoggedIn();
-    verifyAccount();
-});
     
     //SHOW POPUP
     function showPopup(data){
@@ -90,7 +87,7 @@ $(document).ready(function() {
     
     $('#close').on("click",function(){
         $('.popup-wrapper').hide();
-        if(currentPage=="Meisterdish - Signup"){
+        if(currentPage=="Meisterdish - Signup" || currentPage=="Meisterdish - Login"){
             if(localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn']=='true'){
                 window.location.href='menu.html';
             }
@@ -107,6 +104,20 @@ $(document).ready(function() {
     })
 }
    
+$(document).ready(function() {
+    //Logout process
+    $("#logout").on('click', function() {
+        logingOut();
+        });
+
+    // &NAVMENU - RESPONSIVE
+    $('.icon-menu').on("click", function() {
+        $('.navMenu').slideToggle();
+    });
+
+    checkLoggedIn();
+    verifyAccount();
+});
    
     //JQuery Validation   
     $("form").each(function(){
