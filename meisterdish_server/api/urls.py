@@ -25,6 +25,6 @@ urlpatterns = patterns('',
     url(r'^upload_picture/$', views.upload_picture, name='upload_picture'),
     
     url(r'^get_categories/$', views.get_categories, name='get_categories'),
-    url(r'^get_meal_types/$', views.get_meal_types, name='get_meal_types'),
+    
     
 )

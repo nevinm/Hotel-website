@@ -11,7 +11,7 @@ $(document).ready(function() {
             "session-key": localStorage["session_key"]
         },       
         done: function (e, data) {
-        	$("#display-pic").attr('src', data.result.url);
+        	$("#display-pic").attr('src', data.result.thumbnail_url);
         }
     });
 });
