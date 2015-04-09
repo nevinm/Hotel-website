@@ -99,12 +99,11 @@ def logout(request, data):
 @check_input('POST')
 def signup(request, data):
     try:
-        """
         password = data['password'].strip()
         email = data['email'].strip()
         first_name = data['first_name'].strip()
         last_name = data['last_name'].strip()
-        """
+        
         fb = False
         fb_id = ""
         profile_image = None

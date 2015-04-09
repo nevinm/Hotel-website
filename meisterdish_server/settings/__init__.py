@@ -174,6 +174,10 @@ LOGGING = {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },
+        'model': {
+            'handlers': ['logfile'],
+            'level': 'DEBUG'
+        },
     }
 }
 
