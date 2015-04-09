@@ -205,7 +205,7 @@ def change_user_status(request, data, session_user):
         log.error("Failed to change user status : "+e.message)
         return custom_error("Failed to change user status")
 
-@check_input('POST', True)
+@check_input('POST')
 def get_meals(request, data, user):
     try:
         limit = settings.PER_PAGE
@@ -268,7 +268,7 @@ def get_meals(request, data, user):
                               "current_page":page,
                               "per_page" : limit,
                               })
-    except Exception as e:
+    except KeyError as e:
         log.error("Failed to list meals : "+e.message)
         return custom_error("Failed to list meals")
     
