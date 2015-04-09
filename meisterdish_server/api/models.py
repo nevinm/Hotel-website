@@ -78,7 +78,7 @@ class Image(models.Model):
                 PIL_TYPE = 'gif'
                 FILE_EXTENSION = 'gif'
         except:
-            PIL_TYPE = os.path.splitext(str(self.image.file))[1].strip('.')
+            PIL_TYPE = os.path.splitext(str(self.image.file.split('?')[0]))[1].strip('.')
             FILE_EXTENSION = PIL_TYPE
             if PIL_TYPE.upper() == "JPG":
                 PIL_TYPE = 'jpeg'
@@ -185,15 +185,16 @@ class CreditCardDetails(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=25)
+    is_hidden = models.BooleanField(default=False)
+    is_deleted =  models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.name
 
 class MealType(models.Model):
-    """ These can be used to filter meals. 
-        Examples : vegan, non-vegan, piscatarious etc..
-    """
     name = models.CharField(max_length=25)
+    is_hidden = models.BooleanField(default=False)
+    is_deleted =  models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.name
