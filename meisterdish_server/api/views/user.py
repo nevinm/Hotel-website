@@ -139,22 +139,19 @@ def get_categories(request, data, user):
                              "id":cat.id,
                              "name":cat.name.title()
                              })
-        return json_response({"status":1, "categories":cat_list})
-    except Exception as e:
-        log.error("get categories : " + e.message)
-        return custom_error("Failed to list categories ")
-    
-@check_input('POST')
-def get_meal_types(request, data, user):
-    try:
+        
         types = MealType.objects.all()
+        
+        #Meal Types / Filters
         type_list = []
         for type in types:
             type_list.append({
                              "id":type.id,
                              "name":type.name.title()
                              })
-        return json_response({"status":1, "meal_types":type_list})
+    
+        return json_response({"status":1, "categories":cat_list, "meal_types":type_list})
     except Exception as e:
-        log.error("get meal types : " + e.message)
-        return custom_error("Failed to list meal types ")
+        log.error("get categories +filters: " + e.message)
+        return custom_error("Failed to list categories and meal filters")
+    
