@@ -99,17 +99,25 @@ def logout(request, data):
 @check_input('POST')
 def signup(request, data):
     try:
+        """
         password = data['password'].strip()
         email = data['email'].strip()
         first_name = data['first_name'].strip()
         last_name = data['last_name'].strip()
-        
+        """
         fb = False
         fb_id = ""
+        profile_image = None
         if 'fb_id' in data:
             fb_id = data['fb_id']
             fb = True
             
+            if 'image_url' in data and data['image_url'].strip() != '':
+                profile_image_url = data['image_url'].strip()
+                profile_image = Image()
+                profile_image.save_image_from_url(profile_image_url)
+            
+        
         if password == '' or first_name == '' or last_name == '' or email == '':
             log.error(email + " : Sign up failed. Fill required fields.")
             raise Exception("Please fill in all the required fields")
@@ -124,6 +132,7 @@ def signup(request, data):
             user.last_name = last_name
             user.role = Role.objects.get(pk=2)
             user.fb_user_id = fb_id
+            user.profile_image = profile_image
             user.save()
             
             user_dic = {"id":user.id,
