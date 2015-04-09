@@ -13,5 +13,5 @@ urlpatterns = patterns('',
     url(r'^change_user_status/$', cms.change_user_status, name='change_user_status'),
     
     url(r'^get_meals/$', cms.get_meals, name='get_meals'),
-    url(r'^create_meal/$', views.create_meal, name='create_meal'),
+    url(r'^create_meal/$', cms.create_meal, name='create_meal'),
 )
