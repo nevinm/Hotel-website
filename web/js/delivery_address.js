@@ -1,9 +1,11 @@
+
     // Remove address API
     var removeAddressCallback = {
         success: function(data, textStatus) {
             var userDetails = JSON.parse(data);
             if (userDetails.status == 1) {
                 getAddress();
+                isAddress();
             } else {}
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -22,12 +24,14 @@
         removeAddressInstance.sendPost(url, header, data, removeAddressCallback);
     }
 
+   
     var getAddressCallback = {
         success: function(data, textStatus) {
             var userDetails = JSON.parse(data);
             if (userDetails.status == 1) {
                 localStorage['delivery_addressess']=data;
                 autoPopulateAdressess(userDetails);
+                isAddress();
             } else {}
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -114,6 +118,8 @@
         var addAddressInstance = new AjaxHttpSender();
         addAddressInstance.sendPost(url, header, data, addAddressCallback);
     }
+
+
 
     //Edit address API
     var editAddressCallback = {
@@ -231,6 +237,16 @@
         getCitiesInstance.sendPost(url, header, data, getCitiesCallback, cityId);
     }
 
+        //check is ther any addresses exist 
+        function isAddress(){
+           if ($('#editaddress-container .content ol').is(':empty'))
+            {
+                 $('#editaddress-container .content .message').show();
+            } 
+            else{
+                $('#editaddress-container .content .message').hide();
+            }
+        }
 
    $(document).ready(function(){
         $(document).on('change', '.state-selector', function(){
@@ -241,17 +257,29 @@
          $("#savepopup-data").on('click', function(e) {
             e.preventDefault();
             var currentId = $(this).data().id;
-            editAddress(currentId);
+            if($('form.addaddress-popup').valid()){
+                editAddress(currentId);
+            }
         });
 
         $("#addpopup-data").on('click', function(e) {
             e.preventDefault();
-            addAddress();
+            if($('form.addaddress-popup').valid())
+                {
+                    addAddress();
+                }
         });
 
         $(document).on('click', '.remove-address', function() {
+            $(".popup-wrapper").show();
             var deleteId = $(this).data().id;
-            removeAddress(deleteId);
+            $('#yes-button').on('click',function(){
+                $(".popup-wrapper").hide();
+                removeAddress(deleteId);
+            });
+            $('#no-button').on('click',function(){
+                $(".popup-wrapper").hide();
+            });
         });
 
         getStates();

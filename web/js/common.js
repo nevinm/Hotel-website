@@ -124,7 +124,7 @@ $(document).ready(function() {
                     maxlength: 15,
                     letters: true
                 },
-                Fullname: {
+                fullname: {
                     required: true,
                     minlength: 2,
                     maxlength: 20,
@@ -168,10 +168,25 @@ $(document).ready(function() {
                     equalTo: "#new-password"
                 },
                 zip :{
+                    required:true,
+                    number :true,
+                    minlength:6
+                },
+                state:{
                     required:true
                 },
-                state :{
+                city:{
                     required:true
+                },
+                street:{
+                    required:true,
+                    letters: true,
+                    minlength:4
+                },
+                building:{
+                    required:true,
+                    letters: true,
+                    minlength:2
                 }
             },
             messages: {
@@ -183,6 +198,12 @@ $(document).ready(function() {
                 },
                 lastname: {
                     required: "Please enter your last name",
+                    letters: "Name should contain only alphabets",
+                    minlength: "Name should contain atleast 2 characters",
+                    maxlength: "Name should not contain more than 15 charcters"
+                },
+                fullname: {
+                    required: "Please enter your first name",
                     letters: "Name should contain only alphabets",
                     minlength: "Name should contain atleast 2 characters",
                     maxlength: "Name should not contain more than 15 charcters"
@@ -211,8 +232,11 @@ $(document).ready(function() {
                      required:"please provide email"
                 },
                 email : "enter a valid email address",
-                state :"State is required",
-                zip : "Provide a zip code"
+                zip : "provide a valid zip code",
+                street :"provide a valid street address",
+                building:"Provide a valid building name",
+                state: "please fill the required field",
+                city:"please fill the required field"
             }
         });
     });
