@@ -34,10 +34,9 @@ var getProfileCallback = {
             $(".cart span").text(userDetails.meals_in_cart_count);
             $(".account-credit").text(dollarConvert(userDetails.credits));
             if(profileId){
-                $("#"+profileId).attr('src',userDetails.profile_image);
+                $("#"+profileId).attr('src',userDetails.profile_image_thumb);
             }
         } 
-
         else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}

@@ -5,8 +5,4 @@ $(function(){
                 $(this).addClass("activeOption");
             });
         }
-
-        $('.icon-menu').on("click", function() {
-          $('.navMenu').slideToggle();
-    	});
 });
