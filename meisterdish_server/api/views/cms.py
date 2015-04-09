@@ -271,3 +271,19 @@ def get_meals(request, data, user):
     except Exception as e:
         log.error("Failed to list meals : "+e.message)
         return custom_error("Failed to list meals")
+    
+@check_input('POST', True)
+def create_meal(request, data, user):
+    try:
+        "name":meal.name,
+        "description":meal.description,
+        "images":meal_images,
+        "available":1 if meal.available else 0,
+        "category":meal.category.name.title(),
+        "meal_type":meal.type.name.title(),
+        "preparation_time":meal.preparation_time,
+        "price":meal.price,
+        "tax":meal.tax,
+        
+    except:
+        
