@@ -241,12 +241,13 @@ def get_meals(request, data, user):
         
         for meal in meals.object_list:
             meal_images = []
-            for img in meal.images:
+            for img in meal.images.all():
                 meal_images.append({
                                     "id":img.id,
                                     "url":img.image.url,
-                                    "thumb_url" : img.thumb.url
+                                    "thumb_url" : "Not Available" if not img.thumb else img.thumb,
                                     })
+                
             meal_list.append({
                               "id":meal.id,
                               "name":meal.name,
@@ -268,7 +269,7 @@ def get_meals(request, data, user):
                               "current_page":page,
                               "per_page" : limit,
                               })
-    except Exception as e:
+    except KeyError as e:
         log.error("Failed to list meals : "+e.message)
         return custom_error("Failed to list meals")
     
