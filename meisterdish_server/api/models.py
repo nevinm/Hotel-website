@@ -230,6 +230,7 @@ class Meal(models.Model):
     price = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     
+    is_deleted = models.BooleanField(default=False)
     available = models.BooleanField(default=True)
     def __unicode__(self):
         return self.name

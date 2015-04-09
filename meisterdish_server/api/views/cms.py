@@ -214,7 +214,7 @@ def get_meals(request, data, user):
             page = data["nextPage"]
                     
         meal_list = []
-        meals = Meal.objects.filter(deleted=False)
+        meals = Meal.objects.filter(is_deleted=False)
         total_count = meals.count()
          
         if "search" in data:
@@ -275,6 +275,19 @@ def get_meals(request, data, user):
 @check_input('POST', True)
 def create_meal(request, data, user):
     try:
+        for f in request.FILES.getlist('files'):
+            wrapped_file = UploadedFile(f)
+            filename = wrapped_file.name
+            file_size = wrapped_file.file.size
+            log.info ('meal image upload : "'+str(filename)+'"')
+    
+            image = Image()
+            image.title=str(filename)
+            image.image=file
+            image.save()
+            log.info('Meal image saved')
+            
+        return HttpResponse("done")
         name = data['name'].strip()
         desc = data['description'].strip()
         preparation_time = data['preparation_time'].strip()
@@ -321,6 +334,20 @@ def create_meal(request, data, user):
             except:
                 meal.delete() 
                 return custom_error("Some ingredients are currently unavailable")
+        
+        for f in request.FILES.getlist('files'):
+            wrapped_file = UploadedFile(f)
+            filename = wrapped_file.name
+            file_size = wrapped_file.file.size
+            log.info ('meal image upload : "'+str(filename)+'"')
+    
+            image = Image()
+            image.title=str(filename)
+            image.image=file
+            image.save()
+            log.info('Meal image saved')
+            meal.images.add(image)
+        meal.save()
         return json_response({"status":1, "message":"The meal has been successfully created.", "id":meal.id})
     except Exception as e:
         log.error("Failed to create meals : "+e.message)
