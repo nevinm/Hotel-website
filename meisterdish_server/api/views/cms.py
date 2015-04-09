@@ -214,18 +214,18 @@ def get_meals(request, data, user):
             page = data["nextPage"]
                     
         meal_list = []
-        meals = Meal.objects.filter(deleted=False)
+        meals = Meal.objects.filter(is_deleted=False)
         total_count = meals.count()
          
-        if "search" in data:
+        if "search" in data and data['search'].strip() != '':
             search = data["search"]
             meals = meals.filter(Q(name__istartswith=search)| Q(description__istartswith=search))
         
-        if "category_id" in data:
+        if "category_id" in data and str(data['category_id']) != '':
             cat = Category.objects.get(pk=data["category_id"])
             meals = meals.filter(category=cat)
         
-        if "type_id" in data:
+        if "type_id" in data and str(data['type_id']) != '':
             type = MealType.objects.get(pk=data["type_id"])
             meals = meals.filter(type=type)
             
@@ -241,12 +241,13 @@ def get_meals(request, data, user):
         
         for meal in meals.object_list:
             meal_images = []
-            for img in meal.images:
+            for img in meal.images.all():
                 meal_images.append({
                                     "id":img.id,
                                     "url":img.image.url,
-                                    "thumb_url" : img.thumb.url
+                                    "thumb_url" : "Not Available" if not img.thumb else img.thumb.url,
                                     })
+                
             meal_list.append({
                               "id":meal.id,
                               "name":meal.name,
@@ -268,6 +269,87 @@ def get_meals(request, data, user):
                               "current_page":page,
                               "per_page" : limit,
                               })
-    except Exception as e:
+    except KeyError as e:
         log.error("Failed to list meals : "+e.message)
         return custom_error("Failed to list meals")
+    
+@check_input('POST', True)
+def create_meal(request, data, user):
+    try:
+        for f in request.FILES.getlist('files'):
+            wrapped_file = UploadedFile(f)
+            filename = wrapped_file.name
+            file_size = wrapped_file.file.size
+            log.info ('meal image upload : "'+str(filename)+'"')
+    
+            image = Image()
+            image.title=str(filename)
+            image.image=file
+            image.save()
+            log.info('Meal image saved')
+            
+        return HttpResponse("done")
+        name = data['name'].strip()
+        desc = data['description'].strip()
+        preparation_time = data['preparation_time'].strip()
+        price = data['price'].strip()
+        tax = data['tax'].strip()
+        available = data['available']
+        pre_req = data ['pre_requesites']
+        nutrients = data['nutrients']
+        ingredients = data['ingredeints']
+        
+        if len(name) < 4 or len(desc)<10 or float(price) <=0 or float(tax) <0 :
+            return custom_error("Please enter valid details.")
+        
+        meal = Meal()
+        meal.name = name.capitalize()
+        meal.description = desc.captitalize()
+        meal.preparation_time = preparation_time
+        meal.price = price
+        meal.tax = tax
+        meal.available = bool(available)
+        meal.pre_requisites = pre_req
+        
+        try:
+            meal.category=Category.objects.get(is_hidden=False, is_deleted=False, pk=data['category_id'])
+        except:
+            return custom_error("The selected category does not exist, or is not available.")
+        
+        try:
+            meal.type = MealType.objects.get(is_hidden=False, is_deleted=False, pk=data['filter_id'])
+        except:
+            return custom_error("The selected Meal Filter does not exist, or is not available.")
+        meal.save()
+        
+        for nut in nutrients:
+            try:
+                meal.nutrients.add(Nutrient.get(pk=nut))
+            except:
+                meal.delete()
+                return custom_error("Some nutrients are currently unavailable")
+        
+        for ing in ingredients:
+            try:
+                meal.ingredients.add(Ingredient.get(pk=ing))
+            except:
+                meal.delete() 
+                return custom_error("Some ingredients are currently unavailable")
+        
+        for f in request.FILES.getlist('files'):
+            wrapped_file = UploadedFile(f)
+            filename = wrapped_file.name
+            file_size = wrapped_file.file.size
+            log.info ('meal image upload : "'+str(filename)+'"')
+    
+            image = Image()
+            image.title=str(filename)
+            image.image=file
+            image.save()
+            log.info('Meal image saved')
+            meal.images.add(image)
+        meal.save()
+        return json_response({"status":1, "message":"The meal has been successfully created.", "id":meal.id})
+    except Exception as e:
+        log.error("Failed to create meals : "+e.message)
+        return custom_error("Failed to create meal. Please try again later.")

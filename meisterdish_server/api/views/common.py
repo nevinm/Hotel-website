@@ -106,10 +106,17 @@ def signup(request, data):
         
         fb = False
         fb_id = ""
+        profile_image = None
         if 'fb_id' in data:
             fb_id = data['fb_id']
             fb = True
             
+            if 'image_url' in data and data['image_url'].strip() != '':
+                profile_image_url = data['image_url'].strip()
+                profile_image = Image()
+                profile_image.save_image_from_url(profile_image_url)
+            
+        
         if password == '' or first_name == '' or last_name == '' or email == '':
             log.error(email + " : Sign up failed. Fill required fields.")
             raise Exception("Please fill in all the required fields")
@@ -124,6 +131,7 @@ def signup(request, data):
             user.last_name = last_name
             user.role = Role.objects.get(pk=2)
             user.fb_user_id = fb_id
+            user.profile_image = profile_image
             user.save()
             
             user_dic = {"id":user.id,
@@ -373,8 +381,8 @@ def get_profile(request, data, user):
                      "name" : (user.last_name + " "+ user.first_name).title(),
                      "email" : user.email,
                      "mobile" : user.mobile,
-                     "profile_image" : user.profile_image.image.url,
-                     "profile_image_thumb" : user.profile_image.thumb.url,
+                     "profile_image" : "Not Available" if not user.profile_image else user.profile_image.image.url,
+                     "profile_image_thumb" : "Not Available" if not user.profile_image else user.profile_image.thumb.url,
                      "is_admin":True if user.role.id == 1 else False,
                      "meals_in_cart" : meals,
                      "meals_in_cart_count" : len(meals),
@@ -389,7 +397,7 @@ def get_profile(request, data, user):
         log.error("Profile request with no user_id")
         return custom_error("Invalid input.")
     except Exception as e:
-        log.error("Get profile :Exception: "+e.message + traceback.tb_lineno(sys.exc_info()[2]))
+        log.error("Get profile :Exception: "+e.message + str(traceback.tb_lineno(sys.exc_info()[2])))
         return custom_error("Failed to retrieve profile details.")
 
 @check_input('POST')
