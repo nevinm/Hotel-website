@@ -65,18 +65,24 @@ class Image(models.Model):
         import os
  
         THUMBNAIL_SIZE = (300, 300)
- 
-        DJANGO_TYPE = self.image.file.content_type
- 
-        if DJANGO_TYPE == 'image/jpeg':
-            PIL_TYPE = 'jpeg'
-            FILE_EXTENSION = 'jpg'
-        elif DJANGO_TYPE == 'image/png':
-            PIL_TYPE = 'png'
-            FILE_EXTENSION = 'png'
-        elif DJANGO_TYPE == 'image/gif':
-            PIL_TYPE = 'gif'
-            FILE_EXTENSION = 'gif'
+        try:
+            DJANGO_TYPE = self.image.file.content_type
+            
+            if DJANGO_TYPE == 'image/jpeg':
+                PIL_TYPE = 'jpeg'
+                FILE_EXTENSION = 'jpg'
+            elif DJANGO_TYPE == 'image/png':
+                PIL_TYPE = 'png'
+                FILE_EXTENSION = 'png'
+            elif DJANGO_TYPE == 'image/gif':
+                PIL_TYPE = 'gif'
+                FILE_EXTENSION = 'gif'
+        except:
+            PIL_TYPE = os.path.splitext(str(self.image.file))[1].strip('.')
+            FILE_EXTENSION = PIL_TYPE
+            if PIL_TYPE.upper() == "JPG":
+                PIL_TYPE = 'jpeg'
+            DJANGO_TYPE = "image/+"+PIL_TYPE
             
         image = Image.open(StringIO(self.image.read()))
  
@@ -94,7 +100,18 @@ class Image(models.Model):
             suf,
             save=False
         )
- 
+    
+    def save_image_from_url(self, url):
+        import os
+        from django.core.files import File
+        import urllib
+        result = urllib.urlretrieve(url)
+        self.image.save(
+                os.path.basename(url),
+                File(open(result[0]))
+                )
+        super(Image, self).save()
+    
     def save(self, *args, **kwargs):
         self.create_thumbnail()
         force_update = False
