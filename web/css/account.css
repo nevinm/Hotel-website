@@ -222,6 +222,7 @@ div#editaddress-container {
 	 color: #9B9B9B;
 	 width: 100%;
 	 float: left;
+	 min-height: 100px;
 }
 .content .address{
 	width: 33.33%;
@@ -242,6 +243,11 @@ div#editaddress-container {
 
 }
 #editaddress-container .content ol li span:last-child{
+	font-family: 'BrandonGrotesque-Bold';
+	padding-top: 20px;
+	width: 240px;
+}
+#editaddress-container .content ol li span:nth-child(5){
 	font-family: 'BrandonGrotesque-Bold';
 	padding-top: 20px;
 	width: 240px;
@@ -268,6 +274,16 @@ span.green{
 .non-primary-address, .primary-address{
 	display: none;
 }
+#editaddress-container .content .message{
+	display: none;
+	text-align: center;
+}
+#editaddress-container .content .message span{
+	font-family: 'BrandonGrotesque-Regular';
+	font-size: 18px;
+	color: #A9D77B;	
+
+}
 
 /*==================================*\
 			&PROFILE-PICTURE
@@ -275,12 +291,15 @@ span.green{
 .profile-pic-container{
 	float: left;
 	width: 100%;
+	padding-bottom: 20px;
 }
 .profile-pic-container span{
 	border-spacing: 40px 10px;
 	font-family: 'ProximaNova-regular';
 	font-size: 12px;
 	color: #9B9B9B;
+	float: left;
+	padding: 10px 0 35px 0;
 }
 .profile-pic{
 	position: relative;
@@ -313,6 +332,13 @@ span.green{
 	width: 25%;
 	margin-left: 50px;
 }
+.upload-image-container h4:first-child{
+	line-height: 15px;
+}
+.upload-image-container h4:nth-child(2){
+	padding-top: 45px;
+	color:#9b9b9b;
+}
 .upload-file-container{
 	padding: 20px 0px;
 }
@@ -336,6 +362,56 @@ img.popup-close{
 	width: 60px;
 	height: 60px;
 }
+/*.upload-image {
+  height: 22px;
+  width: 114px;
+  background-color: #DDDDDD;
+  overflow: hidden;
+  border-radius: 2px;
+  border: 1px solid #DDDDDD;
+  box-shadow: 0 0 3px;
+}
+.upload-image input{
+	opacity: 0 !important;
+}*/
+.fileUpload {
+  position: relative;
+  padding: 12px 0;
+  width: 100px;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 2px #303030;
+  border-radius: 4px;
+}
+input.upload {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  opacity: 0;
+  width: 100px;
+  cursor: pointer;
+}
+.fileUpload span:first-child{
+	position: absolute;
+	top: 6px;
+	color: #000;
+	font-size: 12px;
+	font-family: 'ProximaNova-Regular';
+	width: 100%;
+	text-align: center;
+	padding: 0;
+}
+.fileUpload span:nth-child(2){
+	width: 125px;
+	margin-left: 106px;
+	margin-top: -5px;
+	padding: 0;
+	color: #000;
+}
+/*==================================*\
+			$ADDRESS-POPUP
+\*==================================*/
 .addresspopup .header{
 	width: 100%;
 	background-color: #6B6B6B;
@@ -353,7 +429,6 @@ input.popup-input {
   width: 262px;
   padding: 7px;
   border: 1px solid;
-  margin-bottom: 15px;
 }
 input.checkbox{
 	width: auto;
@@ -368,17 +443,35 @@ input.checkbox{
 .addaddress-popup .button{
 	padding: 10px 0;
 }
-select{
+.addaddress-popup .forminput-wrapper select{
 	width: 262px;
 	padding: 7px;
 	border-radius: 1px solid;
 	outline: none;
-	margin-bottom: 15px;
 	background: #fff;
 	font-family:'ProximaNova-regular';
     color: #9B9B9B;
     cursor: pointer;
 }
-option{
+.addaddress-popup .forminput-wrapper select option{
 	background-color: #F7F7F7;
+}
+.forminput-wrapper{
+	position: relative;
+	width: 100%;
+	padding: 10px 0;
+}
+#cancel{
+	float: right;
+}
+#addpopup-data{
+	float: left;
+}
+#savepopup-data{
+	float: left;
+}
+.addresspopup .button{
+	float: left;
+	width:100%;
+	padding: 10px 30px;
 }
