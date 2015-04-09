@@ -245,7 +245,7 @@ def get_meals(request, data, user):
                 meal_images.append({
                                     "id":img.id,
                                     "url":img.image.url,
-                                    "thumb_url" : "Not Available" if not img.thumb else img.thumb,
+                                    "thumb_url" : "Not Available" if not img.thumb else img.thumb.url,
                                     })
                 
             meal_list.append({
