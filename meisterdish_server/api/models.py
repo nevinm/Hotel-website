@@ -78,7 +78,7 @@ class Image(models.Model):
                 PIL_TYPE = 'gif'
                 FILE_EXTENSION = 'gif'
         except:
-            PIL_TYPE = os.path.splitext(str(self.image.file.split('?')[0]))[1].strip('.')
+            PIL_TYPE = os.path.splitext(str(self.image.file).split('?')[0])[1].strip('.')
             FILE_EXTENSION = PIL_TYPE
             if PIL_TYPE.upper() == "JPG":
                 PIL_TYPE = 'jpeg'
