@@ -9,6 +9,13 @@ function redirectIfLoggedIn() {
     } else {}
 }
 
+function dollarConvert(value) {
+    var dollarValue = "$" + value + ".00";
+    return dollarValue;
+}
+
+
+
 function checkLoggedIn() {
         if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
             $userentry.hide();

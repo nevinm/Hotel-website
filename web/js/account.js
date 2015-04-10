@@ -4,10 +4,6 @@ function redirectIfLoggedIn() {
     }
 }
 
-function dollarConvert(value) {
-    var dollarValue = "$" + value + ".00";
-    return dollarValue;
-}
 
 function profileAutoPopulate() {
     var userDetails = JSON.parse(localStorage['user_profile']);
