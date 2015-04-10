@@ -1,12 +1,45 @@
-redirectIfAdminLoggedIn();
-// $(document).ready(function() {
+$(document).ready(function() {
+    redirectIfAdminLoggedIn();
+    //By deafault call 1 as starting.
+    getCategories(1);
 
-// });
+     $("#add-category").on('click', function() {
+        $(".add-category-container, .update-category-container").hide();
+        $(".add-category-container").show();
+    });
+
+    $("#add-cancel, #update-cancel").on('click', hideAddCategory);
+    $("#add-confirm").on('click', function() {
+        if ($(".new-category").val().length === 0) {
+            $(".add-status").text("No category present");
+        } else {
+            addCategories();
+        }
+    });
+    $("#update-confirm").on('click', function() {
+        var newCategory = $(".update-category-container .new-category").val(),
+            Id=$(".update-category-container .new-category").attr('data-id');
+            updateCategories(Id,newCategory);
+    })
+
+    $(document).on('click', '.cross', function() {
+        var deleteId = $(this).data().id;
+        removeCategories(deleteId);
+    });
+    $(document).on('click', '.update', function() {
+        $(".add-category-container, .update-category-container").hide();
+        var updateId = $(this).data().id,
+            initialCategory = $(this).closest(".category").data().name;
+        $(".update-category-container").show();
+        $(".update-category-container .new-category").attr("data-id",updateId);
+        $(".update-category-container .new-category").val(initialCategory);
+    });
+
+});
     //Get Categories
     var getCategoriesCallback = {
         success: function(data, textStatus) {
             var categoriesData = JSON.parse(data);
-            console.log(categoriesData);
             populateCategories(categoriesData);
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -25,8 +58,7 @@ redirectIfAdminLoggedIn();
             var getCategoriesInstance = new AjaxHttpSender();
             getCategoriesInstance.sendPost(url, header, data, getCategoriesCallback);
         }
-        //By deafault call 1 as starting.
-    getCategories(1);
+  
 
     //Remove Categories
     var removeCategoriesCallback = {
@@ -94,9 +126,9 @@ redirectIfAdminLoggedIn();
         $.each(categoriesData.aaData, function(key, value) {
             $("#categories tbody").append("<tr>" +
                 "<td class='id'>" + value.id + "</td>" +
-                "<td class='category' data-name='" + value.name + "'>" + value.name +
-                "<a data-id='" + value.id + "'class='cross'></a>" +
-                "<button class='update' type='button' data-id='" + value.id + "'>Update</button></td>" +
+                "<td class='category' data-name='" + value.name + "'>" + value.name +"</td>"+
+                "<td class='delete'><a data-id='" + value.id + "'class='cross'></a></td>" +
+                "<td class='update'><button class='update' type='button' data-id='" + value.id + "'>Update</button></td>"+
                 "</tr>");
         })
         $(".pagination").pagination({
@@ -152,34 +184,4 @@ redirectIfAdminLoggedIn();
         $(".add-category-container, .update-category-container").hide();
     }
 
-    $("#add-category").on('click', function() {
-        $(".add-category-container, .update-category-container").hide();
-        $(".add-category-container").show();
-    });
-
-    $("#add-cancel, #update-cancel").on('click', hideAddCategory);
-    $("#add-confirm").on('click', function() {
-        if ($(".new-category").val().length === 0) {
-            $(".add-status").text("No category present");
-        } else {
-            addCategories();
-        }
-    });
-    $("#update-confirm").on('click', function() {
-        var newCategory = $(".update-category-container .new-category").val(),
-            Id=$(".update-category-container .new-category").attr('data-id');
-            updateCategories(Id,newCategory);
-    })
-
-    $(document).on('click', '.cross', function() {
-        var deleteId = $(this).data().id;
-        removeCategories(deleteId);
-    });
-    $(document).on('click', '.update', function() {
-        $(".add-category-container, .update-category-container").hide();
-        var updateId = $(this).data().id,
-            initialCategory = $(this).closest(".category").data().name;
-        $(".update-category-container").show();
-        $(".update-category-container .new-category").attr("data-id",updateId);
-        $(".update-category-container .new-category").val(initialCategory);
-    });
+   
