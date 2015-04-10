@@ -220,18 +220,11 @@ def get_meals(request, data, user):
             meals = meals.filter(Q(name__istartswith=search)| Q(description__istartswith=search))
         
         if "category_id" in data and str(data['category_id']) != '':
-            try:
-                cat = Category.objects.get(pk=data["category_id"], is_hidden=False, is_deleted=False)
-                meals = meals.filter(category=cat)
-            except:
-                return custom_error("The specified category doesn't exist, or is not available.")
-        
-        if "type_id" in data and str(data['type_id']) != '':
-            try:
-                type = MealType.objects.get(pk=data["type_id"], is_hidden=False, is_deleted=False)
-                meals = meals.filter(type=type)
-            except:
-                return custom_error("The specified meal filter doesn't exist, or is not available.")
+            meals = meals.filter(category__id=data["category_id"])
+            
+        if "type_ids" in data and len(data['type_ids']) >1:
+            meals = meals.filter(type__id__in=data['type_ids'])
+            
         actual_count = meals.count()
         try:
             paginator = Paginator(meals, limit)
@@ -256,6 +249,13 @@ def get_meals(request, data, user):
                                     "id":ing.id,
                                     "name":ing.name.title()
                                     })
+            meal_types = []
+            for ty in meal.types.all():
+                meal_types.append({
+                                    "id":ty.id,
+                                    "name":ty.name.title()
+                                    })
+
             meal_list.append({
                               "id":meal.id,
                               "name":meal.name,
@@ -263,7 +263,7 @@ def get_meals(request, data, user):
                               "images":meal_images,
                               "available":1 if meal.available else 0,
                               "category":meal.category.name.title(),
-                              "meal_type":meal.type.name.title(),
+                              "meal_type":meal_types,
                               "preparation_time":meal.preparation_time,
                               "price":meal.price,
                               "tax":meal.tax,
@@ -288,11 +288,18 @@ def create_meal(request, data, user):
     try:
         name = data['name'].strip()
         desc = data['description'].strip()
-        preparation_time = data['preparation_time'].strip()
+        
         price = data['price'].strip()
         tax = data['tax'].strip()
         available = data['available']
-        pre_req = data ['pre_requisites']
+        
+        pre_req = data.get('pre_requisites'), '').strip()
+        user_to_do = data.get('user_to_do'), '').strip()
+        preparation_time = data.get('preparation_time'), '').strip()
+        finished_preparation = data.get('finished_preparation'), '').strip()
+        saved_time = data.get('preparation_time'), '').strip()
+        tips_and_tricks = data.get('tips_and_tricks'), '').strip()
+
         
         if len(name) < 4 or len(desc)<10 or float(price) <=0 or float(tax) <0 :
             return custom_error("Please enter valid details.")
@@ -305,14 +312,20 @@ def create_meal(request, data, user):
             edit=False
             log.info("CREATING MEAL : "+e.message)
             meal = Meal()
+
         meal.name = name.title()
         meal.description = desc
-        meal.preparation_time = preparation_time
+        
         meal.price = price
         meal.tax = tax
         meal.available = bool(available)
-        meal.pre_requisites = pre_req
         
+        meal.pre_requisites = pre_req
+        meal.user_to_do = user_to_do
+        meal.preparation_time = preparation_time
+        meal.finished_preparation = finished_preparation
+        meals.saved_time = saved_time
+
         try:
             meal.category=Category.objects.get(is_hidden=False, is_deleted=False, pk=data['category_id'])
         except:
