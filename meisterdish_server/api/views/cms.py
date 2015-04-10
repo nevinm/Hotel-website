@@ -222,7 +222,7 @@ def get_meals(request, data, user):
         if "category_id" in data and str(data['category_id']) != '':
             meals = meals.filter(category__id=data["category_id"])
             
-        if "type_ids" in data and len(data['type_ids']) >1:
+        if "type_ids" in data and len(data['type_ids']) >0:
             meals = meals.filter(types__id__in=data['type_ids'])
             
         actual_count = meals.count()
