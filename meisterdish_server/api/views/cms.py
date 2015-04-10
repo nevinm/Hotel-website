@@ -209,7 +209,8 @@ def change_user_status(request, data, session_user):
 @check_input('POST')
 def get_meals(request, data, user):
     try:
-        limit = settings.PER_PAGE
+        limit = data.get('perPage', settings.PER_PAGE)
+        
         page = 1
         if "nextPage" in data and type(data["nextPage"]) == type(2):
             page = data["nextPage"]
@@ -223,13 +224,18 @@ def get_meals(request, data, user):
             meals = meals.filter(Q(name__istartswith=search)| Q(description__istartswith=search))
         
         if "category_id" in data and str(data['category_id']) != '':
-            cat = Category.objects.get(pk=data["category_id"])
-            meals = meals.filter(category=cat)
+            try:
+                cat = Category.objects.get(pk=data["category_id"], is_hidden=False, is_deleted=False)
+                meals = meals.filter(category=cat)
+            except:
+                return custom_error("The specified category doesn't exist, or is not available.")
         
         if "type_id" in data and str(data['type_id']) != '':
-            type = MealType.objects.get(pk=data["type_id"])
-            meals = meals.filter(type=type)
-            
+            try:
+                type = MealType.objects.get(pk=data["type_id"], is_hidden=False, is_deleted=False)
+                meals = meals.filter(type=type)
+            except:
+                return custom_error("The specified meal filter doesn't exist, or is not available.")
         actual_count = meals.count()
         try:
             paginator = Paginator(meals, limit)
@@ -270,7 +276,7 @@ def get_meals(request, data, user):
                               "current_page":page,
                               "per_page" : limit,
                               })
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to list meals : "+e.message)
         return custom_error("Failed to list meals")
     

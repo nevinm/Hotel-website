@@ -73,6 +73,8 @@ table, th, td {
     border-collapse: collapse;
     background-color:#f7f7f7;
     font-family: 'BrandonGrotesque-Regular';
+    text-transform: uppercase;
+    font-size: 12px;
 }
 tbody, thead{
 	text-align: center;
@@ -174,4 +176,45 @@ table#userlist{
 
 #userlist .cross{
   float: none;
+}
+
+/*=======================*\
+     &MEAL - LIST
+\*=======================*/
+.meal-list-container{
+  width: 90%;
+  margin: 0 auto;
+}
+table#meal-list {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.filter-container {
+  float: right;
+  padding: 21px 0px;
+}
+select.meallist-select {
+  margin-right: 30px;
+  background-color: rgb(247, 247, 247);
+  width: 117px;
+  border: 1px solid #ddd;
+  font-family: 'BrandonGrotesque-Regular';
+  color: #7E7979;
+  text-transform: uppercase;
+  font-size: 11px;
+  padding: 2px 0;
+}
+input#searchBy-name {
+  border: 1px solid rgb(221, 221, 221);
+  padding: 4px 0;
+  padding-left: 10px;
+}
+#searchinMeal {
+  height: 24px;
+  width: 50px;
+  margin: 0;
+  margin-left: 8px;
+  line-height: 25px;
+  letter-spacing: 2px;
 }

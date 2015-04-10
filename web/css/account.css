@@ -116,6 +116,14 @@ form.form{
 	width: 60%;
 	padding-left: 20px;
 }
+form.gift-cardform{
+	width: 45%;
+	float: left;
+}
+form.gift-cardform .redeem {
+	padding-left: 20px;
+  padding-top: 20px;
+}
 .first-name,.last-name,.phone-num,.redeem{
 	width: 270px;
 	float: left;
@@ -232,6 +240,7 @@ div#editaddress-container {
 .address-content{
 	width: 150px;
 	float: left;
+	max-height: 140px;
 }
 /*ol li{
 	list-style-type: decimal;
@@ -292,6 +301,7 @@ span.green{
 	float: left;
 	width: 100%;
 	padding-bottom: 20px;
+    margin-top: 30px;
 }
 .profile-pic-container span{
 	border-spacing: 40px 10px;
@@ -303,7 +313,7 @@ span.green{
 }
 .profile-pic{
 	position: relative;
-	width: 25%;
+	width: 20%;
 	float: left;
 }
 .profile-pic img{
@@ -375,24 +385,34 @@ img.popup-close{
 	opacity: 0 !important;
 }*/
 .fileUpload {
-  position: relative;
-  padding: 12px 0;
-  width: 100px;
-  background: #FFFFFF;
-  cursor: pointer;
-  border: 1px solid #ddd;
-  box-shadow: 0 0 2px #303030;
-  border-radius: 4px;
+	cursor: pointer;
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
 }
-input.upload {
-  position: absolute;
-  top: 0px;
-  left: 0;
-  opacity: 0;
-  width: 100px;
-  cursor: pointer;
+.fileUpload input{
+	cursor: pointer;
+	font-size: 100px;
+	-moz-opacity: 0.01;
+	opacity: 0.01;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
-.fileUpload span:first-child{
+.upload-button{
+	background: #ddd;
+	-moz-border-radius: 5px !important;
+	-webkit-border-radius: 5px !important;
+	border-radius: 5px;
+	color: #000 !important;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 11px !important;
+	font-weight: bold;
+	margin-right: 5px;
+	padding:7px 20px !important;
+}
+/*.fileUpload span:first-child{
 	position: absolute;
 	top: 6px;
 	color: #000;
@@ -401,11 +421,11 @@ input.upload {
 	width: 100%;
 	text-align: center;
 	padding: 0;
-}
+}*/
 .fileUpload span:nth-child(2){
 	width: 125px;
 	margin-left: 106px;
-	margin-top: -5px;
+	margin-top:  -18px;
 	padding: 0;
 	color: #000;
 }
