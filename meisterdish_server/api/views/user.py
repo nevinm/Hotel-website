@@ -1,13 +1,8 @@
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
-from django.contrib.sessions.backends.db import SessionStore
 from api.models import *
 import json as simplejson
-import md5
 import logging 
 import settings
-from datetime import datetime
-from django.db.models import Q
-from django.template.loader import render_to_string
 from decorators import *
 log = logging.getLogger('api_user')
 

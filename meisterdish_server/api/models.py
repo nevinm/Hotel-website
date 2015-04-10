@@ -257,8 +257,8 @@ class MealRating(models.Model):
 class MealNutrient(models.Model):
     meal = models.ForeignKey(Meal)
     nutrient = models.ForeignKey(Nutrient)
-    content = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
-    unit = models.CharField(max_length=10)
+    per_serving = models.CharField(max_length=30, default="", null=True, blank=True)
+    daily_value = models.CharField(max_length=30, default="", null=True, blank=True)
     
     def __unicode__(self):
         return self.meal.name + " - " + self.nutrient.name
