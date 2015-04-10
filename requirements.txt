@@ -1,0 +1,6 @@
+Django==1.7.7
+Pillow==2.8.1
+argparse==1.2.1
+django-cors-headers==1.0.0
+psycopg2==2.6
+wsgiref==0.1.2

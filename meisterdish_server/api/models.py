@@ -49,7 +49,6 @@ class City(models.Model):
     
     def __unicode__(self):
         return self.name
-    
 class Image(models.Model):
     title = models.CharField(default="", max_length=100)    
     image = models.FileField(upload_to="images/")
