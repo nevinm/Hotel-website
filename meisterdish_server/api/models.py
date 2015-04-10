@@ -49,7 +49,6 @@ class City(models.Model):
     
     def __unicode__(self):
         return self.name
-    
 class Image(models.Model):
     title = models.CharField(default="", max_length=100)    
     image = models.FileField(upload_to="images/")
@@ -219,13 +218,24 @@ class Meal(models.Model):
     name = models.CharField(max_length=30)
     images = models.ManyToManyField(Image, related_name="meal")
     description = models.TextField(max_length=1024)
-    preparation_time = models.CharField(max_length=30)
-    type = models.ForeignKey(MealType)
+    
+    types = models.ManyToManyField(MealType, null=True, blank=True)
     category = models.ForeignKey(Category, null=True)
     
+    user_to_do = models.TextField(max_length=1024, null=True, blank=True)
+    preparation_time = models.CharField(max_length=30, null=True, blank=True)
+
+    finished_preparation = models.TextField(max_length=1024, null=True, blank=True)
+    saved_time = models.CharField(max_length=30, null=True, blank=True)
+
+    pre_requisites = models.TextField(max_length=1024, null=True, blank=True)
+
     nutrients = models.ManyToManyField(Nutrient, through="MealNutrient")
     ingredients = models.ManyToManyField(Ingredient, through="MealIngredient")
-    pre_requisites = models.TextField(max_length=1024, null=True)
+    
+    tips_and_tricks = models.TextField(max_length=1024, null=True, blank=True)
+
+
     
     price = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])

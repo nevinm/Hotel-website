@@ -18,7 +18,7 @@ def get_categories(request, data, user):
     try:
         limit = settings.PER_PAGE
         page = 1
-        if "nextPage" in data and type(data["nextPage"]) == type(2):
+        if "nextPage" in data and int(data["nextPage"]) >0:
             page = data["nextPage"]
             
         cats = Category.objects
@@ -85,7 +85,8 @@ def remove_category(request, data, user):
         elif "id" in data:
             cat = Category.objects.get(id=str(data['id']).strip())
             
-        cat.delete()
+        cat.is_deleted=True
+        cat.save()
         return json_response({"status":1, "message":"Removed Category"})
     except Exception as e:
         log.error("Failed to remove category : "+e.message)
@@ -112,10 +113,8 @@ def update_category(request, data, user):
 def get_users(request, data, user):
     try:
         limit = settings.PER_PAGE
-        page = 1
-        if "nextPage" in data and type(data["nextPage"]) == type(2):
-            page = data["nextPage"]
-                    
+        
+        page = data.get("nextPage", 1)
         user_list = []
         users = User.objects.filter(deleted=False)
         total_count = users.count()
@@ -206,13 +205,11 @@ def change_user_status(request, data, session_user):
         log.error("Failed to change user status : "+e.message)
         return custom_error("Failed to change user status")
 
-@check_input('POST', True)
+@check_input('POST')
 def get_meals(request, data, user):
     try:
-        limit = settings.PER_PAGE
-        page = 1
-        if "nextPage" in data and type(data["nextPage"]) == type(2):
-            page = data["nextPage"]
+        limit = data.get('perPage', settings.PER_PAGE)
+        page = data.get("nextPage",1)
                     
         meal_list = []
         meals = Meal.objects.filter(is_deleted=False)
@@ -223,12 +220,10 @@ def get_meals(request, data, user):
             meals = meals.filter(Q(name__istartswith=search)| Q(description__istartswith=search))
         
         if "category_id" in data and str(data['category_id']) != '':
-            cat = Category.objects.get(pk=data["category_id"])
-            meals = meals.filter(category=cat)
-        
-        if "type_id" in data and str(data['type_id']) != '':
-            type = MealType.objects.get(pk=data["type_id"])
-            meals = meals.filter(type=type)
+            meals = meals.filter(category__id=data["category_id"])
+            
+        if "type_ids" in data and len(data['type_ids']) >0:
+            meals = meals.filter(types__id__in=data['type_ids'])
             
         actual_count = meals.count()
         try:
@@ -248,7 +243,19 @@ def get_meals(request, data, user):
                                     "url":img.image.url,
                                     "thumb_url" : "Not Available" if not img.thumb else img.thumb.url,
                                     })
-                
+            ingredients = []
+            for ing in meal.ingredients.all():
+                ingredients.append({
+                                    "id":ing.id,
+                                    "name":ing.name.title()
+                                    })
+            meal_types = []
+            for ty in meal.types.all():
+                meal_types.append({
+                                    "id":ty.id,
+                                    "name":ty.name.title()
+                                    })
+
             meal_list.append({
                               "id":meal.id,
                               "name":meal.name,
@@ -256,10 +263,12 @@ def get_meals(request, data, user):
                               "images":meal_images,
                               "available":1 if meal.available else 0,
                               "category":meal.category.name.title(),
-                              "meal_type":meal.type.name.title(),
+                              "meal_type":meal_types,
                               "preparation_time":meal.preparation_time,
                               "price":meal.price,
                               "tax":meal.tax,
+                              "ingredients":ingredients,
+                              
                               })
         return json_response({"staus":1, 
                               "aaData":meal_list,
@@ -270,7 +279,7 @@ def get_meals(request, data, user):
                               "current_page":page,
                               "per_page" : limit,
                               })
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to list meals : "+e.message)
         return custom_error("Failed to list meals")
     
@@ -279,24 +288,44 @@ def create_meal(request, data, user):
     try:
         name = data['name'].strip()
         desc = data['description'].strip()
-        preparation_time = data['preparation_time'].strip()
+        
         price = data['price'].strip()
         tax = data['tax'].strip()
         available = data['available']
-        pre_req = data ['pre_requisites']
+        
+        pre_req = data.get('pre_requisites', '').strip()
+        user_to_do = data.get('user_to_do', '').strip()
+        preparation_time = data.get('preparation_time', '').strip()
+        finished_preparation = data.get('finished_preparation', '').strip()
+        saved_time = data.get('preparation_time', '').strip()
+        tips_and_tricks = data.get('tips_and_tricks', '').strip()
+
         
         if len(name) < 4 or len(desc)<10 or float(price) <=0 or float(tax) <0 :
             return custom_error("Please enter valid details.")
         
-        meal = Meal()
+        try:
+            meal = Meal.objects.get(is_deleted=False, pk=data["edit_id"])
+            log.info("EDITING MEAL :"+str(data['edit_id']))
+            edit=True
+        except Exception as e:
+            edit=False
+            log.info("CREATING MEAL : "+e.message)
+            meal = Meal()
+
         meal.name = name.title()
         meal.description = desc
-        meal.preparation_time = preparation_time
+        
         meal.price = price
         meal.tax = tax
         meal.available = bool(available)
-        meal.pre_requisites = pre_req
         
+        meal.pre_requisites = pre_req
+        meal.user_to_do = user_to_do
+        meal.preparation_time = preparation_time
+        meal.finished_preparation = finished_preparation
+        meals.saved_time = saved_time
+
         try:
             meal.category=Category.objects.get(is_hidden=False, is_deleted=False, pk=data['category_id'])
         except:
@@ -306,8 +335,20 @@ def create_meal(request, data, user):
             meal.type = MealType.objects.get(is_hidden=False, is_deleted=False, pk=data['filter_id'])
         except:
             return custom_error("The selected Meal Filter does not exist, or is not available.")
-        meal.save()
         
+        if not edit:
+            meal.save()
+        else:
+            meal.nutrients = []
+            meal.ingredients = []
+            if "remove_images" in data and len(data["remove_images"].strip()) !=0:
+                try:
+                    remove_images = data['remove_images'].strip().split(",")
+                    for ri in remove_images:
+                        meal.images.remove(ri)
+                except Exception as e:
+                    log.error("Edit meal : Failed to remove image" + e.message)
+                    
         if 'nutrients' in data:
             for nut in data.getlist("nutrients"):
                 try:
@@ -341,3 +382,14 @@ def create_meal(request, data, user):
     except IOError as e:
         log.error("Failed to create meals : "+e.message)
         return custom_error("Failed to create meal. Please try again later.")
+    
+@check_input('POST', True)
+def delete_meal(request, data, user, meal_id):
+    try:
+        meal = Meal.objects.get(is_deleted=False, pk=meal_id)
+        meal.is_deleted=True
+        meal.save()
+        return json_response({"status":1, "message":"Deleted Meal", "id":meal_id})
+    except Exception as e:
+        log.error("Failed to delete meal : "+e.message)
+        return json_response({"status":-1, "message":"Failed to delete meal. Does that exist?"})

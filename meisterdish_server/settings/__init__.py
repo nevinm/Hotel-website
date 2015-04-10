@@ -1,5 +1,4 @@
-import os
-
+import os     
 if os.path.dirname(__file__) == "/home/staging/settings":
     from live import *
 else:
