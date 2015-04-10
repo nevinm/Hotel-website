@@ -85,7 +85,8 @@ def remove_category(request, data, user):
         elif "id" in data:
             cat = Category.objects.get(id=str(data['id']).strip())
             
-        cat.delete()
+        cat.is_deleted=True
+        cat.save()
         return json_response({"status":1, "message":"Removed Category"})
     except Exception as e:
         log.error("Failed to remove category : "+e.message)
@@ -254,7 +255,12 @@ def get_meals(request, data, user):
                                     "url":img.image.url,
                                     "thumb_url" : "Not Available" if not img.thumb else img.thumb.url,
                                     })
-                
+            ingredients = []
+            for ing in meal.ingredients.all():
+                ingredients.append({
+                                    "id":ing.id,
+                                    "name":ing.name.title()
+                                    })
             meal_list.append({
                               "id":meal.id,
                               "name":meal.name,
@@ -266,6 +272,8 @@ def get_meals(request, data, user):
                               "preparation_time":meal.preparation_time,
                               "price":meal.price,
                               "tax":meal.tax,
+                              "ingredients":ingredients,
+                              
                               })
         return json_response({"staus":1, 
                               "aaData":meal_list,
@@ -366,3 +374,14 @@ def create_meal(request, data, user):
     except IOError as e:
         log.error("Failed to create meals : "+e.message)
         return custom_error("Failed to create meal. Please try again later.")
+    
+@check_input('POST', True)
+def delete_meal(request, data, user, meal_id):
+    try:
+        meal = Meal.objects.get(is_deleted=False, pk=meal_id)
+        meal.is_deleted=True
+        meal.save()
+        return json_response({"status":1, "message":"Deleted Meal", "id":meal_id})
+    except Exception as e:
+        log.error("Failed to delete meal : "+e.message)
+        return json_response({"status":-1, "message":"Failed to delete meal. Does that exist?"})
