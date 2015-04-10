@@ -294,7 +294,14 @@ def create_meal(request, data, user):
         if len(name) < 4 or len(desc)<10 or float(price) <=0 or float(tax) <0 :
             return custom_error("Please enter valid details.")
         
-        meal = Meal()
+        try:
+            meal = Meal.objects.get(is_deleted=False, pk=data["edit_id"])
+            log.info("EDITING MEAL :"+str(data['edit_id']))
+            edit=True
+        except Exception as e:
+            edit=False
+            log.info("CREATING MEAL : "+e.message)
+            meal = Meal()
         meal.name = name.title()
         meal.description = desc
         meal.preparation_time = preparation_time
@@ -312,8 +319,20 @@ def create_meal(request, data, user):
             meal.type = MealType.objects.get(is_hidden=False, is_deleted=False, pk=data['filter_id'])
         except:
             return custom_error("The selected Meal Filter does not exist, or is not available.")
-        meal.save()
         
+        if not edit:
+            meal.save()
+        else:
+            meal.nutrients = []
+            meal.ingredients = []
+            if "remove_images" in data and len(data["remove_images"].strip()) !=0:
+                try:
+                    remove_images = data['remove_images'].strip().split(",")
+                    for ri in remove_images:
+                        meal.images.remove(ri)
+                except Exception as e:
+                    log.error("Edit meal : Failed to remove image" + e.message)
+                    
         if 'nutrients' in data:
             for nut in data.getlist("nutrients"):
                 try:
