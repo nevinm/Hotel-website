@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     
     url(r'^get_meals/$', cms.get_meals, name='get_meals'),
     url(r'^create_meal/$', cms.create_meal, name='create_meal'),
+    url(r'^delete_meal/(?P<meal_id>[0-9]+)/$', cms.delete_meal, name='delete_meal'),
 )
