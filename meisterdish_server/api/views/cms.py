@@ -18,7 +18,7 @@ def get_categories(request, data, user):
     try:
         limit = settings.PER_PAGE
         page = 1
-        if "nextPage" in data and type(data["nextPage"]) == type(2):
+        if "nextPage" in data and int(data["nextPage"]) >0:
             page = data["nextPage"]
             
         cats = Category.objects
