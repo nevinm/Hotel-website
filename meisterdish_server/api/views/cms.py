@@ -113,10 +113,8 @@ def update_category(request, data, user):
 def get_users(request, data, user):
     try:
         limit = settings.PER_PAGE
-        page = 1
-        if "nextPage" in data and type(data["nextPage"]) == type(2):
-            page = data["nextPage"]
-                    
+        
+        page = data.get("nextPage", 1)
         user_list = []
         users = User.objects.filter(deleted=False)
         total_count = users.count()
@@ -211,10 +209,7 @@ def change_user_status(request, data, session_user):
 def get_meals(request, data, user):
     try:
         limit = data.get('perPage', settings.PER_PAGE)
-        
-        page = 1
-        if "nextPage" in data and type(data["nextPage"]) == type(2):
-            page = data["nextPage"]
+        page = data.get("nextPage",1)
                     
         meal_list = []
         meals = Meal.objects.filter(is_deleted=False)
