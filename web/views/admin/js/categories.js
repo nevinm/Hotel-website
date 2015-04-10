@@ -1,9 +1,12 @@
 redirectIfAdminLoggedIn();
-$(document).ready(function() {
+// $(document).ready(function() {
+
+// });
     //Get Categories
     var getCategoriesCallback = {
         success: function(data, textStatus) {
             var categoriesData = JSON.parse(data);
+            console.log(categoriesData);
             populateCategories(categoriesData);
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -180,4 +183,3 @@ $(document).ready(function() {
         $(".update-category-container .new-category").attr("data-id",updateId);
         $(".update-category-container .new-category").val(initialCategory);
     });
-});

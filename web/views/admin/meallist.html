@@ -24,10 +24,10 @@
             </div>
             <ul id="menu" class="pullRight">
                     <li>
-                        <a href="meallist.html">MEAL LIST</a>
+                        <a href="#">MEAL LIST</a>
                     </li>
                     <li>
-                        <a href="#">USER LIST</a>
+                        <a href="userlist.html">USER LIST</a>
                     </li>
                     <li>
                         <a href="categories.html">CATEGORIES</a>
@@ -46,34 +46,38 @@
         <div id="page-container">
             <div class='admin-inner-wrapper'>
                 <div class="accountNav">
-                    <div class="logout body-text-bold">
-                        <a id='logout'>LOG OUT</a>
+                <div class="logout body-text-bold">
+                    <a id='logout'>LOG OUT</a>
                     </div>
                 </div>
                 <div class="admin-page-container">
                     <div class="admin-header">
-                        <h2>USERLIST MANAGEMENT</h2>
+                        <h2>MEAL LIST</h2>
                     </div>
-                    <table id="userlist" class="display" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Credits</th>
-                                <th>Email</th>
-                                <th>Is Admin</th>
-                                <th>Mobile</th>
-                                <th>Profile Image</th>
-                                <th>Delete User</th>
-                                <th>Activation status</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                    <br>
-                    <div class="admin-nav">
-                        <div class='pagination'></div>
-                        <div class='add-status'></div>
+                    <div class="meal-list-container">
+                        <div class="filter-container">
+                            <select name="category" id="category" class="meallist-select">
+                                <option value="" selected>Category</option>
+                            </select>
+                            <select name="meal-type" id="meal-type" class="meallist-select">
+                                <option value="" selected>Meal-type</option>
+                            </select>
+                            <input type="text" placeholder="Search by name" id="searchBy-name"/>
+                            <input type="button" class="btn btn-small-primary medium-green" id="searchinMeal" value="SEARCH">
+                        </div>
+                        <table id="meal-list" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Availability</th>
+                                    <th>Category</th>
+                                    <th>Meal Type</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -85,7 +89,8 @@
     <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
     <script type="text/javascript" src='../../js/common.js'></script>
     <script type="text/javascript" src='js/admin.js'></script>
-    <script type="text/javascript" src='js/userlist.js'></script>
+    <script type="text/javascript" src='js/categories.js'></script>
+    <script type="text/javascript" src='js/meal_list.js'></script>
 </body>
 
 </html>
