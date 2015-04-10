@@ -293,12 +293,12 @@ def create_meal(request, data, user):
         tax = data['tax'].strip()
         available = data['available']
         
-        pre_req = data.get('pre_requisites'), '').strip()
-        user_to_do = data.get('user_to_do'), '').strip()
-        preparation_time = data.get('preparation_time'), '').strip()
-        finished_preparation = data.get('finished_preparation'), '').strip()
-        saved_time = data.get('preparation_time'), '').strip()
-        tips_and_tricks = data.get('tips_and_tricks'), '').strip()
+        pre_req = data.get('pre_requisites', '').strip()
+        user_to_do = data.get('user_to_do', '').strip()
+        preparation_time = data.get('preparation_time', '').strip()
+        finished_preparation = data.get('finished_preparation', '').strip()
+        saved_time = data.get('preparation_time', '').strip()
+        tips_and_tricks = data.get('tips_and_tricks', '').strip()
 
         
         if len(name) < 4 or len(desc)<10 or float(price) <=0 or float(tax) <0 :

@@ -219,7 +219,7 @@ class Meal(models.Model):
     images = models.ManyToManyField(Image, related_name="meal")
     description = models.TextField(max_length=1024)
     
-    type = models.ManyToManyField(MealType, null=True, blank=True)
+    types = models.ManyToManyField(MealType, null=True, blank=True)
     category = models.ForeignKey(Category, null=True)
     
     user_to_do = models.TextField(max_length=1024, null=True, blank=True)
@@ -233,7 +233,9 @@ class Meal(models.Model):
     nutrients = models.ManyToManyField(Nutrient, through="MealNutrient")
     ingredients = models.ManyToManyField(Ingredient, through="MealIngredient")
     
-    tips = models.TextField(max_length=1024, null=True, blank=True)
+    tips_and_tricks = models.TextField(max_length=1024, null=True, blank=True)
+
+
     
     price = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
