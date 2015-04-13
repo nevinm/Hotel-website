@@ -203,7 +203,7 @@ select.meallist-select {
   color: #7E7979;
   text-transform: uppercase;
   font-size: 11px;
-  padding: 2px 0;
+  padding: 2px
 }
 input#searchBy-name {
   border: 1px solid rgb(221, 221, 221);
@@ -217,4 +217,147 @@ input#searchBy-name {
   margin-left: 8px;
   line-height: 25px;
   letter-spacing: 2px;
+}
+
+/*=======================*\
+     &CREATE -MEAL
+\*=======================*/
+.admin-createmeal-inner-wrapper{
+  margin-top: 75px;
+  float: left;
+}
+.create-meal-container{
+  margin: 0 auto;
+  width: 90%;
+  border: 1px solid #D0D0D0;
+}
+.create-meal-header{
+  font-family: 'BrandonGrotesque-Medium';
+  width: 100%;
+  text-align: center;
+  background-color: #f7f7f7;
+  padding: 13px 0;
+  font-size: 22px;
+  border-bottom: 1px solid #d0d0d0;
+}
+.section-container {
+  margin: 0 auto;
+  width: 85%;
+}
+.create-meal-input{
+  padding: 8px 25px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+}
+.section-1 input{
+  margin-right: 20px;
+}
+.section-1{
+  padding: 20px 0;
+}
+.fileUpload {
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+}
+.fileUpload input{
+  cursor: pointer;
+  font-size: 100px;
+  -moz-opacity: 0.01;
+  opacity: 0.01;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.upload-button{
+  background: #bbb;
+  -moz-border-radius: 5px !important;
+  -webkit-border-radius: 5px !important;
+  border-radius: 5px;
+  color: #000 !important;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 11px !important;
+  font-weight: bold;
+  margin-right: 5px;
+  padding:7px 20px !important;
+  font-family: 'BrandonGrotesque-Black' !important;
+  color: #fff !important;
+  text-transform: uppercase;
+}
+.text-area-container{
+  width: 50%;
+  float: left;
+  font-family: 'ProximaNova-regular';
+}
+.section-2 {
+  float: left;
+  width: 100%;
+}
+.meal-image-upload-container {
+  width: 50%;
+  float: left;
+}
+.section-3 {
+  width: 100%;
+  float: left;
+}
+.section-4 {
+  width: 100%;
+  float: left;
+}
+.ingredients-container,.pre-requisties-container {
+  width: 50%;
+  float: left;
+/*  padding-bottom: 82px;
+  padding-top: 20px;
+  border: 1px solid #d0d0d0;*/
+}
+.list-container {
+  float: left;
+  width: 100%;
+  padding-left: 63px;
+}
+  .list-container ul li{
+  list-style-type: initial;
+  float: left;
+  width: 100%;
+  font-family: 'BrandonGrotesque-Regular';
+  color: #909090;
+}
+.list-container ul img{
+  height: 14px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.list-container ul{
+  width: 60%;
+  float: left;
+}
+.preperation-container-1,.preperation-container-2 {
+  width: 50%;
+  float: left;
+}
+.section-5,.section-6{
+  width: 100%;
+  float: left;
+}
+.add-list-button,.add-preparation-button,.add-nutrition-content {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  background: rgb(169, 215, 123);
+  border: 1px hidden;
+  font-family: 'BrandonGrotesque-Black';
+  color: #fff;
+  text-transform: uppercase;
+}
+.section-3 select {
+  padding: 4px 35px;
+  border: 1px solid rgb(221, 221, 221);
+  background: #fff;
+  font-family: 'BrandonGrotesque-Regular';
+  color: #909090;
+  text-transform: uppercase;
 }

@@ -1,10 +1,8 @@
-
 $(document).ready(function() {
-	
 	$('#searchinMeal').on("click",function(){
 		var search_name = $('#searchBy-name').val(),
-			category = $('#meal-type option:selected').attr('value'),
-			mealtype = $('#category option:selected').attr('value');
+			category = $('#category option:selected').attr('value'),
+			mealtype = $('#meal-type option:selected').attr('value');
 					$("#meal-list tr td").detach();
 		getmealList(search_name,category,mealtype);	
 	});
@@ -78,7 +76,7 @@ function populateMealList(data){
 									"<td>"+value.description+"</td>"+
 									"<td>"+value.available+"</td>"+
 									"<td>"+value.category+"</td>"+
-									"<td>"+value.meal_type+"</td>"+
+									"<td>"+value.meal_type[0].name+"</td>"+
 									"<td>"+value.price+"</td>"+"</tr>");
 	});
 }
