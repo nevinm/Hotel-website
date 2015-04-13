@@ -18,12 +18,8 @@ def get_orders(request, data, user):
         total_count = orders.count()
 
         #Filter
-        if "order_num" in data and str(data['order_num']).strip() != "":
-            orders = orders.filter(order__num=data['order_num'])
-        
-        if "user" in data and str(data['user']).strip() != "":
-            orders = orders.filter(order__cart__user__pk=data['user'])
-        
+
+
         # End filter
         actual_count = orders.count()
         try:

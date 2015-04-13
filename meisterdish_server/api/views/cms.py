@@ -270,7 +270,7 @@ def get_meals(request, data, user):
                               "ingredients":ingredients,
                               
                               })
-        return json_response({"staus":1, 
+        return json_response({"status":1, 
                               "aaData":meal_list,
                               "total_count":total_count,
                               "actual_count":actual_count,
