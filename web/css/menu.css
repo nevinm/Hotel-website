@@ -180,6 +180,16 @@
 	color: #a9d77b;
 	font-size: 19px;
 }
+.menu-pagination{
+	float: right;
+	padding-bottom: 10px;
+}
+.menu-loading-gif,{
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+	display: none;
+}
 
 @media only screen and (min-width: 768px)and (max-width:1024px){
 	.listItems{

@@ -1,5 +1,8 @@
 $(document).ready(function() {
-    var perPage = 9;
+    var perPage = 3,
+        nextPage = 1,
+        mealTypeFilter = [],
+        endOfList = false;
     $(document).on("click", '.subMenu ul li a', function() {
         $(document).find(".subMenu ul li").removeClass("activeOption");
         $(this).parent().addClass("activeOption");
@@ -7,23 +10,43 @@ $(document).ready(function() {
 
     //Categories
     $(document).on('click', '.menu-categories-list', function() {
+        nextPage = 1;
         categoryId = $(this).find("a").data().id;
         getmealList('', categoryId, '', perPage, 1);
+        infiniteScrolling();
     });
 
-    var mealTypeFilter=[];
     //Filters
-    $(document).on('change','.filter-drop-down input[type=checkbox]', function(e){
+    $(document).on('change', '.filter-drop-down input[type=checkbox]', function(e) {
+        nextPage = 1;
         if ($(this).is(":checked")) {
             mealTypeFilter.push(parseInt($(this).val()));
-            getmealList('','', mealTypeFilter, perPage, 1);
-
+            getmealList('', '', mealTypeFilter, perPage, 1);
+        } else {
+            index = mealTypeFilter.indexOf(parseInt($(this).val()));
+            if (index > -1) {
+                mealTypeFilter.splice(index, 1);
+            }
+            getmealList('', '', mealTypeFilter, perPage, 1);
         }
+        infiniteScrolling();
     });
 
+//Infinite Scrolling
+function infiniteScrolling() {
+    $("body").scroll(function(e) {
+        if ($('.listItems').length && !endOfList) {
+            if (elementScrolling(".listItems:last")) {
+                mealData = JSON.parse(localStorage['meal_details']);
+                getmealList(mealData.search, mealData.category_id, mealData.type_ids, mealData.perPage, mealData.nextPage + 1, true)
+           };
+        }
+    });
+}
+
     getCategory();
-    getmealList();
-    // 
+    getmealList('', '', '', perPage, nextPage);
+    infiniteScrolling();
 });
 //Get Category list of food items.
 var getCategoryCallback = {
@@ -62,14 +85,27 @@ function getCategory() {
 
 //Get meal list
 var getmealListCallback = {
-    success: function(data, textStatus) {
-        var mealLIst = JSON.parse(data);
-        populateMealList(mealLIst);
+    success: function(data, textStatus, isInfinteScrolling) {
+        var mealList = JSON.parse(data);
+        // debugger;
+        if (mealList.status == 1) {
+            endOfList = (mealList.current_page == mealList.page_range[mealList.page_range.length - 1]);
+            if(endOfList){
+                $('body').unbind('scroll');
+            }else{}
+            populateMealList(mealList, isInfinteScrolling);
+        } else {
+            console.log("Something wrong with meals list");
+        }
+        $(".menu-loading-gif").hide();
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getmealList(search_name, category, mealtype, perPage, nextPage) {
+function getmealList(search_name, category, mealtype, perPage, nextPage, isInfinteScrolling) {
+    if (isInfinteScrolling) {
+        $(".menu-loading-gif").show();
+    }
     var url = baseURL + "cms/get_meals/";
     header = {
         "session-key": localStorage['session_key']
@@ -82,13 +118,16 @@ function getmealList(search_name, category, mealtype, perPage, nextPage) {
         "nextPage": nextPage
     }
     data = JSON.stringify(params);
+    localStorage['meal_details'] = data;
     var getmeallistInstance = new AjaxHttpSender();
-    getmeallistInstance.sendPost(url, header, data, getmealListCallback);
+    getmeallistInstance.sendPost(url, header, data, getmealListCallback, isInfinteScrolling);
 }
 
-function populateMealList(mealLIst) {
-    $(".listContainer").empty();
-    $.each(mealLIst.aaData, function(key, value) {
+function populateMealList(mealList, isInfinteScrolling) {
+    if (!isInfinteScrolling) {
+        $(".listContainer").empty();
+    } else {}
+    $.each(mealList.aaData, function(key, value) {
         $(".listContainer").append("<div class='listItems'>" +
             "<img src='" + value.images[0].thumb_url + "' class='thumbnail'>" +
             "<section class='listItemDetails'>" +
@@ -100,5 +139,14 @@ function populateMealList(mealLIst) {
             "data-id='" + value.id + "'>ADD</a></span>" +
             "</section></div>");
     });
+}
 
+function elementScrolling(elem) {
+    var docViewTop = $(window).scrollTop();
+    var docViewBottom = docViewTop + $(window).height();
+
+    var elemTop = $(elem).offset().top;
+    var elemBottom = elemTop + $(elem).height();
+
+    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
 }
