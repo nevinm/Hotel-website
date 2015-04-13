@@ -85,7 +85,7 @@ SLIDER
 #slide1 .slide-description{
 	  position: absolute;
 	  top: 33%;
-	  margin-left: 4%;
+	  margin-left: 7%;
 }
 .slide-description .body-text-small{
 	font-weight: bold;
@@ -96,7 +96,7 @@ SLIDER
 #section2 .slide-description{
     position: absolute;
     top: 47%;
-    margin-left: 6%;
+	margin-left: 31%;
 }
 #section3 .slide-description{
 	position: absolute;

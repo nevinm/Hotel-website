@@ -35,7 +35,10 @@
 /*==============================*\
 			&MENU
 \*==============================*/
-
+.menu-wrapper{
+	background-color: #E7E7E7;
+	background-image: url() !important;
+}
 .subMenu{
 	width: 100%;
 	float: left;
