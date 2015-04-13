@@ -64,7 +64,6 @@ input[type="text"], input[type="email"], input[type="password"]{
 	margin-top: 50px;
 }
 #categories .update{
-	float: right;
 	margin-right: 10px;
 }
 table, th, td {

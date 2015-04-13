@@ -35,7 +35,10 @@
 /*==============================*\
 			&MENU
 \*==============================*/
-
+.menu-wrapper{
+	background-color: #E7E7E7;
+	background-image: url() !important;
+}
 .subMenu{
 	width: 100%;
 	float: left;
@@ -45,7 +48,7 @@
 }
 
 .subMenu ul li.menu-categories-list{
-	display: inline-block;
+	float: left;
 	border-left: 1px solid #F3F3F3;
 	width: 105px;
 	text-align: center;
@@ -61,9 +64,8 @@
 	font-size: 16px;
 }
 
-.subMenu ul li.menu-categories-list a.menu-categories:hover,.subMenu ul li.menu-categories-list a.activeOption{
+.subMenu ul li.menu-categories-list:hover,.subMenu ul li.menu-categories-list.activeOption {
 	border-bottom: 2px solid #a9d77b;
-	padding: 20px 0 16px 0;
 	background-color: #F9F9F9;
 	font-weight: bold;
 	color: #1a1a1a;
@@ -137,8 +139,8 @@
 	float: left;
 }
 .thumbnail{
-	min-width: 100%;
-	height: 230px;
+	/*min-width: 100%;*/
+	/*height: 230px;*/
 	border-radius: 5px;
 	margin-bottom: 10px;
 }
@@ -181,6 +183,16 @@
 	color: #a9d77b;
 	font-size: 19px;
 }
+.menu-pagination{
+	float: right;
+	padding-bottom: 10px;
+}
+.menu-loading-gif,{
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+	display: none;
+}
 
 @media only screen and (min-width: 768px)and (max-width:1024px){
 	.listItems{
@@ -192,7 +204,10 @@
 		margin-left: 0;
 	}
 	.thumbnail{
-		height: 270px;
+		height: auto;
+		margin: 0px auto 10px auto;
+		display: block;
+		width: 100%;
 	}
 	.listContainer{
 		margin: 40px 0 0 0;

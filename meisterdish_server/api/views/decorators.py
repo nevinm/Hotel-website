@@ -61,7 +61,6 @@ def json_request(request):
         req = request.body
         if not req:
             req='{"a":"b"}'
-        
     if (req):
         try:
             if request.FILES:

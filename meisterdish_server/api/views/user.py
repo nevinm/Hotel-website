@@ -1,13 +1,8 @@
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
-from django.contrib.sessions.backends.db import SessionStore
 from api.models import *
 import json as simplejson
-import md5
 import logging 
 import settings
-from datetime import datetime
-from django.db.models import Q
-from django.template.loader import render_to_string
 from decorators import *
 log = logging.getLogger('api_user')
 
@@ -132,7 +127,7 @@ def redeem_gift_card(request, data, user):
 @check_input('POST')
 def get_categories(request, data, user):
     try:
-        cats = Category.objects.all()
+        cats = Category.objects.filter(is_hidden=False, is_deleted=False)
         cat_list = []
         for cat in cats:
             cat_list.append({
@@ -140,7 +135,7 @@ def get_categories(request, data, user):
                              "name":cat.name.title()
                              })
         
-        types = MealType.objects.all()
+        types = MealType.objects.filter(is_hidden=False, is_deleted=False)
         
         #Meal Types / Filters
         type_list = []
