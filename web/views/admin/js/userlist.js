@@ -1,4 +1,3 @@
-redirectIfAdminLoggedIn();
 $(document).ready(function() {
     var userActive;
     //Get UserList

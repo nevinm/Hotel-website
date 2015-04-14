@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    redirectIfAdminLoggedIn();
     //By deafault call 1 as starting.
     getCategories(1);
 
