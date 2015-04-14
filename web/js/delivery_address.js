@@ -61,8 +61,8 @@ function autoPopulateAdressess(userDetails) {
             '<span class="address-street">' + value.street + ', ' + value.building + '</span>' +
             '<span class="address-city">' + value.city + ', ' + value.state + '</span>' +
             '<span class="address-mobile">' + value.phone + '</span>' +
-            '<span class="green primary-address">PRIMARY ADDRESS</span>' +
-            '<span class="non-primary-address">MAKE THIS YOUR PRIMARY ADDRESS</span>' +
+            '<span class="green primary-address add-primary" data-id="' + value.id + '">PRIMARY ADDRESS</span>' +
+            '<span class="non-primary-address add-primary" data-id="' + value.id + '">MAKE THIS YOUR PRIMARY ADDRESS</span>' +
             '</div></li>');
 
         if (value.is_primary == 1) {
@@ -157,13 +157,19 @@ function populateAddressToForm(id) {
     });
 }
 
-function editAddress(currentId) {
-    var newAddress = getNewAddressFromForm(),
-        url = baseURL + "update_address/" + currentId + "/",
-        header = {
+function editAddress(currentId, primaryAdd) {
+    var url = baseURL + "update_address/" + currentId + "/",
+       header = {
             "session-key": localStorage["session_key"]
-        },
-        userData = {
+        },userData;
+    if(primaryAdd){
+        userData={
+            "is_primary": primaryAdd
+        }
+    }
+    else{
+         var newAddress = getNewAddressFromForm();
+         userData = {
             "first_name": newAddress.first_name,
             "last_name": newAddress.last_name,
             "phone": newAddress.phone,
@@ -171,8 +177,8 @@ function editAddress(currentId) {
             "city_id": newAddress.city_id,
             "street": newAddress.street,
             "building": newAddress.building,
-            "is_primary": newAddress.is_primary
         };
+    }
     data = JSON.stringify(userData);
     var editAddressInstance = new AjaxHttpSender();
     editAddressInstance.sendPost(url, header, data, editAddressCallback);
@@ -262,6 +268,12 @@ $(document).ready(function() {
         if ($('form.addaddress-popup').valid()) {
             editAddress(currentId);
         }
+    });
+
+   
+    $(document).on('click','.non-primary-address.add-primary',function(){
+        var currentId = $(this).data().id;
+        editAddress(currentId, 1);
     });
 
     $("#addpopup-data").on('click', function(e) {

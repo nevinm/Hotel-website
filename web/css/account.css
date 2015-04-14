@@ -244,6 +244,7 @@ div#editaddress-container {
 	 min-height: 100px;
 }
 .content .address{
+	min-height: 160px;
 	width: 33.33%;
 	float: left;
 	padding: 14px;
@@ -263,6 +264,7 @@ div#editaddress-container {
 
 }
 #editaddress-container .content ol li span:last-child{
+	cursor: pointer;
 	font-family: 'BrandonGrotesque-Bold';
 	padding-top: 20px;
 	width: 240px;
