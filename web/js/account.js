@@ -1,9 +1,3 @@
-function redirectIfLoggedIn() {
-    if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {} else {
-        window.location.href = '../index.html';
-    }
-}
-
 function profileAutoPopulate() {
     var userDetails = JSON.parse(localStorage['user_profile']);
     if (currentPage == 'Meisterdish - Change Contact') {
@@ -142,7 +136,6 @@ $(document).ready(function() {
         changePasswordInstance.sendPost(url, header, data, changePasswordCallback);
     }
 
-    redirectIfLoggedIn();
     getProfile();
     showAdminLink();
 });
