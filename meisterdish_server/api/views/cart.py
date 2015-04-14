@@ -21,7 +21,8 @@ def get_cart_items(request, data, user):
             "price": cart_item.meal.price,
             "tax": cart_item.meal.tax,
             "quantity":cart_item.quantity,
-            })
+          }
+        )
 
       if not len(cart_list):
           return custom_error("There are not items in cart.")
