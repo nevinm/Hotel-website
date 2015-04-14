@@ -9,7 +9,8 @@ log = logging.getLogger('api_user')
 @check_input('POST')
 def add_address(request, data, user):
     try:
-        name = data["name"].strip()
+        fname = data["first_name"].strip()
+        lname = data["last_name"].strip()
         street = data["street"].strip()
         building = data["building"].strip()
         city_id = data["city_id"]
@@ -21,7 +22,8 @@ def add_address(request, data, user):
             
         add = Address()
         add.user = user
-        add.name = name
+        add.first_name = fname
+        add.last_name = lname
         add.is_primary = is_primary
         add.street = street
         add.building = building
@@ -49,16 +51,6 @@ def add_address(request, data, user):
 @check_input('POST')
 def update_address(request, data, user, address_id):
     try:
-        name = data["name"].strip()
-        street = data["street"].strip()
-        building = data["building"].strip()
-        city_id = data["city_id"]
-        zip = data["zip"].strip()
-        phone = data["phone"].strip()
-        is_primary = False
-        if "is_primary" in data and data["is_primary"]:
-            is_primary = True
-        
         try:
             add = Address.objects.get(id=address_id, user=user)
             add.user = user
@@ -66,16 +58,31 @@ def update_address(request, data, user, address_id):
             log.error("Updated address "+e.message)
             return custom_error("You are not authorized to modify this address.")
         
-        add.name = name
-        add.is_primary = is_primary
-        add.street = street
-        add.building = building
-        add.city = City.objects.get(id=city_id)
-        add.zip = zip
-        add.phone = phone
-        add.save()
+	if 'first_name' in data:
+		fname = data["first_name"].strip()
+        	lname = data["last_name"].strip()
+	        street = data["street"].strip()
+        	building = data["building"].strip()
+	        city_id = data["city_id"]
+	        zip = data["zip"].strip()
+	        phone = data["phone"].strip()
         
-        if add.id and is_primary:
+		add.first_name = fname
+	        add.last_name = lname
+	        add.street = street
+        	add.building = building
+	        add.city = City.objects.get(id=city_id)
+	        add.zip = zip
+	        add.phone = phone
+        
+        if "is_primary" in data and data["is_primary"]:
+	    add.is_primary = True
+	else:
+	    add.is_primary = False
+        
+	add.save()
+        
+        if add.id and add.is_primary:
             try:
                 primary = Address.objects.exclude(id=add.id).get(user=user, is_primary=True)
             except:
@@ -127,7 +134,7 @@ def redeem_gift_card(request, data, user):
 @check_input('POST')
 def get_categories(request, data, user):
     try:
-        cats = Category.objects.filter(is_hidden=False, is_deleted=False)
+        cats = Category.objects.filter(is_hidden=False, is_deleted=False).order_by("name")
         cat_list = []
         for cat in cats:
             cat_list.append({

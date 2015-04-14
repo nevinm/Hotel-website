@@ -21,15 +21,13 @@ def get_categories(request, data, user):
         if "nextPage" in data and int(data["nextPage"]) >0:
             page = data["nextPage"]
             
-        cats = Category.objects
+        cats = Category.objects.filter(is_deleted=False).order_by("name")
         total_count = cats.count()
         
         if 'search' in data:
             search = str(data['search']).strip()
             cats = cats.filter(name__startswith=search)
-        else:
-            cats = cats.all()
-            
+        
         actual_count = cats.count()
         if actual_count == 0:
             return custom_error("There are no categories to list.")
@@ -263,7 +261,7 @@ def get_meals(request, data, user):
                               "images":meal_images,
                               "available":1 if meal.available else 0,
                               "category":meal.category.name.title(),
-                              "meal_type":meal_types,
+                              "meal_types":meal_types,
                               "preparation_time":meal.preparation_time,
                               "price":meal.price,
                               "tax":meal.tax,
