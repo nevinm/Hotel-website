@@ -100,40 +100,64 @@
             <div class="addresspopup-wrapper">
               <div class="bk-overlay"></div>
               <div class="addresspopup">
-                <div class="header">ADDRESS</div>
+                <div class="header">ADD A NEW ADDRESS
+                    <img src="../images/cross_black.png" id="cancel">
+                </div>
                     <div class="container">
                         <form class="addaddress-popup">
-                            <div class="forminput-wrapper">
-                                <input type="text" name="fullname" placeholder="Full Name" class="popup-input">
+                            <div class="section1">
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">First Name</label>
+                                    <input type="text" name="FirstName" class="popup-input">
+                                </div>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Last Name</label>
+                                    <input type="text" name="LastName" class="popup-input">
+                                </div>
                             </div>
-                            <div class="forminput-wrapper">
-                                <input type="text" name="phonenumber" placeholder="Phone" class="popup-input">
+                            <div class="section2">
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Address Line -1</label>
+                                    <!-- <input type="checkbox" name="is-primary" class="popup-input checkbox"><span class='checkbox-span'>Primary</span> -->
+                                    <input type="text" name="address-line-1" class="popup-input" id="address-line-1">
+                                </div>
+
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Address Line -2</label>
+                                    <input type="text" name="address-line-2" class="popup-input" id="address-line-2">
+                                </div>
                             </div>
-                            <div class="forminput-wrapper">
-                                <input type="text" name="zip" class="popup-input" placeholder="zip code">
+                           <div class="section3">
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">City</label>
+                                    <div class="styled-select">
+                                        <select class='city-selector' name="city">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">State</label>
+                                    <div class="styled-select-state">
+                                        <select class='state-selector' name="state">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="forminput-wrapper">
-                                <select class='state-selector' name="state">
-                                    <option value="">State</option>
-                                </select>
-                            </div>
-                            <div class="forminput-wrapper">
-                                <select class='city-selector' name="city">
-                                    <option value="">City</option>
-                                </select>
-                            </div>
-                            <div class="forminput-wrapper">
-                                <input type="text" name="street" class="popup-input" placeholder="Street">
-                            </div>
-                            <div class="forminput-wrapper">
-                                <input type="text" name="building" class="popup-input" placeholder="Building">
-                            </div>
-                            <br>
-                            <input type="checkbox" name="is-primary" class="popup-input checkbox"><span class='checkbox-span'>Set Primary Address</span>
+                            <div class="section4">
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Zip</label>
+                                    <input type="text" name="zip" class="popup-input">
+                                </div>   
+                                 <div class="forminput-wrapper">
+                                    <label class="body-text-small">Phone</label>
+                                    <input type="text" name="phonenum" class="popup-input">
+                                </div>
+                            </div>                       
                             <div class="button">
-                                <input class="btn btn-small-primary medium-green" id="addpopup-data" type="submit" value="ADD">
-                                <input class="btn btn-small-primary medium-green" id="savepopup-data" value="SAVE" type="submit">
-                                <a href="#" class="btn btn-small-primary medium-green" id="cancel">CANCEL</a>
+                                <input class="btn btn-small-primary medium-green" id="addpopup-data" type="submit" value="ADD ADDRESS">
+                                <input class="btn btn-small-primary medium-green" id="savepopup-data" value="SAVE ADDRESS" type="submit">
                             </div>
                         </form>
                     </div>
