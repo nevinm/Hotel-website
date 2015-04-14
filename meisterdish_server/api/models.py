@@ -164,7 +164,8 @@ class User(models.Model):
 
 class Address(models.Model):
     user = models.ForeignKey(User, related_name="user_address")
-    name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50, default="")
+    last_name = models.CharField(max_length=50, default="")
     is_primary = models.BooleanField(default=False)
     street = models.CharField(max_length=50)
     building = models.CharField(max_length=50)
