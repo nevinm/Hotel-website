@@ -14,8 +14,6 @@ function dollarConvert(value) {
     return dollarValue;
 }
 
-
-
 function checkLoggedIn() {
         if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
             $userentry.hide();

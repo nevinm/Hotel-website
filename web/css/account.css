@@ -8,6 +8,12 @@
 	height: 100%;
 	margin-top: 73px;
 }
+
+.small-profile-pic{
+	height: 50px;
+  	float: left;
+  	margin-top: 15px;
+}
 .account-container{
 	background-color: #ffffff;
 	border: 1px solid #D0D0D0;
@@ -21,7 +27,12 @@
 	border-bottom: 1px solid #D0D0D0;
 	padding: 10px 10px 10px 20px;
 	background-color: #f7f7f7;
+	overflow: hidden;
 	border-radius: 7px 7px 0 0;
+}
+.account-container .user-name-wrapper{
+	float: left;
+	margin-left: 20px;
 }
 .account-settings{
 	padding: 10px 10px 150px 20px;
@@ -372,18 +383,6 @@ img.popup-close{
 	width: 60px;
 	height: 60px;
 }
-/*.upload-image {
-  height: 22px;
-  width: 114px;
-  background-color: #DDDDDD;
-  overflow: hidden;
-  border-radius: 2px;
-  border: 1px solid #DDDDDD;
-  box-shadow: 0 0 3px;
-}
-.upload-image input{
-	opacity: 0 !important;
-}*/
 .fileUpload {
 	cursor: pointer;
 	display: inline-block;
