@@ -26,7 +26,7 @@ def get_cart_items(request, data, user):
       if not len(cart_list):
           return custom_error("There are not items in cart.")
       else:
-          return json_response({"staus":1, 
+          return json_response({"status":1, 
                               "aaData":cart_list,
                               "total_count":len(cart_list),
                               })
@@ -116,3 +116,11 @@ def remove_from_cart(request, data, user):
         return json_response("status":1, "message":"The meal has been successfully removed from cart.")
     except Exception as e:
         return custom_error("Failed to remove meal from cart. Please try again later.")
+
+@check_input('POST')
+def delete_cart(request, data, user):
+    try:
+        Cart.get(user=user).delete()
+        return json_response("status":1, "message":"The cart has been cleared.")
+    except Exception as e:
+        return custom_error("Failed to clear cart. Please try again later.")
