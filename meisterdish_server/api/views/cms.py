@@ -263,7 +263,7 @@ def get_meals(request, data, user):
                               "images":meal_images,
                               "available":1 if meal.available else 0,
                               "category":meal.category.name.title(),
-                              "meal_type":meal_types,
+                              "meal_types":meal_types,
                               "preparation_time":meal.preparation_time,
                               "price":meal.price,
                               "tax":meal.tax,

@@ -216,12 +216,14 @@ class Ingredient(models.Model):
 
 class Meal(models.Model):
     name = models.CharField(max_length=30)
-    images = models.ManyToManyField(Image, related_name="meal")
     description = models.TextField(max_length=1024)
+
+    main_image = models.ForeignKey(Image, null=True, blank=True)
+    images = models.ManyToManyField(Image, related_name="meal", null=True, blank=True)
     
     types = models.ManyToManyField(MealType, null=True, blank=True)
     category = models.ForeignKey(Category, null=True)
-    
+
     user_to_do = models.TextField(max_length=1024, null=True, blank=True)
     preparation_time = models.CharField(max_length=30, null=True, blank=True)
 
