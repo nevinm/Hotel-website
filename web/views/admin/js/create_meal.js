@@ -12,6 +12,7 @@ $(document).ready(function() {
             daily_value = $('#nutrients-daily-value').val();
         populateNutrients(nutrients, per_serving, daily_value);
     });
+    
     $('#create-meal-button').on("click", function() {
         createMeal();
     });

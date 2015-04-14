@@ -9,6 +9,7 @@ input[type="text"], input[type="email"], input[type="password"]{
 	border-right: 10px solid #fff;
 	border-left: 10px solid #fff;
 	float: left;
+  padding-bottom: 50px;
 	background-color: #f1f1f1;
 	min-height: 100%;
 }
