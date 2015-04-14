@@ -174,7 +174,7 @@ class Address(models.Model):
     phone = models.CharField(max_length=15)
 
     def __unicode__(self):
-        return self.user.email + " : " + self.name
+        return self.user.email + " : " + self.first_name +" "+ self.last_name
     
 
 """
@@ -298,8 +298,8 @@ class CartItem(models.Model):
     quantity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
 class Order(models.Model):
-    order_num = models.CharField(max_length=20)
-    transaction_id = models.CharField(max_length=30)
+    order_num = models.CharField(max_length=20, null=True)
+    transaction_id = models.CharField(max_length=30, null=True)
     
     cart = models.ForeignKey(Cart)
     total_amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
@@ -313,10 +313,12 @@ class Order(models.Model):
     delivery_time = models.CharField(max_length=20)
     driver_instructions = models.TextField(max_length=1024, null=True)
     
-    payment = models.ForeignKey(Payment)
+    payment = models.ForeignKey(Payment, null=True, blank=True)
     status_choices = ((0, "Incomplete"),
-                      (1, "Order placed, but not delivered."),
-                      (2, "Delivered"),
+                      (1, "Payment failed"),
+                      (2, "Paid, but order failed"),
+                      (3, "Order placed, but not delivered."),
+                      (4, "Delivered"),
                       )
     
     status = models.BooleanField(default=True)
