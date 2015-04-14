@@ -35,7 +35,10 @@
 /*==============================*\
 			&MENU
 \*==============================*/
-
+.menu-wrapper{
+	background-color: #E7E7E7;
+	background-image: url() !important;
+}
 .subMenu{
 	width: 100%;
 	float: left;
@@ -136,7 +139,7 @@
 	float: left;
 }
 .thumbnail{
-	/*min-width: 100%;*/
+	min-width: 100%;
 	/*height: 230px;*/
 	border-radius: 5px;
 	margin-bottom: 10px;
@@ -179,6 +182,16 @@
 .itemCost{
 	color: #a9d77b;
 	font-size: 19px;
+}
+.menu-pagination{
+	float: right;
+	padding-bottom: 10px;
+}
+.menu-loading-gif,{
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+	display: none;
 }
 
 @media only screen and (min-width: 768px)and (max-width:1024px){

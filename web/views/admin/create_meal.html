@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Meisterdish - Admin</title>
+    
+    <script type="text/javascript" src='js/redirect_admin.js'></script>
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../css/fontello.css">
+    <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
+    <link rel="stylesheet" type="text/css" href="../../css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+</head>
+
+<body>
+    <div id="admin-mainWrapper">
+        <header id="header">
+            <div class="contentArea">
+                <a href="../../index.html"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
+                </a>
+            </div>
+            <ul id="menu" class="pullRight">
+                    <li>
+                        <a href="#">MEAL LIST</a>
+                    </li>
+                    <li>
+                        <a href="userlist.html">USER LIST</a>
+                    </li>
+                    <li>
+                        <a href="categories.html">CATEGORIES</a>
+                    </li>
+                    <li class="bold login-signup">
+                        <a href="">LOG IN</a>
+                    </li>
+                    <li class='login-signup'>
+                        <a href="" class="btn btn-small-secondary">SIGN UP</a>
+                    </li>
+                    <li id="navbar-username" class="bold">
+                        <a href=''></a>
+                    </li>
+                </ul>
+        </header>
+        <div id="page-container">
+            <div class='admin-createmeal-inner-wrapper'>
+                <div class="accountNav">
+                <div class="logout body-text-bold">
+                    <a id='logout'>LOG OUT</a>
+                    </div>
+                </div>
+                <div class="create-meal-container">
+                    <div class="create-meal-header">CREATE MEAL</div>
+                    <form id="create-meal" class="section-container">
+                        <div class="section-1">
+                            <input type="text" name="name" class="create-meal-input" id="meal-name" placeholder="Meal Name">
+                            <input type="text" name="price" class="create-meal-input" id="meal-price" placeholder= "Price">
+                            <input type="text" name="tax" class="create-meal-input" id="meal-tax"placeholder = "Tax">
+                            
+                        </div>
+                        <div class="section-2">
+                            <div class="text-area-container">
+                                <textarea id="description">
+                                </textarea>
+                            </div>
+                            <div class="meal-image-upload-container">
+                                <div class="dummy-image"></div>
+                                <div class="fileUpload">
+                                    <span class='upload-button'>UPLOAD</span>
+                                     <input id="profile_picture_id" type="file" name="files[]" data-url="http://meisterdish.qburst.com/backend/api/upload_picture/"  multiple>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-3">
+                            <select name="available" id="create-meal-available">
+                                <option value="0">Available</option>
+                                <option value="1">yes</option>
+                                <option value="2">No</option>
+                            </select>
+                            <select name="category" id="create-meal-category">
+                                <option value="">Category</option>
+                            </select>
+                            <select name="meal-type" id="create-meal-mealType">
+                                <option value="">Meal-type</option>
+                            </select>
+                        </div>
+                        <div class="section-4">
+                            <div class="ingredients-container">
+                                <input type="text"placeholder = "Ingredients" class="create-meal-input" id="ingredients">
+                                <input type="button" class="add-list-button" id="add-ingredients" value="add">
+                                <div class="list-container">
+                                    <ul></ul>
+                                </div>
+                            </div>
+                            <div class="pre-requisties-container">
+                                <input type="text"placeholder = "pre-requisties" class="create-meal-input" id="pre-requisties">
+                                <input type="button" class="add-list-button" value="add">
+                                <div class="list-container">
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-5">
+                            <div class="preperation-container-1">
+                                <input type="number" name="preperationtime" class="create-meal-input" id="meal-prep-time" placeholder = "PREP TIME">
+                                <input type="text" placeholder = "ALL YOU WILL BE DOING" class="create-meal-input" id="preparation-id-1">
+                                
+                                <input type="button" class="add-preparation-button" value="add">
+                                <div class="list-container">
+                                    <ul></ul>
+                                </div>
+                            </div>
+                            <div class="preperation-container-2">
+                                <input type="number" name="preperationtime" class="create-meal-input" id="meal-saved-time" placeholder = "SAVED TIME">
+                                <input type="text" placeholder = "WHAT WE HAVE PREPPED" class="create-meal-input" id="preparation-id-2">
+                                
+                                <input type="button" class="add-preparation-button" value="add">
+                                <div class="list-container">
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-6">
+                            <div class="input-feild-container">
+                                <input type="text" placeholder = "NUTRIENTS" class="create-meal-input" id="nutrients">
+                                <input type="text" placeholder = "per serving" class="create-meal-input" id="nutrients-per-serving">
+                                <input type="text" placeholder = "%daily value" class="create-meal-input" id="nutrients-daily-value">
+                                <input type="button" class="add-nutrition-content" value="add">
+                            </div>
+                            <div class="list-table-container">
+                                <table id="nutrient-table">
+                                    <thead>
+                                        <tr>
+                                            <th>NUTRIENTS</th>
+                                            <th>PER SERVING</th>
+                                            <th>% DAILY VALUE</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <input type="button" class="btn btn-large-primary medium-green" id="create-meal-button" value="CREATE">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src='../../js/jquery.min.js'></script>
+    <script type="text/javascript" src='../../js/jquery.validate.min.js'></script>
+    <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../../js/common.js'></script>
+    <script type="text/javascript" src='js/admin.js'></script>
+    <script type="text/javascript" src='js/create_meal.js'></script>
+</body>
+
+</html>

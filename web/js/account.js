@@ -1,16 +1,12 @@
-function redirectIfLoggedIn() {
-    if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {} else {
-        window.location.href = '../index.html';
-    }
-}
-
-
 function profileAutoPopulate() {
     var userDetails = JSON.parse(localStorage['user_profile']);
     if (currentPage == 'Meisterdish - Change Contact') {
         $("#change-contact input[name='firstname']").val(userDetails.first_name);
         $("#change-contact input[name='lastname']").val(userDetails.last_name);
         $("#change-contact input[name='phonenumber']").val(userDetails.mobile);
+    }
+    if(currentPage== 'Meisterdish - Account'){
+        $(".small-profile-pic").attr('src', userDetails.profile_image_thumb);
     }
 }
 
@@ -29,6 +25,7 @@ var getProfileCallback = {
             localStorage['user_profile'] = data;
             $(".cart span").text(userDetails.meals_in_cart_count);
             $(".account-credit").text(dollarConvert(userDetails.credits));
+            profileAutoPopulate();
             if(profileId){
                 if(userDetails.profile_image_thumb!= "Not Available"){
                     $("#"+profileId).attr('src',userDetails.profile_image_thumb);
@@ -139,9 +136,7 @@ $(document).ready(function() {
         changePasswordInstance.sendPost(url, header, data, changePasswordCallback);
     }
 
-    redirectIfLoggedIn();
     getProfile();
-    profileAutoPopulate();
     showAdminLink();
 });
 

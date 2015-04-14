@@ -8,6 +8,12 @@
 	height: 100%;
 	margin-top: 73px;
 }
+
+.small-profile-pic{
+	height: 50px;
+  	float: left;
+  	margin-top: 15px;
+}
 .account-container{
 	background-color: #ffffff;
 	border: 1px solid #D0D0D0;
@@ -21,7 +27,12 @@
 	border-bottom: 1px solid #D0D0D0;
 	padding: 10px 10px 10px 20px;
 	background-color: #f7f7f7;
+	overflow: hidden;
 	border-radius: 7px 7px 0 0;
+}
+.account-container .user-name-wrapper{
+	float: left;
+	margin-left: 20px;
 }
 .account-settings{
 	padding: 10px 10px 150px 20px;
@@ -233,6 +244,7 @@ div#editaddress-container {
 	 min-height: 100px;
 }
 .content .address{
+	min-height: 160px;
 	width: 33.33%;
 	float: left;
 	padding: 14px;
@@ -252,6 +264,7 @@ div#editaddress-container {
 
 }
 #editaddress-container .content ol li span:last-child{
+	cursor: pointer;
 	font-family: 'BrandonGrotesque-Bold';
 	padding-top: 20px;
 	width: 240px;
@@ -359,31 +372,19 @@ span.green{
 .addresspopup {
   position: absolute;
   top: 40%;
-  width: 300px;
+  width: 400px;
   left: 50%;
-  margin-left: -100px;
+  margin-left: -200px;
   margin-top: -200px;
-  background-image: url('../images/bg.jpg');
-  background-size: cover;
-  border: 1px solid #000;
+  background-color: #fff;
+  border: 1px solid #ddd;
   z-index:99999;
+  border-radius: 3px;
 }
 img.popup-close{
 	width: 60px;
 	height: 60px;
 }
-/*.upload-image {
-  height: 22px;
-  width: 114px;
-  background-color: #DDDDDD;
-  overflow: hidden;
-  border-radius: 2px;
-  border: 1px solid #DDDDDD;
-  box-shadow: 0 0 3px;
-}
-.upload-image input{
-	opacity: 0 !important;
-}*/
 .fileUpload {
 	cursor: pointer;
 	display: inline-block;
@@ -434,11 +435,11 @@ img.popup-close{
 \*==================================*/
 .addresspopup .header{
 	width: 100%;
-	background-color: #6B6B6B;
-	color: #fff;
-	text-align: center;
+	background-color: #F7F7F7;
+	color: #000;
 	font-family: 'BrandonGrotesque-Bold';
-	padding: 10px 0;
+	padding: 15px 10px;
+	border-bottom: 1px solid #ddd;
 }
 .addresspopup .container {
   width: 100%;
@@ -446,9 +447,13 @@ img.popup-close{
   padding-top: 23px;
 }
 input.popup-input {
-  width: 262px;
+  width: 100%;
   padding: 7px;
   border: 1px solid;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  background: #f7f7f7;
+  height: 30px;
 }
 input.checkbox{
 	width: auto;
@@ -463,35 +468,123 @@ input.checkbox{
 .addaddress-popup .button{
 	padding: 10px 0;
 }
-.addaddress-popup .forminput-wrapper select{
-	width: 262px;
-	padding: 7px;
-	border-radius: 1px solid;
-	outline: none;
-	background: #fff;
-	font-family:'ProximaNova-regular';
-    color: #9B9B9B;
-    cursor: pointer;
-}
+
 .addaddress-popup .forminput-wrapper select option{
 	background-color: #F7F7F7;
 }
-.forminput-wrapper{
-	position: relative;
+form.addaddress-popup {
+  width: 83%;
+  margin: 0 auto;
+}
+.section1,.section2,.section3,.section4{
 	width: 100%;
+	float: left;
+}
+.section1 .forminput-wrapper{
+	position: relative;
+	 width: 157px;
 	padding: 10px 0;
+	float: left;
+}
+.section1 .forminput-wrapper:first-child{
+	margin-right: 16px;
+}
+.forminput-wrapper label{
+	text-align: left;
 }
 #cancel{
 	float: right;
+	cursor: pointer;
 }
-#addpopup-data{
+.section2 .forminput-wrapper:first-child{
+	margin-bottom: 12px;
+}
+.section2 .forminput-wrapper:nth-child(2){
+	margin-bottom: 12px;
+}
+.section3 .forminput-wrapper select{	 
+  padding: 7px;
+  outline: none;
+  font-family: 'ProximaNova-regular';
+  color: #9B9B9B;
+  cursor: pointer;
+  background: #f7f7f7;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 100%;
+  font-size: 14px !important;
+}
+.section3 .forminput-wrapper:first-child{
+	width: 180px;
+	float: left;
+	margin-right: 16px;
+}
+.section3 .forminput-wrapper:nth-child(2){
+	width:  134px;
 	float: left;
 }
-#savepopup-data{
-	float: left;
+.section3{
+	margin-bottom: 12px;
 }
-.addresspopup .button{
+.section4 .forminput-wrapper:nth-child(2){
+	width: 174px;
 	float: left;
-	width:100%;
-	padding: 10px 30px;
+	
 }
+.section4 .forminput-wrapper:first-child{
+	width: 140px;
+	float: left;
+	margin-right: 16px;
+}
+.addresspopup .button {
+  float: left;
+  /* width: 100%; */
+  /* padding: 10px 30px; */
+  width: 100%;
+  text-align: center;
+  padding: 30px 0;
+}
+
+.styled-select select {
+  background: transparent !important;
+  width: 268px !important;
+  padding: 5px !important;
+  font-size: 16px !important;
+  line-height: 1;
+  border: 0 !important;
+  border-radius: 0 !important;
+  height: 34px;
+  -webkit-appearance: none !important;
+}
+.styled-select {
+	width: 180px;
+	height: 30px;
+	overflow: hidden;
+	background: url(../images/selector_arrow.png) no-repeat 157px 6px #f7f7f7;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+}
+.section3 .forminput-wrapper .styled-select-state{
+	width: 134px;
+	height: 30px;
+	overflow: hidden;
+	background: url(../images/selector_arrow.png) no-repeat 111px 6px #f7f7f7;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+}
+.styled-select-state select{
+	background: transparent !important;
+  width: 268px !important;
+  padding: 5px !important;
+  font-size: 16px !important;
+  line-height: 1;
+  border: 0 !important;
+  border-radius: 0 !important;
+  height: 34px;
+  -webkit-appearance: none !important;
+  appearance:none !important;
+  -moz-appearance:none!important;
+}
+appearance:button;
+-moz-appearance:button; /* Firefox */
+-webkit-appearance
