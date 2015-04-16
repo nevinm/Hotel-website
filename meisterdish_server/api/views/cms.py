@@ -321,7 +321,7 @@ def create_meal(request, data, user):
         elif 'chef_name' in data and 'chef_image' in data and data['chef_name'].strip() != '':
             chef = Chef()
             chef.name = data['chef_name'].strip()
-            chef.image = Image.objects.get(pk=int(data['chef_image'])
+            chef.image = Image.objects.get(pk=int(data['chef_image']))
             chef.save()
 
         if 'cat_id' in data:
@@ -370,7 +370,7 @@ def create_meal(request, data, user):
                     try:
                         tip_obj = Tip.objects.get(pk=int(tip['id']))
                     except:
-                        tip_obj = 
+                        tip_obj = Tip()
                 tip_obj.title = tip['title'].strip().title()
                 tip_obj.description = tip['description'].strip()
                 if "image" in tip:
