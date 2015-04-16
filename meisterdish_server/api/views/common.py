@@ -510,7 +510,7 @@ def change_email(request, data, user):
 def get_address_list(request, data, user):
     try:
         address_list = []
-        addresses = Address.objects.filter(user=user)
+        addresses = Address.objects.filter(user=user).order_by('-id')
         for add in addresses:
             address_list.append({
                                  "id":add.id,

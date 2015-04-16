@@ -21,8 +21,8 @@ def get_orders(request, data, user):
         if "order_num" in data and str(data['order_num']).strip() != "":
             orders = orders.filter(order__num=data['order_num'])
         
-        if "user" in data and str(data['user']).strip() != "":
-            orders = orders.filter(order__cart__user__pk=data['user'])
+        if "user_id" in data and str(data['user_id']).strip() != "":
+            orders = orders.filter(order__cart__user__pk=data['user_id'])
         
         # End filter
         actual_count = orders.count()
@@ -39,7 +39,7 @@ def get_orders(request, data, user):
 
 
         #End format response
-        return json_response({"staus":1, 
+        return json_response({"status":1, 
                               "aaData":order_list,
                               "total_count":total_count,
                               "actual_count":actual_count,
@@ -51,6 +51,51 @@ def get_orders(request, data, user):
     except Exception as e:
     	log.error("Failed to list orders." + e.message)
     	return custom_error("Failed to get orders list.")
+
+
+@check_input('POST')
+def create_order(request, data, user):
+    try:
+        amount = 0
+        total_price = 0.0
+        total_tax = 0.0
+        
+        delivery_time = data['delivery_time']
+        driver_instructions = data['driver_instructions']
+        tip = int(data['tip'])
+
+        if 'delivery_address' in data:
+            address = Address.get(user=user, pk=data['delivery_address'])
+        else:
+            address = user.user_address.get(is_primary=True).id
+        
+        if 'billing_address' in data:
+            address = Address.get(user=user, pk=data['billing_address'])
+        else:
+            address = user.user_address.get(is_primary=True).id
+        
+        items = CartItem.objects.filter(cart__user=user)
+        for item in items:
+            if not item.meal.available:
+                return custom_error("Sorry, The meal "+item.meal.name + " has gone out of stock. Please add another meals or continue checkout with out it.")
+            
+            amount += item.quantity
+            total_price += item.meal.total_price
+            total_tax += item.meal.tax
+        
+        order = Order()
+        order.cart = item.cart
+        order.delivery_address = address
+        order.billing_address = address
+        order.tip = tip
+        order.delivery_time = delivery_time
+        order.driver_instructions = driver_instructions
+        
+
+
+    except Exception as e:
+        log.error("Failed to update order." + e.message)
+        return custom_error("Failed to update order.")
 
 #Admin only
 @check_input('POST', True)

@@ -25,5 +25,11 @@ urlpatterns = patterns('',
     url(r'^upload_picture/$', views.upload_picture, name='upload_picture'),
     
     url(r'^get_categories/$', views.get_categories, name='get_categories'),
+
+    url(r'^add_to_cart/$', views.add_to_cart, name='add_to_cart'),
+    url(r'^update_cart/$', views.update_cart, name='update_cart'),
+    url(r'^remove_from_cart/$', views.remove_from_cart, name='remove_from_cart'),
+    url(r'^delete_cart/$', views.delete_cart, name='delete_cart'),
+    url(r'^get_cart_items/$', views.get_cart_items, name='get_cart_items'),
     
 )

@@ -230,6 +230,8 @@ input#searchBy-name {
   margin: 0 auto;
   width: 90%;
   border: 1px solid #D0D0D0;
+  background: #fff;
+  margin-bottom: 30px;
 }
 .create-meal-header{
   font-family: 'BrandonGrotesque-Medium';
@@ -248,12 +250,42 @@ input#searchBy-name {
   padding: 8px 25px;
   border: 1px solid #ddd;
   border-radius: 2px;
+  background-color: #f7f7f7;
 }
 .section-1 input{
   margin-right: 20px;
 }
-.section-1{
+.section-1 ,.section-2,.section-3,.section-4,.section-5{
   padding: 20px 0;
+  border: 1px solid #ddd;
+  margin-top: 30px;
+  position: relative;
+  float: left;
+  width: 100%;
+}
+.section-header {
+  position: absolute;
+  top: -12px;
+  background-color: #fff;
+  font-family: 'BrandonGrotesque-bold';
+  left: 41px;
+  color: grey;
+  width: 92px;
+  text-align: center;
+}
+.content-1 {
+  float: left;
+  width: 100%;
+  padding: 10px 60px;
+
+}
+.section-1 input:first-child {
+  margin-right: 20px;
+  /* padding-left: 28px; */
+  /* margin-left: 29px; */
+  width: 206px;
+  float: left;
+  margin-top: 33px;
 }
 .fileUpload {
   cursor: pointer;
@@ -270,8 +302,8 @@ input#searchBy-name {
   right: 0;
   top: 0;
 }
-.upload-button{
-  background: #bbb;
+.upload-button {
+  background: #A9D77B;
   -moz-border-radius: 5px !important;
   -webkit-border-radius: 5px !important;
   border-radius: 5px;
@@ -281,25 +313,53 @@ input#searchBy-name {
   font-size: 11px !important;
   font-weight: bold;
   margin-right: 5px;
-  padding:7px 20px !important;
+  padding: 7px 20px !important;
   font-family: 'BrandonGrotesque-Black' !important;
   color: #fff !important;
   text-transform: uppercase;
+  margin-top: 33px;
+  margin-left: 40px;
 }
 .text-area-container{
   width: 50%;
   float: left;
   font-family: 'ProximaNova-regular';
 }
-.section-2 {
-  float: left;
-  width: 100%;
+textarea#description {
+  height: 100px;
+  width: 79%;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 4px;
+  background-color: rgb(247, 247, 247);
+  resize: none;
 }
+input#meal-price {
+  margin-bottom: 36px;
+}
+
 .meal-image-upload-container {
   width: 50%;
-  float: left;
+  float: right;
 }
-.section-3 {
+.dummy-image {
+  height: 100px;
+  width: 100px;
+  border: 1px solid #ddd;
+  float: left;
+  background: url(../../../images/5213421.png);
+  background-size: cover;
+
+}
+.section-2 .section-header{
+  width: 130px;
+}
+.section-3 .section-header{
+  width: 150px;
+}
+.preperation-container-1 input:first-child,.preperation-container-2 input:first-child{
+  width: 140px;
+}
+.section-3 span {
   width: 100%;
   float: left;
 }
@@ -353,30 +413,59 @@ input#searchBy-name {
   color: #fff;
   text-transform: uppercase;
 }
-.section-3 select {
+.section-1 select {
   padding: 4px 35px;
   border: 1px solid rgb(221, 221, 221);
   background: #fff;
   font-family: 'BrandonGrotesque-Regular';
   color: #909090;
   text-transform: uppercase;
+  margin-left: 50px;
 }
 
-.styled-select select {
-   background: transparent;
-   width: 268px;
-   padding: 5px;
-   font-size: 16px;
-   line-height: 1;
-   border: 0;
-   border-radius: 0;
-   height: 34px;
-   -webkit-appearance: none;
-   }
-   .styled-select {
-   width: 240px;
-   height: 34px;
-   overflow: hidden;
-   background: url(new_arrow.png) no-repeat right #ddd;
-   border: 1px solid #ccc;
-   }
+table#nutrient-table {
+  width: 100%;
+}
+.create-button-container{
+  text-align: center;
+}
+input#create-meal-button {
+  margin-top: 30px;
+}
+.section-5 input{
+  margin-right: 20px;
+}
+.remove-tr,.add-tr,.del-sub-list{
+  height: 14px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.nutrients-popup-wrapper .popup-container .content{
+  padding: 0 !important;]
+}
+.nutrients-popup-wrapper .popup-input{
+  height: 30px;
+  border: 1px solid #ddd;
+  background: #f7f7f7;
+  border-radius: 3px;
+  padding-left: 5px;
+  color:#909090;
+  width: 220px;
+}
+.nutrients-popup-wrapper .popup{
+  height: 300px;
+  margin-top: -150px;
+}
+.nutrients-popup-wrapper .popup-container {
+  padding: 15px;
+  width: 253px;
+  margin: 0 auto;
+}
+.nutrients-popup-wrapper{
+  display: none;
+}
+#nutrient-table ul li:first-child{
+  margin-top: 10px;
+  font-size: 10px;
+  color: grey;
+}

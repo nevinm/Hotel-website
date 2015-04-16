@@ -134,7 +134,7 @@ def redeem_gift_card(request, data, user):
 @check_input('POST')
 def get_categories(request, data, user):
     try:
-        cats = Category.objects.filter(is_hidden=False, is_deleted=False)
+        cats = Category.objects.filter(is_hidden=False, is_deleted=False).order_by("name")
         cat_list = []
         for cat in cats:
             cat_list.append({
