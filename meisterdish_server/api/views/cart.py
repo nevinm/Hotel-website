@@ -10,7 +10,7 @@ log = logging.getLogger('order')
 def get_cart_items(request, data, user):
     try:
       cart_list = []
-      for cart_item in CartItems.objects.filter(cart__user=user):
+      for cart_item in CartItems.objects.filter(cart__user=user, completed=False):
             cart_list.append(
             {
               "id" : cart_item.meal.id,
