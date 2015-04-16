@@ -349,7 +349,7 @@ class Order(models.Model):
                       (4, "Delivered"),
                       )
     
-    #status = models.IntegerField(choices=status_choices, default=0)
+    status = models.IntegerField(choices=status_choices, default=0)
     
     created = models.DateTimeField(null=True)
     updated = models.DateTimeField(null=True)
