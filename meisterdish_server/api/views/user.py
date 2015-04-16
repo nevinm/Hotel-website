@@ -157,3 +157,36 @@ def get_categories(request, data, user):
         log.error("get categories +filters: " + e.message)
         return custom_error("Failed to list categories and meal filters")
     
+@check_input('POST')
+def add_rating(request, data, user, meal_id):
+    try:
+        order = Order.objects.get(pk=data['order_id'], cart__cartitem__meal__pk=meal_id, cart__user=user)
+        if order.status != 4:
+            custom_error("The order is not complete. Please complete the order before rating.")
+        rating = MealRating()
+        rating.order = order
+        rating.rating = data['rating']
+        rating.comment = data['comment'].strip()
+        rating.save()
+        return json_response({"status":1, "message":"Successfully added rating.", "order_id":data['order_id'], "meal_id":meal_id})
+    except Exception as e:
+        log.error("Add review" + e.message)
+        return custom_error("Your are not authorized rate this meal/order.")
+
+"""
+@TODO
+"""
+@check_input('POST')
+def get_meal_details(request, data, user, meal_id):
+    try:
+        meal = Meal.objects.get(pk=meal_id)
+        ratings = []
+        images = []
+        nutrients = []
+        ingredients = []
+
+        for rating = meal.mealreview.all()
+        images = meal.images.all()
+    except Exception as e:
+        log.error("get_meals" + e.message)
+        return custom_error("Failed to get the meal details.")        

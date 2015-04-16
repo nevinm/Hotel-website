@@ -147,7 +147,7 @@ class User(models.Model):
     facebook_login = models.BooleanField(default=False)
     credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)], default=0)
     
-    gift_cards = models.ManyToManyField("GiftCard", null=True)
+    gift_cards = models.ManyToManyField("GiftCard", null=True, blank=True)
     
     need_sms_notification = models.BooleanField(default=True)
     deleted = models.BooleanField(default=False)
@@ -221,6 +221,12 @@ class Chef(models.Model):
     def __unicode__(self):
         return self.name
 
+class Tips(models.Model):
+    title = models.CharField(max_length=1024, null=True, blank=True)
+    description = models.TextField(max_length=1024)
+    image = models.ForeignKey(Image, null=True, blank=True)
+    video_url = models.CharField(max_length=1024, null=True, blank=True)
+
 class Meal(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField(max_length=1024)
@@ -243,12 +249,13 @@ class Meal(models.Model):
     pre_requisites = models.TextField(max_length=1024, null=True, blank=True)
     pre_requisites_image = models.ForeignKey(Image, null=True, blank=True, related_name="pre_requisites")
 
-    nutrients = models.ManyToManyField(Nutrient, through="MealNutrient")
+    nutrients = models.ManyToManyField(Nutrient, through="MealNutrient", null=True, blank=True)
     
-    ingredients = models.ManyToManyField(Ingredient, through="MealIngredient")
+    ingredients = models.ManyToManyField(Ingredient, through="MealIngredient", null=True, blank=True)
     ingredients_image = models.ForeignKey(Image, null=True, blank=True, related_name="ingredients")
     
-    tips_and_tricks = models.TextField(max_length=1024, null=True, blank=True)
+    tips = models.ForeignKey(Tips, null=True, blank=True)
+
     allergy_notice = models.TextField(max_length=1024,  null=True, blank=True)
 
     
@@ -265,7 +272,14 @@ class MealRating(models.Model):
     order = models.ForeignKey("Order")
     rating = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     comment = models.TextField(max_length=200)
+    created = models.DateTimeField(null=True)
     
+    
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = datetime.datetime.now()
+        super(MealRating, self).save(*args, **kwargs)
+
     def __init__(self):
         return self.rating
     
@@ -335,7 +349,7 @@ class Order(models.Model):
                       (4, "Delivered"),
                       )
     
-    status = models.BooleanField(default=True)
+    status = models.IntegerField(choices=status_choices, default=0)
     
     created = models.DateTimeField(null=True)
     updated = models.DateTimeField(null=True)
