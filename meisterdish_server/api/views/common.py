@@ -1,7 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from django.contrib.sessions.backends.db import SessionStore
 from api.models import *
-import json as simplejson
 import md5
 import logging 
 import settings
@@ -10,6 +9,7 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from decorators import *
 import sys, traceback
+from libraries import manage_image_upload
 
 log = logging.getLogger('api')
 
@@ -119,10 +119,10 @@ def signup(request, data):
         
         if password == '' or first_name == '' or last_name == '' or email == '':
             log.error(email + " : Sign up failed. Fill required fields.")
-            raise Exception("Please fill in all the required fields")
+            return custom_error("Please fill in all the required fields")
         
         if User.objects.filter(email=email).exists():
-            raise Exception("email already exists")
+            return custom_error("Email already exists.")
         try:
             user = User()
             user.email = email
@@ -156,13 +156,13 @@ def signup(request, data):
                 return custom_error("An error has occurred in sending verification mail. Please try later.")
         except Exception as e:
             log.error(email + " : Failed to sign up "+e.message)
-            raise Exception("Failed to sign up. Please try again later")
+            return custom_error("Failed to sign up. Please try again later")
     except KeyError as field:
         log.error("failed to signup "+str(field) + "missing")
         return custom_error("Invalid input")
     except Exception as e:
-        log.error("failed to signup "+e.message)
-        return custom_error(e.message)
+        log.error("Failed to signup "+e.message)
+        return custom_error("Failed to signup. Please check all the fields.")
 
 def send_user_verification_mail(user, change_email=False, email=""):
     try:
@@ -534,45 +534,35 @@ def get_address_list(request, data, user):
 @check_input('POST')
 def upload_picture(request, data, user):
     try:
-        from django.core.files.uploadedfile import UploadedFile
+        response = manage_image_upload(request)
+        if response is None:
+            return custom_error("There was an error uploading profile picture. Please try again later.")
 
-        if request.FILES == None:
-            return custom_error('Please upload a valid file')
-        
-        file = request.FILES[u'files[]']
-        wrapped_file = UploadedFile(file)
-        filename = wrapped_file.name
-        file_size = wrapped_file.file.size
-        log.info ('File upload : "'+str(filename)+'"')
-
-        image = Image()
-        image.title=str(filename)
-        image.image=file
-        image.save()
-        log.info('File saving done')
-        
-        delete_url = '/delete/'+str(image.pk)+'/'
-        
-        log.info("Created thumbnail")
-        user.profile_image = image
+        user.profile_image = Image.objects.get(pk=response['id'])
         user.save()
-        return json_response({
-                       "status":1,
-                       "message" : "Sucessfully changed the profile picture.",
-                       "name":filename, 
-                       "size":file_size, 
-                       "url":image.image.url,
-                       "thumbnail_url":image.thumb.url,
-                       })
-    except KeyError as e:
-        log.error("Failed to upload picture : " + e.message)
-        return custom_error("Failed to upload picture. Please try again later.")
+        return json_response(response)
+    except Exception as e:
+        log.error("Failed to upload profile picture : " + e.message)
+        return custom_error("Failed to upload profile picture. Please try again later.")
 
 @check_input('POST')
+def upload_image(request, data, user):
+    try:
+        response = manage_image_upload(request)
+        if response is None:
+            return custom_error("There was an error uploading image. Please try again later.")
+
+        user.profile_image = Image.objects.get(pk=response['id'])
+        user.save()
+        return json_response(response)
+    except Exception as e:
+        log.error("Failed to upload image : " + e.message)
+        return custom_error("Failed to upload image. Please try again later.")
+
+@check_input('POST', True)
 def delete_image(request, data, user, pk):
     try:
-        image = get_object_or_404(Image, pk=pk)
-        image.delete()
+        image = Image.objects.get(pk=pk).delete()
         return json_response({"status":1, "message":"Deleted image", "id":pk})
     except Exception as e:
         log.error("Failed to delete image " + e.message)

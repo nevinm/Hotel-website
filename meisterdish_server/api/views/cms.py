@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from api.models import *
+import json as simplejson
 import logging 
 import settings
 from datetime import datetime
@@ -204,7 +205,7 @@ def change_user_status(request, data, session_user):
         return custom_error("Failed to change user status")
 
 @check_input('POST')
-def get_meals(request, data, user):
+def get_meals(request, data):
     try:
         limit = data.get('perPage', settings.PER_PAGE)
         page = data.get("nextPage",1)
@@ -241,12 +242,8 @@ def get_meals(request, data, user):
                                     "url":img.image.url,
                                     "thumb_url" : "Not Available" if not img.thumb else img.thumb.url,
                                     })
-            ingredients = []
-            for ing in meal.ingredients.all():
-                ingredients.append({
-                                    "id":ing.id,
-                                    "name":ing.name.title()
-                                    })
+            ingredients = simplejson.loads(meal.ingredients) if meal.ingredients is not None and len(meal.ingredients) > 0 else []
+            
             meal_types = []
             for ty in meal.types.all():
                 meal_types.append({
@@ -291,14 +288,6 @@ def create_meal(request, data, user):
         tax = data['tax'].strip()
         available = data['available']
         
-        pre_req = data.get('pre_requisites', '').strip()
-        user_to_do = data.get('user_to_do', '').strip()
-        preparation_time = data.get('preparation_time', '').strip()
-        finished_preparation = data.get('finished_preparation', '').strip()
-        saved_time = data.get('preparation_time', '').strip()
-        tips_and_tricks = data.get('tips_and_tricks', '').strip()
-
-        
         if len(name) < 4 or len(desc)<10 or float(price) <=0 or float(tax) <0 :
             return custom_error("Please enter valid details.")
         
@@ -310,44 +299,100 @@ def create_meal(request, data, user):
             edit=False
             log.info("CREATING MEAL : "+e.message)
             meal = Meal()
-
+        
         meal.name = name.title()
         meal.description = desc
         
         meal.price = price
         meal.tax = tax
         meal.available = bool(available)
-        
-        meal.pre_requisites = pre_req
-        meal.user_to_do = user_to_do
-        meal.preparation_time = preparation_time
-        meal.finished_preparation = finished_preparation
-        meals.saved_time = saved_time
 
-        try:
-            meal.category=Category.objects.get(is_hidden=False, is_deleted=False, pk=data['category_id'])
-        except:
-            return custom_error("The selected category does not exist, or is not available.")
+        image_ids = data['images']
+        if "main_image" not in data:
+            main_img_id = data['images'][0]
+        else:
+            main_img_id = data['main_image']
+
+        meal.main_image = Image.objects.get(pk=int(main_img_id))
+
+        if 'chef_id' in data:
+            chef_id = data['chef_id']
+            meal.chef = Chef.objects.get(pk=int(data['chef_id']))
+        elif 'chef_name' in data and 'chef_image' in data and data['chef_name'].strip() != '':
+            chef = Chef()
+            chef.name = data['chef_name'].strip()
+            chef.image = Image.objects.get(pk=int(data['chef_image'])
+            chef.save()
+
+        if 'cat_id' in data:
+            try:
+                meal.category=Category.objects.get(is_hidden=False, is_deleted=False, pk=data['cat_id'])
+            except:
+                return custom_error("The selected category does not exist, or is not available.")
         
-        try:
-            meal.type = MealType.objects.get(is_hidden=False, is_deleted=False, pk=data['filter_id'])
-        except:
-            return custom_error("The selected Meal Filter does not exist, or is not available.")
+        if 'filter_id' in data:
+            try:
+                meal.type = MealType.objects.get(is_hidden=False, is_deleted=False, pk=data['filter_id'])
+            except:
+                return custom_error("The selected Meal Filter does not exist, or is not available.")
         
         if not edit:
             meal.save()
         else:
-            meal.nutrients = []
-            meal.ingredients = []
-            if "remove_images" in data and len(data["remove_images"].strip()) !=0:
-                try:
-                    remove_images = data['remove_images'].strip().split(",")
-                    for ri in remove_images:
-                        meal.images.remove(ri)
-                except Exception as e:
-                    log.error("Edit meal : Failed to remove image" + e.message)
-                    
+            meal.images = []
+        
+        for img in data['images']:
+            meal.images.add(Image.objects.get(pk=int(img)))
+
+        if 'pre_requisites' in data and len(data['pre_requisites']) > 0:
+            meal['pre_requisites'] = simplejson.dumps(data["pre_requisites"])
+
+        if 'pre_requisites_image' in data:
+            meal.pre_requisites_image = Image.objects.get(pk=int(data['pre_requisites_image']))
+
+        if 'user_to_do' in data and len(data['user_to_do']) > 0:
+            meal['user_to_do'] = simplejson.dumps(data["user_to_do"])
+
+        if 'preparation_time' in data and data['preparation_time'].strip() != '':
+            meal.preparation_time = data['preparation_time'].strip()
+
+        if 'finished_preparation' in data and len(data['finished_preparation']) > 0:
+            meal['finished_preparation'] = simplejson.dumps(data["finished_preparation"])        
+
+        if 'saved_time' in data and data['saved_time'].strip() != '':
+            meal.saved_time = data['saved_time'].strip()
+        
+        if "tips" in data and len(data['tips']) > 0:
+            for tip in data['tips']:
+                if 'id' not in tip:
+                    tip_obj = Tip()
+                else:
+                    try:
+                        tip_obj = Tip.objects.get(pk=int(tip['id']))
+                    except:
+                        tip_obj = 
+                tip_obj.title = tip['title'].strip().title()
+                tip_obj.description = tip['description'].strip()
+                if "image" in tip:
+                    tip_obj.image = Image.objects.get(pk=int(tip['tip']))
+                elif "video_url" in tip:
+                    tip_obj.video_url = tip['video_url'].strip()
+                tip_obj.save()
+                if tip_obj not in meal.tips.all():
+                    meal.tips.add(tip_obj)
+                    meal.save()
+
+        if 'ingredients' in data and len(data['ingredients']) > 0:
+            meal.ingredients = simplejson.dumps(data['ingredients'])
+
+        if 'ingredients_image' in data:
+            meal.ingredients_image = Image.objects.get(pk=int(data['ingredients_image']))
+
+        if 'allergy_notice' in data and data['allergy_notice'].strip() != '':
+            meal.allergy_notice = data['allergy_notice'].strip()
+
         if 'nutrients' in data:
+            meal.nutrients = []
             for nut in data.getlist("nutrients"):
                 try:
                     meal.nutrients.add(Nutrient.get(pk=int(nut)))
@@ -355,31 +400,12 @@ def create_meal(request, data, user):
                     meal.delete()
                     return custom_error("Some nutrients are currently unavailable")
         
-        if 'ingredients' in data:
-            for ing in data.getlist('ingredients'):
-                try:
-                    meal.ingredients.add(Ingredient.get(pk=int(ing)))
-                except:
-                    meal.delete() 
-                    return custom_error("Some ingredients are currently unavailable")
-        
-        for f in request.FILES.getlist('files'):
-            wrapped_file = UploadedFile(f)
-            filename = wrapped_file.name
-            file_size = wrapped_file.file.size
-            log.info ('meal image upload : "'+str(filename)+'"')
-    
-            image = Image()
-            image.title=str(filename)
-            image.image=f
-            image.save()
-            log.info('Meal image saved')
-            meal.images.add(image)
         meal.save()
-        return json_response({"status":1, "message":"The meal has been successfully created.", "id":meal.id})
+        action = "update" if edit else "create"
+        return json_response({"status":1, "message":"The meal has been successfully "+action+"d.", "id":meal.id})
     except IOError as e:
         log.error("Failed to create meals : "+e.message)
-        return custom_error("Failed to create meal. Please try again later.")
+        return custom_error("Failed to "+action+" meal. Please try again later.")
     
 @check_input('POST', True)
 def delete_meal(request, data, user, meal_id):
