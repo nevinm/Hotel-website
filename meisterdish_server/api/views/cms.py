@@ -242,12 +242,8 @@ def get_meals(request, data):
                                     "url":img.image.url,
                                     "thumb_url" : "Not Available" if not img.thumb else img.thumb.url,
                                     })
-            ingredients = []
-            for ing in meal.ingredients.all():
-                ingredients.append({
-                                    "id":ing.id,
-                                    "name":ing.name.title()
-                                    })
+            ingredients = simplejson.loads(meal.ingredients) if meal.ingredients is not None and len(meal.ingredients) > 0 else []
+            
             meal_types = []
             for ty in meal.types.all():
                 meal_types.append({
