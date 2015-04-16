@@ -40,6 +40,9 @@
   padding-right: 20px;
   position: relative;
 }
+.password-wrapper{
+  margin-top: 10px;
+}
 .username-wrapper input, .password-wrapper input{
   width: 60%;
 }
@@ -49,9 +52,6 @@
 span.forgot-password{
   margin: 10px 0px;
   float: left;
-}
-.password-wrapper label{
-  margin: 10px 0px;
 }
 /*==================================*\
       &SIGNUP

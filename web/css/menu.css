@@ -37,7 +37,7 @@
 \*==============================*/
 .menu-wrapper{
 	background-color: #E7E7E7;
-	background-image: url() !important;
+	background-image: url(../images/inner_bg.jpg) !important;
 }
 .subMenu{
 	width: 100%;
@@ -73,7 +73,7 @@
 
 .subMenuFilter{
 	float: right;
-	padding: 18px 0 !important;
+	padding: 20px 0 !important;
 }
 .filter-container{
 	padding: 0 15px;
@@ -97,7 +97,7 @@
 	background-color: white;
 	width: 150px;
 	position: absolute;
-	top: 55px;
+	top: 59px;
 	right: -15px;
 	display: none;
 }

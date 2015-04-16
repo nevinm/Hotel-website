@@ -246,8 +246,18 @@ h4{
 	background-color: #8EC657;
 }
 
-
-
+::-moz-focus-inner { 
+  border: 0; 
+}
+:focus{
+    noFocusLine: expression(this.onFocus=this.blur());
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
 /*==============================*\
 			&common
 \*==============================*/
