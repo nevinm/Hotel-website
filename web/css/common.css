@@ -112,6 +112,13 @@ NAVBAR RESPONSIVE
 h1,h2,h3{
 	text-transform: uppercase;
 }
+.h0{
+	font-family: 'BrandonGrotesque-Light';
+	font-size: 35px;
+	letter-spacing: 4px;
+  	line-height: 75px;
+  	margin-bottom: 5px;
+}
 h1{
 	font-family: 'BrandonGrotesque-Bold';
 	font-size: 35px;
@@ -123,22 +130,22 @@ h2{
 	font-family: 'BrandonGrotesque-Bold';
 	font-size: 24px;
 	letter-spacing: 2px;
-    line-height: 50px;
+    line-height: 35px;
     margin-bottom: 5px;
 }
 h3{
 	font-size: 20px;
 	font-family: 'BrandonGrotesque-Regular';
 	letter-spacing: 1.5px;
-	line-height: 50px;
+	line-height: 30px;
 	margin-bottom: 5px;
 	color: #9B9B9B;
 }
 h4{
 	font-size: 16px;
-	font-family: 'BrandonGrotesque-Regular';
-	letter-spacing: 2px;
-	line-height: 50px;
+	font-family: 'BrandonGrotesque-Light';
+	letter-spacing: 1px;
+	line-height: 25px;
 	margin-bottom: 5px;
 }
 
@@ -152,7 +159,7 @@ h4{
 }
 .body-text-bold{
 	font-size: 16px;
-	font-family: 'ProximaNova-regular';	
+	font-family: 'ProximaNova-semibold';	
 	letter-spacing: 0.5px;
 	line-height: 17px;
 	margin-bottom: 5px;
