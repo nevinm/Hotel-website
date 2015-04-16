@@ -185,7 +185,7 @@ def get_meal_details(request, data, user, meal_id):
         nutrients = []
         ingredients = []
 
-        for rating = meal.mealreview.all():
+        for rating in meal.mealreview.all():
             pass
         images = meal.images.all()
     except Exception as e:
