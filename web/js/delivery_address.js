@@ -121,8 +121,6 @@ function addAddress() {
     addAddressInstance.sendPost(url, header, data, addAddressCallback);
 }
 
-
-
 //Edit address API
 var editAddressCallback = {
     success: function(data, textStatus) {

@@ -250,7 +250,7 @@ h4{
 \*==============================*/
 html,body{
 	height:100%;
-	overflow: inherit;
+	overflow: auto;
 }
 #mainWrapper{
 	width: 100%;
