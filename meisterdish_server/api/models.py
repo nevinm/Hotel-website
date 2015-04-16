@@ -147,7 +147,7 @@ class User(models.Model):
     facebook_login = models.BooleanField(default=False)
     credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)], default=0)
     
-    gift_cards = models.ManyToManyField("GiftCard", null=True)
+    gift_cards = models.ManyToManyField("GiftCard", null=True, blank=True)
     
     need_sms_notification = models.BooleanField(default=True)
     deleted = models.BooleanField(default=False)
@@ -215,6 +215,18 @@ class Ingredient(models.Model):
     def __unicode__(self):
         return self.name
 
+class Chef(models.Model):
+    name = models.CharField(max_length=20)
+    image = models.ForeignKey(Image)
+    def __unicode__(self):
+        return self.name
+
+class Tips(models.Model):
+    title = models.CharField(max_length=1024, null=True, blank=True)
+    description = models.TextField(max_length=1024)
+    image = models.ForeignKey(Image, null=True, blank=True)
+    video_url = models.CharField(max_length=1024, null=True, blank=True)
+
 class Meal(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField(max_length=1024)
@@ -222,6 +234,9 @@ class Meal(models.Model):
     main_image = models.ForeignKey(Image, null=True, blank=True, related_name="main_image")
     images = models.ManyToManyField(Image, related_name="meal", null=True, blank=True)
     
+    chef = models.ForeignKey(Chef, null=True, blank=True)
+    chef_comments = models.TextField(max_length=1024, null=True, blank=True)
+
     types = models.ManyToManyField(MealType, null=True, blank=True)
     category = models.ForeignKey(Category, null=True)
 
@@ -232,12 +247,17 @@ class Meal(models.Model):
     saved_time = models.CharField(max_length=30, null=True, blank=True)
 
     pre_requisites = models.TextField(max_length=1024, null=True, blank=True)
+    pre_requisites_image = models.ForeignKey(Image, null=True, blank=True, related_name="pre_requisites")
 
-    nutrients = models.ManyToManyField(Nutrient, through="MealNutrient")
-    ingredients = models.ManyToManyField(Ingredient, through="MealIngredient")
+    nutrients = models.ManyToManyField(Nutrient, through="MealNutrient", null=True, blank=True)
     
-    tips_and_tricks = models.TextField(max_length=1024, null=True, blank=True)
+    #ingredients = models.ManyToManyField(Ingredient, through="MealIngredient", null=True, blank=True)
+    ingredients = models.TextField(max_length=1024, null=True, blank=True)
+    ingredients_image = models.ForeignKey(Image, null=True, blank=True, related_name="ingredients")
+    
+    tips = models.ForeignKey(Tips, null=True, blank=True)
 
+    allergy_notice = models.TextField(max_length=1024,  null=True, blank=True)
 
     
     price = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
@@ -250,10 +270,17 @@ class Meal(models.Model):
 
 class MealRating(models.Model):
     meal = models.ForeignKey(Meal)
-    user = models.ForeignKey(User)
+    order = models.ForeignKey("Order")
     rating = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     comment = models.TextField(max_length=200)
+    created = models.DateTimeField(null=True)
     
+    
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = datetime.datetime.now()
+        super(MealRating, self).save(*args, **kwargs)
+
     def __init__(self):
         return self.rating
     
@@ -265,16 +292,16 @@ class MealNutrient(models.Model):
     
     def __unicode__(self):
         return self.meal.name + " - " + self.nutrient.name
-    
+"""    
 class MealIngredient(models.Model):
     meal = models.ForeignKey(Meal)
     ingredient = models.ForeignKey(Ingredient)
-    content = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
-    unit = models.CharField(max_length=10)
+    content = models.CharField(max_length=1024, null=True, blank=True)
+    
     
     def __unicode__(self):
         return self.meal.name + " - " + self.ingredient.name
-        
+"""        
 class Payment(models.Model):
     methods = PAYMENT_METHODS
     payment_type = models.CharField(choices=methods, max_length=2)
@@ -291,6 +318,7 @@ class Payment(models.Model):
         
 class Cart(models.Model):
     user = models.ForeignKey(User)
+    completed = models.BooleanField(default=False)
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart)
@@ -302,6 +330,7 @@ class Order(models.Model):
     transaction_id = models.CharField(max_length=30, null=True)
     
     cart = models.ForeignKey(Cart)
+
     total_amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
     total_tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
     tip = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(1000)])
@@ -321,7 +350,7 @@ class Order(models.Model):
                       (4, "Delivered"),
                       )
     
-    status = models.BooleanField(default=True)
+    status = models.IntegerField(choices=status_choices, default=0)
     
     created = models.DateTimeField(null=True)
     updated = models.DateTimeField(null=True)
@@ -330,6 +359,10 @@ class Order(models.Model):
         if not self.id:
             self.created = datetime.datetime.now()
         self.updated = datetime.datetime.now()
+
+        if self.status > 2:
+            self.cart.completed = True
+            self.cart.save()
         super(Order, self).save(*args, **kwargs)
     
 class GiftCard(models.Model):

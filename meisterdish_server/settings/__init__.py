@@ -177,6 +177,10 @@ LOGGING = {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },
+        'libraries': {
+            'handlers': ['logfile'],
+            'level': 'DEBUG'
+        },
     }
 }
 

@@ -255,7 +255,7 @@ input#searchBy-name {
 .section-1 input{
   margin-right: 20px;
 }
-.section-1 ,.section-2,.section-3,.section-4,.section-5{
+.section-1 ,.section-2,.section-3,.section-4,.section-5,.section-6{
   padding: 20px 0;
   border: 1px solid #ddd;
   margin-top: 30px;
@@ -386,11 +386,6 @@ input#meal-price {
   font-family: 'BrandonGrotesque-Regular';
   color: #909090;
 }
-.list-container ul img{
-  height: 14px;
-  margin-left: 10px;
-  cursor: pointer;
-}
 .list-container ul{
   width: 60%;
   float: left;
@@ -403,7 +398,8 @@ input#meal-price {
   width: 100%;
   float: left;
 }
-.add-list-button,.add-preparation-button,.add-nutrition-content {
+.add-list-button,.add-preparation-button,
+.add-nutrition-content,#add-tips-main,#add-tips-sub-list{
   height: 40px;
   width: 40px;
   border-radius: 20px;
@@ -412,6 +408,9 @@ input#meal-price {
   font-family: 'BrandonGrotesque-Black';
   color: #fff;
   text-transform: uppercase;
+}
+#add-tips-sub-list{
+  margin-left: 10px;
 }
 .section-1 select {
   padding: 4px 35px;
@@ -435,7 +434,7 @@ input#create-meal-button {
 .section-5 input{
   margin-right: 20px;
 }
-.remove-tr,.add-tr,.del-sub-list{
+.remove-tr,.add-tr,.del-sub-list,.add-tips-sublist,.del-tips-sub-list{
   height: 14px;
   margin-left: 10px;
   cursor: pointer;
@@ -464,8 +463,43 @@ input#create-meal-button {
 .nutrients-popup-wrapper{
   display: none;
 }
-#nutrient-table ul li:first-child{
-  margin-top: 10px;
-  font-size: 10px;
+.tips-sublist-input-container ul li{
+  font-size: 15px;
   color: grey;
+  text-transform: lowercase;
+  text-align: left;
+  padding-left: 160px;
+}
+#nutrient-table ul li{
+  font-size: 15px;
+  color: grey;
+  text-transform: lowercase;
+  text-align: left;
+  padding-left: 115px;
+}
+.section-6 .section-header{
+  width: 138px;
+}
+table#tips-and-tricks-table{
+  width: 100%;
+}
+.section-6 table thead th:first-child{
+  width: 330px;
+}
+.tips-sublist-input-container{
+  width: 100%;
+  float: left;
+}
+.section-6 table .create-meal-input{
+  padding-left: 1px;
+}
+.section-5 table,td,.section-6 table,td{
+  text-transform: none;
+  font-size: 18px;
+  font-family: 'ProximaNova-regular';
+}
+.remove{
+  height: 14px;
+  margin-left: 10px;
+  cursor: pointer;
 }

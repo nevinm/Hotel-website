@@ -355,7 +355,23 @@ label{
 	border-right: 5px solid transparent;
 	border-top: 5px solid rgb(200, 200, 200);           
 }
+::-webkit-input-placeholder {
+   font-family: 'ProximaNova-regular';
+  color: #9B9B9B;
+}
+:-moz-placeholder { /* Firefox 18- */
+   font-family: 'ProximaNova-regular';
+  color: #9B9B9B;
+}
 
+::-moz-placeholder {  /* Firefox 19+ */
+   font-family: 'ProximaNova-regular';
+  color: #9B9B9B;
+}
+:-ms-input-placeholder {  
+   font-family: 'ProximaNova-regular';
+  color: #9B9B9B; 
+}
 
 /*==============================*\
 			&HEADER
@@ -557,7 +573,7 @@ span.icon-menu{
 	background: white;
 	position: absolute;
 	right: 10px;
-	bottom: 35px;
+	bottom: 37px;
 	padding: 4px 0px;
 	font-family: ProximaNova-Regular;
   	font-size: 11px;

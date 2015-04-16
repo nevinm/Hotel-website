@@ -70,7 +70,7 @@
                             </div> 
                             <div class="content-1">                    
                                 <div class="text-area-container">
-                                    <textarea id="description">
+                                    <textarea id="description" placeholder = "Description" cols="70" rows="50">
                                     </textarea>
                                 </div>
                                 <input type="text" name="price" class="create-meal-input" id="meal-price" placeholder= "Price">
@@ -157,7 +157,7 @@
                             <div class="section-header">NUTRITION</div>
                             <div class="content-1">
                                 <div class="input-feild-container">
-                                    <input type="text" placeholder = "NUTRIENTS" class="create-meal-input" id="nutrients">
+                                    <input type="text" placeholder = "Nutrients" class="create-meal-input" id="nutrients">
                                     <input type="text" placeholder = "per serving" class="create-meal-input" id="nutrients-per-serving">
                                     <input type="text" placeholder = "%daily value" class="create-meal-input" id="nutrients-daily-value">
                                     <input type="button" class="add-nutrition-content" value="add">
@@ -176,6 +176,27 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                        <div class="section-6">
+                            <div class="section-header">TIPS & TRICKS</div>
+                            <div class="content-1">
+                                <div class="tips-container">
+                                    <input type="text" placeholder = "Video URL" class="create-meal-input" id="tips-video-url">
+                                    <input type="text" placeholder = "Tips & Tricks" class="create-meal-input" id="tips-and-tricks">
+                                    <input type="button" id="add-tips-main" value="add">
+                                </div>
+                            </div>
+                            <div class="content-1">
+                                <table id="tips-and-tricks-table">
+                                    <thead>
+                                        <tr>
+                                            <th>VIDEO URL</th>
+                                            <th>TIPS&TRICKS</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
                         </div>
                         <div class="create-button-container">
                             <input type="button" class="btn btn-large-primary medium-green" id="create-meal-button" value="CREATE">

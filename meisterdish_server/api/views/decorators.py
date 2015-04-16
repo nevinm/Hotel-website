@@ -19,8 +19,10 @@ def check_input(method, admin=False):
                                              'logout', 
                                              'reset_password', 
                                              'verify_user', 
-                                             'verify_email',]:
-                        common_apis = ["get_profile"]
+                                             'verify_email',
+                                             'get_meals'
+                                             ]:
+                        #common_apis = ["get_meals"]
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
                         session = SessionStore(session_key=session_key)
                         if session and 'user' in session :
