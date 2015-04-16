@@ -1,3 +1,5 @@
+//global variable 
+var i =0;
 $(document).ready(function() {
 	
 	$('.add-list-button,.add-preparation-button').on("click",function(){
@@ -10,32 +12,33 @@ $(document).ready(function() {
 		var nutrients = $('#nutrients').val(),
 			per_serving = $('#nutrients-per-serving').val(),
 			daily_value = $('#nutrients-daily-value').val();
+			
 		populateNutrients(nutrients,per_serving,daily_value); 
 	});
 	$('#create-meal-button').on("click",function(){
 		createMeal();
 	});
 	
-	//add sub tr
+	//add nutrient table sub tr
 	$(document).on('click','img.add-tr',function(){
 		$('.nutrients-popup-wrapper').show();
 		var parent_tr = $(this).parent().parent();
 		var nutrients_td  = parent_tr.find('td:first-child'),
 			per_serving_td  = parent_tr.find('td:nth-child(2)'),
-			daily_value_td = parent_tr.find('td:nth-child(3)');
-			addSubNutrients(nutrients_td,per_serving_td,daily_value_td);
+			daily_value_td = parent_tr.find('td:nth-child(3)');		
+		addSubNutrients(nutrients_td,per_serving_td,daily_value_td);
 	});
 		
 	$('#cancel-nurient-popup').on("click",function(){
 		$('.nutrients-popup-wrapper').hide();
 	});
 	
-	//remove tr
+	//remove nutrient table tr
 	$(document).on('click','img.remove-tr',function(){
 		$(this).parent().parent().remove();
 	});
 
-	//remove sb-tr
+	//remove  nutrient table sb-tr
 	$(document).on('click','.del-sub-list',function(){
 		var row_li = $(this).parent().parent().parent().parent().find('li');
 		var li_len = $(this).parent().parent().parent().parent().find('li').length;
@@ -45,12 +48,36 @@ $(document).ready(function() {
 		row_li[li_len-temp-temp-1].remove();
 	});
     
-    //remove li
+    //remove nutrient table li
     $(document).on('click', 'img.remove', function() {
-        debugger;
         $(this).parent().remove();
     });
-    getFilterContent();
+
+    //add tips&tricks table tr
+    $('#add-tips-main').on("click",function(){
+    	var video_URL = $('#tips-video-url').val(),
+    		tips_heading = $('#tips-and-tricks').val();
+    	$('#tips-and-tricks-table').append('<tr>'+'<td>'+video_URL+'</td>'+
+    										'<td>'+tips_heading+'<img class="add-tips-sublist" src="../../images/add-button-md.png">'+
+    										'<img class="del-tips-sub-list" src = "../../images/del.png">'+'</td>'+'</tr>')	
+    });
+
+    //del main head(tips and tricks)
+    $(document).on('click','.del-tips-sub-list',function(){
+    	$(this).parent().parent().remove();
+    });
+    //add sublist field to tips & ticks
+    $(document).on('click','.add-tips-sublist',function(){
+    	var current_td = $(this).parent();
+    	$(current_td).append('<div class="tips-sublist-input-container">'+'<input type= "text" class="create-meal-input" id="tips-sub-list">'+'<input type="button" id="add-tips-sub-list" value="add">'+'<ul>'+'</ul>'+'</div>');
+    	
+    	$('.add-tips-sublist').hide();
+    });
+    $(document).on('click','#add-tips-sub-list',function(){
+    	var current_tips_tr = $(this).parent();
+    	current_tips_tr.find('ul').append('<li>'+$('#tips-sub-list').val()+'<img class="remove" src="../../images/del.png">'+'</li>');
+    });
+    // getFilterContent();
 });
 
 //CREATE MEAL API
@@ -124,8 +151,9 @@ function populateListData(element_id, container) {
 
 //populate to table 
 function populateNutrients(nutrients,per_serving,daily_value){
-	$('#nutrient-table').append('<tr>'+'<td>'+nutrients+'<img class="add-tr" src="../../images/add-button-md.png">'+'<img class="remove-tr" src="../../images/del.png">'+'</td>'+
-		'<td>'+per_serving+'</td>'+'<td>'+daily_value+'</td>'+'</tr>')
+	$('#nutrient-table').append('<tr>'+'<td>'+'<span>'+nutrients+'</span>'+'<img class="add-tr" src="../../images/add-button-md.png">'+'<img class="remove-tr" src="../../images/del.png">'+'</td>'+
+		'<td>'+'<span>'+per_serving+'</span>'+'</td>'+'<td>'+'<span>'+daily_value+'</span>'+'</td>'+'</tr>');
+	$('table#nutrient-table tbody td').append('<ul>');
 }
 
 //populate category , meal_type select button
@@ -162,10 +190,14 @@ function populateCreateMealFilter(meal_type, categories) {
 }
 function addSubNutrients(nutrients_td,per_serving_td,daily_value_td){
 	$('#save-nutrients').unbind( "click");
+	
 	$('#save-nutrients').on("click",function (){
-		$(nutrients_td).append('<ul>'+'<li>'+$('#sub-nutrients').val()+'<img class="del-sub-list" src = "../../images/del.png">'+'</li>'+'</ul>');
-		$(per_serving_td).append('<ul>'+'<li>'+$('#sub-per-serving').val()+'</li>'+'</ul>');
-		$(daily_value_td).append('<ul>'+'<li>'+$('#sub-daily-value').val()+'</li>'+'</ul>');
+		$(nutrients_td).find('ul').append('<li class="sub-category-'+i+'">'+$('#sub-nutrients').val()+
+						'<img class="del-sub-list" src = "../../images/del.png">'+'</li>');
+		$(per_serving_td).find('ul').append('<li>'+$('#sub-per-serving').val()+'</li>');
+		$(daily_value_td).find('ul').append('<li>'+$('#sub-daily-value').val()+'</li>');
 		$('.nutrients-popup-wrapper').hide();
+		i++;
+
 	});
 }

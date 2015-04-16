@@ -93,6 +93,10 @@ SLIDER
 .slide-description h3{
 	text-transform: uppercase;
 }
+#slide1 .slide-description .h0{
+	text-transform: uppercase;
+  	color: #9B9B9B;
+}
 #section2 .slide-description{
     position: absolute;
     top: 47%;
@@ -124,24 +128,29 @@ SLIDER
 	background: url(../images/homepageslider/homepage_1.jpg) 0% 50% no-repeat;
 	background-position: fixed;
 	padding: 6% 0 0 0;
+	/*background-size: cover;*/
 }
 #slide2{
 	background: url(../images/homepageslider/homepage_12.jpg) center top no-repeat;
 	background-position: fixed;
 	padding: 6% 0 0 0;
+	/*background-size: cover;*/
 }
 #slide3{
 	background: url(../images/homepageslider/homepage_2.jpg) center top no-repeat;
 	background-position: fixed;
 	padding: 30% 0 0 0;
+	/*background-size: cover;*/
 }
 #slide4{
 	background: url(../images/homepageslider/homepage_14.jpg) center top no-repeat;
 	background-position: fixed;
 	padding: 30% 0 0 0;
+	/*background-size: cover;*/
 }
 #section3{
 	background: url(../images/homepageslider/map_banner.jpg) center top no-repeat;
 	background-position: fixed;
 	padding: 6% 0 0 0;
+	/*background-size: cover;*/
 }

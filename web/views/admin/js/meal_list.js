@@ -106,7 +106,7 @@ function populateMealList(data) {
             "<td>" + value.description + "</td>" +
             "<td>" + value.available + "</td>" +
             "<td>" + value.category + "</td>" +
-            "<td>" + value.meal_type[0].name + "</td>" +
+            "<td>" + value.meal_types[0].name + "</td>" +
             "<td>" + value.price + "</td>" +
             "<td><button type='button' class='meal-delete' data-id='" + value.id + "'>Delete</button></td>" + "</tr>");
     });
