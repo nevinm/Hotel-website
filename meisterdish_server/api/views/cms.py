@@ -386,6 +386,8 @@ def create_meal(request, data, user):
                     meal.tips.add(tip_obj)
                     meal.save()
 
+        if 'ingredients' in data and len(data['ingredients']) > 0:
+            meal.ingredients = simplejson.dumps(data['ingredients'])
 
         if 'ingredients_image' in data:
             meal.ingredients_image = Image.objects.get(pk=int(data['ingredients_image']))
@@ -401,15 +403,6 @@ def create_meal(request, data, user):
                 except:
                     meal.delete()
                     return custom_error("Some nutrients are currently unavailable")
-        
-        if 'ingredients' in data:
-            meal.ingredients = []
-            for ing in data.getlist('ingredients'):
-                try:
-                    meal.ingredients.add(Ingredient.get(pk=int(ing)))
-                except:
-                    meal.delete() 
-                    return custom_error("Some ingredients are currently unavailable")
         
         meal.save()
         action = "update" if edit else "create"

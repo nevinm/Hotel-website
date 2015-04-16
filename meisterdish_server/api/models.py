@@ -251,7 +251,8 @@ class Meal(models.Model):
 
     nutrients = models.ManyToManyField(Nutrient, through="MealNutrient", null=True, blank=True)
     
-    ingredients = models.ManyToManyField(Ingredient, through="MealIngredient", null=True, blank=True)
+    #ingredients = models.ManyToManyField(Ingredient, through="MealIngredient", null=True, blank=True)
+    ingredients = models.TextField(max_length=1024, null=True, blank=True)
     ingredients_image = models.ForeignKey(Image, null=True, blank=True, related_name="ingredients")
     
     tips = models.ForeignKey(Tips, null=True, blank=True)
@@ -291,7 +292,7 @@ class MealNutrient(models.Model):
     
     def __unicode__(self):
         return self.meal.name + " - " + self.nutrient.name
-    
+"""    
 class MealIngredient(models.Model):
     meal = models.ForeignKey(Meal)
     ingredient = models.ForeignKey(Ingredient)
@@ -300,7 +301,7 @@ class MealIngredient(models.Model):
     
     def __unicode__(self):
         return self.meal.name + " - " + self.ingredient.name
-        
+"""        
 class Payment(models.Model):
     methods = PAYMENT_METHODS
     payment_type = models.CharField(choices=methods, max_length=2)
