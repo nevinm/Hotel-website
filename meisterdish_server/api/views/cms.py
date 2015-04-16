@@ -284,11 +284,12 @@ def create_meal(request, data, user):
         name = data['name'].strip()
         desc = data['description'].strip()
         
-        price = data['price'].strip()
-        tax = data['tax'].strip()
+        price = float(data['price'])
+        tax = float(data['tax'])
         available = data['available']
         
-        if len(name) < 4 or len(desc)<10 or float(price) <=0 or float(tax) <0 :
+        if len(name) < 3 or len(desc)<5 or float(price) <=0 or float(tax) <0 :
+            log.error("name, desc, price or tax invalid")
             return custom_error("Please enter valid details.")
         
         try:
@@ -345,19 +346,19 @@ def create_meal(request, data, user):
             meal.images.add(Image.objects.get(pk=int(img)))
 
         if 'pre_requisites' in data and len(data['pre_requisites']) > 0:
-            meal['pre_requisites'] = simplejson.dumps(data["pre_requisites"])
+            meal.pre_requisites = simplejson.dumps(data["pre_requisites"])
 
         if 'pre_requisites_image' in data:
             meal.pre_requisites_image = Image.objects.get(pk=int(data['pre_requisites_image']))
 
         if 'user_to_do' in data and len(data['user_to_do']) > 0:
-            meal['user_to_do'] = simplejson.dumps(data["user_to_do"])
+            meal.user_to_do = simplejson.dumps(data["user_to_do"])
 
         if 'preparation_time' in data and data['preparation_time'].strip() != '':
             meal.preparation_time = data['preparation_time'].strip()
 
         if 'finished_preparation' in data and len(data['finished_preparation']) > 0:
-            meal['finished_preparation'] = simplejson.dumps(data["finished_preparation"])        
+            meal.finished_preparation = simplejson.dumps(data["finished_preparation"])        
 
         if 'saved_time' in data and data['saved_time'].strip() != '':
             meal.saved_time = data['saved_time'].strip()
@@ -365,16 +366,16 @@ def create_meal(request, data, user):
         if "tips" in data and len(data['tips']) > 0:
             for tip in data['tips']:
                 if 'id' not in tip:
-                    tip_obj = Tip()
+                    tip_obj = Tips()
                 else:
                     try:
-                        tip_obj = Tip.objects.get(pk=int(tip['id']))
+                        tip_obj = Tips.objects.get(pk=int(tip['id']))
                     except:
-                        tip_obj = Tip()
+                        tip_obj = Tips()
                 tip_obj.title = tip['title'].strip().title()
                 tip_obj.description = tip['description'].strip()
                 if "image" in tip:
-                    tip_obj.image = Image.objects.get(pk=int(tip['tip']))
+                    tip_obj.image = Image.objects.get(pk=int(tip['image']))
                 elif "video_url" in tip:
                     tip_obj.video_url = tip['video_url'].strip()
                 tip_obj.save()
@@ -391,7 +392,7 @@ def create_meal(request, data, user):
         if 'allergy_notice' in data and data['allergy_notice'].strip() != '':
             meal.allergy_notice = data['allergy_notice'].strip()
 
-        if 'nutrients' in data:
+        if 'nutrients' in data and len(data['nutrients']) > 0:
             meal.nutrients = []
             for nut in data.getlist("nutrients"):
                 try:
