@@ -286,16 +286,16 @@ def forgot_password(request, data):
         
     except KeyError as field:
         log.error("Forgot password request missing "+field.message)
-        return custom_error("Invalid input")
+        return custom_error("Invalid input.")
     except User.DoesNotExist as e:
         log.error("Forgot password request with non-existing email: "+email)
         return custom_error("No user exists with the given email address.")
     except Exception as e:
         log.error("Failed to send the password reset email : "+e.message)
-        return custom_error("Failed to send the password reset email")
+        return custom_error("Failed to send the password reset email.")
     else:
         log.info("Reset password mail sent to : "+email)
-        return json_response({"status":1, "message":"Password reset link has been sent to "+user.email})
+        return json_response({"status":1, "message":"Password reset link has been sent to "+user.email+"."})
 
 @check_input('POST')
 def reset_password(request, data):
@@ -309,14 +309,14 @@ def reset_password(request, data):
         user.save()
         
         log.info("Password reset for user "+user.email)
-        return json_response({"status":1, "message":"Password has been reset."})
+        return json_response({"status":1, "message":"Your password has been reset."})
     
     except KeyError as field:
         log.error("Reset password request missing "+field.message)
-        return custom_error("Invalid input")
+        return custom_error("Invalid input.")
     except User.DoesNotExist:
         log.error("Reset password : No user found with given token")
-        return custom_error("Invalid token")
+        return custom_error("Invalid token.")
     except Exception as e:
         log.error("Validate token : Exception : "+e.message)
         return custom_error("Failed to reset password. Please try again later.")

@@ -352,6 +352,7 @@ class Order(models.Model):
                       )
     
     status = models.IntegerField(choices=status_choices, default=0)
+    is_deleted = models.BooleanField(default=False)
     
     created = models.DateTimeField(null=True)
     updated = models.DateTimeField(null=True)

@@ -334,11 +334,12 @@ def create_meal(request, data, user):
             except:
                 return custom_error("The selected category does not exist, or is not available.")
         
-        if 'filter_id' in data:
-            try:
-                meal.type = MealType.objects.get(is_hidden=False, is_deleted=False, pk=data['filter_id'])
-            except:
-                return custom_error("The selected Meal Filter does not exist, or is not available.")
+        if 'filter_ids' in data:
+            for fid in data['filter_ids']:
+                try:
+                    meal.type = MealType.objects.get(is_hidden=False, is_deleted=False, pk=fid)
+                except:
+                    return custom_error("The selected Meal Filter does not exist, or is not available.")
         
         if not edit:
             meal.save()
@@ -376,7 +377,7 @@ def create_meal(request, data, user):
                     except:
                         tip_obj = Tips()
                 tip_obj.title = tip['title'].strip().title()
-                tip_obj.description = tip['description'].strip()
+                tip_obj.description = simplejson.dumps(tip['description'].strip())
                 
                 if "image" in tip:
                     tip_obj.image = Image.objects.get(pk=int(tip['image']))
