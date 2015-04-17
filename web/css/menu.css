@@ -2,7 +2,7 @@
 .filter-drop-down label {
     cursor: pointer;
     position: relative;
-    padding-left: 30px;
+    padding-left: 35px;
 }
 .filter-drop-down label:before {
     content:"";
@@ -13,20 +13,21 @@
     position: absolute;
     left: 0;
     bottom: 1px;
-    background-color: #F7EEEE;
-    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
-    border-radius: 3px;
+    background-color: #f7f7f7;
+    border-radius: 4px;
+    border: 1px solid #d0d0d0;
 }
 .filter-drop-down input[type=checkbox] {
     display: none;
 }
 .filter-drop-down input[type=checkbox]:checked + label:before {
-    content:"\2714";
+    content:"";
     text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
     font-size: 15px;
     color: #f3f3f3;
     text-align: center;
     line-height: 15px;
+   background: center url(../images/checkbox_tick.png) no-repeat;
     background-color: #969696;
   	color: #F7EBEB;
 }
@@ -37,7 +38,8 @@
 \*==============================*/
 .menu-wrapper{
 	background-color: #E7E7E7;
-	background-image: url() !important;
+	background-image: url(../images/inner_bg.jpg) !important;
+	background-size: cover;
 }
 .subMenu{
 	width: 100%;
@@ -46,7 +48,6 @@
 	background: #fff;
 	color: #5a5a5a;
 }
-
 .subMenu ul li.menu-categories-list{
 	float: left;
 	border-left: 1px solid #F3F3F3;
@@ -73,7 +74,7 @@
 
 .subMenuFilter{
 	float: right;
-	padding: 18px 0 !important;
+	padding: 20px 0 !important;
 }
 .filter-container{
 	padding: 0 15px;
@@ -93,28 +94,35 @@
 .filter-center{
 	position: relative;
 }
-.filter-drop-down{
+.filter-drop-down {
 	background-color: white;
-	width: 150px;
+	width: 180px;
 	position: absolute;
-	top: 55px;
+	top: 59px;
 	right: -15px;
 	display: none;
+	box-shadow: 0 0 6px #d0d0d0;
 }
 
 .filter-drop-down input[type='checkbox']{
 	float: left;
 	margin: 5px 0;
 }
-.filter-drop-down ul li{
-	padding: 10px 0;
+.filter-drop-down ul li {
+	padding: 12px 0;
 	overflow: hidden;
+	text-transform: uppercase;
+	font-family: 'BrandonGrotesque-bold';
+	font-size: 13px;
+}
+.filter-drop-down ul li:hover {
+	background: linear-gradient(to right,#DFDFDF,#f7f7f7,#EFEFEF);
 }
 .filter-drop-down ul li:hover{
 	background-color: #F0F0F0;
 }
 .filter-drop-down ul li div{
-	padding: 0px 15px;
+	padding: 0px 21px;
 }
 .filter-container:hover{
 	border-bottom: 2px solid #a9d77b;
@@ -163,6 +171,13 @@
 	height: 400px;
 	background: url(../images/Header_Image.jpg) no-repeat;
 	background-size: cover;
+	position: relative;
+}
+.subMenuHeader span{
+	position: absolute;
+	bottom: 0;
+	color: #fff;
+	left: 94px;
 }
 .addItemButton{
 	height: 32px;

@@ -50,7 +50,7 @@ def add_to_cart(request, data, user):
         except:
           return custom_error("Sorry, this meal is currently not available.")
         
-        carts = Cart.objects.filter(user=user)
+        carts = Cart.objects.filter(user=user, completed=False)
         if not carts.exists():
            cart = Cart()
            cart.user = user
@@ -87,7 +87,7 @@ def update_cart(request, data, user):
               return custom_error("Sorry, meal #" +str(meal_id)+ " is currently not available.")
             meals.append({"meal":meal, "qty":qty})
 
-        carts = Cart.objects.filter(user=user)
+        carts = Cart.objects.filter(user=user, completed=False)
         if not carts.exists():
            cart = Cart()
            cart.user = user
@@ -114,7 +114,7 @@ def update_cart(request, data, user):
 def remove_from_cart(request, data, user):
     try:
         meal_id = data['meal_id']
-        CartItem.objects.get(cart__user=user, meal__pk=meal_id).delete()
+        CartItem.objects.get(cart__user=user, cart__completed=False, meal__pk=meal_id).delete()
         return json_response({"status":1, "message":"The meal has been successfully removed from cart."})
     except Exception as e:
         return custom_error("Failed to remove meal from cart. Please try again later.")
@@ -122,7 +122,9 @@ def remove_from_cart(request, data, user):
 @check_input('POST')
 def delete_cart(request, data, user):
     try:
-        Cart.get(user=user).delete()
+        cart = Cart.get(user=user, completed=False)
+        cart.completed=True
+        cart.save()
         return json_response({"status":1, "message":"The cart has been cleared."})
     except Exception as e:
         return custom_error("Failed to clear cart. Please try again later.")

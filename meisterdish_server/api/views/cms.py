@@ -316,14 +316,17 @@ def create_meal(request, data, user):
 
         meal.main_image = Image.objects.get(pk=int(main_img_id))
 
+        chef_id = False
         if 'chef_id' in data:
             chef_id = data['chef_id']
             meal.chef = Chef.objects.get(pk=int(data['chef_id']))
-        elif 'chef_name' in data and 'chef_image' in data and data['chef_name'].strip() != '':
-            chef = Chef()
-            chef.name = data['chef_name'].strip()
-            chef.image = Image.objects.get(pk=int(data['chef_image']))
-            chef.save()
+        
+        if 'chef_name' in data and 'chef_image' in data and data['chef_name'].strip() != '':
+            if not chef_id:
+                meal.chef = Chef()
+            meal.chef.name = data['chef_name'].strip()
+            meal.chef.image = Image.objects.get(pk=int(data['chef_image']))
+            meal.chef.save()
 
         if 'cat_id' in data:
             try:
@@ -374,9 +377,11 @@ def create_meal(request, data, user):
                         tip_obj = Tips()
                 tip_obj.title = tip['title'].strip().title()
                 tip_obj.description = tip['description'].strip()
+                
                 if "image" in tip:
                     tip_obj.image = Image.objects.get(pk=int(tip['image']))
-                elif "video_url" in tip:
+                
+                if "video_url" in tip:
                     tip_obj.video_url = tip['video_url'].strip()
                 tip_obj.save()
                 if tip_obj not in meal.tips.all():
@@ -386,25 +391,21 @@ def create_meal(request, data, user):
         if 'ingredients' in data and len(data['ingredients']) > 0:
             meal.ingredients = simplejson.dumps(data['ingredients'])
 
+        if 'nutrients' in data and len(data['nutrients']) > 0:
+            meal.nutrients = simplejson.dumps(data['nutrients'])
+
         if 'ingredients_image' in data:
             meal.ingredients_image = Image.objects.get(pk=int(data['ingredients_image']))
 
         if 'allergy_notice' in data and data['allergy_notice'].strip() != '':
             meal.allergy_notice = data['allergy_notice'].strip()
-
-        if 'nutrients' in data and len(data['nutrients']) > 0:
-            meal.nutrients = []
-            for nut in data.getlist("nutrients"):
-                try:
-                    meal.nutrients.add(Nutrient.get(pk=int(nut)))
-                except:
-                    meal.delete()
-                    return custom_error("Some nutrients are currently unavailable")
         
         meal.save()
         action = "update" if edit else "create"
         return json_response({"status":1, "message":"The meal has been successfully "+action+"d.", "id":meal.id})
-    except IOError as e:
+    except Exception as e:
+        if not edit:
+            meal.delete()
         log.error("Failed to create meals : "+e.message)
         return custom_error("Failed to "+action+" meal. Please try again later.")
     

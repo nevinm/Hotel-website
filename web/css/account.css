@@ -3,7 +3,6 @@
 		  &PAGE-CONTAINER
 \*==============================*/
 #page-container{
-	float: left;
 	width: 100%;
 	height: 100%;
 	margin-top: 73px;
@@ -21,6 +20,8 @@
 	/*float: left;*/
 	width: 100%;
 	box-shadow: 0 0 7px rgb(202, 202, 202);
+	-moz-box-shadow:0 0 7px rgb(202, 202, 202);
+	-webkit-box-shadow:0 0 7px rgb(202, 202, 202);
 }
 .account-header{
 	border-bottom: 1px solid #D0D0D0;
@@ -34,7 +35,7 @@
 	margin-left: 20px;
 }
 .account-settings{
-	padding: 10px 10px 150px 20px;
+	padding: 10px 10px 20px 20px;
 }
 .content{
 	padding: 10px 10px 10px 10px;
@@ -42,6 +43,9 @@
 .sub-content1{
 	float: left;
 	margin-right: 150px;
+}
+ul.sub-content2.body-text-small {
+  float: left;
 }
 .logout, .admin-button {
 	float: right;
@@ -128,7 +132,6 @@ form.form{
 }
 form.gift-cardform{
 	width: 45%;
-	float: left;
 }
 form.gift-cardform .redeem {
 	padding-left: 20px;
@@ -161,9 +164,6 @@ form.gift-cardform .redeem {
  }
  #changecontact-container,#changeemail-container,#changepassword-container {
   width: 400px;
-  -webkit-box-shadow: -2px 3px 5px 0px rgba(194,194,194,1);
--moz-box-shadow: -2px 3px 5px 0px rgba(194,194,194,1);
-box-shadow: -2px 3px 5px 0px rgba(194,194,194,1);
 }
 /*==================================*\
 			&email-form
@@ -184,12 +184,11 @@ span.body-text-small{
 			&GIFTCARD PAGE
 \*==================================*/
 .giftcard-buttons {
-  float: left;
   width: 100%;
   padding: 20px 0px 100px 20px;
 }
 .redeem-button {
-  float: left;
+	float: left;
   padding-right: 35px;
 }
 
@@ -288,7 +287,7 @@ div#editaddress-container {
 }
 .button-changeaddress{
 	width: 100%;
-	float: left;
+	clear: both;
 	padding-left: 24px;
 	padding-bottom: 20px;
 }
@@ -313,7 +312,6 @@ div#editaddress-container {
 			&PROFILE-PICTURE
 \*==================================*/
 .profile-pic-container{
-	float: left;
 	width: 100%;
 	padding-bottom: 20px;
     margin-top: 30px;
