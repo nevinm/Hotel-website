@@ -63,6 +63,8 @@ def create_order(request, data, user):
         delivery_time = data['delivery_time']
         driver_instructions = data['driver_instructions']
         tip = int(data['tip'])
+        if tip < 5:
+            return custom_error("Miniumum tip amount is $5.") 
 
         if 'delivery_address' in data:
             address = Address.get(user=user, pk=data['delivery_address'])
@@ -99,10 +101,12 @@ def create_order(request, data, user):
 
 #Admin only
 @check_input('POST', True)
-def update_order(request, data, user, order_id):
+def delete_order(request, data, user, order_id):
     try:
-    	order = Order.objects.get(pk=order_id)
-
+    	order = Order.objects.get(pk=order_id, is_deleted=False)
+        order.is_deleted = True
+        order.save()
+        return json_response({"status":1, "message":"The order has been deleted", "id":order_id+"."})
     except Exception as e:
-    	log.error("Failed to update order." + e.message)
-    	return custom_error("Failed to update order.")
+    	log.error("Delete order." + e.message)
+    	return custom_error("Failed to delete the order.")

@@ -192,7 +192,7 @@ def get_meal_details(request, data, user, meal_id):
         image_list = []
         for img in meal.images.all():
             image_list.append({
-                "title" : img.title,
+                "id":img.id,
                 "image_url" : img.image.url,
                 "thumb_url" : img.thumb.url,
                 })
@@ -200,25 +200,32 @@ def get_meal_details(request, data, user, meal_id):
         tips_list = []
         for tips in meal.tips.all():
             tips_list.append({
+                "id":tips.id,
                 "title" : tips.title,
-                "description" : tips.description,
+                "description" : "" if tips.description.strip() == "" else simplejson.loads(tips.description),
                 "image_url" : "" if tips.image is None else tips.image.image.url,
                 "video_url" : "" if tips.video_url is None else tips.video_url,
                 })
 
         return json_response({
+            "status":1,
             "id" : meal.id,
             "name" : meal.name.title(),
             "description" : meal.description,
             "price":meal.price,
             "tax":meal.tax,
             "available" : 1 if meal.available else 0,
-            "filters" : [{"name":type.name.title(), "id":type.id} for type in meal.types.all()],
-            "category" : meal.category.name.title(),
-            "chef" : {
-                "id" : meal.chef.id,
-                "name" : meal.chef.name.title(),
-                "image_url" : meal.chef.image.thumb.url,
+            "filters" : [type.id for type in meal.types.all()],
+            "cat_id" : {
+                "id":meal.category.id,
+                "name":meal.category.name.title(),
+                },
+            
+            "chef_id" : meal.chef.id,
+            "chef_name" : meal.chef.name.title(),
+            "chef_image" : "" if meal.chef.image is None else {
+                "id":meal.chef.image.id,
+                "url":meal.chef.image.thumb.url,
                 },
             "user_to_do" : "" if meal.user_to_do == "" else simplejson.loads(meal.user_to_do),
             "preparation_time" : meal.preparation_time,
@@ -227,18 +234,26 @@ def get_meal_details(request, data, user, meal_id):
             "saved_time" : meal.saved_time,
 
             "pre_requisites" : "" if meal.pre_requisites == "" else simplejson.loads(meal.pre_requisites),
-            "pre_requisites_image_url" : "" if meal.pre_requisites_image is None else meal.pre_requisites_image.image.url,
+            "pre_requisites_image" : "" if meal.pre_requisites_image is None else {
+                    "id":meal.pre_requisites_image.id,
+                    "url":meal.pre_requisites_image.image.url,
+                    },
 
             "nutrients" : "" if meal.nutrients == "" else simplejson.loads(meal.nutrients),
             "ingredients" : "" if meal.ingredients == "" else simplejson.loads(meal.ingredients),
-            "ingredients_image_url" : "" if meal.ingredients_image is None else meal.ingredients_image.image.url,
+            "ingredients_image" : "" if meal.ingredients_image is None else {
+                                                        "id" : meal.ingredients_image.id,
+                                                        "url" : meal.ingredients_image.image.url
+                                                        },
             "tips" : tips_list,
             "allergy_notice" : meal.allergy_notice,
             "images" : image_list,
             "ratings" : rating_list,
-            "main_image" : meal.main_image.image.url,
-            })
-        
-    except Exception as e:
+            "main_image" : {
+                "id":meal.main_image.id,
+                "url":meal.main_image.image.url,
+            }
+        })
+    except KeyError as e:
         log.error("get_meals" + e.message)
         return custom_error("Failed to get the meal details.")        

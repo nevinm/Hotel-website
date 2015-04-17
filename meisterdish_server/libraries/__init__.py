@@ -3,7 +3,10 @@ import logging
 from api.models import Image
 log = logging.getLogger('libraries')
  
-def mail(to_list, subject, message, sender="Meisterdish <noreply@meisterdish.com>", headers = {'Reply-To': "<noreply@meisterdish.com>"}):
+def mail(to_list, subject, message, sender="Meisterdish <afmpmail2@gmail.com> ", headers = {
+              'Reply-To': "<afmpmail2@gmail.com> ",
+              'From':"Meisterdish <afmpmail2@gmail.com> ",
+              }):
     msg = EmailMessage(subject, message, sender, to_list)
     msg.content_subtype = "html"
     return msg.send()
