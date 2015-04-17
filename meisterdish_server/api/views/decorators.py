@@ -21,6 +21,7 @@ def check_input(method, admin=False):
                                              'verify_user', 
                                              'verify_email',
                                              'get_meals',
+                                             "create_meal"
                                              ]:
                         #common_apis = ["get_meals"]
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
@@ -44,7 +45,7 @@ def check_input(method, admin=False):
                             log.error('API : '+func.__name__+', Invalid session:Rejected')
                             return json_response({'status' : '-1', 'message' : message})
                     else:
-                        return func(request, req, *args, **kwargs)
+                        return func(request, req, [], *args, **kwargs)
                         
                 else:
                     log.error('API : Got a request with non-JSON input, Rejected.')

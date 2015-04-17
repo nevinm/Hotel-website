@@ -249,8 +249,9 @@ class Meal(models.Model):
     pre_requisites = models.TextField(max_length=1024, null=True, blank=True)
     pre_requisites_image = models.ForeignKey(Image, null=True, blank=True, related_name="pre_requisites")
 
-    nutrients = models.ManyToManyField(Nutrient, through="MealNutrient", null=True, blank=True)
-    
+    #nutrients = models.ManyToManyField(Nutrient, through="MealNutrient", null=True, blank=True)
+    nutrients = models.TextField(max_length=1024, null=True, blank=True)
+
     #ingredients = models.ManyToManyField(Ingredient, through="MealIngredient", null=True, blank=True)
     ingredients = models.TextField(max_length=1024, null=True, blank=True)
     ingredients_image = models.ForeignKey(Image, null=True, blank=True, related_name="ingredients")
