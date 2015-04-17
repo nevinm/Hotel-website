@@ -255,7 +255,7 @@ class Meal(models.Model):
     ingredients = models.TextField(max_length=1024, null=True, blank=True)
     ingredients_image = models.ForeignKey(Image, null=True, blank=True, related_name="ingredients")
     
-    tips = models.ForeignKey(Tips, null=True, blank=True)
+    tips = models.ManyToManyField(Tips, null=True, blank=True)
 
     allergy_notice = models.TextField(max_length=1024,  null=True, blank=True)
 

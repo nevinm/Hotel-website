@@ -11,12 +11,16 @@
   min-height: 100%;
 }
 .login-wrapper{
-	margin: 0 auto;
-	border: 1px solid #D0D0D0;
-	width: 400px;
+	  margin: 0 auto;
+  border: 1px solid #D0D0D0;
+  width: 400px;
   overflow: auto;
   background-color: #fff;
   margin-top: 100px;
+  box-shadow: 0 0 6px #d0d0d0;
+  -moz-box-shadow: 0 0 6px #d0d0d0;
+  -webkit-box-shadow: 0 0 6px #d0d0d0;
+  border-radius: 4px;  
 }
 .login-wrapper h3{
 	color: #6B6B6B;
@@ -27,6 +31,8 @@
   padding-left: 35px;
   background-color: #f7f7f7;
   color: #454545;
+  padding-top: 10px;
+  border-radius: 4px 4px 0 0 ;
 }
 #login-form{
   padding-left: 35px;
@@ -67,6 +73,9 @@ span.forgot-password{
   border-radius: 3px;
   float: left;
   width: 100%;
+  box-shadow: 0 0 6px #d0d0d0;
+  -moz-box-shadow: 0 0 6px #d0d0d0;
+  -webkit-box-shadow: 0 0 6px #d0d0d0;
 }
 .fb-signupButton{
   margin-top: 10px;
@@ -126,6 +135,7 @@ form.signup-formcontainer {
   margin-top: 40px;
   float: left;
   width: 100%;
+  box-shadow: 0 0 6px #d0d0d0;
 }
 #forgotpassword-form,.resetpassword-form{
   float: left;

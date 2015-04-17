@@ -34,7 +34,7 @@ $(document).ready(function() {
 
 //Infinite Scrolling
 function infiniteScrolling() {
-    $("body").scroll(function(e) {
+    $("body").on('scroll', function(e) {
         if ($('.listItems').length && !endOfList) {
             if (elementScrolling(".listItems:last")) {
                 mealData = JSON.parse(localStorage['meal_details']);
