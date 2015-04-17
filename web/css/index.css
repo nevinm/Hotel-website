@@ -76,36 +76,58 @@ SLIDER
 \*==============================*/
 #main-slider-wrapper{
 	width: 100%;
-	border-right: 10px solid #fff;
-	border-left: 10px solid #fff;
 	float: left;
 	background-color: #f1f1f1;
 	min-height: 100%;
 }
-#slide1 .slide-description{
-	  position: absolute;
-	  top: 33%;
-	  margin-left: 7%;
+#slide1 .slide-description {
+	position: absolute;
+	top: 21%;
+	left: 14.5%;
+	width: 18%;
+	line-height: -11px;
 }
-.slide-description .body-text-small{
-	font-weight: bold;
+#slide1 .slide-description .body-text-small{
+	font-family: 'BrandonGrotesque-Light';
+	width: 260px;
+	font-weight: 700;
 }
 .slide-description h3{
 	text-transform: uppercase;
 }
-#slide1 .slide-description .h0{
+#slide1 .slide-description .h0,#slide3 .slide-description .h0{
 	text-transform: uppercase;
-  	color: #9B9B9B;
+	color: #7C7C7C;
+	line-height: 42px;
+	padding-bottom: 10px;
 }
 #section2 .slide-description{
-    position: absolute;
-    top: 47%;
-	margin-left: 31%;
+	position: absolute;
+	top: 30%;
+	margin-left: 25%;
+	width: 19%;
+}
+#section2 .slide-description .body-text-small{
+	font-family: 'BrandonGrotesque-Light';
+	font-size: 14px;
+	padding-bottom: 15px;
 }
 #section3 .slide-description{
 	position: absolute;
-  	top: 38%;
+  	top: 23%;
   	margin-left: 10%;
+}
+#section3 .slide-description .h0{
+	text-transform: uppercase;
+	color: #7C7C7C;
+	line-height: 42px;
+	padding-bottom: 10px;
+}
+#section3 .slide-description .body-text-small{
+	font-family: 'BrandonGrotesque-bold';
+	font-size: 10px;
+	padding-bottom: 15px;
+	letter-spacing: 1px;
 }
 #zip-code{
 	width: 130px;
@@ -128,29 +150,29 @@ SLIDER
 	background: url(../images/homepageslider/homepage_1.jpg) 0% 50% no-repeat;
 	background-position: fixed;
 	padding: 6% 0 0 0;
-	/*background-size: cover;*/
+	background-size: cover;
 }
 #slide2{
 	background: url(../images/homepageslider/homepage_12.jpg) center top no-repeat;
 	background-position: fixed;
 	padding: 6% 0 0 0;
-	/*background-size: cover;*/
+	background-size: cover;
 }
 #slide3{
 	background: url(../images/homepageslider/homepage_2.jpg) center top no-repeat;
 	background-position: fixed;
-	padding: 30% 0 0 0;
-	/*background-size: cover;*/
+	/*padding: 30% 0 0 0;*/
+	background-size: cover;
 }
 #slide4{
 	background: url(../images/homepageslider/homepage_14.jpg) center top no-repeat;
 	background-position: fixed;
 	padding: 30% 0 0 0;
-	/*background-size: cover;*/
+	background-size: cover;
 }
 #section3{
 	background: url(../images/homepageslider/map_banner.jpg) center top no-repeat;
 	background-position: fixed;
 	padding: 6% 0 0 0;
-	/*background-size: cover;*/
+	background-size: cover;
 }

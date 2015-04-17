@@ -226,6 +226,11 @@ input#searchBy-name {
   margin-top: 75px;
   float: left;
 }
+#meal-image{
+  width: auto;
+  height: auto;
+  display: none;
+}
 .create-meal-container{
   margin: 0 auto;
   width: 90%;
@@ -292,6 +297,9 @@ input#searchBy-name {
   display: inline-block;
   overflow: hidden;
   position: relative;
+}
+.section-3 .fileUpload, .section-4 .fileUpload{
+  margin-left: 55%;
 }
 .fileUpload input{
   cursor: pointer;
@@ -439,10 +447,10 @@ input#create-meal-button {
   margin-left: 10px;
   cursor: pointer;
 }
-.nutrients-popup-wrapper .popup-container .content{
+.nutrients-popup-wrapper .popup-container .content, .tips-tricks-wrapper .popup-container .content{
   padding: 0 !important;]
 }
-.nutrients-popup-wrapper .popup-input{
+.nutrients-popup-wrapper .popup-input, .tips-tricks-wrapper .popup-input{
   height: 30px;
   border: 1px solid #ddd;
   background: #f7f7f7;
@@ -455,12 +463,16 @@ input#create-meal-button {
   height: 300px;
   margin-top: -150px;
 }
-.nutrients-popup-wrapper .popup-container {
+.tips-tricks-wrapper .popup{
+  height: 195px;
+  margin-top: -50px;
+}
+.nutrients-popup-wrapper .popup-container, .tips-tricks-wrapper .popup-container {
   padding: 15px;
   width: 253px;
   margin: 0 auto;
 }
-.nutrients-popup-wrapper{
+.nutrients-popup-wrapper, .tips-tricks-wrapper{
   display: none;
 }
 .tips-sublist-input-container ul li{

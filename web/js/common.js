@@ -207,52 +207,52 @@ $(document).ready(function() {
             },
             messages: {
                 firstname: {
-                    required: "Please enter your first name",
-                    letters: "Name should contain only alphabets",
-                    minlength: "Name should contain atleast 2 characters",
-                    maxlength: "Name should not contain more than 15 charcters"
+                    required: "Please enter your first name.",
+                    letters: "Name should contain only alphabets.",
+                    minlength: "Name should contain atleast 2 characters.",
+                    maxlength: "Name should not contain more than 15 charcters."
                 },
                 lastname: {
-                    required: "Please enter your last name",
-                    letters: "Name should contain only alphabets",
-                    minlength: "Name should contain atleast 2 characters",
-                    maxlength: "Name should not contain more than 15 charcters"
+                    required: "Please enter your last name.",
+                    letters: "Name should contain only alphabets.",
+                    minlength: "Name should contain atleast 2 characters.",
+                    maxlength: "Name should not contain more than 15 charcters."
                 },
                 fullname: {
-                    required: "Please enter your first name",
-                    letters: "Name should contain only alphabets",
-                    minlength: "Name should contain atleast 2 characters",
-                    maxlength: "Name should not contain more than 15 charcters"
+                    required: "Please enter your first name.",
+                    letters: "Name should contain only alphabets.",
+                    minlength: "Name should contain atleast 2 characters.",
+                    maxlength: "Name should not contain more than 15 charcters."
                 },
                 password: {
-                    required: "Please provide a password",
-                    minlength: "password shoudn't be less than 6"
+                    required: "Please provide a password.",
+                    minlength: "password shoudn't be less than 6."
                 },
                 username:{
-                    required: "Plaese enter username",
-                    minlength: "Name should contain atleast 2 characters",
-                    maxlength: "Name should not contain more than 15 charcters"
+                    required: "Plaese enter username.",
+                    minlength: "Name should contain atleast 2 characters.",
+                    maxlength: "Name should not contain more than 15 charcters."
                 },
                 confirmpassword: {
-                    required: "Please provide a password",
-                    minlength: "password shoudn't be less than 6",
-                    equalTo: "password doesn't match"
+                    required: "Please provide a password.",
+                    minlength: "password shoudn't be less than 6.",
+                    equalTo: "Password doesn't match."
                 },
                 repassword:{
-                    required:"Please provide a password",
-                    minlength:"password shoudn't be less than 6",
-                    equalTo:"password doesn't match"
+                    required:"Please provide a password.",
+                    minlength:"Password shoudn't be less than 6.",
+                    equalTo:"Password doesn't match."
                 },
                 confirmEmail:{
-                     equalTo:"email doesn't match",
-                     required:"please provide email"
+                     equalTo:"Email doesn't match.",
+                     required:"Please provide email."
                 },
-                email : "enter a valid email address",
-                zip : "provide a valid zip code",
-                street :"provide a valid street address",
-                building:"Provide a valid building name",
-                state: "please fill the required field",
-                city:"please fill the required field"
+                email : "Enter a valid email address.",
+                zip : "Provide a valid zip code.",
+                street :"Provide a valid street address.",
+                building:"Provide a valid building name.",
+                state: "Please fill the required field.",
+                city:"Please fill the required field."
             }
         });
     });
