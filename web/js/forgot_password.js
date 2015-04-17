@@ -1,6 +1,4 @@
 $(document).ready(function() {
-    var baseURL = 'http://meisterdish.qburst.com/backend/api/';
-
     //send email
     var forgotPasswordCallback = {
         success: function(data, textStatus) {
