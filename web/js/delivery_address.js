@@ -67,8 +67,10 @@ function autoPopulateAdressess(userDetails) {
 
         if (value.is_primary == 1) {
             $('.primary-address:last').addClass("show");
+            $('.remove-address:last').addClass("hide");
         } else {
             $('.non-primary-address:last').addClass("show");
+            $('.remove-address:last').addClass("show");
         }
     });
 }

@@ -169,14 +169,13 @@ function createMeal() {
             descptn = $('#description').val(),
             availability = $('#create-meal-available option:selected').attr('value'),
             category = $('#create-meal-category option:selected').attr('value'),
-            meal_type = $('#create-meal-mealType option:selected').attr('value'),
             meal_image_id = $('#meal-image').attr("data-id"),
             pre_requisites_image = $('#kitchen-image').attr("data-id"),
             chef_image = $('#chef-image').attr("data-id"),
             ingredients_image = $('#ingredients-image').attr("data-id");
         var ingredients = [], // ingredient array
             temp = '',
-            pre_requesties = [],
+            pre_requesties = [],meal_type=[],
             toDo = [],
             prepared = [],tips=traverseTipsTricks();
         $('.ingredients-container .list-container ul').find('li').each(function() {
@@ -194,6 +193,10 @@ function createMeal() {
         $('.preperation-container-2 .list-container ul').find('li').each(function() {
             temp = $(this).text();
             prepared.push(temp);
+        });
+
+        $('#create-meal-mealType option:selected').each(function(){
+           meal_type.push($(this).attr('value'));
         });
 
         var url = baseURL + "cms/create_meal/";
