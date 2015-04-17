@@ -179,15 +179,66 @@ def add_rating(request, data, user, meal_id):
 @check_input('POST')
 def get_meal_details(request, data, user, meal_id):
     try:
-        meal = Meal.objects.get(pk=meal_id)
-        ratings = []
-        images = []
-        nutrients = []
-        ingredients = []
+        meal = Meal.objects.get(pk=meal_id, is_deleted=False)
+        rating_list = []
+        for rating in  meal.mealrating.all():
+            rating_list.append({
+                "rating:":rating.rating,
+                "review":rating.comment,
+                "user_first_name":rating.order.cart.user.first_name,
+                "user_last_name":rating.order.cart.user.last_name,
+                "user_image":rating.order.cart.user.main_image.thumb.url,
+                })
+        image_list = []
+        for img in meal.images.all():
+            image_list.append({
+                "title" : img.title,
+                "image_url" : img.image.url,
+                "thumb_url" : img.thumb.url,
+                })
+        
+        tips_list = []
+        for tips in meal.tips.all():
+            tips_list.append({
+                "title" : tips.title,
+                "description" : tips.description,
+                "image_url" : "" if tips.image is None else tips.image.image.url,
+                "video_url" : "" if tips.video_url is None else tips.video_url,
+                })
 
-        for rating in meal.mealreview.all():
-            pass
-        images = meal.images.all()
+        return json_response({
+            "id" : meal.id,
+            "name" : meal.name.title(),
+            "description" : meal.description,
+            "price":meal.price,
+            "tax":meal.tax,
+            "available" : 1 if meal.available else 0,
+            "filters" : [{"name":type.name.title(), "id":type.id} for type in meal.types.all()],
+            "category" : meal.category.name.title(),
+            "chef" : {
+                "id" : meal.chef.id,
+                "name" : meal.chef.name.title(),
+                "image_url" : meal.chef.image.thumb.url,
+                },
+            "user_to_do" : "" if meal.user_to_do == "" else simplejson.loads(meal.user_to_do),
+            "preparation_time" : meal.preparation_time,
+
+            "finished_preparation" : "" if meal.finished_preparation == "" else simplejson.loads(meal.finished_preparation),
+            "saved_time" : meal.saved_time,
+
+            "pre_requisites" : "" if meal.pre_requisites == "" else simplejson.loads(meal.pre_requisites),
+            "pre_requisites_image_url" : "" if meal.pre_requisites_image is None else meal.pre_requisites_image.image.url,
+
+            "nutrients" : "" if meal.nutrients == "" else simplejson.loads(meal.nutrients),
+            "ingredients" : "" if meal.ingredients == "" else simplejson.loads(meal.ingredients),
+            "ingredients_image_url" : "" if meal.ingredients_image is None else meal.ingredients_image.image.url,
+            "tips" : tips_list,
+            "allergy_notice" : meal.allergy_notice,
+            "images" : image_list,
+            "ratings" : rating_list,
+            "main_image" : meal.main_image.image.url,
+            })
+        
     except Exception as e:
         log.error("get_meals" + e.message)
         return custom_error("Failed to get the meal details.")        
