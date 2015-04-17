@@ -36,4 +36,5 @@ urlpatterns = patterns('',
     url(r'^get_meal_details/(?P<meal_id>[0-9]+)/$', views.get_meal_details, name='get_meal_details'),
 
     url(r'^upload_image/$', views.upload_image, name='upload_image'),
+    
 )

@@ -270,7 +270,7 @@ class Meal(models.Model):
         return self.name
 
 class MealRating(models.Model):
-    meal = models.ForeignKey(Meal)
+    meal = models.ForeignKey(Meal, related_name="mealrating")
     order = models.ForeignKey("Order")
     rating = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     comment = models.TextField(max_length=200)

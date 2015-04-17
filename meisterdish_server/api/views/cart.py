@@ -50,7 +50,7 @@ def add_to_cart(request, data, user):
         except:
           return custom_error("Sorry, this meal is currently not available.")
         
-        carts = Cart.objects.filter(user=user)
+        carts = Cart.objects.filter(user=user, completed=False)
         if not carts.exists():
            cart = Cart()
            cart.user = user
@@ -87,7 +87,7 @@ def update_cart(request, data, user):
               return custom_error("Sorry, meal #" +str(meal_id)+ " is currently not available.")
             meals.append({"meal":meal, "qty":qty})
 
-        carts = Cart.objects.filter(user=user)
+        carts = Cart.objects.filter(user=user, completed=False)
         if not carts.exists():
            cart = Cart()
            cart.user = user
