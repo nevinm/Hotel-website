@@ -226,6 +226,11 @@ input#searchBy-name {
   margin-top: 75px;
   float: left;
 }
+#meal-image{
+  width: auto;
+  height: auto;
+  display: none;
+}
 .create-meal-container{
   margin: 0 auto;
   width: 90%;
@@ -292,6 +297,9 @@ input#searchBy-name {
   display: inline-block;
   overflow: hidden;
   position: relative;
+}
+.section-3 .fileUpload, .section-4 .fileUpload{
+  margin-left: 55%;
 }
 .fileUpload input{
   cursor: pointer;

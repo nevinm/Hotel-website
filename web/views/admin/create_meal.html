@@ -7,13 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>Meisterdish - Admin</title>
-    
     <script type="text/javascript" src='js/redirect_admin.js'></script>
     <link rel="stylesheet" type="text/css" href="../../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../../css/fontello.css">
-    <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
     <link rel="stylesheet" type="text/css" href="../../css/common.css">
     <link rel="stylesheet" type="text/css" href="css/admin.css">
 </head>
@@ -26,31 +23,31 @@
                 </a>
             </div>
             <ul id="menu" class="pullRight">
-                    <li>
-                        <a href="#">MEAL LIST</a>
-                    </li>
-                    <li>
-                        <a href="userlist.html">USER LIST</a>
-                    </li>
-                    <li>
-                        <a href="categories.html">CATEGORIES</a>
-                    </li>
-                    <li class="bold login-signup">
-                        <a href="">LOG IN</a>
-                    </li>
-                    <li class='login-signup'>
-                        <a href="" class="btn btn-small-secondary">SIGN UP</a>
-                    </li>
-                    <li id="navbar-username" class="bold green">
-                        <a href=''></a>
-                    </li>
-                </ul>
+                <li>
+                    <a href="#">MEAL LIST</a>
+                </li>
+                <li>
+                    <a href="userlist.html">USER LIST</a>
+                </li>
+                <li>
+                    <a href="categories.html">CATEGORIES</a>
+                </li>
+                <li class="bold login-signup">
+                    <a href="">LOG IN</a>
+                </li>
+                <li class='login-signup'>
+                    <a href="" class="btn btn-small-secondary">SIGN UP</a>
+                </li>
+                <li id="navbar-username" class="bold green">
+                    <a href=''></a>
+                </li>
+            </ul>
         </header>
         <div id="page-container">
             <div class='admin-createmeal-inner-wrapper'>
                 <div class="accountNav">
-                <div class="logout body-text-bold">
-                    <a id='logout'>LOG OUT</a>
+                    <div class="logout body-text-bold">
+                        <a id='logout'>LOG OUT</a>
                     </div>
                 </div>
                 <div class="create-meal-container">
@@ -61,31 +58,34 @@
                             <div class="content-1">
                                 <input type="text" name="name" class="create-meal-input" id="meal-name" placeholder="Meal Name">
                                 <div class="meal-image-upload-container">
-                                    <div class="dummy-image"></div>
+                                    <div>
+                                        <img data-id='' id='meal-image' src='' />
+                                    </div>
                                     <div class="fileUpload">
                                         <span class='upload-button'>UPLOAD MEAL IMAGE</span>
-                                         <input id="profile_picture_id" type="file" name="files[]" data-url="http://meisterdish.qburst.com/backend/api/upload_picture/"  multiple>
+                                        <input id="meal-image-input" type="file" name="files[]" data-url="http://meisterdish.qburst.com/backend/api/upload_picture/">
                                     </div>
-                                </div> 
-                            </div> 
-                            <div class="content-1">                    
-                                <div class="text-area-container">
-                                    <textarea id="description" placeholder = "Description" cols="70" rows="50">
-                                    </textarea>
                                 </div>
-                                <input type="text" name="price" class="create-meal-input" id="meal-price" placeholder= "Price">
-                                <input type="text" name="tax" class="create-meal-input" id="meal-tax"placeholder = "Tax">
-                            </div>  
+                            </div>
+                            <div class="content-1">
+                                <div class="text-area-container">
+                                    <textarea id="description" placeholder="Description" cols="70" rows="50"></textarea>
+                                </div>
+                                <input type="text" name="price" class="create-meal-input" id="meal-price" placeholder="Price">
+                                <input type="text" name="tax" class="create-meal-input" id="meal-tax" placeholder="Tax">
+                            </div>
                             <div class="content-1">
                                 <input type="text" name="chef-name" class="create-meal-input" id="chef-name" placeholder="Chef Name">
                                 <div class="meal-image-upload-container">
-                                    <div class="dummy-image"></div>
+                                    <div>
+                                        <img data-id='' id='chef-image' src='' />
+                                    </div>
                                     <div class="fileUpload">
                                         <span class='upload-button'>UPLOAD CHEF IMAGE</span>
-                                         <input id="profile_picture_id" type="file" name="files[]" data-url="http://meisterdish.qburst.com/backend/api/upload_picture/"  multiple>
+                                        <input id="chef-image-input" type="file" name="files[]" data-url="http://meisterdish.qburst.com/backend/api/upload_picture/" multiple>
                                     </div>
-                                </div> 
-                            </div> 
+                                </div>
+                            </div>
                             <div class="content-1">
                                 <select name="available" id="create-meal-available">
                                     <option value="0">Available</option>
@@ -103,63 +103,73 @@
                         <div class="section-2">
                             <div class="section-header">PREPARATION :</div>
                             <div class="content-1">
-                            <div class="preperation-container-1">
-                                <input type="number" name="preperationtime" class="create-meal-input" id="meal-prep-time" placeholder = "PREP TIME">
-                                <input type="text" placeholder = "ALL YOU WILL BE DOING" class="create-meal-input" id="preparation-id-1">
-                                
-                                <input type="button" class="add-preparation-button" value="add">
-                                <span><h3>ALL YOU WILL BE DOING:</h3></span>
-                                <div class="list-container">
-                                    <ul></ul>
+                                <div class="preperation-container-1">
+                                    <input type="number" name="preperationtime" class="create-meal-input" id="meal-prep-time" placeholder="PREP TIME">
+                                    <input type="text" placeholder="ALL YOU WILL BE DOING" class="create-meal-input" id="preparation-id-1">
+                                    <input type="button" class="add-preparation-button" value="add">
+                                    <span><h3>ALL YOU WILL BE DOING:</h3></span>
+                                    <div class="list-container">
+                                        <ul></ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="preperation-container-2">
-                                <input type="number" name="preperationtime" class="create-meal-input" id="meal-saved-time" placeholder = "SAVED TIME">
-                                <input type="text" placeholder = "WHAT WE HAVE PREPPED" class="create-meal-input" id="preparation-id-2">
-                                
-                                <input type="button" class="add-preparation-button" value="add">
-                                <span><h3>WHAT WE HAVE PREPPED:</h3></span>
-                                <div class="list-container">
-                                    <ul></ul>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="section-3">
-                             <div class="section-header">ALL YOU NEED:</div>
-                             <div class="content-1">
-
-                                 <div class="pre-requisties-container">
-                                    <input type="text"placeholder = "pre-requisties" class="create-meal-input" id="pre-requisties">
-                                    <input type="button" class="add-list-button" value="add">
-                                    <span><h3>FROM YOUR KITCHEN:</h3></span>
+                                <div class="preperation-container-2">
+                                    <input type="number" name="preperationtime" class="create-meal-input" id="meal-saved-time" placeholder="SAVED TIME">
+                                    <input type="text" placeholder="WHAT WE HAVE PREPPED" class="create-meal-input" id="preparation-id-2">
+                                    <input type="button" class="add-preparation-button" value="add">
+                                    <span><h3>WHAT WE HAVE PREPPED:</h3></span>
                                     <div class="list-container">
                                         <ul></ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="section-3">
+                            <div class="section-header">ALL YOU NEED:</div>
+                            <div class="content-1">
+                                <div class="pre-requisties-container">
+                                    <input type="text" placeholder="pre-requisties" class="create-meal-input" id="pre-requisties">
+                                    <input type="button" class="add-list-button" value="add">
+                                    <span><h3>FROM YOUR KITCHEN:</h3></span>
+                                    <div class="list-container">
+                                        <ul></ul>
+                                    </div>
+                                </div>
+                                <div>
+                                    <img data-id='' id='kitchen-image' src='' />
+                                </div>
+                                <div class="fileUpload">
+                                    <span class='upload-button'>UPLOAD IMAGE</span>
+                                    <input id="kitchen-image-input" type="file" name="files[]" data-url="http://meisterdish.qburst.com/backend/api/upload_picture/" multiple>
+                                </div>
+                            </div>
+                        </div>
                         <div class="section-4">
                             <div class="section-header">INGREDIENTS</div>
                             <div class="content-1">
-                            <div class="ingredients-container">
-                                <input type="text"placeholder = "Ingredients" class="create-meal-input" id="ingredients">
-                                <input type="button" class="add-list-button" id="add-ingredients" value="add">
-                                <span><h3>IN THE BOX :</h3></span>
-                                <div class="list-container">
-                                    <ul></ul>
+                                <div class="ingredients-container">
+                                    <input type="text" placeholder="Ingredients" class="create-meal-input" id="ingredients">
+                                    <input type="button" class="add-list-button" id="add-ingredients" value="add">
+                                    <span><h3>IN THE BOX :</h3></span>
+                                    <div class="list-container">
+                                        <ul></ul>
+                                    </div>
+                                </div>
+                                <div>
+                                    <img data-id='' id='ingredients-image' src='' />
+                                </div>
+                                <div class="fileUpload">
+                                    <span class='upload-button'>UPLOAD IMAGE</span>
+                                    <input id="ingredients-image-input" type="file" name="files[]" data-url="http://meisterdish.qburst.com/backend/api/upload_picture/" multiple>
                                 </div>
                             </div>
-                           </div>
                         </div>
-
                         <div class="section-5">
                             <div class="section-header">NUTRITION</div>
                             <div class="content-1">
                                 <div class="input-feild-container">
-                                    <input type="text" placeholder = "Nutrients" class="create-meal-input" id="nutrients">
-                                    <input type="text" placeholder = "per serving" class="create-meal-input" id="nutrients-per-serving">
-                                    <input type="text" placeholder = "%daily value" class="create-meal-input" id="nutrients-daily-value">
+                                    <input type="text" placeholder="Nutrients" class="create-meal-input" id="nutrients">
+                                    <input type="text" placeholder="per serving" class="create-meal-input" id="nutrients-per-serving">
+                                    <input type="text" placeholder="%daily value" class="create-meal-input" id="nutrients-daily-value">
                                     <input type="button" class="add-nutrition-content" value="add">
                                 </div>
                             </div>
@@ -181,8 +191,8 @@
                             <div class="section-header">TIPS & TRICKS</div>
                             <div class="content-1">
                                 <div class="tips-container">
-                                    <input type="text" placeholder = "Video URL" class="create-meal-input" id="tips-video-url">
-                                    <input type="text" placeholder = "Tips & Tricks" class="create-meal-input" id="tips-and-tricks">
+                                    <input type="text" placeholder="Video URL" class="create-meal-input" id="tips-video-url">
+                                    <input type="text" placeholder="Tips & Tricks" class="create-meal-input" id="tips-and-tricks">
                                     <input type="button" id="add-tips-main" value="add">
                                 </div>
                             </div>
@@ -196,7 +206,6 @@
                                     </thead>
                                 </table>
                             </div>
-
                         </div>
                         <div class="create-button-container">
                             <input type="button" class="btn btn-large-primary medium-green" id="create-meal-button" value="CREATE">
@@ -235,6 +244,8 @@
     <script type="text/javascript" src='../../js/jquery.min.js'></script>
     <script type="text/javascript" src='../../js/jquery.validate.min.js'></script>
     <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../../js/jquery.ui.widget.js'></script>
+    <script type="text/javascript" src='../../js/jquery.fileupload.js'></script>
     <script type="text/javascript" src='../../js/common.js'></script>
     <script type="text/javascript" src='js/admin.js'></script>
     <script type="text/javascript" src='js/create_meal.js'></script>
