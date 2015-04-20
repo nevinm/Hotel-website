@@ -90,8 +90,8 @@ var addAddressCallback = {
 function getNewAddressFromForm() {
     var $addressPopup = $(".addaddress-popup");
     var newAddress = {
-        first_name: $addressPopup.find("input[name*='FirstName']").val(),
-        last_name: $addressPopup.find("input[name*='LastName']").val(),
+        first_name: $addressPopup.find("input[name*='firstname']").val(),
+        last_name: $addressPopup.find("input[name*='lastname']").val(),
         phone: $addressPopup.find("input[name*='phonenumber']").val(),
         zip: $addressPopup.find("input[name*='zip']").val(),
         street: $addressPopup.find("input[name*='street']").val(),
@@ -141,8 +141,8 @@ function populateAddressToForm(id) {
     $.each(deliveryAddressList.address_list, function(key, value) {
         if (value.id == id) {
             $addressPopup.find(".state-selector").val(value.state_id);
-            $addressPopup.find("input[name*='FirstName']").val(value.first_name);
-            $addressPopup.find("input[name*='LastName']").val(value.last_name   );
+            $addressPopup.find("input[name*='firstname']").val(value.first_name);
+            $addressPopup.find("input[name*='lastname']").val(value.last_name   );
             $addressPopup.find("input[name*='phonenumber']").val(value.phone);
             $addressPopup.find("input[name*='zip']").val(value.zip);
             $addressPopup.find("input[name*='street']").val(value.street);

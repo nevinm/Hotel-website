@@ -175,7 +175,7 @@ h4{
 .caption{
 	color: #9B9B9B;
 	font-family: 'ProximaNova-regular';
-	font-size:11px;
+	font-size:10px;
 	letter-spacing: 0.5px;
 	line-height: 12px;
 	margin-bottom: 5px;
@@ -273,6 +273,7 @@ html,body{
 	overflow: auto;
 	-webkit-font-smoothing: antialiased;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+    -moz-osx-font-smoothing: grayscale;
 }
 #home-page-main-wrapper{
 	width: 100%;
@@ -676,7 +677,15 @@ span.icon-menu{
 		  margin-left: 25px;
   		
   	}
-  	
+  	#slide1 .slide-description .h0,#slide3 .slide-description .h0,#section3 .slide-description .h0{
+		line-height: 42px !important;
+		padding-bottom: 5px !important;
+		letter-spacing: 4px !important;
+		font-size: 35px !important;
+	}
+	#slide1 .slide-description{
+		left: 18% !important;
+	}	
 }
 @media only screen and (min-width: 1025px){
 	.navMenu{
