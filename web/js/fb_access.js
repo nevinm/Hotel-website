@@ -68,6 +68,7 @@ var loginFBCallback = {
             localStorage['session_key'] = userDetails.session_key;
             localStorage['loggedIn'] = true;
             checkLoggedIn();
+            window.location.href = '../index.html';
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
