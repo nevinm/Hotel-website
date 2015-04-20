@@ -282,6 +282,7 @@ html,body{
 	margin-bottom: -143px;
 	overflow-x:hidden;	
 }
+
 #mainWrapper{
 	width: 100%;
 	float: left;
@@ -356,7 +357,7 @@ label{
 	font-weight: bold;
 	display: inline-block;
 	line-height: 0px;
-	padding: 12px 4px 11px 3px;
+	padding: 12px 4px 10px 3px;
 }
 .cross:before{
 	content: "×";
@@ -391,14 +392,18 @@ label{
    font-family: 'ProximaNova-regular';
   color: #9B9B9B; 
 }
-
+.login-signup{
+	font-family: 'BrandonGrotesque-Bold'!important;
+	font-weight: normal;
+	color: #6b6b6b;
+}
 /*==============================*\
 			&HEADER
 \*==============================*/
 #header{
 	float: left;
 	width: 100%;
-	/*opacity:0.85;*/
+	opacity:0.85;
 	/*-webkit-filter:blur(15px);*/
 	padding: 18px 0;
 	position: fixed;
@@ -442,21 +447,21 @@ span.icon-menu{
 }
 .cart {
 	position: relative;
-    margin-top: 5px;
+	margin-top: 6px;
+	padding-right: 10px;
 }
 .count {
 	font-family: 'BrandonGrotesque-Bold';
-	position: absolute;
-	border-radius: 50%;
-	top: -6px;
-	right: -6px;
-	color: white;
-	background-color: #A9D77B;
-	width: 14px;
-	height: 14px;
-	padding: 3px;
-	line-height: 9px;
-	font-size: 15px;
+  position: absolute;
+  border-radius: 50%;
+  top: -6px;
+  right: 6px;
+  color: white;
+  background-color: #A9D77B;
+  font-size: 12px;
+  padding: 0px 5px;
+  font-weight: bold;
+  height: 18px;
 }
 .menuPadding{
 	padding-top: 6px;

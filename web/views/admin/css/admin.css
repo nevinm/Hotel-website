@@ -13,13 +13,17 @@ input[type="text"], input[type="email"], input[type="password"]{
 	background-color: #f1f1f1;
 	min-height: 100%;
 }
+#admin-mainWrapper .contentArea .bold{
+  font-family: 'BrandonGrotesque-Bold';
+  font-weight: normal;
+}
 .adminlogin-wrapper{
 	width: 400px;
   	margin: 0 auto;
     margin-top: 100px;
 }
 .admin-inner-wrapper{
-	margin-top: 150px;
+	margin-top: 100px;
 }
 .header-small {
   border-bottom: 1px solid #D0D0D0;
@@ -57,7 +61,13 @@ input[type="text"], input[type="email"], input[type="password"]{
 	/*margin-left: 85%;*/
 }
 
-
+li#navbar-username a {
+  margin: 0px;
+  padding: 0px;
+}
+li#navbar-username{
+  padding: 0;
+}
 /*Category Page*/
 .admin-inner-wrapper h2{
     text-align: center
@@ -84,6 +94,9 @@ tbody, thead{
   width: 90%;
   margin: 0 auto;
   text-align: right;
+}
+#admin-mainWrapper .accountNav {
+  max-width: 1100px;
 }
 .admin-nav{
   width: 80%;
@@ -138,6 +151,7 @@ tbody, thead{
   border:1px solid #d0d0d0;
   border-radius: 3px;
   overflow: auto;
+  max-width: 1100px;
 }
 .admin-header {
   background-color: #f7f7f7;
@@ -153,7 +167,9 @@ tbody, thead{
 table#userlist{
   width: 90%;
   margin-top: 20px;
-
+}
+#userlist img{
+  max-width: 50px;
 }
 .status{
 	background: #ccc;
@@ -229,7 +245,7 @@ input#searchBy-name {
      &CREATE -MEAL
 \*=======================*/
 .admin-createmeal-inner-wrapper{
-  margin-top: 150px;
+  margin-top: 100px;
   float: left;
 }
 #meal-image{
@@ -511,11 +527,11 @@ table#tips-and-tricks-table{
 .section-6 table .create-meal-input{
   padding-left: 1px;
 }
-.section-5 table,td,.section-6 table,td{
+/*.section-5 table,td,.section-6 table,td{
   text-transform: none;
   font-size: 18px;
   font-family: 'ProximaNova-regular';
-}
+}*/
 .remove{
   height: 14px;
   margin-left: 10px;
