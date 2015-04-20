@@ -19,5 +19,9 @@ $(document).ready(function() {
         	$("#display-pic").attr('src', data.result.thumbnail_url);
         }
     });
+
+    $(".choose-pic-overlay").on('click',function(){
+        $('#profile_picture_id').trigger('click');
+    });
 });
 

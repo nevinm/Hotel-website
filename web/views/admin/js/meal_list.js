@@ -99,10 +99,10 @@ function populateFilterData(data) {
 
 //function populate MealList 
 function populateMealList(data) {
-	$('#meal-list thead').empty();
+	$('#meal-list tbody').empty();
     var fullMealList = data;
     $.each(fullMealList.aaData, function(key, value) {
-        $('#meal-list thead').append("<tr>" + "<td>" + value.name + "</td>" +
+        $('#meal-list tbody').append("<tr>" + "<td>" + value.name + "</td>" +
             "<td>" + value.description + "</td>" +
             "<td>" + value.available + "</td>" +
             "<td>" + value.category + "</td>" +

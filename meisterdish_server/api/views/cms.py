@@ -15,7 +15,7 @@ def home(request):
     return HttpResponse("Welcome to Meisterdish CMS")
 
 @check_input('POST', True)
-def get_categories(request, data, user):
+def get_categories(request, data, user=None):
     try:
         limit = settings.PER_PAGE
         page = 1
@@ -58,7 +58,7 @@ def get_categories(request, data, user):
                               })
     except Exception as e:
         log.error("Failed to return category list : "+e.message)
-        return json_response({"status":-1, "message":"Failed to retrieve category list"})
+        return custom_error("Failed to retrieve category list")
 
 @check_input('POST', True)
 def add_category(request, data, user):

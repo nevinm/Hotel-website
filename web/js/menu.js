@@ -3,31 +3,32 @@ $(document).ready(function() {
         nextPage = 1,
         mealTypeFilter = [],
         endOfList = false;
-    $(document).on("click", '.subMenu ul li a', function() {
+    $(document).on("click", '.subMenu .menu-categories-list', function() {
         $(document).find(".subMenu ul li").removeClass("activeOption");
-        $(this).parent().addClass("activeOption");
+        $(this).addClass("activeOption");
     });
 
     //Categories
     $(document).on('click', '.menu-categories-list', function() {
         nextPage = 1;
         categoryId = $(this).find("a").data().id;
-        getmealList('', categoryId, '', perPage, 1);
+        getmealList('', categoryId, mealTypeFilter, perPage, 1);
         infiniteScrolling();
     });
 
     //Filters
     $(document).on('change', '.filter-drop-down input[type=checkbox]', function(e) {
+        currentCategory = $(".activeOption a").attr("data-id");
         nextPage = 1;
         if ($(this).is(":checked")) {
             mealTypeFilter.push(parseInt($(this).val()));
-            getmealList('', '', mealTypeFilter, perPage, 1);
+            getmealList('', currentCategory, mealTypeFilter, perPage, 1);
         } else {
             index = mealTypeFilter.indexOf(parseInt($(this).val()));
             if (index > -1) {
                 mealTypeFilter.splice(index, 1);
             }
-            getmealList('', '', mealTypeFilter, perPage, 1);
+            getmealList('', currentCategory, mealTypeFilter, perPage, 1);
         }
         infiniteScrolling();
     });
