@@ -132,7 +132,7 @@ def redeem_gift_card(request, data, user):
         return custom_error("Failed to redeem gift card ")
 
 @check_input('POST')
-def get_categories(request, data, user):
+def get_categories(request, data):
     try:
         cats = Category.objects.filter(is_hidden=False, is_deleted=False).order_by("name")
         cat_list = []
