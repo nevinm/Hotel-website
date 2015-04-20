@@ -101,7 +101,7 @@ function loginFB(fb_id, email) {
 // successful.  See statusChangeCallback() for when this call is made.
 function testAPI() {
     FB.api('/me', function(response) {
-        if ($('title').text().split('-')[1] == ' Login') {
+        if ($('title').text().split('-')[1] == ' Log in') {
             loginFB(response.id, response.email)
         } else {
             localStorage['fb-id'] = JSON.stringify(response.id);
