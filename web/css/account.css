@@ -525,15 +525,15 @@ form.addaddress-popup {
   width: 100%;
   font-size: 14px !important;
 }
-.section3 .forminput-wrapper:first-child{
+.section3 .forminput-wrapper:nth-child(2){
 	width: 180px;
 	float: left;
-	margin-right: 16px;
 	position: relative;
 }
-.section3 .forminput-wrapper:nth-child(2){
+.section3 .forminput-wrapper:first-child{
 	width:  134px;
 	float: left;
+	margin-right: 16px;
 	position: relative;
 }
 .section3{
