@@ -4,6 +4,7 @@ import json as simplejson
 import logging 
 import settings
 from decorators import *
+from libraries import validate_zipcode, validate_phone
 log = logging.getLogger('api_user')
 
 @check_input('POST')
@@ -19,7 +20,11 @@ def add_address(request, data, user):
         is_primary = False
         if "is_primary" in data and data["is_primary"]:
             is_primary = True
-            
+        
+        if not validate_zipcode(zip):
+            return custom_error("Please provide a valid zip code.")
+        elif not validate_phone(phone):
+            return custom_error("Please provide a valid phone number.")
         add = Address()
         add.user = user
         add.first_name = fname
@@ -58,29 +63,33 @@ def update_address(request, data, user, address_id):
             log.error("Updated address "+e.message)
             return custom_error("You are not authorized to modify this address.")
         
-	if 'first_name' in data:
-		fname = data["first_name"].strip()
-        	lname = data["last_name"].strip()
-	        street = data["street"].strip()
-        	building = data["building"].strip()
-	        city_id = data["city_id"]
-	        zip = data["zip"].strip()
-	        phone = data["phone"].strip()
-        
-		add.first_name = fname
-	        add.last_name = lname
-	        add.street = street
-        	add.building = building
-	        add.city = City.objects.get(id=city_id)
-	        add.zip = zip
-	        add.phone = phone
-        
+        if 'first_name' in data:
+            fname = data["first_name"].strip()
+            lname = data["last_name"].strip()
+            street = data["street"].strip()
+            building = data["building"].strip()
+            city_id = data["city_id"]
+            zip = data["zip"].strip()
+            phone = data["phone"].strip()
+            
+            if not validate_zipcode(zip):
+                return custom_error("Please provide a valid zip code.")
+            elif not validate_phone(phone):
+                return custom_error("Please provide a valid phone number.")
+
+            add.first_name = fname
+            add.last_name = lname
+            add.street = street
+            add.building = building
+            add.city = City.objects.get(id=city_id)
+            add.zip = zip
+            add.phone = phone
+            
         if "is_primary" in data and data["is_primary"]:
-	    add.is_primary = True
-	else:
-	    add.is_primary = False
-        
-	add.save()
+            add.is_primary = True
+        else:
+            add.is_primary = False
+        add.save()
         
         if add.id and add.is_primary:
             try:

@@ -411,8 +411,11 @@ def edit_profile(request, data, user):
             user.last_name = data['last_name'].strip()
         
         if 'mobile' in data:
-            user.mobile = data['mobile'].strip()
-        
+            mob = str(data['mobile']).strip()
+            if len(mob) <10 or len(mob)>13:
+                return custom_error("Please enter a valid phone number.")
+            user.mobile = mob
+            
         try:
             if "profile_picture_id" in data:
                 user.profile_image = Image.objects.get(pk=data['profile_picture_id'].strip())
