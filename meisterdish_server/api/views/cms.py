@@ -15,7 +15,7 @@ def home(request):
     return HttpResponse("Welcome to Meisterdish CMS")
 
 @check_input('POST', True)
-def get_categories(request, data, user):
+def get_categories(request, data, user=None):
     try:
         limit = settings.PER_PAGE
         page = 1
