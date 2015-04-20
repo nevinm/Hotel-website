@@ -24,31 +24,35 @@
                 </a>
             </div>
             <ul id="menu" class="pullRight">
-                    <li>
-                        <a href="#">MEAL LIST</a>
-                    </li>
-                    <li>
-                        <a href="userlist.html">USER LIST</a>
-                    </li>
-                    <li>
-                        <a href="categories.html">CATEGORIES</a>
-                    </li>
-                    <li class="bold login-signup">
-                        <a href="">LOG IN</a>
-                    </li>
-                    <li class='login-signup'>
-                        <a href="" class="btn btn-small-secondary">SIGN UP</a>
-                    </li>
-                    <li id="navbar-username" class="bold green">
-                        <a href='../account.html'></a>
-                    </li>
-                </ul>
+                <li>
+                    <a href="#">MEAL LIST</a>
+                </li>
+                <li>
+                    <a href="userlist.html">USER LIST</a>
+                </li>
+                <li>
+                    <a href="categories.html">CATEGORIES</a>
+                </li>
+                <li class="bold login-signup">
+                    <a href="">LOG IN</a>
+                </li>
+                <li class='login-signup'>
+                    <a href="" class="btn btn-small-secondary">SIGN UP</a>
+                </li>
+                <li id="navbar-username" class="bold green">
+                    <a href='../account.html'></a>
+                </li>
+            </ul>
         </header>
         <div id="page-container">
             <div class='admin-inner-wrapper'>
-                <div class="accountNav">
-                <div class="logout body-text-bold">
-                    <a id='logout'>LOG OUT</a>
+                <div class="accountNav"><div class='create-meal-wrapper'>
+                <a href="create_meal.html">
+                   <input type="button" class="btn btn-small-primary medium-green" id="createMeals" value="Create Meal">
+                </a>
+                </div>
+                    <div class="logout body-text-bold">
+                        <a id='logout'>LOG OUT</a>
                     </div>
                 </div>
                 <div class="admin-page-container">
@@ -63,7 +67,7 @@
                             <select name="meal-type" id="meal-type" class="meallist-select">
                                 <option value="" selected>Meal-type</option>
                             </select>
-                            <input type="text" placeholder="Search by name" id="searchBy-name"/>
+                            <input type="text" placeholder="Search by name" id="searchBy-name" />
                             <input type="button" class="btn btn-small-primary medium-green" id="searchinMeal" value="SEARCH">
                         </div>
                         <table id="meal-list" class="display" cellspacing="0" width="100%">
@@ -82,6 +86,7 @@
                         </table>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>

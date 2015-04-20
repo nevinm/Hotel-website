@@ -185,6 +185,10 @@ table#userlist{
   width: 90%;
   margin: 0 auto;
 }
+.create-meal-wrapper{
+  padding: 10px 0px;
+  float: left;
+}
 table#meal-list {
   width: 100%;
   float: right;
