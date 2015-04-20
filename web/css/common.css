@@ -391,7 +391,11 @@ label{
    font-family: 'ProximaNova-regular';
   color: #9B9B9B; 
 }
-
+.login-signup{
+	font-family: 'BrandonGrotesque-Bold'!important;
+	font-weight: normal;
+	color: #6b6b6b;
+}
 /*==============================*\
 			&HEADER
 \*==============================*/
