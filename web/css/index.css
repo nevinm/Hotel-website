@@ -80,6 +80,11 @@ SLIDER
 	background-color: #f1f1f1;
 	min-height: 100%;
 }
+.login-signup{
+	font-family: 'BrandonGrotesque-Bold'!important;
+	font-weight: normal;
+	color: #6b6b6b;
+}
 #slide1 .slide-description {
 	position: absolute;
 	top: 21%;
