@@ -54,7 +54,7 @@ function autoPopulateAdressess(userDetails) {
     $.each(userDetails.address_list, function(key, value) {
         $("#editaddress-container ol").append('<li class="address">' +
             '<div class ="button">' +
-            '<a href="#" data-id="' + value.id + '" class="edit-address btn btn-small-secondary">EDIT</a>' +
+            '<a href="#" data-id="' + value.id + '" data-primary="'+value.is_primary+'" class="edit-address btn btn-small-secondary">EDIT</a>' +
             '<a href="#" data-id="' + value.id + '" class="remove-address btn btn-small-secondary">REMOVE</a></div>' +
             '<div class="address-content">' +
             '<span class="address-name">' + value.first_name +" "+ value.last_name + '</span>' +
@@ -264,9 +264,10 @@ $(document).ready(function() {
 
     $("#savepopup-data").on('click', function(e) {
         e.preventDefault();
-        var currentId = $(this).data().id;
+        var currentId = $(this).attr("data-id"),
+        isPrimary= $(this).attr("data-primary");
         if ($('form.addaddress-popup').valid()) {
-            editAddress(currentId);
+            editAddress(currentId, isPrimary);
         }
     });
 
