@@ -7,6 +7,9 @@ $(document).ready(function() {
         getmealList(search_name, category, mealtype);
     });
 
+    $(document).on('click', '.meal-edit',function(){
+
+    });
     $(document).on('click', '.meal-delete',function(){
     	var confirmDelete = confirm("Are you sure you want to delete this meal?");
     	if(confirmDelete){
@@ -108,6 +111,7 @@ function populateMealList(data) {
             "<td>" + value.category + "</td>" +
             "<td>" + value.meal_types[0].name + "</td>" +
             "<td>" + value.price + "</td>" +
-            "<td><button type='button' class='meal-delete' data-id='" + value.id + "'>Delete</button></td>" + "</tr>");
+            "<td><button type='button' class='meal-delete' data-id='" + value.id + "'>Delete</button></td>" +
+            "<td><button type='button' class='meal-edit' data-id='" + value.id + "'>Edit</button></td>" + "</tr>");
     });
 }

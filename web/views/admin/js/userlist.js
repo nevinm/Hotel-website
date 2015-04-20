@@ -58,20 +58,23 @@ $(document).ready(function() {
         $("#userlist tbody").empty()
         $.each(userListData.aaData, function(key, value) {
             $("#userlist tbody").append("<tr class='row'>" +
-                "<td class='id'>" + value.id + "</td>" +
                 "<td class='name'>" + value.name + "</td>" +
                 "<td class='credits'>" + value.credits + "</td>" +
                 "<td class='email'>" + value.email + "</td>" +
                 "<td class='is_admin'>" + value.is_admin + "</td>" +
                 "<td class='mobile'>" + value.mobile + "</td>" +
-                "<td class='profile_image'>" + value.profile_image + "</td>" +
+                "<td class='profile_image'><img src='" + value.profile_image + "'/></td>" +
                 "<td align='center' class='delete-user'><a data-id='" + value.id + "'class='cross'></a></td>" +
                 "</tr>");
 
             if (value.is_active) {
-                $("tbody .row:last").append("<td class='profile_image'><button data-id='" + value.id + "' class='status down'>Active</button></td>");
+                $("tbody .row:last").append("<td><button data-id='" + value.id + "' class='status down'>Active</button></td>");
             } else {
-                $("tbody .row:last").append("<td class='profile_image'><button data-id='" + value.id + "' class='status'>Inactive</button></td>")
+                $("tbody .row:last").append("<td><button data-id='" + value.id + "' class='status'>Inactive</button></td>")
+            }
+            if(value.profile_image=="Not Available"){
+                $(".profile_image img:last").remove();
+                $(".profile_image:last").html("Not Available");
             }
         })
         $(".pagination").pagination({

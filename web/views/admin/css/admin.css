@@ -153,7 +153,9 @@ tbody, thead{
 table#userlist{
   width: 90%;
   margin-top: 20px;
-
+}
+#userlist img{
+  max-width: 50px;
 }
 .status{
 	background: #ccc;

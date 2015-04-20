@@ -282,6 +282,7 @@ html,body{
 	margin-bottom: -143px;
 	overflow-x:hidden;	
 }
+
 #mainWrapper{
 	width: 100%;
 	float: left;
@@ -356,7 +357,7 @@ label{
 	font-weight: bold;
 	display: inline-block;
 	line-height: 0px;
-	padding: 12px 4px 11px 3px;
+	padding: 12px 4px 10px 3px;
 }
 .cross:before{
 	content: "×";
@@ -398,7 +399,7 @@ label{
 #header{
 	float: left;
 	width: 100%;
-	/*opacity:0.85;*/
+	opacity:0.85;
 	/*-webkit-filter:blur(15px);*/
 	padding: 18px 0;
 	position: fixed;
