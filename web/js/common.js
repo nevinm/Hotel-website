@@ -171,6 +171,7 @@ $(document).ready(function() {
                 phonenumber: {
                     required:true,
                     minlength:10,
+                    maxlength:15,
                     number :true
                 },
                 confirmpassword: {
@@ -218,10 +219,7 @@ $(document).ready(function() {
                     minlength: "Name should contain atleast 2 characters.",
                     maxlength: "Name should not contain more than 15 charcters."
                 },
-                phonenumber:{
-                    required:"Please enter your phone number.",
-                    minlength:"Provide a valid number."
-                },    
+                phonenumber:"Provide a valid number.",
                 fullname: {
                     required: "Please enter your first name.",
                     letters: "Name should contain only alphabets.",
