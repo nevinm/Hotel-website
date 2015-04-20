@@ -186,7 +186,9 @@ $('#cancel').on("click", function() {
 //show edit address popup
 $(document).on("click", ".edit-address", function() {
     currentId = $(this).data().id;
+    isPrimary= $(this).attr("data-primary");
     $("#savepopup-data").attr("data-id", currentId);
+    $("#savepopup-data").attr("data-primary", isPrimary);
     populateAddressToForm(currentId);
     $(".addresspopup-wrapper").show();
     $("#addpopup-data").hide();

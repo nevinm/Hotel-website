@@ -218,6 +218,10 @@ $(document).ready(function() {
                     minlength: "Name should contain atleast 2 characters.",
                     maxlength: "Name should not contain more than 15 charcters."
                 },
+                phonenumber:{
+                    required:"Please enter your phone number.",
+                    minlength:"Provide a valid number."
+                },    
                 fullname: {
                     required: "Please enter your first name.",
                     letters: "Name should contain only alphabets.",
@@ -226,7 +230,7 @@ $(document).ready(function() {
                 },
                 password: {
                     required: "Please provide a password.",
-                    minlength: "password shoudn't be less than 6."
+                    minlength: "Password should be of minimum 6 characters."
                 },
                 username:{
                     required: "Plaese enter username.",
@@ -235,12 +239,12 @@ $(document).ready(function() {
                 },
                 confirmpassword: {
                     required: "Please provide a password.",
-                    minlength: "password shoudn't be less than 6.",
+                    minlength: "Password should be of minimum 6 characters.",
                     equalTo: "Password doesn't match."
                 },
                 repassword:{
                     required:"Please provide a password.",
-                    minlength:"Password shoudn't be less than 6.",
+                    minlength:"Password should be of minimum 6 characters.",
                     equalTo:"Password doesn't match."
                 },
                 confirmEmail:{
@@ -249,10 +253,10 @@ $(document).ready(function() {
                 },
                 email : "Enter a valid email address.",
                 zip : "Provide a valid zip code.",
-                street :"Provide a valid street address.",
-                building:"Provide a valid building name.",
-                state: "Please fill the required field.",
-                city:"Please fill the required field."
+                street :"Provide a valid address.",
+                building:"Provide a vslid address.",
+                state: "Provide a state name.",
+                city:"Provide a city name."
             }
         });
     });

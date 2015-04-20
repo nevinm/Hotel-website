@@ -175,7 +175,7 @@ h4{
 .caption{
 	color: #9B9B9B;
 	font-family: 'ProximaNova-regular';
-	font-size:10px;
+	font-size:11px;
 	letter-spacing: 0.5px;
 	line-height: 12px;
 	margin-bottom: 5px;
@@ -271,6 +271,8 @@ button:focus {
 html,body{
 	height:100%;
 	overflow: auto;
+	-webkit-font-smoothing: antialiased;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
 }
 #home-page-main-wrapper{
 	width: 100%;
@@ -581,7 +583,8 @@ span.icon-menu{
 #signup-firstname-error,#signup-lastname-error,#signup-email-error,#signup-password-error,
 #username-error,#password-error,#forgotpassword-email-error,#confirm-newpassword-error,
 #newpassword-error,#new-password-error,#confirm-password-error,#old-password-error,
-#firstname-error,#lastname-error,#phonenumber-error,#new-email-error,#confirmEmail-error
+#firstname-error,#lastname-error,#phonenumber-error,#new-email-error,#confirmEmail-error,
+#address-line-1-error,#address-line-2-error,#zip-error,#phonenumber-error,#state-error,#city-error
 {
 	color: #ff7878;
 	background: white;
@@ -616,8 +619,7 @@ span.icon-menu{
 	opacity: 1 !important;
 	transition:0.5s;
 }
-#fullname-error, .forminput-wrapper #phonenumber-error, 
-#zip-error, #state-error, #street-error, #building-error,#city-error,#state-error {
+/*#fullname-error, #street-error, #building-error,#city-error {
 	color: #ff7878;
 	position: absolute;
 	right: 18px;
@@ -629,7 +631,7 @@ span.icon-menu{
 	width: 262px;
 	text-align: left;
 	padding: 0;
-}
+}*/
 /*==============================*\
 		&NAVBAR RESPONSIVE
 \*==============================*/

@@ -25,6 +25,7 @@ input[type="text"], input[type="email"], input[type="password"]{
   border-bottom: 1px solid #D0D0D0;
   height: 46px;
   padding-left: 35px;
+  padding-top: 10px;
   background-color: #f7f7f7;
   color: #454545;
 }
@@ -185,8 +186,13 @@ table#userlist{
   width: 90%;
   margin: 0 auto;
 }
+.create-meal-wrapper{
+  padding: 10px 0px;
+  float: left;
+}
 table#meal-list {
   width: 100%;
+  float: right;
   margin-top: 20px;
   margin-bottom: 20px;
 }
