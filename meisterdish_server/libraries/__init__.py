@@ -7,7 +7,7 @@ def mail(to_list, subject, message, sender="Meisterdish <afmpmail2@gmail.com> ",
               'Reply-To': "<afmpmail2@gmail.com> ",
               'From':"Meisterdish <afmpmail2@gmail.com> ",
               }):
-    msg = EmailMessage(subject, message, sender, to_list)
+    msg = EmailMessage(subject, message, sender, to_list, headers=headers)
     msg.content_subtype = "html"
     return msg.send()
 
