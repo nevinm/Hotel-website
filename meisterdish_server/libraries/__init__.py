@@ -1,6 +1,8 @@
 from django.core.mail import EmailMessage
 import logging
 from api.models import Image
+import re
+
 log = logging.getLogger('libraries')
  
 def mail(to_list, subject, message, sender="Meisterdish Test<meisterdishtest@gmail.com>", headers = {
@@ -42,3 +44,21 @@ def manage_image_upload(request):
     except Exception as e:
         log.error("Failed to upload image : " + e.message)
         return None
+
+def validate_zipcode(zip):
+  regex = "^\d{5}(-\d{4})?$"
+  if re.match(regex, str(zip)) is None:
+    return False
+  return True
+
+def validate_email(email):
+  regex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+  if re.match(regex, str(email)) is None:
+    return False
+  return True
+
+def validate_phone(phone):
+  regex = "^(1\s*[-\/\.]?)?(\((\d{3})\)|(\d{3}))\s*[-\/\.]?\s*(\d{3})\s*[-\/\.]?\s*(\d{4})\s*(([xX]|[eE][xX][tT])\.?\s*(\d+))*$"
+  if re.match(regex, str(phone)) is None:
+    return False
+  return True  
