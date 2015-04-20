@@ -189,7 +189,8 @@
 	float: right;
 }
 .menuItemName{
-	color: #5a5a5a;
+	color: #9B9B9B;
+  	text-transform: uppercase;
 }
 .menuItemDetails{
 	vertical-align: middle;
