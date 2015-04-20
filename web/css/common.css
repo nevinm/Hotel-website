@@ -392,7 +392,11 @@ label{
    font-family: 'ProximaNova-regular';
   color: #9B9B9B; 
 }
-
+.login-signup{
+	font-family: 'BrandonGrotesque-Bold'!important;
+	font-weight: normal;
+	color: #6b6b6b;
+}
 /*==============================*\
 			&HEADER
 \*==============================*/
@@ -414,6 +418,7 @@ label{
 	max-width: 1100px;
 	width: 100%;
 	margin: 0 auto;
+	overflow: hidden;
 }
 #menu{
 	margin: 0;
@@ -443,21 +448,21 @@ span.icon-menu{
 }
 .cart {
 	position: relative;
-    margin-top: 5px;
+	margin-top: 6px;
+	padding-right: 10px;
 }
 .count {
 	font-family: 'BrandonGrotesque-Bold';
-	position: absolute;
-	border-radius: 50%;
-	top: -6px;
-	right: -6px;
-	color: white;
-	background-color: #A9D77B;
-	width: 14px;
-	height: 14px;
-	padding: 3px;
-	line-height: 9px;
-	font-size: 15px;
+  position: absolute;
+  border-radius: 50%;
+  top: -6px;
+  right: 6px;
+  color: white;
+  background-color: #A9D77B;
+  font-size: 12px;
+  padding: 0px 5px;
+  font-weight: bold;
+  height: 18px;
 }
 .menuPadding{
 	padding-top: 6px;
