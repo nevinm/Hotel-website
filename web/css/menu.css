@@ -115,11 +115,8 @@
 	font-family: 'BrandonGrotesque-bold';
 	font-size: 13px;
 }
-.filter-drop-down ul li:hover {
-	background: linear-gradient(to right,#DFDFDF,#f7f7f7,#EFEFEF);
-}
 .filter-drop-down ul li:hover{
-	background-color: #F0F0F0;
+	background-color: #E8E8E8;
 }
 .filter-drop-down ul li div{
 	padding: 0px 21px;
