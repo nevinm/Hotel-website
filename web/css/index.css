@@ -84,7 +84,7 @@ SLIDER
 	position: absolute;
 	top: 21%;
 	left: 14.5%;
-	width: 18%;
+	width: 20%;
 	line-height: -11px;
 }
 #slide1 .slide-description .body-text-small{
@@ -95,17 +95,19 @@ SLIDER
 .slide-description h3{
 	text-transform: uppercase;
 }
-#slide1 .slide-description .h0,#slide3 .slide-description .h0{
+#slide1 .slide-description .h0,#slide3 .slide-description .h0,#section3 .slide-description .h0{
 	text-transform: uppercase;
-	color: #7C7C7C;
-	line-height: 42px;
-	padding-bottom: 10px;
+	color: #9b9b9b;
+	line-height: 55px;
+	padding-bottom: 5px;
+	letter-spacing: 4px;
+	font-size: 50px;
 }
 #section2 .slide-description{
 	position: absolute;
 	top: 30%;
 	margin-left: 25%;
-	width: 19%;
+	width: 21%;
 }
 #section2 .slide-description .body-text-small{
 	font-family: 'BrandonGrotesque-Light';
@@ -118,16 +120,17 @@ SLIDER
   	margin-left: 10%;
 }
 #section3 .slide-description .h0{
-	text-transform: uppercase;
+/*	text-transform: uppercase;
 	color: #7C7C7C;
 	line-height: 42px;
-	padding-bottom: 10px;
+	padding-bottom: 10px;*/
 }
 #section3 .slide-description .body-text-small{
 	font-family: 'BrandonGrotesque-bold';
-	font-size: 10px;
-	padding-bottom: 15px;
-	letter-spacing: 1px;
+	font-size: 12px;
+	padding-bottom: 5px;
+	letter-spacing: .5px;
+	line-height: 25px;
 }
 #zip-code{
 	width: 130px;
@@ -175,4 +178,9 @@ SLIDER
 	background-position: fixed;
 	padding: 6% 0 0 0;
 	background-size: cover;
+}
+input#zip-code[type="text"]{
+	font-size: 16px;
+	font-family: 'BrandonGrotesque-Light';
+	text-transform: uppercase;
 }

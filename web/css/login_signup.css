@@ -17,10 +17,9 @@
   overflow: auto;
   background-color: #fff;
   margin-top: 100px;
-  box-shadow: 0 0 6px #d0d0d0;
-  -moz-box-shadow: 0 0 6px #d0d0d0;
-  -webkit-box-shadow: 0 0 6px #d0d0d0;
-  border-radius: 4px;  
+  -webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+-moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
 }
 .login-wrapper h3{
 	color: #6B6B6B;
@@ -73,9 +72,9 @@ span.forgot-password{
   border-radius: 3px;
   float: left;
   width: 100%;
-  box-shadow: 0 0 6px #d0d0d0;
-  -moz-box-shadow: 0 0 6px #d0d0d0;
-  -webkit-box-shadow: 0 0 6px #d0d0d0;
+  -webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+  -moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+  box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
 }
 .fb-signupButton{
   margin-top: 10px;
@@ -135,7 +134,9 @@ form.signup-formcontainer {
   margin-top: 40px;
   float: left;
   width: 100%;
-  box-shadow: 0 0 6px #d0d0d0;
+  -webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+  -moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+  box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
 }
 #forgotpassword-form,.resetpassword-form{
   float: left;
