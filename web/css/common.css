@@ -417,7 +417,6 @@ label{
 	max-width: 1100px;
 	width: 100%;
 	margin: 0 auto;
-	overflow: hidden;
 }
 #menu{
 	margin: 0;
@@ -590,7 +589,8 @@ span.icon-menu{
 #username-error,#password-error,#forgotpassword-email-error,#confirm-newpassword-error,
 #newpassword-error,#new-password-error,#confirm-password-error,#old-password-error,
 #firstname-error,#lastname-error,#phonenumber-error,#new-email-error,#confirmEmail-error,
-#address-line-1-error,#address-line-2-error,#zip-error,#phonenumber-error,#state-error,#city-error
+#address-line-1-error,#address-line-2-error,#zip-error,#phonenumber-error,#state-error,
+#city-error,#adminlogin-email-error
 {
 	color: #ff7878;
 	background: white;

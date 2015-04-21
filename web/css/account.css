@@ -316,7 +316,9 @@ ol{
 	color: #A9D77B;	
 
 }
-
+.check-box-container{
+	float: right;
+}
 /*==================================*\
 			&PROFILE-PICTURE
 \*==================================*/
