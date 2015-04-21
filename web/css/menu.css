@@ -234,7 +234,7 @@
 	position: relative;
 }
 
-.category-menu li:hover a{
+.category-menu li:active a, .category-menu .activeOption a{
 	color: #8EC657;
 }
 

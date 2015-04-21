@@ -8,6 +8,11 @@ $(document).ready(function() {
         $(this).addClass("activeOption");
     });
 
+    $(document).on("click", '.sub-menu-mobile .category-menu li', function() {
+        $(document).find(".sub-menu-mobile ul li").removeClass("activeOption");
+        $(this).addClass("activeOption");
+    });
+
     //Categories
     $(document).on('click', '.menu-categories-list', function() {
         nextPage = 1;
@@ -60,7 +65,9 @@ var getCategoryCallback = {
         if (userDetails.status == 1) {
             $.each(userDetails.categories, function(key, value) {
                 $('.category-wrapper .category-menu').append("<li class='menu-categories-list'><a href='#'" +
-                    " class='menu-categories' data-id='" + value.id + "'>" + value.name + "</a></li>")
+                    " class='menu-categories' data-id='" + value.id + "'>" + value.name + "</a></li>");
+                $('.sub-menu-mobile .category-menu').append("<li class='menu-categories-list '><a href='#'"+
+                    "class='menu-categories' data-id='" + value.id + "'>" + value.name + "</a></li>")
             });
             $.each(userDetails.meal_types, function(key, value) {
                 $(".filter-drop-down ul").append("<li><div><input id='mealtype" + key + "' type='checkbox' " +
