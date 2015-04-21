@@ -5,7 +5,10 @@ var removeAddressCallback = {
         if (userDetails.status == 1) {
             getAddress();
             isAddress();
-        } else {}
+        } 
+        else {
+           showErrorPopup(userDetails); 
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -31,7 +34,9 @@ var getAddressCallback = {
             localStorage['delivery_addressess'] = data;
             autoPopulateAdressess(userDetails);
             isAddress();
-        } else {}
+        } else {
+            showErrorPopup(userDetails);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -82,7 +87,9 @@ var addAddressCallback = {
         if (userDetails.status == 1) {
             getAddress();
             $(".addresspopup-wrapper").hide();
-        } else {}
+        } else {
+            showErrorPopup(userDetails);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -130,7 +137,9 @@ var editAddressCallback = {
         if (userDetails.status == 1) {
             getAddress();
             $(".addresspopup-wrapper").hide();
-        } else {}
+        } else {
+            showErrorPopup(userDetails);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -196,7 +205,9 @@ var getStatesCallback = {
                     text: value.name,
                 }));
             });
-        } else {}
+        } else {
+            showErrorPopup(userDetails);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -229,7 +240,9 @@ var getCitiesCallback = {
             if (cityId) {
                 $('.city-selector').val(cityId);
             }
-        } else {}
+        } else {
+            showErrorPopup(cityList);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }

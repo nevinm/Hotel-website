@@ -108,7 +108,16 @@ function logingOut(){
         // }
     })
 }
-   
+
+//show Error popup
+function showErrorPopup(data){
+    var message = data.message;
+    $('.popup-container .content span').text(message);
+    $('.delivery-address-error-popup-wrapper').show();
+    $('#ok-button').on("click",function(){
+        $('.delivery-address-error-popup-wrapper').hide();
+    })
+}
 $(document).ready(function() {
     //Logout process
     $("#logout").on('click', function() {

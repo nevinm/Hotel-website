@@ -555,7 +555,7 @@ span.icon-menu{
 	border-radius: 4px;
 
 }
-.popup .header{
+.popup .header,.delivery-address-error-popup .header{
 	border-bottom: 1px solid #D0D0D0;
 	height: 46px;
 	padding-left: 35px;
@@ -591,7 +591,8 @@ span.icon-menu{
 #username-error,#password-error,#forgotpassword-email-error,#confirm-newpassword-error,
 #newpassword-error,#new-password-error,#confirm-password-error,#old-password-error,
 #firstname-error,#lastname-error,#phonenumber-error,#new-email-error,#confirmEmail-error,
-#address-line-1-error,#address-line-2-error,#zip-error,#phonenumber-error,#state-error,#city-error
+#address-line-1-error,#address-line-2-error,#zip-error,#phonenumber-error,#state-error,
+#city-error,#adminlogin-email-error
 {
 	color: #ff7878;
 	background: white;
@@ -639,14 +640,29 @@ span.icon-menu{
 	text-align: left;
 	padding: 0;
 }*/
+
+.delivery-address-error-popup-wrapper{
+	display: none;
+}
+.delivery-address-error-popup{
+	position: absolute;
+	height: 250px;
+	width: 450px;
+	background-color:#fff;
+	top: 40%;
+	left: 50%;
+	margin-top: -125px;
+	margin-left: -225px;
+	z-index: 999999;
+	border-radius: 4px;
+
+}
+.delivery-address-error-popup-wrapper .bk-overlay{
+	z-index: 99999;
+}
 /*==============================*\
 		&NAVBAR RESPONSIVE
 \*==============================*/
-
-@media only screen and (min-width: 768px)and (max-width:1024px){
-  	ul#menu{
-  		display: none;
-  	}
   	.navMenu {
 		width: 100%;
 		position: absolute;
@@ -658,18 +674,23 @@ span.icon-menu{
 
 	.navMenu ul li{
 		list-style-type: none;
-		font-family: 'BrandonGrotesque-Regular';
+		font-family: 'BrandonGrotesque-Bold';
 		font-size: 12px;
 		cursor: pointer;
 		padding: 14px;
-		border-bottom: 1px solid #A3A2A2; 
+		border-bottom: 1px solid #A3A2A2;
 	}
 	.navMenu ul li a{
-		color: black;
+		color: #9B9B9B;
 	}
 	.navMenu ul li a:hover{
 		color: #8EC657;
 	}
+@media only screen and (min-width: 768px)and (max-width:1024px){
+  	ul#menu{
+  		display: none;
+  	}
+
   	span.icon-menu{
   		display: block;
   	}
@@ -712,16 +733,39 @@ span.icon-menu{
 }
 
 /*==============================*\
-		&MOBILE RESPONSIVE
+            &MOBILE
 \*==============================*/
-@media only screen and (min-width : 320px) and (max-width : 768px) {
+@media (min-width: 320px)and (max-width:767px){
+	header#header {
+		opacity: 1;
+		background-color: #fff;
+	}
 	.logo{
 		display: none;
 	}
+	ul#menu{
+			display: none;
+	}
 	span.icon-menu{
   		display: block;
+  		float: left;
+  		padding-left: 20px;
   	}
-  	ul#menu{
-  		display: none;
+  	.cart{
+  		margin-top: 11px;
+  		padding-right: 20px;
+  	}
+  	.count{
+  		right: 16px;
+  	}
+  	.navMenu{
+  		background: rgba(255,255,255,1);
+  	}
+  	.navMenu ul li:first-child{
+  		border-top: 2px solid #d0d0d0;
+  	}
+  	.navMenu ul li{
+  		border-bottom: 2px solid #d0d0d0;
+  		padding-left: 29px;
   	}
 }
