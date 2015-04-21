@@ -267,6 +267,9 @@
 	background-color : rgba(255,255,255,1);
 }
 
+#header h3{
+	display: none;
+}
 
 @media only screen and (min-width: 768px)and (max-width:1024px){
 	.listItems{
@@ -322,6 +325,7 @@
   	}
   	#header h3{
   		text-align: center;
+  		display: block;
   	}
 }
 
