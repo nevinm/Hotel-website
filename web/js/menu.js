@@ -2,7 +2,7 @@ $(document).ready(function() {
     var perPage = 3,
         nextPage = 1,
         mealTypeFilter = [],
-        endOfList = false;
+        endOfList = false, ipadWidth=767;
     $(document).on("click", '.subMenu .menu-categories-list', function() {
         $(document).find(".subMenu ul li").removeClass("activeOption");
         $(this).addClass("activeOption");
@@ -19,6 +19,13 @@ $(document).ready(function() {
     $(".category-header").on('click',function(){
         $(".category-menu").slideToggle();
     });
+
+    $(".filter-container").on('click',function(){
+        // if(window.innerWidth < ipadWidth){
+            $(".filter-drop-down").slideToggle();
+        // }
+        // else{}
+    })
 
     //Filters
     $(document).on('change', '.filter-drop-down input[type=checkbox]', function(e) {

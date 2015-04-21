@@ -627,4 +627,7 @@ form.addaddress-popup {
 	.mobile-logout{
 		display: block;
 	}
+	.user-name-wrapper h2{
+		font-size: 16px;
+	}
 }
