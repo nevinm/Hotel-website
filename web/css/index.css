@@ -80,11 +80,6 @@ SLIDER
 	background-color: #f1f1f1;
 	min-height: 100%;
 }
-.login-signup{
-	font-family: 'BrandonGrotesque-Bold'!important;
-	font-weight: normal;
-	color: #6b6b6b;
-}
 #slide1 .slide-description {
 	position: absolute;
 	top: 21%;
@@ -186,4 +181,19 @@ input#zip-code[type="text"]{
 	font-size: 16px;
 	font-family: 'BrandonGrotesque-Light';
 	text-transform: uppercase;
+}
+
+/*==============================*\
+			&Media-query
+\*==============================*/
+@media only screen and (min-width: 768px)and (max-width:1024px){
+	#slide1 .slide-description .h0,#slide3 .slide-description .h0,#section3 .slide-description .h0{
+		line-height: 42px;
+		padding-bottom: 5px;
+		letter-spacing: 4px;
+		font-size: 35px;
+	}
+	#slide1 .slide-description{
+		left: 18%;
+	}	
 }

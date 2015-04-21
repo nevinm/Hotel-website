@@ -7,15 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-     <title>Meisterdish - Delivery Address</title>
+    <title>Meisterdish - Delivery Address</title>
     <script type="text/javascript" src='../js/redirect.js'></script>
-
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/fontello.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/account.css">
-
 </head>
 
 <body>
@@ -67,7 +64,7 @@
                         <a href='account.html'></a>
                     </li>
                 </ul>
-            </div>   
+            </div>
         </header>
         <div id="page-container">
             <div class="accountNav">
@@ -82,8 +79,8 @@
                     <a href='admin/categories.html' id="admin-redirect">Admin Page</a>
                 </div>
             </div>
-            <div class="account-wrapper"> 
-                <div class="account-container" id="editaddress-container">  
+            <div class="account-wrapper">
+                <div class="account-container" id="editaddress-container">
                     <div class="account-header">MANAGE YOUR DELIVERY ADDRESSES</div>
                     <div class="content">
                         <div class="message">
@@ -91,19 +88,18 @@
                         </div>
                         <ol></ol>
                     </div>
-                     <div class="button-changeaddress">
-                        <a href="account.html" class="btn btn-large-primary medium-green" >UPDATE</a>
+                    <div class="button-changeaddress">
+                        <a href="account.html" class="btn btn-large-primary medium-green">UPDATE</a>
                         <a href="#" class="btn btn-large-secondary medium-green" id="add-address">ADD ADDRESS</a>
                     </div>
                 </div>
-
-            </div> 
+            </div>
             <div class="addresspopup-wrapper">
-              <div class="bk-overlay"></div>
-              <div class="addresspopup">
-                <div class="header">ADD A NEW ADDRESS
-                    <img src="../images/cross_black.png" id="cancel">
-                </div>
+                <div class="bk-overlay"></div>
+                <div class="addresspopup">
+                    <div class="header">ADD A NEW ADDRESS
+                        <img src="../images/cross_black.png" id="cancel">
+                    </div>
                     <div class="container">
                         <form class="addaddress-popup">
                             <div class="section1">
@@ -116,33 +112,34 @@
                                     <input type="text" name="lastname" class="popup-input">
                                 </div>
                             </div>
+
                             <div class="section2">
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">Address Line -1</label>
-                                    <div class="check-box-container">
-                                        <input type="checkbox" name="is-primary" class="popup-input checkbox"><span class='checkbox-span'>Primary</span>
+                                    <div class='primary-wrapper'>
+                                        <input type="checkbox" name="is-primary" class="popup-input checkbox">
+                                        <span class='checkbox-span'>Primary</span>
                                     </div>
                                     <input type="text" name="street" class="popup-input" id="address-line-1">
                                 </div>
-
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">Address Line -2</label>
                                     <input type="text" name="building" class="popup-input" id="address-line-2">
                                 </div>
                             </div>
-                           <div class="section3">
+                            <div class="section3">
                                 <div class="forminput-wrapper">
-                                    <label class="body-text-small">City</label>
-                                    <div class="styled-select">
-                                        <select class='city-selector' name="city">
+                                    <label class="body-text-small">State</label>
+                                    <div class="styled-select-state">
+                                        <select class='state-selector' name="state">
                                             <option value=""></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="forminput-wrapper">
-                                    <label class="body-text-small">State</label>
-                                    <div class="styled-select-state">
-                                        <select class='state-selector' name="state">
+                                    <label class="body-text-small">City</label>
+                                    <div class="styled-select">
+                                        <select class='city-selector' name="city">
                                             <option value=""></option>
                                         </select>
                                     </div>
@@ -152,12 +149,12 @@
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">Zip</label>
                                     <input type="text" name="zip" class="popup-input">
-                                </div>   
-                                 <div class="forminput-wrapper">
+                                </div>
+                                <div class="forminput-wrapper">
                                     <label class="body-text-small">Phone</label>
                                     <input type="text" name="phonenumber" class="popup-input">
                                 </div>
-                            </div>                       
+                            </div>
                             <div class="button">
                                 <input class="btn btn-small-primary medium-green" id="addpopup-data" type="submit" value="ADD ADDRESS">
                                 <input class="btn btn-small-primary medium-green" id="savepopup-data" value="SAVE ADDRESS" type="submit">
@@ -165,22 +162,21 @@
                         </form>
                     </div>
                 </div>
-            </div>  
-            <div class="popup-wrapper">
+            </div>
+            <div class="delivery-address-error-popup-wrapper">
                 <div class="bk-overlay"></div>
-                <div class="popup">
+                <div class="delivery-address-error-popup">
                     <div class="header"></div>
                     <div class="popup-container">
                         <div class="content">
-                             <span>Are you sure want to remove this address </span>
+                            <span>Are you sure want to remove this address </span>
                         </div>
                         <div class="button">
-                            <a href="#" class="btn btn-small-secondary" id="yes-button">YES</a>
-                            <a href="#" class="btn btn-small-secondary" id="no-button">NO</a>
+                            <a href="#" class="btn btn-small-secondary" id="ok-button">OK</a>
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
         </div>
     </div>
     <script type="text/javascript" src='../js/jquery.min.js'></script>

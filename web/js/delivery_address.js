@@ -7,7 +7,7 @@ var removeAddressCallback = {
             isAddress();
         } 
         else {
-           showPopup(userDetails); 
+           showErrorPopup(userDetails); 
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -35,7 +35,7 @@ var getAddressCallback = {
             autoPopulateAdressess(userDetails);
             isAddress();
         } else {
-            showPopup(userDetails);
+            showErrorPopup(userDetails);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -59,7 +59,7 @@ function autoPopulateAdressess(userDetails) {
     $.each(userDetails.address_list, function(key, value) {
         $("#editaddress-container ol").append('<li class="address">' +
             '<div class ="button">' +
-            '<a href="#" data-id="' + value.id + '" data-primary="'+value.is_primary+'" class="edit-address btn btn-small-secondary">EDIT</a>' +
+            '<a href="#" data-id="' + value.id + '" class="edit-address btn btn-small-secondary">EDIT</a>' +
             '<a href="#" data-id="' + value.id + '" class="remove-address btn btn-small-secondary">REMOVE</a></div>' +
             '<div class="address-content">' +
             '<span class="address-name">' + value.first_name +" "+ value.last_name + '</span>' +
@@ -88,7 +88,7 @@ var addAddressCallback = {
             getAddress();
             $(".addresspopup-wrapper").hide();
         } else {
-            showPopup(userDetails);
+            showErrorPopup(userDetails);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -138,7 +138,7 @@ var editAddressCallback = {
             getAddress();
             $(".addresspopup-wrapper").hide();
         } else {
-            showPopup(userDetails);
+            showErrorPopup(userDetails);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -206,7 +206,7 @@ var getStatesCallback = {
                 }));
             });
         } else {
-            showPopup(userDetails);
+            showErrorPopup(userDetails);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -241,7 +241,7 @@ var getCitiesCallback = {
                 $('.city-selector').val(cityId);
             }
         } else {
-            showPopup(cityList);
+            showErrorPopup(cityList);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -277,10 +277,9 @@ $(document).ready(function() {
 
     $("#savepopup-data").on('click', function(e) {
         e.preventDefault();
-        var currentId = $(this).attr("data-id"),
-        isPrimary= $(this).attr("data-primary");
+        var currentId = $(this).attr("data-id");
         if ($('form.addaddress-popup').valid()) {
-            editAddress(currentId, isPrimary);
+            editAddress(currentId);
         }
     });
 

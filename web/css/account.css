@@ -491,6 +491,12 @@ form.addaddress-popup {
 	width: 100%;
 	float: left;
 }
+.primary-wrapper{
+	width: 75px;
+	height: 20px;
+	margin-top: -5px;
+	float: right;
+}
 .section1 .forminput-wrapper{
 	position: relative;
 	 width: 157px;
@@ -502,6 +508,7 @@ form.addaddress-popup {
 }
 .forminput-wrapper label{
 	text-align: left;
+	width: auto;
 }
 #cancel{
 	float: right;
@@ -527,15 +534,15 @@ form.addaddress-popup {
   width: 100%;
   font-size: 14px !important;
 }
-.section3 .forminput-wrapper:first-child{
+.section3 .forminput-wrapper:nth-child(2){
 	width: 180px;
 	float: left;
-	margin-right: 16px;
 	position: relative;
 }
-.section3 .forminput-wrapper:nth-child(2){
+.section3 .forminput-wrapper:first-child{
 	width:  134px;
 	float: left;
+	margin-right: 16px;
 	position: relative;
 }
 .section3{
