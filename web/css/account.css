@@ -66,13 +66,25 @@ ul.sub-content2.body-text-small {
   float: left;
   position: relative;
 }
+.backNav-mobile{
+	display: none;
+}
 .backNav span {
-  font-family: 'BrandonGrotesque-Regular';
-  font-size: 18px;
-  position: relative;
-  width: 188px;
-  bottom: 7px;
-  left: 10px;
+	font-family: 'BrandonGrotesque-Bold';
+	font-size: 16px;
+	position: relative;
+	width: 188px;
+	bottom: 7px;
+	left: 10px;
+	color: #353535;
+}
+.backNav-mobile span {
+	font-family: 'BrandonGrotesque-Bold';
+	font-size: 16px;
+	color: #353535;
+	float: left;
+	margin-top: 6px;
+	padding-left: 20px;
 }
 .account-settings li{
 	margin-bottom: 10px;
@@ -138,9 +150,10 @@ form.gift-cardform .redeem {
   padding-top: 20px;
 }
 .first-name,.last-name,.phone-num,.redeem{
-	width: 270px;
-	/*float: left;*/
+	max-width: 270px;
+	/* float: left; */
 	position: relative;
+	width: 100%;
 }
 .notify,.update-button {
   width: 100%;
@@ -160,17 +173,20 @@ form.gift-cardform .redeem {
  	padding-top: 20px;
  }
  #change-password .password{
- 	padding-top: 15px;
+	padding-top: 15px;
  }
  #changecontact-container,#changeemail-container,#changepassword-container {
-  width: 400px;
+	max-width: 400px;
+	width: 90%;
+	float: left;
 }
 /*==================================*\
 			&email-form
 \*==================================*/
 .new-email,.retype-email,.password{
-	width: 280px;
+	max-width: 280px;
 	position: relative;
+	width: 100%;
 }
 span.body-text-small{
 	padding: 10px 20px;
@@ -197,16 +213,16 @@ span.body-text-small{
 \*==================================*/
 #change-contact{
 	width: 65%;
-	/*float: left;*/
-	padding-top: 20px;
-	padding-left: 20px;
+  /* float: left; */
+  padding-top: 20px;
 }
 #change-contact .phone-num,.last-name{
 	padding-top: 10px;
 
 }
 #change-contact .phone-num .arrange{
-	width: 270px;
+	max-width: 270px;
+	width: 100%;
 }
 #change-contact .notify,.update-button{
 	padding-left: 0px;
@@ -609,6 +625,36 @@ form.addaddress-popup {
   appearance:none !important;
   -moz-appearance:none!important;
 }
-appearance:button;
--moz-appearance:button; /* Firefox */
--webkit-appearance
+/*==================================*\
+			&MOBILE
+\*==================================*/
+@media (min-width: 320px)and (max-width:767px){
+	span.icon-menu{
+		display: none;
+	}
+	.backNav{
+		display: none;
+	}
+	.backNav-mobile{
+		display: block;
+	}
+	.account-wrapper{
+		width: 100%;
+	}
+	#changecontact-container, #changeemail-container, #changepassword-container {
+		float: none;
+		margin: 0 auto;
+	}
+	.logout{
+		display: none;
+	}
+	#change-email span.body-text-small{
+		width: 300px;
+	}
+	form.form {
+		width: 90%;
+	}
+	#change-contact{
+		width: 90%;
+	}
+}

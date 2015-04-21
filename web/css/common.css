@@ -736,6 +736,11 @@ span.icon-menu{
             &MOBILE
 \*==============================*/
 @media (min-width: 320px)and (max-width:767px){
+	#account-mainWrapper,#mainWrapper{
+		background-color: #CDD5CE;
+		background-image: none;
+		border:none;
+	}
 	header#header {
 		opacity: 1;
 		background-color: #fff;
@@ -768,6 +773,10 @@ span.icon-menu{
   	.navMenu ul li{
   		border-bottom: 2px solid #d0d0d0;
   		padding-left: 29px;
+  	}
+  	.account-header h3{
+  		letter-spacing: 1px;
+  		font-size: 16px !important;
   	}
   	
 }
