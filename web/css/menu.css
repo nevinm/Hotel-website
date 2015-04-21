@@ -234,3 +234,16 @@
 		margin-left: 0;
 	}
 }
+
+@media (min-width: 320px) and (max-width: 767px){
+	.listItems{
+  		max-width: 430px;
+		float: none;
+		width: auto;
+		margin: 0 auto;
+  	}
+  	.listItemDetails{
+  		padding: 0 10px;
+  	}
+}
+

@@ -13,6 +13,7 @@ COMMON
 HEADER
 FOOTER
 NAVBAR RESPONSIVE
+MOBILE RESPONSIVE
 */
 
 /*==============================*\
@@ -650,7 +651,6 @@ span.icon-menu{
 		width: 100%;
 		position: absolute;
 		background: rgba(255,255,255,.85);
-		/* height: 211px; */
 		top: 73px;
 		z-index: 99;
 		left: 0;
@@ -678,8 +678,8 @@ span.icon-menu{
   	}
   	.cart{
   		margin-right: 25px;
-		  margin-top: 9px;
-		  margin-left: 25px;
+		margin-top: 9px;
+		margin-left: 25px;
   		
   	}
   	#slide1 .slide-description .h0,#slide3 .slide-description .h0,#section3 .slide-description .h0{
@@ -708,5 +708,20 @@ span.icon-menu{
   	.btn-small-secondary{
   		height: 31px !important;
   		min-width: 88px !important;
+  	}
+}
+
+/*==============================*\
+		&MOBILE RESPONSIVE
+\*==============================*/
+@media only screen and (min-width : 320px) and (max-width : 768px) {
+	.logo{
+		display: none;
+	}
+	span.icon-menu{
+  		display: block;
+  	}
+  	ul#menu{
+  		display: none;
   	}
 }
