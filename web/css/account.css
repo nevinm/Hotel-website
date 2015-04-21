@@ -491,6 +491,8 @@ form.addaddress-popup {
 }
 .primary-wrapper{
 	width: 75px;
+	height: 20px;
+	margin-top: -5px;
 	float: right;
 }
 .section1 .forminput-wrapper{
@@ -504,6 +506,7 @@ form.addaddress-popup {
 }
 .forminput-wrapper label{
 	text-align: left;
+	width: auto;
 }
 #cancel{
 	float: right;
