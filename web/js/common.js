@@ -187,7 +187,8 @@ $(document).ready(function() {
                 zip :{
                     required:true,
                     number :true,
-                    minlength:6
+                    minlength:4,
+                    maxlength:6
                 },
                 state:{
                     required:true

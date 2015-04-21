@@ -489,6 +489,10 @@ form.addaddress-popup {
 	width: 100%;
 	float: left;
 }
+.primary-wrapper{
+	width: 75px;
+	float: right;
+}
 .section1 .forminput-wrapper{
 	position: relative;
 	 width: 157px;
