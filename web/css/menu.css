@@ -208,65 +208,13 @@
 	text-align: center;
 	display: none;
 }
+.subMenu .category-header{
+	display: none;
+}
 
 /*==============================*\
 		&MENU - MOBILE
 \*==============================*/
-.sub-menu-mobile{
-	float: left;
-	display: none;
-	width: 100%;
-	position: relative;
-}
-
-.sub-menu-mobile .arrow-down{
-	position: absolute;
-	right: 0;
-	top: 9px;
-	border-top : 5px solid rgb(148, 148, 148);
-}
-
-.category-mobile-dropdown{
-	margin: 0 auto;
-	cursor: pointer;
-	display: block;
-	text-align: center;
-	position: relative;
-}
-
-.category-menu li:active a, .category-menu .activeOption a{
-	color: #8EC657;
-}
-
-.category-mobile-dropdown h4{
-	margin: 0 auto;
-}
-.category-mobile-dropdown .category-header{
-	width: 180px;
-	position: relative;
-	margin: 0 auto;
-}
-
-.category-menu a{
-	color: #9B9B9B;
-}
-.sub-menu-mobile .category-menu{
-	width: 100%;
-	padding-top: 10px;
-	display: none;
-	position: absolute;
-	font-family: BrandonGrotesque-Bold;
-	z-index: 10;
-}
-
-.sub-menu-mobile .menu-categories-list{
-	margin: 0 auto;
-	padding: 10px 0px;
-	border-bottom: 2px solid rgb(145, 145, 145);
-	text-align: center;
-	background-color : rgba(255,255,255,1);
-}
-
 #header h3{
 	display: none;
 }
@@ -315,13 +263,35 @@
   	.listContainer{
   		margin: 0px;
   	}
-  	.subMenuHeader{
-  		display: none;
+  	.subMenu {
+  		margin-top: 75px;
   	}
-  	.sub-menu-mobile{
-  		display: block;
-  		padding: 10px 0px;
+  	.subMenu ul{
+  		width: 100%;
+  		position: absolute;
+  	}
+  	.subMenu ul li.menu-categories-list{
   		background-color: white;
+  		float: none;
+  		width: 100%
+  	}
+  	.subMenu .category-header{
+  		display: block;
+  		text-align: center;
+  		margin: 0 auto;
+  		cursor: pointer;
+  		padding: 10px 0;
+  		width: 190px;
+  		text-align: center;
+  		position: relative;
+  	}
+  	.subMenu .arrow-down{
+  		position: absolute;
+  		top: 19px;
+  		right: 3px;
+  	}
+  	.category-menu, .subMenuHeader{
+  		display: none;
   	}
   	#header h3{
   		text-align: center;
