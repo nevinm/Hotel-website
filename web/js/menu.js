@@ -6,6 +6,9 @@ $(document).ready(function() {
     $(document).on("click", '.subMenu .menu-categories-list', function() {
         $(document).find(".subMenu ul li").removeClass("activeOption");
         $(this).addClass("activeOption");
+        if(window.innerWidth < ipadWidth){
+            $(".category-menu").slideToggle();
+        }
     });
 
     //Categories
@@ -20,11 +23,10 @@ $(document).ready(function() {
         $(".category-menu").slideToggle();
     });
 
-    $(".filter-container").on('click',function(){
-        // if(window.innerWidth < ipadWidth){
+    $(".filter-container, .subMenuFilter").on('click',function(e){
+        if( e.target === this ) {
             $(".filter-drop-down").slideToggle();
-        // }
-        // else{}
+         }
     })
 
     //Filters

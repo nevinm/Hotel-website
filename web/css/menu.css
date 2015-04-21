@@ -38,7 +38,7 @@
 \*==============================*/
 .menu-wrapper{
 	background-color: #E7E7E7;
-	background-image: url(../images/inner_bg.jpg) !important;
+	background-image: url(../images/inner_bg.jpg);
 	background-size: cover;
 }
 .subMenu{
@@ -140,6 +140,7 @@
 	float: left;
 	width: 100%;
 	margin: 75px 0 0 0;
+	padding: 0 10px;
 }
 .listItems{
 	width: 32%;
@@ -255,6 +256,7 @@
 @media (min-width: 320px) and (max-width: 767px){
 	.listItems{
   		max-width: 430px;
+  		background-color: white;
 		float: none;
 		width: auto;
 		margin: 50px auto;
@@ -295,7 +297,10 @@
   	.subMenu .arrow-down{
   		position: absolute;
   		top: 19px;
-  		right: 3px;
+  		right: 0px;
+  		border-left: 7px solid transparent;
+  		border-right: 7px solid transparent;
+  		border-top: 7px solid rgb(200, 200, 200);
   	}
   	.category-menu, .subMenuHeader,.filter-menu-label .arrow-down{
   		display: none;
@@ -311,6 +316,7 @@
   	}
   	.category-wrapper{
   		position: relative;
+  		box-shadow: 0 0 2px #1A1A1A;
   	}
 
   	.filter-container:hover .filter-drop-down{
@@ -319,6 +325,11 @@
 	.filter-container:hover {
 		border-bottom: 0px;
 		background-color: transparent;
+	}
+	#mainWrapper{
+		background-color: #CDD5CE;
+		background-image: none !important;
+		border:none;
 	}
 }
 

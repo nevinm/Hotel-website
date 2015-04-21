@@ -290,7 +290,7 @@ html,body{
 	background-image: url(../images/bg.jpg);
 	min-height: 100%;
 	margin-bottom: -143px;
-	overflow-x:hidden;
+	/*overflow-x:hidden;*/
 	background-size: cover;
 }
 #account-mainWrapper{
