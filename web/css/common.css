@@ -739,6 +739,7 @@ span.icon-menu{
 	header#header {
 		opacity: 1;
 		background-color: #fff;
+		box-shadow: 0 0 15px #1A1A1A;
 	}
 	.logo{
 		display: none;
@@ -768,4 +769,5 @@ span.icon-menu{
   		border-bottom: 2px solid #d0d0d0;
   		padding-left: 29px;
   	}
+  	
 }
