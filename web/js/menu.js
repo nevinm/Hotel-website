@@ -16,6 +16,10 @@ $(document).ready(function() {
         infiniteScrolling();
     });
 
+    $(".category-mobile-dropdown").on('click',function(){
+        $(".category-mobile-dropdown .category-menu").slideToggle();
+    });
+
     //Filters
     $(document).on('change', '.filter-drop-down input[type=checkbox]', function(e) {
         currentCategory = $(".activeOption a").attr("data-id");
