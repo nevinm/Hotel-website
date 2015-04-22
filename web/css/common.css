@@ -729,7 +729,6 @@ span.icon-menu{
   	}
   	.btn-small-secondary{
   		height: 31px !important;
-  		min-width: 88px !important;
   	}
 }
 
@@ -776,8 +775,7 @@ span.icon-menu{
   		padding-left: 29px;
   	}
   	.account-header h3{
-  		letter-spacing: 1px;
+  		letter-spacing: 0px;
   		font-size: 16px !important;
   	}
-  	
 }
