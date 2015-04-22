@@ -629,6 +629,9 @@ form.addaddress-popup {
 	span.icon-menu{
 		display: none;
 	}
+	.account-main-page span.icon-menu{
+		display: block;
+	}
 	.backNav{
 		display: none;
 	}
@@ -681,6 +684,10 @@ form.addaddress-popup {
 	.user-name-wrapper h2{
 		font-size: 16px;
 	}
+	.account-container{
+		margin: 0 auto;
+  		max-width: 400px;
+	}
   	#editaddress-container{
 		width: 90%;
 		margin: 0 auto;
@@ -690,7 +697,7 @@ form.addaddress-popup {
   		width: 100% !important;
   	}
   	.address-content{
-  		font-family: 'ProximaNova-semibold';
+  		font-family: 'ProximaNova-regular';
 		font-size: 15px;
 		padding-top: 0px;
 		margin-top: -8px;
@@ -710,8 +717,11 @@ form.addaddress-popup {
 	}
 	.account-settings li{
 		color:#A9D77B;
+	}	
+	#editaddress-container .content ol li span:last-child{
+		width: 300px;
 	}
-	
+}
   	@media only screen and (max-width:400px){
   		.address-content{
   			font-size: 12px;

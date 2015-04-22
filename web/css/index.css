@@ -117,12 +117,7 @@ SLIDER
   	top: 23%;
   	margin-left: 10%;
 }
-#section3 .slide-description .h0{
-/*	text-transform: uppercase;
-	color: #7C7C7C;
-	line-height: 42px;
-	padding-bottom: 10px;*/
-}
+
 #section3 .slide-description .body-text-small{
 	font-family: 'BrandonGrotesque-bold';
 	font-size: 12px;
@@ -161,14 +156,16 @@ SLIDER
 }
 #slide3{
 	background: url(../images/homepageslider/homepage_2.jpg) center top no-repeat;
+	padding: 6% 0 0 0;
 	background-position: fixed;
 	/*padding: 30% 0 0 0;*/
 	background-size: cover;
 }
 #slide4{
 	background: url(../images/homepageslider/homepage_14.jpg) center top no-repeat;
+	padding: 6% 0 0 0;
 	background-position: fixed;
-	padding: 30% 0 0 0;
+	/*padding: 30% 0 0 0;*/
 	background-size: cover;
 }
 #section3{
@@ -188,7 +185,7 @@ input#zip-code[type="text"]{
 /*==============================*\
 			&Media-query
 \*==============================*/
-@media only screen and (min-width: 768px)and (max-width:1024px){
+@media (min-width: 768px) and (max-width:1024px){
 	#slide1 .slide-description .h0,#slide3 .slide-description .h0,#section3 .slide-description .h0{
 		line-height: 42px;
 		padding-bottom: 5px;
@@ -202,7 +199,7 @@ input#zip-code[type="text"]{
 /*==============================*\
 	     &HOME-RESPONSIVE
 \*==============================*/
-@media only screen and (min-width: 320px)and (max-width:767px){
+@media (min-width: 320px) and (max-width:767px){
 	.logo-mobile{
 		display: block;
 		margin-top: 5px;
@@ -216,8 +213,26 @@ input#zip-code[type="text"]{
 		background-color:#CDD5CE;
 	}
 	#section0, #section1, #section2, #section3{
-		max-width: 450px;
-		width: 90%;
-		margin: 0 auto;
+/*		margin-top: 20px;*/
+		border:1px solid #d0d0d0;
+		box-shadow: 0 0 5px #d0d0d0;
+		background-color: #fff;
 	}
+	.section .slide-description, #slider-footer{
+		display: none;
+	}
+	#slide1, #slide2,#section3, #slide3,#slide4{
+		height: 200px !important;
+		width: 100%;
+		margin-top: 75px;
+	}
+	.fp-tableCell{
+		height:200px !important;
+	}
+	.fp-slides{
+		height: auto;
+	}
+	div#fullpage {
+ 	 margin: 0 10px;
+	}	
 }
