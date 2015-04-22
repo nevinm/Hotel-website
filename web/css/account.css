@@ -83,14 +83,6 @@ box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
 	left: 10px;
 	color: #353535;
 }
-.backNav-mobile span {
-	font-family: 'BrandonGrotesque-Bold';
-	font-size: 16px;
-	color: #353535;
-	float: left;
-	margin-top: 6px;
-	padding-left: 20px;
-}
 .account-settings li{
 	margin-bottom: 10px;
 }
@@ -643,6 +635,20 @@ form.addaddress-popup {
 	.backNav-mobile{
 		display: block;
 	}
+	.backNav-mobile span:first-child {
+		float: left;
+		margin-top: 8px;
+		padding-left: 20px;
+	}
+	.backNav-mobile span:nth-child(2) {
+		font-family: 'BrandonGrotesque-Bold';
+		font-size: 16px;
+		color: #353535;
+		float: left;
+		margin-top: 6px;
+		/* padding-left: 0px; */
+		margin-left: 13px;
+	}
 	.account-wrapper{
 		width: 100%;
 	}
@@ -702,6 +708,10 @@ form.addaddress-popup {
 	.small-profile-pic{
 		float: none;
 	}
+	.account-settings li{
+		color:#A9D77B;
+	}
+	
   	@media only screen and (max-width:400px){
   		.address-content{
   			font-size: 12px;

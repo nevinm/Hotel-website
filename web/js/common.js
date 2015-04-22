@@ -24,6 +24,7 @@ function checkLoggedIn() {
             $userentry.show();
             $("#logout").hide();
             $('#menu').removeClass('menuPadding');
+            $('li#navbar-username').hide();
         }
 }
 

@@ -182,7 +182,9 @@ input#zip-code[type="text"]{
 	font-family: 'BrandonGrotesque-Light';
 	text-transform: uppercase;
 }
-
+.logo-mobile{
+	display: none;
+}
 /*==============================*\
 			&Media-query
 \*==============================*/
@@ -195,5 +197,27 @@ input#zip-code[type="text"]{
 	}
 	#slide1 .slide-description{
 		left: 18%;
+	}
+}
+/*==============================*\
+	     &HOME-RESPONSIVE
+\*==============================*/
+@media only screen and (min-width: 320px)and (max-width:767px){
+	.logo-mobile{
+		display: block;
+		margin-top: 5px;
 	}	
+	.logo-mobile-container {
+		width: 262px;
+		overflow: hidden;
+		margin: 0 auto;
+	}
+	#home-page-main-wrapper{
+		background-color:#CDD5CE;
+	}
+	#section0, #section1, #section2, #section3{
+		max-width: 450px;
+		width: 90%;
+		margin: 0 auto;
+	}
 }

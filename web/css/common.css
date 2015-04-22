@@ -711,6 +711,10 @@ span.icon-menu{
 	}
 	#slide1 .slide-description{
 		left: 18% !important;
+	}
+	#navbar-username a{
+		color: #A9D77B;
+		text-transform: uppercase;
 	}	
 }
 @media only screen and (min-width: 1025px){
@@ -773,8 +777,13 @@ span.icon-menu{
   		border-bottom: 2px solid #d0d0d0;
   		padding-left: 29px;
   	}
+  	#navbar-username a{
+		color: #A9D77B;
+		text-transform: uppercase;
+	}
   	.account-header h3{
   		letter-spacing: 0px;
   		font-size: 16px !important;
   	}
+
 }
