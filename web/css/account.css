@@ -635,6 +635,9 @@ form.addaddress-popup {
 	span.icon-menu{
 		display: none;
 	}
+	.account-main-page span.icon-menu{
+		display: block;
+	}
 	.backNav{
 		display: none;
 	}
@@ -672,5 +675,9 @@ form.addaddress-popup {
 	}
 	.user-name-wrapper h2{
 		font-size: 16px;
+	}
+	.account-container{
+		margin: 0 auto;
+  		max-width: 400px;
 	}
 }

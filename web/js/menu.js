@@ -19,10 +19,12 @@ $(document).ready(function() {
         infiniteScrolling();
     });
 
+    //Mobile category header
     $(".category-header").on('click',function(){
         $(".category-menu").slideToggle();
     });
 
+    //Filter toggle
     $(".filter-container, .subMenuFilter").on('click',function(e){
         if( e.target === this ) {
             $(".filter-drop-down").slideToggle();
