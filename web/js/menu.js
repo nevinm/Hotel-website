@@ -2,10 +2,13 @@ $(document).ready(function() {
     var perPage = 3,
         nextPage = 1,
         mealTypeFilter = [],
-        endOfList = false;
+        endOfList = false, ipadWidth=767;
     $(document).on("click", '.subMenu .menu-categories-list', function() {
         $(document).find(".subMenu ul li").removeClass("activeOption");
         $(this).addClass("activeOption");
+        if(window.innerWidth < ipadWidth){
+            $(".category-menu").slideToggle();
+        }
     });
 
     //Categories
@@ -16,9 +19,15 @@ $(document).ready(function() {
         infiniteScrolling();
     });
 
-    $(".category-mobile-dropdown").on('click',function(){
-        $(".category-mobile-dropdown .category-menu").slideToggle();
+    $(".category-header").on('click',function(){
+        $(".category-menu").slideToggle();
     });
+
+    $(".filter-container, .subMenuFilter").on('click',function(e){
+        if( e.target === this ) {
+            $(".filter-drop-down").slideToggle();
+         }
+    })
 
     //Filters
     $(document).on('change', '.filter-drop-down input[type=checkbox]', function(e) {
@@ -60,7 +69,9 @@ var getCategoryCallback = {
         if (userDetails.status == 1) {
             $.each(userDetails.categories, function(key, value) {
                 $('.category-wrapper .category-menu').append("<li class='menu-categories-list'><a href='#'" +
-                    " class='menu-categories' data-id='" + value.id + "'>" + value.name + "</a></li>")
+                    " class='menu-categories' data-id='" + value.id + "'>" + value.name + "</a></li>");
+                // $('.sub-menu-mobile .category-menu').append("<li class='menu-categories-list '><a href='#'"+
+                //     "class='menu-categories' data-id='" + value.id + "'>" + value.name + "</a></li>")
             });
             $.each(userDetails.meal_types, function(key, value) {
                 $(".filter-drop-down ul").append("<li><div><input id='mealtype" + key + "' type='checkbox' " +
