@@ -37,4 +37,5 @@ urlpatterns = patterns('',
 
     url(r'^upload_image/$', views.upload_image, name='upload_image'),
     
+    url(r'^get_orders/$', views.get_orders, name='get_orders'),
 )
