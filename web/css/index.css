@@ -226,6 +226,9 @@ input#zip-code[type="text"]{
 		width: 100%;
 		margin-top: 75px;
 	}
+	.section{
+		border: 2px solid black;
+	}
 	.fp-tableCell{
 		height:150px !important;
 	}

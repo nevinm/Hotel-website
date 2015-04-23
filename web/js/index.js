@@ -33,11 +33,12 @@ function renderFullPageJS() {
 function renderMobileFullPageJs() {
     $('#fullpage').fullpage({
         scrollingSpeed: 1000,
-        slidesNavigation: true,
+        slidesNavigation: false,
         controlArrows: false,
-        navigation: true,
-        // autoScrolling: false
-        // fitToSection: false,
+        navigation: false,
+        autoScrolling: false,
+        scrollBar: true,
+        fitToSection: false,
     });
 }
 
@@ -55,3 +56,5 @@ function destroyFullPageJS() {
         renderFullPageJS();
     }
 }
+
+
