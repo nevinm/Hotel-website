@@ -38,4 +38,6 @@ urlpatterns = patterns('',
     url(r'^upload_image/$', views.upload_image, name='upload_image'),
     
     url(r'^get_orders/$', views.get_orders, name='get_orders'),
+    url(r'^get_order_details/(?P<order_id>[0-9]+)/$', views.get_order_details, name='get_order_details'),
+    url(r'^create_order/$', views.create_order, name='create_order'),
 )

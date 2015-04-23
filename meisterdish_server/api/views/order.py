@@ -46,22 +46,6 @@ def get_orders(request, data, user=None):
 
         #Format response
         for order in orders:
-            """
-            meals = []
-            for cart_item in CartItems.objects.filter(cart__order=order, completed=False):
-                meals.append(
-                {
-                  "id" : cart_item.meal.id,
-                  "name": cart_item.meal.name,
-                  "description": cart_item.meal.description,
-                  "image": "Not available" if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
-                  "available": 1 if cart_item.meal.available else 0,
-                  "category": cart_item.meal.category.name.title(),
-                  "price": cart_item.meal.price,
-                  "tax": cart_item.meal.tax,
-                  "quantity":cart_item.quantity,
-                }
-            """
             order_list.append({
                 "id":order.id,
                 "total_amount": order.total_amount,
@@ -72,7 +56,6 @@ def get_orders(request, data, user=None):
                 "user_last_name" : order.cart.user.last_name,
                 "user_id" : order.cart.user.id,
                 "user_image" : order.cart.user.profile_image.thumb.url,
-                #"meals":meals,
                 "status":order.status,
                 })
 
@@ -159,3 +142,58 @@ def delete_order(request, data, user, order_id):
     except Exception as e:
     	log.error("Delete order." + e.message)
     	return custom_error("Failed to delete the order.")
+
+@check_input('POST')
+def get_order_details(request, data, user, order_id):
+    try:
+        if user.role.pk == settings.ROLE_ADMIN:
+            order = Order.objects.get(pk=order_id, is_deleted=False)
+        else:
+            order = Order.objects.get(pk=order_id, is_deleted=False, cart__user=user)
+        meals = []
+        for cart_item in CartItem.objects.filter(cart__order=order, cart__completed=False):
+            meals.append(
+            {
+              "id" : cart_item.meal.id,
+              "name": cart_item.meal.name,
+              "description": cart_item.meal.description,
+              "image": "Not available" if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
+              "available": 1 if cart_item.meal.available else 0,
+              "category": cart_item.meal.category.name.title(),
+              "price": cart_item.meal.price,
+              "tax": cart_item.meal.tax,
+              "quantity":cart_item.quantity,
+            })
+        order_details = {
+            "id": order.id,
+            "total_amount": order.total_amount,
+            "total_tax" : order.total_tax,
+            "tip" : order.tip,
+            "grand_total" : order.grand_total,
+            "user_first_name" : order.cart.user.first_name,
+            "user_last_name" : order.cart.user.last_name,
+            "user_id" : order.cart.user.id,
+            "user_image" : order.cart.user.profile_image.thumb.url,
+            "meals":meals,
+            "status":order.status,
+        }
+        return json_response({"status":1, "order":order_details})
+    except Exception as e:
+        log.error("get order details." + e.message)
+        return custom_error("Failed to list order details.")
+
+#Admin only
+@check_input('POST', True)
+def update_order(request, data, user, order_id):
+    try:
+        status = data['status']
+        if status < 0 or status > 5:
+            "Invalid order status."
+        order = Order.objects.get(pk=order_id, is_deleted=False)
+
+        order.status = status
+        order.save()
+        return json_response({"status":1, "message":"The order has been updated", "id":order_id+"."})
+    except Exception as e:
+        log.error("Update order." + e.message)
+        return custom_error("Failed to update the order.")
