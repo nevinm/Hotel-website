@@ -135,6 +135,10 @@ SLIDER
     color: #9B9B9B;
 }
 
+.slide-description-mobile{
+	display: none;
+}
+
 #section0,
 #section1,
 #section2,
@@ -224,10 +228,13 @@ input#zip-code[type="text"]{
 	#slide1, #slide2,#section3, #slide3,#slide4{
 		height: 150px !important;
 		width: 100%;
-		margin-top: 75px;
+	}
+	#slide1, #slide2{
+			margin-top: 75px;
 	}
 	.section{
 		border: 2px solid black;
+		height: auto !important;
 	}
 	.fp-tableCell{
 		height:150px !important;
@@ -239,6 +246,7 @@ input#zip-code[type="text"]{
 		margin: 0 10px;
 	}
 	.slide-description-mobile{
+		display: block;
 		width: 88%;
 		margin: 0 auto;
 		padding-top: 20px;

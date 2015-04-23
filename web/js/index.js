@@ -34,7 +34,7 @@ function renderMobileFullPageJs() {
     $('#fullpage').fullpage({
         scrollingSpeed: 1000,
         slidesNavigation: false,
-        controlArrows: false,
+        controlArrows: true,
         navigation: false,
         autoScrolling: false,
         scrollBar: true,
