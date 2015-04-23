@@ -282,8 +282,8 @@ class MealRating(models.Model):
             self.created = datetime.datetime.now()
         super(MealRating, self).save(*args, **kwargs)
 
-    def __init__(self):
-        return self.rating
+    def __unicode__(self):
+        return str(self.rating)
     
 class MealNutrient(models.Model):
     meal = models.ForeignKey(Meal)
