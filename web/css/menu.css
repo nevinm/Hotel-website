@@ -38,7 +38,7 @@
 \*==============================*/
 .menu-wrapper{
 	background-color: #E7E7E7;
-	background-image: url(../images/inner_bg.jpg) !important;
+	background-image: url(../images/inner_bg.jpg);
 	background-size: cover;
 }
 .subMenu{
@@ -117,6 +117,7 @@
 	font-family: 'BrandonGrotesque-bold';
 	font-size: 13px;
 }
+
 .filter-drop-down ul li:hover{
 	background-color: #E8E8E8;
 }
@@ -131,14 +132,11 @@
 	color: #1a1a1a;
 }
 
-.filter-container:hover .filter-drop-down{
-	display: block;
-	font-weight: normal;
-}
 .listContainer{
 	float: left;
 	width: 100%;
 	margin: 75px 0 0 0;
+	padding: 0 10px;
 }
 .listItems{
 	width: 32%;
@@ -208,6 +206,16 @@
 	text-align: center;
 	display: none;
 }
+.subMenu .category-header{
+	display: none;
+}
+
+/*==============================*\
+		&MENU - MOBILE
+\*==============================*/
+#header h3{
+	display: none;
+}
 
 @media only screen and (min-width: 768px)and (max-width:1024px){
 	.listItems{
@@ -234,3 +242,95 @@
 		margin-left: 0;
 	}
 }
+
+@media (min-width: 768px){
+	.category-menu{
+		display: block !important;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 767px){
+	.listItems{
+  		max-width: 430px;
+  		background-color: white;
+		float: none;
+		width: auto;
+		margin: 50px auto;
+		overflow: hidden;
+		border-radius: 2px;
+		-webkit-box-shadow: 0px 4px 5px 0px rgba(145,145,145,1);
+		-moz-box-shadow: 0px 4px 5px 0px rgba(145,145,145,1);
+		box-shadow: 0px 4px 5px 0px rgba(145,145,145,1);
+  	}
+  	.listItemDetails{
+  		padding: 0 10px;
+  	}
+  	.listContainer{
+  		margin: 0px;
+  	}
+  	.subMenu {
+  		margin-top: 75px;
+  	}
+  	.subMenu ul.category-menu{
+  		width: 100%;
+  		position: absolute;
+  	}
+  	.subMenu ul li.menu-categories-list{
+  		background-color: white;
+  		float: none;
+  		width: 100%
+  	}
+  	.subMenu .category-header{
+  		display: block;
+  		text-align: center;
+  		margin: 0 auto;
+  		cursor: pointer;
+  		padding: 13px 0;
+  		width: 190px;
+  		text-align: center;
+  		position: relative;
+  	}
+  	.subMenu .arrow-down{
+  		position: absolute;
+  		top: 19px;
+  		right: 0px;
+  		border-left: 7px solid transparent;
+  		border-right: 7px solid transparent;
+  		border-top: 7px solid rgb(200, 200, 200);
+  	}
+  	.category-menu, .subMenuHeader,.filter-menu-label .arrow-down{
+  		display: none;
+  	}
+  	#header h3{
+  		text-align: center;
+  		font-family: 'BrandonGrotesque-Bold';
+  		display: block;
+  		color: #5A5A5A;
+  	}
+  	.filter-container{
+  		position: absolute;
+  		right: 0;
+  		top: -5px;
+  	}
+  	.category-wrapper{
+  		position: relative;
+  		box-shadow: 0 0 2px #1A1A1A;
+  	}
+
+  	.filter-container:hover .filter-drop-down{
+		display: none;
+	}
+	.filter-container:hover {
+		border-bottom: 0px;
+		background-color: transparent;
+	}
+	#mainWrapper{
+		background-color: #CDD5CE;
+		background-image: none !important;
+		border:none;
+	}
+	.subMenuFilter{
+		color: #A9D77B;
+	}
+}
+

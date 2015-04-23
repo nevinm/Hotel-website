@@ -24,6 +24,7 @@ function checkLoggedIn() {
             $userentry.show();
             $("#logout").hide();
             $('#menu').removeClass('menuPadding');
+            $('li#navbar-username').hide();
         }
 }
 
@@ -108,7 +109,16 @@ function logingOut(){
         // }
     })
 }
-   
+
+//show Error popup
+function showErrorPopup(data){
+    var message = data.message;
+    $('.popup-container .content span').text(message);
+    $('.delivery-address-error-popup-wrapper').show();
+    $('#ok-button').on("click",function(){
+        $('.delivery-address-error-popup-wrapper').hide();
+    })
+}
 $(document).ready(function() {
     //Logout process
     $("#logout").on('click', function() {
@@ -187,7 +197,8 @@ $(document).ready(function() {
                 zip :{
                     required:true,
                     number :true,
-                    minlength:6
+                    minlength:4,
+                    maxlength:6
                 },
                 state:{
                     required:true

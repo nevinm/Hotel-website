@@ -5,7 +5,10 @@ var removeAddressCallback = {
         if (userDetails.status == 1) {
             getAddress();
             isAddress();
-        } else {}
+        } 
+        else {
+           showErrorPopup(userDetails); 
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -31,7 +34,9 @@ var getAddressCallback = {
             localStorage['delivery_addressess'] = data;
             autoPopulateAdressess(userDetails);
             isAddress();
-        } else {}
+        } else {
+            showErrorPopup(userDetails);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -54,7 +59,7 @@ function autoPopulateAdressess(userDetails) {
     $.each(userDetails.address_list, function(key, value) {
         $("#editaddress-container ol").append('<li class="address">' +
             '<div class ="button">' +
-            '<a href="#" data-id="' + value.id + '" data-primary="'+value.is_primary+'" class="edit-address btn btn-small-secondary">EDIT</a>' +
+            '<a href="#" data-id="' + value.id + '" class="edit-address btn btn-small-secondary">EDIT</a>' +
             '<a href="#" data-id="' + value.id + '" class="remove-address btn btn-small-secondary">REMOVE</a></div>' +
             '<div class="address-content">' +
             '<span class="address-name">' + value.first_name +" "+ value.last_name + '</span>' +
@@ -82,7 +87,9 @@ var addAddressCallback = {
         if (userDetails.status == 1) {
             getAddress();
             $(".addresspopup-wrapper").hide();
-        } else {}
+        } else {
+            showErrorPopup(userDetails);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -130,7 +137,9 @@ var editAddressCallback = {
         if (userDetails.status == 1) {
             getAddress();
             $(".addresspopup-wrapper").hide();
-        } else {}
+        } else {
+            showErrorPopup(userDetails);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -196,7 +205,9 @@ var getStatesCallback = {
                     text: value.name,
                 }));
             });
-        } else {}
+        } else {
+            showErrorPopup(userDetails);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -229,7 +240,9 @@ var getCitiesCallback = {
             if (cityId) {
                 $('.city-selector').val(cityId);
             }
-        } else {}
+        } else {
+            showErrorPopup(cityList);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -264,10 +277,9 @@ $(document).ready(function() {
 
     $("#savepopup-data").on('click', function(e) {
         e.preventDefault();
-        var currentId = $(this).attr("data-id"),
-        isPrimary= $(this).attr("data-primary");
+        var currentId = $(this).attr("data-id");
         if ($('form.addaddress-popup').valid()) {
-            editAddress(currentId, isPrimary);
+            editAddress(currentId);
         }
     });
 

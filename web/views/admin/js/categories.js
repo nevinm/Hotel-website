@@ -124,7 +124,6 @@ $(document).ready(function() {
         $("#categories tbody").empty();
         $.each(categoriesData.aaData, function(key, value) {
             $("#categories tbody").append("<tr>" +
-                "<td class='id'>" + value.id + "</td>" +
                 "<td class='category' data-name='" + value.name + "'>" + value.name +"</td>"+
                 "<td class='delete'><a data-id='" + value.id + "'class='cross'></a></td>" +
                 "<td class='update'><button class='update' type='button' data-id='" + value.id + "'>Update</button></td>"+

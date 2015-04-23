@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div id="account-mainWrapper">
+    <div id="account-mainWrapper" class='account-main-page'>
         <header id="header">
             <div class="contentArea">
                 <a href="../index.html"><img class="pullLeft logo" src="../images/logo.png" alt="MeisterDish"></a>
@@ -30,6 +30,9 @@
                 <div class="navMenu" style="display:none">
                     <ul>
                         <li>
+                            <a href="../index.html">HOME</a>
+                        </li>
+                        <li>
                             <a href="menu.html">THE MENU</a>
                         </li>
                         <li>
@@ -38,11 +41,14 @@
                         <li>
                             <a href="">PARTNERS</a>
                         </li>
-                        <li>
-                            <a href="/">LOG IN</a>
+                       <li class="login-signup">
+                            <a href="views/login.html">LOG IN</a>
                         </li>
-                        <li>
-                            <a href="/">SIGN UP</a>
+                        <li class='login-signup'>
+                            <a href="views/signup.html">SIGN UP</a>
+                        </li>
+                        <li id="navbar-username" class="bold green">
+                            <a href='views/account.html'></a>
                         </li>
                     </ul>
                 </div>
@@ -80,13 +86,15 @@
             <div class="account-wrapper">
                 <div class="account-container">
                     <div class="account-header">
-                        <img class='small-profile-pic' src='' />
                         <div class='user-name-wrapper'>
                             <h2></h2>
                             <div class="body-text-small">
                                 <span>ACCOUNT CREDIT: </span><span class='account-credit'></span>
                             </div>
                         </div>
+                    </div>
+                    <div class="account-profpic-container">
+                        <img class='small-profile-pic' src='' />
                     </div>
                     <div class="account-settings">
                         <h3>ACCOUNT SETTINGS</h3>
@@ -102,6 +110,7 @@
                                 <li>PAYMENT METHODS</li>
                                 <li>GIFT CARDS</li>
                                 <li>ORDER HISTORY</li>
+                                <li class='mobile-logout'>LOGOUT</li>
                             </ul>
                         </div>
                         <div style="clear:both"></div>

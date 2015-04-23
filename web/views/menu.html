@@ -24,8 +24,12 @@
                     <img src="../images/cart_icon.png">
                 </div>
                 <span class="icon-menu pullRight"></span>
+                <h3>THE MENU</h3>
                 <div class="navMenu" style="display:none">
                     <ul>
+                        <li>
+                            <a href="../index.html">HOME</a>
+                        </li>
                         <li>
                             <a href="menu.html">THE MENU</a>
                         </li>
@@ -35,11 +39,14 @@
                         <li>
                             <a href="">PARTNERS</a>
                         </li>
-                        <li>
-                            <a href="login.html">LOG IN</a>
+                        <li class="login-signup">
+                            <a href="views/login.html">LOG IN</a>
                         </li>
-                        <li>
-                            <a href="signup.html">SIGN UP</a>
+                        <li class='login-signup'>
+                            <a href="views/signup.html">SIGN UP</a>
+                        </li>
+                        <li id="navbar-username" class="bold green">
+                            <a href='views/account.html'></a>
                         </li>
                     </ul>
                 </div>
@@ -71,6 +78,10 @@
             </div>
             <div class="subMenu body-text-bold">
                 <div class="contentArea category-wrapper">
+                    <div class='category-header'>
+                        <h4 class='mobile-categoreis'>ALL CATEGORIES</h4>
+                        <div class="arrow-down pullRight"></div>
+                    </div>
                     <ul class="pullLeft category-menu">
                         <li class='menu-categories-list  activeOption'><a href='#' class='menu-categories' data-id=''>Show All</a></li>
                     </ul>
@@ -95,9 +106,6 @@
                 <div class='menu-loading-gif'>
                     <h3>Loading...</h3>
                 </div>
-                <!-- <div class='end-of-list'>
-                    <h3>End of results.</h3>
-                </div> -->
             </div>
             <div class="popup-wrapper">
                 <div class="bk-overlay"></div>

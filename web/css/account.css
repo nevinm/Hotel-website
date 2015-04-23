@@ -9,9 +9,11 @@
 }
 
 .small-profile-pic{
-	height: 50px;
-  	float: left;
-  	margin-top: 15px;
+	height: 148px;
+	float: left;
+	margin-top: 15px;
+	margin-right: 30px;
+	margin-left: 30px;
 }
 .account-container{
 	background-color: #ffffff;
@@ -31,7 +33,7 @@ box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
 	border-radius: 7px 7px 0 0;
 }
 .account-container .user-name-wrapper{
-	float: left;
+	float: left;;
 	margin-left: 20px;
 }
 .account-settings{
@@ -44,7 +46,7 @@ box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
 	float: left;
 	margin-right: 150px;
 }
-ul.sub-content2.body-text-small {
+.sub-content2 {
   float: left;
 }
 .logout, .admin-button {
@@ -52,6 +54,9 @@ ul.sub-content2.body-text-small {
 	padding-top: 6px;
 	margin-left: 30px;
 	font-size: 14px;
+}
+.mobile-logout{
+	display: none;
 }
 .admin-button{
 	display: none;
@@ -66,13 +71,17 @@ ul.sub-content2.body-text-small {
   float: left;
   position: relative;
 }
+.backNav-mobile{
+	display: none;
+}
 .backNav span {
-  font-family: 'BrandonGrotesque-Regular';
-  font-size: 18px;
-  position: relative;
-  width: 188px;
-  bottom: 7px;
-  left: 10px;
+	font-family: 'BrandonGrotesque-Bold';
+	font-size: 16px;
+	position: relative;
+	width: 188px;
+	bottom: 7px;
+	left: 10px;
+	color: #353535;
 }
 .account-settings li{
 	margin-bottom: 10px;
@@ -138,9 +147,10 @@ form.gift-cardform .redeem {
   padding-top: 20px;
 }
 .first-name,.last-name,.phone-num,.redeem{
-	width: 270px;
-	/*float: left;*/
+	max-width: 270px;
+	/* float: left; */
 	position: relative;
+	width: 100%;
 }
 .notify,.update-button {
   width: 100%;
@@ -160,17 +170,20 @@ form.gift-cardform .redeem {
  	padding-top: 20px;
  }
  #change-password .password{
- 	padding-top: 15px;
+	padding-top: 15px;
  }
  #changecontact-container,#changeemail-container,#changepassword-container {
-  width: 400px;
+	max-width: 400px;
+	width: 90%;
+	float: left;
 }
 /*==================================*\
 			&email-form
 \*==================================*/
 .new-email,.retype-email,.password{
-	width: 280px;
+	max-width: 280px;
 	position: relative;
+	width: 100%;
 }
 span.body-text-small{
 	padding: 10px 20px;
@@ -197,16 +210,16 @@ span.body-text-small{
 \*==================================*/
 #change-contact{
 	width: 65%;
-	/*float: left;*/
-	padding-top: 20px;
-	padding-left: 20px;
+  /* float: left; */
+  padding-top: 20px;
 }
 #change-contact .phone-num,.last-name{
 	padding-top: 10px;
 
 }
 #change-contact .phone-num .arrange{
-	width: 270px;
+	max-width: 270px;
+	width: 100%;
 }
 #change-contact .notify,.update-button{
 	padding-left: 0px;
@@ -316,7 +329,9 @@ ol{
 	color: #A9D77B;	
 
 }
-
+.check-box-container{
+	float: right;
+}
 /*==================================*\
 			&PROFILE-PICTURE
 \*==================================*/
@@ -489,6 +504,12 @@ form.addaddress-popup {
 	width: 100%;
 	float: left;
 }
+.primary-wrapper{
+	width: 75px;
+	height: 20px;
+	margin-top: -5px;
+	float: right;
+}
 .section1 .forminput-wrapper{
 	position: relative;
 	 width: 157px;
@@ -500,6 +521,7 @@ form.addaddress-popup {
 }
 .forminput-wrapper label{
 	text-align: left;
+	width: auto;
 }
 #cancel{
 	float: right;
@@ -525,15 +547,15 @@ form.addaddress-popup {
   width: 100%;
   font-size: 14px !important;
 }
-.section3 .forminput-wrapper:first-child{
+.section3 .forminput-wrapper:nth-child(2){
 	width: 180px;
 	float: left;
-	margin-right: 16px;
 	position: relative;
 }
-.section3 .forminput-wrapper:nth-child(2){
+.section3 .forminput-wrapper:first-child{
 	width:  134px;
 	float: left;
+	margin-right: 16px;
 	position: relative;
 }
 .section3{
@@ -589,17 +611,146 @@ form.addaddress-popup {
 }
 .styled-select-state select{
 	background: transparent !important;
-  width: 268px !important;
-  padding: 5px !important;
-  font-size: 16px !important;
-  line-height: 1;
-  border: 0 !important;
-  border-radius: 0 !important;
-  height: 34px;
-  -webkit-appearance: none !important;
-  appearance:none !important;
-  -moz-appearance:none!important;
+	width: 268px !important;
+	padding: 5px !important;
+	font-size: 16px !important;
+	line-height: 1;
+	border: 0 !important;
+	border-radius: 0 !important;
+	height: 34px;
+	-webkit-appearance: none !important;
+	appearance:none !important;
+	-moz-appearance:none!important;
 }
-appearance:button;
--moz-appearance:button; /* Firefox */
--webkit-appearance
+/*==================================*\
+			&TABLET
+\*==================================*/
+@media only screen and (min-width: 768px)and (max-width:1024px){
+	.sub-content1 {
+		float: left;
+		margin-right: 3%;
+	}
+	.sub-content2 {
+		float: right;
+		margin-right: 5%;
+	}
+}
+/*==================================*\
+			&MOBILE
+\*==================================*/
+@media (min-width: 320px)and (max-width:767px){
+	span.icon-menu{
+		display: none;
+	}
+	.account-main-page span.icon-menu{
+		display: block;
+	}
+	.backNav{
+		display: none;
+	}
+	.backNav-mobile{
+		display: block;
+	}
+	.backNav-mobile span:first-child {
+		float: left;
+		margin-top: 8px;
+		padding-left: 20px;
+	}
+	.backNav-mobile span:nth-child(2) {
+		font-family: 'BrandonGrotesque-Bold';
+		font-size: 16px;
+		color: #353535;
+		float: left;
+		margin-top: 6px;
+		/* padding-left: 0px; */
+		margin-left: 13px;
+	}
+	.account-wrapper{
+		width: 100%;
+	}
+	#changecontact-container, #changeemail-container, #changepassword-container {
+		float: none;
+		margin: 0 auto;
+	}
+	.sub-content1 , .sub-content2{
+		float: none;
+		margin: 0px;
+	} 
+	.account-settings{
+		text-align: center;
+	}
+	.logout{
+		display: none;
+	}
+	#change-email span.body-text-small{
+		width: 300px;
+	}
+	form.form {
+		width: 90%;
+	}
+	#change-contact{
+		width: 90%;
+	}
+	.mobile-logout{
+		display: block;
+	}
+	.user-name-wrapper h2{
+		font-size: 16px;
+	}
+	.account-container{
+		margin: 0 auto;
+  		max-width: 400px;
+	}
+  	#editaddress-container{
+		width: 90%;
+		margin: 0 auto;
+		max-width: 400px;
+	}
+  	.content .address{
+  		width: 100% !important;
+  	}
+  	.address-content{
+  		font-family: 'ProximaNova-regular';
+		font-size: 15px;
+		padding-top: 0px;
+		margin-top: -8px;
+  	}
+  	.button-changeaddress{
+  		padding-top: 30px;
+  		text-align: center;
+  		padding-left: 0px;
+  	}
+	.account-profpic-container {
+		width: 100%;
+		float: left;
+		text-align: center;
+	}
+	.small-profile-pic{
+		float: none;
+	}
+	.account-settings li{
+		color:#A9D77B;
+	}	
+	#editaddress-container .content ol li span:last-child{
+		width: 300px;
+	}
+}
+  	@media only screen and (max-width:400px){
+  		.address-content{
+  			font-size: 12px;
+  		}
+  		.content .address{
+  			padding-right: 10px;
+  		}
+  		#editaddress-container .content ol li span:last-child{
+  			font-size: 11px;
+  		}
+  		.btn-large-primary, .btn-large-extended, .btn-large-secondary{
+  			min-width: 0px;
+  			padding: 0 15px;
+  			font-size: 14px;
+  		}
+  		.button-changeaddress .btn:last-child{
+  			margin-left: 2px;
+  		}
+	}
