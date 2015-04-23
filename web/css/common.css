@@ -281,7 +281,7 @@ html,body{
 	float: left;
 	min-height: 100%;
 	margin-bottom: -143px;
-	overflow-x:hidden;	
+	/*overflow-x:hidden;	*/
 }
 
 #mainWrapper{
