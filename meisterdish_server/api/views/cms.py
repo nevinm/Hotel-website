@@ -345,7 +345,7 @@ def create_meal(request, data, user):
             meal.save()
         else:
             meal.images = []
-        if 'images' in data:
+        if 'images' in data and len(data['images']) > 0:
             for img in data['images']:
                 meal.images.add(Image.objects.get(pk=int(img)))
 
@@ -404,7 +404,7 @@ def create_meal(request, data, user):
         meal.save()
         action = "update" if edit else "create"
         return json_response({"status":1, "message":"The meal has been successfully "+action+"d.", "id":meal.id})
-    except Exception as e:
+    except KeyError as e:
         if not edit and meal.id:
             meal.delete()
         log.error("Failed to create meals : "+e.message)
