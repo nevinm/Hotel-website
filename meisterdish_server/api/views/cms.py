@@ -257,7 +257,7 @@ def get_meals(request, data):
                               "description":meal.description,
                               "images":meal_images,
                               "available":1 if meal.available else 0,
-                              "category":meal.category.name.title(),
+                              "category":"Not Available" if not meal.category else meal.category.name.title(),
                               "meal_types":meal_types,
                               "preparation_time":meal.preparation_time,
                               "price":meal.price,
@@ -407,7 +407,7 @@ def create_meal(request, data, user):
         meal.save()
         action = "update" if edit else "create"
         return json_response({"status":1, "message":"The meal has been successfully "+action+"d.", "id":meal.id})
-    except KeyError as e:
+    except Exception as e:
         if not edit and meal.id:
             meal.delete()
         log.error("Failed to create meals : "+e.message)
