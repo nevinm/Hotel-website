@@ -10,7 +10,7 @@ function redirectIfLoggedIn() {
 }
 
 function dollarConvert(value) {
-    var dollarValue = "$" + value + ".00";
+    var dollarValue = "$" + value;
     return dollarValue;
 }
 

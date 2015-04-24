@@ -225,14 +225,14 @@ def get_meal_details(request, data, user, meal_id):
             "tax":meal.tax,
             "available" : 1 if meal.available else 0,
             "filters" : [type.id for type in meal.types.all()],
-            "cat_id" : {
+            "cat_id" : 'Not Available' if not meal.category else {
                 "id":meal.category.id,
                 "name":meal.category.name.title(),
                 },
             
-            "chef_id" : meal.chef.id,
-            "chef_name" : meal.chef.name.title(),
-            "chef_image" : "" if meal.chef.image is None else {
+            "chef_id" : "Not available"  if not meal.chef else meal.chef.id,
+            "chef_name" : "Not available"  if not meal.chef else meal.chef.name.title(),
+            "chef_image" : "Not Available" if not meal.chef or not meal.chef.image else {
                 "id":meal.chef.image.id,
                 "url":meal.chef.image.thumb.url,
                 },
