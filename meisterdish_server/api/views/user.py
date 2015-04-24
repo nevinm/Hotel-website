@@ -225,7 +225,7 @@ def get_meal_details(request, data, user, meal_id):
             "tax":meal.tax,
             "available" : 1 if meal.available else 0,
             "filters" : [type.id for type in meal.types.all()],
-            "cat_id" : {
+            "cat_id" : {} if not meal.category else {
                 "id":meal.category.id,
                 "name":meal.category.name.title(),
                 },
