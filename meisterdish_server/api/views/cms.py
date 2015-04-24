@@ -281,6 +281,7 @@ def get_meals(request, data):
 @check_input('POST', True)
 def create_meal(request, data, user):
     try:
+        edit=False
         name = data['name'].strip()
         desc = data['description'].strip()
         
@@ -297,7 +298,6 @@ def create_meal(request, data, user):
             log.info("EDITING MEAL :"+str(data['edit_id']))
             edit=True
         except Exception as e:
-            edit=False
             log.info("CREATING MEAL : "+e.message)
             meal = Meal()
         
