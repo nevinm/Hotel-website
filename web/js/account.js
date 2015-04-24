@@ -55,8 +55,11 @@ function getProfile(profileId) {
 
 $(document).ready(function() {
     // &ACCORDION
+    $(".accordion-header").css("border-top:none");
     $(".accordion-header").click(function() {
+        $(".accordion-header").css("border-bottom:1px solid"); 
         $(".accordion-content").slideUp();
+
         if (!$(this).next().is(":visible")) {
             $(this).next().slideDown();
         }
