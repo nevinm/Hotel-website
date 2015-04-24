@@ -149,9 +149,9 @@ function populateMealList(mealList, isInfinteScrolling) {
         $(".listContainer").append("<div class='listItems'>" +
             "<img src='" + value.images[0].thumb_url + "' class='thumbnail'>" +
             "<section class='listItemDetails'>" +
-            "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +
-            "<h3 class='pullRight itemCost'>" + dollarConvert(value.price + value.tax) + "</h3>" +
+            "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +           
             "</section><section class='listItemDetails'>" +
+            "<h3 class='pullLeft itemCost'>" + dollarConvert(value.price + value.tax) + "</h3>" +
             "<span class='menuItemDetails caption'>Brioche Bun, Avocado, Tomato, Red Onions.</span>" +
             "<span><a href='#' class='btn btn-small-primary medium-green addItemButton' " +
             "data-id='" + value.id + "'>ADD</a></span>" +

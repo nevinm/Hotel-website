@@ -62,7 +62,7 @@ html, body {
 .fp-controlArrow {
     position: absolute;
     z-index: 4;
-    top: 31%;
+    top: 25%;
     cursor: pointer;
     width: 0;
     height: 0;
@@ -71,6 +71,9 @@ html, body {
     -webkit-transform: translate3d(0,0,0);
     -ms-transform: translate3d(0,0,0);
     transform: translate3d(0,0,0);
+}
+#section1 .fp-controlArrow{
+    top: 22%;
 }
 .fp-controlArrow.fp-prev {
     left: 15px;

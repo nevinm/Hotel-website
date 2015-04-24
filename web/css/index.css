@@ -217,11 +217,17 @@ input#zip-code[type="text"]{
 		background-color:#CDD5CE;
 	}
 	 #section1, #section2{
-		margin-top: 20px;
 		border:1px hidden;
 		box-shadow: 0 0 6px grey;
 		background-color: #fff;
-		border-radius: 4px;
+		border-radius: 4px ;
+		z-index: 99999;
+	}
+	#section1{
+		margin-top: 95px;
+	}
+	#section2{
+		margin-top: 20px;
 	}
 	.section .slide-description, #slider-footer{
 		display: none;
@@ -230,8 +236,8 @@ input#zip-code[type="text"]{
 		height: 150px !important;
 		width: 100%;
 	}
-	#slide1, #slide2{
-			margin-top: 75px;
+	#slide1,#slide2,#slide3,#slide4 {
+		border-radius: 4px 4px 0 0;
 	}
 	.section{
 		border: 2px solid black;
@@ -272,7 +278,8 @@ input#zip-code[type="text"]{
 		color: #fff;
 		border-color: #A9D77B;
 		width: 100%;
-		/* padding: 0; */
+		margin-top: 40px;
+		margin-bottom: 20px;
 		font-size: 20px;
 	}
 	.slide-description-mobile .h0 span{
@@ -303,16 +310,18 @@ input#zip-code[type="text"]{
 		margin-top:15px;
 	}
 	.slide-description-mobile .body-text-small{
-		font-family: 'ProximaNova-semibold';
+		font-family: 'BrandonGrotesque-Regular';
 		margin-bottom: 35px;
+		font-size: 12px;
+		font-weight: bold;
 	}
 	#section3-description{
 		background-color: #fff;
 		width: 100%;
 		padding: 0 5%;
 		padding-top: 20px;
-		padding-bottom: 25px;
-		margin-bottom: 30px;
+		padding-bottom: 15px;
+		margin-bottom: 20px;
 		border: 1px hidden;
 		border-top: none;
 		border-radius: 0 0 4px 4px;
@@ -323,6 +332,9 @@ input#zip-code[type="text"]{
 		margin-top: 20px;
 		/*box-shadow: 0 0 3px grey;*/
 		border-radius: 4px 4px 0 0;
+	}
+	.zip-code-container {
+		padding-top: 20px;
 	}
 }
 @media (min-width: 320px) and (max-width:400px){
