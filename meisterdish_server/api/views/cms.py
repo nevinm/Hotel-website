@@ -405,7 +405,7 @@ def create_meal(request, data, user):
         action = "update" if edit else "create"
         return json_response({"status":1, "message":"The meal has been successfully "+action+"d.", "id":meal.id})
     except Exception as e:
-        if not edit:
+        if not edit and meal.id:
             meal.delete()
         log.error("Failed to create meals : "+e.message)
         return custom_error("Failed to "+action+" meal. Please try again later.")
