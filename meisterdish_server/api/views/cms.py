@@ -307,14 +307,17 @@ def create_meal(request, data, user):
         meal.price = price
         meal.tax = tax
         meal.available = bool(available)
-
-        image_ids = data['images']
+        
         if "main_image" not in data:
-            main_img_id = data['images'][0]
+            if 'images' in data and len(data['images']) > 0:
+                main_img_id = data['images'][0]
+            else:
+                main_img_id = None
         else:
             main_img_id = data['main_image']
 
-        meal.main_image = Image.objects.get(pk=int(main_img_id))
+        if main_img_id:
+            meal.main_image = Image.objects.get(pk=int(main_img_id))
 
         chef_id = False
         if 'chef_id' in data:
