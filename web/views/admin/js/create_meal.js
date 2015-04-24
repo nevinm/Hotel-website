@@ -1,9 +1,10 @@
 //global variable 
 var nutrient_sub_category = 0,
     nutrient_main_category = 0,
-    tipsAndTricksData = [];
+    tipsAndTricksData = [], createMealParams={}, mealId;
 $(document).ready(function() {
 
+    checkIfMealEdit();
     $('#create-meal-button').on("click", function() {
         createMeal();
     });
@@ -34,20 +35,9 @@ $(document).ready(function() {
     });
 
     //remove nutrient and tips sub part 
-    $(document).on('click', '.remove-nutrients', function() {
+    $(document).on('click', '.remove', function() {
         $(this).parents().eq(0).remove();
     });
-
-    //remove nutrient table sb-tr
-    // $(document).on('click', '.del-sub-list', function() {
-    //     var currentCategory = $(this).parent().attr("data-category");
-    //     $('*[data-category="' + currentCategory + '"]').remove();
-    // });
-
-    //remove nutrient table li
-    // $(document).on('click', 'img.remove', function() {
-    //     $(this).parent().remove();
-    // });
 
     //Add tips n tricks main
     $('#add-tips-main').on("click", function() {
@@ -106,6 +96,11 @@ $(document).ready(function() {
     getFilterContent();
 });
 
+function checkIfMealEdit(){
+    currentUrl = window.location.href;
+    mealId = currentUrl.substr(currentUrl.indexOf("mealId=") + 7);
+    getMeals(mealId);
+}
 
 function extractNutrients() {
     var totalNutrientData = [];
@@ -129,7 +124,7 @@ function extractNutrients() {
         }
         totalNutrientData.push(oneNutrientTotal);
     });
-    return totalSubNutrientData;
+    return totalNutrientData;
 }
 
 function extractNutrientInnerDetails(parentElement) {
@@ -156,17 +151,34 @@ function traverseTipsTricks() {
 }
 
 function extractTipsAndTricks(self) {
-        var videoPointers = [],
-            videoUrl = $(self).find(".video-url").text(),
-            videoHeading = $(self).find(".video-heading").text();
-        $(this).find("ul li").each(function() {
-            videoPointers.push($(self).text());
+    var videoPointers = [],
+        videoUrl = $(self).find(".video-url").text(),
+        videoHeading = $(self).find(".video-heading").text();
+    $(this).find("ul li").each(function() {
+        videoPointers.push($(self).text());
+    });
+    return {
+        "video_url": videoUrl,
+        "title": videoHeading,
+        "description": videoPointers
+    };
+}
+
+function uploadImage(imageElementSelect, imageElement) {
+        $('#' + imageElementSelect).fileupload({
+            dataType: 'json',
+            headers: {
+                "session-key": localStorage["session_key"]
+            },
+            formData: {
+                example: 'test'
+            },
+            done: function(e, data) {
+                $("#" + imageElement).attr('src', data.result.thumbnail_url);
+                $("#" + imageElement).attr('data-id', data.result.id);
+                $("#" + imageElement).show();
+            }
         });
-        return {
-            "video_url": videoUrl,
-            "title": videoHeading,
-            "description": videoPointers
-        };
     }
     //CREATE MEAL API
 var createMealCallback = {
@@ -174,23 +186,6 @@ var createMealCallback = {
         console.log(data);
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-}
-
-function uploadImage(imageElementSelect, imageElement) {
-    $('#' + imageElementSelect).fileupload({
-        dataType: 'json',
-        headers: {
-            "session-key": localStorage["session_key"]
-        },
-        formData: {
-            example: 'test'
-        },
-        done: function(e, data) {
-            $("#" + imageElement).attr('src', data.result.thumbnail_url);
-            $("#" + imageElement).attr('data-id', data.result.id);
-            $("#" + imageElement).show();
-        }
-    });
 }
 
 function createMeal() {
@@ -213,7 +208,7 @@ function createMeal() {
         toDo = [],
         prepared = [],
         tips = traverseTipsTricks(),
-        nutrients = extractNutrients;()
+        nutrients = extractNutrients()
     $('.ingredients-container .list-container ul').find('li').each(function() {
         temp = $(this).text();
         ingredients.push(temp);
@@ -239,7 +234,8 @@ function createMeal() {
     header = {
         "session-key": localStorage['session_key']
     }
-    params = {
+    createMealParams = {};
+    createMealFields = {
         "name": name,
         "description": descptn,
         "price": price,
@@ -247,7 +243,7 @@ function createMeal() {
         "chef_image": chef_image,
         "meal_image_id": meal_image_id,
         "category_id": category,
-        "filter_id": meal_type,
+        "filter_ids": meal_type,
         "available": availability,
         "ingredients": ingredients,
         "pre_requisites": pre_requesties,
@@ -260,9 +256,22 @@ function createMeal() {
         "tips": tips,
         "nutrients": nutrients
     }
-    data = JSON.stringify(params);
+
+    $.each(createMealFields, function(key, value){
+        createMealEmptyCheck(key, value);
+    });
+
+    data = JSON.stringify(createMealParams);
     var createMealInstance = new AjaxHttpSender();
     createMealInstance.sendPost(url, header, data, createMealCallback);
+}
+
+
+function createMealEmptyCheck(key, value) {
+    if (value.length != 0) {
+        createMealParams[key] =value;
+    }
+    else{}
 }
 
 // populate list data 
@@ -271,8 +280,6 @@ function populateListData(element_id, container) {
     $('.' + container).find('.list-container ul').append('<li>' + addTo_list +
         '<img class="remove" src="../../images/del.png">' + '</li>');
 }
-
-
 
 //populate category , meal_type select button
 var getFilterContentCallback = {
@@ -336,4 +343,23 @@ function addSubNutrients(self) {
             subDailyValue = $("#sub-daily-value").val();
         populateSubNutrients(subNutrientName, subPerServing, subDailyValue, parentElement);
     })
+}
+
+//Get Meal
+var getMealsContentCallback = {
+    success: function(data, textStatus) {
+        debugger;
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function getMeals(mealId) {
+    var url = baseURL + "get_meal_details/"+mealId+"/";
+    header = {
+        "session-key": localStorage['session_key']
+    }
+    params = {}
+    data = JSON.stringify(params);
+    var getFilterContentInstance = new AjaxHttpSender();
+    getFilterContentInstance.sendPost(url, header, data, getFilterContentCallback);
 }
