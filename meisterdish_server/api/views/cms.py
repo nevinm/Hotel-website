@@ -345,9 +345,9 @@ def create_meal(request, data, user):
             meal.save()
         else:
             meal.images = []
-        
-        for img in data['images']:
-            meal.images.add(Image.objects.get(pk=int(img)))
+        if 'images' in data:
+            for img in data['images']:
+                meal.images.add(Image.objects.get(pk=int(img)))
 
         if 'pre_requisites' in data and len(data['pre_requisites']) > 0:
             meal.pre_requisites = simplejson.dumps(data["pre_requisites"])
