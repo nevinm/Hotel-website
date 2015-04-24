@@ -46,6 +46,20 @@ def get_orders(request, data, user=None):
 
         #Format response
         for order in orders:
+            meals = []
+            for cart_item in CartItem.objects.filter(cart__order=order, cart__completed=True):
+                meals.append(
+                {
+                  "id" : cart_item.meal.id,
+                  "name": cart_item.meal.name,
+                  "description": cart_item.meal.description,
+                  "image": "Not available" if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
+                  "available": 1 if cart_item.meal.available else 0,
+                  "category": cart_item.meal.category.name.title(),
+                  "price": cart_item.meal.price,
+                  "tax": cart_item.meal.tax,
+                  "quantity":cart_item.quantity,
+                })
             order_list.append({
                 "id":order.id,
                 "total_amount": order.total_amount,
@@ -57,6 +71,7 @@ def get_orders(request, data, user=None):
                 "user_id" : order.cart.user.id,
                 "user_image" : order.cart.user.profile_image.thumb.url,
                 "status":order.status,
+                "meals":meals,
                 "delivery_address" : {
                      "id":order.delivery_address.id,
                      "first_name":order.delivery_address.first_name,
@@ -173,7 +188,7 @@ def get_order_details(request, data, user, order_id):
         else:
             order = Order.objects.get(pk=order_id, is_deleted=False, cart__user=user)
         meals = []
-        for cart_item in CartItem.objects.filter(cart__order=order, cart__completed=False):
+        for cart_item in CartItem.objects.filter(cart__order=order, cart__completed=True):
             meals.append(
             {
               "id" : cart_item.meal.id,
