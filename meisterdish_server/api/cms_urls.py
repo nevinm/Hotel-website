@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
-from api.views import cms
+from api.views import cms, order
+
 urlpatterns = patterns('',
     url(r'^$', cms.home, name='cms_home'),
     url(r'^get_categories/$', cms.get_categories, name='get_categories'),
@@ -15,4 +16,7 @@ urlpatterns = patterns('',
     url(r'^get_meals/$', cms.get_meals, name='get_meals'),
     url(r'^create_meal/$', cms.create_meal, name='create_meal'),
     url(r'^delete_meal/(?P<meal_id>[0-9]+)/$', cms.delete_meal, name='delete_meal'),
+
+    url(r'^delete_order/(?P<order_id>[0-9]+)/$', order.delete_order, name='delete_order'),
+    url(r'^update_order/(?P<order_id>[0-9]+)/$', order.update_order, name='update_order'),    
 )

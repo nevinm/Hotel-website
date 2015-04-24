@@ -1,11 +1,9 @@
 $(document).ready(function() {
     ipadWidth = 767;
-    // renderFullPageJS();
+    isMobileRendered();
     destroyFullPageJS();
-    $(window).resize(function() {
-        destroyFullPageJS();
-    });
 });
+var mobileRendered;
 
 function renderFullPageJS() {
     $('#fullpage').fullpage({
@@ -13,23 +11,28 @@ function renderFullPageJS() {
         slidesNavigation: true,
         controlArrows: false,
         navigation: true,
-        // afterRender: function() {
-        //     idInterval = setInterval(function() {
-        //         $.fn.fullpage.moveSlideRight();
-        //     }, 7000);
-        // },
-        // afterLoad: function(anchorLink, index) {
-        //     clearInterval(idInterval);
-        //     if (index == 1 || index == 2) {
-        //         idInterval = setInterval(function() {
-        //             $.fn.fullpage.moveSlideRight();
-        //         }, 7000);
-        //     } else {
-        //         clearInterval(idInterval);
-        //     }
-        // }
+        afterResize: function(){
+            destroyFullPageJS();
+        },
+        afterRender: function() {
+            idInterval = setInterval(function() {
+                $.fn.fullpage.moveSlideRight();
+            }, 7000);
+        },
+        afterLoad: function(anchorLink, index) {
+            clearInterval(idInterval);
+            if (index == 1 || index == 2) {
+                idInterval = setInterval(function() {
+                    $.fn.fullpage.moveSlideRight();
+                }, 7000);
+            } else {
+                clearInterval(idInterval);
+            }
+        }
     });
+    mobileRendered = false;
 }
+
 function renderMobileFullPageJs() {
     $('#fullpage').fullpage({
         scrollingSpeed: 1000,
@@ -39,22 +42,31 @@ function renderMobileFullPageJs() {
         autoScrolling: false,
         scrollBar: true,
         fitToSection: false,
+        afterResize: function(){
+            destroyFullPageJS();
+        }
     });
+    mobileRendered = true;
 }
 
+function isMobileRendered(){
+    if(window.innerWidth <= ipadWidth){
+        mobileRendered = false;
+    }
+    else{
+        mobileRendered = true;
+    }
+}
 function destroyFullPageJS() {
-    if (window.innerWidth < ipadWidth) {
-        if($.fn.fullpage.destroy){
+    if (window.innerWidth < ipadWidth && mobileRendered==false) {
+        if ($.fn.fullpage.destroy) {
             $.fn.fullpage.destroy('all');
-        }
+        } else{}
         renderMobileFullPageJs();
-    } else {
-        if($.fn.fullpage.destroy){
+    } else if (window.innerWidth >= ipadWidth && mobileRendered == true) {
+        if ($.fn.fullpage.destroy) {
             $.fn.fullpage.destroy('all');
-        }
-        else{}
+        } else {}
         renderFullPageJS();
     }
 }
-
-

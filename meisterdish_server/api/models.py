@@ -282,8 +282,8 @@ class MealRating(models.Model):
             self.created = datetime.datetime.now()
         super(MealRating, self).save(*args, **kwargs)
 
-    def __init__(self):
-        return self.rating
+    def __unicode__(self):
+        return str(self.rating)
     
 class MealNutrient(models.Model):
     meal = models.ForeignKey(Meal)
@@ -340,7 +340,7 @@ class Order(models.Model):
     delivery_address = models.ForeignKey(Address, related_name="delivery_address")
     billing_address = models.ForeignKey(Address, related_name="billing_address")
     
-    delivery_time = models.CharField(max_length=20)
+    delivery_time = models.DateTimeField(default=datetime.datetime.now())
     driver_instructions = models.TextField(max_length=1024, null=True)
     
     payment = models.ForeignKey(Payment, null=True, blank=True)

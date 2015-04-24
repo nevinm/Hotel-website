@@ -14,6 +14,11 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+
+ROLE_ADMIN = 1
+ROLE_USER = 2
+ROLE_GUEST = 3
+
 ALLOWED_HOSTS = []
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -178,6 +183,10 @@ LOGGING = {
             'level': 'DEBUG'
         },
         'libraries': {
+            'handlers': ['logfile'],
+            'level': 'DEBUG'
+        },
+        'order': {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },
