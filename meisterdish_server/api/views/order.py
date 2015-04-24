@@ -57,6 +57,28 @@ def get_orders(request, data, user=None):
                 "user_id" : order.cart.user.id,
                 "user_image" : order.cart.user.profile_image.thumb.url,
                 "status":order.status,
+                "delivery_address" : {
+                     "id":order.delivery_address.id,
+                     "first_name":order.delivery_address.first_name,
+                     "last_name":order.delivery_address.last_name,
+                     "street":order.delivery_address.street,
+                     "building":order.delivery_address.building,
+                     "city":order.delivery_address.city.name,
+                     "state":order.delivery_address.city.state.name,
+                     "zip":order.delivery_address.zip,
+                     "phone":order.delivery_address.phone,
+                    },
+                "billing_address" : {
+                     "id":order.billing_address.id,
+                     "first_name":order.billing_address.first_name,
+                     "last_name":order.billing_address.last_name,
+                     "street":order.billing_address.street,
+                     "building":order.billing_address.building,
+                     "city":order.billing_address.city.name,
+                     "state":order.billing_address.city.state.name,
+                     "zip":order.billing_address.zip,
+                     "phone":order.billing_address.phone,
+                    }
                 })
 
         #End format response
@@ -176,6 +198,28 @@ def get_order_details(request, data, user, order_id):
             "user_image" : order.cart.user.profile_image.thumb.url,
             "meals":meals,
             "status":order.status,
+            "delivery_address" : {
+                     "id":order.delivery_address.id,
+                     "first_name":order.delivery_address.first_name,
+                     "last_name":order.delivery_address.last_name,
+                     "street":order.delivery_address.street,
+                     "building":order.delivery_address.building,
+                     "city":order.delivery_address.city.name,
+                     "state":order.delivery_address.city.state.name,
+                     "zip":order.delivery_address.zip,
+                     "phone":order.delivery_address.phone,
+                    },
+            "billing_address" : {
+                     "id":order.billing_address.id,
+                     "first_name":order.billing_address.first_name,
+                     "last_name":order.billing_address.last_name,
+                     "street":order.billing_address.street,
+                     "building":order.billing_address.building,
+                     "city":order.billing_address.city.name,
+                     "state":order.billing_address.city.state.name,
+                     "zip":order.billing_address.zip,
+                     "phone":order.billing_address.phone,
+                    }
         }
         return json_response({"status":1, "order":order_details})
     except Exception as e:
