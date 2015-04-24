@@ -104,7 +104,7 @@ SLIDER
 }
 #section2 .slide-description{
 	position: absolute;
-	top: 30%;
+	top: 37%;
 	margin-left: 25%;
 	width: 21%;
 	color: #9b9b9b;
@@ -216,11 +216,12 @@ input#zip-code[type="text"]{
 	#home-page-main-wrapper{
 		background-color:#CDD5CE;
 	}
-	#section0, #section1, #section2, #section3{
-/*		margin-top: 20px;*/
-		border:1px solid #d0d0d0;
-		box-shadow: 0 0 5px #d0d0d0;
+	 #section1, #section2{
+		margin-top: 20px;
+		border:1px hidden;
+		box-shadow: 0 0 6px grey;
 		background-color: #fff;
+		border-radius: 4px;
 	}
 	.section .slide-description, #slider-footer{
 		display: none;
@@ -304,5 +305,31 @@ input#zip-code[type="text"]{
 	.slide-description-mobile .body-text-small{
 		font-family: 'ProximaNova-semibold';
 		margin-bottom: 35px;
+	}
+	#section3-description{
+		background-color: #fff;
+		width: 100%;
+		padding: 0 5%;
+		padding-top: 20px;
+		padding-bottom: 25px;
+		margin-bottom: 30px;
+		border: 1px hidden;
+		border-top: none;
+		border-radius: 0 0 4px 4px;
+	}
+	div#section3 {
+		border: 1px hidden;
+		border-bottom: none;
+		margin-top: 20px;
+		/*box-shadow: 0 0 3px grey;*/
+		border-radius: 4px 4px 0 0;
+	}
+}
+@media (min-width: 320px) and (max-width:400px){
+	.logo-mobile-container{
+		width:181px;
+	}
+	.logo-mobile{
+		margin-top: 9px;
 	}
 }
