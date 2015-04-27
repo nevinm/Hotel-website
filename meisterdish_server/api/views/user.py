@@ -236,10 +236,10 @@ def get_meal_details(request, data, user, meal_id):
                 "id":meal.chef.image.id,
                 "url":meal.chef.image.thumb.url,
                 },
-            "user_to_do" : "" if meal.user_to_do == "" else simplejson.loads(meal.user_to_do),
+            "user_to_do" : "" if meal.user_to_do.strip() == "" else simplejson.loads(meal.user_to_do),
             "preparation_time" : meal.preparation_time,
 
-            "finished_preparation" : "" if meal.finished_preparation == "" else simplejson.loads(meal.finished_preparation),
+            "finished_preparation" : "" if meal.finished_preparation.strip() == "" else simplejson.loads(meal.finished_preparation),
             "saved_time" : meal.saved_time,
 
             "pre_requisites" : "" if meal.pre_requisites == "" else simplejson.loads(meal.pre_requisites),
@@ -258,7 +258,7 @@ def get_meal_details(request, data, user, meal_id):
             "allergy_notice" : meal.allergy_notice,
             "images" : image_list,
             "ratings" : rating_list,
-            "main_image" : {
+            "main_image" : "Not Available" if not meal.meain_image else {
                 "id":meal.main_image.id,
                 "url":meal.main_image.image.url,
             }
