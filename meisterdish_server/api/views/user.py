@@ -4,7 +4,10 @@ import json as simplejson
 import logging 
 import settings
 from decorators import *
-from libraries import validate_zipcode, validate_phone
+from libraries import validate_zipcode, validate_phone, card
+import paypalrestsdk
+from.datetime import datetime
+
 log = logging.getLogger('api_user')
 
 @check_input('POST')
@@ -267,8 +270,51 @@ def get_meal_details(request, data, user, meal_id):
 @check_input('POST')
 def save_credit_card(request, data, user):
     try:
-       pass 
+        num = str(data["number"]).strip()
+        exp_month = str(data["exp_month"]).strip()
+        exp_year = str(data["exp_year"]).strip()
+        cvv2 = expire_month = str(data["cvv2"]).strip()
+        fname = str(data["first_name"]).strip()
+        lname = str(data["last_name"]).strip()
+        
+        # Create a card
+        cc = card.Card(
+            number=num,
+            month=exp_month,
+            year=exp_year,
+            cvc=cvv2,
+            holder = fname
+        )
 
+        if not cc.is_valid or cc.is_expired:
+            log.error("User : " + user.email + ": Credit Card : valid? "+str(cc.is_valid) + " , expired? "+str(cc.is_expired))
+            return custom_error("Please enter valid card details.")
+        
+        brand = 
+        credit_card = paypalrestsdk.CreditCard({
+            "type": cc.brand,
+            "number": num,
+            "expire_month": exp_month,
+            "expire_year": exp_year,
+            "cvv2": cvv2,
+            "first_name": fname,
+            "last_name": lname
+            })
+        credit_card.create()
+        if credit_card.get("status") != 'ok':
+            return custom_error("Failed to save credit card details.")
+
+        c_card = CreditCardDetails()
+        c_card.user = user
+        c_card.card_id = credit_card.id
+        c_card.number = credit_card.number
+        c_card.first_name = credit_card.first_name
+        c_card.last_name = credit_card.last_name
+        c_card.valid = datetime.time(credit_card.valid_untill)
+        c_card.expiry_month = credit_card.expire_month 
+        c_card.expiry_year = credit_card.expire_year
+        c_card.card_type = credit_card.type
+        c_card.save()
     except Exception as e:
         log.error("Save CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to save credit card details.")
