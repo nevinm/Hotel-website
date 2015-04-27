@@ -14,6 +14,13 @@ function dollarConvert(value) {
     return dollarValue;
 }
 
+function getParameterFromUrl(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 function checkLoggedIn() {
         if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
             $userentry.hide();
