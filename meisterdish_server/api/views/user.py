@@ -276,7 +276,7 @@ def save_credit_card(request, data, user):
 def delete_credit_card(request, data, user):
     try:
         
-
+        pass
     except Exception as e:
         log.error("Delete CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to delete credit card details.")
