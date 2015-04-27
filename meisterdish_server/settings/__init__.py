@@ -1,8 +1,10 @@
 import os        
 if os.path.dirname(__file__) == "/home/staging/settings":
     from live import *
+    Live = True
 else:
     from local import *
+    Live = False
 
 DEBUG = DEBUG
 BASE_URL = BASE_URL
@@ -220,3 +222,14 @@ ORDER_STATUS =  (
     (3, "Not delivered"),
     (4, "Complete"),
     )
+
+if not Live:
+    # SandBox
+    PayPal_account = "nazz007online-facilitator@gmail.com"
+    PayPal_endpoint = "api.sandbox.paypal.com"
+    PayPal_client_id = "AfPVcIBPTPK4v-ssJY7FvudRt4bYlSviIY02zi7b8JbtmaL91ZneDCMMJSOiIgqo9hBVemBUkpF8p_1F"
+    PayPal_secret = "EDrB0Fsr8fny7_aTopTkjC4t5btB-SvoRQDx2B2omc6OabinTG503o1aVx7_jm1D9giX-9bPfsgB_fGE"
+else:
+    #@TODO
+    pass
+
