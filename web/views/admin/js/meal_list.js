@@ -1,24 +1,26 @@
 $(document).ready(function() {
     $('#searchinMeal').on("click", function() {
         var search_name = $('#searchBy-name').val(),
-            category = $('#category option:selected').attr('value'),
-            mealtype = $('#meal-type option:selected').attr('value');
+            category = $('#category option:selected').attr('value'),mealtype=[];
+            // mealtype = $('#meal-type option:selected').attr('value');
+        $('#meal-type option:selected').each(function() {
+            mealtype.push($(this).attr('value'));
+        });
         $("#meal-list tr td").detach();
         getmealList(search_name, category, mealtype);
     });
 
-    $(document).on('click', '.meal-edit',function(){
+    $(document).on('click', '.meal-edit', function() {
         mealId = $(this).data().id;
-        window.location.href = 'create_meal.html?mealId='+ mealId;
+        window.location.href = 'create_meal.html?mealId=' + mealId;
     });
 
-    $(document).on('click', '.meal-delete',function(){
-    	var confirmDelete = confirm("Are you sure you want to delete this meal?");
-    	if(confirmDelete){
-	    	currentMealId = $(this).data().id;
-	    	deleteMeal(currentMealId);
-    	}
-    	else{}
+    $(document).on('click', '.meal-delete', function() {
+        var confirmDelete = confirm("Are you sure you want to delete this meal?");
+        if (confirmDelete) {
+            currentMealId = $(this).data().id;
+            deleteMeal(currentMealId);
+        } else {}
     });
     getmealList();
     getFilterContent();
@@ -34,15 +36,15 @@ var deleteMealCallback = {
 }
 
 function deleteMeal(currentMealId) {
-        var url = baseURL + "cms/delete_meal/"+currentMealId+"/";
-        header = {
-            "session-key": localStorage['session_key']
-        }
-        params = {}
-        data = JSON.stringify(params);
-        var deleteMealInstance = new AjaxHttpSender();
-        deleteMealInstance.sendPost(url, header, data, deleteMealCallback);
+    var url = baseURL + "cms/delete_meal/" + currentMealId + "/";
+    header = {
+        "session-key": localStorage['session_key']
     }
+    params = {}
+    data = JSON.stringify(params);
+    var deleteMealInstance = new AjaxHttpSender();
+    deleteMealInstance.sendPost(url, header, data, deleteMealCallback);
+}
 
 
 //get meal list
@@ -104,7 +106,7 @@ function populateFilterData(data) {
 
 //function populate MealList 
 function populateMealList(data) {
-	$('#meal-list tbody').empty();
+    $('#meal-list tbody').empty();
     var fullMealList = data;
     $.each(fullMealList.aaData, function(key, value) {
         $('#meal-list tbody').append("<tr>" + "<td>" + value.name + "</td>" +

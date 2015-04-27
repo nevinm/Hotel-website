@@ -161,6 +161,20 @@ $(document).ready(function() {
                     minlength: 2,
                     maxlength: 15,
                 },
+                mealname:{
+                    required: true,
+                    minlength: 3,
+                },
+                mealprice:{
+                    required: true
+                },
+                mealtax:{
+                    required: true
+                },
+                mealdescription:{
+                    required: true,
+                    minlength: 5
+                },
                 oldpassword:{
                     required: true,
                     minlength: 6

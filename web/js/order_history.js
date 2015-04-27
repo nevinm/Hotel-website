@@ -1,92 +1,75 @@
    //Get orders API process
-var getOrdersCallback = {
-    success: function(data, textStatus) {
-        debugger;       
-    },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-}
+   var getOrdersCallback = {
+       success: function(data, textStatus) {
+           populateOrdersList(JSON.parse(data));
+       },
+       failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+   }
 
-function getOrders() {
-    var url = baseURL + "get_orders/",
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        userData = {
-            
-        };
-    data = JSON.stringify(userData);
-    var getOrdersInstance = new AjaxHttpSender();
-    getOrdersInstance.sendPost(url, header, data, getOrdersCallback);
-}
+   function getOrders() {
+       var url = baseURL + "get_orders/",
+           header = {
+               "session-key": localStorage["session_key"]
+           },
+           userData = {
 
-var dummyData ={
-    "status": 1,
-    "num_pages": 1,
-    "actual_count": 1,
-    "aaData": [
-        {
-            "user_last_name": "last",
-            "total_tax": 34,
-            "grand_total": 2323,
-            "status": 0,
-            "user_id": 1,
-            "total_amount": 34,
-            "user_image": "http://10.7.1.64:86/backend//media/images/bg_thumbnail_tOhUyPE.jpg",
-            "user_first_name": "firsdt",
-            "tip": 5,
-            "id": 1,
-            "delivery_address": {
-                "id": 1,
-                "first_name": "first_name",
-                "last_name": "last_name",
-                "street": "street",
-                "building": "building",
-                "city": "city.name",
-                "state": "state.name",
-                "zip": "zip",
-                "phone": 132465
-            },
-            "billing_address": {
-                "id": 1,
-                "first_name": "first_name",
-                "last_name": "last_name",
-                "street": "street",
-                "building": "building",
-                "city": "city.name",
-                "state": "state.name",
-                "zip": "zip",
-                "phone": 132465
-            },
-            "meals": [
-                {
-                    "id": 1,
-                    "name": "asdas",
-                    "description": "asdasdasdasdasdas asd asdas d",
-                    "image": "http://10.1.2.0/asdasd.img.jpg",
-                    "available": 1,
-                    "category": "My Cat",
-                    "price": 10,
-                    "tax": 2,
-                    "quantity": 2
-                },
-                {
-                    "id": 1,
-                    "name": "asdas",
-                    "description": "asdasdasdasdasdas asd asdas d",
-                    "image": "http://10.1.2.0/asdasd.img.jpg",
-                    "available": 1,
-                    "category": "My Cat",
-                    "price": 10,
-                    "tax": 2,
-                    "quantity": 2
-                }
-            ]
-        }
-    ],
-    "page_range": [
-        1
-    ],
-    "per_page": 10,
-    "total_count": 1,
-    "current_page": 1
-}
+           };
+       data = JSON.stringify(userData);
+       var getOrdersInstance = new AjaxHttpSender();
+       getOrdersInstance.sendPost(url, header, data, getOrdersCallback);
+   }
+
+   $(document).ready(function() {
+       // &ACCORDION
+       getOrders();
+       $(".accordion-header").css("border-top:none");
+       $(document).on('click', '.accordion-header', function() {
+           $(".accordion-header").css("border-bottom:1px solid");
+           $(".accordion-content").slideUp();
+
+           if (!$(this).next().is(":visible")) {
+               $(this).next().slideDown();
+           }
+       });
+   });
+
+
+   function populateOrdersList(ordersList) {
+       // ordersList = JSON.parse(dummyData);
+       $.each(ordersList.aaData, function(key, value) {
+           deliveryAddress = value.delivery_address;
+           meals = value.meals;
+           $("#accordion ul").append("<li><div class='accordion-header' style='border-top:none'>" +
+               "<h4 style='float: left;padding-right: 116px;'>#123456</h4>" +
+               "<h4 class='status'>"+value.status+"</h4></div><div class='accordion-content body-text-small'>" +
+               "<div class='row'><div class='accordion-subcontent'>" +
+               "<div class='order-head'>ORDER TOTAL</div>" +
+               "<div class='order-content'>" + dollarConvert(value.total_amount) + "</div>" +
+               "</div>" +
+               "<div class='accordion-subcontent'>" +
+               "<div class='order-head'>ORDER DATE</div>" +
+               "<div class='order-content'>12/12/2015</div>" +
+               "</div>" +
+               "<div class='accordion-subcontent'>" +
+               "<div class='order-head'>SHIPPING INFROMATION</div>" +
+               "<div class='order-content'>" +
+               "<span>" + deliveryAddress.first_name + " " + deliveryAddress.last_name + "</span>" +
+               "<span>" + deliveryAddress.building + " " + deliveryAddress.street + "</span>" +
+               "<span>" + deliveryAddress.city + "</span>" +
+               "<span>" + deliveryAddress.zip + "</span>" +
+               "+</div></div>" +
+               "<div class='accordion-subcontent'>" +
+               "<div class='order-head'>ITEMS ORDERD</div>" +
+               "<div class='order-content'>" +
+               "</div></div></div>" +
+               "</li>");
+
+            if(value.status== "IN PROGRESS"){
+                $("h4.status:last").addClass("green");
+            }
+           $.each(meals, function(key, meal) {
+               $("#accordion .order-content:last").append("<span>" + meal.name + " x " + meal.quantity + "</span>");
+           });
+       });
+   }
+

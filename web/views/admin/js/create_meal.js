@@ -3,9 +3,9 @@ var nutrient_sub_category = 0,
     nutrient_main_category = 0,
     tipsAndTricksData = [], createMealParams={}, mealId;
 $(document).ready(function() {
-
     checkIfMealEdit();
-    $('#create-meal-button').on("click", function() {
+    $('#create-meal-button').on("click", function(e) {
+        e.preventDefault();
         createMeal();
     });
 
@@ -241,8 +241,8 @@ function createMeal() {
         "price": price,
         "tax": tax,
         "chef_image": chef_image,
-        "meal_image_id": meal_image_id,
-        "category_id": category,
+        "main_image": meal_image_id,
+        "cat_id": category,
         "filter_ids": meal_type,
         "available": availability,
         "ingredients": ingredients,
@@ -348,7 +348,8 @@ function addSubNutrients(self) {
 //Get Meal
 var getMealsContentCallback = {
     success: function(data, textStatus) {
-        debugger;
+        mealDetails = JSON.parse(data);
+        populateMealDetails(mealDetails);
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -361,5 +362,19 @@ function getMeals(mealId) {
     params = {}
     data = JSON.stringify(params);
     var getFilterContentInstance = new AjaxHttpSender();
-    getFilterContentInstance.sendPost(url, header, data, getFilterContentCallback);
+    getFilterContentInstance.sendPost(url, header, data, getMealsContentCallback);
+}
+
+function populateMealDetails(mealDetails){
+    $("#meal-name").val(mealDetails.name);
+    $("#description").val(mealDetails.description);
+    $("#meal-price").val(mealDetails.price);
+    $("#meal-tax").val(mealDetails.tax);
+    $("#chef-name").val(mealDetails.chef_name);
+    $("#create-meal-available").val(mealDetails.available);
+    $("#create-meal-category").val(mealDetails.cat_id.id);
+    $.each(mealDetails.filters,function(key,value){
+        $("#create-meal-mealType option[value='" + value + "']").prop("selected", true);
+    });
+    $('#meal-prep-time').val();
 }
