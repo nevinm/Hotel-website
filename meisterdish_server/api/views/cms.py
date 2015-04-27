@@ -256,6 +256,7 @@ def get_meals(request, data):
                               "name":meal.name,
                               "description":meal.description,
                               "images":meal_images,
+                              "main_image" : "" if not meal.main_image else meal.main_image.thumb.url,
                               "available":1 if meal.available else 0,
                               "category":"Not Available" if not meal.category else meal.category.name.title(),
                               "meal_types":meal_types,
@@ -342,7 +343,7 @@ def create_meal(request, data, user):
                 meal.save()
             else:
                 meal.types = []
-                
+
             for fid in data['filter_ids']:
                 try:
                     log.info(fid)
@@ -354,6 +355,9 @@ def create_meal(request, data, user):
                     log.error("getting filter " + e.message)
                     return custom_error("The selected Meal Filter does not exist, or is not available.")
         
+        if not meal.id:
+            meal.save()
+
         if edit:
             meal.images = []
 
