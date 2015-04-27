@@ -184,6 +184,9 @@ function uploadImage(imageElementSelect, imageElement) {
 var createMealCallback = {
     success: function(data, textStatus) {
         console.log(data);
+        var meal_message = JSON.parse(data);
+        showPopup(meal_message);
+        debugger;
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
