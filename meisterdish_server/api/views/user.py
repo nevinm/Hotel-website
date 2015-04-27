@@ -6,7 +6,7 @@ import settings
 from decorators import *
 from libraries import validate_zipcode, validate_phone, card
 import paypalrestsdk
-from.datetime import datetime
+from datetime import datetime
 
 log = logging.getLogger('api_user')
 
@@ -306,7 +306,6 @@ def save_credit_card(request, data, user):
             log.error("User : " + user.email + ": Credit Card : valid? "+str(cc.is_valid) + " , expired? "+str(cc.is_expired))
             return custom_error("Please enter valid card details.")
         
-        brand = 
         credit_card = paypalrestsdk.CreditCard({
             "type": cc.brand,
             "number": num,
