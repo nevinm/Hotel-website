@@ -27,6 +27,8 @@ function checkLoggedIn() {
             $('#navbar-username a').text(localStorage['username']);
             $(".account-header h2").text(localStorage['username'] + "'S ACCOUNT");
             $('#menu').addClass('menuPadding');
+            $('.delivery-info-container').show();
+            $('.delivery-info-guest-container').hide();
         } else {
             $userentry.show();
             $("#logout").hide();
@@ -236,6 +238,9 @@ $(document).ready(function() {
                     required:true,
                     letters: true,
                     minlength:2
+                }
+                available:{
+                    required:true
                 }
             },
             messages: {
