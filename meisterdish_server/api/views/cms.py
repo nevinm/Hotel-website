@@ -338,6 +338,11 @@ def create_meal(request, data, user):
                 return custom_error("The selected category does not exist, or is not available.")
         
         if 'filter_ids' in data:
+            if not edit:
+                meal.save()
+            else:
+                meal.types = []
+                
             for fid in data['filter_ids']:
                 try:
                     log.info(fid)
@@ -349,10 +354,9 @@ def create_meal(request, data, user):
                     log.error("getting filter " + e.message)
                     return custom_error("The selected Meal Filter does not exist, or is not available.")
         
-        if not edit:
-            meal.save()
-        else:
+        if edit:
             meal.images = []
+
         if 'images' in data and len(data['images']) > 0:
             for img in data['images']:
                 meal.images.add(Image.objects.get(pk=int(img)))
