@@ -212,3 +212,11 @@ PAYMENT_METHODS = (
                    ('PP', 'PayPal'),
                    )
 PER_PAGE = 10
+
+ORDER_STATUS =  (
+    (0, "Incomplete"),
+    (1, "Payment failed"),
+    (2, "Paid, but order failed"),
+    (3, "Not delivered"),
+    (4, "Complete"),
+    )

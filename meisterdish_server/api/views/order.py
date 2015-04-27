@@ -70,7 +70,7 @@ def get_orders(request, data, user=None):
                 "user_last_name" : order.cart.user.last_name,
                 "user_id" : order.cart.user.id,
                 "user_image" : order.cart.user.profile_image.thumb.url,
-                "status":order.status,
+                "status":dict(settings.ORDER_STATUS)[order.status],
                 "meals":meals,
                 "delivery_address" : {
                      "id":order.delivery_address.id,
@@ -212,7 +212,7 @@ def get_order_details(request, data, user, order_id):
             "user_id" : order.cart.user.id,
             "user_image" : order.cart.user.profile_image.thumb.url,
             "meals":meals,
-            "status":order.status,
+            "status":dict(settings.ORDER_STATUS)[order.status],
             "delivery_address" : {
                      "id":order.delivery_address.id,
                      "first_name":order.delivery_address.first_name,

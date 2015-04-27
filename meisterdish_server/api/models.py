@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
-from settings import PAYMENT_METHODS
+from settings import PAYMENT_METHODS, ORDER_STATUS
 import logging
 log = logging.getLogger('model')
 import sys, traceback
@@ -344,14 +344,9 @@ class Order(models.Model):
     driver_instructions = models.TextField(max_length=1024, null=True)
     
     payment = models.ForeignKey(Payment, null=True, blank=True)
-    status_choices = ((0, "Incomplete"),
-                      (1, "Payment failed"),
-                      (2, "Paid, but order failed"),
-                      (3, "Order placed, but not delivered."),
-                      (4, "Delivered"),
-                      )
     
-    status = models.IntegerField(choices=status_choices, default=0)
+    
+    status = models.IntegerField(choices=ORDER_STATUS, default=0)
     is_deleted = models.BooleanField(default=False)
     
     created = models.DateTimeField(null=True)
