@@ -268,6 +268,23 @@ def get_meal_details(request, data, user, meal_id):
         return custom_error("Failed to get the meal details.")
 
 @check_input('POST')
+def list_credit_cards(request, data, user):
+    try:
+        cards_list = []
+        for card in CreditCardDetails.objects.filter(user=user):
+            cards_list.append({
+                "id": card.id,
+                "card_id" : card.card_id,
+                "number" : card.number,
+                "expire_month" : card.expire_month,
+                "expire_year" : card.expire_year,
+            })
+        return json_response({"status":1, "cards":cards_list})
+    except Exception as e:
+        log.error("List CC: user"+str(user.id) + " : "+ e.message)
+        return custom_error("Failed to list credit cards.")
+         
+@check_input('POST')
 def save_credit_card(request, data, user):
     try:
         num = str(data["number"]).strip()
@@ -320,10 +337,10 @@ def save_credit_card(request, data, user):
         return custom_error("Failed to save credit card details.")
 
 @check_input('POST')
-def delete_credit_card(request, data, user):
+def delete_credit_card(request, data, user, id):
     try:
-        
-        pass
+        card = CreditCardDetails.objects.get(pk=id)
+        card_id = card.card_id
     except Exception as e:
         log.error("Delete CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to delete credit card details.")
