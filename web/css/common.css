@@ -449,6 +449,7 @@ span.icon-menu{
 }
 .cart {
 	position: relative;
+	cursor: pointer;
 	margin-top: 6px;
 	padding-right: 10px;
 }
