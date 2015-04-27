@@ -229,7 +229,6 @@ def get_meal_details(request, data, user, meal_id):
                 "id":meal.category.id,
                 "name":meal.category.name.title(),
                 },
-            
             "chef_id" : "Not available"  if not meal.chef else meal.chef.id,
             "chef_name" : "Not available"  if not meal.chef else meal.chef.name.title(),
             "chef_image" : "Not Available" if not meal.chef or not meal.chef.image else {
