@@ -257,7 +257,7 @@ def get_meal_details(request, data, user, meal_id):
             "allergy_notice" : meal.allergy_notice,
             "images" : image_list,
             "ratings" : rating_list,
-            "main_image" : "Not Available" if not meal.meain_image else {
+            "main_image" : "Not Available" if not meal.main_image else {
                 "id":meal.main_image.id,
                 "url":meal.main_image.image.url,
             }
