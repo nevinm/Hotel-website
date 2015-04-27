@@ -1,24 +1,26 @@
 $(document).ready(function() {
     $('#searchinMeal').on("click", function() {
         var search_name = $('#searchBy-name').val(),
-            category = $('#category option:selected').attr('value'),
-            mealtype = $('#meal-type option:selected').attr('value');
+            category = $('#category option:selected').attr('value'),mealtype=[];
+            // mealtype = $('#meal-type option:selected').attr('value');
+        $('#meal-type option:selected').each(function() {
+            mealtype.push($(this).attr('value'));
+        });
         $("#meal-list tr td").detach();
         getmealList(search_name, category, mealtype);
     });
 
-    $(document).on('click', '.meal-edit',function(){
+    $(document).on('click', '.meal-edit', function() {
         mealId = $(this).data().id;
-        window.location.href = 'create_meal.html?mealId='+ mealId;
+        window.location.href = 'create_meal.html?mealId=' + mealId;
     });
 
-    $(document).on('click', '.meal-delete',function(){
-    	var confirmDelete = confirm("Are you sure you want to delete this meal?");
-    	if(confirmDelete){
-	    	currentMealId = $(this).data().id;
-	    	deleteMeal(currentMealId);
-    	}
-    	else{}
+    $(document).on('click', '.meal-delete', function() {
+        var confirmDelete = confirm("Are you sure you want to delete this meal?");
+        if (confirmDelete) {
+            currentMealId = $(this).data().id;
+            deleteMeal(currentMealId);
+        } else {}
     });
     getmealList();
     getFilterContent();
@@ -34,15 +36,15 @@ var deleteMealCallback = {
 }
 
 function deleteMeal(currentMealId) {
-        var url = baseURL + "cms/delete_meal/"+currentMealId+"/";
-        header = {
-            "session-key": localStorage['session_key']
-        }
-        params = {}
-        data = JSON.stringify(params);
-        var deleteMealInstance = new AjaxHttpSender();
-        deleteMealInstance.sendPost(url, header, data, deleteMealCallback);
+    var url = baseURL + "cms/delete_meal/" + currentMealId + "/";
+    header = {
+        "session-key": localStorage['session_key']
     }
+    params = {}
+    data = JSON.stringify(params);
+    var deleteMealInstance = new AjaxHttpSender();
+    deleteMealInstance.sendPost(url, header, data, deleteMealCallback);
+}
 
 
 //get meal list
@@ -56,13 +58,16 @@ var getmealListCallback = {
 
 function getmealList(search_name, category, mealtype) {
         var url = baseURL + "cms/get_meals/";
+        if(mealtype==""){
+            mealtype.length=0;
+        }
         header = {
             "session-key": localStorage['session_key']
         }
         params = {
             "search": search_name,
             "category_id": category,
-            "type_id": mealtype
+            "type_ids": mealtype
         }
         data = JSON.stringify(params);
         var getmeallistInstance = new AjaxHttpSender();
@@ -104,7 +109,7 @@ function populateFilterData(data) {
 
 //function populate MealList 
 function populateMealList(data) {
-	$('#meal-list tbody').empty();
+    $('#meal-list tbody').empty();
     var fullMealList = data;
     $.each(fullMealList.aaData, function(key, value) {
         $('#meal-list tbody').append("<tr>" + "<td>" + value.name + "</td>" +
@@ -112,7 +117,7 @@ function populateMealList(data) {
             "<td>" + value.available + "</td>" +
             "<td>" + value.category + "</td>" +
             "<td>" + value.meal_types[0].name + "</td>" +
-            "<td>" + value.price + "</td>" +
+            "<td>" + dollarConvert(value.price) + "</td>" +
             "<td><button type='button' class='meal-delete' data-id='" + value.id + "'>Delete</button></td>" +
             "<td><button type='button' class='meal-edit' data-id='" + value.id + "'>Edit</button></td>" + "</tr>");
     });

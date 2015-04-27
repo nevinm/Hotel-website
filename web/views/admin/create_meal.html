@@ -56,7 +56,7 @@
                         <div class="section-1">
                             <div class="section-header">DETAILS :</div>
                             <div class="content-1">
-                                <input type="text" name="name" class="create-meal-input" id="meal-name" placeholder="Meal Name">
+                                <input type="text" name="mealname" class="create-meal-input" id="meal-name" placeholder="Meal Name">
                                 <div class="meal-image-upload-container">
                                     <div>
                                         <img data-id='' id='meal-image' src='' />
@@ -69,10 +69,10 @@
                             </div>
                             <div class="content-1">
                                 <div class="text-area-container">
-                                    <textarea id="description" placeholder="Description" cols="70" rows="50"></textarea>
+                                    <textarea id="description" name= 'mealdescription' placeholder="Description" cols="70" rows="50"></textarea>
                                 </div>
-                                <input type="text" name="price" class="create-meal-input" id="meal-price" placeholder="Price">
-                                <input type="text" name="tax" class="create-meal-input" id="meal-tax" placeholder="Tax">
+                                <input type="text" name="mealprice" class="create-meal-input" id="meal-price" placeholder="Price">
+                                <input type="text" name="mealtax" class="create-meal-input" id="meal-tax" placeholder="Tax">
                             </div>
                             <div class="content-1">
                                 <input type="text" name="chef-name" class="create-meal-input" id="chef-name" placeholder="Chef Name">
@@ -196,7 +196,7 @@
                             </div>
                         </div>
                         <div class="create-button-container">
-                            <input type="button" class="btn btn-large-primary medium-green" id="create-meal-button" value="CREATE">
+                            <input type="submit" class="btn btn-large-primary medium-green" id="create-meal-button" value="CREATE">
                         </div>
                     </form>
                 </div>

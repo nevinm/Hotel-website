@@ -161,6 +161,20 @@ $(document).ready(function() {
                     minlength: 2,
                     maxlength: 15,
                 },
+                mealname:{
+                    required: true,
+                    minlength: 3,
+                },
+                mealprice:{
+                    required: true
+                },
+                mealtax:{
+                    required: true
+                },
+                mealdescription:{
+                    required: true,
+                    minlength: 5
+                },
                 oldpassword:{
                     required: true,
                     minlength: 6
@@ -263,7 +277,7 @@ $(document).ready(function() {
                 email : "Enter a valid email address.",
                 zip : "Provide a valid zip code.",
                 street :"Provide a valid address.",
-                building:"Provide a vslid address.",
+                building:"Provide a valid address.",
                 state: "Provide a state name.",
                 city:"Provide a city name."
             }
