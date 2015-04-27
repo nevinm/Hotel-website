@@ -37,7 +37,7 @@ html, body {
     display: block;
 }
 .fp-slides {
-    z-index:1;
+    /*z-index:;*/
     height: 100%;
     overflow: hidden;
     position: relative;
