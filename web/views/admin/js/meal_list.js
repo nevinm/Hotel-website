@@ -64,7 +64,7 @@ function getmealList(search_name, category, mealtype) {
         params = {
             "search": search_name,
             "category_id": category,
-            "type_id": mealtype
+            "type_ids": mealtype
         }
         data = JSON.stringify(params);
         var getmeallistInstance = new AjaxHttpSender();
