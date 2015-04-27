@@ -180,14 +180,14 @@ class Address(models.Model):
 
 class CreditCardDetails(models.Model):
     user = models.ForeignKey(User, related_name="cc_details")
-    card_id = models.CharField(max_length=25) 
+    card_id = models.CharField(max_length=35) 
     number = models.CharField(max_length=16)
     fname = models.CharField(max_length=25)
     lname = models.CharField(max_length=25)
-    expiry_month = models.CharField(choices=months)
-    expiry_year = models.CharField(choices=years)
+    expiry_month = models.CharField(max_length=10)
+    expiry_year = models.CharField(max_length=10)
     cvv2 = models.CharField(max_length=5)
-    valid = models.DateTimeField(default="")
+    valid = models.DateTimeField(null=True)
     card_type = models.CharField(max_length=15)
     def __unicode__(self):
         return self.user.email + " : " + self.card_no[-4:]
