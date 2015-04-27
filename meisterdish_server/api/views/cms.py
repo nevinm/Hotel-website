@@ -138,8 +138,8 @@ def get_users(request, data, user):
                               "name" : (user.last_name + " "+ user.first_name).title(),
                               "email" : user.email,
                               "mobile" : "Not Available" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
-                              "profile_image" : "Not Available" if user.profile_image is None else user.profile_image.image.url,
-                              "profile_image_thumb" : "Not Available" if user.profile_image is None else user.profile_image.thumb.url,
+                              "profile_image" : settings.DEFAULT_USER_IMAGE if user.profile_image is None else user.profile_image.image.url,
+                              "profile_image_thumb" : settings.DEFAULT_USER_IMAGE if user.profile_image is None else user.profile_image.thumb.url,
                               "is_admin": "Yes" if user.role.id == 1 else "No",
                               "credits" : "$ "+str(user.credits),
                               "is_active": user.is_active,
@@ -221,7 +221,7 @@ def get_meals(request, data):
         if "category_id" in data and str(data['category_id']) != '':
             meals = meals.filter(category__id=data["category_id"])
             
-        if "type_ids" in data and len(data['type_ids']) >0:
+        if "type_ids" in data and len(data['type_ids']) >0 and str(data['type_ids']) != '':
             meals = meals.filter(types__id__in=data['type_ids'])
             
         actual_count = meals.count()
@@ -240,7 +240,7 @@ def get_meals(request, data):
                 meal_images.append({
                                     "id":img.id,
                                     "url":img.image.url,
-                                    "thumb_url" : "Not Available" if not img.thumb else img.thumb.url,
+                                    "thumb_url" : settings.DEFAULT_MEAL_IMAGE if not img.thumb else img.thumb.url,
                                     })
             ingredients = simplejson.loads(meal.ingredients) if meal.ingredients is not None and len(meal.ingredients) > 0 else []
             
@@ -256,7 +256,7 @@ def get_meals(request, data):
                               "name":meal.name,
                               "description":meal.description,
                               "images":meal_images,
-                              "main_image" : "" if not meal.main_image else meal.main_image.thumb.url,
+                              "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.thumb.url,
                               "available":1 if meal.available else 0,
                               "category":"Not Available" if not meal.category else meal.category.name.title(),
                               "meal_types":meal_types,
