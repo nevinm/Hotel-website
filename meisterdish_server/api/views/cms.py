@@ -257,7 +257,7 @@ def get_meals(request, data):
                               "description":meal.description,
                               "images":meal_images,
                               "available":1 if meal.available else 0,
-                              "category":meal.category.name.title(),
+                              "category":"Not Available" if not meal.category else meal.category.name.title(),
                               "meal_types":meal_types,
                               "preparation_time":meal.preparation_time,
                               "price":meal.price,
@@ -281,6 +281,7 @@ def get_meals(request, data):
 @check_input('POST', True)
 def create_meal(request, data, user):
     try:
+        edit=False
         name = data['name'].strip()
         desc = data['description'].strip()
         
@@ -297,7 +298,6 @@ def create_meal(request, data, user):
             log.info("EDITING MEAL :"+str(data['edit_id']))
             edit=True
         except Exception as e:
-            edit=False
             log.info("CREATING MEAL : "+e.message)
             meal = Meal()
         
@@ -307,14 +307,17 @@ def create_meal(request, data, user):
         meal.price = price
         meal.tax = tax
         meal.available = bool(available)
-
-        image_ids = data['images']
+        
         if "main_image" not in data:
-            main_img_id = data['images'][0]
+            if 'images' in data and len(data['images']) > 0:
+                main_img_id = data['images'][0]
+            else:
+                main_img_id = None
         else:
             main_img_id = data['main_image']
 
-        meal.main_image = Image.objects.get(pk=int(main_img_id))
+        if main_img_id:
+            meal.main_image = Image.objects.get(pk=int(main_img_id))
 
         chef_id = False
         if 'chef_id' in data:
@@ -345,9 +348,9 @@ def create_meal(request, data, user):
             meal.save()
         else:
             meal.images = []
-        
-        for img in data['images']:
-            meal.images.add(Image.objects.get(pk=int(img)))
+        if 'images' in data and len(data['images']) > 0:
+            for img in data['images']:
+                meal.images.add(Image.objects.get(pk=int(img)))
 
         if 'pre_requisites' in data and len(data['pre_requisites']) > 0:
             meal.pre_requisites = simplejson.dumps(data["pre_requisites"])
@@ -405,9 +408,10 @@ def create_meal(request, data, user):
         action = "update" if edit else "create"
         return json_response({"status":1, "message":"The meal has been successfully "+action+"d.", "id":meal.id})
     except Exception as e:
-        if not edit:
+        if not edit and meal.id:
             meal.delete()
         log.error("Failed to create meals : "+e.message)
+        action = "update" if edit else "create"
         return custom_error("Failed to "+action+" meal. Please try again later.")
     
 @check_input('POST', True)
