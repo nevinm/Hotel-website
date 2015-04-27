@@ -266,7 +266,7 @@ def get_meal_details(request, data, user, meal_id):
 @check_input('POST')
 def save_credit_card(request, data, user):
     try:
-        
+       pass 
 
     except Exception as e:
         log.error("Save CC: user"+str(user.id) + " : "+ e.message)
