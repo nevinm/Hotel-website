@@ -380,7 +380,7 @@ def create_meal(request, data, user):
                     except:
                         tip_obj = Tips()
                 tip_obj.title = tip['title'].strip().title()
-                tip_obj.description = simplejson.dumps(tip['description'].strip())
+                tip_obj.description = simplejson.dumps(tip['description'])
                 
                 if "image" in tip:
                     tip_obj.image = Image.objects.get(pk=int(tip['image']))
