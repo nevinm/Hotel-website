@@ -58,6 +58,9 @@ var getmealListCallback = {
 
 function getmealList(search_name, category, mealtype) {
         var url = baseURL + "cms/get_meals/";
+        if(mealtype==""){
+            mealtype.length=0;
+        }
         header = {
             "session-key": localStorage['session_key']
         }
