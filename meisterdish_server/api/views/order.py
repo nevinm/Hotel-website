@@ -69,7 +69,7 @@ def get_orders(request, data, user=None):
                 "user_first_name" : order.cart.user.first_name,
                 "user_last_name" : order.cart.user.last_name,
                 "user_id" : order.cart.user.id,
-                "user_image" : order.cart.user.profile_image.thumb.url,
+                "user_image" : "" if not order.cart.user.profile_image else order.cart.user.profile_image.thumb.url,
                 "status":dict(settings.ORDER_STATUS)[order.status],
                 "meals":meals,
                 "delivery_address" : {

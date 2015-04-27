@@ -182,9 +182,6 @@ def add_rating(request, data, user, meal_id):
         log.error("Add review" + e.message)
         return custom_error("Your are not authorized rate this meal/order.")
 
-"""
-@TODO
-"""
 @check_input('POST')
 def get_meal_details(request, data, user, meal_id):
     try:
@@ -262,6 +259,24 @@ def get_meal_details(request, data, user, meal_id):
                 "url":meal.main_image.image.url,
             }
         })
-    except KeyError as e:
+    except Exception as e:
         log.error("get_meals" + e.message)
-        return custom_error("Failed to get the meal details.")        
+        return custom_error("Failed to get the meal details.")
+
+@check_input('POST')
+def save_credit_card(request, data, user):
+    try:
+        
+
+    except Exception as e:
+        log.error("Save CC: user"+str(user.id) + " : "+ e.message)
+        return custom_error("Failed to save credit card details.")
+
+@check_input('POST')
+def delete_credit_card(request, data, user):
+    try:
+        
+
+    except Exception as e:
+        log.error("Delete CC: user"+str(user.id) + " : "+ e.message)
+        return custom_error("Failed to delete credit card details.")
