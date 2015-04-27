@@ -345,7 +345,7 @@ def create_meal(request, data, user):
                     mt = MealType.objects.get(is_hidden=False, is_deleted=False, pk=int(fid))
                     if mt not in meal.types.all():
                         meal.types.add(mt)
-                except Exdeption as e:
+                except Exception as e:
                     log.error("getting filter " + e.message)
                     return custom_error("The selected Meal Filter does not exist, or is not available.")
         
