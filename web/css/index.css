@@ -80,21 +80,22 @@ SLIDER
 	background-color: #f1f1f1;
 	min-height: 100%;
 }
-#slide1 .slide-description {
-	position: absolute;
-	top: 21%;
-	left: 14.5%;
-	width: 20%;
+#section1 .slide-description {
+	position: fixed;
+	top: 9%;
+	left: 23.5%;
+	width: 48%;
+	z-index: 5;
 	line-height: -11px;
 	color: #9b9b9b;
 }
-#slide1 .slide-description h4{
+#section1 .slide-description h4{
 	width: 360px;
 }
 .slide-description h3{
 	text-transform: uppercase;
 }
-#slide1 .slide-description .h0,#slide3 .slide-description .h0,#section3 .slide-description .h0{
+#section1 .slide-description .h0,#slide3 .slide-description .h0,#section3 .slide-description .h0{
 	text-transform: uppercase;
 	color: #9b9b9b;
 	line-height: 55px;

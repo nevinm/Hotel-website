@@ -8,8 +8,10 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.meal-edit',function(){
-
+        mealId = $(this).data().id;
+        window.location.href = 'create_meal.html?mealId='+ mealId;
     });
+
     $(document).on('click', '.meal-delete',function(){
     	var confirmDelete = confirm("Are you sure you want to delete this meal?");
     	if(confirmDelete){
