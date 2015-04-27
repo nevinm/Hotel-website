@@ -888,8 +888,46 @@ span.operator {
 	width: 300px;
 }
 .pay-container .forminput-wrapper{
-	width: 100px;
 	float: left;
+}
+.pay-container .forminput-wrapper:first-child{
+	width: 214px;
+	float: left;
+}
+.pay-container .forminput-wrapper:nth-child(2){
+	width: 70px;
+	margin-left: 16px;
+}
+.pay-container .forminput-wrapper:nth-child(3){
+	padding-top: 20px;
+	width: 98px;
+}
+.pay-container .forminput-wrapper:nth-child(3) .styled-select{
+	background-position: 78px 6px;
+}
+.pay-container .div{
+	width: 10px;
+	float: left;
+	padding-top: 49px;
+	font-size: 18px;
+	color: #b0b0b0;
+	margin-right: 1px;
+	margin-left: 5px;
+}
+.pay-container .forminput-wrapper:nth-child(5){
+	padding-top: 43px;
+	width: 70px;
+	margin-right: 16px;
+}
+.pay-container .forminput-wrapper:nth-child(5) .styled-select{
+	background-position: 52px 6px;
+}
+.pay-container .forminput-wrapper:nth-child(6){
+	padding-top: 20px;
+	width: 100px;
+}
+.pay-container .forminput-wrapper .styled-select{
+	width: 100%;
 }
 .receipt-container .checkout-header{
 	padding-left: 5%;
@@ -1072,6 +1110,14 @@ input#driver-description {
 	.account-container{
 		width: 90%;
 		margin-bottom: 20px;
+	}
+	.delivery-time-container,.delivery-info-guest-container{
+		width: 100%;
+	}
+	.receipt-container {
+		float: left;
+		max-width: 400px;
+		width: 90%;
 	}
   	@media only screen and (max-width:400px){
   		.address-content{
