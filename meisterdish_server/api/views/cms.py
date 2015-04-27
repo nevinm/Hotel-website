@@ -256,6 +256,7 @@ def get_meals(request, data):
                               "name":meal.name,
                               "description":meal.description,
                               "images":meal_images,
+                              "main_image" : "" if not meal.main_image else meal.main_image.thumb.url,
                               "available":1 if meal.available else 0,
                               "category":"Not Available" if not meal.category else meal.category.name.title(),
                               "meal_types":meal_types,
@@ -338,16 +339,28 @@ def create_meal(request, data, user):
                 return custom_error("The selected category does not exist, or is not available.")
         
         if 'filter_ids' in data:
+            if not edit:
+                meal.save()
+            else:
+                meal.types = []
+
             for fid in data['filter_ids']:
                 try:
-                    meal.type = MealType.objects.get(is_hidden=False, is_deleted=False, pk=fid)
-                except:
+                    log.info(fid)
+                    log.info("nazz")
+                    mt = MealType.objects.get(is_hidden=False, is_deleted=False, pk=int(fid))
+                    if mt not in meal.types.all():
+                        meal.types.add(mt)
+                except Exception as e:
+                    log.error("getting filter " + e.message)
                     return custom_error("The selected Meal Filter does not exist, or is not available.")
         
-        if not edit:
+        if not meal.id:
             meal.save()
-        else:
+
+        if edit:
             meal.images = []
+
         if 'images' in data and len(data['images']) > 0:
             for img in data['images']:
                 meal.images.add(Image.objects.get(pk=int(img)))
@@ -380,7 +393,7 @@ def create_meal(request, data, user):
                     except:
                         tip_obj = Tips()
                 tip_obj.title = tip['title'].strip().title()
-                tip_obj.description = simplejson.dumps(tip['description'].strip())
+                tip_obj.description = simplejson.dumps(tip['description'])
                 
                 if "image" in tip:
                     tip_obj.image = Image.objects.get(pk=int(tip['image']))
