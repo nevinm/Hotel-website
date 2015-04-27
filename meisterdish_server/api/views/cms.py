@@ -340,7 +340,9 @@ def create_meal(request, data, user):
         if 'filter_ids' in data:
             for fid in data['filter_ids']:
                 try:
-                    meal.type = MealType.objects.get(is_hidden=False, is_deleted=False, pk=fid)
+                    mt = MealType.objects.get(is_hidden=False, is_deleted=False, pk=int(fid))
+                    if mt not in meal.types.all():
+                        meal.types.add(mt)
                 except:
                     return custom_error("The selected Meal Filter does not exist, or is not available.")
         
