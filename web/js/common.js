@@ -22,17 +22,19 @@ function getParameterFromUrl(name) {
 }
 
 function checkLoggedIn() {
-    if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
-        $userentry.hide();
-        $('#navbar-username a').text(localStorage['username']);
-        $(".account-header h2").text(localStorage['username'] + "'S ACCOUNT");
-        $('#menu').addClass('menuPadding');
-    } else {
-        $userentry.show();
-        $("#logout").hide();
-        $('#menu').removeClass('menuPadding');
-        $('li#navbar-username').hide();
-    }
+        if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
+            $userentry.hide();
+            $('#navbar-username a').text(localStorage['username']);
+            $(".account-header h2").text(localStorage['username'] + "'S ACCOUNT");
+            $('#menu').addClass('menuPadding');
+            $('.delivery-info-container').show();
+            $('.delivery-info-guest-container').hide();
+        } else {
+            $userentry.show();
+            $("#logout").hide();
+            $('#menu').removeClass('menuPadding');
+            $('li#navbar-username').hide();
+        }
 }
 
 function verifyAccount() {
@@ -147,98 +149,101 @@ $(document).ready(function() {
 $("form").each(function() {
     $(this).validate({
         rules: {
-            firstname: {
-                required: true,
-                minlength: 2,
-                maxlength: 15,
-                letters: true
-            },
-            lastname: {
-                required: true,
-                minlength: 2,
-                maxlength: 15,
-                letters: true
-            },
-            fullname: {
-                required: true,
-                minlength: 2,
-                maxlength: 20,
-                letters: true
-            },
-            username: {
-                required: true,
-                minlength: 2,
-                maxlength: 15,
-            },
-            mealname: {
-                required: true,
-                minlength: 3,
-            },
-            mealprice: {
-                required: true
-            },
-            mealtax: {
-                required: true
-            },
-            mealdescription: {
-                required: true,
-                minlength: 5
-            },
-            oldpassword: {
-                required: true,
-                minlength: 6
-            },
-            password: {
-                required: true,
-                minlength: 6
-            },
-            email: {
-                required: true,
-                email: true
-            },
-            confirmEmail: {
-                required: true,
-                email: true,
-                equalTo: "#new-email"
-            },
-            phonenumber: {
-                required: true,
-                minlength: 10,
-                maxlength: 15,
-                number: true
-            },
-            confirmpassword: {
-                required: true,
-                minlength: 6,
-                equalTo: "#newpassword"
-            },
-            repassword: {
-                required: true,
-                minlength: 6,
-                equalTo: "#new-password"
-            },
-            zip: {
-                required: true,
-                number: true,
-                minlength: 4,
-                maxlength: 6
-            },
-            state: {
-                required: true
-            },
-            city: {
-                required: true
-            },
-            street: {
-                required: true,
-                letters: true,
-                minlength: 4
-            },
-            building: {
-                required: true,
-                letters: true,
-                minlength: 2
-            }
+                firstname: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 15,
+                    letters: true
+                },
+                lastname: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 15,
+                    letters: true
+                },
+                fullname: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 20,
+                    letters: true
+                },
+                username:{
+                    required: true,
+                    minlength: 2,
+                    maxlength: 15,
+                },
+                mealname:{
+                    required: true,
+                    minlength: 3,
+                },
+                mealprice:{
+                    required: true
+                },
+                mealtax:{
+                    required: true
+                },
+                mealdescription:{
+                    required: true,
+                    minlength: 5
+                },
+                oldpassword:{
+                    required: true,
+                    minlength: 6
+                },
+                password: {
+                    required: true,
+                    minlength: 6
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                confirmEmail:{
+                    required:true,
+                    email:true,
+                    equalTo:"#new-email"
+                },
+                phonenumber: {
+                    required:true,
+                    minlength:10,
+                    maxlength:15,
+                    number :true
+                },
+                confirmpassword: {
+                    required: true,
+                    minlength: 6,
+                    equalTo: "#newpassword"
+                },
+                repassword: {
+                    required:true,
+                    minlength:6,
+                    equalTo: "#new-password"
+                },
+                zip :{
+                    required:true,
+                    number :true,
+                    minlength:4,
+                    maxlength:6
+                },
+                state:{
+                    required:true
+                },
+                city:{
+                    required:true
+                },
+                street:{
+                    required:true,
+                    letters: true,
+                    minlength:4
+                },
+                building:{
+                    required:true,
+                    letters: true,
+                    minlength:2
+                },
+                available:{
+                    required:true
+                }
         },
         messages: {
             firstname: {
