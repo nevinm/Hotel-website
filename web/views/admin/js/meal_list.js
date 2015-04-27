@@ -58,13 +58,16 @@ var getmealListCallback = {
 
 function getmealList(search_name, category, mealtype) {
         var url = baseURL + "cms/get_meals/";
+        if(mealtype==""){
+            mealtype.length=0;
+        }
         header = {
             "session-key": localStorage['session_key']
         }
         params = {
             "search": search_name,
             "category_id": category,
-            "type_id": mealtype
+            "type_ids": mealtype
         }
         data = JSON.stringify(params);
         var getmeallistInstance = new AjaxHttpSender();
@@ -114,7 +117,7 @@ function populateMealList(data) {
             "<td>" + value.available + "</td>" +
             "<td>" + value.category + "</td>" +
             "<td>" + value.meal_types[0].name + "</td>" +
-            "<td>" + value.price + "</td>" +
+            "<td>" + dollarConvert(value.price) + "</td>" +
             "<td><button type='button' class='meal-delete' data-id='" + value.id + "'>Delete</button></td>" +
             "<td><button type='button' class='meal-edit' data-id='" + value.id + "'>Edit</button></td>" + "</tr>");
     });

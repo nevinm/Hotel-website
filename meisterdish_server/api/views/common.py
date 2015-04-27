@@ -358,7 +358,7 @@ def get_profile(request, data, user):
                               'decription' : meal.description,
                               'price' : meal.price,
                               'tax' : meal.tax,
-                              'image_url':meal.image_url,
+                              'image_url':settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.thumb.url,
                               })
         address_list = []
         addresses = Address.objects.filter(user=user)
@@ -382,8 +382,8 @@ def get_profile(request, data, user):
                      "name" : (user.last_name + " "+ user.first_name).title(),
                      "email" : user.email,
                      "mobile" : user.mobile,
-                     "profile_image" : "Not Available" if not user.profile_image else user.profile_image.image.url,
-                     "profile_image_thumb" : "Not Available" if not user.profile_image else user.profile_image.thumb.url,
+                     "profile_image" : settings.DEFAULT_USER_IMAGE if not user.profile_image else user.profile_image.image.url,
+                     "profile_image_thumb" : settings.DEFAULT_USER_IMAGE if not user.profile_image else user.profile_image.thumb.url,
                      "is_admin":True if user.role.id == 1 else False,
                      "meals_in_cart" : meals,
                      "meals_in_cart_count" : len(meals),

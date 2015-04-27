@@ -14,6 +14,13 @@ function dollarConvert(value) {
     return dollarValue;
 }
 
+function getParameterFromUrl(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 function checkLoggedIn() {
         if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
             $userentry.hide();
@@ -277,7 +284,7 @@ $(document).ready(function() {
                 email : "Enter a valid email address.",
                 zip : "Provide a valid zip code.",
                 street :"Provide a valid address.",
-                building:"Provide a vslid address.",
+                building:"Provide a valid address.",
                 state: "Provide a state name.",
                 city:"Provide a city name."
             }

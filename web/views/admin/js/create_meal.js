@@ -97,9 +97,11 @@ $(document).ready(function() {
 });
 
 function checkIfMealEdit(){
-    currentUrl = window.location.href;
-    mealId = currentUrl.substr(currentUrl.indexOf("mealId=") + 7);
-    getMeals(mealId);
+    mealId = getParameterFromUrl("mealId");
+    if(mealId.length){
+        getMeals(mealId);
+    }
+    else{}
 }
 
 function extractNutrients() {
