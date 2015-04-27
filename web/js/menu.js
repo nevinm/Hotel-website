@@ -72,8 +72,6 @@ var getCategoryCallback = {
             $.each(userDetails.categories, function(key, value) {
                 $('.category-wrapper .category-menu').append("<li class='menu-categories-list'><a href='#'" +
                     " class='menu-categories' data-id='" + value.id + "'>" + value.name + "</a></li>");
-                // $('.sub-menu-mobile .category-menu').append("<li class='menu-categories-list '><a href='#'"+
-                //     "class='menu-categories' data-id='" + value.id + "'>" + value.name + "</a></li>")
             });
             $.each(userDetails.meal_types, function(key, value) {
                 $(".filter-drop-down ul").append("<li><div><input id='mealtype" + key + "' type='checkbox' " +
@@ -147,7 +145,7 @@ function populateMealList(mealList, isInfinteScrolling) {
     } else {}
     $.each(mealList.aaData, function(key, value) {
         $(".listContainer").append("<div class='listItems'>" +
-            "<img src='" + value.images[0].thumb_url + "' class='thumbnail'>" +
+            "<img src='" + value.main_image + "' class='thumbnail'>" +
             "<section class='listItemDetails'>" +
             "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +           
             "</section><section class='listItemDetails'>" +

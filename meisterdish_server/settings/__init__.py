@@ -233,3 +233,5 @@ else:
     #@TODO
     pass
 
+DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
+DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
