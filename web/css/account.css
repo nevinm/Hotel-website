@@ -667,8 +667,9 @@ form.addaddress-popup {
 	width: 80%;
 	background-color: #fff;
 	-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-  -moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-  box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+	-moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+	box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+	display: none;
 }
 .receipt-container{
 	border:1px solid #D0D0D0;
@@ -677,19 +678,27 @@ form.addaddress-popup {
 	width: 19%;
 	background-color: #fff;
 	-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-  -moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-  box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+	-moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+	box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+	position: relative;
 }
-.delivery-info-user-container{
+.receipt-container .caption{
+	position: absolute;
+	bottom: -46px;
+	font-size: 10px;
+	line-height: 16px;
+}
+.delivery-info-guest-container{
 	border:1px solid #D0D0D0;
 	border-radius: 4px;
-	display: none;
+	display: block;
 	float: left;
 	width: 80%;
 	background-color: #fff;
 	-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-  -moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-  box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+  	-moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+  	box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+  	margin-bottom: 30px;
 }
 .checkout-header {
   border-radius: 4px 4px  0 0;
@@ -843,6 +852,44 @@ span.operator {
 	float: left;
 	line-height: 12px;
 	padding-left: 10px;
+}
+#guest-address-info{
+	width: 100%;
+	float: left;
+}
+.delivery-info-guest-container .address-info{
+	width: 47%;
+	padding-left: 20px;
+}
+.delivery-info-guest-container .address-info .content-heading{
+	font-family: 'ProximaNova-semibold';
+}
+#guest-address-info .section3 .forminput-wrapper{
+	float: left;
+	width: 125px;
+}
+#guest-address-info .section3 .forminput-wrapper:nth-child(2){
+	margin-right: 16px;
+}
+#guest-address-info .section3 .forminput-wrapper .styled-select{
+	width: 125px;
+  	background: url(../images/selector_arrow.png) no-repeat 110px 6px #f7f7f7;
+}
+#guest-address-info .section1 .forminput-wrapper{
+	width: 195px;
+}
+.payment-method-guest-container {
+	width: 50%;
+	float: left;
+	padding: 20px 10px 20px 80px;
+}
+.pay-container {
+	padding-top: 30px;
+	width: 300px;
+}
+.pay-container .forminput-wrapper{
+	width: 100px;
+	float: left;
 }
 .receipt-container .checkout-header{
 	padding-left: 5%;
