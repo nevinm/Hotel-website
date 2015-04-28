@@ -40,4 +40,8 @@ urlpatterns = patterns('',
     url(r'^get_orders/$', views.get_orders, name='get_orders'),
     url(r'^get_order_details/(?P<order_id>[0-9]+)/$', views.get_order_details, name='get_order_details'),
     url(r'^create_order/$', views.create_order, name='create_order'),
+
+    url(r'^list_credit_cards/$', views.list_credit_cards, name='list_credit_cards'),
+    url(r'^save_credit_card/$', views.save_credit_card, name='save_credit_card'),
+    url(r'^delete_credit_card/(?P<card_id>[0-9]+)/$', views.delete_credit_card, name='delete_credit_card'),
 )

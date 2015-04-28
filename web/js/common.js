@@ -132,10 +132,6 @@ $(document).ready(function() {
         logingOut();
     });
 
-    $(".cart").on('click',function(){
-        window.location.href='checkout.html';
-    });
-
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
         $('.navMenu').slideToggle();

@@ -5,7 +5,7 @@ function profileAutoPopulate() {
         $("#change-contact input[name='lastname']").val(userDetails.last_name);
         $("#change-contact input[name='phonenumber']").val(userDetails.mobile);
     }
-    if(currentPage== 'Meisterdish - Account'){
+    if (currentPage == 'Meisterdish - Account') {
         $(".small-profile-pic").attr('src', userDetails.profile_image_thumb);
     }
 }
@@ -26,16 +26,14 @@ var getProfileCallback = {
             $(".cart span").text(userDetails.meals_in_cart_count);
             $(".account-credit").text(dollarConvert(userDetails.credits));
             profileAutoPopulate();
-            if(profileId){
-                if(userDetails.profile_image_thumb!= "Not Available"){
-                    $("#"+profileId).attr('src',userDetails.profile_image_thumb);
-                }
-                else{
-                    $("#"+profileId).attr('src','../images/blank-person.png');
+            if (profileId) {
+                if (userDetails.profile_image_thumb != "Not Available") {
+                    $("#" + profileId).attr('src', userDetails.profile_image_thumb);
+                } else {
+                    $("#" + profileId).attr('src', '../images/blank-person.png');
                 }
             }
-        } 
-        else {}
+        } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -54,8 +52,6 @@ function getProfile(profileId) {
 }
 
 $(document).ready(function() {
-   
-
     //Change contact API process
     var editContactCallback = {
         success: function(data, textStatus) {
