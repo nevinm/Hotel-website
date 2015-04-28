@@ -1,9 +1,10 @@
 //global variable 
 var nutrient_sub_category = 0,
     nutrient_main_category = 0,
-    tipsAndTricksData = [], createMealParams={}, mealId;
+    tipsAndTricksData = [],
+    createMealParams = {},
+    mealId;
 $(document).ready(function() {
-    checkIfMealEdit();
     $('#create-meal-button').on("click", function(e) {
         e.preventDefault();
         createMeal();
@@ -43,9 +44,7 @@ $(document).ready(function() {
     $('#add-tips-main').on("click", function() {
         var video_URL = $('#tips-video-url').val(),
             tips_heading = $('#tips-and-tricks').val();
-        $('#tips-and-tricks-table').append('<tr>' + '<td><span class="video-url">' + video_URL + '</span></td><td><span class="video-heading">' +
-            tips_heading + '</span><img class="add-tips-sublist" src="../../images/add-button-md.png">' +
-            '<img class="del-tips-sub-list" src = "../../images/del.png"><ul></ul></td></tr>')
+        addMainTipsTricks(video_URL, tips_heading);
     });
 
     //Add sublist field to tips & ticks
@@ -54,17 +53,6 @@ $(document).ready(function() {
         var parentElement = $(this).parent();
         addSubTipsTricks(parentElement);
     });
-
-    //Add  sublist pointers tips and tricks
-    function addSubTipsTricks(parentElement) {
-        $('#save-tips').unbind();
-        $('#save-tips').on('click', function() {
-            var newTipTrick = $("#tips_tricks_content").val();
-            parentElement.find('ul').append('<li>' + $('#tips_tricks_content').val() +
-                '<img class="remove" src="../../images/del.png">' + '</li>');
-            $(".tips-tricks-wrapper").hide();
-        });
-    }
 
     //Del sub category (tips and tricks)
     $(document).on('click', '.del-tips-sub-list', function() {
@@ -96,12 +84,42 @@ $(document).ready(function() {
     getFilterContent();
 });
 
-function checkIfMealEdit(){
-    mealId = getParameterFromUrl("mealId");
-    if(mealId.length){
-        getMeals(mealId);
+function addMainTipsTricks(video_URL, tips_heading, isEditingdescription) {
+    $('#tips-and-tricks-table').append('<tr>' + '<td><span class="video-url">' + video_URL +
+        '</span></td><td><span class="video-heading">' +
+        tips_heading + '</span><img class="add-tips-sublist" src="../../images/add-button-md.png">' +
+        '<img class="del-tips-sub-list" src = "../../images/del.png"><ul class="sub-tips-tricks"></ul></td></tr>')
+    if(isEditingdescription){
+        $.each(isEditingdescription, function(key, value){
+            parentElement = $(".sub-tips-tricks:last").parent();
+            addSubTipsTricks(parentElement, value);
+        });
     }
     else{}
+}
+
+//Add  sublist pointers tips and tricks
+function addSubTipsTricks(parentElement, isEditingdescription) {
+    if(isEditingdescription){
+        parentElement.find('ul').append('<li>' + isEditingdescription +
+                '<img class="remove" src="../../images/del.png">' + '</li>');
+    }else{
+        $('#save-tips').unbind();
+        $('#save-tips').on('click', function() {
+            var newTipTrick = $("#tips_tricks_content").val();
+            parentElement.find('ul').append('<li>' + $('#tips_tricks_content').val() +
+                '<img class="remove" src="../../images/del.png">' + '</li>');
+            $(".tips-tricks-wrapper").hide();
+        });
+    }
+}
+
+function checkIfMealEdit() {
+    mealId = getParameterFromUrl("mealId");
+    if (mealId.length) {
+        getMeals(mealId);
+        createMealParams['edit_id']= mealId;
+    } else {}
 }
 
 function extractNutrients() {
@@ -156,8 +174,8 @@ function extractTipsAndTricks(self) {
     var videoPointers = [],
         videoUrl = $(self).find(".video-url").text(),
         videoHeading = $(self).find(".video-heading").text();
-    $(this).find("ul li").each(function() {
-        videoPointers.push($(self).text());
+    $(self).find("ul li").each(function() {
+        videoPointers.push($(this).text());
     });
     return {
         "video_url": videoUrl,
@@ -239,7 +257,6 @@ function createMeal() {
     header = {
         "session-key": localStorage['session_key']
     }
-    createMealParams = {};
     createMealFields = {
         "name": name,
         "description": descptn,
@@ -262,7 +279,7 @@ function createMeal() {
         "nutrients": nutrients
     }
 
-    $.each(createMealFields, function(key, value){
+    $.each(createMealFields, function(key, value) {
         createMealEmptyCheck(key, value);
     });
 
@@ -274,16 +291,22 @@ function createMeal() {
 
 function createMealEmptyCheck(key, value) {
     if (value.length != 0) {
-        createMealParams[key] =value;
-    }
-    else{}
+        createMealParams[key] = value;
+    } else {}
 }
 
-// populate list data 
-function populateListData(element_id, container) {
-    var addTo_list = $('#' + element_id).val();
-    $('.' + container).find('.list-container ul').append('<li>' + addTo_list +
-        '<img class="remove" src="../../images/del.png">' + '</li>');
+// populate to do- list data 
+function populateListData(element_id, container, dataFromApi) {
+    if (dataFromApi) {
+        $.each(dataFromApi, function(key, value) {
+            $('.' + container).find('.list-container ul').append('<li>' + value +
+                '<img class="remove" src="../../images/del.png">' + '</li>');
+        });
+    } else {
+        var addTo_list = $('#' + element_id).val();
+        $('.' + container).find('.list-container ul').append('<li>' + addTo_list +
+            '<img class="remove" src="../../images/del.png">' + '</li>');
+    }
 }
 
 //populate category , meal_type select button
@@ -313,14 +336,16 @@ function getFilterContent() {
 function populateCreateMealFilter(meal_type, categories) {
     $.each(meal_type, function(key, value) {
         $('#create-meal-mealType ').append("<option value='" + value.id + "'>" + value.name + "</option>");
-    })
+    });
     $.each(categories, function(key, value) {
         $('#create-meal-category').append("<option value='" + value.id + "'>" + value.name + "</option>");
-    })
+    });
+    //Check if its a meal editing ,only afer the filters and categories are populated.
+    checkIfMealEdit();
 }
 
 //populate to Div 
-function populateNutrients(nutrients, per_serving, daily_value) {
+function populateNutrients(nutrients, per_serving, daily_value, isEditingMealDetails) {
     $(".nutrients-total").append("<div class='nutrient-main-container'>" +
         "<div class='nutrient-main'>" +
         "<div><span>Nutrients</span><span class='nutrients-value'>" + nutrients + "</span></div>" +
@@ -328,6 +353,12 @@ function populateNutrients(nutrients, per_serving, daily_value) {
         "<div><span>Daily Value</span><span class='daily-value'>" + daily_value + "</span></div>" +
         "<img class='add-nutrient-sublist' src='../../images/add-button-md.png'>" +
         "</div><img class='remove remove-main-nutrients remove-nutrients' src='../../images/cross_black.png'></div>");
+    if (isEditingMealDetails) {
+        parentElement = $(".nutrient-main-container:last");
+        $.each(isEditingMealDetails.subNutrients, function(key, value) {
+            populateSubNutrients(value.nutrientsName, value.servingValue, value.dailyValue, parentElement);
+        });
+    } else {}
 }
 
 function populateSubNutrients(subNutrientName, subPerServing, subDailyValue, parentElement) {
@@ -360,7 +391,7 @@ var getMealsContentCallback = {
 }
 
 function getMeals(mealId) {
-    var url = baseURL + "get_meal_details/"+mealId+"/";
+    var url = baseURL + "get_meal_details/" + mealId + "/";
     header = {
         "session-key": localStorage['session_key']
     }
@@ -370,16 +401,31 @@ function getMeals(mealId) {
     getFilterContentInstance.sendPost(url, header, data, getMealsContentCallback);
 }
 
-function populateMealDetails(mealDetails){
+function populateMealDetails(mealDetails) {
     $("#meal-name").val(mealDetails.name);
     $("#description").val(mealDetails.description);
+    $("#chef-image").attr("src", mealDetails.chef_image);
+    $("#meal-image").attr("src", mealDetails.main_image.url);
     $("#meal-price").val(mealDetails.price);
     $("#meal-tax").val(mealDetails.tax);
     $("#chef-name").val(mealDetails.chef_name);
     $("#create-meal-available").val(mealDetails.available);
     $("#create-meal-category").val(mealDetails.cat_id.id);
-    $.each(mealDetails.filters,function(key,value){
+    $.each(mealDetails.filters, function(key, value) {
         $("#create-meal-mealType option[value='" + value + "']").prop("selected", true);
     });
-    $('#meal-prep-time').val();
+    $('#meal-prep-time').val(mealDetails.preparation_time);
+    $('#meal-saved-time').val(mealDetails.saved_time);
+    populateListData('', "preperation-container-1", mealDetails.user_to_do);
+    populateListData('', "preperation-container-2", mealDetails.finished_preparation);
+    populateListData('', "pre-requisties-container", mealDetails.pre_requisites);
+    $("#kitchen-image").attr("src", mealDetails.pre_requisites_image.url);
+    populateListData('', "ingredients-container", mealDetails.ingredients);
+    $("#ingredients-image").attr("src", mealDetails.ingredients_image.url);
+    $.each(mealDetails.nutrients, function(key, value) {
+        populateNutrients(value.mainNutrient, value.perServing, value.dailyValue, value);
+    });
+    $.each(mealDetails.tips, function(key, value) {
+        addMainTipsTricks(value.video_url, value.title, value.description);
+    });
 }
