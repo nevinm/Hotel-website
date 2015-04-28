@@ -243,7 +243,13 @@ $("form").each(function() {
                 },
                 available:{
                     required:true
-                }
+                },
+                category:{
+                    required:true
+                },
+                meal_type:{
+                    required:true
+                },
         },
         messages: {
             firstname: {

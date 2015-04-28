@@ -620,6 +620,10 @@ form.addaddress-popup {
 	border: 1px solid #ddd;
 	border-radius: 4px;
 }
+#address-line-1-error {
+	width: 200px;
+	left: 0;
+}
 .section3 .forminput-wrapper .styled-select-state{
 	width: 134px;
 	height: 30px;
