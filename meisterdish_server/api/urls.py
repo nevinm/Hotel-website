@@ -31,6 +31,7 @@ urlpatterns = patterns('',
     url(r'^remove_from_cart/$', views.remove_from_cart, name='remove_from_cart'),
     url(r'^delete_cart/$', views.delete_cart, name='delete_cart'),
     url(r'^get_cart_items/$', views.get_cart_items, name='get_cart_items'),
+    url(r'^get_cart_items_count/$', views.get_cart_items_count, name='get_cart_items_count'),
     
     url(r'^add_rating/(?P<meal_id>[0-9]+)/$', views.add_rating, name='add_rating'),
     url(r'^get_meal_details/(?P<meal_id>[0-9]+)/$', views.get_meal_details, name='get_meal_details'),
