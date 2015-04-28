@@ -196,7 +196,7 @@ def get_meal_details(request, data, user, meal_id):
                 "review":rating.comment,
                 "user_first_name":rating.order.cart.user.first_name,
                 "user_last_name":rating.order.cart.user.last_name,
-                "user_image":rating.order.cart.user.main_image.thumb.url,
+                "user_image": settings.DEFAULT_USER_IMAGE if not rating.order.cart.user.profile_image else rating.order.cart.user.profile_image.thumb.url,
                 })
         image_list = []
         for img in meal.images.all():
@@ -212,7 +212,7 @@ def get_meal_details(request, data, user, meal_id):
                 "id":tips.id,
                 "title" : tips.title,
                 "description" : "" if tips.description.strip() == "" else simplejson.loads(tips.description),
-                "image_url" : "" if tips.image is None else tips.image.image.url,
+                "image_url" : settings.DEFAULT_MEAL_IMAGE if tips.image is None else tips.image.image.url,
                 "video_url" : "" if tips.video_url is None else tips.video_url,
                 })
 
@@ -232,7 +232,7 @@ def get_meal_details(request, data, user, meal_id):
             
             "chef_id" : "Not available"  if not meal.chef else meal.chef.id,
             "chef_name" : "Not available"  if not meal.chef else meal.chef.name.title(),
-            "chef_image" : "Not Available" if not meal.chef or not meal.chef.image else {
+            "chef_image" : settings.DEFAULT_USER_IMAGE if not meal.chef or not meal.chef.image else {
                 "id":meal.chef.image.id,
                 "url":meal.chef.image.thumb.url,
                 },
@@ -243,14 +243,14 @@ def get_meal_details(request, data, user, meal_id):
             "saved_time" : meal.saved_time,
 
             "pre_requisites" : "" if meal.pre_requisites == "" else simplejson.loads(meal.pre_requisites),
-            "pre_requisites_image" : "" if meal.pre_requisites_image is None else {
+            "pre_requisites_image" : settings.DEFAULT_MEAL_IMAGE if meal.pre_requisites_image is None else {
                     "id":meal.pre_requisites_image.id,
                     "url":meal.pre_requisites_image.image.url,
                     },
 
             "nutrients" : "" if meal.nutrients == "" else simplejson.loads(meal.nutrients),
             "ingredients" : "" if meal.ingredients == "" else simplejson.loads(meal.ingredients),
-            "ingredients_image" : "" if meal.ingredients_image is None else {
+            "ingredients_image" : settings.DEFAULT_MEAL_IMAGE if meal.ingredients_image is None else {
                                                         "id" : meal.ingredients_image.id,
                                                         "url" : meal.ingredients_image.image.url
                                                         },
@@ -258,7 +258,7 @@ def get_meal_details(request, data, user, meal_id):
             "allergy_notice" : meal.allergy_notice,
             "images" : image_list,
             "ratings" : rating_list,
-            "main_image" : "Not Available" if not meal.main_image else {
+            "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else {
                 "id":meal.main_image.id,
                 "url":meal.main_image.image.url,
             }
