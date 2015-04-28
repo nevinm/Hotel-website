@@ -22,9 +22,7 @@
    $(document).ready(function() {
        // &ACCORDION
        getOrders();
-       $(".accordion-header").css("border-top:none");
        $(document).on('click', '.accordion-header', function() {
-           $(".accordion-header").css("border-bottom:1px solid");
            $(".accordion-content").slideUp();
 
            if (!$(this).next().is(":visible")) {
@@ -39,7 +37,7 @@
        $.each(ordersList.aaData, function(key, value) {
            deliveryAddress = value.delivery_address;
            meals = value.meals;
-           $("#accordion ul").append("<li><div class='accordion-header' style='border-top:none'>" +
+           $("#accordion ul").append("<li><div class='accordion-header'>" +
                "<h4 style='float: left;padding-right: 116px;'>#123456</h4>" +
                "<h4 class='status'>"+value.status+"</h4></div><div class='accordion-content body-text-small'>" +
                "<div class='row'><div class='accordion-subcontent'>" +

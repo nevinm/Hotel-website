@@ -234,7 +234,7 @@ def get_meals(request, data):
             log.error("meal list pagination : " + e.message)
             custom_error("There was an error listing meals.")
         
-        for meal in meals.object_list:
+        for meal in meals:
             meal_images = []
             for img in meal.images.all():
                 meal_images.append({

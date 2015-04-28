@@ -94,7 +94,6 @@ ul.accordion-content li {
   padding: 20px;
 }
 .accordion-header{
-	/*border-bottom: 1px solid #ADADAD;*/
 	border-top: 1px solid #ADADAD;
 	padding-left: 20px;
 	cursor: pointer;
@@ -619,6 +618,10 @@ form.addaddress-popup {
 	background: url(../images/selector_arrow.png) no-repeat 157px 6px #f7f7f7;
 	border: 1px solid #ddd;
 	border-radius: 4px;
+}
+#address-line-1-error {
+	width: 200px;
+	left: 0;
 }
 .section3 .forminput-wrapper .styled-select-state{
 	width: 134px;
