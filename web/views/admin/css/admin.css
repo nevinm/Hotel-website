@@ -452,7 +452,23 @@ input#meal-price {
     background: url(../../../images/5213421.png);
     background-size: cover;
 }
-
+.forminput-wrapper{
+  float: left;
+  position: relative;
+  width: 280px;
+}
+#chef-image-input-error,#meal-image-input-error{
+  left: 30px;
+}
+#description-error{
+  bottom: 107px;
+}
+#meal-price-error{
+  bottom: 75px;
+}
+#create-meal-mealType-error{
+  bottom: 73px;
+}
 .section-2 .section-header {
     width: 130px;
 }
@@ -515,12 +531,14 @@ input#meal-price {
     width: 100%;
     float: left;
 }
-
+.section-5 .forminput-wrapper{
+  width: 240px;
+  margin-bottom: 20px;
+}
 .add-list-button,
 .add-preparation-button,
-.add-nutrition-content,
 #add-tips-main,
-#add-tips-sub-list {
+#add-tips-sub-list,.add-nutrition-content {
     height: 40px;
     width: 40px;
     border-radius: 20px;
@@ -530,9 +548,14 @@ input#meal-price {
     color: #fff;
     text-transform: uppercase;
 }
-
+.add-nutrition-content{
+  margin-top: 18px;
+}
 #add-tips-sub-list {
     margin-left: 10px;
+}
+#add-tips-main{
+  margin-top: 15px;
 }
 
 .section-1 select {
@@ -541,8 +564,10 @@ input#meal-price {
     background: #fff;
     font-family: 'BrandonGrotesque-Regular';
     color: #909090;
-    text-transform: uppercase;
-    margin-left: 50px;
+    text-transform: uppercase; 
+}
+#create-meal-mealType{
+    height: 69px;
 }
 /*table#nutrient-table {
   width: 100%;

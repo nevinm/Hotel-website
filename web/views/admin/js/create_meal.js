@@ -6,7 +6,9 @@ $(document).ready(function() {
     checkIfMealEdit();
     $('#create-meal-button').on("click", function(e) {
         e.preventDefault();
-        createMeal();
+        if($('form').valid()){
+        	createMeal();
+        }
     });
 
     $('.add-list-button,.add-preparation-button').on("click", function() {
@@ -20,8 +22,9 @@ $(document).ready(function() {
         var nutrients = $('#nutrients').val(),
             per_serving = $('#nutrients-per-serving').val(),
             daily_value = $('#nutrients-daily-value').val();
-
-        populateNutrients(nutrients, per_serving, daily_value);
+            if(nutrients!=undefined && nutrients!=""){
+        		populateNutrients(nutrients, per_serving, daily_value);
+    		}
     });
 
     //Add nutrient sub category
@@ -179,6 +182,7 @@ function uploadImage(imageElementSelect, imageElement) {
                 $("#" + imageElement).attr('src', data.result.thumbnail_url);
                 $("#" + imageElement).attr('data-id', data.result.id);
                 $("#" + imageElement).show();
+
             }
         });
     }
@@ -282,8 +286,10 @@ function createMealEmptyCheck(key, value) {
 // populate list data 
 function populateListData(element_id, container) {
     var addTo_list = $('#' + element_id).val();
-    $('.' + container).find('.list-container ul').append('<li>' + addTo_list +
+    if(addTo_list!=undefined && addTo_list!=""){
+    	$('.' + container).find('.list-container ul').append('<li>' + addTo_list +
         '<img class="remove" src="../../images/del.png">' + '</li>');
+	}
 }
 
 //populate category , meal_type select button

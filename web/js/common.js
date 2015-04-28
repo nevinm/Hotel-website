@@ -172,11 +172,17 @@ $("form").each(function() {
                     required: true,
                     minlength: 3,
                 },
+                chef_name:{
+                    required: true,
+                    minlength: 3,
+                },
                 mealprice:{
-                    required: true
+                    required: true,
+                    number:true
                 },
                 mealtax:{
-                    required: true
+                    required: true,
+                    number:true
                 },
                 mealdescription:{
                     required: true,
@@ -246,6 +252,9 @@ $("form").each(function() {
                 meal_type:{
                     required:true
                 },
+                image_upload :{
+                    required:true
+                }
         },
         messages: {
             firstname: {
@@ -295,7 +304,13 @@ $("form").each(function() {
             street: "Provide a valid address.",
             building: "Provide a valid address.",
             state: "Provide a state name.",
-            city: "Provide a city name."
+            city: "Provide a city name.",
+            mealprice:"Enter a valid meal price.",
+            mealtax:"Enter a valid meal tax.",
+            mealname:"Enter a valid meal name.",
+            chef_name:"Enter a valid chef name.",
+            mealdescription:"Meal description is not valid.",
+            image_upload:"Please select an image."
         }
     });
 });
