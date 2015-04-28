@@ -20,7 +20,7 @@ def manage_image_upload(request):
         if request.FILES == None:
             return custom_error('Please upload a valid image')
         
-        file = request.FILES[u'files[]']
+        file = request.FILES[u'image_upload']
         wrapped_file = UploadedFile(file)
         filename = wrapped_file.name
         file_size = wrapped_file.file.size
