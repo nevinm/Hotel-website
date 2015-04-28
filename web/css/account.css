@@ -94,7 +94,6 @@ ul.accordion-content li {
   padding: 20px;
 }
 .accordion-header{
-	/*border-bottom: 1px solid #ADADAD;*/
 	border-top: 1px solid #ADADAD;
 	padding-left: 20px;
 	cursor: pointer;
