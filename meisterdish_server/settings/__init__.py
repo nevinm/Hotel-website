@@ -225,13 +225,19 @@ ORDER_STATUS =  (
 
 if not Live:
     # SandBox
-    PayPal_account = "nazz007online-facilitator@gmail.com"
-    PayPal_endpoint = "api.sandbox.paypal.com"
-    PayPal_client_id = "AfPVcIBPTPK4v-ssJY7FvudRt4bYlSviIY02zi7b8JbtmaL91ZneDCMMJSOiIgqo9hBVemBUkpF8p_1F"
-    PayPal_secret = "EDrB0Fsr8fny7_aTopTkjC4t5btB-SvoRQDx2B2omc6OabinTG503o1aVx7_jm1D9giX-9bPfsgB_fGE"
+    PAYPAL_MODE="sandbox"
+    PAYPAL_CLIENT_ID = "AfPVcIBPTPK4v-ssJY7FvudRt4bYlSviIY02zi7b8JbtmaL91ZneDCMMJSOiIgqo9hBVemBUkpF8p_1F"
+    PAYPAL_CLIENT_SECRET = "EDrB0Fsr8fny7_aTopTkjC4t5btB-SvoRQDx2B2omc6OabinTG503o1aVx7_jm1D9giX-9bPfsgB_fGE"
+    PAYPAL_ACCOUNT = "nazz007online-facilitator@gmail.com"
+    PAYPAL_ENDPOINT = "api.sandbox.paypal.com"
 else:
     #@TODO
     pass
 
 DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
 DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 880bf96258e1cbb9184255545d54703772d71600
