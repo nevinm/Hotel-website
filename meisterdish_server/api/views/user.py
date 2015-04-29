@@ -263,7 +263,7 @@ def get_meal_details(request, data, user, meal_id):
             }
         })
     except Exception as e:
-        log.error("get_meals" + e.message)
+        log.error("get_meal details : " + e.message)
         return custom_error("Failed to get the meal details.")
 
 @check_input('POST')
@@ -323,11 +323,7 @@ def save_credit_card(request, data, user):
         c_card.user = user
         c_card.card_id = credit_card.id
         c_card.number = credit_card.number
-        c_card.first_name = credit_card.first_name
-        c_card.last_name = credit_card.last_name
-        c_card.valid = datetime.time(credit_card.valid_untill)
-        c_card.expiry_month = credit_card.expire_month 
-        c_card.expiry_year = credit_card.expire_year
+        c_card.cvv2 = credit_card.cvv2
         c_card.card_type = credit_card.type
         c_card.save()
     except Exception as e:
