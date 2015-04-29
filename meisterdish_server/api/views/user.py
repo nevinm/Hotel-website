@@ -4,9 +4,10 @@ import json as simplejson
 import logging 
 import settings
 from decorators import *
-from libraries import validate_zipcode, validate_phone, card
+from libraries import validate_zipcode, validate_phone, card, configure_paypal_rest_sdk
 import paypalrestsdk
 from datetime import datetime
+from settings import PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET
 
 log = logging.getLogger('api_user')
 
@@ -287,7 +288,7 @@ def list_credit_cards(request, data, user):
 @check_input('POST')
 def save_credit_card(request, data, user):
     try:
-        num = int(str(data["number"]).strip())
+        num = str(data["number"]).strip()
         exp_month = int(str(data["exp_month"]).strip())
         exp_year = int(str(data["exp_year"]).strip())
         cvv2 = int(str(data["cvv2"]).strip())
@@ -307,6 +308,8 @@ def save_credit_card(request, data, user):
             log.error("User : " + user.email + ": Credit Card : valid? "+str(cc.is_valid) + " , expired? "+str(cc.is_expired))
             return custom_error("Please enter valid card details.")
         
+        configure_paypal_rest_sdk()
+        
         credit_card = paypalrestsdk.CreditCard({
             "type": cc.brand,
             "number": num,
@@ -317,7 +320,10 @@ def save_credit_card(request, data, user):
             "last_name": lname
             })
         credit_card.create()
-        if credit_card.get("status") != 'ok':
+
+        if not credit_card:
+            if credit_card.error:
+                log.error("Save Credit card error : " + credit_card.error)
             return custom_error("Failed to save credit card details.")
 
         c_card = CreditCardDetails()
@@ -327,15 +333,39 @@ def save_credit_card(request, data, user):
         c_card.cvv2 = credit_card.cvv2
         c_card.card_type = credit_card.type
         c_card.save()
+        return json_response({"message":"Successfully saved credit card details.", "id":c_card.id})
     except Exception as e:
         log.error("Save CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to save credit card details.")
 
 @check_input('POST')
-def delete_credit_card(request, data, user, id):
+def delete_credit_card(request, data, user, card_id):
     try:
-        card = CreditCardDetails.objects.get(pk=id)
-        card_id = card.card_id
+        card = CreditCardDetails.objects.get(pk=card_id)
+        c_id = card.card_id
+
+        configure_paypal_rest_sdk()
+        credit_card = paypalrestsdk.CreditCard({"id":c_id})
+        credit_card.delete()
+
+        card.delete()
+        return json_response({"message":"Successfully deleted credit card.", "id":c_card.id})
     except Exception as e:
-        log.error("Delete CC: user"+str(user.id) + " : "+ e.message)
+        log.error("Delete CC: user "+str(user.id) + " : "+ e.message)
         return custom_error("Failed to delete credit card details.")
+
+@check_input('POST')
+def get_saved_cards(request, data, user):
+    try:
+        cards_list = []
+        cards = CreditCardDetails.objects.filter(user=user)
+        for card in cards:
+            cards_list.append({
+                "id":card.id,
+                "number" :card.number,
+                "type" : card.card_type
+                })
+        return json_response({"cards":cards_list, "status":1})
+    except Exception as e:
+        log.error("List CC: user "+str(user.id) + " : "+ e.message)
+        return custom_error("Failed to list saved cards.")
