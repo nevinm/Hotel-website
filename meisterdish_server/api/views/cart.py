@@ -49,6 +49,7 @@ def add_to_cart(request, data, user):
         try:
           meal = Meal.objects.get(pk=meal_id, available=True, is_deleted=False)
         except:
+          log.error("Trying to add a deleted or non-existing meal?")
           return custom_error("Sorry, this meal is currently not available.")
         
         carts = Cart.objects.filter(user=user, completed=False)
@@ -60,7 +61,7 @@ def add_to_cart(request, data, user):
           cart = carts[0]
         
         try:
-           cart_item = CartItem.get(cart=cart, meal=meal)
+           cart_item = CartItem.objects.get(cart=cart, meal=meal)
            cart_item.quantity = cart_item.quantity+quantity
         except CartItem.DoesNotExist:
            cart_item = CartItem()
@@ -99,7 +100,7 @@ def update_cart(request, data, user):
         
         for meal in meals:
           try:
-             cart_item = CartItem.get(cart=cart, meal=meal['meal'])
+             cart_item = CartItem.objects.get(cart=cart, meal=meal['meal'])
              cart_item.quantity = meal['qty']
           except CartItem.DoesNotExist:
              cart_item = CartItem()
