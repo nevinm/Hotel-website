@@ -2,6 +2,7 @@ from django.core.mail import EmailMessage
 import logging
 from api.models import Image
 import re
+import settings
 
 log = logging.getLogger('libraries')
  
@@ -62,3 +63,11 @@ def validate_phone(phone):
   if re.match(regex, str(phone)) is None:
     return False
   return True  
+
+def configure_paypal_rest_sdk():
+  import paypalrestsdk
+  paypalrestsdk.configure({
+    "mode": settings.PAYPAL_MODE, # sandbox or live
+    "client_id": settings.PAYPAL_CLIENT_ID,
+    "client_secret": settings.PAYPAL_CLIENT_SECRET,
+  })
