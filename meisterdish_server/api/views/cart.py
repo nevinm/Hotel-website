@@ -78,17 +78,16 @@ def add_to_cart(request, data, user):
 @check_input('POST')
 def update_cart(request, data, user):
     try:
-        meal_ids = data['meals']
-        meals = []
-        for meal_id, qty in meal_ids:
-            if int(qty) < 1:
-                return custom_error("Please provide a valid quantity for each meal.")
+        meal_id = data['meal_id']
+        qty = data['quantity']
+        
+        if int(qty) < 1:
+            return custom_error("Please provide a valid quantity for each meal.")
 
-            try:
-              meal = Meal.objects.get(pk=meal_id, available=True, is_deleted=False)
-            except:
-              return custom_error("Sorry, meal #" +str(meal_id)+ " is currently not available.")
-            meals.append({"meal":meal, "qty":qty})
+        try:
+          meal = Meal.objects.get(pk=meal_id, available=True, is_deleted=False)
+        except:
+          return custom_error("Sorry, meal #" +str(meal_id)+ " is currently not available.")
 
         carts = Cart.objects.filter(user=user, completed=False)
         if not carts.exists():
@@ -98,16 +97,15 @@ def update_cart(request, data, user):
         else:
           cart = carts[0]
         
-        for meal in meals:
-          try:
-             cart_item = CartItem.objects.get(cart=cart, meal=meal['meal'])
-             cart_item.quantity = meal['qty']
-          except CartItem.DoesNotExist:
-             cart_item = CartItem()
-             cart_item.cart = cart
-             cart_item.meal = meal['meal']
-             cart_item.quantity = meal['qty']
-          cart_item.save()
+        
+        try:
+           cart_item = CartItem.objects.get(cart=cart, meal__pk=meal['meal'])
+        except CartItem.DoesNotExist:
+           cart_item = CartItem()
+           cart_item.cart = cart
+           cart_item.meal = meal
+        cart_item.quantity = qty
+        cart_item.save()
         return json_response({"status":1, "message":"The cart has been updated."})
         
     except Exception as e:
