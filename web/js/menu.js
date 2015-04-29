@@ -3,6 +3,7 @@ $(document).ready(function() {
         nextPage = 1,
         mealTypeFilter = [],
         endOfList = false, ipadWidth=767;
+
     $(document).on("click", '.subMenu .menu-categories-list', function() {
         $(document).find(".subMenu ul li").removeClass("activeOption");
         $(this).addClass("activeOption");
@@ -10,7 +11,13 @@ $(document).ready(function() {
             $(".category-menu").slideToggle();
         }
     });
-
+    //Add to cart
+    $(document).on("click", '.addItemButton', function() {
+        $(this).attr('disabled','disabled');
+        $(this).css('background-color', '#d0d0d0');
+        var meal_id = $(this).attr('data-id');
+        addToCart(meal_id);
+    });
     //Categories
     $(document).on('click', '.menu-categories-list', function() {
         nextPage = 1;
@@ -48,11 +55,18 @@ $(document).ready(function() {
         infiniteScrolling();
     });
 
+    getCategory();
+    getmealList('', '', '', perPage, nextPage);
+    infiniteScrolling();
+});
+
 //Infinite Scrolling
 function infiniteScrolling() {
+    $('body').unbind('scroll');
     $("body").on('scroll', function(e) {
-        if ($('.listItems').length && !endOfList) {
+        if ($('.listItems').length && endOfList==false) {
             if (elementScrolling(".listItems:last")) {
+                $("body").unbind('scroll');
                 mealData = JSON.parse(localStorage['meal_details']);
                 getmealList(mealData.search, mealData.category_id, mealData.type_ids, mealData.perPage, mealData.nextPage + 1, true)
            };
@@ -60,10 +74,6 @@ function infiniteScrolling() {
     });
 }
 
-    getCategory();
-    getmealList('', '', '', perPage, nextPage);
-    infiniteScrolling();
-});
 //Get Category list of food items.
 var getCategoryCallback = {
     success: function(data, textStatus) {
@@ -103,10 +113,9 @@ function getCategory() {
 var getmealListCallback = {
     success: function(data, textStatus, isInfinteScrolling) {
         var mealList = JSON.parse(data);
-        // debugger;
         if (mealList.status == 1) {
             endOfList = (mealList.current_page == mealList.page_range[mealList.page_range.length - 1]);
-            if(endOfList){
+            if(endOfList==true){
                 $('body').unbind('scroll');
             }else{}
             populateMealList(mealList, isInfinteScrolling);
@@ -155,6 +164,10 @@ function populateMealList(mealList, isInfinteScrolling) {
             "data-id='" + value.id + "'>ADD</a></span>" +
             "</section></div>");
     });
+    if(endOfList){
+    }else{
+        infiniteScrolling();
+    }
 }
 
 function elementScrolling(elem) {
@@ -165,4 +178,31 @@ function elementScrolling(elem) {
     var elemBottom = elemTop + $(elem).height();
 
     return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+}
+//add to cart call back
+var addToCartCallback = {
+     success: function(data, textStatus) {
+        var meal_details = JSON.parse(data),
+            status  = meal_details.status;
+            if(status == -1){
+                showPopup(meal_details);
+            }
+        
+     },
+     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function addToCart(meal_id){
+    var url = baseURL + 'add_to_cart/',
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {
+            "meal_id":1,
+            "quantity":1
+        }
+        data = JSON.stringify(params);
+        localStorage['addToCart'] = data;
+        var addToCartInstance = new AjaxHttpSender(); 
+        addToCartInstance.sendPost(url, header, data, addToCartCallback);
 }
