@@ -118,12 +118,13 @@ var getmealListCallback = {
         var mealList = JSON.parse(data);
         if (mealList.status == 1) {
             endOfList = (mealList.current_page == mealList.page_range[mealList.page_range.length - 1]);
-            console.log((mealList.current_page + " " + mealList.page_range[mealList.page_range.length - 1]));
             if(endOfList==true){
                 $('body').unbind('scroll');
             }else{}
             populateMealList(mealList, isInfinteScrolling);
-        } else {}
+        } else {
+            console.log("Something wrong with meals list");
+        }
         $(".menu-loading-gif").hide();
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
