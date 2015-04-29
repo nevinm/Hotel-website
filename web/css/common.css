@@ -665,6 +665,12 @@ span.icon-menu{
 .delivery-address-error-popup-wrapper .bk-overlay{
 	z-index: 99999;
 }
+.button-disabled{
+	cursor: default;
+	pointer-events:none;
+	background-color: #d0d0d0;
+	border-color: #D0D0D0;
+}
 /*==============================*\
 		&NAVBAR RESPONSIVE
 \*==============================*/

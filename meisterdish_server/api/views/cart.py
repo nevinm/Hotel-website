@@ -71,6 +71,7 @@ def add_to_cart(request, data, user):
         return json_response({"status":1, "message":"The meal has been added to the cart."})
         
     except Exception as e:
+        log.error("Add to cart : "+e.message)
         return custom_error("Failed to add to cart. Please try again later.")
 
 @check_input('POST')
@@ -109,6 +110,7 @@ def update_cart(request, data, user):
         return json_response({"status":1, "message":"The cart has been updated."})
         
     except Exception as e:
+        log.error("Update cart : "+e.message)
         return custom_error("Failed to update cart. Please try again later.")
 
 @check_input('POST')
@@ -118,6 +120,7 @@ def remove_from_cart(request, data, user):
         CartItem.objects.get(cart__user=user, cart__completed=False, meal__pk=meal_id).delete()
         return json_response({"status":1, "message":"The meal has been successfully removed from cart."})
     except Exception as e:
+        log.error("Remove from cart : "+e.message)
         return custom_error("Failed to remove meal from cart. Please try again later.")
 
 @check_input('POST')
@@ -128,4 +131,13 @@ def delete_cart(request, data, user):
         cart.save()
         return json_response({"status":1, "message":"The cart has been cleared."})
     except Exception as e:
+        log.error("Delete cart : "+e.message)
         return custom_error("Failed to clear cart. Please try again later.")
+
+@check_input('POST')
+def get_cart_items_count(request, data, user):
+    try:
+      count = CartItem.objects.filter(cart__user=user, cart__completed=False).count()
+      return json_response({"status":1, "count":count})
+    except Exception as e:
+      return custom_error("Failed to clear cart. Please try again later.")      

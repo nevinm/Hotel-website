@@ -128,10 +128,14 @@
                             <div class="section-header">PREPARATION :</div>
                             <div class="content-1">
                                 <div class="preperation-container-1">
-                                    <label class="body-text-small">Prep-Time</label>
-                                    <input type="number" name="preperationtime" class="create-meal-input" id="meal-prep-time">
-                                     <label class="body-text-small">All you will be doing</label>
-                                    <input type="text"class="create-meal-input" id="preparation-id-1">
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Prep-Time</label>
+                                        <input type="text" name="preperationtime" class="create-meal-input" id="meal-prep-time">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                         <label class="body-text-small">All you will be doing</label>
+                                        <input type="text"class="create-meal-input" id="preparation-id-1">
+                                    </div>
                                     <input type="button" class="add-preparation-button" value="add">
                                     <span><h3>ALL YOU WILL BE DOING:</h3></span>
                                     <div class="list-container">
@@ -139,10 +143,14 @@
                                     </div>
                                 </div>
                                 <div class="preperation-container-2">
+                                    <div class="forminput-wrapper">
                                     <label class="body-text-small">Saved-Time</label>
-                                    <input type="number" name="savedtime" class="create-meal-input" id="meal-saved-time">
+                                    <input type="text" name="savedtime" class="create-meal-input" id="meal-saved-time">
+                                    </div>
+                                    <div class="forminput-wrapper">
                                      <label class="body-text-small">What we have prepared</label>
                                     <input type="text"class="create-meal-input" id="preparation-id-2">
+                                    </div>
                                     <input type="button" class="add-preparation-button" value="add">
                                     <span><h3>WHAT WE HAVE PREPPED:</h3></span>
                                     <div class="list-container">
@@ -155,15 +163,17 @@
                             <div class="section-header">ALL YOU NEED:</div>
                             <div class="content-1">
                                 <div class="pre-requisties-container">
+                                     <div class="forminput-wrapper">
                                     <label class="body-text-small">Pre-requisties</label>
                                     <input type="text" class="create-meal-input" id="pre-requisties">
+                                    </div>
                                     <input type="button" class="add-list-button" value="add">
                                     <span><h3>FROM YOUR KITCHEN:</h3></span>
                                     <div class="list-container">
                                         <ul></ul>
                                     </div>
                                 </div>
-                                <div>
+                                <div class='img-container'>
                                     <img data-id='' id='kitchen-image' src='' />
                                 </div>
                                 <div class="fileUpload">
@@ -176,15 +186,17 @@
                             <div class="section-header">INGREDIENTS</div>
                             <div class="content-1">
                                 <div class="ingredients-container">
+                                     <div class="forminput-wrapper">
                                     <label class="body-text-small">Ingredients</label>
                                     <input type="text" class="create-meal-input" id="ingredients">
+                                    </div>
                                     <input type="button" class="add-list-button" id="add-ingredients" value="add">
                                     <span><h3>IN THE BOX :</h3></span>
                                     <div class="list-container">
                                         <ul></ul>
                                     </div>
                                 </div>
-                                <div>
+                                <div class='img-container'>
                                     <img data-id='' id='ingredients-image' src='' />
                                 </div>
                                 <div class="fileUpload">
@@ -242,7 +254,7 @@
                             </div>
                         </div>
                         <div class="create-button-container">
-                            <input type="submit" class="btn btn-large-primary medium-green" id="create-meal-button" value="CREATE">
+                            <input type="submit" class="btn btn-large-primary medium-green" id="create-meal-button" value="SAVE">
                         </div>
                     </form>
                 </div>

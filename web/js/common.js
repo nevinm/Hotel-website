@@ -252,9 +252,9 @@ $("form").each(function() {
                 meal_type:{
                     required:true
                 },
-                image_upload :{
-                    required:true
-                }
+                // image_upload :{
+                //     required:true
+                // }
         },
         messages: {
             firstname: {
@@ -309,8 +309,8 @@ $("form").each(function() {
             mealtax:"Enter a valid meal tax.",
             mealname:"Enter a valid meal name.",
             chef_name:"Enter a valid chef name.",
-            mealdescription:"Meal description is not valid.",
-            image_upload:"Please select an image."
+            mealdescription:"Meal description is not valid."
+            // image_upload:"Please select an image."
         }
     });
 });
