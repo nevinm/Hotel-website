@@ -7,11 +7,13 @@ var nutrient_sub_category = 0,
 $(document).ready(function() {
     $('#create-meal-button').on("click", function(e) {
         e.preventDefault();
-        createMeal();
+        if($('form').valid()){
+        	createMeal();
+        }
     });
 
     $('.add-list-button,.add-preparation-button').on("click", function() {
-        var element_id = $(this).prev().attr('id');
+        var element_id = $(this).prev().find('.create-meal-input').attr('id');
         var container = $(this).parent().attr('class');
         populateListData(element_id, container);
     });
@@ -21,8 +23,9 @@ $(document).ready(function() {
         var nutrients = $('#nutrients').val(),
             per_serving = $('#nutrients-per-serving').val(),
             daily_value = $('#nutrients-daily-value').val();
-
-        populateNutrients(nutrients, per_serving, daily_value);
+            if(nutrients!=undefined && nutrients!=""){
+        		populateNutrients(nutrients, per_serving, daily_value);
+    		}
     });
 
     //Add nutrient sub category
@@ -44,6 +47,7 @@ $(document).ready(function() {
     $('#add-tips-main').on("click", function() {
         var video_URL = $('#tips-video-url').val(),
             tips_heading = $('#tips-and-tricks').val();
+        if((video_URL!=undefined&&tips_heading!=undefined)&&(video_URL!=""&&tips_heading!=""))
         addMainTipsTricks(video_URL, tips_heading);
     });
 
@@ -197,6 +201,7 @@ function uploadImage(imageElementSelect, imageElement) {
                 $("#" + imageElement).attr('src', data.result.thumbnail_url);
                 $("#" + imageElement).attr('data-id', data.result.id);
                 $("#" + imageElement).show();
+
             }
         });
     }
@@ -303,9 +308,13 @@ function populateListData(element_id, container, dataFromApi) {
                 '<img class="remove" src="../../images/del.png">' + '</li>');
         });
     } else {
-        var addTo_list = $('#' + element_id).val();
+        var addTo_list = $('#' + element_id).val(),
+        	meal_prep_time = $('#meal-prep-time').val(),
+        	saved_time = $('#meal-saved-time').val();
+    if(addTo_list!=undefined && addTo_list!=""){
         $('.' + container).find('.list-container ul').append('<li>' + addTo_list +
             '<img class="remove" src="../../images/del.png">' + '</li>');
+    }
     }
 }
 
