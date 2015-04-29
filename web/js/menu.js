@@ -13,8 +13,11 @@ $(document).ready(function() {
     });
     //Add to cart
     $(document).on("click", '.addItemButton', function() {
-        $(this).attr('disabled','disabled');
-        $(this).css('background-color', '#d0d0d0');
+        // $(this).attr('onclick','return false');
+        var x={};
+        x=JSON.parse(localStorage['addToCart']);
+        console.log(x.meal_id);
+        $(this).addClass('button-disabled');
         var meal_id = $(this).attr('data-id');
         addToCart(meal_id);
     });
@@ -160,7 +163,7 @@ function populateMealList(mealList, isInfinteScrolling) {
             "<h3 class='pullLeft itemCost'>" + dollarConvert(value.price + value.tax) + "</h3>" +
             "<span class='menuItemDetails caption'>Brioche Bun, Avocado, Tomato, Red Onions.</span>" +
             "<span><a href='#' class='btn btn-small-primary medium-green addItemButton' " +
-            "data-id='" + value.id + "'>ADD</a></span>" +
+            "data-id='" + value.id +"'>ADD</a></span>" +
             "</section></div>");
     });
     if(endOfList){
@@ -186,6 +189,9 @@ var addToCartCallback = {
             if(status == -1){
                 showPopup(meal_details);
             }
+            else{
+                showPopup(meal_details);
+            }
         
      },
      failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -197,7 +203,7 @@ function addToCart(meal_id){
             "session-key": localStorage["session_key"]
         },
         params = {
-            "meal_id":1,
+            "meal_id":meal_id,
             "quantity":1
         }
         data = JSON.stringify(params);
