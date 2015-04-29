@@ -286,10 +286,10 @@ def list_credit_cards(request, data, user):
 @check_input('POST')
 def save_credit_card(request, data, user):
     try:
-        num = str(data["number"]).strip()
-        exp_month = str(data["exp_month"]).strip()
-        exp_year = str(data["exp_year"]).strip()
-        cvv2 = expire_month = str(data["cvv2"]).strip()
+        num = int(str(data["number"]).strip())
+        exp_month = int(str(data["exp_month"]).strip())
+        exp_year = int(str(data["exp_year"]).strip())
+        cvv2 = int(str(data["cvv2"]).strip())
         fname = str(data["first_name"]).strip()
         lname = str(data["last_name"]).strip()
         
