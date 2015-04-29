@@ -47,7 +47,7 @@ def add_to_cart(request, data, user):
            return custom_error("Invalid quantity.")
 
         try:
-          meal = Meal.objects.get(pk=meal_id, available=True, is_deleted=True)
+          meal = Meal.objects.get(pk=meal_id, available=True, is_deleted=False)
         except:
           return custom_error("Sorry, this meal is currently not available.")
         
@@ -84,7 +84,7 @@ def update_cart(request, data, user):
                 return custom_error("Please provide a valid quantity for each meal.")
 
             try:
-              meal = Meal.objects.get(pk=meal_id, available=True, is_deleted=True)
+              meal = Meal.objects.get(pk=meal_id, available=True, is_deleted=False)
             except:
               return custom_error("Sorry, meal #" +str(meal_id)+ " is currently not available.")
             meals.append({"meal":meal, "qty":qty})
