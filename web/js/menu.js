@@ -187,13 +187,14 @@ var addToCartCallback = {
      success: function(data, textStatus) {
         var meal_details = JSON.parse(data),
             status  = meal_details.status;
+            console.log(data);
             if(status == -1){
                 showPopup(meal_details);
             }
             else{
                 showPopup(meal_details);
-            }
-        
+                CartItemCount();
+            }      
      },
      failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -205,8 +206,7 @@ function addToCart(meal_id){
         },
         params = {
             "meal_id":meal_id,
-            "quantity":1
-        }
+        };
         data = JSON.stringify(params);
         localStorage['addToCart'] = data;
         var addToCartInstance = new AjaxHttpSender(); 

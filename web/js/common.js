@@ -139,6 +139,7 @@ $(document).ready(function() {
 
     checkLoggedIn();
     verifyAccount();
+    CartItemCount();
 });
 
 //JQuery Validation   
@@ -319,4 +320,32 @@ if ($.validator) {
     $.validator.addMethod('letters', function(value) {
         return value.match(/^[- a-zA-Z]+$/);
     });
+}
+
+//CartItemCount
+var CartItemCountCallback = {
+    success: function(data, textStatus) {
+        var numOfItems = JSON.parse(data);
+        // setInterval(function() {
+        //     $('span.c
+        //     ount').animate({
+        // //     height: '28px',
+        // //     padding: '0px 10px',
+        // //     fontSize: '16px'
+        // //     });
+        // // },3000);
+        $('span.count').text(numOfItems.count); 
+     },
+     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function CartItemCount(){
+    var url = baseURL + 'get_cart_items_count/',
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {};
+        data = JSON.stringify(params);
+        var CartItemCountInstance = new AjaxHttpSender(); 
+        CartItemCountInstance.sendPost(url, header, data, CartItemCountCallback);
 }
