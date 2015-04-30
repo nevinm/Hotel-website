@@ -10,6 +10,18 @@ $(document).ready(function() {
         removeCartItems(meal_id);
     });
 
+    //Add  date button active
+    $(".checkout-time-button").on('click',function(){
+        $(".checkout-time-button").removeClass("checkout-time-button-active");
+        $(this).addClass("checkout-time-button-active");
+    });
+
+    //Add time button active
+    $(".checkout-time-button").on('click',function(){
+        $(".checkout-time-button").removeClass("checkout-time-button-active");
+        $(this).addClass("checkout-time-button-active");
+    });
+
     $(document).on('click', '.order-list-items', function() {
         $('span#remove-cart-item').show();
     });
@@ -177,7 +189,6 @@ function checkOutPayPal(serviceName, merchantID, options) {
     addFormFields(form, data);
     addFormFields(form, options);
     $("body").append(form);
-    debugger;
 
     // submit form
     clearCart();

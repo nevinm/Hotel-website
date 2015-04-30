@@ -746,6 +746,10 @@ form.addaddress-popup {
 	background-color: #A9D77B;
 	color: #fff;
 }
+.checkout-time-button-active {
+	background-color: #A9D77B;
+	color: #fff;
+}
 .content-heading {
 	font-family: 'BrandonGrotesque-Bold';
 	color: #b0b0b0;
