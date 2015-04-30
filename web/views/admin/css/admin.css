@@ -511,6 +511,7 @@ input#meal-price {
     float: left;
     width: 100%;
     padding-left: 63px;
+     word-break: break-all;
 }
 
 .list-container ul li {

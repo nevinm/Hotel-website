@@ -758,6 +758,8 @@ form.addaddress-popup {
 	width: 64%;
 	float: right;
 	padding: 10px 0 0 10px;
+	overflow-x: auto;
+	height: 196px;
 }
 .order-list-header .content-heading{
 	width: 100px;
@@ -783,7 +785,7 @@ form.addaddress-popup {
 	width: 47%;
 }
 .order-list-header  .content-heading:first-child{
-	margin-right: 37%;
+	margin-right: 33%;
 	text-align: left;
 }
 .order-list-header  .content-heading:nth-child(3){
@@ -795,7 +797,16 @@ form.addaddress-popup {
 	padding: 5px 0px;
 	padding-left: 10px;
 	width: 243px;
-	margin-right: 40px;
+	margin-right: 21px;
+}
+span#remove-cart-item {
+	margin: 0;
+	float: left;
+	cursor: pointer;
+	color: #A9D77B;
+	width: 50px;
+	padding-left: 25px;
+	display: none;
 }
 .order-list-items input {
 	width: 30px;
@@ -805,10 +816,11 @@ form.addaddress-popup {
 	border-radius: 3px;
 	background-color: #f7f7f7;
 }
-span.operator {
+.operator-plus,.operator-minus {
 	color: #b0b0b0;
 	font-weight: bold;
 	padding: 0 5px;
+	cursor: pointer;
 }
 .quantity-container {
   width: 76px;
@@ -818,6 +830,7 @@ span.operator {
 .price-container{
 	font-family: 'BrandonGrotesque-Bold';
 	color: #b0b0b0;
+	float: left;
 }
 .address-info,.payment-method-container {
   width: 250px;
@@ -931,6 +944,9 @@ span.operator {
 }
 .pay-container .forminput-wrapper .styled-select{
 	width: 100%;
+}
+.paypal{
+	cursor: pointer;
 }
 .receipt-container .checkout-header{
 	padding-left: 5%;

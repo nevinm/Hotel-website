@@ -22,19 +22,19 @@ function getParameterFromUrl(name) {
 }
 
 function checkLoggedIn() {
-        if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
-            $userentry.hide();
-            $('#navbar-username a').text(localStorage['username']);
-            $(".account-header h2").text(localStorage['username'] + "'S ACCOUNT");
-            $('#menu').addClass('menuPadding');
-            $('.delivery-info-container').show();
-            $('.delivery-info-guest-container').hide();
-        } else {
-            $userentry.show();
-            $("#logout").hide();
-            $('#menu').removeClass('menuPadding');
-            $('li#navbar-username').hide();
-        }
+    if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
+        $userentry.hide();
+        $('#navbar-username a').text(localStorage['username']);
+        $(".account-header h2").text(localStorage['username'] + "'S ACCOUNT");
+        $('#menu').addClass('menuPadding');
+        $('.delivery-info-container').show();
+        $('.delivery-info-guest-container').hide();
+    } else {
+        $userentry.show();
+        $("#logout").hide();
+        $('#menu').removeClass('menuPadding');
+        $('li#navbar-username').hide();
+    }
 }
 
 function verifyAccount() {
@@ -139,122 +139,123 @@ $(document).ready(function() {
 
     checkLoggedIn();
     verifyAccount();
+    CartItemCount();
 });
 
 //JQuery Validation   
 $("form").each(function() {
     $(this).validate({
         rules: {
-                firstname: {
-                    required: true,
-                    minlength: 2,
-                    maxlength: 15,
-                    letters: true
-                },
-                lastname: {
-                    required: true,
-                    minlength: 2,
-                    maxlength: 15,
-                    letters: true
-                },
-                fullname: {
-                    required: true,
-                    minlength: 2,
-                    maxlength: 20,
-                    letters: true
-                },
-                username:{
-                    required: true,
-                    minlength: 2,
-                    maxlength: 15,
-                },
-                mealname:{
-                    required: true,
-                    minlength: 3,
-                },
-                chef_name:{
-                    required: true,
-                    minlength: 3,
-                },
-                mealprice:{
-                    required: true,
-                    number:true
-                },
-                mealtax:{
-                    required: true,
-                    number:true
-                },
-                mealdescription:{
-                    required: true,
-                    minlength: 5
-                },
-                oldpassword:{
-                    required: true,
-                    minlength: 6
-                },
-                password: {
-                    required: true,
-                    minlength: 6
-                },
-                email: {
-                    required: true,
-                    email: true
-                },
-                confirmEmail:{
-                    required:true,
-                    email:true,
-                    equalTo:"#new-email"
-                },
-                phonenumber: {
-                    required:true,
-                    minlength:10,
-                    maxlength:15,
-                    number :true
-                },
-                confirmpassword: {
-                    required: true,
-                    minlength: 6,
-                    equalTo: "#newpassword"
-                },
-                repassword: {
-                    required:true,
-                    minlength:6,
-                    equalTo: "#new-password"
-                },
-                zip :{
-                    required:true,
-                    number :true,
-                    minlength:4,
-                    maxlength:6
-                },
-                state:{
-                    required:true
-                },
-                city:{
-                    required:true
-                },
-                street:{
-                    required:true,
-                    letters: true,
-                    minlength:4
-                },
-                building:{
-                    required:true,
-                    letters: true,
-                    minlength:2
-                },
-                available:{
-                    required:true
-                },
-                category:{
-                    required:true
-                },
-                meal_type:{
-                    required:true
-                },
-                // image_upload :{
-                //     required:true
-                // }
+            firstname: {
+                required: true,
+                minlength: 2,
+                maxlength: 15,
+                letters: true
+            },
+            lastname: {
+                required: true,
+                minlength: 2,
+                maxlength: 15,
+                letters: true
+            },
+            fullname: {
+                required: true,
+                minlength: 2,
+                maxlength: 20,
+                letters: true
+            },
+            username: {
+                required: true,
+                minlength: 2,
+                maxlength: 15,
+            },
+            mealname: {
+                required: true,
+                minlength: 3,
+            },
+            chef_name: {
+                required: true,
+                minlength: 3,
+            },
+            mealprice: {
+                required: true,
+                number: true
+            },
+            mealtax: {
+                required: true,
+                number: true
+            },
+            mealdescription: {
+                required: true,
+                minlength: 5
+            },
+            oldpassword: {
+                required: true,
+                minlength: 6
+            },
+            password: {
+                required: true,
+                minlength: 6
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            confirmEmail: {
+                required: true,
+                email: true,
+                equalTo: "#new-email"
+            },
+            phonenumber: {
+                required: true,
+                minlength: 10,
+                maxlength: 15,
+                number: true
+            },
+            confirmpassword: {
+                required: true,
+                minlength: 6,
+                equalTo: "#newpassword"
+            },
+            repassword: {
+                required: true,
+                minlength: 6,
+                equalTo: "#new-password"
+            },
+            zip: {
+                required: true,
+                number: true,
+                minlength: 4,
+                maxlength: 6
+            },
+            state: {
+                required: true
+            },
+            city: {
+                required: true
+            },
+            street: {
+                required: true,
+                letters: true,
+                minlength: 4
+            },
+            building: {
+                required: true,
+                letters: true,
+                minlength: 2
+            },
+            available: {
+                required: true
+            },
+            category: {
+                required: true
+            },
+            meal_type: {
+                required: true
+            },
+            // image_upload :{
+            //     required:true
+            // }
         },
         messages: {
             firstname: {
@@ -305,12 +306,12 @@ $("form").each(function() {
             building: "Provide a valid address.",
             state: "Provide a state name.",
             city: "Provide a city name.",
-            mealprice:"Enter a valid meal price.",
-            mealtax:"Enter a valid meal tax.",
-            mealname:"Enter a valid meal name.",
-            chef_name:"Enter a valid chef name.",
-            mealdescription:"Meal description is not valid."
-            // image_upload:"Please select an image."
+            mealprice: "Enter a valid meal price.",
+            mealtax: "Enter a valid meal tax.",
+            mealname: "Enter a valid meal name.",
+            chef_name: "Enter a valid chef name.",
+            mealdescription: "Meal description is not valid."
+                // image_upload:"Please select an image."
         }
     });
 });
@@ -319,4 +320,45 @@ if ($.validator) {
     $.validator.addMethod('letters', function(value) {
         return value.match(/^[- a-zA-Z]+$/);
     });
+}
+
+//CartItemCount
+var CartItemCountCallback = {
+    success: function(data, textStatus) {
+        var numOfItems = JSON.parse(data);
+        // setInterval(function() {
+        //     $('span.c
+        //     ount').animate({
+        // //     height: '28px',
+        // //     padding: '0px 10px',
+        // //     fontSize: '16px'
+        // //     });
+        // // },3000);
+        $('span.count').text(numOfItems.count);
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function CartItemCount() {
+    var url = baseURL + 'get_cart_items_count/',
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {};
+    data = JSON.stringify(params);
+    var CartItemCountInstance = new AjaxHttpSender();
+    CartItemCountInstance.sendPost(url, header, data, CartItemCountCallback);
+}
+
+
+//Used to add form fields - paypal.
+function addFormFields(form, data) {
+    if (data != null) {
+        $.each(data, function(name, value) {
+            if (value != null) {
+                var input = $("<input></input>").attr("type", "hidden").attr("name", name).val(value);
+                form.append(input);
+            }
+        });
+    }
 }
