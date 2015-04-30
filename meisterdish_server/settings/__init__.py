@@ -192,6 +192,10 @@ LOGGING = {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },
+        'cart': {
+            'handlers': ['logfile'],
+            'level': 'DEBUG'
+        },
     }
 }
 

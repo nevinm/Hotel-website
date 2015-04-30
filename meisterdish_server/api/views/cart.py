@@ -5,7 +5,7 @@ import logging
 import settings
 from decorators import *
 from django.core.paginator import Paginator
-log = logging.getLogger('order')
+log = logging.getLogger('cart')
 
 @check_input('POST')
 def get_cart_items(request, data, user):
@@ -99,7 +99,7 @@ def update_cart(request, data, user):
         
         
         try:
-           cart_item = CartItem.objects.get(cart=cart, meal__pk=meal['meal'])
+           cart_item = CartItem.objects.get(cart=cart, meal__pk=meal_id)
         except CartItem.DoesNotExist:
            cart_item = CartItem()
            cart_item.cart = cart
