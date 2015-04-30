@@ -945,6 +945,9 @@ span#remove-cart-item {
 .pay-container .forminput-wrapper .styled-select{
 	width: 100%;
 }
+.paypal{
+	cursor: pointer;
+}
 .receipt-container .checkout-header{
 	padding-left: 5%;
 }
