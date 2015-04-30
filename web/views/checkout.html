@@ -86,49 +86,61 @@
         <div id="page-container"> 
             <div class="checkout-wrapper">
                 <div class="left-wrapper">
-                <div class="delivery-time-container">
-                    <div class="checkout-header">
-                        <span>DELIVERY TIME</span>
-                        <span>YOUR ORDER</span>
-                    </div>
-                    <div class="contents">
-                        <div class="order-list-container">
-                            <div class="order-list-header">                        
-                                <span class="content-heading">ITEMS</span>
-                                <span class="content-heading">QUANTITY</span>
-                                <span class="content-heading">PRICE</span>
+                <div class="delivery-time-container box-border">
+                    <div class="time-container ">
+                        <div class="checkout-header">
+                            <span>DELIVERY TIME</span>
+                        </div>
+                        <div class="contents">
+                            <div class="time-content">
+                                <span class="content-heading">TODAY 5/09</span>
+                                <input type="button" value="NOW" class="checkout-time-button">
+                                <input type="button" value="6-5pm" class="checkout-time-button">
+                                <input type="button" value="5-7pm" class="checkout-time-button">
+                                <input type="button" value="7-8pm" class="checkout-time-button">
+                                <input type="button" value="8-9pm" class="checkout-time-button">
+                            </div>
+                            <div class="week-content">
+                                <span class="content-heading">THIS WEEK</span>
+                                <div class="date-content">
+                                    <input type="button" value="5/11" class="checkout-time-button">
+                                    <input type="button" value="5/12" class="checkout-time-button">
+                                    <input type="button" value="5/13" class="checkout-time-button">
+                                    <input type="button" value="5/14" class="checkout-time-button">
+                                    <input type="button" value="5/15" class="checkout-time-button">
+                                </div>
+                                <div class="time-content">
+                                    <input type="button" value="4-5pm" class="checkout-time-button">
+                                    <input type="button" value="6-5pm" class="checkout-time-button">
+                                    <input type="button" value="5-7pm" class="checkout-time-button">
+                                    <input type="button" value="7-8pm" class="checkout-time-button">
+                                    <input type="button" value="8-9pm" class="checkout-time-button">
+                                </div>
                             </div>
                         </div>
-                        <div class="time-content">
-                            <span class="content-heading">TODAY 5/09</span>
-                            <input type="button" value="NOW" class="checkout-time-button">
-                            <input type="button" value="6-5pm" class="checkout-time-button">
-                            <input type="button" value="5-7pm" class="checkout-time-button">
-                            <input type="button" value="7-8pm" class="checkout-time-button">
-                            <input type="button" value="8-9pm" class="checkout-time-button">
+                    </div>
+                    <div class="delivery-order-container">
+                        <div class="checkout-header">
+                            <span>YOUR ORDER</span>
                         </div>
-                        <div class="week-content">
-                            <span class="content-heading">THIS WEEK</span>
-                            <input type="button" value="5/11" class="checkout-time-button">
-                            <input type="button" value="5/12" class="checkout-time-button">
-                            <input type="button" value="5/13" class="checkout-time-button">
-                            <input type="button" value="5/14" class="checkout-time-button">
-                            <input type="button" value="5/15" class="checkout-time-button">
-                            <input type="button" value="4-5pm" class="checkout-time-button">
-                            <input type="button" value="6-5pm" class="checkout-time-button">
-                            <input type="button" value="5-7pm" class="checkout-time-button">
-                            <input type="button" value="7-8pm" class="checkout-time-button">
-                            <input type="button" value="8-9pm" class="checkout-time-button">
+                        <div class="contents">
+                            <div class="order-list-container">
+                                <div class="order-list-header">                        
+                                    <span class="content-heading">ITEMS</span>
+                                    <span class="content-heading">QUANTITY</span>
+                                    <span class="content-heading">PRICE</span>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
-                <div class="delivery-info-container">
-                    <div class="checkout-header">
-                        <span>DELIVERY INFO</span>
-                        <span>PAYMENT METHOD</span>
-                    </div>
-                    <div class="contents">
-                        <div class="address-info">
+                <div class="delivery-info-container box-border">
+                    <div class="address-info">
+                        <div class="checkout-header">
+                            <span>DELIVERY INFO</span>
+                        </div>
+                        <div class="contents">
                             <span class="content-heading">DELIVERY ADDRESS</span>
                             <span>John Smith</span>
                             <span>1234 Main Street</span>
@@ -136,7 +148,12 @@
                             <span>10001</span>
                             <span>CHANGE ADDRESS</span>
                         </div>
-                        <div class="payment-method-container">
+                    </div>
+                    <div class="payment-method-container">
+                        <div class="checkout-header">
+                            <span>PAYMENT METHOD</span>
+                        </div>
+                        <div class="contents">
                             <span class="content-heading">PAYING WITH CREDIT CARD</span>
                             <img src="../images/card_icon.png">
                             <span class="body-text-small">Master Card ending in 4321</span>

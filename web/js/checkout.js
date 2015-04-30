@@ -7,10 +7,6 @@ $(document).ready(function() {
         removeCartItems(meal_id);
     });
 
-    $(document).on('click', '.order-list-items', function() {
-        $('span#remove-cart-item').show();
-    });
-
     //Clear cart
     $(document).on('click', '.clear-cart', function() {
         clearCart();
@@ -70,7 +66,7 @@ function populateCartItems(data) {
             "<input type='text' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
             "<span class='price-container'>" + "$" + value.price + "</span>" +
-            "<span class='body-text-small' id='remove-cart-item'>" + 'REMOVE' + "</span>" + "</div>");
+            "<img src='../images/cross_black.png' id='remove-cart-item'>"+ "</div>");
     });
 }
 
@@ -119,6 +115,7 @@ function clearCart() {
 //update cart items call back
 var updateCartItemsCallback = {
     success: function(data, textStatus) {
+         debugger;
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
