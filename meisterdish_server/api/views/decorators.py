@@ -22,6 +22,7 @@ def check_input(method, admin=False):
                                              'verify_email',
                                              'get_meals',
                                              "get_categories",
+                                             "get_meal_details",
                                              ]:
                         #common_apis = ["get_meals"]
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
