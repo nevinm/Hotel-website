@@ -1,6 +1,9 @@
 $(document).ready(function() {
     getCartItems();
-
+    var cartItems, payPalEmail ="paypaluser@youremail.com" , 
+    returnUrl ="http://meisterdish.qburst.com/views/menu.html",
+    cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
+    notifyUrl= "http://meisterdish.qburst.com/views/checkout.html"
     //Remove cart items
     $(document).on('click', '#remove-cart-item', function() {
         var meal_id = $(this).parent().attr('data-id'); //may change
@@ -34,12 +37,21 @@ $(document).ready(function() {
         }
         updateCartItems(meal_id, qty);
     });
+
+    //PayPal payment
+    $(".paypal").on('click', function() {
+        checkOutPayPal("PayPal", payPalEmail, {
+            "return": returnUrl,
+            "cancel_return": cancelReturnUrl,
+            "notify_url": notifyUrl
+        });
+    });
 });
 
 //Get Cart items
 var getCartItemsCallback = {
     success: function(data, textStatus) {
-        var cartItems = JSON.parse(data);
+        cartItems = JSON.parse(data);
         populateCartItems(cartItems);
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -65,8 +77,8 @@ function populateCartItems(data) {
             "<div class='quantity-container'>" + "<span class='operator-minus' data-min='1'>" + '-' + "</span>" +
             "<input type='text' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
-            "<span class='price-container'>" + "$" + value.price + "</span>" +
-            "<img src='../images/cross_black.png' id='remove-cart-item'>"+ "</div>");
+            "<span class='price-container'>" + dollarConvert(value.price) + "</span>" +
+            "<span class='body-text-small' id='remove-cart-item'>" + 'REMOVE' + "</span>" + "</div>");
     });
 }
 
@@ -96,7 +108,8 @@ function removeCartItems(meal_id) {
 //clear cart
 var clearCartCallback = {
     success: function(data, textStatus) {
-
+        CartItemCount();
+        getCartItems();
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -114,9 +127,7 @@ function clearCart() {
 
 //update cart items call back
 var updateCartItemsCallback = {
-    success: function(data, textStatus) {
-         debugger;
-    },
+    success: function(data, textStatus) {},
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
@@ -146,13 +157,12 @@ function checkOutPayPal(serviceName, merchantID, options) {
     };
 
     // item data
-    for (var i = 0; i < this.items.length; i++) {
-        var item = this.items[i];
-        var ctr = i + 1;
-        data["item_number_" + ctr] = item.sku;
-        data["item_name_" + ctr] = item.name;
-        data["quantity_" + ctr] = item.quantity;
-        data["amount_" + ctr] = item.price.toFixed(2);
+    for (var i = 0; i < cartItems.aaData.length; i++) {
+        var item = cartItems.aaData[i];
+        var counter = i + 1;
+        data["item_name_" + counter] = item.name;
+        data["quantity_" + counter] = item.quantity;
+        data["amount_" + counter] = (item.price + item.tax).toFixed(2);
     }
 
     // build form
@@ -160,23 +170,13 @@ function checkOutPayPal(serviceName, merchantID, options) {
     form.attr("action", "https://www.sandbox.paypal.com/cgi-bin/webscr");
     form.attr("method", "POST");
     form.attr("style", "display:none;");
-    this.addFormFields(form, data);
-    this.addFormFields(form, options);
+    addFormFields(form, data);
+    addFormFields(form, options);
     $("body").append(form);
+    debugger;
 
     // submit form
-    this.clearCart = clearCart == null || clearCart;
+    clearCart();
     form.submit();
     form.remove();
 }
-
-$(document).ready(function() {
-    getCartItems();
-
-    $("#paypal").on('click', function() {
-        checkoutParameters("PayPal", "paypaluser@youremail.com", {
-            "return": "http://10.1.4.109/angularjs-cart/ShoppingCart/default.htm#/cart",
-            "cancel_return": "http://10.1.4.109/angularjs-cart/ShoppingCart/default.htm#/cart"
-        });
-    });
-});

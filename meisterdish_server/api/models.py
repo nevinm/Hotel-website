@@ -29,14 +29,14 @@ class Role(models.Model):
         return self.name
     
 class Country(models.Model):
-    name = models.CharField(max_length=30)
-    country_code = models.CharField(max_length=3, unique=True)
+    name = models.CharField(db_index=True, max_length=30)
+    country_code = models.CharField(db_index=True, max_length=3, unique=True)
     
     def __unicode__(self):
         return self.name
     
 class State(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(db_index=True, max_length=30)
     country = models.ForeignKey(Country, to_field='country_code')
     state_code = models.CharField(max_length=3, unique=True)
     
@@ -44,7 +44,7 @@ class State(models.Model):
         return self.name
     
 class City(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(db_index=True, max_length=30)
     state = models.ForeignKey(State, to_field='state_code')
     
     def __unicode__(self):
@@ -128,29 +128,29 @@ class Image(models.Model):
         super(Image, self).save(force_update=force_update)
         
 class User(models.Model):
-    fb_user_id = models.CharField(max_length=20, null=True, blank=True, default="")
+    fb_user_id = models.CharField(db_index=True, max_length=20, null=True, blank=True, default="")
     password = models.CharField(max_length=50)
     
     role = models.ForeignKey(Role)
-    first_name = models.CharField(max_length=25)
-    last_name = models.CharField(max_length=25)
+    first_name = models.CharField(db_index=True, max_length=25)
+    last_name = models.CharField(db_index=True, max_length=25)
     
-    email = models.EmailField(max_length=30, unique=True)
+    email = models.EmailField(db_index=True, max_length=30, unique=True)
     mobile = models.CharField(max_length=15, null=True)
     profile_image = models.ForeignKey(Image, null=True)
     
     user_verify_token = models.CharField(max_length=50, null=True, blank=True, default="")
     password_reset_token = models.CharField(max_length=20, null=True, blank=True, default="")
 
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(db_index=True, default=False)
     
     facebook_login = models.BooleanField(default=False)
-    credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)], default=0)
+    credits = models.FloatField(db_index=True, validators=[MinValueValidator(0), MaxValueValidator(1000)], default=0)
     
     gift_cards = models.ManyToManyField("GiftCard", null=True, blank=True)
     
     need_sms_notification = models.BooleanField(default=True)
-    deleted = models.BooleanField(default=False)
+    deleted = models.BooleanField(db_index=True, default=False)
     
     created = models.DateTimeField()
     
@@ -166,7 +166,7 @@ class Address(models.Model):
     user = models.ForeignKey(User, related_name="user_address")
     first_name = models.CharField(max_length=50, default="")
     last_name = models.CharField(max_length=50, default="")
-    is_primary = models.BooleanField(default=False)
+    is_primary = models.BooleanField(db_index=True, default=False)
     street = models.CharField(max_length=50)
     building = models.CharField(max_length=50)
     city = models.ForeignKey(City)
@@ -180,42 +180,42 @@ class Address(models.Model):
 
 class CreditCardDetails(models.Model):
     user = models.ForeignKey(User, related_name="cc_details")
-    card_id = models.CharField(max_length=35) 
+    card_id = models.CharField(db_index=True, max_length=35) 
     number = models.CharField(max_length=16)
-    cvv2 = models.CharField(max_length=5)
+    cvv2 = models.CharField(db_index=True, max_length=5)
     card_type = models.CharField(max_length=15)
     def __unicode__(self):
         return self.user.email + " : " + self.number
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=25)
-    is_hidden = models.BooleanField(default=False)
-    is_deleted =  models.BooleanField(default=False)
+    name = models.CharField(db_index=True, max_length=25)
+    is_hidden = models.BooleanField(db_index=True, default=False)
+    is_deleted =  models.BooleanField(db_index=True, default=False)
     
     def __unicode__(self):
         return self.name
 
 class MealType(models.Model):
-    name = models.CharField(max_length=25)
-    is_hidden = models.BooleanField(default=False)
-    is_deleted =  models.BooleanField(default=False)
+    name = models.CharField(db_index=True, max_length=25)
+    is_hidden = models.BooleanField(db_index=True, default=False)
+    is_deleted =  models.BooleanField(db_index=True, default=False)
     
     def __unicode__(self):
         return self.name
 
 class Nutrient(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(db_index=True, max_length=20)
     def __unicode__(self):
         return self.name
     
 class Ingredient(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(db_index=True, max_length=20)
     def __unicode__(self):
         return self.name
 
 class Chef(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(db_index=True, max_length=20)
     image = models.ForeignKey(Image)
     def __unicode__(self):
         return self.name
@@ -227,8 +227,8 @@ class Tips(models.Model):
     video_url = models.CharField(max_length=1024, null=True, blank=True)
 
 class Meal(models.Model):
-    name = models.CharField(max_length=30)
-    description = models.TextField(max_length=1024)
+    name = models.CharField(db_index=True, max_length=30)
+    description = models.TextField(db_index=True, max_length=1024)
 
     main_image = models.ForeignKey(Image, null=True, blank=True, related_name="main_image")
     images = models.ManyToManyField(Image, related_name="meal", null=True, blank=True)
@@ -263,8 +263,8 @@ class Meal(models.Model):
     price = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     
-    is_deleted = models.BooleanField(default=False)
-    available = models.BooleanField(default=True)
+    is_deleted = models.BooleanField(db_index=True, default=False)
+    available = models.BooleanField(db_index=True, default=True)
     def __unicode__(self):
         return self.name
 
@@ -318,6 +318,7 @@ class Payment(models.Model):
         
 class Cart(models.Model):
     user = models.ForeignKey(User)
+    delivery_time = models.DateTimeField(null=True)
     completed = models.BooleanField(default=False)
 
 class CartItem(models.Model):
@@ -326,8 +327,8 @@ class CartItem(models.Model):
     quantity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
 class Order(models.Model):
-    order_num = models.CharField(max_length=20, null=True)
-    transaction_id = models.CharField(max_length=30, null=True)
+    order_num = models.CharField(db_index=True, max_length=20, null=True)
+    transaction_id = models.CharField(db_index=True, max_length=30, null=True)
     
     cart = models.ForeignKey(Cart)
 
@@ -339,16 +340,16 @@ class Order(models.Model):
     delivery_address = models.ForeignKey(Address, related_name="delivery_address")
     billing_address = models.ForeignKey(Address, related_name="billing_address")
     
-    delivery_time = models.DateTimeField(default=datetime.datetime.now())
+    delivery_time = models.DateTimeField(null=True)
     driver_instructions = models.TextField(max_length=1024, null=True)
     
     payment = models.ForeignKey(Payment, null=True, blank=True)
     
     
-    status = models.IntegerField(choices=ORDER_STATUS, default=0)
-    is_deleted = models.BooleanField(default=False)
+    status = models.IntegerField(db_index=True, choices=ORDER_STATUS, default=0)
+    is_deleted = models.BooleanField(db_index=True, default=False)
     
-    created = models.DateTimeField(null=True)
+    created = models.DateTimeField(db_index=True, null=True)
     updated = models.DateTimeField(null=True)
     
     def save(self, *args, **kwargs):
