@@ -119,7 +119,7 @@ def create_order(request, data, user):
         
         try:
             del_time = data['delivery_time'].strip()
-            delivery_time = datetime.strptime(del_time,"%m-%d-%Y %I:%M:%S")
+            delivery_time = datetime.strptime(del_time,"%m-%d-%Y %H:%M:%S")
         except Exception as e:
             log.error("Failed to get delivery time : "+e.message)
             return custom_error("Please provide a valid delivery time.")

@@ -5,6 +5,8 @@ import logging
 import settings
 from decorators import *
 from django.core.paginator import Paginator
+from datetime import datetime, timedelta
+
 log = logging.getLogger('cart')
 
 @check_input('POST')
@@ -32,6 +34,7 @@ def get_cart_items(request, data, user):
           return json_response({"status":1, 
                               "aaData":cart_list,
                               "total_count":len(cart_list),
+                              "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                               })
     except Exception as e:
     	log.error("Failed to list cart items." + e.message)
@@ -126,7 +129,7 @@ def remove_from_cart(request, data, user):
 @check_input('POST')
 def delete_cart(request, data, user):
     try:
-        cart = Cart.get(user=user, completed=False)
+        cart = Cart.objects.get(user=user, completed=False)
         cart.completed=True
         cart.save()
         return json_response({"status":1, "message":"The cart has been cleared."})
@@ -140,4 +143,21 @@ def get_cart_items_count(request, data, user):
       count = CartItem.objects.filter(cart__user=user, cart__completed=False).count()
       return json_response({"status":1, "count":count})
     except Exception as e:
-      return custom_error("Failed to clear cart. Please try again later.")      
+      return custom_error("Failed to clear cart. Please try again later.")
+
+@check_input('POST')
+def save_delivery_time(request, data, user):
+    try:
+        del_time = data['delivery_time'].strip()
+        delivery_time = datetime.strptime(del_time,"%m-%d-%Y %H:%M:%S")
+        if delivery_time > datetime.now() - timedelta(hours=settings.ORDER_DELIVERY_WINDOW):
+            return custom_error("Sorry, the delivery time should be at least "+str(settings.ORDER_DELIVERY_WINDOW) + " from now.")
+
+        cart = Cart.objects.get(user=user, completed=False)
+        cart.delivery_time = delivery_time
+        cart.save()
+
+        return json_response({"status":1, "message":"Successfully updated delivery time."})
+    except KeyError as e:
+        log.error("Save delivery time " + e.message)
+        return custom_error("Failed to update delivery time. Please try again later.")
