@@ -301,16 +301,21 @@ def save_credit_card(request, data, user):
         exp_month = int(str(data["exp_month"]).strip())
         exp_year = int(str(data["exp_year"]).strip())
         cvv2 = int(str(data["cvv2"]).strip())
-        fname = str(data["first_name"]).strip()
-        lname = str(data["last_name"]).strip()
-        
+        if "first_name" in data and data["first_name"].strip() != "":
+            name = data["first_name"].strip()
+
+            if "last_name" in data and data["last_name"].strip() != "":
+                name = name + " " + data["last_name"].strip()
+        else:
+            name = ""
+
         # Create a card
         cc = card.Card(
             number=num,
             month=exp_month,
             year=exp_year,
             cvc=cvv2,
-            holder = fname
+            holder = name
         )
 
         if not cc.is_valid or cc.is_expired:
@@ -325,8 +330,8 @@ def save_credit_card(request, data, user):
             "expire_month": exp_month,
             "expire_year": exp_year,
             "cvv2": cvv2,
-            "first_name": fname,
-            "last_name": lname
+            "first_name": name,
+            #"last_name": lname
             })
         credit_card.create()
 
@@ -334,7 +339,7 @@ def save_credit_card(request, data, user):
             if credit_card.error:
                 log.error("Save Credit card error : " + credit_card.error)
             return custom_error("Failed to save credit card details.")
-
+        
         c_card = CreditCardDetails()
         c_card.user = user
         c_card.card_id = credit_card.id
