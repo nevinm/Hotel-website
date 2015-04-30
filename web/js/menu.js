@@ -2,25 +2,27 @@ $(document).ready(function() {
     var perPage = 3,
         nextPage = 1,
         mealTypeFilter = [],
-        endOfList = false, ipadWidth=767;
+        endOfList = false,
+        ipadWidth = 767;
 
     $(document).on("click", '.subMenu .menu-categories-list', function() {
         $(document).find(".subMenu ul li").removeClass("activeOption");
         $(this).addClass("activeOption");
-        if(window.innerWidth < ipadWidth){
+        if (window.innerWidth < ipadWidth) {
             $(".category-menu").slideToggle();
         }
     });
     //Add to cart
     $(document).on("click", '.addItemButton', function() {
         // $(this).attr('onclick','return false');
-        var x={};
-        x=JSON.parse(localStorage['addToCart']);
-        console.log(x.meal_id);
+        var x = {},
+            meal_id = $(this).attr('data-id');
+        // x = JSON.parse(localStorage['addToCart']);
+        // console.log(x.meal_id);
         $(this).addClass('button-disabled');
-        var meal_id = $(this).attr('data-id');
         addToCart(meal_id);
     });
+
     //Categories
     $(document).on('click', '.menu-categories-list', function() {
         nextPage = 1;
@@ -30,15 +32,15 @@ $(document).ready(function() {
     });
 
     //Mobile category header
-    $(".category-header").on('click',function(){
+    $(".category-header").on('click', function() {
         $(".category-menu").slideToggle();
     });
 
     //Filter toggle
-    $(".filter-container, .subMenuFilter").on('click',function(e){
-        if( e.target === this ) {
+    $(".filter-container, .subMenuFilter").on('click', function(e) {
+        if (e.target === this) {
             $(".filter-drop-down").slideToggle();
-         }
+        }
     })
 
     //Filters
@@ -67,12 +69,12 @@ $(document).ready(function() {
 function infiniteScrolling() {
     $('body').unbind('scroll');
     $("body").on('scroll', function(e) {
-        if ($('.listItems').length && endOfList==false) {
+        if ($('.listItems').length && endOfList == false) {
             if (elementScrolling(".listItems:last")) {
                 $("body").unbind('scroll');
                 mealData = JSON.parse(localStorage['meal_details']);
                 getmealList(mealData.search, mealData.category_id, mealData.type_ids, mealData.perPage, mealData.nextPage + 1, true)
-           };
+            };
         }
     });
 }
@@ -118,9 +120,9 @@ var getmealListCallback = {
         var mealList = JSON.parse(data);
         if (mealList.status == 1) {
             endOfList = (mealList.current_page == mealList.page_range[mealList.page_range.length - 1]);
-            if(endOfList==true){
+            if (endOfList == true) {
                 $('body').unbind('scroll');
-            }else{}
+            } else {}
             populateMealList(mealList, isInfinteScrolling);
         } else {
             console.log("Something wrong with meals list");
@@ -159,56 +161,54 @@ function populateMealList(mealList, isInfinteScrolling) {
         $(".listContainer").append("<div class='listItems'>" +
             "<img src='" + value.main_image + "' class='thumbnail'>" +
             "<section class='listItemDetails'>" +
-            "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +           
+            "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +
             "</section><section class='listItemDetails'>" +
             "<h3 class='pullLeft itemCost'>" + dollarConvert(value.price + value.tax) + "</h3>" +
             "<span class='menuItemDetails caption'>Brioche Bun, Avocado, Tomato, Red Onions.</span>" +
             "<span><a href='#' class='btn btn-small-primary medium-green addItemButton' " +
-            "data-id='" + value.id +"'>ADD</a></span>" +
+            "data-id='" + value.id + "'>ADD</a></span>" +
             "</section></div>");
     });
-    if(endOfList){
-    }else{
+    if (endOfList) {} else {
         infiniteScrolling();
     }
 }
 
 function elementScrolling(elem) {
-    var docViewTop = $(window).scrollTop();
-    var docViewBottom = docViewTop + $(window).height();
+        var docViewTop = $(window).scrollTop();
+        var docViewBottom = docViewTop + $(window).height();
 
-    var elemTop = $(elem).offset().top;
-    var elemBottom = elemTop + $(elem).height();
+        var elemTop = $(elem).offset().top;
+        var elemBottom = elemTop + $(elem).height();
 
-    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-}
-//add to cart call back
+        return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    }
+    //add to cart call back
 var addToCartCallback = {
-     success: function(data, textStatus) {
+    success: function(data, textStatus) {
         var meal_details = JSON.parse(data),
-            status  = meal_details.status;
-            console.log(data);
-            if(status == -1){
-                showPopup(meal_details);
-            }
-            else{
-                showPopup(meal_details);
-                CartItemCount();
-            }      
-     },
-     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+            status = meal_details.status;
+        console.log(data);
+        if (status == -1) {
+            showPopup(meal_details);
+        } else {
+            showPopup(meal_details);
+            CartItemCount();
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function addToCart(meal_id){
+function addToCart(meal_id) {
     var url = baseURL + 'add_to_cart/',
         header = {
             "session-key": localStorage["session_key"]
         },
         params = {
-            "meal_id":meal_id,
+            "meal_id": meal_id,
         };
-        data = JSON.stringify(params);
-        localStorage['addToCart'] = data;
-        var addToCartInstance = new AjaxHttpSender(); 
-        addToCartInstance.sendPost(url, header, data, addToCartCallback);
+    data = JSON.stringify(params);
+    localStorage['addToCart'] = data;
+    var addToCartInstance = new AjaxHttpSender();
+    addToCartInstance.sendPost(url, header, data, addToCartCallback);
 }

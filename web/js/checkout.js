@@ -1,39 +1,42 @@
 $(document).ready(function() {
     getCartItems();
-    
+
     //Remove cart items
     $(document).on('click', '#remove-cart-item', function() {
         var meal_id = $(this).parent().attr('data-id'); //may change
         removeCartItems(meal_id);
     });
+
     $(document).on('click', '.order-list-items', function() {
         $('span#remove-cart-item').show();
     });
+
     //Clear cart
     $(document).on('click', '.clear-cart', function() {
         clearCart();
     });
 
-//update cart items
+    //update cart items
     $(document).on('click', '.operator-plus', function() {
         var oldVal = parseInt($(this).parent().find('.quantity').val()),
-            newVal = oldVal+1,
+            newVal = oldVal + 1,
             meal_id = $(this).parents(':eq(1)').attr('data-id'),
             qty = newVal;
         if (oldVal < $(this).data("max")) {
             $(this).parent().find('.quantity').val(newVal);
-            }
-        updateCartItems(meal_id,qty);
+        }
+        updateCartItems(meal_id, qty);
     });
+
     $(document).on('click', '.operator-minus', function() {
         var oldVal = parseInt($(this).parent().find('.quantity').val()),
-            newVal = oldVal-1,
+            newVal = oldVal - 1,
             meal_id = $(this).parents(':eq(1)').attr('data-id'),
             qty = newVal;
         if (oldVal > $(this).data("min")) {
             $(this).parent().find('.quantity').val(newVal);
-            }
-        updateCartItems(meal_id,qty);
+        }
+        updateCartItems(meal_id, qty);
     });
 });
 
@@ -41,7 +44,7 @@ $(document).ready(function() {
 var getCartItemsCallback = {
     success: function(data, textStatus) {
         var cartItems = JSON.parse(data);
-        populateCartItems(cartItems);   
+        populateCartItems(cartItems);
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -58,19 +61,18 @@ function getCartItems() {
 }
 
 //populate cart items
-function populateCartItems(data){
-    $('.order-list-items').empty();
-    $.each(data.aaData,function(key,value){
-            $('.order-list-container').append("<div class='order-list-items' data-id='"+value.id+"'>"+
-                "<img src='"+value.image+"'>"+"<span class='body-text-small'>"+value.name+"</span>"+
-                "<div class='quantity-container'>"+"<span class='operator-minus' data-min='1'>"+'-'+"</span>"+
-                "<input type='text' class='quantity' value='"+value.quantity+"'>"+
-                "<span class='operator-plus' data-max='10'>"+'+'+"</span>"+"</div>"+
-                "<span class='price-container'>"+"$"+value.price+"</span>"+
-                "<span class='body-text-small' id='remove-cart-item'>"+'REMOVE'+"</span>"+"</div>");
-        });
+function populateCartItems(data) {
+    $('.order-list-items').remove();
+    $.each(data.aaData, function(key, value) {
+        $('.order-list-container').append("<div class='order-list-items' data-id='" + value.id + "'>" +
+            "<img src='" + value.image + "'>" + "<span class='body-text-small'>" + value.name + "</span>" +
+            "<div class='quantity-container'>" + "<span class='operator-minus' data-min='1'>" + '-' + "</span>" +
+            "<input type='text' class='quantity' value='" + value.quantity + "'>" +
+            "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
+            "<span class='price-container'>" + "$" + value.price + "</span>" +
+            "<span class='body-text-small' id='remove-cart-item'>" + 'REMOVE' + "</span>" + "</div>");
+    });
 }
-
 
 //Remove cart items call back
 var removeCartItemsCallback = {
@@ -82,13 +84,13 @@ var removeCartItemsCallback = {
 }
 
 //Remove cart items
-function removeCartItems(meal_id){
+function removeCartItems(meal_id) {
     var url = baseURL + "remove_from_cart/",
         header = {
             "session-key": localStorage["session_key"]
         },
         params = {
-            "meal_id":meal_id
+            "meal_id": meal_id
         };
     data = JSON.stringify(params);
     var removeCartItemsInstance = new AjaxHttpSender();
@@ -98,12 +100,12 @@ function removeCartItems(meal_id){
 //clear cart
 var clearCartCallback = {
     success: function(data, textStatus) {
-        
+
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function clearCart(){
+function clearCart() {
     var url = baseURL + "delete_cart/",
         header = {
             "session-key": localStorage["session_key"]
@@ -117,22 +119,67 @@ function clearCart(){
 //update cart items call back
 var updateCartItemsCallback = {
     success: function(data, textStatus) {
-        debugger;
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
 //update cart items
-function updateCartItems(meal_id,quantity){
+function updateCartItems(meal_id, quantity) {
     var url = baseURL + "update_cart/",
         header = {
             "session-key": localStorage["session_key"]
         },
         params = {
-            "meal_id":meal_id,
-            "quantity":quantity
+            "meal_id": meal_id,
+            "quantity": quantity
         };
     data = JSON.stringify(params);
     var updateCartItemsInstance = new AjaxHttpSender();
     updateCartItemsInstance.sendPost(url, header, data, updateCartItemsCallback);
 }
+
+function checkOutPayPal(serviceName, merchantID, options) {
+    // global data
+    var data = {
+        cmd: "_cart",
+        business: merchantID,
+        upload: "1",
+        rm: "2",
+        charset: "utf-8"
+    };
+
+    // item data
+    for (var i = 0; i < this.items.length; i++) {
+        var item = this.items[i];
+        var ctr = i + 1;
+        data["item_number_" + ctr] = item.sku;
+        data["item_name_" + ctr] = item.name;
+        data["quantity_" + ctr] = item.quantity;
+        data["amount_" + ctr] = item.price.toFixed(2);
+    }
+
+    // build form
+    var form = $('<form/></form>');
+    form.attr("action", "https://www.sandbox.paypal.com/cgi-bin/webscr");
+    form.attr("method", "POST");
+    form.attr("style", "display:none;");
+    this.addFormFields(form, data);
+    this.addFormFields(form, options);
+    $("body").append(form);
+
+    // submit form
+    this.clearCart = clearCart == null || clearCart;
+    form.submit();
+    form.remove();
+}
+
+$(document).ready(function() {
+    getCartItems();
+
+    $("#paypal").on('click', function() {
+        checkoutParameters("PayPal", "paypaluser@youremail.com", {
+            "return": "http://10.1.4.109/angularjs-cart/ShoppingCart/default.htm#/cart",
+            "cancel_return": "http://10.1.4.109/angularjs-cart/ShoppingCart/default.htm#/cart"
+        });
+    });
+});
