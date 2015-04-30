@@ -162,13 +162,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="delivery-info-guest-container">
+                <div class="delivery-info-guest-container box-border">
+                    <div class="address-info-guest">
                     <div class="checkout-header">
                         <span>DELIVERY INFO</span>
-                        <span>PAYMENT METHOD</span>
                     </div>
-                    <div class="address-info">
-                        <div class="container">
+                        <div class="content">
                             <span class="content-heading">Do you have an account? Log In here</span>
                             <form id="guest-address-info" novalidate="novalidate">
                                 <div class="section1">
@@ -210,47 +209,68 @@
                                     </div>
                                 </div>
                             </form>
+                            </div>
                         </div>
-                    </div>
                     <div class="payment-method-guest-container">
-                        <span class="content-heading">PAY WITH PAL</span>
-                        <img class='paypal' src="../images/paypal_button.png">
-                        <div class="pay-container">
-                             <span class="content-heading">PAY BY CREDIT CARD</span>
-                             <form id="pay-form">
-                                 <div class="forminput-wrapper">
-                                        <label class="body-text-small">Credit card number</label>
-                                        <input type="text" name="firstname" class="popup-input">
-                                    </div>
-                                    <div class="forminput-wrapper">
-                                        <label class="body-text-small">CVV</label>
-                                        <input type="text" name="lastname" class="popup-input">
-                                    </div>
+                        <div class="checkout-header">
+                            <span>PAYMENT METHOD</span>
+                        </div>
+                        <div class="content">
+                            <div class="paypal-container">
+                                <span class="content-heading">PAY WITH PAL</span>
+                                <img class='paypal' src="../images/paypal_button.png">
+                            </div>
+                            <div class="pay-by-credit-container">
+                                 <span class="content-heading">PAY BY CREDIT CARD</span>
+                                 <form id="pay-form">
                                      <div class="forminput-wrapper">
-                                        <label class="body-text-small">Expiry Date</label>
-                                        <div class="styled-select">
-                                            <select name="expirydate">
-                                            <option value=""></option>
-                                            </select>
+                                            <label class="body-text-small">Credit card number</label>
+                                            <input type="text" name="cardnumber" class="popup-input"id="card-number">
                                         </div>
-                                    </div>
-                                    <span class="div">/</span>
-                                     <div class="forminput-wrapper">
-                                        <div class="styled-select">
-                                            <select >
-                                            <option value=""></option>
-                                            </select>
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">CVV</label>
+                                            <input type="text" name="cvv" class="popup-input" id="cvv-number">
                                         </div>
-                                    </div>
-                                    <div class="forminput-wrapper">
-                                         <label class="body-text-small">Billing Zip</label>
-                                        <input type="text" name="zip" class="popup-input">
-                                    </div>
-                             </form>
+                                         <div class="forminput-wrapper">
+                                            <label class="body-text-small">Expiry Date</label>
+                                            <div class="styled-select">
+                                                <select name="expirydate" id="ExpMonth">
+                                                    <option value=""></option>
+                                                    <option value="1">JAN</option>
+                                                    <option value="2">FEB</option>
+                                                    <option value="3">MAR</option>
+                                                    <option value="4">APR</option>
+                                                    <option value="5">MAY</option>
+                                                    <option value="6">JUN</option>
+                                                    <option value="7">JUL</option>
+                                                    <option value="8">AUG</option>
+                                                    <option value="9">SEP</option>
+                                                    <option value="10">OCT</option>
+                                                    <option value="11">NOV</option>
+                                                    <option value="12">DEC</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <span class="div">/</span>
+                                         <div class="forminput-wrapper">
+                                            <div class="styled-select">
+                                                <select id="ExpYear">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="forminput-wrapper">
+                                             <label class="body-text-small">Billing Zip</label>
+                                            <input type="text" name="zip" class="popup-input" id="billing-zip">
+                                        </div>
+                                        <div class="button">
+                                            <input type="button" value="SAVE"/ id="save-credit-card">
+                                        </div>
+                                 </form>
+                            </div>
                         </div>
                     </div>
-
-                </div>
+                    </div>
                 </div>
                 <div class="right-wrapper">
                 <div class="receipt-container">
@@ -305,7 +325,10 @@
                     </span>
                 </div>
                 </div>
-            </div>           
+            </div>          
+        <div class="popup-message">
+            <span></span>
+        </div> 
         </div>
     </div>
 	<script type="text/javascript" src='../js/jquery.min.js'></script>
