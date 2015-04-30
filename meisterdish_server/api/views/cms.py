@@ -264,6 +264,7 @@ def get_meals(request, data):
                               "price":meal.price,
                               "tax":meal.tax,
                               "ingredients":ingredients,
+                              "in_cart" : 1 if CartItem.objects.filter(cart__user=user, meal__pk=meal.id).exists() else 0,
                               
                               })
         return json_response({"status":1, 
