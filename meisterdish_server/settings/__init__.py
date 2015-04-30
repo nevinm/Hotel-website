@@ -192,6 +192,10 @@ LOGGING = {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },
+        'cart': {
+            'handlers': ['logfile'],
+            'level': 'DEBUG'
+        },
     }
 }
 
@@ -237,4 +241,4 @@ else:
 DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
 DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
 
-
+ORDER_DELIVERY_WINDOW = 3 #Hours
