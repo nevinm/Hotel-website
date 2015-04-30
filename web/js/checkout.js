@@ -94,7 +94,7 @@ function populateCartItems(data) {
             "<input type='text' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
             "<span class='price-container'>" + dollarConvert(value.price) + "</span>" +
-            "<span class='body-text-small' id='remove-cart-item'>" + 'REMOVE' + "</span>" + "</div>");
+            "<img src='../images/cross_black.png' id='remove-cart-item'>"+ "</div>");
     });
 }
 
