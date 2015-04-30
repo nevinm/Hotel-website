@@ -304,7 +304,7 @@ def save_credit_card(request, data, user):
         if "first_name" in data and data["first_name"].strip() != "":
             name = data["first_name"].strip()
 
-            if "last_name" in data and data["last_name"].strip() != ""
+            if "last_name" in data and data["last_name"].strip() != "":
                 name = name + " " + data["last_name"].strip()
         else:
             name = ""
