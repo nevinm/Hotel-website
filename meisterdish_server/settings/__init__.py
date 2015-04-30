@@ -236,8 +236,3 @@ else:
 
 DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
 DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 880bf96258e1cbb9184255545d54703772d71600
