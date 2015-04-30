@@ -338,8 +338,8 @@ def save_credit_card(request, data, user):
             if credit_card.error:
                 log.error("Save Credit card error : " + credit_card.error)
             return custom_error("Failed to save credit card details.")
-
-        c_card = CreditCardDetails()
+        
+	c_card = CreditCardDetails()
         c_card.user = user
         c_card.card_id = credit_card.id
         c_card.number = credit_card.number
