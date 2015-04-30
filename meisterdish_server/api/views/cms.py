@@ -207,6 +207,14 @@ def change_user_status(request, data, session_user):
 @check_input('POST')
 def get_meals(request, data):
     try:
+        session_key = request.META.get('HTTP_SESSION_KEY', None)
+        session = SessionStore(session_key=session_key)
+        if session and 'user' in session :
+            try:
+                user = User.objects.get(pk=session['user']['id'])
+            except Exception as e:
+                user = None
+                    
         limit = data.get('perPage', settings.PER_PAGE)
         page = data.get("nextPage",1)
                     
@@ -264,6 +272,7 @@ def get_meals(request, data):
                               "price":meal.price,
                               "tax":meal.tax,
                               "ingredients":ingredients,
+                              "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, meal__pk=meal.id).exists() else 0,
                               
                               })
         return json_response({"status":1, 

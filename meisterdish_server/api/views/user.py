@@ -187,8 +187,16 @@ def add_rating(request, data, user, meal_id):
         return custom_error("Your are not authorized rate this meal/order.")
 
 @check_input('POST')
-def get_meal_details(request, data, user, meal_id):
+def get_meal_details(request, data, meal_id):
     try:
+        session_key = request.META.get('HTTP_SESSION_KEY', None)
+        session = SessionStore(session_key=session_key)
+        if session and 'user' in session :
+            try:
+                user = User.objects.get(pk=session['user']['id'])
+            except Exception as e:
+                user = None
+
         meal = Meal.objects.get(pk=meal_id, is_deleted=False)
         rating_list = []
         for rating in  meal.mealrating.all():
@@ -216,7 +224,7 @@ def get_meal_details(request, data, user, meal_id):
                 "image_url" : settings.DEFAULT_MEAL_IMAGE if tips.image is None else tips.image.image.url,
                 "video_url" : "" if tips.video_url is None else tips.video_url,
                 })
-
+        
         return json_response({
             "status":1,
             "id" : meal.id,
@@ -262,7 +270,8 @@ def get_meal_details(request, data, user, meal_id):
             "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else {
                 "id":meal.main_image.id,
                 "url":meal.main_image.image.url,
-            }
+            },
+            "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, meal__pk=meal.id).exists() else 0,
         })
     except Exception as e:
         log.error("get_meal details : " + e.message)
