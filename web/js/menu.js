@@ -168,6 +168,9 @@ function populateMealList(mealList, isInfinteScrolling) {
             "<span><a href='#' class='btn btn-small-primary medium-green addItemButton' " +
             "data-id='" + value.id + "'>ADD</a></span>" +
             "</section></div>");
+        if(value.available && !value.in_cart){}else{
+            $(".addItemButton:last").addClass("button-disabled");
+        }
     });
     if (endOfList) {} else {
         infiniteScrolling();
