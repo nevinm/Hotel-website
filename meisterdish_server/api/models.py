@@ -160,7 +160,7 @@ class User(models.Model):
         super(User, self).save(*args, **kwargs)
         
     def __unicode__(self):
-        return self.email
+        return self.email if self.email else "Guest user"
 
 class Address(models.Model):
     user = models.ForeignKey(User, related_name="user_address")
