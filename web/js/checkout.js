@@ -241,7 +241,9 @@ function clearCart() {
 
 //update cart items call back
 var updateCartItemsCallback = {
-    success: function(data, textStatus) {},
+    success: function(data, textStatus) {
+        localStorage['cartItems']=data;
+    },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
@@ -270,6 +272,7 @@ function checkOutPayPal(serviceName, merchantID, options) {
             charset: "utf-8"
         };
 
+        cartItems = JSON.parse(localStorage['cartItems']);
         // item data
         for (var i = 0; i < cartItems.aaData.length; i++) {
             var item = cartItems.aaData[i];
