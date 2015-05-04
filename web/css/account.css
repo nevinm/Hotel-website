@@ -797,6 +797,11 @@ form.addaddress-popup {
 	margin-right: 0;
 	text-align: center;
 }
+.order-list-container .emtpy-cart-message{
+	text-align: center;
+    margin-top: 50px;
+}
+
 .order-list-items .body-text-small {
 	padding: 0;
 	padding: 5px 0px;

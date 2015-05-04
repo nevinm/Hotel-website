@@ -14,13 +14,14 @@ $(document).ready(function() {
     });
     //Add to cart
     $(document).on("click", '.addItemButton', function() {
-        // $(this).attr('onclick','return false');
         var x = {},
             meal_id = $(this).attr('data-id');
-        // x = JSON.parse(localStorage['addToCart']);
-        // console.log(x.meal_id);
-        $(this).addClass('button-disabled');
-        addToCart(meal_id);
+            if(localStorage['loggedIn']=='true'){
+                addToCart(meal_id);
+            }
+            else if(localStorage['loggedIn']=='false'){
+                addToCart(meal_id);
+            }
     });
 
     //Categories
@@ -168,7 +169,7 @@ function populateMealList(mealList, isInfinteScrolling) {
             "<span><a href='#' class='btn btn-small-primary medium-green addItemButton' " +
             "data-id='" + value.id + "'>ADD</a></span>" +
             "</section></div>");
-        if(value.available && !value.in_cart){}else{
+        if (value.available && !value.in_cart) {} else {
             $(".addItemButton:last").addClass("button-disabled");
         }
     });
@@ -188,15 +189,18 @@ function elementScrolling(elem) {
     }
     //add to cart call back
 var addToCartCallback = {
-    success: function(data, textStatus) {
+    success: function(data, textStatus, mealId) {
         var meal_details = JSON.parse(data),
             status = meal_details.status;
-        console.log(data);
         if (status == -1) {
             showPopup(meal_details);
         } else {
+            $('*[data-id="' + mealId + '"]').addClass("button-disabled");
             showPopup(meal_details);
             CartItemCount();
+            if(meal_details.session_key && (meal_details.session_key).length){
+                localStorage['session_key']=meal_details.session_key;
+            }
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -211,7 +215,6 @@ function addToCart(meal_id) {
             "meal_id": meal_id,
         };
     data = JSON.stringify(params);
-    localStorage['addToCart'] = data;
     var addToCartInstance = new AjaxHttpSender();
-    addToCartInstance.sendPost(url, header, data, addToCartCallback);
+    addToCartInstance.sendPost(url, header, data, addToCartCallback, meal_id);
 }

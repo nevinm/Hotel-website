@@ -664,10 +664,10 @@ span.icon-menu{
 	z-index: 99999;
 }
 .button-disabled{
-	cursor: default;
-	pointer-events:none;
-	background-color: #d0d0d0;
-	border-color: #D0D0D0;
+	cursor: default !important;
+	pointer-events:none !important;
+	background-color: #d0d0d0 !important;
+	border-color: #D0D0D0 !important;
 }
 /*==============================*\
 		&NAVBAR RESPONSIVE
