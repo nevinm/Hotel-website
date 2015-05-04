@@ -14,6 +14,23 @@ function dollarConvert(value) {
     return dollarValue;
 }
 
+// delivery_time : 04-28-2015 20:15:20
+function getCurrentDateTime(){
+    var currentdate = new Date();
+    return datetime = ('0' + (currentdate.getMonth()+1)).slice(-2)  + "-" 
+                +('0'+ currentdate.getDate()).slice(-2) + "-"
+                + currentdate.getFullYear();
+}
+
+function getCurrentHour() {
+    var currentdate = new Date();
+    var hours = currentdate.getHours();
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    var strTime = hours;
+    return strTime;
+}
+
 function getParameterFromUrl(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -79,6 +96,7 @@ function logingOut() {
     $(".logout").addClass('hide');
     localStorage.removeItem('username');
     localStorage.removeItem('session_key');
+    localStorage.removeItem('cartItems');
     localStorage.removeItem('fb-id');
     localStorage.removeItem('user_profile');
     localStorage.removeItem('fb-image');
@@ -105,15 +123,6 @@ function showPopup(data) {
                 window.location.href = 'menu.html';
             }
         }
-        // if(currentPage="Meisterdish -Change Email"){
-        //     window.location.href = "account.html";
-        // }
-        // if(localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn']=='true'){
-        //     window.location.href='menu.html';
-        // }
-        // if ($('.facebook-signup').length) {
-        //     window.location.href='login.html';
-        // }
     })
 }
 

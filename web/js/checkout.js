@@ -2,14 +2,31 @@ $(document).ready(function() {
     getCartItems();
     populateYear();
     savedCardDetails();
-    var cartItems, payPalEmail ="paypaluser@youremail.com" , 
-    returnUrl ="http://meisterdish.qburst.com/views/menu.html",
-    cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
-    notifyUrl= "http://meisterdish.qburst.com/views/checkout.html"
+    setCurrentTime();
+    var cartItems, payPalEmail = "paypaluser@youremail.com",
+        returnUrl = "http://meisterdish.qburst.com/views/menu.html",
+        cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
+        notifyUrl = "http://meisterdish.qburst.com/views/checkout.html"
+
     //Remove cart items
     $(document).on('click', '#remove-cart-item', function() {
         var meal_id = $(this).parent().attr('data-id'); //may change
         removeCartItems(meal_id);
+        updateReciept();
+    });
+
+    //Separate the today and week buttons
+    timeActiveRestriction(".week-content input[type=button]", "checkout-time-button-active", ".today-content input[type=button]");
+    timeActiveRestriction(".today-content input[type=button]", "checkout-time-button-active", ".week-content input[type=button]");
+    //Within Week button restriction
+    timeActiveRestriction(".week-content .date-content .checkout-time-button", "checkout-time-button-active", ".week-content .date-content .checkout-time-button");
+    timeActiveRestriction(".week-content .time-content .checkout-time-button", "checkout-time-button-active", ".week-content .time-content .checkout-time-button");
+
+    //Today button restriction
+    timeActiveRestriction(".today-content .checkout-time-button", "checkout-time-button-active", ".today-content .checkout-time-button");
+
+    $(document).on('click', '.order-list-items', function() {
+        $('span#remove-cart-item').show();
     });
 
     //Clear cart
@@ -27,6 +44,7 @@ $(document).ready(function() {
             $(this).parent().find('.quantity').val(newVal);
         }
         updateCartItems(meal_id, qty);
+        updateReciept();
     });
 
     $(document).on('click', '.operator-minus', function() {
@@ -38,6 +56,7 @@ $(document).ready(function() {
             $(this).parent().find('.quantity').val(newVal);
         }
         updateCartItems(meal_id, qty);
+        updateReciept();
     });
 
     //PayPal payment
@@ -48,25 +67,57 @@ $(document).ready(function() {
             "notify_url": notifyUrl
         });
     });
-    
+
     //populate year
-    function populateYear(){
+    function populateYear() {
         var currentYear = new Date().getFullYear();
-        for(var i = 1;i<=20;i++){
-            $('#ExpYear').append("<option value='"+i+"'>"+currentYear+"</option>");
+        for (var i = 1; i <= 20; i++) {
+            $('#ExpYear').append("<option value='" + i + "'>" + currentYear + "</option>");
             currentYear = currentYear + 1;
         }
     }
-    $('#save-credit-card').on("click",function(){
+    $('#save-credit-card').on("click", function() {
         saveCreditCardDetails();
     });
 });
 
+
+function setCurrentTime() {
+    currentHour = getCurrentHour();
+    $(".today-content .checkout-time-button").each(function(key, value) {
+        if (getCurrentHour() == $(value).data().hr) {
+            $(this).val("NOW");
+            $(this).addClass("checkout-time-button-active");
+        }
+    });
+}
+
+//Used for the time selection resrtiction
+function timeActiveRestriction(buttonSelector, activeClass, oppositeSelector) {
+    $(buttonSelector).on('click', function() {
+        $(oppositeSelector).removeClass(activeClass);
+        $(this).addClass(activeClass);
+        if (buttonSelector == ".today-content input[type=button]") {
+            $(".week-content .time-content .checkout-time-button").addClass("button-disabled");
+        } else if (buttonSelector == ".week-content .date-content .checkout-time-button") {
+            $(".week-content .time-content .checkout-time-button").removeClass("button-disabled");
+        }
+        // deliveryTime = getCurrentDateTime() + " "+getCurrentHour()+":00:00";
+    });
+}
+
 //Get Cart items
 var getCartItemsCallback = {
     success: function(data, textStatus) {
+        localStorage['cartItems'] = data;
         cartItems = JSON.parse(data);
-        populateCartItems(cartItems);
+        if (cartItems.status == 1) {
+            $(".emtpy-cart-message").hide();
+            populateCartItems(cartItems);
+        } else {
+            $('.order-list-items').remove();
+            $(".emtpy-cart-message").show();
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -82,18 +133,61 @@ function getCartItems() {
     getCartItemsInstance.sendPost(url, header, data, getCartItemsCallback);
 }
 
+//Save delivery time
+var saveDeliveryTimeCallback = {
+    success: function(data, textStatus) {
+        cartItems = JSON.parse(data);
+        populateCartItems(cartItems);
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function saveDeliveryTime() {
+    var url = baseURL + "save_delivery_time/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {
+
+        };
+    data = JSON.stringify(params);
+    var saveDeliveryTimeInstance = new AjaxHttpSender();
+    saveDeliveryTimeInstance.sendPost(url, header, data, saveDeliveryTimeCallback);
+}
+
 //populate cart items
 function populateCartItems(data) {
     $('.order-list-items').remove();
+    $(".items-container .item-count").text("(" + data.total_count + ")");
     $.each(data.aaData, function(key, value) {
         $('.order-list-container').append("<div class='order-list-items' data-id='" + value.id + "'>" +
             "<img src='" + value.image + "'>" + "<span class='body-text-small'>" + value.name + "</span>" +
             "<div class='quantity-container'>" + "<span class='operator-minus' data-min='1'>" + '-' + "</span>" +
             "<input type='text' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
-            "<span class='price-container'>" + dollarConvert(value.price) + "</span>" +
-            "<img src='../images/cross_black.png' id='remove-cart-item'>"+ "</div>");
+            "<span class='price-container' data-tax='" + value.tax + "'>" + dollarConvert(value.price) + "</span>" +
+            "<img src='../images/cross_black.png' id='remove-cart-item'>" + "</div>");
     });
+    updateReciept();
+}
+
+function updateReciept() {
+    var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
+        totalDriverTip = 5,
+        totalDeliveryCost = 2;
+    $(".order-list-items").each(function(key, value) {
+        quantity = parseInt($(value).find('.quantity').val());
+        price = parseInt($(value).find('.price-container').text().slice(1));
+        tax = parseInt($(value).find('.price-container').attr("data-tax"));
+
+        totalItemCost += (price * quantity);
+        totalTaxCost += (tax * quantity);
+    });
+    totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost;
+
+    $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
+    $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
+    $(".total-cost").text("$" + (totalCost).toFixed(2));
 }
 
 //Remove cart items call back
@@ -103,10 +197,10 @@ var removeCartItemsCallback = {
         getCartItems();
         var message = JSON.parse(data).message;
         $('.popup-message span').text(message);
-         $('.popup-message').show();
-        setTimeout(function(){
+        $('.popup-message').show();
+        setTimeout(function() {
             $('.popup-message').hide();
-        },2000); 
+        }, 2000);
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -167,40 +261,42 @@ function updateCartItems(meal_id, quantity) {
 }
 
 function checkOutPayPal(serviceName, merchantID, options) {
-    // global data
-    var data = {
-        cmd: "_cart",
-        business: merchantID,
-        upload: "1",
-        rm: "2",
-        charset: "utf-8"
-    };
+        // global data
+        var data = {
+            cmd: "_cart",
+            business: merchantID,
+            upload: "1",
+            rm: "2",
+            charset: "utf-8"
+        };
 
-    // item data
-    for (var i = 0; i < cartItems.aaData.length; i++) {
-        var item = cartItems.aaData[i];
-        var counter = i + 1;
-        data["item_name_" + counter] = item.name;
-        data["quantity_" + counter] = item.quantity;
-        data["amount_" + counter] = (item.price + item.tax).toFixed(2);
+        // item data
+        for (var i = 0; i < cartItems.aaData.length; i++) {
+            var item = cartItems.aaData[i];
+            var counter = i + 1;
+            data["item_name_" + counter] = item.name;
+            data["quantity_" + counter] = item.quantity;
+            data["amount_" + counter] = (item.price).toFixed(2);
+            data["tax_" + counter] = (item.tax).toFixed(2);
+        }
+            data["shipping_" + counter] = 2;
+            data["handling_" + counter] = 5;
+
+        // build form
+        var form = $('<form/></form>');
+        form.attr("action", "https://www.sandbox.paypal.com/cgi-bin/webscr");
+        form.attr("method", "POST");
+        form.attr("style", "display:none;");
+        addFormFields(form, data);
+        addFormFields(form, options);
+        $("body").append(form);
+
+        // submit form
+        // clearCart();
+        form.submit();
+        form.remove();
     }
-
-    // build form
-    var form = $('<form/></form>');
-    form.attr("action", "https://www.sandbox.paypal.com/cgi-bin/webscr");
-    form.attr("method", "POST");
-    form.attr("style", "display:none;");
-    addFormFields(form, data);
-    addFormFields(form, options);
-    $("body").append(form);
-    debugger;
-
-    // submit form
-    clearCart();
-    form.submit();
-    form.remove();
-}
-//save credit card details call back
+    //save credit card details call back
 var saveCreditCardDetailsCallback = {
     success: function(data, textStatus) {
         debugger;
@@ -223,7 +319,7 @@ function saveCreditCardDetails() {
             "exp_month": Exp_month,
             "exp_year": Exp_year,
             "cvv2": cvv
-            }
+        }
     data = JSON.stringify(params);
     var saveCreditCardDetailsInstance = new AjaxHttpSender();
     saveCreditCardDetailsInstance.sendPost(url, header, data, saveCreditCardDetailsCallback);
@@ -231,9 +327,7 @@ function saveCreditCardDetails() {
 
 //Get saved cards
 var savedCardDetailsCallback = {
-    success: function(data, textStatus) {
-        debugger;
-    },
+    success: function(data, textStatus) {},
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
@@ -243,8 +337,7 @@ function savedCardDetails() {
         header = {
             "session-key": localStorage["session_key"]
         },
-        params = {
-            }
+        params = {}
     data = JSON.stringify(params);
     var savedCardDetailsInstance = new AjaxHttpSender();
     savedCardDetailsInstance.sendPost(url, header, data, savedCardDetailsCallback);

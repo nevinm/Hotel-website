@@ -526,6 +526,9 @@ input#meal-price {
     width: 60%;
     float: left;
 }
+.preperation-container-1 .add-preparation-button, .preperation-container-2 .add-preparation-button{
+    margin-top: 102px;
+}
 
 .preperation-container-1,
 .preperation-container-2 {
