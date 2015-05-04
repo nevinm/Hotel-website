@@ -295,8 +295,6 @@ html,body{
 }
 #account-mainWrapper{
 	width: 100%;
-	border-right: 10px solid #fff;
-	border-left: 10px solid #fff;
 	float: left;
 	background-image:  url(../images/bg.jpg);
 	min-height: 100%;
