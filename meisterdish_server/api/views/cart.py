@@ -49,7 +49,7 @@ def add_to_cart(request, data):
             (user, session_key) = create_guest_user(request)
         else:
             session_key = None
-            
+
         if user is None:
             return custom_error("An error has occured. Please try again later.")
 
@@ -123,7 +123,28 @@ def update_cart(request, data, user):
            cart_item.meal = meal
         cart_item.quantity = qty
         cart_item.save()
-        return json_response({"status":1, "message":"The cart has been updated."})
+
+        cart_list = []
+        for cart_item in CartItem.objects.filter(cart__user=user, cart__completed=False):
+              cart_list.append(
+              {
+                "id" : cart_item.meal.id,
+                "name": cart_item.meal.name,
+                "description": cart_item.meal.description,
+                "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
+                "available": 1 if cart_item.meal.available else 0,
+                "category": cart_item.meal.category.name.title(),
+                "price": cart_item.meal.price,
+                "tax": cart_item.meal.tax,
+                "quantity":cart_item.quantity,
+              }
+        )
+        return json_response({"status":1, 
+                              "aaData":cart_list,
+                              "messge" : "The cart has been updated",
+                              "total_count":len(cart_list),
+                              "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
+                              }) 
         
     except Exception as e:
         log.error("Update cart : "+e.message)
