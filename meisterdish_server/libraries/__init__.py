@@ -1,8 +1,9 @@
 from django.core.mail import EmailMessage
 import logging
-from api.models import Image
+from api.models import Image, User, Role, 
 import re
 import settings
+from django.contrib.sessions.backends.db import SessionStore
 
 log = logging.getLogger('libraries')
  
@@ -71,3 +72,43 @@ def configure_paypal_rest_sdk():
     "client_id": settings.PAYPAL_CLIENT_ID,
     "client_secret": settings.PAYPAL_CLIENT_SECRET,
   })
+
+def get_request_user(request):
+  session_key = request.META.get('HTTP_SESSION_KEY', None)
+  session = SessionStore(session_key=session_key)
+  if session and 'user' in session :
+      try:
+          user = User.objects.get(pk=session['user']['id'])
+      except Exception as e:
+          user = None
+  else:
+      user = None
+  return user
+
+def create_guest_user(request):
+  try:
+    user = User()
+    user.role = Role.objects.get(pk=settings.ROLE_GUEST)
+    user.is_active = True
+    user.save()
+
+    if user.id:
+        user_dic = {
+                    "id":user.id,
+                    "email":user.email,
+                    "first_name":user.first_name,
+                    "last_name":user.last_name,
+                    "role":user.role.id,
+                   }
+
+        session = SessionStore()
+        session["user"] = user_dic
+        session.set_expiry = settings.SESSION_EXPIRY
+        session.save()
+        return (user, session.session_key)
+    else:
+      return (None, None)
+    
+  except Exception as e:
+    log.error("Failed to add guest user " +e.message )
+    return (None, None)

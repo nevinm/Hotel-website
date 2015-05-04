@@ -144,7 +144,7 @@ def signup(request, data):
             log.info(user.email + " signed up")
             session = SessionStore()
             session["user"] = user_dic
-            sessionset_expiry = settings.SESSION_EXPIRY
+            session.set_expiry = settings.SESSION_EXPIRY
             session.save()
             
             log.info(email + " : Signed up ")
