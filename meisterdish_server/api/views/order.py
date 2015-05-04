@@ -110,6 +110,13 @@ def get_orders(request, data, user=None):
     	log.error("Failed to list orders." + e.message)
     	return custom_error("Failed to get orders list.")
 
+def make_cc_payment(data):
+    try:
+        return True
+    except KeyError as e:
+        log.error("Failed to pay using CC." + e.message)
+        return False
+
 @check_input('POST')
 def create_order(request, data, user):
     try:
@@ -121,31 +128,52 @@ def create_order(request, data, user):
             del_time = data['delivery_time'].strip()
             delivery_time = datetime.strptime(del_time,"%m-%d-%Y %H:%M:%S")
         except Exception as e:
-            log.error("Failed to get delivery time : "+e.message)
+            log.error("Invalid delivery time : "+e.message)
             return custom_error("Please provide a valid delivery time.")
 
-        driver_instructions = data['driver_instructions']
-        tip = int(data['tip'])
+        driver_instructions = data.get('driver_instructions', "")
+        tip = int(data.get('tip', 5))
         if tip < 5:
             return custom_error("Miniumum tip amount is $5.") 
 
         if 'delivery_address' in data:
-            del_address = Address.get(user=user, pk=data['delivery_address'])
+            del_address = Address.objects.get(user=user, pk=data['delivery_address'])
         else:
             del_address = user.user_address.get(is_primary=True).id
         
         if 'billing_address' in data:
-            bil_address = Address.get(user=user, pk=data['billing_address'])
+            bil_address = Address.objects.get(user=user, pk=data['billing_address'])
         else:
             bil_address = user.user_address.get(is_primary=True).id
         
+        if "payment_type" not in data:
+            return custom_error("Please choose a valid payment type")
+         
+        elif data["payment_type"].lower() == "cc":
+
+            payment_type = "CC"
+            if "card_id" not in data:
+                cc_data = {
+                    "number" : data["number"],
+                    "first_name" : data["first_name"],
+                    "last_name" : data["last_name"],
+                    "exp_month" : data['expiry_month'],
+                    "exp_year" : data["expiry_year"],
+                    "cvv2" : data["cvv2"],
+                }
+            else:
+                cc_data = CreditCardDetails.objects.get(pk=data["card_id"]).card_id
+            response = make_cc_payment(cc_data)
+        else:
+            payment_type = "PP"
+
         items = CartItem.objects.filter(cart__user=user)
         for item in items:
             if not item.meal.available:
-                return custom_error("Sorry, The meal "+item.meal.name + " has gone out of stock. Please add another meals or continue checkout with out it.")
+                return custom_error("Sorry, The meal "+ item.meal.name.title() + " has gone out of stock. Please add another meals or continue checkout with out it.")
             
             quantity += item.quantity
-            total_price += item.meal.total_price
+            total_price += item.meal.price
             total_tax += item.meal.tax
         
         order = Order()
@@ -162,11 +190,15 @@ def create_order(request, data, user):
         order.total_tax = total_tax
         order.tip = tip
         order.save()
-
+        
+        if payment_type == "CC":
+            return json_response({"status":1, "message":"The Order has been placed successully."})
+        else:
+            return json_response({"status":1, "message":"The request has been placed. You will be notified once the payment is verified. "})
 
     except Exception as e:
         log.error("Failed to update order." + e.message)
-        return custom_error("Failed to update order.")
+        return custom_error("Failed to place order.")
 
 #Admin only
 @check_input('POST', True)

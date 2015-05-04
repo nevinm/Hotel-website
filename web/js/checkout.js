@@ -1,5 +1,7 @@
 $(document).ready(function() {
     getCartItems();
+    populateYear();
+    savedCardDetails();
     var cartItems, payPalEmail ="paypaluser@youremail.com" , 
     returnUrl ="http://meisterdish.qburst.com/views/menu.html",
     cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
@@ -62,6 +64,18 @@ $(document).ready(function() {
             "notify_url": notifyUrl
         });
     });
+    
+    //populate year
+    function populateYear(){
+        var currentYear = new Date().getFullYear();
+        for(var i = 1;i<=20;i++){
+            $('#ExpYear').append("<option value='"+i+"'>"+currentYear+"</option>");
+            currentYear = currentYear + 1;
+        }
+    }
+    $('#save-credit-card').on("click",function(){
+        saveCreditCardDetails();
+    });
 });
 
 //Get Cart items
@@ -103,6 +117,12 @@ var removeCartItemsCallback = {
     success: function(data, textStatus) {
         CartItemCount();
         getCartItems();
+        var message = JSON.parse(data).message;
+        $('.popup-message span').text(message);
+         $('.popup-message').show();
+        setTimeout(function(){
+            $('.popup-message').hide();
+        },2000); 
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -194,4 +214,53 @@ function checkOutPayPal(serviceName, merchantID, options) {
     clearCart();
     form.submit();
     form.remove();
+}
+//save credit card details call back
+var saveCreditCardDetailsCallback = {
+    success: function(data, textStatus) {
+        debugger;
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+//save credit card items
+function saveCreditCardDetails() {
+    var url = baseURL + "save_credit_card/",
+        card_number = $('#card-number').val(),
+        cvv = $('#cvv-number').val(),
+        Exp_month = $("#ExpMonth").val(),
+        Exp_year = $("#ExpYear option:selected").text(),
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {
+            "number": card_number,
+            "exp_month": Exp_month,
+            "exp_year": Exp_year,
+            "cvv2": cvv
+            }
+    data = JSON.stringify(params);
+    var saveCreditCardDetailsInstance = new AjaxHttpSender();
+    saveCreditCardDetailsInstance.sendPost(url, header, data, saveCreditCardDetailsCallback);
+}
+
+//Get saved cards
+var savedCardDetailsCallback = {
+    success: function(data, textStatus) {
+        debugger;
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+//save credit card items
+function savedCardDetails() {
+    var url = baseURL + "get_saved_cards/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {
+            }
+    data = JSON.stringify(params);
+    var savedCardDetailsInstance = new AjaxHttpSender();
+    savedCardDetailsInstance.sendPost(url, header, data, savedCardDetailsCallback);
 }

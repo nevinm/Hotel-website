@@ -305,7 +305,9 @@ class MealIngredient(models.Model):
 class Payment(models.Model):
     methods = PAYMENT_METHODS
     payment_type = models.CharField(choices=methods, max_length=2)
-    data = models.TextField(max_length=1024, null=True)
+    response = models.TextField(max_length=1024, null=True)
+    transaction_id = models.CharField(max_length=128, null=True)
+    
     status = models.BooleanField(default=False)
     created = models.DateTimeField(null=True)
     updated = models.DateTimeField(null=True)
@@ -360,6 +362,9 @@ class Order(models.Model):
         if self.status > 2:
             self.cart.completed = True
             self.cart.save()
+        if not self.grand_total or self.grand_total == 0:
+            self.grand_total = self.total_amount + self.total_tax
+
         super(Order, self).save(*args, **kwargs)
     
 class GiftCard(models.Model):

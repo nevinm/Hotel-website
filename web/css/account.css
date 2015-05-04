@@ -535,7 +535,7 @@ form.addaddress-popup {
 	margin-bottom: 10px;
 }
 .section1 .forminput-wrapper:first-child{
-	margin-right: 16px;
+	margin-right: 4%;
 }
 .forminput-wrapper label{
 	text-align: left;
@@ -650,7 +650,7 @@ form.addaddress-popup {
 .checkout-wrapper {
   width: 90%;
   margin: 0 auto;
-  margin-top: 35px;
+  margin-top: 57px;
   display: table;
 }
 .box-border{
@@ -698,16 +698,9 @@ form.addaddress-popup {
 	line-height: 16px;
 }
 .delivery-info-guest-container{
-	display: block;
-	border:1px solid #D0D0D0;
-	border-radius: 4px;
-	display: block;
+	display: block ;
 	float: left;
 	width: 98%;
-	background-color: #fff;
-	-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-  	-moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-  	box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
   	margin-bottom: 30px;
 }
 .checkout-header {
@@ -911,67 +904,69 @@ form.addaddress-popup {
 }
 #guest-address-info .section3 .forminput-wrapper{
 	float: left;
-	width: 125px;
+	width: 30.6%;
 }
 #guest-address-info .section3 .forminput-wrapper:nth-child(2){
-	margin-right: 16px;
+	margin-right: 4%;
 }
 #guest-address-info .section3 .forminput-wrapper .styled-select{
-	width: 125px;
+	width: 100%;
   	background: url(../images/selector_arrow.png) no-repeat 110px 6px #f7f7f7;
 }
 #guest-address-info .section1 .forminput-wrapper{
-	width: 195px;
+	width: 48%;
 }
 .payment-method-guest-container {
-	width: 52%;
+	width: 47%;
 	float: left;
-	padding: 20px 10px 20px 80px;
 }
-.pay-container {
+form#pay-form {
+  width: 100%;
+  float: left;
+}
+.pay-by-credit-container{
 	padding-top: 30px;
-	width: 300px;
+	width: 80%;
 }
-.pay-container .forminput-wrapper{
+.pay-by-credit-container .forminput-wrapper{
 	float: left;
 }
-.pay-container .forminput-wrapper:first-child{
-	width: 214px;
+.pay-by-credit-container .forminput-wrapper:first-child{
 	float: left;
+	width: 68%;
 }
-.pay-container .forminput-wrapper:nth-child(2){
-	width: 70px;
-	margin-left: 16px;
+.pay-by-credit-container .forminput-wrapper:nth-child(2){
+	width: 28%;
+	margin-left: 4%;
 }
-.pay-container .forminput-wrapper:nth-child(3){
+.pay-by-credit-container .forminput-wrapper:nth-child(3){
 	padding-top: 20px;
-	width: 98px;
+	width: 30%;
 }
-.pay-container .forminput-wrapper:nth-child(3) .styled-select{
+.pay-by-credit-container .forminput-wrapper:nth-child(3) .styled-select{
 	background-position: 78px 6px;
 }
-.pay-container .div{
-	width: 10px;
+.pay-by-credit-container .div{
+	width: 4%;
 	float: left;
 	padding-top: 49px;
 	font-size: 18px;
 	color: #b0b0b0;
-	margin-right: 1px;
-	margin-left: 5px;
+	text-align: center;
 }
-.pay-container .forminput-wrapper:nth-child(5){
+.pay-by-credit-container .forminput-wrapper:nth-child(5){
 	padding-top: 43px;
-	width: 70px;
-	margin-right: 16px;
+	width: 28%;
+	margin-right: 4%;
 }
-.pay-container .forminput-wrapper:nth-child(5) .styled-select{
+.pay-by-credit-container .forminput-wrapper:nth-child(5) .styled-select{
 	background-position: 52px 6px;
 }
-.pay-container .forminput-wrapper:nth-child(6){
+.pay-by-credit-container .forminput-wrapper:nth-child(6){
 	padding-top: 20px;
-	width: 100px;
+	width: 34%;
 }
-.pay-container .forminput-wrapper .styled-select{
+.pay-by-credit-container .forminput-wrapper .styled-select{
 	width: 100%;
 }
 .paypal{
@@ -1041,6 +1036,31 @@ input#driver-description {
 }
 .order-list-items:hover #remove-cart-item{
 	display: block;
+}
+.address-info-guest {
+	width: 53%;
+	float: left;
+}
+.address-info-guest .content{
+	padding-left: 30px;
+	padding-top: 20px;
+	padding-right: 40px;
+}
+.popup-message {
+  position: absolute;
+  width: 89%;
+  top: 73px;
+  padding: 10px 0px;
+  text-align: center;
+  background: #A9D77B;
+  display: none;
+  /* margin: 0 auto; */
+  left: 50%;
+  margin-left: -45%;
+}
+.popup-message span{
+	font-family: 'ProximaNova-semibold';
+	color:#fff;
 }
 /*==================================*\
 			&TABLET
@@ -1177,6 +1197,13 @@ input#driver-description {
 		float: left;
 		max-width: 400px;
 		width: 90%;
+	}
+	.time-container {
+		margin: 0 auto;
+		width: 90%;
+		max-width: 400px;
+		border: 1px solid #d0d0d0;
+		border-radius: 4px;
 	}
   	@media only screen and (max-width:400px){
   		.address-content{
