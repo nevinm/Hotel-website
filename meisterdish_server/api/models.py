@@ -129,13 +129,13 @@ class Image(models.Model):
         
 class User(models.Model):
     fb_user_id = models.CharField(db_index=True, max_length=20, null=True, blank=True, default="")
-    password = models.CharField(max_length=50)
+    password = models.CharField(max_length=50, null=True)
     
     role = models.ForeignKey(Role)
-    first_name = models.CharField(db_index=True, max_length=25)
-    last_name = models.CharField(db_index=True, max_length=25)
+    first_name = models.CharField(db_index=True, max_length=25, default="")
+    last_name = models.CharField(db_index=True, max_length=25, default="")
     
-    email = models.EmailField(db_index=True, max_length=30, unique=True)
+    email = models.EmailField(db_index=True, max_length=30, unique=True, null=True)
     mobile = models.CharField(max_length=15, null=True)
     profile_image = models.ForeignKey(Image, null=True)
     
@@ -160,7 +160,7 @@ class User(models.Model):
         super(User, self).save(*args, **kwargs)
         
     def __unicode__(self):
-        return self.email
+        return self.email if self.email else "Guest user"
 
 class Address(models.Model):
     user = models.ForeignKey(User, related_name="user_address")

@@ -9,6 +9,8 @@ from django.template.loader import render_to_string
 from decorators import *
 from django.core.paginator import Paginator
 from django.core.files.uploadedfile import UploadedFile
+from libraries import get_request_user
+
 log = logging.getLogger('cms_api')
 
 def home(request):
@@ -207,14 +209,8 @@ def change_user_status(request, data, session_user):
 @check_input('POST')
 def get_meals(request, data):
     try:
-        session_key = request.META.get('HTTP_SESSION_KEY', None)
-        session = SessionStore(session_key=session_key)
-        if session and 'user' in session :
-            try:
-                user = User.objects.get(pk=session['user']['id'])
-            except Exception as e:
-                user = None
-                    
+        user = get_request_user(request)
+
         limit = data.get('perPage', settings.PER_PAGE)
         page = data.get("nextPage",1)
                     
@@ -243,6 +239,7 @@ def get_meals(request, data):
             custom_error("There was an error listing meals.")
         
         for meal in meals:
+            """
             meal_images = []
             for img in meal.images.all():
                 meal_images.append({
@@ -250,6 +247,7 @@ def get_meals(request, data):
                                     "url":img.image.url,
                                     "thumb_url" : settings.DEFAULT_MEAL_IMAGE if not img.thumb else img.thumb.url,
                                     })
+            """
             ingredients = simplejson.loads(meal.ingredients) if meal.ingredients is not None and len(meal.ingredients) > 0 else []
             
             meal_types = []
@@ -263,7 +261,7 @@ def get_meals(request, data):
                               "id":meal.id,
                               "name":meal.name,
                               "description":meal.description,
-                              "images":meal_images,
+                              #"images":meal_images,
                               "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.thumb.url,
                               "available":1 if meal.available else 0,
                               "category":"Not Available" if not meal.category else meal.category.name.title(),
@@ -272,7 +270,7 @@ def get_meals(request, data):
                               "price":meal.price,
                               "tax":meal.tax,
                               "ingredients":ingredients,
-                              "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, meal__pk=meal.id).exists() else 0,
+                              "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, cart__completed=False, meal__pk=meal.id).exists() else 0,
                               
                               })
         return json_response({"status":1, 

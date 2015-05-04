@@ -6,6 +6,7 @@ import settings
 from decorators import *
 from django.core.paginator import Paginator
 from datetime import datetime, timedelta
+from libraries import get_request_user, create_guest_user
 
 log = logging.getLogger('cart')
 
@@ -41,8 +42,17 @@ def get_cart_items(request, data, user):
     	return custom_error("Failed to get cart items.")
 
 @check_input('POST')
-def add_to_cart(request, data, user):
+def add_to_cart(request, data):
     try:
+        user = get_request_user(request)
+        if not user:
+            (user, session_key) = create_guest_user(request)
+        else:
+            session_key = None
+            
+        if user is None:
+            return custom_error("An error has occured. Please try again later.")
+
         meal_id = data['meal_id']
         quantity = data.get('quantity', 1)
 
@@ -72,7 +82,11 @@ def add_to_cart(request, data, user):
            cart_item.meal = meal
            cart_item.quantity = quantity
         cart_item.save()
-        return json_response({"status":1, "message":meal.name.title() + " has been added to the cart."})
+        
+        response = {"status":1, "message":meal.name.title() + " has been added to the cart."}
+        if session_key:
+          response["session_key"] = session_key
+        return json_response(response)
         
     except Exception as e:
         log.error("Add to cart : "+e.message)
