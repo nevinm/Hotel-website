@@ -129,13 +129,13 @@ class Image(models.Model):
         
 class User(models.Model):
     fb_user_id = models.CharField(db_index=True, max_length=20, null=True, blank=True, default="")
-    password = models.CharField(max_length=50)
+    password = models.CharField(max_length=50, null=True)
     
     role = models.ForeignKey(Role)
-    first_name = models.CharField(db_index=True, max_length=25)
-    last_name = models.CharField(db_index=True, max_length=25)
+    first_name = models.CharField(db_index=True, max_length=25, null=True)
+    last_name = models.CharField(db_index=True, max_length=25, null=True)
     
-    email = models.EmailField(db_index=True, max_length=30, unique=True)
+    email = models.EmailField(db_index=True, max_length=30, unique=True, null=True)
     mobile = models.CharField(max_length=15, null=True)
     profile_image = models.ForeignKey(Image, null=True)
     
