@@ -214,7 +214,9 @@ def get_meals(request, data):
                 user = User.objects.get(pk=session['user']['id'])
             except Exception as e:
                 user = None
-                    
+        else:
+            user = None
+
         limit = data.get('perPage', settings.PER_PAGE)
         page = data.get("nextPage",1)
                     
