@@ -47,7 +47,9 @@ def add_to_cart(request, data):
         user = get_request_user(request)
         if not user:
             (user, session_key) = create_guest_user(request)
-        
+        else:
+            session_key = None
+            
         if user is None:
             return custom_error("An error has occured. Please try again later.")
 
