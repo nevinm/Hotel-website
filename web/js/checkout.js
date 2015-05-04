@@ -12,6 +12,7 @@ $(document).ready(function() {
     $(document).on('click', '#remove-cart-item', function() {
         var meal_id = $(this).parent().attr('data-id'); //may change
         removeCartItems(meal_id);
+        updateReciept();
     });
 
     //Separate the today and week buttons
@@ -43,6 +44,7 @@ $(document).ready(function() {
             $(this).parent().find('.quantity').val(newVal);
         }
         updateCartItems(meal_id, qty);
+        updateReciept();
     });
 
     $(document).on('click', '.operator-minus', function() {
@@ -54,6 +56,7 @@ $(document).ready(function() {
             $(this).parent().find('.quantity').val(newVal);
         }
         updateCartItems(meal_id, qty);
+        updateReciept();
     });
 
     //PayPal payment
@@ -154,7 +157,6 @@ function saveDeliveryTime() {
 
 //populate cart items
 function populateCartItems(data) {
-    var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0;
     $('.order-list-items').remove();
     $(".items-container .item-count").text("(" + data.total_count + ")");
     $.each(data.aaData, function(key, value) {
@@ -163,19 +165,26 @@ function populateCartItems(data) {
             "<div class='quantity-container'>" + "<span class='operator-minus' data-min='1'>" + '-' + "</span>" +
             "<input type='text' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
-            "<span class='price-container'>" + dollarConvert(value.price) + "</span>" +
+            "<span class='price-container' data-tax='" + value.tax + "'>" + dollarConvert(value.price) + "</span>" +
             "<img src='../images/cross_black.png' id='remove-cart-item'>" + "</div>");
-
-        totalItemCost += (value.price * value.quantity);
-        totalTaxCost += (value.tax);
-        totalDriverTip = 5;
-        totalDeliveryCost = 2;
     });
-    totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost;
-    updateReciept(totalItemCost, totalTaxCost, totalCost);
+    updateReciept();
 }
 
-function updateReciept(totalItemCost, totalTaxCost, totalCost) {
+function updateReciept() {
+    var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
+        totalDriverTip = 5,
+        totalDeliveryCost = 2;
+    $(".order-list-items").each(function(key, value) {
+        quantity = parseInt($(value).find('.quantity').val());
+        price = parseInt($(value).find('.price-container').text().slice(1));
+        tax = parseInt($(value).find('.price-container').attr("data-tax"));
+
+        totalItemCost += (price * quantity);
+        totalTaxCost += (tax * quantity);
+    });
+    totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost;
+
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
     $(".total-cost").text("$" + (totalCost).toFixed(2));
@@ -261,7 +270,6 @@ function checkOutPayPal(serviceName, merchantID, options) {
             charset: "utf-8"
         };
 
-
         // item data
         for (var i = 0; i < cartItems.aaData.length; i++) {
             var item = cartItems.aaData[i];
@@ -270,9 +278,9 @@ function checkOutPayPal(serviceName, merchantID, options) {
             data["quantity_" + counter] = item.quantity;
             data["amount_" + counter] = (item.price).toFixed(2);
             data["tax_" + counter] = (item.tax).toFixed(2);
+        }
             data["shipping_" + counter] = 2;
             data["handling_" + counter] = 5;
-        }
 
         // build form
         var form = $('<form/></form>');
@@ -319,9 +327,7 @@ function saveCreditCardDetails() {
 
 //Get saved cards
 var savedCardDetailsCallback = {
-    success: function(data, textStatus) {
-        debugger;
-    },
+    success: function(data, textStatus) {},
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
