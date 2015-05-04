@@ -132,8 +132,8 @@ class User(models.Model):
     password = models.CharField(max_length=50, null=True)
     
     role = models.ForeignKey(Role)
-    first_name = models.CharField(db_index=True, max_length=25, null=True)
-    last_name = models.CharField(db_index=True, max_length=25, null=True)
+    first_name = models.CharField(db_index=True, max_length=25, default="")
+    last_name = models.CharField(db_index=True, max_length=25, default="")
     
     email = models.EmailField(db_index=True, max_length=30, unique=True, null=True)
     mobile = models.CharField(max_length=15, null=True)
