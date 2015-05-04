@@ -1,6 +1,6 @@
 from django.core.mail import EmailMessage
 import logging
-from api.models import Image, User, Role, 
+from api.models import Image, User, Role
 import re
 import settings
 from django.contrib.sessions.backends.db import SessionStore

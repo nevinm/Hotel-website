@@ -44,9 +44,12 @@ def get_cart_items(request, data, user):
 @check_input('POST')
 def add_to_cart(request, data):
     try:
-        user = get_request_user()
+        user = get_request_user(request)
         if not user:
             (user, session_key) = create_guest_user(request)
+        
+        if user is None:
+            return custom_error("An error has occured. Please try again later.")
 
         meal_id = data['meal_id']
         quantity = data.get('quantity', 1)
