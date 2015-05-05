@@ -15,6 +15,17 @@ $(document).ready(function() {
         updateReciept();
     });
 
+    $('.driver-tip').on('change', function() {
+        selectedTip = $(this).find('option:selected').text();
+          $('.driver-tip-display').text(selectedTip+".00");
+    });
+    //Set time for delivery API call
+    $('.set-time-button').on('click',function(){
+        var requiredDate = $(this).attr("data-date");
+        requiredDateTime = getDateTimeRequiredFormat(requiredDate)+ " " + $(this).attr('data-hr')+":00:00";
+        saveDeliveryTime(requiredDateTime);
+    });
+
     //Separate the today and week buttons
     timeActiveRestriction(".week-content input[type=button]", "checkout-time-button-active", ".today-content input[type=button]");
     timeActiveRestriction(".today-content input[type=button]", "checkout-time-button-active", ".week-content input[type=button]");
@@ -93,8 +104,10 @@ function setCurrentTime() {
 
     //Setting the correct date.
     var currentDate = getMonthDate(getCurrentDateTime(0));
-    // currentDate = currentDate.replace(/\-/g, "/").substring(0, 5);
     $(".today-content .content-heading").text("TODAY " + currentDate);
+    $('.today-content').find('.checkout-time-button').each(function(key, value){
+        $(value).attr("data-date",getMonthDate(getCurrentDateTime(0))+"/"+ getCurrentYear());
+    });
 
     //Setting the future dates and blocking the dates other than tomorrow.
     $(".date-content .checkout-time-button").each(function(key, value){
@@ -115,9 +128,38 @@ function timeActiveRestriction(buttonSelector, activeClass, oppositeSelector) {
             $(".week-content .time-content .checkout-time-button").addClass("button-disabled");
         } else if (buttonSelector == ".week-content .date-content .checkout-time-button") {
             $(".week-content .time-content .checkout-time-button").removeClass("button-disabled");
+           var date = $(this).val()+"/"+getCurrentYear();
+            $(this).parents().eq(1).find('.time-content .checkout-time-button').each(function(key, value){
+                $(value).attr('data-date',date);
+            });
+            firstDate = $(buttonSelector).parents().eq(1).find('.time-content .checkout-time-button')[0];
+            $(firstDate).trigger("click");
         }
-        // deliveryTime = getCurrentDateTime() + " "+getCurrentHour()+":00:00";
     });
+}
+
+function populateDate(cartItems){
+    dateTime = cartItems.delivery_time.split(" ")[0];
+    dateMonth = cartItems.delivery_time.substring(0,5).replace('-','/');
+    hour = cartItems.delivery_time.substring(11,13);
+    currentDate = getCurrentDateTime(0).replace(/\//g, "-");
+    tomorrowDate = getCurrentDateTime(1).replace(/\//g, "-");
+    if(dateTime==currentDate){
+        $('.today-content .checkout-time-button').each(function(key, value){
+            if($(value).data().hr == parseInt(hour)){
+                $('.checkout-time-button-active').removeClass('checkout-time-button-active');
+                $(value).addClass("checkout-time-button-active");
+            }
+        });
+    }
+    else if(dateTime==tomorrowDate){
+         $('.week-content .set-time-button').each(function(key, value){
+            if($(value).data().hr == parseInt(hour)){
+                $('.checkout-time-button-active').removeClass('checkout-time-button-active');
+                $(value).addClass("checkout-time-button-active");
+            }
+        });
+    }
 }
 
 //Get Cart items
@@ -128,6 +170,7 @@ var getCartItemsCallback = {
         if (cartItems.status == 1) {
             $(".emtpy-cart-message").hide();
             populateCartItems(cartItems);
+            populateDate(cartItems);
         } else {
             $('.order-list-items').remove();
             $(".emtpy-cart-message").show();
@@ -150,20 +193,17 @@ function getCartItems() {
 //Save delivery time
 var saveDeliveryTimeCallback = {
     success: function(data, textStatus) {
-        cartItems = JSON.parse(data);
-        populateCartItems(cartItems);
+        
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function saveDeliveryTime() {
+function saveDeliveryTime(date) {
     var url = baseURL + "save_delivery_time/",
         header = {
             "session-key": localStorage["session_key"]
         },
-        params = {
-
-        };
+        params = {"delivery_time":date};
     data = JSON.stringify(params);
     var saveDeliveryTimeInstance = new AjaxHttpSender();
     saveDeliveryTimeInstance.sendPost(url, header, data, saveDeliveryTimeCallback);
@@ -297,7 +337,7 @@ function checkOutPayPal(serviceName, merchantID, options) {
             data["tax_" + counter] = (item.tax).toFixed(2);
         }
         data["shipping_" + counter] = 2;
-        data["handling_" + counter] = 5;
+        data["handling_" + counter] = parseInt($('.driver-tip option:selected').text().substring(1));
 
         // build form
         var form = $('<form/></form>');

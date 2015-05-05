@@ -92,11 +92,11 @@
                             <div class="contents contents-time-date">
                                 <div class="today-content">
                                     <span class="content-heading"></span>
-                                    <input type="button" data-hr='4' value="4-5pm" class="checkout-time-button">
-                                    <input type="button" data-hr='5' value="5-6pm" class="checkout-time-button">
-                                    <input type="button" data-hr='6' value="6-7pm" class="checkout-time-button">
-                                    <input type="button" data-hr='7' value="7-8pm" class="checkout-time-button">
-                                    <input type="button" data-hr='8' value="8-9pm" class="checkout-time-button">
+                                    <input type="button" data-hr='4' value="4-5pm" class="checkout-time-button set-time-button">
+                                    <input type="button" data-hr='5' value="5-6pm" class="checkout-time-button set-time-button">
+                                    <input type="button" data-hr='6' value="6-7pm" class="checkout-time-button set-time-button">
+                                    <input type="button" data-hr='7' value="7-8pm" class="checkout-time-button set-time-button">
+                                    <input type="button" data-hr='8' value="8-9pm" class="checkout-time-button set-time-button">
                                 </div>
                                 <div class="week-content">
                                     <span class="content-heading">THIS WEEK</span>
@@ -108,11 +108,11 @@
                                         <input type="button" value="" class="checkout-time-button">
                                     </div>
                                     <div class="time-content">
-                                        <input type="button" data-hr='5' value="4-5pm" class="checkout-time-button button-disabled">
-                                        <input type="button" data-hr='6' value="5-6pm" class="checkout-time-button button-disabled">
-                                        <input type="button" data-hr='7' value="6-7pm" class="checkout-time-button button-disabled">
-                                        <input type="button" data-hr='8' value="7-8pm" class="checkout-time-button button-disabled">
-                                        <input type="button" data-hr='9' value="8-9pm" class="checkout-time-button button-disabled">
+                                        <input type="button" data-hr='5' value="4-5pm" class="checkout-time-button button-disabled set-time-button">
+                                        <input type="button" data-hr='6' value="5-6pm" class="checkout-time-button button-disabled set-time-button">
+                                        <input type="button" data-hr='7' value="6-7pm" class="checkout-time-button button-disabled set-time-button">
+                                        <input type="button" data-hr='8' value="7-8pm" class="checkout-time-button button-disabled set-time-button">
+                                        <input type="button" data-hr='9' value="8-9pm" class="checkout-time-button button-disabled set-time-button">
                                     </div>
                                 </div>
                             </div>
@@ -296,10 +296,20 @@
                                 <div class="inner-content body-text-small">
                                     <div class="styled-select">
                                         <select class='driver-tip' name="driver-tip">
+                                            <option value="">$0</option>
+                                            <option value="">$1</option>
+                                            <option value="">$2</option>
+                                            <option value="">$3</option>
+                                            <option value="">$4</option>
                                             <option value="">$5</option>
+                                            <option value="">$6</option>
+                                            <option value="">$7</option>
+                                            <option value="">$8</option>
+                                            <option value="">$9</option>
+                                            <option value="">$10</option>
                                         </select>
                                     </div>
-                                    <span>$5.00</span>
+                                    <span class='driver-tip-display'>$0.00</span>
                                 </div>
                             </div>
                             <div class="gift-card-container">
