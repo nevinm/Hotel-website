@@ -11,23 +11,8 @@ function renderFullPageJS() {
         slidesNavigation: true,
         controlArrows: false,
         navigation: true,
-        afterResize: function(){
+        afterResize: function() {
             destroyFullPageJS();
-        },
-        afterRender: function() {
-            idInterval = setInterval(function() {
-                $.fn.fullpage.moveSlideRight();
-            }, 7000);
-        },
-        afterLoad: function(anchorLink, index) {
-            clearInterval(idInterval);
-            if (index == 1 || index == 2) {
-                idInterval = setInterval(function() {
-                    $.fn.fullpage.moveSlideRight();
-                }, 7000);
-            } else {
-                clearInterval(idInterval);
-            }
         }
     });
     mobileRendered = false;
@@ -42,26 +27,26 @@ function renderMobileFullPageJs() {
         autoScrolling: false,
         scrollBar: true,
         fitToSection: false,
-        afterResize: function(){
+        afterResize: function() {
             destroyFullPageJS();
         }
     });
     mobileRendered = true;
 }
 
-function isMobileRendered(){
-    if(window.innerWidth <= ipadWidth){
+function isMobileRendered() {
+    if (window.innerWidth <= ipadWidth) {
         mobileRendered = false;
-    }
-    else{
+    } else {
         mobileRendered = true;
     }
 }
+
 function destroyFullPageJS() {
-    if (window.innerWidth < ipadWidth && mobileRendered==false) {
+    if (window.innerWidth < ipadWidth && mobileRendered == false) {
         if ($.fn.fullpage.destroy) {
             $.fn.fullpage.destroy('all');
-        } else{}
+        } else {}
         renderMobileFullPageJs();
     } else if (window.innerWidth >= ipadWidth && mobileRendered == true) {
         if ($.fn.fullpage.destroy) {
