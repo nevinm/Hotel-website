@@ -81,10 +81,10 @@ SLIDER
 	min-height: 100%;
 }
 #section1 .slide-description {
-	position: fixed;
-	top: 9%;
-	left: 23.5%;
-	width: 48%;
+	position: absolute;
+	top: 34%;
+	left: 13.5%;
+	width: 19%;
 	z-index: 5;
 	line-height: -11px;
 	color: #9b9b9b;
