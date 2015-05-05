@@ -6,6 +6,7 @@ import settings
 from decorators import *
 from datetime import datetime
 from django.core.paginator import Paginator
+from libraries import  card, configure_paypal_rest_sdk
 log = logging.getLogger('order')
 
 #Admin and User
@@ -110,9 +111,20 @@ def get_orders(request, data, user=None):
     	log.error("Failed to list orders." + e.message)
     	return custom_error("Failed to get orders list.")
 
-def make_cc_payment(data):
+def make_cc_payment(cc_data):
     try:
-        return True
+         # Create a card
+        cc = card.Card(
+            number=num,
+            month=exp_month,
+            year=exp_year,
+            cvc=cvv2,
+            holder = name
+        )
+
+        if not cc.is_valid or cc.is_expired:
+            log.error("User : " + user.email + ": Credit Card : valid? "+str(cc.is_valid) + " , expired? "+str(cc.is_expired))
+            return custom_error("Please enter valid card details.")
     except KeyError as e:
         log.error("Failed to pay using CC." + e.message)
         return False
@@ -150,7 +162,6 @@ def create_order(request, data, user):
             return custom_error("Please choose a valid payment type")
          
         elif data["payment_type"].lower() == "cc":
-
             payment_type = "CC"
             if "card_id" not in data:
                 cc_data = {
@@ -164,7 +175,7 @@ def create_order(request, data, user):
             else:
                 cc_data = CreditCardDetails.objects.get(pk=data["card_id"]).card_id
             response = make_cc_payment(cc_data)
-        else:
+        else: #PayPal
             payment_type = "PP"
 
         items = CartItem.objects.filter(cart__user=user)
