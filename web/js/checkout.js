@@ -90,6 +90,20 @@ function setCurrentTime() {
             $(this).addClass("checkout-time-button-active");
         }
     });
+
+    //Setting the correct date.
+    var currentDate = getMonthDate(getCurrentDateTime(0));
+    // currentDate = currentDate.replace(/\-/g, "/").substring(0, 5);
+    $(".today-content .content-heading").text("TODAY " + currentDate);
+
+    //Setting the future dates and blocking the dates other than tomorrow.
+    $(".date-content .checkout-time-button").each(function(key, value){
+        var tomorrowDate =getMonthDate(getCurrentDateTime(key+1));
+        $(value).val(tomorrowDate);
+        if(key!=0){
+            $(value).addClass("button-disabled");
+        }
+    });
 }
 
 //Used for the time selection resrtiction
@@ -241,7 +255,9 @@ function clearCart() {
 
 //update cart items call back
 var updateCartItemsCallback = {
-    success: function(data, textStatus) {},
+    success: function(data, textStatus) {
+        localStorage['cartItems'] = data;
+    },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
@@ -270,6 +286,7 @@ function checkOutPayPal(serviceName, merchantID, options) {
             charset: "utf-8"
         };
 
+        cartItems = JSON.parse(localStorage['cartItems']);
         // item data
         for (var i = 0; i < cartItems.aaData.length; i++) {
             var item = cartItems.aaData[i];
@@ -279,8 +296,8 @@ function checkOutPayPal(serviceName, merchantID, options) {
             data["amount_" + counter] = (item.price).toFixed(2);
             data["tax_" + counter] = (item.tax).toFixed(2);
         }
-            data["shipping_" + counter] = 2;
-            data["handling_" + counter] = 5;
+        data["shipping_" + counter] = 2;
+        data["handling_" + counter] = 5;
 
         // build form
         var form = $('<form/></form>');
