@@ -15,8 +15,9 @@ function dollarConvert(value) {
 }
 
 // delivery_time : 04-28-2015 20:15:20
-function getCurrentDateTime(){
+function getCurrentDateTime(days){
     var currentdate = new Date();
+    currentdate.setDate(currentdate.getDate()+days);
     return datetime = ('0' + (currentdate.getMonth()+1)).slice(-2)  + "-" 
                 +('0'+ currentdate.getDate()).slice(-2) + "-"
                 + currentdate.getFullYear();
@@ -29,6 +30,20 @@ function getCurrentHour() {
     hours = hours ? hours : 12; // the hour '0' should be '12'
     var strTime = hours;
     return strTime;
+}
+
+function getMonthDate(currentDate){
+    return currentDate.replace(/\-/g, "/").substring(0, 5);
+}
+
+
+function getCurrentYear(){
+    var currentdate = new Date();
+    return currentdate.getFullYear();
+}
+
+function getDateTimeRequiredFormat(date){
+    return date.replace(/\//g, "-");
 }
 
 function getParameterFromUrl(name) {

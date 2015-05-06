@@ -91,30 +91,30 @@
                         <div class="checkout-header">
                             <span>DELIVERY TIME</span>
                         </div>
-                        <div class="contents">
+                        <div class="contents contents-time-date">
                             <div class="today-content">
-                                <span class="content-heading">TODAY 5/09</span>
-                                <input type="button" value="NOW" class="checkout-time-button">
-                                <input type="button" value="6-5pm" class="checkout-time-button">
-                                <input type="button" value="5-7pm" class="checkout-time-button">
-                                <input type="button" value="7-8pm" class="checkout-time-button">
-                                <input type="button" value="8-9pm" class="checkout-time-button">
+                                <span class="content-heading"></span>
+                                <input type="button" data-hr='4' value="4-5pm" class="checkout-time-button set-time-button">
+                                <input type="button" data-hr='5' value="5-6pm" class="checkout-time-button set-time-button">
+                                <input type="button" data-hr='6' value="6-7pm" class="checkout-time-button set-time-button">
+                                <input type="button" data-hr='7' value="7-8pm" class="checkout-time-button set-time-button">
+                                <input type="button" data-hr='8' value="8-9pm" class="checkout-time-button set-time-button">
                             </div>
                             <div class="week-content">
                                 <span class="content-heading">THIS WEEK</span>
                                 <div class="date-content">
-                                    <input type="button" value="5/11" class="checkout-time-button">
-                                    <input type="button" value="5/12" class="checkout-time-button">
-                                    <input type="button" value="5/13" class="checkout-time-button">
-                                    <input type="button" value="5/14" class="checkout-time-button">
-                                    <input type="button" value="5/15" class="checkout-time-button">
+                                    <input type="button" value="" class="checkout-time-button">
+                                    <input type="button" value="" class="checkout-time-button">
+                                    <input type="button" value="" class="checkout-time-button">
+                                    <input type="button" value="" class="checkout-time-button">
+                                    <input type="button" value="" class="checkout-time-button">
                                 </div>
                                 <div class="time-content">
-                                    <input type="button" value="4-5pm" class="checkout-time-button">
-                                    <input type="button" value="6-5pm" class="checkout-time-button">
-                                    <input type="button" value="5-7pm" class="checkout-time-button">
-                                    <input type="button" value="7-8pm" class="checkout-time-button">
-                                    <input type="button" value="8-9pm" class="checkout-time-button">
+                                    <input type="button" data-hr='5' value="4-5pm" class="checkout-time-button button-disabled set-time-button">
+                                    <input type="button" data-hr='6' value="5-6pm" class="checkout-time-button button-disabled set-time-button">
+                                    <input type="button" data-hr='7' value="6-7pm" class="checkout-time-button button-disabled set-time-button">
+                                    <input type="button" data-hr='8' value="7-8pm" class="checkout-time-button button-disabled set-time-button">
+                                    <input type="button" data-hr='9' value="8-9pm" class="checkout-time-button button-disabled set-time-button">
                                 </div>
                             </div>
                         </div>
@@ -197,9 +197,9 @@
                         </div>
                     </div>
                     <div class="payment-info">
-                    <div class="checkout-header">
+                        <div class="checkout-header">
                             <span>PAYMENT METHOD</span>
-                    </div>
+                        </div>
                     <div class="payment-method-container">
                         <div class="contents">
                             <span class="content-heading">PAYING WITH CREDIT CARD</span>
@@ -269,57 +269,67 @@
                 </div>
                 </div>
                 <div class="right-wrapper">
-                <div class="receipt-container">
-                    <div class="checkout-header">
-                        <span>RECEIPT</span>
-                    </div>
-                    <div class="contents">
-                        <div class="items-container">
-                            <span class="content-heading">ITEMS</span>
-                            <div class="inner-content body-text-small">
-                                <span>Items(2)</span>
-                                <span>$20.00</span>
-                            </div>
-                            <div class="inner-content body-text-small">
-                                <span>Delivery</span>
-                                <span>$2.00</span>
-                            </div>
-                            <div class="inner-content body-text-small">
-                                <span>Tax</span>
-                                <span>$2</span>
-                            </div>
+                    <div class="receipt-container">
+                        <div class="checkout-header">
+                            <span>RECEIPT</span>
                         </div>
-                        <div class="driver-tip-container">
-                            <span class="content-heading">DRIVER TIP</span>
-                            <div class="inner-content body-text-small">
-                                <div class="styled-select">
-                                    <select class='driver-tip' name="driver-tip">
-                                        <option value="">$5</option>
-                                    </select>
+                        <div class="contents">
+                            <div class="items-container">
+                                <span class="content-heading">ITEMS</span>
+                                <div class="inner-content body-text-small">
+                                    <span>Items<span class='item-count'></span></span>
+                                    <span class='total-item-cost'></span>
                                 </div>
-                                <span>$5.00</span>
+                                <div class="inner-content body-text-small">
+                                    <span>Delivery</span>
+                                    <span class='total-delivery-cost'>$2.00</span>
+                                </div>
+                                <div class="inner-content body-text-small">
+                                    <span>Tax</span>
+                                    <span class='total-tax-cost'></span>
+                                </div>
+                            </div>
+                            <div class="driver-tip-container">
+                                <span class="content-heading">DRIVER TIP</span>
+                                <div class="inner-content body-text-small">
+                                    <div class="styled-select">
+                                        <select class='driver-tip' name="driver-tip">
+                                            <option value="">$0</option>
+                                            <option value="">$1</option>
+                                            <option value="">$2</option>
+                                            <option value="">$3</option>
+                                            <option value="">$4</option>
+                                            <option value="">$5</option>
+                                            <option value="">$6</option>
+                                            <option value="">$7</option>
+                                            <option value="">$8</option>
+                                            <option value="">$9</option>
+                                            <option value="">$10</option>
+                                        </select>
+                                    </div>
+                                    <span class='driver-tip-display'>$0.00</span>
+                                </div>
+                            </div>
+                            <div class="gift-card-container">
+                                <span class="content-heading">GIFT CARD?</span>
+                                <hr>
+                            </div>
+                            <div class="total-container">
+                                <span>TOTAL</span>
+                                <span class='total-cost'></span>
+                            </div>
+                            <div class="instruction-container">
+                                <span class="content-heading">DRIVER INSTRUCTIONS</span>
+                                <input type="text" placeholder="Anything that might help our drive to get you faster" id="driver-description">
+                                <div style="width:100%;text-align:center">
+                                    <a href="#" class="btn btn-small-primary medium-green">PLACE ORDER</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="gift-card-container">
-                            <span class="content-heading">GIFT CARD?</span>
-                            <hr>
-                        </div>
-                        <div class="total-container">
-                            <span>TOTAL</span>
-                            <span>$29.00</span>
-                        </div>
-                        <div class="instruction-container">
-                            <span class="content-heading">DRIVER INSTRUCTIONS</span>
-                            <input type="text" placeholder="Anything that might help our drive to get you faster" id="driver-description">
-                            <div style="width:100%;text-align:center">
-                                <a href="#" class="btn btn-small-primary medium-green">PLACE ORDER</a>
-                            </div>
-                        </div>
-                    </div>
-                    <span class="caption">
+                        <span class="caption">
                         By placing your order, you agree to our terms and conditions
                     </span>
-                </div>
+                    </div>
                 </div>
             </div>          
             <div class="popup-message">
