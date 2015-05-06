@@ -134,8 +134,7 @@ def make_cc_payment_with_details(cc_data, amount):
                 "first_name": cc_data["holder"],
                 }
             }]
-        response = make_cc_payment(funding_instruments, amount)
-        return response
+        return make_cc_payment(funding_instruments, amount)
     except KeyError as e:
         log.error("Failed to pay using CC." + e.message)
         return "An error has occurred with payment using card. Please try again."
@@ -149,11 +148,10 @@ def make_cc_payment_with_saved_card(card_id, amount):
                 #"payer_id" : "ppuser12345"
             }
         }]
-        response = make_cc_payment(funding_instruments, amount)
-        return response
+        return make_cc_payment(funding_instruments, amount)
     except KeyError as e:
         log.error("Failed to pay using CC (Saved card)." + e.message)
-        return False
+        return e.message
 
 def make_cc_payment(funding_instruments, amount):
     try:
@@ -167,7 +165,7 @@ def make_cc_payment(funding_instruments, amount):
             },
             "transactions": [{
                 "amount": {
-                    "total": "f",
+                    "total": amount,
                     "currency": "USD" 
                 },
                 "description": "creating a direct payment with credit card"
@@ -176,24 +174,28 @@ def make_cc_payment(funding_instruments, amount):
         response = payment.create()
         
         if not response:
-            log.error("CC Payment failed for field:"  + payment.error.details.field + ", Issue : "+payment.error.details.issue)
-            return "The payment details entered are invalid."
+            log.error("CC Payment failed :"  + payment.error['details'][0]['field'] + " : "+payment.error['details'][0]['issue'])
+            return str(payment.error['details'][0]['field'] + " : "+payment.error['details'][0]['issue'])
         else:
             payment_obj = save_cc_payment(payment)
             if not payment_obj:
                 log.info("### NOTE ### . The below payment response is not saved.")
                 log.info(payment)
-                return custom_error("An error has occurred. Please try again later.")
-
+                return "An error has occurred while saving payment response. Please try again later."
         return payment_obj
-    except Exception as e:
+    except KeyError as e:
         log.error("Failed to pay using CC." + e.message)
         return "Failed to pay using credit card."
 
-def save_cc_payment(payment):
+def save_cc_payment(payment_data):
     try:
-       pass 
-    except Exception as e:
+        payment = Payment()
+        payment.payment_type = "CC"
+        payment.response = str(payment_data)
+        payment.transaction_id = payment_data["id"]
+        payment.save()
+        return payment
+    except KeyError as e:
         log.error("Failed to save CC payment details." + e.message)
         return False
 
@@ -239,14 +241,16 @@ def create_order(request, data, user):
                     "year" : data["expiry_year"],
                     "cvc" : data["cvv2"],
                 }
-                response = make_cc_payment_with_details(cc_data, 30.00)
+                payment = make_cc_payment_with_details(cc_data, 30.25)
             else:
-                response = make_cc_payment_with_saved_card(data["card_id"], 30.00)
+                payment = make_cc_payment_with_saved_card(data["card_id"], 30.25)
             
-            if type(response) == False  or type(response) == str:
-                return custom_error(str(response) + " Please try again later with proper card details.")
+            if type(payment) == False:
+                return custom_error("An error has occurred while payment with Credit Card. Please try agiain.")
+            elif type(payment) == str:
+                return custom_error(payment)
             else:
-                return json_response({"status":1, "message":"Order has been placed."})
+                log.info("Order payment (CC) success.Payment id :"+str(payment.id))
         else: #PayPal
             payment_type = "PP"
             

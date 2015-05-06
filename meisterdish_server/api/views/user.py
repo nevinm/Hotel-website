@@ -286,6 +286,8 @@ def list_credit_cards(request, data, user):
                 "number" : card.number,
                 "expire_month" : card.expire_month,
                 "expire_year" : card.expire_year,
+                "type" : card.card_type,
+                "logo" : settings.STATIC_URL + "default/"+card.card_type+".png",
             })
         return json_response({"status":1, "cards":cards_list})
     except Exception as e:
@@ -335,7 +337,7 @@ def save_credit_card(request, data, user):
         
         if not res:
             if credit_card.error:
-                log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + ", Issue : "+credit_card.error['details'][0]['issue'])
+                log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + " : "+credit_card.error['details'][0]['issue'])
             return custom_error(credit_card.error['details'][0]['field'] + " : " +credit_card.error['details'][0]['issue'])
         
 	c_card = CreditCardDetails()
