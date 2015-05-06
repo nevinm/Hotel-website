@@ -275,25 +275,6 @@ def get_meal_details(request, data, meal_id):
     except Exception as e:
         log.error("get_meal details : " + e.message)
         return custom_error("Failed to get the meal details.")
-
-@check_input('POST')
-def list_credit_cards(request, data, user):
-    try:
-        cards_list = []
-        for card in CreditCardDetails.objects.filter(user=user):
-            cards_list.append({
-                "id": card.id,
-                "card_id" : card.card_id,
-                "number" : card.number,
-                "expire_month" : card.expire_month,
-                "expire_year" : card.expire_year,
-                "type" : card.card_type,
-                "logo" : settings.STATIC_URL + "default/"+card.card_type+".png",
-            })
-        return json_response({"status":1, "cards":cards_list})
-    except Exception as e:
-        log.error("List CC: user"+str(user.id) + " : "+ e.message)
-        return custom_error("Failed to list credit cards.")
          
 @check_input('POST')
 def save_credit_card(request, data, user):
@@ -376,9 +357,13 @@ def get_saved_cards(request, data, user):
         cards = CreditCardDetails.objects.filter(user=user)
         for card in cards:
             cards_list.append({
-                "id":card.id,
-                "number" :card.number,
-                "type" : card.card_type
+                "id": card.id,
+                "card_id" : card.card_id,
+                "number" : card.number,
+                "expire_month" : card.expire_month,
+                "expire_year" : card.expire_year,
+                "type" : card.card_type,
+                "logo" : settings.STATIC_URL + "default/"+card.card_type+".png",
                 })
         return json_response({"cards":cards_list, "status":1})
     except Exception as e:
