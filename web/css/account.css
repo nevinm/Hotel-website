@@ -670,6 +670,14 @@ form.addaddress-popup {
 	width: 36%;
 	float: left;
 }
+.delivery-info{
+	width: 53%;
+	float: left;
+}
+.payment-info{
+	width: 47%;
+	float: left;
+}
 .delivery-info-container{
 	/*border:1px solid #D0D0D0;
 	border-radius: 4px;*/
@@ -679,7 +687,7 @@ form.addaddress-popup {
 	-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
 	-moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
 	box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);*/
-	display: none;
+/*	display: none;*/
 }
 .receipt-container{
 	border:1px solid #D0D0D0;
@@ -698,7 +706,6 @@ form.addaddress-popup {
 	line-height: 16px;
 }
 .delivery-info-guest-container{
-	display: block ;
 	float: left;
 	width: 98%;
   	margin-bottom: 30px;
@@ -762,7 +769,7 @@ form.addaddress-popup {
 .order-list-container{
 	width: 64%;
 	float: right;
-	padding: 10px 0 0 10px;
+	padding: 10px 0 0 0;
 	overflow-x: auto;
 	height: 196px;
 }
@@ -845,7 +852,7 @@ form.addaddress-popup {
 	width: 30px;
 }
 .address-info{
-  width: 40%;
+  width: 100%;
   font-family: 'ProximaNova-Regular';
   color: #b0b0b0;
   font-size: 12px;
@@ -878,14 +885,14 @@ form.addaddress-popup {
 	float: left;
 	position: relative;
 	min-height: 260px;
-	width: 60%;
+	width: 100%;
 }
 .payment-method-container .contents{
 	padding-top: 20px;
 	width: 300px;
 }
 .payment-method-container .contents span:last-child{
-	left: 0;
+	left: 10px;
 }
 .payment-method-container img{
 	float: left;
@@ -922,7 +929,7 @@ form.addaddress-popup {
 	width: 48%;
 }
 .payment-method-guest-container {
-	width: 47%;
+	width: 100%;
 	float: left;
 }
 form#pay-form {
@@ -1021,6 +1028,7 @@ input#driver-description {
 	background-color: #f7f7f7;
 	border: 1px solid #d0d0d0;
 	border-radius: 4px;
+	width: 100%;
 }
 .instruction-container .btn{
 	margin-top: 20px;
@@ -1043,7 +1051,7 @@ input#driver-description {
 	display: block;
 }
 .address-info-guest {
-	width: 53%;
+	width: 100%;
 	float: left;
 }
 .address-info-guest .content{
@@ -1067,6 +1075,9 @@ input#driver-description {
 	font-family: 'ProximaNova-semibold';
 	color:#fff;
 }
+#pay-using-card,#pay-using-paypal{
+		display:none;
+	}
 /*==================================*\
 			&TABLET
 \*==================================*/
@@ -1195,21 +1206,113 @@ input#driver-description {
 		width: 90%;
 		margin-bottom: 20px;
 	}
-	.delivery-time-container,.delivery-info-guest-container{
-		width: 100%;
-	}
-	.receipt-container {
+	.receipt-container{
 		float: left;
+		margin-bottom: 20px;
+	}
+	.checkout-wrapper{
+		display: block;
+	}
+	.left-wrapper{
+		display: block;
+		width: 100%;
 		max-width: 400px;
-		width: 90%;
+		float: none;
+		margin: 0 auto;
+	}
+	.right-wrapper{
+		display: block;
+		width: 100%;
+		max-width: 320px;
+		float: none;
+		margin: 0 auto;
 	}
 	.time-container {
-		margin: 0 auto;
-		width: 90%;
-		max-width: 400px;
-		border: 1px solid #d0d0d0;
-		border-radius: 4px;
+		width: 100%;
+		float: none;
+		margin-bottom: 20px; 
 	}
+	.delivery-order-container {
+		width: 100%;
+		border:1px solid #D0D0D0;
+		border-radius: 4px;
+		background-color: #fff;
+		-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+		-moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+		box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+		margin-bottom: 20px;
+		float: left;
+	}
+	.order-list-header {
+		display: none;
+	}
+	.order-list-items .body-text-small{
+		width: 135px;
+	}
+	.quantity-container{
+		margin-right: 20px;
+	}
+	.order-list-container{
+		width: 100%;
+	}
+	.delivery-info{
+		width: 100%;
+		float: left;
+	}
+	.payment-info{
+		width: 100%;	
+	}
+	.receipt-container .caption{
+		display: none;
+	}
+	input.popup-input{
+		height: 36px;
+	}
+	#guest-address-info .section3 .forminput-wrapper{
+		width: 30.2%;
+	}
+	.forminput-wrapper .styled-select{
+		height: 36px;
+	}
+	.pay-by-credit-container .forminput-wrapper:nth-child(3) .styled-select {
+		background-position: 64px 9px;
+	}
+	.pay-by-credit-container .forminput-wrapper:nth-child(5) .styled-select {
+		background-position: 58px 9px;
+	}
+	#remove-cart-item {
+		width: 13px;
+		margin-top: 3px;
+		padding-left: 0;
+		margin-left:20px;
+	}
+	.pay-by-credit-container{
+		width: 100%;
+	}
+	form#pay-form{
+		padding-bottom: 20px;
+	}
+	#guest-address-info{
+		padding-bottom: 20px;
+	}
+	.payment-method-container .contents span:last-child{
+		left: 30px;
+	}
+	.payment-method-container .contents{
+		padding: 20px 30px;
+		width: 100%;
+	}
+	.payment-method-guest-container{
+		padding: 0 20px;
+	}
+	..delivery-info-container{
+		width: 100%;
+	}
+	#pay-using-card,#pay-using-paypal{
+		display: block;
+		float: left;
+	}
+}
   	@media only screen and (max-width:400px){
   		.address-content{
   			font-size: 12px;
@@ -1227,5 +1330,14 @@ input#driver-description {
   		}
   		.button-changeaddress .btn:last-child{
   			margin-left: 2px;
+  		}
+  		.checkout-time-button {
+  			width: 47px;
+  		}
+  		.body-text-small{
+  			font-size: 11px;
+  		}
+  		#guest-address-info .section3 .forminput-wrapper{
+  			width: 29.4%;
   		}
 	}

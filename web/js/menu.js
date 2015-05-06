@@ -16,12 +16,11 @@ $(document).ready(function() {
     $(document).on("click", '.addItemButton', function() {
         var x = {},
             meal_id = $(this).attr('data-id');
-            if(localStorage['loggedIn']=='true'){
-                addToCart(meal_id);
-            }
-            else if(localStorage['loggedIn']=='false'){
-                addToCart(meal_id);
-            }
+        if (localStorage['loggedIn'] == 'true') {
+            addToCart(meal_id);
+        } else if (localStorage['loggedIn'] == 'false') {
+            addToCart(meal_id);
+        }
     });
 
     //Categories
@@ -179,15 +178,16 @@ function populateMealList(mealList, isInfinteScrolling) {
 }
 
 function elementScrolling(elem) {
-        var docViewTop = $(window).scrollTop();
-        var docViewBottom = docViewTop + $(window).height();
+    var docViewTop = $(window).scrollTop();
+    var docViewBottom = docViewTop + $(window).height();
 
-        var elemTop = $(elem).offset().top;
-        var elemBottom = elemTop + $(elem).height();
+    var elemTop = $(elem).offset().top;
+    var elemBottom = elemTop + $(elem).height();
 
-        return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-    }
-    //add to cart call back
+    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+}
+
+//add to cart call back
 var addToCartCallback = {
     success: function(data, textStatus, mealId) {
         var meal_details = JSON.parse(data),
@@ -198,8 +198,8 @@ var addToCartCallback = {
             $('*[data-id="' + mealId + '"]').addClass("button-disabled");
             showPopup(meal_details);
             CartItemCount();
-            if(meal_details.session_key && (meal_details.session_key).length){
-                localStorage['session_key']=meal_details.session_key;
+            if (meal_details.session_key && (meal_details.session_key).length) {
+                localStorage['session_key'] = meal_details.session_key;
             }
         }
     },
