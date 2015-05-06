@@ -182,6 +182,8 @@ class CreditCardDetails(models.Model):
     user = models.ForeignKey(User, related_name="cc_details")
     card_id = models.CharField(db_index=True, max_length=35) 
     number = models.CharField(max_length=16)
+    expire_month = models.CharField(max_length=16)
+    expire_year = models.CharField(max_length=16)
     cvv2 = models.CharField(db_index=True, max_length=5)
     card_type = models.CharField(max_length=15)
     def __unicode__(self):

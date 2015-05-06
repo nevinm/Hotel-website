@@ -7,7 +7,6 @@ from decorators import *
 from libraries import validate_zipcode, validate_phone, card, configure_paypal_rest_sdk
 import paypalrestsdk
 from datetime import datetime
-from settings import PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET
 
 log = logging.getLogger('api_user')
 
@@ -276,23 +275,6 @@ def get_meal_details(request, data, meal_id):
     except Exception as e:
         log.error("get_meal details : " + e.message)
         return custom_error("Failed to get the meal details.")
-
-@check_input('POST')
-def list_credit_cards(request, data, user):
-    try:
-        cards_list = []
-        for card in CreditCardDetails.objects.filter(user=user):
-            cards_list.append({
-                "id": card.id,
-                "card_id" : card.card_id,
-                "number" : card.number,
-                "expire_month" : card.expire_month,
-                "expire_year" : card.expire_year,
-            })
-        return json_response({"status":1, "cards":cards_list})
-    except Exception as e:
-        log.error("List CC: user"+str(user.id) + " : "+ e.message)
-        return custom_error("Failed to list credit cards.")
          
 @check_input('POST')
 def save_credit_card(request, data, user):
@@ -333,12 +315,12 @@ def save_credit_card(request, data, user):
             "first_name": name,
             #"last_name": lname
             })
-        credit_card.create()
-
-        if not credit_card:
+        res = credit_card.create()
+        
+        if not res:
             if credit_card.error:
-                log.error("Save Credit card error : " + credit_card.error)
-            return custom_error("Failed to save credit card details.")
+                log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + " : "+credit_card.error['details'][0]['issue'])
+            return custom_error(credit_card.error['details'][0]['field'] + " : " +credit_card.error['details'][0]['issue'])
         
         c_card = CreditCardDetails()
         c_card.user = user
@@ -348,7 +330,7 @@ def save_credit_card(request, data, user):
         c_card.card_type = credit_card.type
         c_card.save()
         return json_response({"message":"Successfully saved credit card details.", "id":c_card.id})
-    except Exception as e:
+    except KeyError as e:
         log.error("Save CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to save credit card details.")
 
@@ -375,9 +357,13 @@ def get_saved_cards(request, data, user):
         cards = CreditCardDetails.objects.filter(user=user)
         for card in cards:
             cards_list.append({
-                "id":card.id,
-                "number" :card.number,
-                "type" : card.card_type
+                "id": card.id,
+                "card_id" : card.card_id,
+                "number" : card.number,
+                "expire_month" : card.expire_month,
+                "expire_year" : card.expire_year,
+                "type" : card.card_type,
+                "logo" : settings.STATIC_URL + "default/"+card.card_type+".png",
                 })
         return json_response({"cards":cards_list, "status":1})
     except Exception as e:

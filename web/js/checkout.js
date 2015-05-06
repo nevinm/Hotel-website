@@ -19,7 +19,8 @@ $(document).ready(function() {
 
     $('.driver-tip').on('change', function() {
         selectedTip = $(this).find('option:selected').text();
-          $('.driver-tip-display').text(selectedTip+".00");
+        $('.driver-tip-display').text(selectedTip+".00");
+        updateReciept();
     });
     //Set time for delivery API call
     $('.set-time-button').on('click',function(){
@@ -166,10 +167,7 @@ function populateDate(cartItems){
         //Setting the future time.
         $('.week-content .set-time-button').each(function(key, value){
             if($(value).data().hr == parseInt(hour)){
-                // $('.checkout-time-button-active').removeClass('checkout-time-button-active');
                 $('.week-content .set-time-button').removeClass("checkout-time-button-active");
-                // $(value).removeClass("button-disabled");
-                // $(value).siblings().removeClass("button-disabled")
                 $(value).addClass("checkout-time-button-active");
             }
         });
@@ -241,7 +239,7 @@ function populateCartItems(data) {
 
 function updateReciept() {
     var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
-        totalDriverTip = 5,
+        totalDriverTip = parseInt($('.driver-tip option:selected').text().substring(1)),
         totalDeliveryCost = 2;
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
