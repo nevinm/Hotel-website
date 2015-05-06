@@ -87,5 +87,5 @@ def json_response(response, wrap=False):
     return header_res
 
 def custom_error(message):
-    log.error("Error : "+message)
+    #log.error("Error : "+message)
     return json_response({'status' : -1, 'message' : message})
