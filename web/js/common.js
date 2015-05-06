@@ -36,6 +36,16 @@ function getMonthDate(currentDate){
     return currentDate.replace(/\-/g, "/").substring(0, 5);
 }
 
+
+function getCurrentYear(){
+    var currentdate = new Date();
+    return currentdate.getFullYear();
+}
+
+function getDateTimeRequiredFormat(date){
+    return date.replace(/\//g, "-");
+}
+
 function getParameterFromUrl(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),

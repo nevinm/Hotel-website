@@ -7,7 +7,6 @@ from decorators import *
 from libraries import validate_zipcode, validate_phone, card, configure_paypal_rest_sdk
 import paypalrestsdk
 from datetime import datetime
-from settings import PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET
 
 log = logging.getLogger('api_user')
 
@@ -332,12 +331,12 @@ def save_credit_card(request, data, user):
             "first_name": name,
             #"last_name": lname
             })
-        credit_card.create()
-
-        if not credit_card:
+        res = credit_card.create()
+        
+        if not res:
             if credit_card.error:
-                log.error("Save Credit card error : " + credit_card.error)
-            return custom_error("Failed to save credit card details.")
+                log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + ", Issue : "+credit_card.error['details'][0]['issue'])
+            return custom_error(credit_card.error['details'][0]['field'] + " : " +credit_card.error['details'][0]['issue'])
         
 	c_card = CreditCardDetails()
         c_card.user = user
@@ -347,7 +346,7 @@ def save_credit_card(request, data, user):
         c_card.card_type = credit_card.type
         c_card.save()
         return json_response({"message":"Successfully saved credit card details.", "id":c_card.id})
-    except Exception as e:
+    except KeyError as e:
         log.error("Save CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to save credit card details.")
 
