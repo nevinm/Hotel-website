@@ -153,9 +153,17 @@ function populateDate(cartItems){
         });
     }
     else if(dateTime==tomorrowDate){
-         $('.week-content .set-time-button').each(function(key, value){
+        //Setting the future date
+        tommorrowSelector = $('.week-content .date-content').find('.checkout-time-button')[0];
+        $(tommorrowSelector).trigger("click");
+
+        //Setting the future time.
+        $('.week-content .set-time-button').each(function(key, value){
             if($(value).data().hr == parseInt(hour)){
-                $('.checkout-time-button-active').removeClass('checkout-time-button-active');
+                // $('.checkout-time-button-active').removeClass('checkout-time-button-active');
+                $('.week-content .set-time-button').removeClass("checkout-time-button-active");
+                // $(value).removeClass("button-disabled");
+                // $(value).siblings().removeClass("button-disabled")
                 $(value).addClass("checkout-time-button-active");
             }
         });
