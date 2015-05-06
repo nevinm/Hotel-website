@@ -3,6 +3,8 @@ $(document).ready(function() {
     populateYear();
     savedCardDetails();
     setCurrentTime();
+    showPopup();
+    getAddress();
     var cartItems, payPalEmail = "paypaluser@youremail.com",
         returnUrl = "http://meisterdish.qburst.com/views/menu.html",
         cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
@@ -344,4 +346,53 @@ function savedCardDetails() {
     data = JSON.stringify(params);
     var savedCardDetailsInstance = new AjaxHttpSender();
     savedCardDetailsInstance.sendPost(url, header, data, savedCardDetailsCallback);
+}
+
+$(window).resize(function(){
+    mobileResponsive();
+});
+
+$(window).load(function(){
+    mobileResponsive();
+});
+
+function mobileResponsive(){
+    if ($(window).width() <= 767 && $(window).width() >= 320){  
+        $('.delivery-info-container').removeClass('box-border');
+        $('.delivery-info').addClass('box-border');
+        $('.payment-info').addClass('box-border');
+    } 
+    else{
+        $('.delivery-info-container').addClass('box-border');
+        $('.delivery-info').removeClass('box-border');
+        $('.payment-info').removeClass('box-border');
+    } 
+} 
+
+//ADDRESS LIST
+var getAddressCallback = {
+    success: function(data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            localStorage['delivery_addressess'] = data;
+            // autoPopulateAdressess(userDetails);
+            // isAddress();
+        } else {
+            showErrorPopup(userDetails);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function getAddress(id) {
+    var url = baseURL + "get_address_list/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+            "id": id
+        };
+    data = JSON.stringify(userData);
+    var getAddressInstance = new AjaxHttpSender();
+    getAddressInstance.sendPost(url, header, data, getAddressCallback);
 }
