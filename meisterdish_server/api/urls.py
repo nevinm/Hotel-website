@@ -47,4 +47,6 @@ urlpatterns = patterns('',
     url(r'^get_saved_cards/$', views.get_saved_cards, name='get_saved_cards'),
     url(r'^save_credit_card/$', views.save_credit_card, name='save_credit_card'),
     url(r'^delete_credit_card/(?P<card_id>[0-9]+)/$', views.delete_credit_card, name='delete_credit_card'),
+
+    url(r'^paypal_success/$', views.paypal_success, name='paypal_success'),
 )

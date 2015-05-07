@@ -23,7 +23,8 @@ def check_input(method, admin=False):
                                              'get_meals',
                                              "get_categories",
                                              "get_meal_details",
-                                             "add_to_cart"
+                                             "add_to_cart",
+                                             "paypal_success",
                                              ]:
                         #common_apis = ["get_meals"]
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
