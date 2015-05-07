@@ -326,8 +326,8 @@ def save_credit_card(request, data, user):
         c_card.card_id = credit_card.id
         c_card.number = credit_card.number
         c_card.cvv2 = credit_card.cvv2
-        c_card.expire_year = credit_card.exp_year
-        c_card.expire_month = credit_card.expire_month
+        c_card.expire_year = exp_year
+        c_card.expire_month = exp_month
         c_card.card_type = credit_card.type
         c_card.save()
         return json_response({"message":"Successfully saved credit card details.", "id":c_card.id})
