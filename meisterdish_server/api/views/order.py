@@ -113,10 +113,15 @@ def get_orders(request, data, user=None):
     	log.error("Failed to list orders." + e.message)
     	return custom_error("Failed to get orders list.")
 
-def make_cc_payment_with_details(cc_data, amount):
+def make_cc_payment_with_details(cc_data, amount, order_num):
     try:
         # Create a card
-        cc = card.Card(cc_data)
+        cc = card.Card(number=cc_data["number"],
+            holder=cc_data["holder"],
+            month=int(cc_data["month"]),
+            year=int(cc_data["year"]),
+            cvc=cc_data["cvc"],
+        )
         if not cc.is_valid:
             log.error("User : " + user.email + ": Credit Card is invalid.")
             return "Invalid card details."
@@ -134,12 +139,12 @@ def make_cc_payment_with_details(cc_data, amount):
                 "first_name": cc_data["holder"],
                 }
             }]
-        return make_cc_payment(funding_instruments, amount)
-    except KeyError as e:
-        log.error("Failed to pay using CC." + e.message)
+        return make_cc_payment(funding_instruments, amount, order_num)
+    except Exception as e:
+        log.error("Failed to pay using CC (with card data)." + e.message)
         return "An error has occurred with payment using card. Please try again."
 
-def make_cc_payment_with_saved_card(card_id, amount):
+def make_cc_payment_with_saved_card(card_id, amount, order_num):
     try:
         card_id = CreditCardDetails.objects.get(pk=card_id).card_id
         funding_instruments = [{
@@ -148,12 +153,12 @@ def make_cc_payment_with_saved_card(card_id, amount):
                 #"payer_id" : "ppuser12345"
             }
         }]
-        return make_cc_payment(funding_instruments, amount)
-    except KeyError as e:
+        return make_cc_payment(funding_instruments, amount, order_num)
+    except Exception as e:
         log.error("Failed to pay using CC (Saved card)." + e.message)
         return e.message
 
-def make_cc_payment(funding_instruments, amount):
+def make_cc_payment(funding_instruments, amount, order_num):
     try:
         import paypalrestsdk
         configure_paypal_rest_sdk()
@@ -168,7 +173,7 @@ def make_cc_payment(funding_instruments, amount):
                     "total": amount,
                     "currency": "USD" 
                 },
-                "description": "creating a direct payment with credit card"
+                "description": "Meisterdish Order with ID : "+order_id + " on "+datetime.now().strftime("%m-%d-%Y %H:%M:%S")
             }]
         })
         response = payment.create()
@@ -183,7 +188,7 @@ def make_cc_payment(funding_instruments, amount):
                 log.info(payment)
                 return "An error has occurred while saving payment response. Please try again later."
         return payment_obj
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to pay using CC." + e.message)
         return "Failed to pay using credit card."
 
@@ -195,7 +200,7 @@ def save_cc_payment(payment_data):
         payment.transaction_id = payment_data["id"]
         payment.save()
         return payment
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to save CC payment details." + e.message)
         return False
 
@@ -205,6 +210,7 @@ def create_order(request, data, user):
         quantity = 0
         total_price = 0.0
         total_tax = 0.0
+        paid = False
         
         try:
             del_time = data['delivery_time'].strip()
@@ -228,34 +234,7 @@ def create_order(request, data, user):
         else:
             bil_address = user.user_address.get(is_primary=True).id
         
-        if "payment_type" not in data:
-            return custom_error("Please choose a valid payment type")
-         
-        elif data["payment_type"].lower() == "cc":
-            payment_type = "CC"
-            if "card_id" not in data:
-                cc_data = {
-                    "number" : data["number"],
-                    "holder" : data.get("first_name", "") + data.get("last_name", ""),
-                    "month" : data['expiry_month'],
-                    "year" : data["expiry_year"],
-                    "cvc" : data["cvv2"],
-                }
-                payment = make_cc_payment_with_details(cc_data, 30.25)
-            else:
-                payment = make_cc_payment_with_saved_card(data["card_id"], 30.25)
-            
-            if type(payment) == False:
-                return custom_error("An error has occurred while payment with Credit Card. Please try agiain.")
-            elif type(payment) == str:
-                return custom_error(payment)
-            else:
-                log.info("Order payment (CC) success.Payment id :"+str(payment.id))
-        else: #PayPal
-            payment_type = "PP"
-            
-        return custom_error("Not handled.")
-        items = CartItem.objects.filter(cart__user=user)
+        items = CartItem.objects.filter(cart__user=user, cart__completed=False)
         for item in items:
             if not item.meal.available:
                 return custom_error("Sorry, The meal "+ item.meal.name.title() + " has gone out of stock. Please add another meals or continue checkout with out it.")
@@ -263,8 +242,11 @@ def create_order(request, data, user):
             quantity += item.quantity
             total_price += item.meal.price
             total_tax += item.meal.tax
+
+        total_amount = total_price + total_tax
         
         order = Order()
+        order.order_num = token = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
         order.cart = item.cart
         
         order.delivery_address = del_address
@@ -277,7 +259,38 @@ def create_order(request, data, user):
         order.total_amount = total_price
         order.total_tax = total_tax
         order.tip = tip
-        order.save()
+
+        if "payment_type" not in data:
+            return custom_error("Please choose a valid payment type")
+         
+        elif data["payment_type"].lower() == "cc":
+            payment_type = "CC"
+            if "card_id" not in data:
+                cc_data = {
+                    "number" : data["number"],
+                    "holder" : data.get("first_name", "") + data.get("last_name", ""),
+                    "month" : data['exp_month'],
+                    "year" : data["exp_year"],
+                    "cvc" : data["cvv2"],
+                }
+                payment = make_cc_payment_with_details(cc_data, total_amount, order.order_num)
+            else:
+                payment = make_cc_payment_with_saved_card(data["card_id"], total_amount, order.order_num)
+            
+            if type(payment) == False:
+                return custom_error("An error has occurred while payment with Credit Card. Please try agiain.")
+            elif type(payment) == str:
+                return custom_error(payment)
+            else:
+                paid = True
+                log.info("Order payment (CC) success.Payment id :"+str(payment.id))
+        else: #PayPal
+            payment_type = "PP"
+            
+        if paid:
+            order.payment = payment
+            order.status = 3
+            order.save()
         
         if payment_type == "CC":
             return json_response({"status":1, "message":"The Order has been placed successully."})
@@ -375,4 +388,15 @@ def update_order(request, data, user, order_id):
         return json_response({"status":1, "message":"The order has been updated", "id":order_id+"."})
     except Exception as e:
         log.error("Update order." + e.message)
+        return custom_error("Failed to update the order.")
+
+@check_input('POST', True)
+def paypal_success(request, data):
+    try:
+        log.info("PAYPAL Success")
+        log.info(request.method)
+        log.info(data)
+        return HttpResponseRedirect("http://meisterdish.qburst.com/")
+    except Exception as e:
+        log.error("Paypal success" + e.message)
         return custom_error("Failed to update the order.")
