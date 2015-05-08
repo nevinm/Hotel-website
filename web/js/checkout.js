@@ -9,7 +9,7 @@ $(document).ready(function() {
         //returnUrl = "http://meisterdish.qburst.com/views/menu.html",
         returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
         cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
-        notifyUrl = "http://10.7.1.64:86/backend/api/paypal_ipn/"
+        notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/"
 
     //Remove cart items
     $(document).on('click', '#remove-cart-item', function() {
@@ -79,7 +79,8 @@ $(document).ready(function() {
         checkOutPayPal("PayPal", payPalEmail, {
             "return": returnUrl,
             "cancel_return": cancelReturnUrl,
-            "notify_url": notifyUrl
+            "notify_url": notifyUrl,
+            "my_temp_id" : "hai nazz"
         });
     });
 
