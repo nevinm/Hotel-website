@@ -3,7 +3,6 @@ $(document).ready(function() {
     populateYear();
     savedCardDetails();
     setCurrentTime();
-    // showPopup();
     getAddress();
     var cartItems, payPalEmail = "nazz007online-facilitator@gmail.com",
         //returnUrl = "http://meisterdish.qburst.com/views/menu.html",
@@ -655,9 +654,6 @@ var getCitiesCallback = {
                     id:value.id
                 }));
             });
-            // if (cityId) {
-            //     $('.city-selector').val(cityId);
-            // }
         } else {
             showErrorPopup(cityList);
         }
@@ -680,7 +676,5 @@ function getCities(cityId) {
 
 function populateAddedAddress(){
     var addedAddress = getNewAddress();
-    // data = JSON.parse(addedAddress);
-    // addressData=[addedAddress];
     populateAddresstoInfoContainer([addedAddress]);
 }
