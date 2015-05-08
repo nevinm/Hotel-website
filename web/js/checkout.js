@@ -9,7 +9,7 @@ $(document).ready(function() {
         //returnUrl = "http://meisterdish.qburst.com/views/menu.html",
         returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
         cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
-        notifyUrl = "http://10.7.1.64:86/backend/api/paypal_ipn/"
+        notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/"
 
     //Remove cart items
     $(document).on('click', '#remove-cart-item', function() {
@@ -79,7 +79,8 @@ $(document).ready(function() {
         checkOutPayPal("PayPal", payPalEmail, {
             "return": returnUrl,
             "cancel_return": cancelReturnUrl,
-            "notify_url": notifyUrl
+            "notify_url": notifyUrl,
+            "my_temp_id" : "hai nazz"
         });
     });
 
@@ -95,9 +96,27 @@ $(document).ready(function() {
         saveCreditCardDetails();
     });
 
-     $(document).on('click', '#change-address', function() {
-         // getAddress();
-     })
+    $(document).on('click', '#change-address', function() {
+        populateAddressListPopup();
+    });
+    
+    $(document).on('click', '#cancel', function() {
+        $('.address-list-popup').hide();
+    });
+
+    $(document).on('click', '#save-delivery-address', function() {
+        var selectedId=$('input[type=radio][name=address]:checked').attr('id');
+        setPrimaryAdd(selectedId);
+        changeDeliveryAddress(selectedId);
+    });
+
+    $('#add-guest-address').on("click",function(e){
+        e.preventDefault();
+        if($('#guest-address-info').valid())
+            {
+                addAddress();
+            }
+    });
 });
 
 
@@ -369,7 +388,7 @@ function checkOutPayPal(serviceName, merchantID, options) {
     //save credit card details call back
 var saveCreditCardDetailsCallback = {
     success: function(data, textStatus) {
-        debugger;
+        savedCardDetails();
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -389,8 +408,8 @@ function saveCreditCardDetails() {
             "exp_month": Exp_month,
             "exp_year": Exp_year,
             "cvv2": cvv,
-            "first_name":"nabeel",
-            "last_name":"Th"
+            "first_name":"first_name",
+            "last_name":"last_name"
         }
     data = JSON.stringify(params);
     var saveCreditCardDetailsInstance = new AjaxHttpSender();
@@ -404,15 +423,9 @@ var savedCardDetailsCallback = {
             last_num;
         if(cardDetails.status == 1){
             if(cardDetails.cards.length!=0){
-                 $.each(cardDetails.cards,function(key,value){
-                    last_num = cardDetails.cards[key].number.slice(-4);
-                    $('.saved-cards').append("<input type='radio' name='card' id='"+"r"+value.id+"' class='radio-button-payment'>"+
-                        "<label for='"+"r"+value.id+"'>"+
-                        "<img class='paypal' src='"+value.logo+"'>"+
-                        "<span class='body-text-small'>"+value.type+" "+"ending in"+" "+last_num+"</span>"+
-                        "<span class='body-text-small'>"+"Expires on"+" "+value.expire_month+"/"+value.expire_year+"</span>"+"</label>");
-                 });
+                populateCardDetails(cardDetails.cards);
                  $('.payment-method-container').show();
+                 $('.payment-method-guest-container').hide();
             }
             else{
                 $('.payment-method-guest-container').show();
@@ -434,6 +447,17 @@ function savedCardDetails() {
     data = JSON.stringify(params);
     var savedCardDetailsInstance = new AjaxHttpSender();
     savedCardDetailsInstance.sendPost(url, header, data, savedCardDetailsCallback);
+}
+
+function populateCardDetails(cards){
+    $.each(cards,function(key,value){
+        last_num = cards[key].number.slice(-4);
+        $('.saved-cards').append("<input type='radio' name='card' id='"+"r"+value.id+"' class='radio-button-payment'>"+
+        "<label for='"+"r"+value.id+"'>"+
+        "<img class='paypal' src='"+value.logo+"'>"+
+        "<span class='body-text-small'>"+value.type+" "+"ending in"+" "+last_num+"</span>"+
+        "<span class='body-text-small'>"+"Expires on"+" "+value.expire_month+"/"+value.expire_year+"</span>"+"</label>");
+    });
 }
 
 $(window).resize(function(){
@@ -459,43 +483,204 @@ function mobileResponsive(){
 
 //ADDRESS LIST
 var getAddressCallback = {
+    success: function(data, textStatus,flag) {
+         if(flag=="populateAddressToPopUp"){
+             userDetails = JSON.parse(data);
+             appendAddresscontent(userDetails);
+         }
+         else{
+             popuplateAddressList(data);
+         }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function getAddress(flag) {
+    var url = baseURL + "get_address_list/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {};
+    data = JSON.stringify(userData);
+    var getAddressInstance = new AjaxHttpSender();
+    getAddressInstance.sendPost(url, header, data, getAddressCallback,flag);
+}
+function popuplateAddressList(data){
+    userDetails = JSON.parse(data);
+    if (userDetails.status == 1) {
+        if(userDetails.address_list.length!=0){
+            $('.address-info-guest').hide();
+            localStorage['delivery_addressess'] = data;
+            populateAddresstoInfoContainer(userDetails.address_list)
+        }
+        else{
+            $('.address-info').hide();
+            $('.address-info-guest').show();
+            getCities();
+        }
+    } 
+    else {
+        showErrorPopup(userDetails);
+    }
+}
+
+function populateAddresstoInfoContainer(data){    
+     $.each(data,function(key,value){
+        if(value.is_primary == 1){
+            $('.address-info').append("<div class='contents'>"+
+            "<span class='content-heading'>"+"DELIVERY ADDRESS"+"</span>"+
+            "<span>"+value.first_name+" "+value.last_name+"</span>"+
+            "<span>"+value.building+","+value.street+"</span>"+
+            "<span>"+value.city+","+value.state+" "+value.zip+"</span>"+
+            "<span>"+value.phone+"</span>"+
+            "<span class='change-address-payment' id='change-address'>"+"CHANGE ADDRESS"+"</span>"+"</div>");
+        }
+    });
+    $('.address-info-guest').hide();
+    $('.address-info').show();
+}
+//populate address list in popup
+function populateAddressListPopup(){
+    $('.address-container').remove();
+    $('.address-list-popup .button').remove();
+    if(localStorage['delivery_addressess']){
+        addressList = JSON.parse(localStorage['delivery_addressess']);
+        appendAddresscontent(addressList);
+        $('.address-list-popup .popup-container').append("<div class='button'>"+
+            "<a href='#' class='btn btn-medium-primary medium-green' id='save-delivery-address'>"+"SELECT"+"</a>"+
+            "<a href='#' class='btn btn-medium-secondary' id='cancel'>"+"CANCEL"+"</a>"+"</div>");
+        $('.address-list-popup').show();
+    }
+    else{
+       getAddress("populateAddressToPopUp");
+    }
+}
+function appendAddresscontent(addressList){
+    $.each(addressList.address_list,function(key,value){
+        $('.address-list-popup .popup-container').append
+            ("<div class='address-container'>"+"<input type='radio' name='address' id='"+value.id+"' class='radio-button'>"+
+            "<label class='list-address' for='"+value.id+"'>"+
+            "<span>"+value.first_name+" "+value.last_name+"</span>"+
+            "<span>"+value.building+","+value.street+"</span>"+
+            "<span>"+value.city+","+value.state+" "+value.zip+"</span>"+
+            "<span>"+value.phone+"</span>"+"</label>"+"</div>");
+    });  
+}
+
+var setPrimaryAddCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
-        if (userDetails.status == 1) {
-            if(userDetails.address_list.length!=0){
-                $('.address-info-guest').hide();
-                $.each(userDetails.address_list,function(key,value){
-                    if(value.is_primary == 1){
-                        $('.address-info').append("<div class='contents'>"+
-                            "<span class='content-heading'>"+"DELIVERY ADDRESS"+"</span>"+
-                            "<span>"+value.first_name+" "+value.last_name+"</span>"+
-                            "<span>"+value.building+","+value.street+"</span>"+
-                            "<span>"+value.city+","+value.state+" "+value.zip+"</span>"+
-                            "<span>"+value.phone+"</span>"+
-                            "<span class='change-address-payment' id='change-address'>"+"CHANGE ADDRESS"+"</span>"+"</div>");
-                    }
-                });
-            }
-            else{
-                $('.address-info').hide();
-                $('.address-info-guest').show();
-            }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function setPrimaryAdd(selectedId){
+    var url = baseURL + "update_address/" + selectedId + "/",
+       header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData={
+            "is_primary": 1
+        }
+    data = JSON.stringify(userData);
+    var setPrimaryAddInstance = new AjaxHttpSender();
+    setPrimaryAddInstance.sendPost(url, header, data, setPrimaryAddCallback);
+}
+
+function changeDeliveryAddress(selectedId){
+    var selectedAddress = $('#'+selectedId).parent().find('label'),
+        htmlContent = '<span class="content-heading">DELIVERY ADDRESS</span>'+selectedAddress.html()+
+        '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
+        $('.address-info .contents').html(htmlContent);
+        $('.address-list-popup').hide();
+}
+var addAddressCallback = {
+    success: function(data, textStatus) {
+        var userDetails = JSON.parse(data);
+        populateAddedAddress();
+        debugger;
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function addAddress(){
+    var newAddress = getNewAddress(),
+    url = baseURL + "add_address/",
+    header = {
+        "session-key": localStorage["session_key"]
+    },
+    userData = {
+        "first_name": newAddress.first_name,
+        "last_name": newAddress.last_name,
+        "phone": newAddress.phone,
+        "zip": newAddress.zip,
+        "city_id": newAddress.city_id,
+        "street": newAddress.street,
+        "building": newAddress.building,
+        "is_primary": newAddress.is_primary
+    };
+    data = JSON.stringify(userData);
+    var addAddressInstance = new AjaxHttpSender();
+    addAddressInstance.sendPost(url, header, data, addAddressCallback);
+}
+function getNewAddress(){
+    var $addressContainer = $('#guest-address-info'),
+        cityId = $addressContainer.find(".city-selector").val(),
+        city_name = $(".city-selector").find("#"+cityId).text();
+    var newAddress = {
+        first_name: $addressContainer.find("input[name*='firstname']").val(),
+        last_name: $addressContainer.find("input[name*='lastname']").val(),
+        phone: $addressContainer.find("input[name*='phonenumber']").val(),
+        zip: $addressContainer.find("input[name*='zip']").val(),
+        street: $addressContainer.find("input[name*='street']").val(),
+        city_id: cityId,
+        building: $addressContainer.find("input[name*='building']").val(),
+        is_primary: $addressContainer.find("input[type*='checkbox']").val() == "on" ? 1 : 0,
+        state:"Alabama",
+        city: city_name
+    }
+    return newAddress;
+}
+
+// Get City API
+var getCitiesCallback = {
+    success: function(data, textStatus, cityId) {
+        var cityList = JSON.parse(data);
+        if (cityList.status == 1) {
+            $('.city-selector').empty();
+            $.each(cityList.city_list, function(index, value) {
+                $('.city-selector').append($('<option/>', {
+                    value: value.id,
+                    text: value.name,
+                    id:value.id
+                }));
+            });
+            // if (cityId) {
+            //     $('.city-selector').val(cityId);
+            // }
         } else {
-            showErrorPopup(userDetails);
+            showErrorPopup(cityList);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getAddress(id) {
-    var url = baseURL + "get_address_list/",
+function getCities(cityId) {
+    var url = baseURL + "get_cities/",
         header = {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "id": id
+            "state_id": 52
         };
     data = JSON.stringify(userData);
-    var getAddressInstance = new AjaxHttpSender();
-    getAddressInstance.sendPost(url, header, data, getAddressCallback);
+    var getCitiesInstance = new AjaxHttpSender();
+    getCitiesInstance.sendPost(url, header, data, getCitiesCallback, cityId);
+}
+
+function populateAddedAddress(){
+    var addedAddress = getNewAddress();
+    // data = JSON.parse(addedAddress);
+    // addressData=[addedAddress];
+    populateAddresstoInfoContainer([addedAddress]);
 }

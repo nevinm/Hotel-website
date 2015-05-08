@@ -158,7 +158,17 @@ $(document).ready(function() {
 
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
-        $('.navMenu').slideToggle();
+        // $('.navMenu').slideToggle();
+        // Set the effect type
+    var effect = 'slide';
+ 
+    // Set the options for the effect type chosen
+    var options = { direction: 'right' };
+ 
+    // Set the duration (default: 400 milliseconds)
+    var duration = 700;
+ 
+    $('.navMenu').toggle(effect, options, duration);
     });
 
     checkLoggedIn();
@@ -325,7 +335,7 @@ $("form").each(function() {
                 required: "Please provide email."
             },
             email: "Enter a valid email address.",
-            zip: "Provide a valid zip code.",
+            zip: "Provide a valid zip.",
             street: "Provide a valid address.",
             building: "Provide a valid address.",
             state: "Provide a state name.",

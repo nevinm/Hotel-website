@@ -625,8 +625,90 @@ span.icon-menu {
 /*==============================*\
             &POPUP
 \*==============================*/
+.popup-wrapper{
+	display: none;
+}
+.bk-overlay{
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background:#000;
+	top:0;
+	left: 0;
+	opacity: 0.8;
+	z-index: 9999;
+}
+.popup{
+	position: absolute;
+	height: 250px;
+	width: 400px;
+	background-color:#fff;
+	top: 40%;
+	left: 50%;
+	margin-top: -125px;
+	margin-left: -200px;
+	z-index: 9999;
+	border-radius: 4px;
 
-.popup-wrapper {
+}
+.popup .header,.delivery-address-error-popup .header{
+	border-bottom: 1px solid #D0D0D0;
+	height: 46px;
+	padding-left: 35px;
+	background-color: #A9D77B;
+	color: #454545;
+	border-radius: 4px 4px 0 0;
+}
+.popup-container{
+	padding: 15px;
+}
+.popup .content{
+	padding: 43px 0 !important;
+	float: none !important;
+}
+ .popup-container .content span{
+	width: 100%;
+	float: left;
+	text-align: center;
+	font-family: 'BrandonGrotesque-Regular';
+	font-size: 16px;
+	padding: 5px 0;
+	color: #5C5C5C;
+}
+
+.popup-container .button{
+	width: 100%;
+	text-align: center;
+	padding: 20px 0px;
+}
+
+#signup-firstname-error,#signup-lastname-error,#signup-email-error,#signup-password-error,
+#username-error,#password-error,#forgotpassword-email-error,#confirm-newpassword-error,
+#newpassword-error,#new-password-error,#confirm-password-error,#old-password-error,
+#firstname-error,#lastname-error,#phonenumber-error,#new-email-error,#confirmEmail-error,
+#address-line-1-error,#address-line-2-error,#zip-error,#phonenumber-error,#state-error,
+#city-error,#adminlogin-email-error,#meal-name-error,#description-error,#meal-price-error,
+#meal-tax-error,#chef-name-error,#create-meal-available-error,#create-meal-category-error,
+#create-meal-mealType-error,#chef-image-input-error,#meal-image-input-error
+{
+	color: #ff7878;
+	background: white;
+	position: absolute;
+	right: 10px;
+	bottom: 37px;
+	padding: 4px 0px;
+	font-family: ProximaNova-Regular;
+  	font-size: 11px;
+	margin-top: 4px;
+	border-radius: 5px;
+	border:1px hidden !important;
+	padding-left: 10px;
+	width: 100%;
+}
+.error{
+	border: 2px solid #ff7878 !important;
+
+/*.popup-wrapper {
     display: none;
 }
 
@@ -688,7 +770,7 @@ span.icon-menu {
     text-align: center;
     float: left;
     padding: 20px 0px;
-}
+}*//*
 
 #signup-firstname-error,
 #signup-lastname-error,
@@ -741,6 +823,7 @@ span.icon-menu {
 
 .error {
     border: 2px solid #ff7878 !important;
+>>>>>>> 05e0cf24b0e809df624a4c894b79249dd76d3df3*/
 }
 /*label.error:after{
     position: absolute;
@@ -807,12 +890,13 @@ span.icon-menu {
 \*==============================*/
 
 .navMenu {
-    width: 100%;
-    position: absolute;
-    background: rgba(255, 255, 255, .85);
-    top: 73px;
-    z-index: 99;
-    left: 0;
+     width: 51%;
+  position: absolute;
+  background: rgba(255, 255, 255, .85);
+  top: 73px;
+  z-index: 99;
+  left: 0;
+  display: none;
 }
 
 .navMenu ul li {
