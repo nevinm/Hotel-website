@@ -62,13 +62,23 @@ def login(request, data):
                               "role" : user.role.id,
                               }
             
-            session = SessionStore()
+            session_key = request.META.get('HTTP_SESSION_KEY', None)
+            if session_key :
+                session = SessionStore(session_key=session_key)
+                log.info("Logging in to guest session")
+                if 'user' in session and session["user"]["id"] != user.id:
+                    log.error("User " + email + "logging in to the session for "+session["user"]["email"] + ": REJECTED")
+                    return custom_error("Invalid session.")
+            else:
+                session = SessionStore()
+            
             session["user"] = user_dic
             if str(remember) == "1":
                 session.set_expiry = 0
             else:
                 session.set_expiry = settings.SESSION_EXPIRY
             session.save()
+
             log.info(email+" logged in ..")
             return json_response({"status":1, "message": "Logged in succesfully", "user":user_dic, "session_key":session.session_key})
         else:
@@ -78,7 +88,7 @@ def login(request, data):
     except KeyError as e:
         log.error("Login :" + str(e) + " missing" )
         return json_response({"status":-1, "message":"Please fill all the fields."})
-    except Exception as e:
+    except IOError as e:
         log.error("Login : " + e.message)
         return json_response({"status":-1, "message": "Login failed. Please try again later."})
 
@@ -142,7 +152,17 @@ def signup(request, data):
                                   }
             
             log.info(user.email + " signed up")
-            session = SessionStore()
+            
+            session_key = request.META.get('HTTP_SESSION_KEY', None)
+            if session_key :
+                session = SessionStore(session_key=session_key)
+                log.info("Logging in to guest session")
+                if 'user' in session and session["user"]["id"] != user.id:
+                    log.error("User " + email + "logging in to the session for "+session["user"]["email"] + ": REJECTED")
+                    return custom_error("Invalid session.")
+            else:
+                session = SessionStore()
+                
             session["user"] = user_dic
             session.set_expiry = settings.SESSION_EXPIRY
             session.save()
