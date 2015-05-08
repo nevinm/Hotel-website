@@ -71,7 +71,7 @@ def check_nvp_input():
 def nvp_request(request):
     try:
         if (request.method == 'GET'):
-            return request.GET
+            return dict(request.GET)
         else:
             data = request.body
             return {item.split('=')[0] : item.split('=')[1]  for item in data.split('&')}

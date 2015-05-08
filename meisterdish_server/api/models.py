@@ -362,7 +362,7 @@ class Order(models.Model):
             self.created = datetime.datetime.now()
         self.updated = datetime.datetime.now()
 
-        if self.status > 2:
+        if self.status >= 4:
             self.cart.completed = True
             self.cart.save()
         if not self.grand_total or self.grand_total == 0:
