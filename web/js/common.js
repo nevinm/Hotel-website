@@ -158,8 +158,34 @@ $(document).ready(function() {
 
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
-        $('.navMenu').slideToggle();
+        $('.navMenu').show();
+        $('#header').animate({
+            left:"60%"
+        })
+        $('#page-container').animate({
+             left:"60%"
+        })
+        $('.navMenu').animate({
+            left:"0"
+        });
+        setTimeout(function(){
+           $('.icon-menu').addClass('icon-cancel'); 
+       },100)
     });
+   $(document).on('click', '.icon-cancel', function() {
+        $('.navMenu').animate({
+            left:"-60%"
+        });
+        $('#page-container').animate({
+            left:"0px"
+        })
+        $('#header').animate({
+            left:"0px"
+        })
+        setTimeout(function(){
+           $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel'); 
+       },500)
+    })
 
     checkLoggedIn();
     verifyAccount();
@@ -325,7 +351,7 @@ $("form").each(function() {
                 required: "Please provide email."
             },
             email: "Enter a valid email address.",
-            zip: "Provide a valid zip code.",
+            zip: "Provide a valid zip.",
             street: "Provide a valid address.",
             building: "Provide a valid address.",
             state: "Provide a state name.",

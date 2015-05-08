@@ -919,6 +919,7 @@ form.addaddress-popup {
 #guest-address-info .section3 .forminput-wrapper{
 	float: left;
 	width: 30.6%;
+	position: relative;
 }
 #guest-address-info .section3 .forminput-wrapper:nth-child(2){
 	margin-right: 4%;
@@ -1100,17 +1101,73 @@ input.radio-button-payment {
 #change-address {
   cursor: pointer;
 }
+.address-list-popup{
+	display: none;
+}
+.address-list-popup .popup{
+	width: 64%;
+	margin-left: -32%;
+	height: auto;
+}
+.address-list-popup .header{
+	font-family: 'BrandonGrotesque-Bold';
+	color: #000;
+	background-color: #f7f7f7;
+	padding-left: 20px;
+	padding-top: 12px;
+	padding-right: 20px;
+}
+.address-container {
+  width: 33%;
+  float: left;
+  font-family: 'ProximaNova-Regular';
+  color: #b0b0b0;
+  padding: 20px 20px;
+}
+.list-address span{
+	width: 100%;
+  float: left;
+    font-size: 13px;
+  padding-bottom: 7px;
+}
+.list-address{
+	width: 80%;
+	float: left;
+}
+.radio-button{
+	float: left;
+	cursor: pointer;
+	margin-right: 8%;
+}
+.address-list-popup .button{
+	padding-left: 20px;
+	float: left;
+}
+.address-list-popup .button #cancel{
+	float: left;
+	margin-left: 20px;
+}
+#save-delivery-address{
+	float: left;
+}
+.section2 .forminput-wrapper #address-line-1-error{
+	bottom: 97px;
+	left: -9px;
+}
 /*==================================*\
 			&TABLET
 \*==================================*/
-@media only screen and (min-width: 768px)and (max-width:1024px){
+@media (min-width: 768px)and (max-width:1024px){
 	.sub-content1 {
 		float: left;
 		margin-right: 3%;
 	}
 	.sub-content2 {
 		float: right;
-		margin-right: 5%;
+		margin-right: 2%;
+	}
+	.address-container{
+		width: 50%;
 	}
 }
 /*==================================*\
@@ -1334,8 +1391,14 @@ input.radio-button-payment {
 		display: block;
 		float: left;
 	}
+	.address-container{
+		width: 100%;
+	}
+	.section2 .forminput-wrapper #address-line-1-error{
+		bottom: 106px;
+	}
 }
-  	@media only screen and (max-width:400px){
+  	@media (max-width:400px){
   		.address-content{
   			font-size: 12px;
   		}
