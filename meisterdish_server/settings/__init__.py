@@ -206,8 +206,6 @@ MAIL_USE_TLS=True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'afmpmail2@gmail.com'
 EMAIL_HOST_PASSWORD = 'afmp@123mail2'
-#EMAIL_HOST_USER = 'meisterdishtest@gmail.com'
-#EMAIL_HOST_PASSWORD = 'meisterdish@123'
 DEFAULT_FROM_EMAIL = 'Meisterdish Test<meisterdishtest@gmail.com>'
 
 

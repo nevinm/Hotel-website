@@ -23,7 +23,8 @@ def check_input(method, admin=False):
                                              'get_meals',
                                              "get_categories",
                                              "get_meal_details",
-                                             "add_to_cart"
+                                             "add_to_cart",
+                                             "paypal_success",
                                              ]:
                         #common_apis = ["get_meals"]
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
@@ -87,5 +88,5 @@ def json_response(response, wrap=False):
     return header_res
 
 def custom_error(message):
-    log.error("Error : "+message)
+    #log.error("Error : "+message)
     return json_response({'status' : -1, 'message' : message})

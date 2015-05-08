@@ -869,7 +869,7 @@ form.addaddress-popup {
 	float: left;
 	line-height: 20px;
 }
-.address-info .contents span:last-child,.payment-method-container .contents span:last-child{
+.change-address-payment{
 	font-family: 'BrandonGrotesque-Regular';
 	font-size: 14px;
  	padding-top: 20px; 
@@ -886,10 +886,11 @@ form.addaddress-popup {
 	position: relative;
 	min-height: 260px;
 	width: 100%;
+	display: none;
 }
 .payment-method-container .contents{
 	padding-top: 20px;
-	width: 300px;
+	width: 100%;
 }
 .payment-method-container .contents span:last-child{
 	left: 10px;
@@ -902,6 +903,7 @@ form.addaddress-popup {
 	float: left;
 	line-height: 12px;
 	padding-left: 10px;
+	width: 73%;
 }
 #guest-address-info{
 	width: 100%;
@@ -931,6 +933,8 @@ form.addaddress-popup {
 .payment-method-guest-container {
 	width: 100%;
 	float: left;
+	padding-bottom: 20px;
+	display: none
 }
 form#pay-form {
   width: 100%;
@@ -1053,6 +1057,7 @@ input#driver-description {
 .address-info-guest {
 	width: 100%;
 	float: left;
+	display: none;
 }
 .address-info-guest .content{
 	padding-left: 30px;
@@ -1076,8 +1081,25 @@ input#driver-description {
 	color:#fff;
 }
 #pay-using-card,#pay-using-paypal{
-		display:none;
-	}
+	display:none;
+}
+
+input.radio-button-payment {
+	float: left;
+	margin-right: 30px;
+}
+.saved-cards{
+	width: 100%;
+	float: left;
+}
+.saved-cards label {
+	float: left;
+	width: 80%;
+	padding-bottom: 20px;
+}
+#change-address {
+  cursor: pointer;
+}
 /*==================================*\
 			&TABLET
 \*==================================*/

@@ -93,6 +93,10 @@ $(document).ready(function() {
     $('#save-credit-card').on("click", function() {
         saveCreditCardDetails();
     });
+
+     $(document).on('click', '#change-address', function() {
+         // getAddress();
+     })
 });
 
 
@@ -383,7 +387,9 @@ function saveCreditCardDetails() {
             "number": card_number,
             "exp_month": Exp_month,
             "exp_year": Exp_year,
-            "cvv2": cvv
+            "cvv2": cvv,
+            "first_name":"nabeel",
+            "last_name":"Th"
         }
     data = JSON.stringify(params);
     var saveCreditCardDetailsInstance = new AjaxHttpSender();
@@ -392,11 +398,32 @@ function saveCreditCardDetails() {
 
 //Get saved cards
 var savedCardDetailsCallback = {
-    success: function(data, textStatus) {},
+    success: function(data, textStatus) {
+        var cardDetails = JSON.parse(data),
+            last_num;
+        if(cardDetails.status == 1){
+            if(cardDetails.cards.length!=0){
+                 $.each(cardDetails.cards,function(key,value){
+                    last_num = cardDetails.cards[key].number.slice(-4);
+                    $('.saved-cards').append("<input type='radio' name='card' id='"+"r"+value.id+"' class='radio-button-payment'>"+
+                        "<label for='"+"r"+value.id+"'>"+
+                        "<img class='paypal' src='"+value.logo+"'>"+
+                        "<span class='body-text-small'>"+value.type+" "+"ending in"+" "+last_num+"</span>"+
+                        "<span class='body-text-small'>"+"Expires on"+" "+value.expire_month+"/"+value.expire_year+"</span>"+"</label>");
+                 });
+                 $('.payment-method-container').show();
+            }
+            else{
+                $('.payment-method-guest-container').show();
+            }
+        }
+        else{
+            showPopup(cardDetails);
+        }
+    },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-//save credit card items
 function savedCardDetails() {
     var url = baseURL + "get_saved_cards/",
         header = {
@@ -434,9 +461,24 @@ var getAddressCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
-            localStorage['delivery_addressess'] = data;
-            // autoPopulateAdressess(userDetails);
-            // isAddress();
+            if(userDetails.address_list.length!=0){
+                $('.address-info-guest').hide();
+                $.each(userDetails.address_list,function(key,value){
+                    if(value.is_primary == 1){
+                        $('.address-info').append("<div class='contents'>"+
+                            "<span class='content-heading'>"+"DELIVERY ADDRESS"+"</span>"+
+                            "<span>"+value.first_name+" "+value.last_name+"</span>"+
+                            "<span>"+value.building+","+value.street+"</span>"+
+                            "<span>"+value.city+","+value.state+" "+value.zip+"</span>"+
+                            "<span>"+value.phone+"</span>"+
+                            "<span class='change-address-payment' id='change-address'>"+"CHANGE ADDRESS"+"</span>"+"</div>");
+                    }
+                });
+            }
+            else{
+                $('.address-info').hide();
+                $('.address-info-guest').show();
+            }
         } else {
             showErrorPopup(userDetails);
         }
