@@ -390,13 +390,21 @@ def update_order(request, data, user, order_id):
         log.error("Update order." + e.message)
         return custom_error("Failed to update the order.")
 
-@check_input('POST', True)
+@check_nvp_input()
 def paypal_success(request, data):
     try:
         log.info("PAYPAL Success")
-        log.info(request.method)
         log.info(data)
-        return HttpResponseRedirect("http://meisterdish.qburst.com/")
+        return HttpResponseRedirect("http://meisterdish.qburst.com/views/checkout.html")
     except Exception as e:
-        log.error("Paypal success" + e.message)
-        return custom_error("Failed to update the order.")
+        log.error("Paypal success url : " + e.message)
+        return custom_error("Failed to handle payment data.")
+
+@check_nvp_input()
+def paypal_ipn(request, data):
+    try:
+        log.info("PAYPAL IPN")
+        log.info(data)
+    except Exception as e:
+        log.error("Paypal IPN ERROR : " + e.message)
+    return HttpResponse("Done")

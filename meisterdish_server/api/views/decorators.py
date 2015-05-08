@@ -24,7 +24,6 @@ def check_input(method, admin=False):
                                              "get_categories",
                                              "get_meal_details",
                                              "add_to_cart",
-                                             "paypal_success",
                                              ]:
                         #common_apis = ["get_meals"]
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
@@ -48,8 +47,7 @@ def check_input(method, admin=False):
                             log.error('API : '+func.__name__+', Invalid session:Rejected')
                             return json_response({'status' : '-1', 'message' : message})
                     else:
-                        return func(request, req, *args, **kwargs)
-                        
+                        return func(request, req, *args, **kwargs)   
                 else:
                     log.error('API : Got a request with non-JSON input, Rejected.')
                     return custom_error('Please enter a valid JSON input')
@@ -59,14 +57,38 @@ def check_input(method, admin=False):
         return wraps(func)(inner_decorator)
     return wrapper
 
+def check_nvp_input():
+    def wrapper(func):
+        def inner_decorator(request, *args, **kwargs):
+            log.info(func.__name__ + " called. Is it from Paypal ? ")
+            data = json_nvp_request(request)
+            if not data:
+                return HttpResponse("Failed to parse the request data.")
+            return func(request, data, *args, **kwargs)
+        return wraps(func)(inner_decorator)
+    return wrapper
+
+def json_nvp_request(request):
+    try:
+        if (request.method == 'GET'):
+            return request.GET
+        else:
+            data = request.body
+            return {item.split('=')[0] : item.split('=')[1]  for item in data.split('&')}
+    except Exception as e:
+        log.error("Failed to parse NVP Response : "+ e.message)
+        return None
+
 def json_request(request):
     if (request.method == 'GET'):
         req = request.GET
         return req
     else:
         req = request.body
+
         if not req:
             req='{"a":"b"}'
+
     if (req):
         try:
             if request.FILES:
