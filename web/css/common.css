@@ -475,6 +475,7 @@ label {
     font-family: 'BrandonGrotesque-Bold'!important;
     font-weight: normal;
     color: #6b6b6b;
+    display: none;
 }
 /*==============================*\
             &HEADER
@@ -1050,9 +1051,9 @@ span.icon-menu {
     }
 }
 
-@media (min-width: 1302px) {
+/*@media (min-width: 1302px) {*/
     #header {
         height: 100px;
         padding: 30px 0;
     }
-}
+/*}*/
