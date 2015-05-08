@@ -160,7 +160,10 @@
     letter-spacing: 1px;
     color: #9B9B9B;
 }
-.mobile-tab,.left-arrow,.right-arrow{
+
+.mobile-tab,
+.left-arrow,
+.right-arrow {
     display: none;
 }
 /*==============================*\
@@ -214,13 +217,31 @@
 }
 
 @media (min-width: 320px)and (max-width: 767px) {
-    .mobile-tab,.left-arrow,.right-arrow{
+    .mobile-tab,
+    .left-arrow,
+    .right-arrow {
         display: block;
     }
-    .add-meal{
+    .add-meal {
         display: none;
     }
-    .ui-tabs .ui-tabs-nav li{
+    .ui-tabs .ui-tabs-nav li {
         width: auto;
+    }
+    .ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+        padding: 5px;
+    }
+    .ui-tabs .ui-tabs-nav li {
+        padding: 0px;
+    }
+    .ui-state-hover,
+    .ui-widget-content .ui-state-hover,
+    .ui-widget-header .ui-state-hover,
+    .ui-state-focus,
+    .ui-widget-content .ui-state-focus,
+    .ui-widget-header .ui-state-focus {
+        border-bottom: 0;
+        font-weight: normal;
+        margin: 0;
     }
 }

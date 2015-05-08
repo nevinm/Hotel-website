@@ -2,7 +2,6 @@ var ipadWidth = 768;
 $(document).ready(function() {
 
     isMobileRendered();
-    // checkTabReplacement();
     $(window).resize(function() {
         checkTabReplacement();
     });
@@ -10,50 +9,61 @@ $(document).ready(function() {
 });
 
 function checkTabReplacement() {
-	//To do mobile rendering
+    //To do mobile rendering
     if (window.innerWidth < ipadWidth && mobileRendered == false) {
         mobileJqueryUITab();
-        replaceWord();
+        replaceWord(true);
         mobileRendered = true;
-    } 
-	//To do pc rendering
+    }
+    //To do pc rendering
     else if (window.innerWidth >= ipadWidth && mobileRendered == true) {
         pcJqueryUiTab();
-        replaceWord();
+        replaceWord(false);
         mobileRendered = false;
     }
 }
 
-function replaceWord() {
-    $(".meal-tab-container").find('.pc-tab').each(function(key, value) {
-        $value = $(value);
-        replacedWord = $value.attr("data-link");
-        $value.attr("data-link", $value.html());
-        $value.html(replacedWord);
-    });
+function replaceWord(isMobile) {
+    if (isMobile) {
+        $(".meal-tab-container").find('.pc-tab').each(function(key, value) {
+            $value = $(value);
+            replacedWord = $value.attr("data-mobile-link");
+            $value.html(replacedWord);
+        });
+    } else {
+        $(".meal-tab-container").find('.pc-tab').each(function(key, value) {
+            $value = $(value);
+            replacedWord = $value.attr("data-pc-link");
+            $value.html(replacedWord);
+        });
+    }
 }
 
 function isMobileRendered() {
     if (window.innerWidth >= ipadWidth) {
         mobileRendered = false;
         pcJqueryUiTab();
+        replaceWord(mobileRendered);
     } else {
         mobileRendered = true;
         mobileJqueryUITab();
+        replaceWord(mobileRendered);
     }
 }
 
 function pcJqueryUiTab() {
-    if ($("#meal-tabs").data("ui-tabs")) {
-        $("#meal-tabs").tabs('destroy');
-    }
+    destroyTabs();
     $("#meal-tabs").tabs();
 }
 
-function mobileJqueryUITab() {
+function destroyTabs() {
     if ($("#meal-tabs").data("ui-tabs")) {
         $("#meal-tabs").tabs('destroy');
     }
+}
+
+function mobileJqueryUITab() {
+    destroyTabs();
     var $tabs = $("#meal-tabs").tabs({
         activate: function(event, ui) {
             $tabs.tabs('option', 'hide', false);
