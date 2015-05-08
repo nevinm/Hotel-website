@@ -186,8 +186,9 @@ class CreditCardDetails(models.Model):
     expire_year = models.CharField(max_length=16)
     cvv2 = models.CharField(db_index=True, max_length=5)
     card_type = models.CharField(max_length=15)
+    
     def __unicode__(self):
-        return self.user.email + " : " + self.number
+        return self.user.email + " : " + str(self.number)
 
 
 class Category(models.Model):
