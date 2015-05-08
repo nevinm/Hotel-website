@@ -38,11 +38,18 @@
 /*==============================*\
             &MENU
 \*==============================*/
-
-.menu-wrapper {
-    background-color: #E7E7E7;
-    background-image: url(../images/inner_bg.jpg);
-    background-size: cover;
+#mainWrapper{
+	background-color: #fff;
+	background-image: none !important;
+}
+.menu-wrapper{
+	background-color: #E7E7E7;
+	background-image: url(../images/inner_bg.jpg);
+	background-size: cover;
+}
+.subMenu.body-text-bold{
+	font-size: 12pt;
+	font-family: 'BrandonGrotesque-Regular';
 }
 
 .subMenu {
@@ -52,7 +59,9 @@
     background-color: transparent;
     background-repeat-x: inherit;
     background-image: url('../images/white.png');
-    color: #5a5a5a;
+    color: #9B9B9B;
+    box-shadow: 0 0 3px #b0b0b0;
+>>>>>>> 05e0cf24b0e809df624a4c894b79249dd76d3df3
 }
 
 .subMenu ul li.menu-categories-list {
@@ -73,12 +82,11 @@
     font-size: 16px;
 }
 
-.subMenu ul li.menu-categories-list:hover,
-.subMenu ul li.menu-categories-list.activeOption {
-    border-bottom: 2px solid #a9d77b;
-    background-color: #F9F9F9;
-    font-weight: bold;
-    color: #1a1a1a;
+.subMenu ul li.menu-categories-list:hover,.subMenu ul li.menu-categories-list.activeOption {
+	border-bottom: 2px solid #a9d77b;
+	background-color: #F9F9F9;
+	font-weight: bold;
+	color: #6b6b6b;
 }
 
 .subMenuFilter {
@@ -129,40 +137,112 @@
 }
 
 .filter-drop-down ul li {
+	padding: 12px 0;
+	overflow: hidden;
+	text-transform: uppercase;
+	font-family: 'BrandonGrotesque-bold';
+	font-size: 13px;
+}
+
+.filter-drop-down ul li:hover{
+	background-color: #E8E8E8;
+}
+.filter-drop-down ul li div{
+	padding: 0px 21px;
+}
+.filter-container:hover{
+	border-bottom: 2px solid #a9d77b;
+	background-color: #F9F9F9;
+	box-sizing:border-box;
+	font-weight: bold;
+	color: #1a1a1a;
+}
+
+.listContainer{
+	float: left;
+	width: 100%;
+	margin: 75px 0 0 0;
+	padding: 0 10px;
+}
+.listItems{
+	width: 32%;
+	margin: 0 0 60px 2%;
+	float: left;
+}
+.thumbnail{
+	min-width: 100%;
+	height: 250px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	border: 0.5px solid #9b9b9b;
+}
+.listItemDetails{
+	float: left;
+	width: 100%;
+	display: table;
+	margin-bottom: 2px;
+}
+.listItemDetails span{
+	display: table-cell;
+	width: 100%;
+	padding: 0 2%;
+}
+.contentWrapper{
+	float: left;
+	width: 100%;
+}
+.subMenuHeader{
+	float: left;
+	width: 100%;
+	height: 400px;
+	background: url(../images/header-image1.jpg) no-repeat;
+	background-size: cover;
+	position: relative;
+}
+.subMenuHeader span{
+	position: absolute;
+	bottom: 0;
+	color: #fff;
+	left: 94px;
+}
+.addItemButton{
+	height: 32px;
+	min-width: 75px;
+	font-size: 12px;
+	line-height: 30px;
+	padding: 0 0px;
+	border-radius: 4px;
+	float: right;
+}
+.menuItemName{
+	color: #9B9B9B;
+  	text-transform: uppercase;
+}
+.menuItemDetails{
+	vertical-align: middle;
+}
+.itemCost{
+	color: #B3B3B3;
+	font-size: 24px;
+	font-weight: normal;
+}
+.menu-pagination{
+	float: right;
+	padding-bottom: 10px;
+}
+.menu-loading-gif,{
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+	display: none;
+}
+.subMenu .category-header{
+	display: none;
     padding: 12px 0;
     overflow: hidden;
     text-transform: uppercase;
     font-family: 'BrandonGrotesque-bold';
     font-size: 13px;
-}
-
-.filter-drop-down ul li:hover {
-    background-color: #E8E8E8;
-}
-
-.filter-drop-down ul li div {
-    padding: 0px 21px;
-}
-
-.filter-container:hover {
-    border-bottom: 2px solid #a9d77b;
-    background-color: #F9F9F9;
-    box-sizing: border-box;
-    font-weight: bold;
-    color: #1a1a1a;
-}
-
-.listContainer {
-    float: left;
-    width: 100%;
-    margin: 75px 0 0 0;
-    padding: 0 10px;
-}
-
-.listItems {
-    width: 32%;
-    margin: 0 0 60px 2%;
-    float: left;
 }
 
 .thumbnail {
@@ -199,7 +279,6 @@
     position: relative;
 }
 
-
 .subMenuHeader span {
     position: absolute;
     bottom: 0;
@@ -228,6 +307,7 @@
 
 .itemCost {
     color: #B3B3B3;
+    margin-bottom: 7px;
     font-size: 24px;
     font-weight: normal;
 }
@@ -248,6 +328,7 @@
 .subMenu .category-header {
     display: none;
 }
+
 /*==============================*\
         &MENU - MOBILE
 \*==============================*/
@@ -307,7 +388,7 @@
         margin: 0px;
     }
     .subMenu {
-        margin-top: 75px;
+        margin-top: 100px;
     }
     .subMenu ul.category-menu {
         width: 100%;
@@ -373,7 +454,7 @@
     }
 }
 
-@media (min-width: 1302px) {
+/*@media (min-width: 1302px) {*/
     .subMenu {
         height: 70px;
     }
@@ -386,4 +467,4 @@
     .filter-container .arrow-down {
         top: 29px;
     }
-}
+/*}*/

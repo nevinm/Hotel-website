@@ -141,14 +141,6 @@
                                 <span>DELIVERY INFO</span>
                             </div>
                         <div class="address-info">
-                            <div class="contents">
-                                <!-- <span class="content-heading">DELIVERY ADDRESS</span>
-                                <span>John Smith</span>
-                                <span>1234 Main Street</span>
-                                <span>New York, NY</span>
-                                <span>10001</span>
-                                <span>CHANGE ADDRESS</span> -->
-                            </div>
                         </div>
                         <div class="address-info-guest">
                         <div class="content">
@@ -167,9 +159,12 @@
                                 <div class="section2">
                                     <div class="forminput-wrapper">
                                         <label class="body-text-small">Delivery Address</label>
-
+                                        <div class="primary-wrapper">
+                                            <input type="checkbox" name="is-primary" class="popup-input checkbox">
+                                            <span class="checkbox-span">Primary</span>
+                                        </div>
                                         <input type="text" name="street" class="popup-input" id="address-line-1" style="
-                                        margin-bottom: 20px;
+                                        margin-bottom: 30px;
                                         ">
                                         <input type="text" name="building" class="popup-input" id="address-line-2">
                                     </div>
@@ -191,6 +186,9 @@
                                         <label class="body-text-small">Phone</label>
                                         <input type="text" name="phonenumber" class="popup-input">
                                     </div>
+                                </div>
+                                <div class="button">
+                                    <input type="submit" id="add-guest-address" value="ADD">
                                 </div>
                             </form>
                             </div>
@@ -258,7 +256,7 @@
                                             <input type="text" name="zip" class="popup-input" id="billing-zip">
                                         </div>
                                         <div class="button">
-                                            <input type="button" value="SAVE"/ id="save-credit-card">
+                                            <input type="button" value="SAVE" id="save-credit-card">
                                         </div>
                                  </form>
                             </div>
@@ -345,6 +343,14 @@
                         <div class="button">
                             <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="address-list-popup">
+                <div class="bk-overlay"></div>
+                <div class="popup">
+                    <div class="header">SELECT YOUR DELIVERY ADDRESS</div>
+                    <div class="popup-container">
                     </div>
                 </div>
             </div>
