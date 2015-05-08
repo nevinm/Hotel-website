@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Meisterdish -Meal Details Page</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/fontello.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/jquery-ui-tabs.css">
+    <link rel="stylesheet" type="text/css" href="../css/meal_details.css">
+</head>
+
+<body>
+    <div id="meal-details-wrapper" class='menu-wrapper'>
+        <header id="header">
+            <div class="contentArea">
+                <div class="backNav">
+                    <a href="account.html"><img src="../images/back_menu.png"></a>
+                    <span><a href="account.html">BACK TO MENU</a></span>
+                </div>
+                <div class="cart pullRight">
+                    <a href="checkout.html">
+                        <span class="count">0</span>
+                        <img src="../images/cart_icon.png">
+                    </a>
+                </div>
+            </div>
+        </header>
+        <div class="contentArea content-wrapper">
+            <div class='meal-content'>
+                <div class='meal-details'>
+                    <div class='meal-details-main'>
+                        <p class='h0 meal-name'>LANCASTER FARM BEEF BURGER</p>
+                        <h4 class='meal-ingredients'>BRIOCHE BUN,AVOCADO, TOMATO, RED ONIONS, PARMESAN CHEESE</h4>
+                    </div>
+                    <div class='meal-price-rating'>
+                        <span class='price'>$11.95</span>
+                        <div class="rating">
+                            <span>
+                                <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1">
+                                <label for="rating-input-1-5" class="rating-star"></label>
+                                <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
+                                <label for="rating-input-1-4" class="rating-star"></label>
+                                <input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1">
+                                <label for="rating-input-1-3" class="rating-star"></label>
+                                <input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1">
+                                <label for="rating-input-1-2" class="rating-star"></label>
+                                <input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1">
+                                <label for="rating-input-1-1" class="rating-star"></label>
+                            </span>
+                            <span class='mark'>(12)</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="meal-tabs">
+                    <img class='add-meal' src="../images/add_meal_button.png">
+                    <div class='meal-tab-container'>
+                        <ul>
+                            <li><a class='pc-tab' data-mobile-link='&#8226' data-pc-link='Details' href="#details">Details</a></li>
+                            <li><a class='pc-tab' data-mobile-link='&#8226' data-pc-link='Preparation' href="#preparation"></a></li>
+                            <li><a class='pc-tab' data-mobile-link='&#8226' data-pc-link='All you need' href="#allYouNeed"></a></li>
+                        </ul>
+                        <!--       <ul>
+                            <li><a class='mobile-tab' href="#details2">*</a></li>
+                            <li><a class='mobile-tab' href="#preparation">*</a></li>
+                            <li><a class='mobile-tab' href="#allYouNeed">*</a></li>
+                        </ul> -->
+                    </div>
+                    <div id="details">
+                        <div class="left-arrow">
+                            <a class="prev-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
+                        </div>
+                        <div class='details-part-1'>
+                            <img src='../images/meal_main.png' />
+                        </div>
+                        <div class='details-part-2'>
+                            <div class='details-description'>
+                                <span>"Pasture raised Beef from our local farm, with green garden salad, topped with avacado,red onion n all." </span>
+                            </div>
+                            <div class='details-chef'>
+                                <img src="../images/chef.png">
+                                <div class='chef-sub-details'>
+                                    <p class='chef-name'>CHEF BRANDON</p>
+                                    <span class='caption'>Alum of NewYork</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right-arrow">
+                            <a class="next-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
+                        </div>
+                    </div>
+                    <div id="preparation"><div class="left-arrow">
+                            <a class="prev-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
+                        </div>
+                        <div class='details-part-1'>
+                            <img src='../images/meal_main.png' />
+                        </div>
+                        <div class='details-part-2'>
+                            <div class='details-description'>
+                                <span>"Pasture raised Beef from our local farm, with green garden salad, topped with avacado,red onion n all." </span>
+                            </div>
+                            <div class='details-chef'>
+                                <img src="../images/chef.png">
+                                <div class='chef-sub-details'>
+                                    <p class='chef-name'>CHEF BRANDON</p>
+                                    <span class='caption'>Alum of NewYork</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right-arrow">
+                            <a class="next-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
+                        </div></div>
+                    <div id="allYouNeed">All you need Body</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src='../js/jquery.min.js'></script>
+    <script type="text/javascript" src='../js/jquery.validate.min.js'></script>
+    <script type="text/javascript" src='../js/jquery-ui-tabs.js'></script>
+    <script type="text/javascript" src='../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../js/common.js'></script>
+    <script type="text/javascript" src='../js/meal_details.js'></script>
+</body>
+
+</html>

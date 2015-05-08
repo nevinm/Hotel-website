@@ -1,0 +1,247 @@
+/*==============================*\
+            &Common
+\*==============================*/
+
+#meal-tabs {
+    position: relative;
+}
+
+.contentArea {
+    width: 90%;
+    margin-bottom: 50px;
+}
+
+#meal-details-wrapper {
+    width: 100%;
+    float: left;
+    background-image: url(../images/meal_bg.jpg);
+    min-height: 100%;
+    margin-bottom: -143px;
+    background-size: cover;
+}
+
+.content-wrapper {
+    margin-top: 100px;
+}
+
+.meal-content {
+    width: 100%;
+}
+
+.meal-details {
+    width: 100%;
+    overflow: hidden;
+}
+
+.meal-details-main,
+.meal-price-rating {
+    float: left;
+}
+
+.meal-price-rating .price {
+    font-family: 'BrandonGrotesque-Thin';
+    font-size: 20px;
+}
+
+.meal-price-rating .mark {
+    font-family: 'ProximaNova-regular';
+    font-size: 12px;
+    color: #9B9B9B;
+    margin-top: 5px;
+}
+
+.meal-price-rating>* {
+    float: right;
+    width: 100%;
+    text-align: right;
+}
+
+.meal-details-main {
+    width: 80%;
+}
+
+.meal-price-rating {
+    width: 20%;
+    margin-top: 30px;
+}
+
+.meal-name {
+    font-size: 50px;
+    color: #6B6B6B;
+    margin-bottom: 0px;
+}
+
+.meal-ingredients {
+    color: #9B9B9B;
+    margin-bottom: 30px;
+}
+
+.backNav {
+    width: 50%;
+    float: left;
+}
+
+.backNav a {
+    display: block;
+    float: left;
+}
+
+.backNav span {
+    margin-top: 2px;
+    display: block;
+    margin-left: 10px;
+    float: left;
+    font-family: 'BrandonGrotesque-Light';
+    font-size: 20px;
+    position: relative;
+    width: 188px;
+    color: #353535;
+}
+/*==============================*\
+        &Meal Details
+\*==============================*/
+
+.meal-tab-container {
+    height: 66px;
+    border: 1px solid white;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+}
+
+.add-meal {
+    position: absolute;
+    right: -35px;
+    top: -35px;
+}
+
+.details-part-1 {
+    padding-right: 50px;
+}
+
+.details-part-1 img {
+    max-height: 280px;
+}
+
+.details-part-1,
+.details-part-2 {
+    width: 50%;
+    float: left;
+}
+
+.details-description {
+    margin-bottom: 51px;
+}
+
+.details-chef img {
+    float: left;
+    height: 50px;
+}
+
+.chef-sub-details {
+    float: left;
+    padding: 7px;
+    margin-left: 7px;
+}
+
+.chef-sub-details .caption {
+    color: #C3C3C3;
+}
+
+#details .chef-name {
+    font-family: 'BrandonGrotesque-Bold';
+    font-size: 12px;
+    color: #9B9B9B;
+}
+
+.details-description span {
+    font-family: 'ProximaNova-regular';
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #9B9B9B;
+}
+
+.mobile-tab,
+.left-arrow,
+.right-arrow {
+    display: none;
+}
+/*==============================*\
+        Star Rating
+\*==============================*/
+
+.rating >* {
+    float: left;
+    margin-left: 10px;
+}
+
+.rating {
+    width: 165px;
+    margin-top: 10px;
+    padding: 4px 6px 0;
+    height: 33px;
+    overflow: hidden;
+    display: inline-block
+}
+
+.rating-input {
+    position: absolute;
+    left: 0;
+    display: none
+}
+
+.rating-star {
+    display: block;
+    float: right;
+    width: 17px;
+    height: 18px;
+    margin-top: 1px;
+    margin-left: 4px;
+    background: url(../images/star_sprite.png) -20px 0px
+}
+
+.rating-star:hover,
+.rating-star:hover~.rating-star,
+.rating-input:checked~.rating-star {
+    background-position: 0px 0;
+}
+/*==============================*\
+        Media Query
+\*==============================*/
+
+@media (min-width: 768px)and (max-width: 1024px) {
+    .contentArea {
+        max-width: 768px;
+        width: 95%;
+    }
+}
+
+@media (min-width: 320px)and (max-width: 767px) {
+    .mobile-tab,
+    .left-arrow,
+    .right-arrow {
+        display: block;
+    }
+    .add-meal {
+        display: none;
+    }
+    .ui-tabs .ui-tabs-nav li {
+        width: auto;
+    }
+    .ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+        padding: 5px;
+    }
+    .ui-tabs .ui-tabs-nav li {
+        padding: 0px;
+    }
+    .ui-state-hover,
+    .ui-widget-content .ui-state-hover,
+    .ui-widget-header .ui-state-hover,
+    .ui-state-focus,
+    .ui-widget-content .ui-state-focus,
+    .ui-widget-header .ui-state-focus {
+        border-bottom: 0;
+        font-weight: normal;
+        margin: 0;
+    }
+}
