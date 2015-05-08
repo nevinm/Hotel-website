@@ -325,7 +325,7 @@ $("form").each(function() {
                 required: "Please provide email."
             },
             email: "Enter a valid email address.",
-            zip: "Provide a valid zip code.",
+            zip: "Provide a valid zip.",
             street: "Provide a valid address.",
             building: "Provide a valid address.",
             state: "Provide a state name.",

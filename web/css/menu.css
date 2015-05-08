@@ -36,17 +36,27 @@
 /*==============================*\
 			&MENU
 \*==============================*/
+#mainWrapper{
+	background-color: #fff;
+	background-image: none !important;
+}
 .menu-wrapper{
 	background-color: #E7E7E7;
 	background-image: url(../images/inner_bg.jpg);
 	background-size: cover;
 }
+
 .subMenu{
 	width: 100%;
 	float: left;
 	border-bottom: 1px solid #ededed;
 	background: #fff;
-	color: #5a5a5a;
+	color: #9B9B9B;
+	box-shadow: 0 0 3px #b0b0b0;
+}
+.subMenu.body-text-bold{
+	font-size: 12pt;
+	font-family: 'BrandonGrotesque-Regular';
 }
 .subMenu ul li.menu-categories-list{
 	float: left;
@@ -69,7 +79,7 @@
 	border-bottom: 2px solid #a9d77b;
 	background-color: #F9F9F9;
 	font-weight: bold;
-	color: #1a1a1a;
+	color: #6b6b6b;
 }
 
 .subMenuFilter{
@@ -148,6 +158,7 @@
 	height: 250px;
 	border-radius: 5px;
 	margin-bottom: 10px;
+	border: 0.5px solid #9b9b9b;
 }
 .listItemDetails{
 	float: left;
