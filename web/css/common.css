@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*==============================*\
-			&CONTENTS
+            &CONTENTS
 \*==============================*/
 /*
 FONT-FACE
@@ -14,7 +14,7 @@ NAVBAR RESPONSIVE
 MOBILE RESPONSIVE
 */
 /*==============================*\
-			&FONT-FACE
+            &FONT-FACE
 \*==============================*/
 
 @font-face {
@@ -81,7 +81,7 @@ MOBILE RESPONSIVE
     font-variant: normal;
 }
 /*==============================*\
-		   &COLOURS-MODULE
+           &COLOURS-MODULE
 \*==============================*/
 
 .light-green {
@@ -127,7 +127,7 @@ MOBILE RESPONSIVE
     color: #A9D77B;
 }
 /*==============================*\
-	&HEADINGS AND BODY-MODULE
+    &HEADINGS AND BODY-MODULE
 \*==============================*/
 
 h1,
@@ -212,7 +212,7 @@ h4 {
     margin-bottom: 5px;
 }
 /*==============================*\
-		   &BUTTONS-MODULE
+           &BUTTONS-MODULE
 \*==============================*/
 /*Small*/
 
@@ -319,7 +319,7 @@ button:focus {
     outline: none;
 }
 /*==============================*\
-			&common
+            &common
 \*==============================*/
 
 html,
@@ -336,7 +336,7 @@ body {
     float: left;
     min-height: 100%;
     margin-bottom: -143px;
-    /*overflow-x:hidden;	*/
+    /*overflow-x:hidden;    */
 }
 
 #mainWrapper {
@@ -477,15 +477,13 @@ label {
     color: #6b6b6b;
 }
 /*==============================*\
-			&HEADER
+            &HEADER
 \*==============================*/
 
 #header {
     float: left;
     width: 100%;
-    opacity: 0.85;
-    /*-webkit-filter:blur(15px);*/
-    
+    /*opacity: 0.85;*/
     padding: 18px 0;
     position: fixed;
     background-color: transparent;
@@ -559,7 +557,7 @@ span.icon-menu {
     padding-top: 6px;
 }
 /*==============================*\
-			&FOOTER
+            &FOOTER
 \*==============================*/
 
 #footer {
@@ -621,10 +619,10 @@ span.icon-menu {
     height: 16px;
 }
 /*.sliderfooter{
-	position: relative !important;
+    position: relative !important;
 }*/
 /*==============================*\
-			&POPUP
+            &POPUP
 \*==============================*/
 
 .popup-wrapper {
@@ -744,14 +742,14 @@ span.icon-menu {
     border: 2px solid #ff7878 !important;
 }
 /*label.error:after{
-	position: absolute;
-	border-right:6px solid transparent;
-	border-left:6px solid transparent;
-	border-bottom:6px solid transparent;
-	border-top:6px solid #ff7878;
-	bottom:-12px;
-	left: 18px;
-	content: "";
+    position: absolute;
+    border-right:6px solid transparent;
+    border-left:6px solid transparent;
+    border-bottom:6px solid transparent;
+    border-top:6px solid #ff7878;
+    bottom:-12px;
+    left: 18px;
+    content: "";
 }*/
 
 .marginRight {
@@ -763,17 +761,17 @@ span.icon-menu {
     transition: 0.5s;
 }
 /*#fullname-error, #street-error, #building-error,#city-error {
-	color: #ff7878;
-	position: absolute;
-	right: 18px;
-	bottom: 46px;
-	font-family: ProximaNova-Regular;
-	font-size: 11px;
-	border: 1px hidden !important;
-	background-color: transparent;
-	width: 262px;
-	text-align: left;
-	padding: 0;
+    color: #ff7878;
+    position: absolute;
+    right: 18px;
+    bottom: 46px;
+    font-family: ProximaNova-Regular;
+    font-size: 11px;
+    border: 1px hidden !important;
+    background-color: transparent;
+    width: 262px;
+    text-align: left;
+    padding: 0;
 }*/
 
 .delivery-address-error-popup-wrapper {
@@ -804,7 +802,7 @@ span.icon-menu {
     border-color: #D0D0D0 !important;
 }
 /*==============================*\
-		&NAVBAR RESPONSIVE
+        &NAVBAR RESPONSIVE
 \*==============================*/
 
 .navMenu {
@@ -935,5 +933,12 @@ span.icon-menu {
     .account-header h3 {
         letter-spacing: 0px;
         font-size: 16px !important;
+    }
+}
+
+@media (min-width: 1302px) {
+    #header {
+        height: 100px;
+        padding: 30px 0;
     }
 }

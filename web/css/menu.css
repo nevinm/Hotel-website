@@ -36,7 +36,7 @@
     color: #F7EBEB;
 }
 /*==============================*\
-			&MENU
+            &MENU
 \*==============================*/
 
 .menu-wrapper {
@@ -49,7 +49,9 @@
     width: 100%;
     float: left;
     border-bottom: 1px solid #ededed;
-    background: #fff;
+    background-color: transparent;
+    background-repeat-x: inherit;
+    background-image: url('../images/white.png');
     color: #5a5a5a;
 }
 
@@ -81,7 +83,7 @@
 
 .subMenuFilter {
     float: right;
-    padding: 20px 0 !important;
+    padding: 20px 0;
 }
 
 .filter-container {
@@ -197,11 +199,12 @@
     position: relative;
 }
 
+
 .subMenuHeader span {
     position: absolute;
     bottom: 0;
     color: #fff;
-    left: 94px;
+    /*left: 94px;*/
 }
 
 .addItemButton {
@@ -246,7 +249,7 @@
     display: none;
 }
 /*==============================*\
-		&MENU - MOBILE
+        &MENU - MOBILE
 \*==============================*/
 
 #header h3 {
@@ -367,5 +370,20 @@
     }
     .subMenuFilter {
         color: #A9D77B;
+    }
+}
+
+@media (min-width: 1302px) {
+    .subMenu {
+        height: 70px;
+    }
+    .subMenu ul li.menu-categories-list a {
+        padding: 25px 0;
+    }
+    .subMenuFilter {
+        padding: 25px 0;
+    }
+    .filter-container .arrow-down {
+        top: 29px;
     }
 }
