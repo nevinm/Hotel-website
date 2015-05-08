@@ -174,7 +174,7 @@ class Address(models.Model):
     phone = models.CharField(max_length=15)
 
     def __unicode__(self):
-        return self.user.email + " : " + self.first_name +" "+ self.last_name
+        return str(self.user.email) + " : " + self.first_name +" "+ self.last_name
     
 class CreditCardDetails(models.Model):
     user = models.ForeignKey(User, related_name="cc_details")
@@ -186,7 +186,7 @@ class CreditCardDetails(models.Model):
     card_type = models.CharField(max_length=15)
     
     def __unicode__(self):
-        return self.user.email + " : " + str(self.number)
+        return str(self.user.email) + " : " + str(self.number)
 
 class Category(models.Model):
     name = models.CharField(db_index=True, max_length=25)
