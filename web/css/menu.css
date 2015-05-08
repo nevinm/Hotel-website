@@ -123,7 +123,7 @@
     background-color: white;
     width: 180px;
     position: absolute;
-    top: 59px;
+    top: 70px;
     right: -15px;
     display: none;
     box-shadow: 0 0 6px #d0d0d0;
@@ -140,8 +140,8 @@
 	padding: 12px 0;
 	overflow: hidden;
 	text-transform: uppercase;
-	font-family: 'BrandonGrotesque-bold';
-	font-size: 13px;
+	font-size: 12px;
+    font-weight: bold;
 }
 
 .filter-drop-down ul li:hover{
@@ -454,15 +454,16 @@
     }
 }
 
+
 /*@media (min-width: 1302px) {*/
     .subMenu {
         height: 70px;
     }
     .subMenu ul li.menu-categories-list a {
-        padding: 25px 0;
+        padding: 26px 0;
     }
     .subMenuFilter {
-        padding: 25px 0;
+        padding: 26px 0;
     }
     .filter-container .arrow-down {
         top: 29px;
