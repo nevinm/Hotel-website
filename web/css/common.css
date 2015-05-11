@@ -901,11 +901,10 @@ span.icon-menu {
 
 .navMenu ul li {
     list-style-type: none;
-    font-family: 'BrandonGrotesque-Bold';
-    font-size: 12px;
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 16px;
     cursor: pointer;
     padding: 14px;
-    border-bottom: 1px solid #A3A2A2;
 }
 
 .navMenu ul li a {
@@ -967,6 +966,13 @@ span.icon-menu {
         height: 31px !important;
     }
 }
+
+
+@media (min-width: 768px){
+	#header{
+		left: 0px !important;
+	}
+}
 /*==============================*\
             &MOBILE
 \*==============================*/
@@ -1001,15 +1007,30 @@ span.icon-menu {
     .count {
         right: 16px;
     }
-    .navMenu {
-        background: rgba(255, 255, 255, 1);
-    }
+	.navMenu {
+		background: rgba(255, 255, 255, 1);
+		position: fixed;
+		height: 100%;
+		width: 60%;
+		left: -60%;
+		top: 0;
+	}
+	#page-container{
+		position: fixed;
+	}
+	#slider-footer {
+		display: none;
+	}
     .navMenu ul li:first-child {
-        border-top: 2px solid #d0d0d0;
+        border-top: 2px solid #A9D77B;
+        margin-top: 73px;
+    }
+    .navMenu ul{
+     	width: 90%;
+     	margin:0 auto;
     }
     .navMenu ul li {
-        border-bottom: 2px solid #d0d0d0;
-        padding-left: 29px;
+        padding-left:50px;
     }
     #navbar-username a {
         color: #A9D77B;
@@ -1018,6 +1039,15 @@ span.icon-menu {
     .account-header h3 {
         letter-spacing: 0px;
         font-size: 16px !important;
+    }
+    .icon-cancel{
+    	display: none;
+    	background-image: url(../images/cross_black.png);
+    	height:20px;
+    	width: 20px;
+    	background-size: contain;
+    	float: left;
+    	cursor: pointer;
     }
 }
 

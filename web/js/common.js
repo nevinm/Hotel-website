@@ -158,18 +158,34 @@ $(document).ready(function() {
 
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
-        // $('.navMenu').slideToggle();
-        // Set the effect type
-    var effect = 'slide';
- 
-    // Set the options for the effect type chosen
-    var options = { direction: 'right' };
- 
-    // Set the duration (default: 400 milliseconds)
-    var duration = 700;
- 
-    $('.navMenu').toggle(effect, options, duration);
+        $('.navMenu').show();
+        $('#header').animate({
+            left:"60%"
+        })
+        $('#page-container').animate({
+             left:"60%"
+        })
+        $('.navMenu').animate({
+            left:"0"
+        });
+        setTimeout(function(){
+           $('.icon-menu').addClass('icon-cancel'); 
+       },100)
     });
+   $(document).on('click', '.icon-cancel', function() {
+        $('.navMenu').animate({
+            left:"-60%"
+        });
+        $('#page-container').animate({
+            left:"0px"
+        })
+        $('#header').animate({
+            left:"0px"
+        })
+        setTimeout(function(){
+           $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel'); 
+       },500)
+    })
 
     checkLoggedIn();
     verifyAccount();

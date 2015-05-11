@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
+from django.contrib.sessions.backends.db import SessionStore
 from api.models import *
 import json as simplejson
 import logging 
@@ -6,7 +7,7 @@ import settings
 from decorators import *
 from datetime import datetime
 from django.core.paginator import Paginator
-from libraries import  card, configure_paypal_rest_sdk
+from libraries import  card, configure_paypal_rest_sdk, verify_paypal_transaction, verify_paypal_ipn
 import paypalrestsdk
 
 log = logging.getLogger('order')
@@ -214,7 +215,7 @@ def create_order(request, data, user):
         
         try:
             del_time = data['delivery_time'].strip()
-            delivery_time = datetime.strptime(del_time,"%m-%d-%Y %H:%M:%S")
+            delivery_time = datetime.strptime(del_time,"%m/%d/%Y %H:%M:%S")
         except Exception as e:
             log.error("Invalid delivery time : "+e.message)
             return custom_error("Please provide a valid delivery time.")
@@ -395,17 +396,105 @@ def paypal_success(request, data):
     try:
         log.info("PAYPAL Success")
         log.info(dict(data))
-        #return HttpResponseRedirect("http://meisterdish.qburst.com/views/checkout.html")
-        return HttpResponse("http://meisterdish.qburst.com/views/checkout.html")
+        if "st" not in data or data["st"] != "Completed":
+            log.error("PayPal Success: status not 'Completed' : " + data["st"])
+            return HttpResponse("Payment failed.")
+
+        txn_id = data["tx"]
+        if txn_id.strip() == "":
+            return HttpResponse("Invalid payment.")
+        
+        success = True
+        paypal_response = verify_paypal_transaction(txn_id)
+        if not paypal_response:
+            log.error("Failed to verify paypal transaction.")
+            success=False
+        else:
+            payment = save_payment_data(paypal_response)
+            if not payment:
+                success = False
+
+        session_key = paypal_response["custom"]
+        if session_key == "":
+            log.error("PayPal Success: Invalid user session")
+            return HttpResponse("Invalid session.")
+        try:
+            user = user_dic = SessionStore(session_key=session_key)["user"]
+        except:
+            return HttpResponse("No user session found.")
+
+        try:
+            order = Order.objects.get(transaction_id=None, payment=None, cart__completed=False, cart__user__pk=user_dic["id"], status=0)
+            if not success:
+                order.status = 1
+                order.save()
+                return HttpResponse("Failed to verify payment. Please contact customer support.")
+
+            if float(paypal_response["payment_gross"]) != float(order.grand_total + order.tip):
+                log.error("Paypal success : order and payment amounts not matching.")
+                return HttpResponse("The paid amount is different from order amount.")
+
+            order.transaction_id = txn_id
+            order.payment = payment
+            order.status = 2
+            order.save()
+            error = ""
+        except Exception as e:
+            log.error("Paypal success - No valid Order Found with the given transaction ID " + txn_id)
+            error = "?error="+e.message
+    except KeyError as e:
+        log.error("Paypal success Error : " + e.message)
+        error = "?error=Failed to verify payment."
+    return HttpResponseRedirect("http://meisterdish.qburst.com/views/checkout.html" + error)
+
+def save_payment_data(paypal_response):
+    try:
+        payment =Payment()
+        payment.payment_type="pp"
+        payment.response = paypal_response["text_response"]
+        payment.transaction_id
+        payment.status = True
+        payment.amount = float(paypal_response['payment_gross'])
+        payment.save()
+        return payment
     except Exception as e:
-        log.error("Paypal success url : " + e.message)
-        return custom_error("Failed to handle payment data.")
+        log.error("Failed to save Paypal payment data on success URl " + e.message)
+        return False
 
 @check_nvp_input()
-def paypal_ipn(request, data):
+def paypal_ipn(request, data, session_id):
     try:
         log.info("PAYPAL IPN")
         log.info(data)
+
+        session_key = data["custom"]
+        if session_key == "":
+            log.error("PayPal IPN: Invalid user session")
+            return HttpResponse("None")
+
+        user = user_dic = SessionStore(session_key=session_key)["user"]
+        payment_data = verify_paypal_ipn(data)
+        if not payment_data:
+            return HttpResponse("None")
+        
+        txn_id = data['txn_id']
+        try:
+            order = Order.objects.get(transaction_id=txn_id, payment=None, cart__completed=False, cart__user__pk=user_dic["id"], status=2)
+            
+            payment = order.payment
+            payment.ipn_verified=True
+            payment.ipn_response = payment_data
+            payment.save()
+
+            order.status = 3
+            order.save()
+
+        except Exception as e:
+            log.error("Paypal IPN No valid Order Found with the given transaction ID " + txn_id)        
+            return HttpResponse("None")
     except Exception as e:
         log.error("Paypal IPN ERROR : " + e.message)
+        return HttpResponse("None")
+    log.error("Paypal IPN Finished")
     return HttpResponse("Done")
+
