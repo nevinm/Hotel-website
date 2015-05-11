@@ -220,7 +220,7 @@ PER_PAGE = 10
 ORDER_STATUS =  (
     (0, "Incomplete"),
     (1, "Payment failed"),
-    (2, "Paid, not verified")
+    (2, "Paid, not verified"),
     (3, "Payment verified"),
     (4, "Order placed"),
     (5, "Not delivered"),
@@ -235,6 +235,7 @@ if not Live:
     PAYPAL_CLIENT_ID = "AfPVcIBPTPK4v-ssJY7FvudRt4bYlSviIY02zi7b8JbtmaL91ZneDCMMJSOiIgqo9hBVemBUkpF8p_1F"
     PAYPAL_CLIENT_SECRET = "EDrB0Fsr8fny7_aTopTkjC4t5btB-SvoRQDx2B2omc6OabinTG503o1aVx7_jm1D9giX-9bPfsgB_fGE"
     PAYPAL_ACCOUNT = "nazz007online-facilitator@gmail.com"
+    PAYPAL_ID_TOKEN = "Yw2OCYWBNM2QKVTcgaR2jQMtApfxO03e-ZdUBNHg44mBYXO5MUyRx3ebLra"
     
 else:
     PAYPAL_MODE="live"

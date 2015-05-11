@@ -308,9 +308,13 @@ class MealIngredient(models.Model):
 class Payment(models.Model):
     methods = PAYMENT_METHODS
     payment_type = models.CharField(choices=methods, max_length=2)
-    response = models.TextField(max_length=1024, null=True)
-    transaction_id = models.CharField(max_length=128, null=True)
+    response = models.TextField(max_length=5000, null=True, blank=True)
+    transaction_id = models.CharField(max_length=128, null=True, blank=True)
+    amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
     
+    ipn_verified = models.BooleanField(default=False)
+    ipn_response = models.TextField(max_length=5000, null=True, blank=True)
+
     status = models.BooleanField(default=False)
     created = models.DateTimeField(null=True)
     updated = models.DateTimeField(null=True)
