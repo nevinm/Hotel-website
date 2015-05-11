@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
     getCartItems();
     populateYear();
@@ -81,6 +82,7 @@ $(document).ready(function() {
             "notify_url": notifyUrl,
             "my_temp_id" : "hai nazz"
         });
+        debugger;
     });
 
     //populate year
@@ -116,6 +118,10 @@ $(document).ready(function() {
                 addAddress();
             }
     });
+
+    $("#place-order").on("click",function(){
+        placeOrder();
+    });
 });
 
 
@@ -134,7 +140,6 @@ function setCurrentTime() {
     $('.today-content').find('.checkout-time-button').each(function(key, value){
         $(value).attr("data-date",getMonthDate(getCurrentDateTime(0))+"/"+ getCurrentYear());
     });
-
     //Setting the future dates and blocking the dates other than tomorrow.
     $(".date-content .checkout-time-button").each(function(key, value){
         var tomorrowDate =getMonthDate(getCurrentDateTime(key+1));
@@ -155,6 +160,7 @@ function timeActiveRestriction(buttonSelector, activeClass, oppositeSelector) {
         } else if (buttonSelector == ".week-content .date-content .checkout-time-button") {
             $(".week-content .time-content .checkout-time-button").removeClass("button-disabled");
            var date = $(this).val()+"/"+getCurrentYear();
+           console.log(date);
             $(this).parents().eq(1).find('.time-content .checkout-time-button').each(function(key, value){
                 $(value).attr('data-date',date);
             });
@@ -224,7 +230,6 @@ function getCartItems() {
 //Save delivery time
 var saveDeliveryTimeCallback = {
     success: function(data, textStatus) {
-        
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -418,6 +423,7 @@ function saveCreditCardDetails() {
 //Get saved cards
 var savedCardDetailsCallback = {
     success: function(data, textStatus) {
+        debugger;      
         var cardDetails = JSON.parse(data),
             last_num;
         if(cardDetails.status == 1){
@@ -451,8 +457,8 @@ function savedCardDetails() {
 function populateCardDetails(cards){
     $.each(cards,function(key,value){
         last_num = cards[key].number.slice(-4);
-        $('.saved-cards').append("<input type='radio' name='card' id='"+"r"+value.id+"' class='radio-button-payment'>"+
-        "<label for='"+"r"+value.id+"'>"+
+        $('.saved-cards').append("<input type='radio' name='card' id='"+value.id+"' class='radio-button-payment'>"+
+        "<label for='"+value.id+"'>"+
         "<img class='paypal' src='"+value.logo+"'>"+
         "<span class='body-text-small'>"+value.type+" "+"ending in"+" "+last_num+"</span>"+
         "<span class='body-text-small'>"+"Expires on"+" "+value.expire_month+"/"+value.expire_year+"</span>"+"</label>");
@@ -588,7 +594,7 @@ function setPrimaryAdd(selectedId){
 
 function changeDeliveryAddress(selectedId){
     var selectedAddress = $('#'+selectedId).parent().find('label'),
-        htmlContent = '<span class="content-heading">DELIVERY ADDRESS</span>'+selectedAddress.html()+
+        htmlContent = '<span class="content-heading" id="'+selectedId+'">DELIVERY ADDRESS</span>'+selectedAddress.html()+
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
         $('.address-info .contents').html(htmlContent);
         $('.address-list-popup').hide();
@@ -678,3 +684,44 @@ function populateAddedAddress(){
     var addedAddress = getNewAddress();
     populateAddresstoInfoContainer([addedAddress]);
 }
+// // var placeOrderCallback = {
+// //      success: function(data, textStatus) {
+// //         debugger;
+// //     },
+// //     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+// // }
+
+// // function placeOrder(){
+// //      var driverInstr = $("#driver-description").val(),
+//             // addressId = $(".address-info .contents .content-heading").attr('id')
+//         var $today_content = $(".today-content").find(".checkout-time-button-active"),
+//             $weekDatecontent = $(".week-content .date-content").find(".checkout-time-button-active"),
+//             $weekTimecontent = $(".week-content .time-content").find(".checkout-time-button-active"),
+//             selected_day,selected_time,
+//             if(today_content){
+//                 selected_day = $today_content.attr("data-date");
+//                 selected_time = "0"+$today_content.attr("data_hr")+":"+"00"+":"+"00";
+//             }
+//             else{
+//                 selected_day = $weekDatecontent.attr("data-date");
+//                 selected_time = "0"+$weekTimecontent.attr("data_hr")+":"+"00"+":"+"00";
+//             }
+//             deliveryTime = selected_day + " " + selected_time
+//             // deliveryDate = $(".time-content").find(".checkout-time-button-active").attr("data-date"),
+// //         
+//             url = baseURL + "create_order/",
+// //         header = {
+// //             "session-key": localStorage["session_key"]
+// //         },
+// //         params = {
+// //             "delivery_time": "04-28-2015 10:10:10",
+// //             "billing_address": addressId,
+// //             "delivery_address": addressId,
+// //             "payment_type": "pp", // OR "cc"
+// //             "tip":10 //Optional
+// //             "driver_instructions" : "asdasds",
+// //         };
+// //     data = JSON.stringify(params);
+// //     var placeOrderInstance = new AjaxHttpSender();
+// //    placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
+// // }

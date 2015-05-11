@@ -1,5 +1,5 @@
 var baseURL = 'http://meisterdish.qburst.com/backend/api/',
-    userDetails, currentPage = $("title").text();
+    userDetails, currentPage = $("title").text(),clicked=0;
 //If already logged in
 var $userentry = $('.login-signup');
 
@@ -158,33 +158,37 @@ $(document).ready(function() {
 
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
+        clicked =1;
         $('.navMenu').show();
         $('#header').animate({
-            left:"60%"
+            marginLeft:"60%"
         })
+        // $("#page-container").css("position","fixed")
         $('#page-container').animate({
-             left:"60%"
+             marginLeft:"60%"
         })
         $('.navMenu').animate({
-            left:"0"
+            marginLeft:"0"
         });
         setTimeout(function(){
            $('.icon-menu').addClass('icon-cancel'); 
        },100)
     });
    $(document).on('click', '.icon-cancel', function() {
+        clicked = 0;
         $('.navMenu').animate({
-            left:"-60%"
+            marginLeft:"-60%"
         });
+        // $("#page-container").css("position","relative");
         $('#page-container').animate({
-            left:"0px"
-        })
+            marginLeft:"0px"
+        })        
         $('#header').animate({
-            left:"0px"
+            marginLeft:"0px"
         })
         setTimeout(function(){
            $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel'); 
-       },500)
+       },600)
     })
 
     checkLoggedIn();
@@ -410,5 +414,26 @@ function addFormFields(form, data) {
                 form.append(input);
             }
         });
+    }
+}
+
+$(window).resize(function(){
+    mobileResponsive();
+});
+
+$(window).load(function(){
+    mobileResponsive();
+});
+
+function mobileResponsive(){
+    if ($(window).width() <= 767 && $(window).width() >= 320){ 
+        if(clicked ==1){
+            $('#page-container').css("margin-left","60%");
+            $('#header').css("margin-left","60%");
+        }
+    }
+    else{
+        $('#page-container').css("margin-left","0px");
+        $('#header').css("margin-left","0px");
     }
 }
