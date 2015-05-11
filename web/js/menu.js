@@ -23,6 +23,9 @@ $(document).ready(function() {
         }
     });
 
+    $(document).on("click", '.thumbnail', function() {
+        window.location.href='meal_details.html';
+    });
     //Categories
     $(document).on('click', '.menu-categories-list', function() {
         nextPage = 1;
