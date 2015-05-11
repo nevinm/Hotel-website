@@ -4,6 +4,8 @@ from api.models import Image, User, Role
 import re
 import settings
 from django.contrib.sessions.backends.db import SessionStore
+from urllib import unquote_plus, unquote
+from urllib2 import Request, urlopen
 
 log = logging.getLogger('libraries')
  
@@ -112,3 +114,47 @@ def create_guest_user(request):
   except Exception as e:
     log.error("Failed to add guest user " +e.message )
     return (None, None)
+
+def verify_paypal_transaction(transaction_id):
+    url = settings.PAYPAL_PAYMENT_URL
+    token = settings.PAYPAL_ID_TOKEN
+
+    sending_data = "tx=" + transaction_id + "&at=" + token + "&cmd=_notify-synch"
+    log.info("Verifying paypal transaction:"+sending_data)
+    req = Request(url, sending_data)
+    response = urlopen(req)
+    response_data = response.read()
+    log.debug("PayPal response :"+str(response_data)) 
+    if response_data[:7].upper() != 'SUCCESS':
+        log.info("PayPal Payment failed")
+        return False
+    else:
+        log.info("PayPal Payment verified")
+        response_dict = get_payment_dict(response_data)
+        response_dict["text_response"] = response_data
+        return response_dict
+
+def get_payment_dict(data):
+  dict_ = {}
+  for eachItem in data.split("\n")[1:]:
+      if eachItem != "":
+          ar = unquote_plus(unquote(eachItem)).split("=")
+          if len(ar) >= 2:
+              if ar[1] != "":            
+                  dict_[ar[0]] = ar[1]                                  
+  return dict_
+
+def verify_paypal_ipn(data):
+    url = settings.PAYPAL_PAYMENT_URL
+    req_data = 'cmd=_notify-validate&'+urllib.urlencode(data)
+    req = Request(url, req_data)
+    response = urlopen(req)
+    response_data = response.read()
+
+    if response_data.find('VERIFIED') >= 0:
+        log.info(response_data.find('VERIFIED'))
+        log.info("verified IPN")
+        return response_data
+    else:
+        log.error("Failed to verify IPN")
+        return False

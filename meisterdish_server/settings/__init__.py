@@ -220,21 +220,30 @@ PER_PAGE = 10
 ORDER_STATUS =  (
     (0, "Incomplete"),
     (1, "Payment failed"),
-    (2, "Paid, but order failed"),
-    (3, "Not delivered"),
-    (4, "Complete"),
+    (2, "Paid, not verified"),
+    (3, "Payment verified"),
+    (4, "Order placed"),
+    (5, "Not delivered"),
+    (6, "Complete"),
     )
 
 if not Live:
     # SandBox
     PAYPAL_MODE="sandbox"
+    PAYPAL_ENDPOINT = "api.sandbox.paypal.com"
+    PAYPAL_PAYMENT_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr"
     PAYPAL_CLIENT_ID = "AfPVcIBPTPK4v-ssJY7FvudRt4bYlSviIY02zi7b8JbtmaL91ZneDCMMJSOiIgqo9hBVemBUkpF8p_1F"
     PAYPAL_CLIENT_SECRET = "EDrB0Fsr8fny7_aTopTkjC4t5btB-SvoRQDx2B2omc6OabinTG503o1aVx7_jm1D9giX-9bPfsgB_fGE"
     PAYPAL_ACCOUNT = "nazz007online-facilitator@gmail.com"
-    PAYPAL_ENDPOINT = "api.sandbox.paypal.com"
+    PAYPAL_ID_TOKEN = "Yw2OCYWBNM2QKVTcgaR2jQMtApfxO03e-ZdUBNHg44mBYXO5MUyRx3ebLra"
+    
 else:
-    #@TODO
-    pass
+    PAYPAL_MODE="live"
+    PAYPAL_ENDPOINT = "api.paypal.com"
+    PAYPAL_PAYMENT_URL = "https://www.paypal.com/cgi-bin/webscr"
+    PAYPAL_CLIENT_ID = ""
+    PAYPAL_CLIENT_SECRET = ""
+    PAYPAL_ACCOUNT = ""
 
 DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
 DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
