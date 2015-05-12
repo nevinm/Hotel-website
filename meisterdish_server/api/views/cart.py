@@ -193,11 +193,11 @@ def save_delivery_time(request, data, user):
                 return custom_error("Sorry, the delivery time should be at least "+str(settings.ORDER_DELIVERY_WINDOW) + " hours from now.")
             cart.delivery_time = delivery_time
             field = "time"
-        elif "delivery_address" in data:
+        
+        if "delivery_address" in data:
             cart.delivery_address = Address.objects.get(pk=int(data["delivery_address"]))
             field = "address"
-        else:
-            return custom_error("Invalid Input")
+
         cart.save()
 
         return json_response({"status":1, "message":"Successfully updated delivery " + field + "."})
