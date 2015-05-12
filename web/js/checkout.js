@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
     getCartItems();
     populateYear();
@@ -20,13 +19,14 @@ $(document).ready(function() {
 
     $('.driver-tip').on('change', function() {
         selectedTip = $(this).find('option:selected').text();
-        $('.driver-tip-display').text(selectedTip+".00");
+        $('.driver-tip-display').text(selectedTip + ".00");
         updateReciept();
     });
+
     //Set time for delivery API call
-    $('.set-time-button').on('click',function(){
+    $('.set-time-button').on('click', function() {
         var requiredDate = $(this).attr("data-date");
-        requiredDateTime = getDateTimeRequiredFormat(requiredDate)+ " " + $(this).attr('data-hr')+":00:00";
+        requiredDateTime = getDateTimeRequiredFormat(requiredDate) + " " + $(this).attr('data-hr') + ":00:00";
         saveDeliveryTime(requiredDateTime);
     });
 
@@ -80,7 +80,7 @@ $(document).ready(function() {
             "return": returnUrl,
             "cancel_return": cancelReturnUrl,
             "notify_url": notifyUrl,
-            "my_temp_id" : "hai nazz"
+            "my_temp_id": "hai nazz"
         });
         debugger;
     });
@@ -100,26 +100,25 @@ $(document).ready(function() {
     $(document).on('click', '#change-address', function() {
         populateAddressListPopup();
     });
-    
+
     $(document).on('click', '#cancel', function() {
         $('.address-list-popup').hide();
     });
 
     $(document).on('click', '#save-delivery-address', function() {
-        var selectedId=$('input[type=radio][name=address]:checked').attr('id');
+        var selectedId = $('input[type=radio][name=address]:checked').attr('id');
         setPrimaryAdd(selectedId);
         changeDeliveryAddress(selectedId);
     });
 
-    $('#add-guest-address').on("click",function(e){
+    $('#add-guest-address').on("click", function(e) {
         e.preventDefault();
-        if($('#guest-address-info').valid())
-            {
-                addAddress();
-            }
+        if ($('#guest-address-info').valid()) {
+            addAddress();
+        }
     });
 
-    $("#place-order").on("click",function(){
+    $("#place-order").on("click", function() {
         placeOrder();
     });
 });
@@ -137,14 +136,14 @@ function setCurrentTime() {
     //Setting the correct date.
     var currentDate = getMonthDate(getCurrentDateTime(0));
     $(".today-content .content-heading").text("TODAY " + currentDate);
-    $('.today-content').find('.checkout-time-button').each(function(key, value){
-        $(value).attr("data-date",getMonthDate(getCurrentDateTime(0))+"/"+ getCurrentYear());
+    $('.today-content').find('.checkout-time-button').each(function(key, value) {
+        $(value).attr("data-date", getMonthDate(getCurrentDateTime(0)) + "/" + getCurrentYear());
     });
     //Setting the future dates and blocking the dates other than tomorrow.
-    $(".date-content .checkout-time-button").each(function(key, value){
-        var tomorrowDate =getMonthDate(getCurrentDateTime(key+1));
+    $(".date-content .checkout-time-button").each(function(key, value) {
+        var tomorrowDate = getMonthDate(getCurrentDateTime(key + 1));
         $(value).val(tomorrowDate);
-        if(key!=0){
+        if (key != 0) {
             $(value).addClass("button-disabled");
         }
     });
@@ -159,10 +158,10 @@ function timeActiveRestriction(buttonSelector, activeClass, oppositeSelector) {
             $(".week-content .time-content .checkout-time-button").addClass("button-disabled");
         } else if (buttonSelector == ".week-content .date-content .checkout-time-button") {
             $(".week-content .time-content .checkout-time-button").removeClass("button-disabled");
-           var date = $(this).val()+"/"+getCurrentYear();
-           console.log(date);
-            $(this).parents().eq(1).find('.time-content .checkout-time-button').each(function(key, value){
-                $(value).attr('data-date',date);
+            var date = $(this).val() + "/" + getCurrentYear();
+            console.log(date);
+            $(this).parents().eq(1).find('.time-content .checkout-time-button').each(function(key, value) {
+                $(value).attr('data-date', date);
             });
             firstDate = $(buttonSelector).parents().eq(1).find('.time-content .checkout-time-button')[0];
             $(firstDate).trigger("click");
@@ -170,28 +169,27 @@ function timeActiveRestriction(buttonSelector, activeClass, oppositeSelector) {
     });
 }
 
-function populateDate(cartItems){
+function populateDate(cartItems) {
     dateTime = cartItems.delivery_time.split(" ")[0];
-    dateMonth = cartItems.delivery_time.substring(0,5).replace('-','/');
-    hour = cartItems.delivery_time.substring(11,13);
+    dateMonth = cartItems.delivery_time.substring(0, 5).replace('-', '/');
+    hour = cartItems.delivery_time.substring(11, 13);
     currentDate = getCurrentDateTime(0).replace(/\//g, "-");
     tomorrowDate = getCurrentDateTime(1).replace(/\//g, "-");
-    if(dateTime==currentDate){
-        $('.today-content .checkout-time-button').each(function(key, value){
-            if($(value).data().hr == parseInt(hour)){
+    if (dateTime == currentDate) {
+        $('.today-content .checkout-time-button').each(function(key, value) {
+            if ($(value).data().hr == parseInt(hour)) {
                 $('.checkout-time-button-active').removeClass('checkout-time-button-active');
                 $(value).addClass("checkout-time-button-active");
             }
         });
-    }
-    else if(dateTime==tomorrowDate){
+    } else if (dateTime == tomorrowDate) {
         //Setting the future date
         tommorrowSelector = $('.week-content .date-content').find('.checkout-time-button')[0];
         $(tommorrowSelector).trigger("click");
 
         //Setting the future time.
-        $('.week-content .set-time-button').each(function(key, value){
-            if($(value).data().hr == parseInt(hour)){
+        $('.week-content .set-time-button').each(function(key, value) {
+            if ($(value).data().hr == parseInt(hour)) {
                 $('.week-content .set-time-button').removeClass("checkout-time-button-active");
                 $(value).addClass("checkout-time-button-active");
             }
@@ -229,8 +227,7 @@ function getCartItems() {
 
 //Save delivery time
 var saveDeliveryTimeCallback = {
-    success: function(data, textStatus) {
-    },
+    success: function(data, textStatus) {},
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
@@ -239,7 +236,9 @@ function saveDeliveryTime(date) {
         header = {
             "session-key": localStorage["session_key"]
         },
-        params = {"delivery_time":date};
+        params = {
+            "delivery_time": date
+        };
     data = JSON.stringify(params);
     var saveDeliveryTimeInstance = new AjaxHttpSender();
     saveDeliveryTimeInstance.sendPost(url, header, data, saveDeliveryTimeCallback);
@@ -412,8 +411,8 @@ function saveCreditCardDetails() {
             "exp_month": Exp_month,
             "exp_year": Exp_year,
             "cvv2": cvv,
-            "first_name":"first_name",
-            "last_name":"last_name"
+            "first_name": "first_name",
+            "last_name": "last_name"
         }
     data = JSON.stringify(params);
     var saveCreditCardDetailsInstance = new AjaxHttpSender();
@@ -423,20 +422,17 @@ function saveCreditCardDetails() {
 //Get saved cards
 var savedCardDetailsCallback = {
     success: function(data, textStatus) {
-        debugger;      
         var cardDetails = JSON.parse(data),
             last_num;
-        if(cardDetails.status == 1){
-            if(cardDetails.cards.length!=0){
+        if (cardDetails.status == 1) {
+            if (cardDetails.cards.length != 0) {
                 populateCardDetails(cardDetails.cards);
-                 $('.payment-method-container').show();
-                 $('.payment-method-guest-container').hide();
-            }
-            else{
+                $('.payment-method-container').show();
+                $('.payment-method-guest-container').hide();
+            } else {
                 $('.payment-method-guest-container').show();
             }
-        }
-        else{
+        } else {
             showPopup(cardDetails);
         }
     },
@@ -454,48 +450,46 @@ function savedCardDetails() {
     savedCardDetailsInstance.sendPost(url, header, data, savedCardDetailsCallback);
 }
 
-function populateCardDetails(cards){
-    $.each(cards,function(key,value){
+function populateCardDetails(cards) {
+    $.each(cards, function(key, value) {
         last_num = cards[key].number.slice(-4);
-        $('.saved-cards').append("<input type='radio' name='card' id='"+value.id+"' class='radio-button-payment'>"+
-        "<label for='"+value.id+"'>"+
-        "<img class='paypal' src='"+value.logo+"'>"+
-        "<span class='body-text-small'>"+value.type+" "+"ending in"+" "+last_num+"</span>"+
-        "<span class='body-text-small'>"+"Expires on"+" "+value.expire_month+"/"+value.expire_year+"</span>"+"</label>");
+        $('.saved-cards').append("<input type='radio' name='card' id='" + value.id + "' class='radio-button-payment'>" +
+            "<label for='" + value.id + "'>" +
+            "<img class='paypal' src='" + value.logo + "'>" +
+            "<span class='body-text-small'>" + value.type + " " + "ending in" + " " + last_num + "</span>" +
+            "<span class='body-text-small'>" + "Expires on" + " " + value.expire_month + "/" + value.expire_year + "</span>" + "</label>");
     });
 }
 
-$(window).resize(function(){
+$(window).resize(function() {
     mobileResponsive();
 });
 
-$(window).load(function(){
+$(window).load(function() {
     mobileResponsive();
 });
 
-function mobileResponsive(){
-    if ($(window).width() <= 767 && $(window).width() >= 320){  
+function mobileResponsive() {
+    if ($(window).width() <= 767 && $(window).width() >= 320) {
         $('.delivery-info-container').removeClass('box-border');
         $('.delivery-info').addClass('box-border');
         $('.payment-info').addClass('box-border');
-    } 
-    else{
+    } else {
         $('.delivery-info-container').addClass('box-border');
         $('.delivery-info').removeClass('box-border');
         $('.payment-info').removeClass('box-border');
-    } 
-} 
+    }
+}
 
 //ADDRESS LIST
 var getAddressCallback = {
-    success: function(data, textStatus,flag) {
-         if(flag=="populateAddressToPopUp"){
-             userDetails = JSON.parse(data);
-             appendAddresscontent(userDetails);
-         }
-         else{
-             popuplateAddressList(data);
-         }
+    success: function(data, textStatus, flag) {
+        if (flag == "populateAddressToPopUp") {
+            userDetails = JSON.parse(data);
+            appendAddresscontent(userDetails);
+        } else {
+            popuplateAddressList(data);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -508,38 +502,36 @@ function getAddress(flag) {
         userData = {};
     data = JSON.stringify(userData);
     var getAddressInstance = new AjaxHttpSender();
-    getAddressInstance.sendPost(url, header, data, getAddressCallback,flag);
+    getAddressInstance.sendPost(url, header, data, getAddressCallback, flag);
 }
 
-function popuplateAddressList(data){
+function popuplateAddressList(data) {
     userDetails = JSON.parse(data);
     if (userDetails.status == 1) {
-        if(userDetails.address_list.length!=0){
+        if (userDetails.address_list.length != 0) {
             $('.address-info-guest').hide();
             localStorage['delivery_addressess'] = data;
             populateAddresstoInfoContainer(userDetails.address_list)
-        }
-        else{
+        } else {
             $('.address-info').hide();
             $('.address-info-guest').show();
             getCities();
         }
-    } 
-    else {
+    } else {
         showErrorPopup(userDetails);
     }
 }
 
-function populateAddresstoInfoContainer(data){    
-     $.each(data,function(key,value){
-        if(value.is_primary == 1){
-            $('.address-info').append("<div class='contents'>"+
-            "<span class='content-heading'>"+"DELIVERY ADDRESS"+"</span>"+
-            "<span>"+value.first_name+" "+value.last_name+"</span>"+
-            "<span>"+value.building+","+value.street+"</span>"+
-            "<span>"+value.city+","+value.state+" "+value.zip+"</span>"+
-            "<span>"+value.phone+"</span>"+
-            "<span class='change-address-payment' id='change-address'>"+"CHANGE ADDRESS"+"</span>"+"</div>");
+function populateAddresstoInfoContainer(data) {
+    $.each(data, function(key, value) {
+        if (value.is_primary == 1) {
+            $('.address-info').append("<div class='contents'>" +
+                "<span class='content-heading'>" + "DELIVERY ADDRESS" + "</span>" +
+                "<span>" + value.first_name + " " + value.last_name + "</span>" +
+                "<span>" + value.building + "," + value.street + "</span>" +
+                "<span>" + value.city + "," + value.state + " " + value.zip + "</span>" +
+                "<span>" + value.phone + "</span>" +
+                "<span class='change-address-payment' id='change-address'>" + "CHANGE ADDRESS" + "</span>" + "</div>");
         }
     });
     $('.address-info-guest').hide();
@@ -547,32 +539,30 @@ function populateAddresstoInfoContainer(data){
 }
 
 //populate address list in popup
-function populateAddressListPopup(){
+function populateAddressListPopup() {
     $('.address-container').remove();
     $('.address-list-popup .button').remove();
-    if(localStorage['delivery_addressess']){
+    if (localStorage['delivery_addressess']) {
         addressList = JSON.parse(localStorage['delivery_addressess']);
         appendAddresscontent(addressList);
-        $('.address-list-popup .popup-container').append("<div class='button'>"+
-            "<a href='#' class='btn btn-medium-primary medium-green' id='save-delivery-address'>"+"SELECT"+"</a>"+
-            "<a href='#' class='btn btn-medium-secondary' id='cancel'>"+"CANCEL"+"</a>"+"</div>");
+        $('.address-list-popup .popup-container').append("<div class='button'>" +
+            "<a href='#' class='btn btn-medium-primary medium-green' id='save-delivery-address'>" + "SELECT" + "</a>" +
+            "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
         $('.address-list-popup').show();
-    }
-    else{
-       getAddress("populateAddressToPopUp");
+    } else {
+        getAddress("populateAddressToPopUp");
     }
 }
 
-function appendAddresscontent(addressList){
-    $.each(addressList.address_list,function(key,value){
-        $('.address-list-popup .popup-container').append
-            ("<div class='address-container'>"+"<input type='radio' name='address' id='"+value.id+"' class='radio-button'>"+
-            "<label class='list-address' for='"+value.id+"'>"+
-            "<span>"+value.first_name+" "+value.last_name+"</span>"+
-            "<span>"+value.building+","+value.street+"</span>"+
-            "<span>"+value.city+","+value.state+" "+value.zip+"</span>"+
-            "<span>"+value.phone+"</span>"+"</label>"+"</div>");
-    });  
+function appendAddresscontent(addressList) {
+    $.each(addressList.address_list, function(key, value) {
+        $('.address-list-popup .popup-container').append("<div class='address-container'>" + "<input type='radio' name='address' id='" + value.id + "' class='radio-button'>" +
+            "<label class='list-address' for='" + value.id + "'>" +
+            "<span>" + value.first_name + " " + value.last_name + "</span>" +
+            "<span>" + value.building + "," + value.street + "</span>" +
+            "<span>" + value.city + "," + value.state + " " + value.zip + "</span>" +
+            "<span>" + value.phone + "</span>" + "</label>" + "</div>");
+    });
 }
 
 var setPrimaryAddCallback = {
@@ -582,12 +572,12 @@ var setPrimaryAddCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function setPrimaryAdd(selectedId){
+function setPrimaryAdd(selectedId) {
     var url = baseURL + "update_address/" + selectedId + "/",
-       header = {
+        header = {
             "session-key": localStorage["session_key"]
         },
-        userData={
+        userData = {
             "is_primary": 1
         }
     data = JSON.stringify(userData);
@@ -595,12 +585,12 @@ function setPrimaryAdd(selectedId){
     setPrimaryAddInstance.sendPost(url, header, data, setPrimaryAddCallback);
 }
 
-function changeDeliveryAddress(selectedId){
-    var selectedAddress = $('#'+selectedId).parent().find('label'),
-        htmlContent = '<span class="content-heading" id="'+selectedId+'">DELIVERY ADDRESS</span>'+selectedAddress.html()+
+function changeDeliveryAddress(selectedId) {
+    var selectedAddress = $('#' + selectedId).parent().find('label'),
+        htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
-        $('.address-info .contents').html(htmlContent);
-        $('.address-list-popup').hide();
+    $('.address-info .contents').html(htmlContent);
+    $('.address-list-popup').hide();
 }
 var addAddressCallback = {
     success: function(data, textStatus) {
@@ -611,31 +601,31 @@ var addAddressCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function addAddress(){
+function addAddress() {
     var newAddress = getNewAddress(),
-    url = baseURL + "add_address/",
-    header = {
-        "session-key": localStorage["session_key"]
-    },
-    userData = {
-        "first_name": newAddress.first_name,
-        "last_name": newAddress.last_name,
-        "phone": newAddress.phone,
-        "zip": newAddress.zip,
-        "city_id": newAddress.city_id,
-        "street": newAddress.street,
-        "building": newAddress.building,
-        "is_primary": newAddress.is_primary
-    };
+        url = baseURL + "add_address/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+            "first_name": newAddress.first_name,
+            "last_name": newAddress.last_name,
+            "phone": newAddress.phone,
+            "zip": newAddress.zip,
+            "city_id": newAddress.city_id,
+            "street": newAddress.street,
+            "building": newAddress.building,
+            "is_primary": newAddress.is_primary
+        };
     data = JSON.stringify(userData);
     var addAddressInstance = new AjaxHttpSender();
     addAddressInstance.sendPost(url, header, data, addAddressCallback);
 }
 
-function getNewAddress(){
+function getNewAddress() {
     var $addressContainer = $('#guest-address-info'),
         cityId = $addressContainer.find(".city-selector").val(),
-        city_name = $(".city-selector").find("#"+cityId).text();
+        city_name = $(".city-selector").find("#" + cityId).text();
     var newAddress = {
         first_name: $addressContainer.find("input[name*='firstname']").val(),
         last_name: $addressContainer.find("input[name*='lastname']").val(),
@@ -645,7 +635,7 @@ function getNewAddress(){
         city_id: cityId,
         building: $addressContainer.find("input[name*='building']").val(),
         is_primary: $addressContainer.find("input[type*='checkbox']").val() == "on" ? 1 : 0,
-        state:"Alabama",
+        state: "Alabama",
         city: city_name
     }
     return newAddress;
@@ -661,7 +651,7 @@ var getCitiesCallback = {
                 $('.city-selector').append($('<option/>', {
                     value: value.id,
                     text: value.name,
-                    id:value.id
+                    id: value.id
                 }));
             });
         } else {
@@ -684,48 +674,50 @@ function getCities(cityId) {
     getCitiesInstance.sendPost(url, header, data, getCitiesCallback, cityId);
 }
 
-function populateAddedAddress(){
+function populateAddedAddress() {
     var addedAddress = getNewAddress();
     populateAddresstoInfoContainer([addedAddress]);
 }
-// // var placeOrderCallback = {
-// //      success: function(data, textStatus) {
-// //         debugger;
-// //     },
-// //     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-// // }
 
-// // function placeOrder(){
-// //      var driverInstr = $("#driver-description").val(),
-//             // addressId = $(".address-info .contents .content-heading").attr('id')
-//         var $today_content = $(".today-content").find(".checkout-time-button-active"),
-//             $weekDatecontent = $(".week-content .date-content").find(".checkout-time-button-active"),
-//             $weekTimecontent = $(".week-content .time-content").find(".checkout-time-button-active"),
-//             selected_day,selected_time,
-//             if(today_content){
-//                 selected_day = $today_content.attr("data-date");
-//                 selected_time = "0"+$today_content.attr("data_hr")+":"+"00"+":"+"00";
-//             }
-//             else{
-//                 selected_day = $weekDatecontent.attr("data-date");
-//                 selected_time = "0"+$weekTimecontent.attr("data_hr")+":"+"00"+":"+"00";
-//             }
-//             deliveryTime = selected_day + " " + selected_time
-//             // deliveryDate = $(".time-content").find(".checkout-time-button-active").attr("data-date"),
-// //         
-//             url = baseURL + "create_order/",
-// //         header = {
-// //             "session-key": localStorage["session_key"]
-// //         },
-// //         params = {
-// //             "delivery_time": "04-28-2015 10:10:10",
-// //             "billing_address": addressId,
-// //             "delivery_address": addressId,
-// //             "payment_type": "pp", // OR "cc"
-// //             "tip":10 //Optional
-// //             "driver_instructions" : "asdasds",
-// //         };
-// //     data = JSON.stringify(params);
-// //     var placeOrderInstance = new AjaxHttpSender();
-// //    placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
-// // }
+var placeOrderCallback = {
+    success: function(data, textStatus) {
+        debugger;
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function placeOrder() {
+    var driverInstr = $("#driver-description").val(),
+        driverTip = $('.driver-tip').find('option:selected').data().amount,
+        addressId = $(".address-info .contents .content-heading").attr('id')
+    var $today_content = $(".today-content").find(".checkout-time-button-active"),
+        $weekDatecontent = $(".week-content .date-content").find(".checkout-time-button-active"),
+        $weekTimecontent = $(".week-content .time-content").find(".checkout-time-button-active"),
+        selected_day, selected_time, deliveryTime;
+    if ($today_content.length) {
+        selected_day = $today_content.attr("data-date");
+        selected_time = "0" + $today_content.attr("data-hr") + ":" + "00" + ":" + "00";
+        deliveryTime = selected_day + " " + selected_time;
+    } else {
+        selected_day = $weekDatecontent.val();
+        selected_time = "0" + $weekTimecontent.attr("data-hr") + ":" + "00" + ":" + "00";
+        deliveryTime = selected_day + "/" + getCurrentYear() + " " + selected_time;
+    }
+    // deliveryDate = $(".time-content").find(".checkout-time-button-active").attr("data-date"),
+    //         
+    url = baseURL + "create_order/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {
+            "delivery_time": deliveryTime,
+            "billing_address": addressId,
+            "delivery_address": addressId,
+            "payment_type": "pp", // OR "cc"
+            "tip": driverTip, //Optional
+            "driver_instructions": driverInstr,
+        };
+    data = JSON.stringify(params);
+    var placeOrderInstance = new AjaxHttpSender();
+    placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
+}
