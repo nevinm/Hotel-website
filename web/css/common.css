@@ -526,11 +526,12 @@ label {
 }
 
 span.icon-menu {
-    display: none;
-    font-size: 30px;
-    color: #818181;
-    margin: 3px 0 0 0;
-    cursor: pointer;
+	display: none;
+	background-image: url(../images/hamburger-menu.png);
+	margin: 6px 0 0 25px;
+	cursor: pointer;
+	height: 30px;
+	width: 35px;
 }
 
 .cart {
@@ -872,7 +873,6 @@ span.icon-menu {
     span.icon-menu {
         display: block;
         float: left;
-        padding-left: 20px;
     }
     .cart {
         margin-top: 11px;
@@ -888,6 +888,7 @@ span.icon-menu {
 		width: 60%;
 		left: 0;
 		top: 0;
+		overflow-y:auto; 
 	}
 	#page-container{
 		overflow-x:hidden; 
@@ -898,6 +899,9 @@ span.icon-menu {
     .navMenu ul li:first-child {
         border-top: 2px solid #A9D77B;
         margin-top: 73px;
+    }
+    #footer-navMenu.navMenu ul li:first-child {
+    	padding-top: 30px;
     }
     .navMenu ul{
      	width: 90%;
@@ -915,14 +919,18 @@ span.icon-menu {
         font-size: 16px !important;
     }
     .icon-cancel{
-    	display: none;
-    	background-image: url(../images/cross_black.png);
+    	display: block;
+    	background-image: url(../images/hamburger-menu-close.png);
     	height:20px;
-    	width: 20px;
+    	width: 19px;
     	background-size: contain;
     	float: left;
     	cursor: pointer;
     }
+	span.icon-cancel {
+		margin-left: 20px;
+		margin-top: 8px;
+	}
 }
 
 /*@media (min-width: 1302px) {*/
