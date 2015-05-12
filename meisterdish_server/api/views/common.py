@@ -66,9 +66,6 @@ def login(request, data):
             if session_key :
                 session = SessionStore(session_key=session_key)
                 log.info("Logging in to guest session")
-                if 'user' in session and session["user"]["id"] != user.id:
-                    log.error("User " + email + "logging in to the session for "+session["user"]["email"] + ": REJECTED")
-                    return custom_error("Invalid session.")
             else:
                 session = SessionStore()
             
