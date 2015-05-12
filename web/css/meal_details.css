@@ -97,6 +97,11 @@
     width: 188px;
     color: #353535;
 }
+
+.ui-tabs-anchor:after {
+    display: none;
+    content: "\25CF";
+}
 /*==============================*\
         &Meal Details
 \*==============================*/
@@ -243,5 +248,16 @@
         border-bottom: 0;
         font-weight: normal;
         margin: 0;
+    }
+    .ui-tabs-anchor:after {
+        display: block;
+        color: #9B9B9B;
+        font-size: 12px;
+    }
+    .ui-tabs-anchor {
+        font-size: 0 !important;
+    }
+    .ui-state-active a:after{
+        color:black;
     }
 }

@@ -1,11 +1,7 @@
 var ipadWidth = 768;
 $(document).ready(function() {
-
-    isMobileRendered();
-    $(window).resize(function() {
-        checkTabReplacement();
-    });
-
+    // $("#meal-tabs").tabs();
+    mobileJqueryUITab();
 });
 
 function checkTabReplacement() {
