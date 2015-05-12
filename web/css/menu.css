@@ -401,14 +401,14 @@
         text-align: center;
         margin: 0 auto;
         cursor: pointer;
-        padding: 13px 0;
+        padding: 20px 0;
         width: 190px;
         text-align: center;
         position: relative;
     }
     .subMenu .arrow-down {
         position: absolute;
-        top: 19px;
+        top: 27px;
         right: 0px;
         border-left: 7px solid transparent;
         border-right: 7px solid transparent;
@@ -432,7 +432,7 @@
     }
     .category-wrapper {
         position: relative;
-        box-shadow: 0 0 2px #1A1A1A;
+        /*box-shadow: 0 0 2px #1A1A1A;*/
     }
     .filter-container:hover .filter-drop-down {
         display: none;

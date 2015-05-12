@@ -510,6 +510,7 @@ function getAddress(flag) {
     var getAddressInstance = new AjaxHttpSender();
     getAddressInstance.sendPost(url, header, data, getAddressCallback,flag);
 }
+
 function popuplateAddressList(data){
     userDetails = JSON.parse(data);
     if (userDetails.status == 1) {
@@ -544,6 +545,7 @@ function populateAddresstoInfoContainer(data){
     $('.address-info-guest').hide();
     $('.address-info').show();
 }
+
 //populate address list in popup
 function populateAddressListPopup(){
     $('.address-container').remove();
@@ -560,6 +562,7 @@ function populateAddressListPopup(){
        getAddress("populateAddressToPopUp");
     }
 }
+
 function appendAddresscontent(addressList){
     $.each(addressList.address_list,function(key,value){
         $('.address-list-popup .popup-container').append
@@ -628,6 +631,7 @@ function addAddress(){
     var addAddressInstance = new AjaxHttpSender();
     addAddressInstance.sendPost(url, header, data, addAddressCallback);
 }
+
 function getNewAddress(){
     var $addressContainer = $('#guest-address-info'),
         cityId = $addressContainer.find(".city-selector").val(),
