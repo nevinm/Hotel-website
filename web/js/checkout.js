@@ -82,7 +82,6 @@ $(document).ready(function() {
             "notify_url": notifyUrl,
             "my_temp_id": "hai nazz"
         });
-        debugger;
     });
 
     //populate year
@@ -421,7 +420,7 @@ function saveCreditCardDetails() {
 
 //Get saved cards
 var savedCardDetailsCallback = {
-    success: function(data, textStatus) {
+    success: function(data, textStatus) {     
         var cardDetails = JSON.parse(data),
             last_num;
         if (cardDetails.status == 1) {
@@ -596,7 +595,6 @@ var addAddressCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
         populateAddedAddress();
-        debugger;
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }

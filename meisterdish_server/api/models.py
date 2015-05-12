@@ -328,6 +328,7 @@ class Payment(models.Model):
 class Cart(models.Model):
     user = models.ForeignKey(User)
     delivery_time = models.DateTimeField(null=True)
+    delivery_address = models.ForeignKey(Address, null=True, blank=True)
     completed = models.BooleanField(default=False)
 
 class CartItem(models.Model):
