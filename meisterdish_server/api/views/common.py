@@ -531,7 +531,11 @@ def get_address_list(request, data, user):
     try:
         address_list = []
         addresses = Address.objects.filter(user=user).order_by('-id')
+        delivery_address = 0
+
         for add in addresses:
+            if add.is_primary:
+                delivery_address = add.id
             address_list.append({
                                  "id":add.id,
                                  "first_name":add.first_name,
@@ -546,7 +550,11 @@ def get_address_list(request, data, user):
                                  "zip":add.zip,
                                  "phone":add.phone,
                                  })
-        return json_response({"status":1, "address_list":address_list})
+        try:
+            del_address = Cart.objects.get(user=user, completed=False).delivery_address
+            if del_address:
+                delivery_address = del_address.id
+        return json_response({"status":1, "address_list":address_list, "delivery_address":delivery_address})
     except Exception as e:
         log.error("Failed to send address list : " + e.message)
         return custom_error("Failed to retrieve address list")
