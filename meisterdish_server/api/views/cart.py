@@ -36,6 +36,7 @@ def get_cart_items(request, data, user):
                               "aaData":cart_list,
                               "total_count":len(cart_list),
                               "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
+                              "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
                               })
     except Exception as e:
     	log.error("Failed to list cart items." + e.message)
@@ -144,6 +145,7 @@ def update_cart(request, data, user):
                               "messge" : "The cart has been updated",
                               "total_count":len(cart_list),
                               "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
+                              "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id
                               }) 
         
     except Exception as e:
@@ -183,16 +185,22 @@ def get_cart_items_count(request, data, user):
 @check_input('POST')
 def save_delivery_time(request, data, user):
     try:
-        del_time = data['delivery_time'].strip()
-        delivery_time = datetime.strptime(del_time,"%m-%d-%Y %H:%M:%S")
-        if delivery_time < datetime.now() - timedelta(hours=settings.ORDER_DELIVERY_WINDOW):
-            return custom_error("Sorry, the delivery time should be at least "+str(settings.ORDER_DELIVERY_WINDOW) + " hours from now.")
-
         cart = Cart.objects.get(user=user, completed=False)
-        cart.delivery_time = delivery_time
+        if "delivery_time" in data:
+            del_time = data['delivery_time'].strip()
+            delivery_time = datetime.strptime(del_time,"%m-%d-%Y %H:%M:%S")
+            if delivery_time < datetime.now() - timedelta(hours=settings.ORDER_DELIVERY_WINDOW):
+                return custom_error("Sorry, the delivery time should be at least "+str(settings.ORDER_DELIVERY_WINDOW) + " hours from now.")
+            cart.delivery_time = delivery_time
+            field = "time"
+        elif "delivery_address" in data:
+            cart.delivery_address = Address.objects.get(pk=int(data["delivery_address"]))
+            field = "address"
+        else:
+            return custom_error("Invalid Input")
         cart.save()
 
-        return json_response({"status":1, "message":"Successfully updated delivery time."})
+        return json_response({"status":1, "message":"Successfully updated delivery " + field + "."})
     except KeyError as e:
-        log.error("Save delivery time " + e.message)
-        return custom_error("Failed to update delivery time. Please try again later.")
+        log.error("Save delivery time/address " + e.message)
+        return custom_error("Failed to update delivery " + field + ". Please try again later.")
