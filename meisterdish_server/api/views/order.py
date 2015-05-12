@@ -442,7 +442,7 @@ def paypal_success(request, data):
         except Exception as e:
             log.error("Paypal success - No valid Order Found with the given transaction ID " + txn_id)
             error = "?error="+e.message
-    except KeyError as e:
+    except Exception as e:
         log.error("Paypal success Error : " + e.message)
         error = "?error=Failed to verify payment."
     return HttpResponseRedirect("http://meisterdish.qburst.com/views/checkout.html" + error)
