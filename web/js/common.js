@@ -171,7 +171,7 @@ $(document).ready(function() {
             marginLeft:"0"
         });
         setTimeout(function(){
-           $('.icon-menu').addClass('icon-cancel'); 
+           $('.icon-menu').addClass('icon-cancel').removeClass('icon-menu'); 
        },100)
     });
    $(document).on('click', '.icon-cancel', function() {
