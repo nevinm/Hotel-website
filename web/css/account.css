@@ -678,6 +678,9 @@ form.addaddress-popup {
 	width: 47%;
 	float: left;
 }
+.payment-info .checkout-header{
+	padding-left: 1%;
+}
 .delivery-info-container{
 	/*border:1px solid #D0D0D0;
 	border-radius: 4px;*/
@@ -737,6 +740,7 @@ form.addaddress-popup {
 .today-content,.week-content{
 	width: 100%;
 	padding: 10px 0;
+	padding-left: 20px;
 }
 .checkout-time-button {
 	padding: 9px 0px;
@@ -772,6 +776,7 @@ form.addaddress-popup {
 	padding: 10px 0 0 0;
 	overflow-x: auto;
 	height: 196px;
+	padding-left: 10px;
 }
 .order-list-header .content-heading{
 	width: 100px;
@@ -871,7 +876,7 @@ form.addaddress-popup {
 }
 .change-address-payment{
 	font-family: 'BrandonGrotesque-Regular';
-	font-size: 14px;
+	font-size: 12px;
  	padding-top: 20px; 
 	float: left;
 	position: absolute;
@@ -1010,6 +1015,7 @@ form#pay-form {
 	font-family: 'ProximaNova-Regular';
 	color: #b0b0b0;
 	font-weight: bold;
+	font-size: 12px !important;
 }
 .driver-tip-container .inner-content span{
 	float: right;
@@ -1153,6 +1159,10 @@ input.radio-button-payment {
 .section2 .forminput-wrapper #address-line-1-error{
 	bottom: 97px;
 	left: -9px;
+}
+.pay-by-credit-container select{
+	font-size: 12px !important;
+	color: #b0b0b0;
 }
 /*==================================*\
 			&TABLET
@@ -1397,6 +1407,9 @@ input.radio-button-payment {
 	.section2 .forminput-wrapper #address-line-1-error{
 		bottom: 106px;
 	}
+	.payment-info .checkout-header{
+		padding-left: 6%;
+	}
 }
   	@media (max-width:400px){
   		.address-content{
@@ -1417,7 +1430,7 @@ input.radio-button-payment {
   			margin-left: 2px;
   		}
   		.checkout-time-button {
-  			width: 47px;
+  			width: 41px;
   		}
   		.body-text-small{
   			font-size: 11px;

@@ -175,6 +175,7 @@
 	border-radius: 5px;
 	margin-bottom: 10px;
 	border: 0.5px solid #9b9b9b;
+	cursor: pointer;
 }
 .listItemDetails{
 	float: left;
