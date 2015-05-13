@@ -30,7 +30,7 @@ input[type="password"] {
 }
 
 .admin-inner-wrapper {
-    margin-top: 100px;
+    margin-top: 150px;
 }
 
 .header-small {
@@ -238,11 +238,82 @@ table#userlist {
 #userlist .cross {
     float: none;
 }
-/*=======================*\
-     &MEAL - LIST
-\*=======================*/
 
-.meal-list-container {
+.order-detail-popup{
+    display: none;
+    width: 50%;
+    height: 50%;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid rgb(218, 218, 218);
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
+}
+
+.order-detail-popup .accordion-header {
+  border-top: 1px solid #ADADAD;
+  padding-left: 20px;
+  cursor: pointer;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: relative;
+}
+
+.order-detail-popup .accordion-header .remove {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+}
+.accordion-header h4 {
+  font-family: 'BrandonGrotesque-bold';
+  font-weight: normal;
+}
+.accordion-header h4:nth-child(2) {
+  font-family: 'BrandonGrotesque-Light';
+  font-weight: normal;
+}
+.order-id{
+    float: left;
+    padding-right: 116px;
+}
+.row {
+  display: table;
+  border-spacing: 10px 10px;
+  border-collapse: separate;
+}
+.accordion-subcontent{
+    display: table-cell;
+    vertical-align: top;
+    padding-left: 10px;
+}
+.accordion-subcontent:first-child,.accordion-subcontent:nth-child(2){
+    width: 15%;
+}
+.accordion-subcontent:nth-child(3){
+    width: 20%;
+}
+.accordion-subcontent:nth-child(4){
+    width: 25%;
+}
+.order-head {
+  font-weight: bold;
+  color: #000;
+  float: left;
+  width: 100%;
+}
+.order-content {
+  float: left;
+  padding-top: 15px;
+}
+/*====================================*\
+     &MEAL - LIST and ORDER - LIST
+\*====================================*/
+
+.meal-list-container, .order-list-container {
     width: 90%;
     margin: 0 auto;
 }
@@ -289,6 +360,10 @@ input#searchBy-name {
     margin-left: 8px;
     line-height: 25px;
     letter-spacing: 2px;
+}
+
+.order-list-container .profile-image{
+    width: 50px;
 }
 /*=======================*\
      &CREATE -MEAL
@@ -375,9 +450,6 @@ input#searchBy-name {
 
 .section-1 input:first-child {
     margin-right: 20px;
-    /* padding-left: 28px; */
-    /* margin-left: 29px; */
-    
     width: 206px;
     float: left;
     margin-top: 33px;
@@ -502,9 +574,6 @@ input#meal-price {
 .pre-requisties-container {
     width: 50%;
     float: left;
-    /*  padding-bottom: 82px;
-  padding-top: 20px;
-  border: 1px solid #d0d0d0;*/
 }
 
 .list-container {
@@ -582,9 +651,6 @@ input#meal-price {
 #create-meal-mealType{
     height: 69px;
 }
-/*table#nutrient-table {
-  width: 100%;
-}*/
 
 .create-button-container {
     text-align: center;
@@ -678,11 +744,6 @@ table#tips-and-tricks-table {
 .section-6 table .create-meal-input {
     padding-left: 1px;
 }
-/*.section-5 table,td,.section-6 table,td{
-  text-transform: none;
-  font-size: 18px;
-  font-family: 'ProximaNova-regular';
-}*/
 
 .remove {
     height: 14px;

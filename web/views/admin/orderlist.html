@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Meisterdish - Admin</title>
+    <script type="text/javascript" src='js/redirect_admin.js'></script>
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../css/fontello.css">
+    <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
+    <link rel="stylesheet" type="text/css" href="../../css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+</head>
+
+<body>
+    <div id="admin-mainWrapper">
+        <header id="header">
+            <div class="contentArea">
+                <a href="../../index.html"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
+                </a>
+                <ul id="menu" class="pullRight">
+                    <li class="bold">
+                        <a href="#">ORDER LIST</a>
+                    </li>
+                    <li>
+                        <a href="#">MEAL LIST</a>
+                    </li>
+                    <li>
+                        <a href="userlist.html">USER LIST</a>
+                    </li>
+                    <li>
+                        <a href="categories.html">CATEGORIES</a>
+                    </li>
+                    <li class="bold login-signup">
+                        <a href="">LOG IN</a>
+                    </li>
+                    <li class='login-signup'>
+                        <a href="" class="btn btn-small-secondary">SIGN UP</a>
+                    </li>
+                    <li id="navbar-username" class="bold green">
+                        <a href='../account.html'></a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <div id="page-container">
+            <div class='admin-inner-wrapper'>
+                <div class="accountNav">
+                    <div class="logout body-text-bold">
+                        <a id='logout'>LOG OUT</a>
+                    </div>
+                </div>
+                <div class="admin-page-container">
+                    <div class="admin-header">
+                        <h2>ORDER LIST</h2>
+                    </div>
+                    <div class="order-list-container">
+                        <div class="filter-container">
+                            <input type="text" placeholder="Search by name" id="searchBy-name" />
+                            <input type="button" class="btn btn-small-primary medium-green" id="searchinOrders" value="SEARCH">
+                        </div>
+                        <table id="order-list" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                    <th>Billing Address</th>
+                                    <th>Profile Image</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="admin-nav">
+                        <div class='pagination'></div>
+                        <div class='add-status'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='order-detail-popup'>
+            <div class="accordion-header">
+                <h4 class='order-id'>#123456</h4>
+                <h4 class="order-status">Incomplete</h4>
+                <img class="remove" src="../../images/cross_black.png">
+            </div>
+            <div class="accordion-content body-text-small" style="display: block;">
+                <div class="row">
+                    <div class="accordion-subcontent">
+                        <div class="order-head">ORDER TOTAL</div>
+                        <div class="order-content">$1333</div>
+                    </div>
+                    <div class="accordion-subcontent">
+                        <div class="order-head">ORDER DATE</div>
+                        <div class="order-content">12/12/2015</div>
+                    </div>
+                    <div class="accordion-subcontent">
+                        <div class="order-head">SHIPPING INFROMATION</div>
+                        <div class="order-content"><span>ASDA SDASDAS</span><span>asdasd aSDAS</span><span>Addison</span><span>123123</span>+</div>
+                    </div>
+                    <div class="accordion-subcontent">
+                        <div class="order-head">ITEMS ORDERD</div>
+                        <div class="order-content"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src='../../js/jquery.min.js'></script>
+    <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
+    <script type="text/javascript" src='../../js/jquery.validate.min.js'></script>
+    <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../../js/common.js'></script>
+    <script type="text/javascript" src='js/admin.js'></script>
+    <script type="text/javascript" src='js/order_list.js'></script>
+</body>
+
+</html>
