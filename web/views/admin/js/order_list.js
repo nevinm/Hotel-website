@@ -1,9 +1,9 @@
 $(document).ready(function() {
     getOrders();
     $(document).on('click', "#order-list td:not(.no-popup)", function() {
-    	console.log("clicked");
+        console.log("clicked");
         currentOrderId = $(this).parent().data().id;
-        // getOrderDetails(currentOrderId);
+        getOrderDetails(currentOrderId);
     });
 
     $(".remove").on('click', function() {
@@ -12,7 +12,9 @@ $(document).ready(function() {
 
     $(document).on('click', ".meal-delete", function() {
         OrderId = $(this).data().id;
-        deleteMeal(OrderId);
+        if (confirm('Are you sure you want to delete this order?')) {
+            deleteOrder(OrderId);
+        } else {}
     });
 });
 
@@ -58,6 +60,26 @@ function getOrderDetails(currentOrderId) {
     getOrderDetailsInstance.sendPost(url, header, data, getOrderDetailsCallback);
 }
 
+//Delete orders API process
+var deleteOrderCallback = {
+    success: function(data, textStatus) {
+        currentPage = $('.pagination').pagination('getCurrentPage');
+        getOrders(currentPage);
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function deleteOrder(orderId) {
+    var url = baseURL + "cms/delete_order/" + orderId + "/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {}
+    data = JSON.stringify(params);
+    var deleteOrderInstance = new AjaxHttpSender();
+    deleteOrderInstance.sendPost(url, header, data, deleteOrderCallback);
+}
+
 //function populate OrderList 
 function populateOrderList(data) {
     $('#order-list tbody').empty();
@@ -69,15 +91,15 @@ function populateOrderList(data) {
             "<td>" + value.billing_address.phone + "</td>" +
             "<td>12/12/2015 10:00:00</td>" +
             "<td>" + dollarConvert(value.total_amount) + "</td>" +
-            "<td class='no-popup'><select id='order-status' name='status'>"+
-				"<option value='0'>Incomplete</option>"+
-				"<option value='1'>Payment failed</option>"+
-				"<option value='2' selected='selected'>Paid, not verified</option>"+
-				"<option value='3'>Payment verified</option>"+
-				"<option value='4'>Order placed</option>"+
-				"<option value='5'>Not delivered</option>"+
-				"<option value='6'>Complete</option>"+
-				"</select></td>"+
+            "<td class='no-popup'><select class='order-status' name='status'>" +
+            "<option value='0'>Incomplete</option>" +
+            "<option value='1'>Payment failed</option>" +
+            "<option value='2' selected='selected'>Paid, not verified</option>" +
+            "<option value='3'>Payment verified</option>" +
+            "<option value='4'>Order placed</option>" +
+            "<option value='5'>Not delivered</option>" +
+            "<option value='6'>Complete</option>" +
+            "</select></td>" +
             "<td class='no-popup'><button type='button' class='meal-delete' data-id='" + value.id + "'>Delete</button></td></tr>");
     });
 
@@ -96,7 +118,7 @@ function populateOrderDetails(orderDetails) {
     var $orderAddress = $('.order-detail-popup').find(".order-address"),
         $orderPopup = $('.order-detail-popup');
     $orderPopup.find(".order-id").text("#" + orderDetails.order.id);
-    $orderPopup.find(".order-status").text(orderDetails.order.status);
+    $orderPopup.find(".order-status-message").text(orderDetails.order.status);
     $orderPopup.find(".order-name").text(orderDetails.order.user_first_name + " " + orderDetails.order.user_last_name);
     $orderPopup.find(".order-total").text(dollarConvert(orderDetails.order.grand_total));
     $orderAddress.find('.building').text(orderDetails.order.delivery_address.building);
