@@ -100,9 +100,10 @@ li#navbar-username {
     margin-right: 10px;
 }
 
-table,
-th,
-td {
+#userlist,#userlist th,#userlist td,
+#categories,#categories th,#categories td,
+#meal-list,#meal-list th,#meal-list td
+ {
     border: 1px solid #d0d0d0;
     padding: 10px;
     border-collapse: collapse;
@@ -110,6 +111,14 @@ td {
     font-family: 'BrandonGrotesque-Regular';
     text-transform: uppercase;
     font-size: 12px;
+}
+#order-list,#order-list th,#order-list td{
+    border: 1px solid #d0d0d0;
+    padding: 10px;
+    border-collapse: collapse;
+    font-family: 'BrandonGrotesque-Regular';
+    text-transform: uppercase;
+    font-size: 12px;   
 }
 
 tbody,
@@ -241,8 +250,8 @@ table#userlist {
 
 .order-detail-popup{
     display: none;
-    width: 50%;
-    height: 50%;
+    width: 800px;
+    height: 370px;
     margin: auto;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
@@ -280,7 +289,7 @@ table#userlist {
     float: left;
     padding-right: 116px;
 }
-.row {
+.accordion-content .row {
   display: table;
   border-spacing: 10px 10px;
   border-collapse: separate;
@@ -305,10 +314,78 @@ table#userlist {
   float: left;
   width: 100%;
 }
+
+.order-meal{
+    height: 200px;
+    padding: 0 10px;
+    overflow: auto;
+}
 .order-content {
   float: left;
   padding-top: 15px;
 }
+#order-list tbody tr:hover{
+    background-color: rgb(234, 234, 234);
+}
+.content-heading:nth-child(1),.content-heading:nth-child(2){
+    margin-right: 30%
+}
+.order-list-items{
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+}
+.order-list-items img{
+    width: 30px;
+    height: 30px;
+    float: left;
+    border-radius: 4px;
+}
+.order-list-items .body-text-small{
+    padding: 5px 0px;
+    padding-left: 10px;
+    width: 243px;
+    margin-right: 21px;
+    float: left;
+}
+
+.order-list-items input{
+    width: 30px;
+    padding: 5px 0px;
+    text-align: center;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+    background-color: #f7f7f7;
+}
+.order-list-items .quantity-container{
+    /*width: 76px;*/
+    float: left;
+    margin-right: 33%;
+}
+.order-list-items .price-container{
+    font-family: 'BrandonGrotesque-Bold';
+    color: #b0b0b0;
+    float: left;
+    width: 30px;
+}
+.order-list-header{
+    padding-bottom: 20px;
+}
+.order-list-container .search-filters{
+    float: left;
+    font-family: 'BrandonGrotesque-Regular';
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-top: 10px;
+}
+#order-status-filters{
+    margin-right: 20px;
+}
+#search-orders{
+    margin-left: 30px;
+}
+
+
 /*====================================*\
      &MEAL - LIST and ORDER - LIST
 \*====================================*/
@@ -364,6 +441,13 @@ input#searchBy-name {
 
 .order-list-container .profile-image{
     width: 50px;
+}
+#order-list{
+    width: 100%;
+}
+
+#order-list tbody{
+    cursor: pointer;
 }
 /*=======================*\
      &CREATE -MEAL
