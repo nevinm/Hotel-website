@@ -9,6 +9,7 @@ from datetime import datetime
 from django.core.paginator import Paginator
 from libraries import  card, configure_paypal_rest_sdk, verify_paypal_transaction, verify_paypal_ipn
 import paypalrestsdk
+from django.db.models import Q
 
 log = logging.getLogger('order')
 
@@ -29,12 +30,18 @@ def get_orders(request, data, user=None):
         total_count = orders.count()
 
         #Filter
-        if "order_num" in data and str(data['order_num']).strip() != "":
-            orders = orders.filter(order__num=data['order_num'])
+        if "num" in data and str(data['num']).strip() != "":
+            orders = orders.filter(order_num=data['num'])
         
         if "user_id" in data and str(data['user_id']).strip() != "":
-            orders = orders.filter(order__cart__user__pk=data['user_id'])
+            orders = orders.filter(cart__user__pk=data['user_id'])
+
+        if "search" in data and str(data['search']).strip() != "":
+            orders = orders.filter(Q(cart__user__first_name__icontains=data['search']) | Q(cart__user__last_name__icontains=data['search']))
         
+        if "status" in data and str(data['status']).strip() != "":
+            orders = orders.filter(status=data['status'])
+
         # End filter
         orders = orders.order_by("-id")
 
@@ -64,6 +71,7 @@ def get_orders(request, data, user=None):
                   "tax": cart_item.meal.tax,
                   "quantity":cart_item.quantity,
                 })
+            
             order_list.append({
                 "id":order.id,
                 "total_amount": order.total_amount,
@@ -75,6 +83,7 @@ def get_orders(request, data, user=None):
                 "user_id" : order.cart.user.id,
                 "user_image" : settings.DEFAULT_USER_IMAGE if not order.cart.user.profile_image else order.cart.user.profile_image.thumb.url,
                 "status":dict(settings.ORDER_STATUS)[order.status],
+                "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                 "meals":meals,
                 "delivery_address" : {
                      "id":order.delivery_address.id,

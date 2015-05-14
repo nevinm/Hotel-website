@@ -85,7 +85,7 @@ def login(request, data):
     except KeyError as e:
         log.error("Login :" + str(e) + " missing" )
         return json_response({"status":-1, "message":"Please fill all the fields."})
-    except IOError as e:
+    except Exception as e:
         log.error("Login : " + e.message)
         return json_response({"status":-1, "message": "Login failed. Please try again later."})
 

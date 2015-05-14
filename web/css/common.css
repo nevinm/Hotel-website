@@ -325,7 +325,7 @@ button:focus {
 html,
 body {
     height: 100%;
-    overflow: auto;
+    /*overflow: auto;*/
     -webkit-font-smoothing: antialiased;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
     -moz-osx-font-smoothing: grayscale;
@@ -930,6 +930,11 @@ span.icon-menu {
 	span.icon-cancel {
 		margin-left: 20px;
 		margin-top: 8px;
+	}
+	.socialMedia{
+		border: none;
+		margin:none;
+		padding-top: none;		
 	}
 }
 

@@ -38,6 +38,14 @@
 /*==============================*\
             &MENU
 \*==============================*/
+#header{
+    position: relative !important;
+}
+.fixedMenu {
+  position: fixed;
+  top:0; left:0;
+  width: 100%; 
+}
 #mainWrapper{
 	background-color: #fff;
 	background-image: none !important;
@@ -49,6 +57,7 @@
 }
 .subMenu.body-text-bold{
 	font-size: 12pt;
+    /*margin-top: 101px;*/
 	font-family: 'BrandonGrotesque-Regular';
 }
 
@@ -383,9 +392,6 @@
     }
     .listContainer {
         margin: 0px;
-    }
-    .subMenu {
-        margin-top: 100px;
     }
     .subMenu ul.category-menu {
         width: 100%;

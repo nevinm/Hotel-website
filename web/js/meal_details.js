@@ -1,11 +1,7 @@
 var ipadWidth = 768;
 $(document).ready(function() {
-
-    isMobileRendered();
-    $(window).resize(function() {
-        checkTabReplacement();
-    });
-
+    // $("#meal-tabs").tabs();
+    mobileJqueryUITab();
 });
 
 function checkTabReplacement() {
@@ -103,3 +99,12 @@ function mobileJqueryUITab() {
         $tabs.tabs('option', 'active', (selected - 1));
     });
 }
+$('.meal-tab-container ul li').on("click",function(){
+    $('.meal-tab-container ul li').removeClass('activeli');
+    $(this).addClass('activeli');
+    // if ($(window).width() <= 767 && $(window).width() >= 320) {
+    //     var tabName = $(this).find('a').attr('data-pc-link');
+    //     $('.mobile-tab-header').empty();
+    //     $('.mobile-tab-header').append(tabName);
+    // }
+});

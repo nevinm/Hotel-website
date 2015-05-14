@@ -420,7 +420,7 @@ ol{
   margin-top: -200px;
   background-color: #fff;
   border: 1px solid #ddd;
-  z-index:99999;
+  z-index:999999;
   border-radius: 3px;
 }
 img.popup-close{
@@ -650,7 +650,7 @@ form.addaddress-popup {
 .checkout-wrapper {
   width: 90%;
   margin: 0 auto;
-  margin-top: 57px;
+  margin-top: 70px;
   display: table;
 }
 .box-border{
@@ -940,7 +940,8 @@ form.addaddress-popup {
 	width: 100%;
 	float: left;
 	padding-bottom: 20px;
-	display: none
+	display: none;
+
 }
 form#pay-form {
   width: 100%;
@@ -949,6 +950,7 @@ form#pay-form {
 .pay-by-credit-container{
 	padding-top: 30px;
 	width: 80%;
+	position: relative;
 }
 .pay-by-credit-container .forminput-wrapper{
 	float: left;
@@ -1074,7 +1076,7 @@ input#driver-description {
 .popup-message {
   position: absolute;
   width: 89%;
-  top: 73px;
+  top: 103px;
   padding: 10px 0px;
   text-align: center;
   background: #A9D77B;
@@ -1163,6 +1165,20 @@ input.radio-button-payment {
 .pay-by-credit-container select{
 	font-size: 12px !important;
 	color: #b0b0b0;
+}
+.pay-by-credit-container .button{
+	font-family: 'ProximaNova-Regular';
+	font-size: 12px;
+	color:#b0b0b0;
+}
+#pp, #cc {
+  /* float: left; */
+  position: absolute;
+  top: 0;
+  left: -37px;
+}
+.paypal-container{
+	position: relative;
 }
 /*==================================*\
 			&TABLET

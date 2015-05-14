@@ -92,9 +92,11 @@ $(document).ready(function() {
             currentYear = currentYear + 1;
         }
     }
-    $('#save-credit-card').on("click", function() {
-        saveCreditCardDetails();
-    });
+    $('#save-credit-card').on("click",function(){      
+        if ($('input:checkbox[name=save-card-details]:checked')) {             
+            saveCreditCardDetails();
+        }
+    })
 
     $(document).on('click', '#change-address', function() {
         populateAddressListPopup();
@@ -106,8 +108,9 @@ $(document).ready(function() {
 
     $(document).on('click', '#save-delivery-address', function() {
         var selectedId = $('input[type=radio][name=address]:checked').attr('id');
-        setPrimaryAdd(selectedId);
         changeDeliveryAddress(selectedId);
+        saveDeliveryTime("",selectedId);
+
     });
 
     $('#add-guest-address').on("click", function(e) {
@@ -226,18 +229,27 @@ function getCartItems() {
 
 //Save delivery time
 var saveDeliveryTimeCallback = {
-    success: function(data, textStatus) {},
+    success: function(data, textStatus) {
+        debugger;
+    },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function saveDeliveryTime(date) {
+function saveDeliveryTime(date,delivery_Id) {
     var url = baseURL + "save_delivery_time/",
         header = {
             "session-key": localStorage["session_key"]
-        },
-        params = {
-            "delivery_time": date
         };
+        if(date){
+            params = {
+                "delivery_time": date
+            };
+        }
+        if(delivery_Id){
+            params = {
+                "delivery_address": delivery_Id
+            };
+        }
     data = JSON.stringify(params);
     var saveDeliveryTimeInstance = new AjaxHttpSender();
     saveDeliveryTimeInstance.sendPost(url, header, data, saveDeliveryTimeCallback);
@@ -510,7 +522,7 @@ function popuplateAddressList(data) {
         if (userDetails.address_list.length != 0) {
             $('.address-info-guest').hide();
             localStorage['delivery_addressess'] = data;
-            populateAddresstoInfoContainer(userDetails.address_list)
+            populateAddresstoInfoContainer(userDetails)
         } else {
             $('.address-info').hide();
             $('.address-info-guest').show();
@@ -522,17 +534,20 @@ function popuplateAddressList(data) {
 }
 
 function populateAddresstoInfoContainer(data) {
-    $.each(data, function(key, value) {
-        if (value.is_primary == 1) {
-            $('.address-info').append("<div class='contents'>" +
-                "<span class='content-heading'>" + "DELIVERY ADDRESS" + "</span>" +
-                "<span>" + value.first_name + " " + value.last_name + "</span>" +
-                "<span>" + value.building + "," + value.street + "</span>" +
-                "<span>" + value.city + "," + value.state + " " + value.zip + "</span>" +
-                "<span>" + value.phone + "</span>" +
-                "<span class='change-address-payment' id='change-address'>" + "CHANGE ADDRESS" + "</span>" + "</div>");
-        }
-    });
+    var selectedId = data.delivery_address;
+    if(selectedId){
+        $.each(data.address_list, function(key, value) {
+            if (value.id == selectedId) {
+                $('.address-info').append("<div class='contents'>" +
+                    "<span class='content-heading'>" + "DELIVERY ADDRESS" + "</span>" +
+                    "<span>" + value.first_name + " " + value.last_name + "</span>" +
+                    "<span>" + value.building + "," + value.street + "</span>" +
+                    "<span>" + value.city + "," + value.state + " " + value.zip + "</span>" +
+                    "<span>" + value.phone + "</span>" +
+                    "<span class='change-address-payment' id='change-address'>" + "CHANGE ADDRESS" + "</span>" + "</div>");
+            }
+        });
+    }
     $('.address-info-guest').hide();
     $('.address-info').show();
 }
@@ -585,7 +600,7 @@ function setPrimaryAdd(selectedId) {
 }
 
 function changeDeliveryAddress(selectedId) {
-    var selectedAddress = $('#' + selectedId).parent().find('label'),
+    var selectedAddress =$('.popup-container').find('#'+selectedId).parent().find('label'),
         htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
     $('.address-info .contents').html(htmlContent);
@@ -594,7 +609,13 @@ function changeDeliveryAddress(selectedId) {
 var addAddressCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
-        populateAddedAddress();
+        if(userDetails.status == 1){
+            populateAddedAddress(userDetails.id);
+        }
+        else{
+            showPopup(userDetails);
+            $('.address-info-guest').show();
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -613,7 +634,7 @@ function addAddress() {
             "city_id": newAddress.city_id,
             "street": newAddress.street,
             "building": newAddress.building,
-            "is_primary": newAddress.is_primary
+            "is_primary": newAddress.is_primary,
         };
     data = JSON.stringify(userData);
     var addAddressInstance = new AjaxHttpSender();
@@ -672,9 +693,15 @@ function getCities(cityId) {
     getCitiesInstance.sendPost(url, header, data, getCitiesCallback, cityId);
 }
 
-function populateAddedAddress() {
-    var addedAddress = getNewAddress();
-    populateAddresstoInfoContainer([addedAddress]);
+function populateAddedAddress(delivery_address) {
+    var addedAddress = [];
+    addedAddress.push(getNewAddress());
+    addedAddress.push({"id":delivery_address});
+    data = {
+        "address_list": addedAddress,
+        "delivery_address":delivery_address
+    },
+    populateAddresstoInfoContainer(data);
 }
 
 var placeOrderCallback = {
@@ -701,8 +728,6 @@ function placeOrder() {
         selected_time = "0" + $weekTimecontent.attr("data-hr") + ":" + "00" + ":" + "00";
         deliveryTime = selected_day + "/" + getCurrentYear() + " " + selected_time;
     }
-    // deliveryDate = $(".time-content").find(".checkout-time-button-active").attr("data-date"),
-    //         
     url = baseURL + "create_order/",
         header = {
             "session-key": localStorage["session_key"]

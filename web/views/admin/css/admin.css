@@ -30,7 +30,7 @@ input[type="password"] {
 }
 
 .admin-inner-wrapper {
-    margin-top: 100px;
+    margin-top: 150px;
 }
 
 .header-small {
@@ -74,10 +74,6 @@ input[type="password"] {
     padding-bottom: 20px;
 }
 
-.logout {
-    /*margin-left: 85%;*/
-}
-
 li#navbar-username a {
     margin: 0px;
     padding: 0px;
@@ -86,7 +82,9 @@ li#navbar-username a {
 li#navbar-username {
     padding: 0;
 }
-/*Category Page*/
+/*=======================*\
+       &Category-Page
+\*=======================*/
 
 .admin-inner-wrapper h2 {
     text-align: center
@@ -100,9 +98,10 @@ li#navbar-username {
     margin-right: 10px;
 }
 
-table,
-th,
-td {
+#userlist,#userlist th,#userlist td,
+#categories,#categories th,#categories td,
+#meal-list,#meal-list th,#meal-list td
+ {
     border: 1px solid #d0d0d0;
     padding: 10px;
     border-collapse: collapse;
@@ -110,6 +109,14 @@ td {
     font-family: 'BrandonGrotesque-Regular';
     text-transform: uppercase;
     font-size: 12px;
+}
+#order-list,#order-list th,#order-list td{
+    border: 1px solid #d0d0d0;
+    padding: 10px;
+    border-collapse: collapse;
+    font-family: 'BrandonGrotesque-Regular';
+    text-transform: uppercase;
+    font-size: 12px;   
 }
 
 tbody,
@@ -203,7 +210,9 @@ thead {
     margin: 0 auto;
     padding-bottom: 10px;
 }
-/*Userlist page*/
+/*=======================*\
+       &Userlist-Page
+\*=======================*/
 
 table#userlist {
     width: 90%;
@@ -238,11 +247,189 @@ table#userlist {
 #userlist .cross {
     float: none;
 }
+
 /*=======================*\
-     &MEAL - LIST
+       &Userlist-Page
 \*=======================*/
 
-.meal-list-container {
+.order-list-container .profile-image{
+    width: 50px;
+}
+#order-list{
+    width: 100%;
+}
+
+#order-list tbody{
+    cursor: pointer;
+}
+
+.order-detail-popup{
+    display: none;
+    width: 800px;
+    height: 370px;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid rgb(218, 218, 218);
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
+}
+
+.order-detail-popup .accordion-header {
+    border-top: 1px solid #ADADAD;
+    padding-left: 20px;
+    border-bottom: 1px solid #ADADAD;
+    cursor: pointer;
+    background-color: rgb(228, 228, 228);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.order-detail-popup .accordion-header .remove {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+}
+.accordion-header h4 {
+  font-family: 'BrandonGrotesque-bold';
+  font-weight: normal;
+}
+.accordion-header h4:nth-child(2) {
+  font-family: 'BrandonGrotesque-Light';
+  font-weight: normal;
+}
+.order-id{
+    float: left;
+    padding-right: 116px;
+}
+.accordion-content .row {
+    display: table;
+    border-bottom: 1px solid rgb(234, 234, 234);
+    border-spacing: 10px 10px;
+    border-collapse: separate;
+}
+.accordion-subcontent{
+    display: table-cell;
+    vertical-align: top;
+    padding-left: 10px;
+}
+.accordion-subcontent:first-child,.accordion-subcontent:nth-child(2){
+    width: 15%;
+}
+.accordion-subcontent:nth-child(3){
+    width: 25%;
+}
+.accordion-subcontent:nth-child(4){
+    width: 20%;
+}
+.order-head {
+  font-weight: bold;
+  color: #000;
+  float: left;
+  width: 100%;
+}
+
+.order-meal{
+    margin-top: 15px;
+    height: 200px;
+    padding: 0 10px;
+    overflow: auto;
+}
+.order-content {
+  float: left;
+  padding-top: 15px;
+}
+#order-list tbody tr:hover{
+    background-color: rgb(234, 234, 234);
+}
+.content-heading:nth-child(1),.content-heading:nth-child(2){
+    margin-right: 30%
+}
+.order-list-items{
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+}
+.order-list-items img{
+    width: 30px;
+    height: 30px;
+    float: left;
+    border-radius: 4px;
+}
+.order-list-items .body-text-small{
+    padding: 5px 0px;
+    padding-left: 10px;
+    width: 243px;
+    margin-right: 21px;
+    float: left;
+}
+
+.order-list-items input{
+    width: 30px;
+    padding: 5px 0px;
+    text-align: center;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+    background-color: #f7f7f7;
+}
+.order-list-items .quantity-container{
+    /*width: 76px;*/
+    float: left;
+    margin-right: 33%;
+}
+.order-list-items .price-container{
+    font-family: 'BrandonGrotesque-Bold';
+    color: #b0b0b0;
+    float: left;
+    width: 30px;
+}
+.order-list-header{
+    padding-bottom: 20px;
+}
+.order-list-container .search-filters{
+    float: left;
+    font-family: 'BrandonGrotesque-Regular';
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-top: 10px;
+}
+#order-status-filters{
+    margin-right: 20px;
+}
+.order-status, #order-status-filter{
+    background-color: rgb(247, 247, 247);
+    width: 145px;
+    border: 1px solid #ddd;
+    font-family: 'BrandonGrotesque-Regular';
+    color: #7E7979;
+    text-transform: uppercase;
+    font-size: 11px;
+    padding: 2px;
+}
+#search-orders{
+    margin-left: 30px;
+}
+
+.order-list-empty{
+    display: none;
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-family: 'BrandonGrotesque-Regular';
+    text-transform: uppercase;
+    font-size: 12px
+}
+
+/*====================================*\
+     &MEAL - LIST and ORDER - LIST
+\*====================================*/
+
+.meal-list-container, .order-list-container {
     width: 90%;
     margin: 0 auto;
 }
@@ -290,6 +477,8 @@ input#searchBy-name {
     line-height: 25px;
     letter-spacing: 2px;
 }
+
+
 /*=======================*\
      &CREATE -MEAL
 \*=======================*/
@@ -375,9 +564,6 @@ input#searchBy-name {
 
 .section-1 input:first-child {
     margin-right: 20px;
-    /* padding-left: 28px; */
-    /* margin-left: 29px; */
-    
     width: 206px;
     float: left;
     margin-top: 33px;
@@ -502,9 +688,6 @@ input#meal-price {
 .pre-requisties-container {
     width: 50%;
     float: left;
-    /*  padding-bottom: 82px;
-  padding-top: 20px;
-  border: 1px solid #d0d0d0;*/
 }
 
 .list-container {
@@ -582,9 +765,6 @@ input#meal-price {
 #create-meal-mealType{
     height: 69px;
 }
-/*table#nutrient-table {
-  width: 100%;
-}*/
 
 .create-button-container {
     text-align: center;
@@ -678,11 +858,6 @@ table#tips-and-tricks-table {
 .section-6 table .create-meal-input {
     padding-left: 1px;
 }
-/*.section-5 table,td,.section-6 table,td{
-  text-transform: none;
-  font-size: 18px;
-  font-family: 'ProximaNova-regular';
-}*/
 
 .remove {
     height: 14px;
