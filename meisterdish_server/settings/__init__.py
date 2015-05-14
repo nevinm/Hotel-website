@@ -219,16 +219,6 @@ PER_PAGE = 10
 
 ORDER_STATUS =  (
     (0, "Incomplete"),
-    (1, "Payment failed"),
-    (2, "Paid, not verified"),
-    (3, "Payment verified"),
-    (4, "Order placed"),
-    (5, "Confirmed"),
-    (6, "Delivered"),
-    )
-
-ORDER_STATUS =  (
-    (0, "Incomplete"),
     (1, "Order placed"),
     (2, "Confirmed"),
     (3, "Dispatched"),

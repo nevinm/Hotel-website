@@ -308,7 +308,7 @@ class Payment(models.Model):
     response = models.TextField(max_length=5000, null=True, blank=True)
     transaction_id = models.CharField(max_length=128, null=True, blank=True)
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
-    
+    transaction_verified = models.BooleanField(default=False)
     ipn_verified = models.BooleanField(default=False)
     ipn_response = models.TextField(max_length=5000, null=True, blank=True)
 
