@@ -1,7 +1,6 @@
 $(document).ready(function() {
     getOrders();
     $(document).on('click', "#order-list td:not(.no-popup)", function() {
-        console.log("clicked");
         currentOrderId = $(this).parent().data().id;
         getOrderDetails(currentOrderId);
     });
@@ -16,12 +15,29 @@ $(document).ready(function() {
             deleteOrder(OrderId);
         } else {}
     });
+
+    $("#search-orders").on('click',function(){
+        userName = $("#user-name").val();
+        orderName = $("#order-id").val();
+        status = $("#order-status-filter option:selected").val();
+        searchOrders();
+    });
 });
 
 //Get orders API process
 var getOrdersCallback = {
     success: function(data, textStatus) {
-        populateOrderList(data);
+        var order = JSON.parse(data);
+        if(order.status==1){
+            if(order.aaData.length>0){
+                $(".order-list-empty").hide();
+                populateOrderList(data);
+            }
+            else{
+                $(".order-list-empty").show();
+            }
+        }
+        else{}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -42,9 +58,12 @@ function getOrders(nextPage) {
 //Get order details API process
 var getOrderDetailsCallback = {
     success: function(data, textStatus) {
-        orderDetails = JSON.parse(data);
-        $(".order-detail-popup").show();
-        populateOrderDetails(orderDetails);
+        var orderDetails = JSON.parse(data);
+        if(orderDetails.status==1){
+            $(".order-detail-popup").show();
+            populateOrderDetails(orderDetails);
+        }
+        else{}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -63,8 +82,11 @@ function getOrderDetails(currentOrderId) {
 //Delete orders API process
 var deleteOrderCallback = {
     success: function(data, textStatus) {
-        currentPage = $('.pagination').pagination('getCurrentPage');
-        getOrders(currentPage);
+        var deleteOrder = JSON.parse(data);
+        if(deleteOrder.status==1){
+            currentPage = $('.pagination').pagination('getCurrentPage');
+            getOrders(currentPage);
+        }else{}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }

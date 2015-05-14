@@ -393,9 +393,6 @@
     .listContainer {
         margin: 0px;
     }
-    .subMenu {
-        margin-top: 100px;
-    }
     .subMenu ul.category-menu {
         width: 100%;
         position: absolute;
