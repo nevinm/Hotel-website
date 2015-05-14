@@ -125,7 +125,7 @@ def get_orders(request, data, user=None):
     	log.error("Failed to list orders." + e.message)
     	return custom_error("Failed to get orders list.")
 
-def make_cc_payment_with_details(cc_data, amount, order_num):
+def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
     try:
         # Create a card
         cc = card.Card(number=cc_data["number"],
@@ -140,7 +140,9 @@ def make_cc_payment_with_details(cc_data, amount, order_num):
         elif cc.is_expired:
             log.error("User : " + user.email + ": Credit Card is expired.")
             return "The card is expired."
-        
+        elif save_card:
+            save_credit_card(cc, user)
+
         funding_instruments = [{
             "credit_card":{
                 "type": cc.brand,
@@ -155,6 +157,38 @@ def make_cc_payment_with_details(cc_data, amount, order_num):
     except Exception as e:
         log.error("Failed to pay using CC (with card data)." + e.message)
         return "An error has occurred with payment using card. Please try again."
+
+def save_credit_card(cc, user):
+    try:
+        configure_paypal_rest_sdk()
+        credit_card = paypalrestsdk.CreditCard({
+            "type": cc.brand,
+            "number": cc.number,
+            "expire_month": cc.month,
+            "expire_year": cc.year,
+            "cvv2": cc.cvc,
+            "first_name": cc.holder,
+            })
+        res = credit_card.create()
+        
+        if not res:
+            if credit_card.error:
+                log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + " : "+credit_card.error['details'][0]['issue'])
+            return custom_error(credit_card.error['details'][0]['field'] + " : " +credit_card.error['details'][0]['issue'])
+        
+        c_card = CreditCardDetails()
+        c_card.user = user
+        c_card.card_id = credit_card.id
+        c_card.number = credit_card.number
+        c_card.cvv2 = credit_card.cvv2
+        c_card.expire_year = exp_year
+        c_card.expire_month = exp_month
+        c_card.card_type = credit_card.type
+        c_card.save()
+        return True
+    except Exception as e:
+        log.error("Save credit card : " + e.message)
+        return False
 
 def make_cc_payment_with_saved_card(card_id, amount, order_num):
     try:
@@ -286,7 +320,7 @@ def create_order(request, data, user):
                     "cvc" : data["cvv2"],
                 }
 
-                payment = make_cc_payment_with_details(cc_data, total_amount, order.order_num)
+                payment = make_cc_payment_with_details(cc_data, total_amount, order.order_num, data.get("save_card", 0))
             else:
                 payment = make_cc_payment_with_saved_card(data["card_id"], total_amount, order.order_num)
             
