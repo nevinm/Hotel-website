@@ -813,7 +813,6 @@ form.addaddress-popup {
 	text-align: center;
     margin-top: 50px;
 }
-
 .order-list-items .body-text-small {
 	padding: 0;
 	padding: 5px 0px;
@@ -1116,6 +1115,7 @@ input.radio-button-payment {
 	width: 64%;
 	margin-left: -32%;
 	height: auto;
+	top: 50%;
 }
 .address-list-popup .header{
 	font-family: 'BrandonGrotesque-Bold';
