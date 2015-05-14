@@ -9,6 +9,7 @@ from datetime import datetime
 from django.core.paginator import Paginator
 from libraries import  card, configure_paypal_rest_sdk, verify_paypal_transaction, verify_paypal_ipn
 import paypalrestsdk
+from django.db.models import Q
 
 log = logging.getLogger('order')
 
@@ -30,13 +31,13 @@ def get_orders(request, data, user=None):
 
         #Filter
         if "num" in data and str(data['num']).strip() != "":
-            orders = orders.filter(num=data['num'])
+            orders = orders.filter(order_num=data['num'])
         
         if "user_id" in data and str(data['user_id']).strip() != "":
             orders = orders.filter(cart__user__pk=data['user_id'])
 
         if "search" in data and str(data['search']).strip() != "":
-            orders = orders.filter(Q(cart__user__first_name__in=data['search']) | Q(cart__user__last_name__in=data['search']))
+            orders = orders.filter(Q(cart__user__first_name__icontains=data['search']) | Q(cart__user__last_name__icontains=data['search']))
         
         if "status" in data and str(data['status']).strip() != "":
             orders = orders.filter(status=data['status'])
