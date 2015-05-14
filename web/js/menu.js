@@ -24,7 +24,7 @@ $(document).ready(function() {
     });
 
     $(document).on("click", '.thumbnail', function() {
-        window.location.href='meal_details.html';
+        window.location.href = 'meal_details.html';
     });
     //Categories
     $(document).on('click', '.menu-categories-list', function() {
@@ -63,6 +63,18 @@ $(document).ready(function() {
         infiniteScrolling();
     });
 
+    $(window).on('scroll', function(e) {
+        var menuNavHeight = 100,
+            stickyMenu = $('.subMenu'),
+            scroll = $(document).scrollTop();
+
+        if (scroll >= menuNavHeight) {
+            stickyMenu.addClass('fixedMenu');
+        } else {
+            stickyMenu.removeClass('fixedMenu');
+        }
+    });
+
     getCategory();
     getmealList('', '', '', perPage, nextPage);
     infiniteScrolling();
@@ -70,11 +82,12 @@ $(document).ready(function() {
 
 //Infinite Scrolling
 function infiniteScrolling() {
-    $('body').unbind('scroll');
-    $("body").on('scroll', function(e) {
+    var stickyMenuOffset = $('.subMenu').offset().top;
+    $(document).unbind('scroll');
+    $(document).on('scroll', function(e) {
         if ($('.listItems').length && endOfList == false) {
             if (elementScrolling(".listItems:last")) {
-                $("body").unbind('scroll');
+                $(document).unbind('scroll');
                 mealData = JSON.parse(localStorage['meal_details']);
                 getmealList(mealData.search, mealData.category_id, mealData.type_ids, mealData.perPage, mealData.nextPage + 1, true)
             };
@@ -124,7 +137,7 @@ var getmealListCallback = {
         if (mealList.status == 1) {
             endOfList = (mealList.current_page == mealList.page_range[mealList.page_range.length - 1]);
             if (endOfList == true) {
-                $('body').unbind('scroll');
+                // $(document).unbind('scroll');
             } else {}
             populateMealList(mealList, isInfinteScrolling);
         } else {

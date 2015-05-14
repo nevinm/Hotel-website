@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Meisterdish - Admin</title>
+    <script type="text/javascript" src='js/redirect_admin.js'></script>
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../css/fontello.css">
+    <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
+    <link rel="stylesheet" type="text/css" href="../../css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+</head>
+
+<body>
+    <div id="admin-mainWrapper">
+        <header id="header">
+            <div class="contentArea">
+                <a href="../../index.html"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
+                </a>
+                <ul id="menu" class="pullRight">
+                    <li class="bold">
+                        <a href="#">ORDER LIST</a>
+                    </li>
+                    <li>
+                        <a href="meallist.html">MEAL LIST</a>
+                    </li>
+                    <li>
+                        <a href="userlist.html">USER LIST</a>
+                    </li>
+                    <li>
+                        <a href="categories.html">CATEGORIES</a>
+                    </li>
+                    <li class="bold login-signup">
+                        <a href="">LOG IN</a>
+                    </li>
+                    <li class='login-signup'>
+                        <a href="" class="btn btn-small-secondary">SIGN UP</a>
+                    </li>
+                    <li id="navbar-username" class="bold green">
+                        <a href='../account.html'></a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <div id="page-container">
+            <div class='admin-inner-wrapper'>
+                <div class="accountNav">
+                    <div class="logout body-text-bold">
+                        <a id='logout'>LOG OUT</a>
+                    </div>
+                </div>
+                <div class="admin-page-container">
+                    <div class="admin-header">
+                        <h2>ORDER LIST</h2>
+                    </div>
+                    <div class="order-list-container">
+                        <div class="filter-container">
+                            <div class='search-filters'>
+                                <input type="text" placeholder="Search by name" id="user-name" />
+                                <label for="user-name">User Name</label>
+                            </div>
+                            <div class='search-filters'>
+                                <input type="text" placeholder="Search by Order Id" id="order-id" />
+                                <label for="user-name">Order Id</label>
+                            </div>
+                            <div class='search-filters'>
+                                <select id="order-status-filter" name="status">
+                                    <option value="">Select Status Filter</option>
+                                    <option value="0">Incomplete</option>
+                                    <option value="1">Payment failed</option>
+                                    <option value="2">Paid, not verified</option>
+                                    <option value="3">Payment verified</option>
+                                    <option value="4">Order placed</option>
+                                    <option value="5">Not delivered</option>
+                                    <option value="6">Complete</option>
+                                </select>
+                            </div>
+                            <input type="button" class="btn btn-small-primary medium-green" id="search-orders" value="SEARCH">
+                        </div>
+                        <table id="order-list" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Date & Time</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class='order-list-empty'>Order List is Empty</div>
+                    </div>
+                    <div class="admin-nav">
+                        <div class='pagination'></div>
+                        <div class='add-status'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='order-detail-popup'>
+            <div class="accordion-header">
+                <h4 class='order-id'></h4>
+                <h4 class="order-status-message"></h4>
+                <img class="remove" src="../../images/cross_black.png">
+            </div>
+            <div class="accordion-content body-text-small">
+                <div class="row">
+                    <div class="accordion-subcontent">
+                        <div class="order-head">NAME</div>
+                        <div class="order-content order-name">Abdul Nasar</div>
+                    </div>
+                    <div class="accordion-subcontent">
+                        <div class="order-head">ORDER DATE</div>
+                        <div class="order-content">12/12/2015</div>
+                    </div>
+                    <div class="accordion-subcontent">
+                        <div class="order-head">SHIPPING INFROMATION</div>
+                        <div class="order-content order-address">
+                            <span class='building'></span>
+                            <span class='street'></span>
+                            <span class='city-state'></span>
+                            <span class='zip'></span>
+                        </div>
+                    </div>
+                    <div class="accordion-subcontent">
+                        <div class="order-head">ORDER TOTAL</div>
+                        <div class="order-content order-total">$1333</div>
+                    </div>
+                </div>
+                <div class="order-meal">
+                    <div class="order-list-header">
+                        <span class="content-heading">ITEMS</span>
+                        <span class="content-heading">QUANTITY</span>
+                        <span class="content-heading">PRICE</span>
+                    </div>
+                    <div class="order-list-items" data-id="43">
+                        <img src="http://meisterdish.qburst.com/backend//media/images/1_thumbnail_yLC1oXa.png">
+                        <span class="body-text-small">Steak With Cheese</span>
+                        <div class="quantity-container">
+                            <input type="text" class="quantity" value="6" disabled>
+                        </div>
+                        <span class="price-container" data-tax="5">$4</span>
+                    </div>
+                    <div class="order-list-items" data-id="43">
+                        <img src="http://meisterdish.qburst.com/backend//media/images/1_thumbnail_yLC1oXa.png">
+                        <span class="body-text-small">Steak With Cheese</span>
+                        <div class="quantity-container">
+                            <input type="text" class="quantity" value="6" disabled>
+                        </div>
+                        <span class="price-container" data-tax="5">$4</span>
+                    </div>
+                    <div class="order-list-items" data-id="43">
+                        <img src="http://meisterdish.qburst.com/backend//media/images/1_thumbnail_yLC1oXa.png">
+                        <span class="body-text-small">Steak With Cheese</span>
+                        <div class="quantity-container">
+                            <input type="text" class="quantity" value="6" disabled>
+                        </div>
+                        <span class="price-container" data-tax="5">$4</span>
+                    </div>
+                    <div class="order-list-items" data-id="43">
+                        <img src="http://meisterdish.qburst.com/backend//media/images/1_thumbnail_yLC1oXa.png">
+                        <span class="body-text-small">Steak With Cheese</span>
+                        <div class="quantity-container">
+                            <input type="text" class="quantity" value="6" disabled>
+                        </div>
+                        <span class="price-container" data-tax="5">$4</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src='../../js/jquery.min.js'></script>
+    <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
+    <script type="text/javascript" src='../../js/jquery.validate.min.js'></script>
+    <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../../js/common.js'></script>
+    <script type="text/javascript" src='js/admin.js'></script>
+    <script type="text/javascript" src='js/order_list.js'></script>
+</body>
+
+</html>

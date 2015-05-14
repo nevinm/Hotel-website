@@ -25,7 +25,7 @@ $(document).ready(function() {
         //By deafault call 1 as starting.
     getUserlist(1);
 
-    // Activate User
+    // Activate User 
     var updateUserStatusCallback = {
         success: function(data, textStatus) {
             var updateUserStatusData = JSON.parse(data);

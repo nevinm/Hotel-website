@@ -728,8 +728,6 @@ function placeOrder() {
         selected_time = "0" + $weekTimecontent.attr("data-hr") + ":" + "00" + ":" + "00";
         deliveryTime = selected_day + "/" + getCurrentYear() + " " + selected_time;
     }
-    // deliveryDate = $(".time-content").find(".checkout-time-button-active").attr("data-date"),
-    //         
     url = baseURL + "create_order/",
         header = {
             "session-key": localStorage["session_key"]

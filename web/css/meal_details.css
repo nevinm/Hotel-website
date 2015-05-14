@@ -109,7 +109,10 @@
     float: left;
     margin-right: 44%;
     margin-top: 15px;
-
+}
+.ui-tabs-anchor:after {
+    display: none;
+    content: "\25CF";
 }
 /*==============================*\
         &Meal Details
@@ -534,9 +537,9 @@ width: 100%;
         width: 154px;
         margin: 0 auto;
     }
-    a.pc-tab{
+  /*  a.pc-tab{
         font-size: 30px !important;
-    }
+    }*/
     .meal-tab-container{
         border: none;
         box-shadow: none;
@@ -574,5 +577,17 @@ width: 100%;
     a.ui-tabs-anchor:visited,
     a.ui-tabs-anchor:hover,a.ui-tabs-anchor:focus{
         color: #6b6b6b;
+    }
+    .ui-tabs-anchor:after {
+        display: block;
+        color: #9B9B9B;
+        font-size: 12px;
+        padding: 0 5px; 
+    }
+    .ui-tabs-anchor {
+        font-size: 0 !important;
+    }
+    .ui-state-active a:after{
+        color:black;
     }
 }
