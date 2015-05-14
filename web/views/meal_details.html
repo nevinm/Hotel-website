@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/fontello.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/jquery-ui-tabs.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/jquery-ui-tabs.css"> -->
     <link rel="stylesheet" type="text/css" href="../css/meal_details.css">
 </head>
 
@@ -57,24 +57,48 @@
                         </div>
                     </div>
                 </div>
+                <div class="selected-menu">
+                    <img src="http://meisterdish.qburst.com/backend//media/images/1_thumbnail_FtvRvvs.png" class="thumbnail">
+                    <div class="contents">
+                        <span class="h0 menu-header">LANCASTER FARM BEEF BURGER</span>
+                        <div class="button-hr-container">
+                            <hr>
+                            <a href="#" class="btn btn-small-primary medium-green addItemButton" data-id="44">ADD</a>
+                        </div>
+                        <span class='price'>$11.95</span>
+                    </div>
+                </div>
                 <div id="meal-tabs">
                     <img class='add-meal' src="../images/add_meal_button.png">
-                    <div class='meal-tab-container'>
+                        <div class='meal-tab-container'>
                         <ul>
-                            <li><a class='pc-tab' data-mobile-link='&#8226' data-pc-link='Details' href="#details">Details</a></li>
-                            <li><a class='pc-tab' data-mobile-link='&#8226' data-pc-link='Preparation' href="#preparation"></a></li>
-                            <li><a class='pc-tab' data-mobile-link='&#8226' data-pc-link='All you need' href="#allYouNeed"></a></li>
+                            <li><a class='pc-tab' data-mobile-link='&#8226' data-pc-link='DETAILS' href="#details"></a></li>
+                            <li><a class='pc-tab' data-mobile-link='&#8226' data-pc-link='PREPERATION' href="#preparation"></a></li>
+                            <li><a class='pc-tab' data-mobile-link='&#8226' data-pc-link='ALL YOU  NEED' href="#allYouNeed"></a></li>
+                            <li><a class='pc-tab' data-mobile-link='&#8226' data-pc-link='INGREDIENTS' href="#ingredients"></a></li>
+                            <li><a class='pc-tab' data-mobile-link='&#8226' data-pc-link='TIPS & TRICKS' href="#tips-and-tricks"></a></li>
+                            <li><a class='pc-tab' data-mobile-link='&#8226' data-pc-link='NUTRITION' href="#nutrients"></a></li>
+                            <li><a class='pc-tab' data-mobile-link='&#8226' data-pc-link='REVIEWS' href="#reviews"></a></li>
                         </ul>
+                        <div class="mobile-tab-header-container">
+                            <div class="left-arrow">
+                                <a class="prev-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
+                            </div>
+                            <div class="mobile-tab-header">
+                                <span>DETAILS</span>
+                            </div>
+                            <div class="right-arrow">
+                                <a class="next-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
+                            </div>
+                        </div>
                         <!--       <ul>
                             <li><a class='mobile-tab' href="#details2">*</a></li>
                             <li><a class='mobile-tab' href="#preparation">*</a></li>
                             <li><a class='mobile-tab' href="#allYouNeed">*</a></li>
                         </ul> -->
                     </div>
-                    <div id="details">
-                        <div class="left-arrow">
-                            <a class="prev-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
+                    <div class="current-page" id="details">
+                        
                         <div class='details-part-1'>
                             <img src='../images/meal_main.png' />
                         </div>
@@ -89,33 +113,419 @@
                                     <span class='caption'>Alum of NewYork</span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="right-arrow">
-                            <a class="next-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
                         </div>
                     </div>
-                    <div id="preparation"><div class="left-arrow">
-                            <a class="prev-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
-                        <div class='details-part-1'>
-                            <img src='../images/meal_main.png' />
-                        </div>
-                        <div class='details-part-2'>
-                            <div class='details-description'>
-                                <span>"Pasture raised Beef from our local farm, with green garden salad, topped with avacado,red onion n all." </span>
+                    <div class="currentpage "id="preparation">
+                        <div class="container">
+                           <div class="list-container">
+                                <span class="list-header">
+                                    ALL YOU W"LL BE DOING:
+                                </span>
+                                <span class="sub-header">
+                                    ALLOW 15-20 MINUTES
+                                </span>
+                                <ul>
+                                    <li>Making the patties</li>
+                                    <li>Slicing the tomatos and avocado</li>
+                                    <li>Cooking the patties</li>
+                                    <li>Mixing the salad</li>
+                                    <li>Stacking the burger</li>
+                                </ul>
                             </div>
-                            <div class='details-chef'>
-                                <img src="../images/chef.png">
-                                <div class='chef-sub-details'>
-                                    <p class='chef-name'>CHEF BRANDON</p>
-                                    <span class='caption'>Alum of NewYork</span>
+                            <div class="list-container">
+                                <span class="list-header">
+                                    WHAT WE'VE PREPPED:
+                                </span>
+                                <span class="sub-header">
+                                    20 MINUTES SAVED
+                                </span>
+                                <ul>
+                                    <li>Measuring and portioning the ingredients</li>
+                                    <li>Cleaned the vegetables,</li>
+                                    <li>Peeled the garlic and red onions</li>
+                                    <li>Chopped the garlic, red onions and gruyere cheese</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="currentpage" id="allYouNeed">
+                        <div class="container">
+                            <div class="image-container">
+                                <img src="../images/allyouneed.jpg">
+                            </div>
+                            <div class="list-container">
+                                <span class="list-header">
+                                    FROM YOUR KITCHEN:
+                                </span>
+                                <ul>
+                                    <li>Knife & cutting board</li>
+                                    <li>2 pans</li>
+                                    <li>Mixing bowl</li>
+                                    <li>Cooking spoon</li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="currentpage" id="ingredients">
+                        <div class="container">
+                            <div class="image-container">
+                                <img src="../images/ingredients.jpg">
+                            </div>
+                            <div class="list-container">
+                                <span class="list-header">
+                                    IN THE BOX:
+                                </span>
+                                <ul>
+                                    <li>Brioche Bun(2)</li>
+                                    <li>Lancaster farm beef,ground</li>
+                                    <li>Mustad Crest, picked</li>
+                                    <li> Avocado</li>
+                                    <li>Tomato</li>
+                                    <li>Lemon , Halved</li>
+                                    <li>Gralic, sliced</li>
+                                    <li>Red onion , sliced</li>
+                                    <li>Gruyere cheese , sliced</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div  class="currentpage"id="tips-and-tricks">
+                        <div class="section">
+                            <div class="container">
+                            <span class="mob-view-header">HOW TO SAFELY DE-STONE AN AVOCADO</span>
+                            <div class="video-container">
+                                <iframe  height="280" src="https://www.youtube.com/embed/GETRVzxihhM?list=PLLALQuK1NDrgp7mRDuUT3NI70hoX2WIhS" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <div class="list-container">
+                                <span class="list-header">
+                                    HOW TO SAFELY DE-STONE AN AVOCADO
+                                </span>
+                                <ul>
+                                    <li>Brioche Bun(2)</li>
+                                    <li>Lancaster farm beef,ground</li>
+                                    <li>Mustad Crest, picked</li>
+                                    <li> Avocado</li>
+                                    <li>Tomato</li>
+                                    <li>Lemon , Halved</li>
+                                    <li>Gralic, sliced</li>
+                                    <li>Red onion , sliced</li>
+                                    <li>Gruyere cheese , sliced</li>
+                                </ul>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="section">
+                            <div class="container">
+                            <span class="mob-view-header">HOW TO MAINTAIN YOU KNIFE</span>
+                            <div class="video-container"><iframe  height="280" src="https://www.youtube.com/embed/7WAZBGcwdn8" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <div class="list-container">
+                                <span class="list-header">
+                                    HOW TO MAINTAIN YOU KNIFE
+                                </span>
+                                <ul>
+                                    <li>Brioche Bun(2)</li>
+                                    <li>Lancaster farm beef,ground</li>
+                                    <li>Mustad Crest, picked</li>
+                                    <li> Avocado</li>
+                                    <li>Tomato</li>
+                                    <li>Lemon , Halved</li>
+                                    <li>Gralic, sliced</li>
+                                    <li>Red onion , sliced</li>
+                                    <li>Gruyere cheese , sliced</li>
+                                </ul>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div  class="currentpage"id="nutrients">
+                        <div class="container">
+                            <div class="table-container">
+                                <table id="nutrient-table">
+                                     <tbody>
+                                        <tr>
+                                            <th></th>
+                                            <th>PER SERVING</th>
+                                            <th>%DAILY VALUE</th>
+                                        </tr>
+                                        <tr>
+                                            <td>CALORIES</td>
+                                            <td>3</td>
+                                            <td>3</td>
+                                        </tr>
+                                        <tr>
+                                            <td>TOTAL FAT</td>
+                                            <td>3</td>
+                                            <td>3</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sub-nutrients">SATURATED FAT</td>
+                                            <td>3</td>
+                                            <td>3</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="sub-nutrients">TRANS FAT</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>CHOLESTEROL</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SODIUM</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SODIUM</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SODIUM</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SODIUM</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SODIUM</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-container">
+                                <span class="sub-header">
+                                    FOOD ALLERGY NOTICE:
+                                </span>
+                                <span class="description">
+                                    Our meals are prepared in kitchen whose environment contains nuts and gulton.Though best practices are used when preparing the meal, In advertent cross-contamination may occur.We cannot guarantee the complete absence of allergens.
+                                </span>
+                                <span class="sub-description">
+                                    We strive to serve generous portion sizes and each meal is packed by hand. Actual serving size may vary. Percent Daily Values are based on a 2000 calorie diet. Your daily values may be higher or lower depending on your calorie needs.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="reviews">
+                        <div class="container">
+                            <div class="list-review">
+                                <div class="list-header">
+                                    JERRY L.
                                 </div>
+                            <div class="rating">
+                                <span>
+                                    <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1">
+                                    <label for="rating-input-1-5" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
+                                    <label for="rating-input-1-4" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1">
+                                    <label for="rating-input-1-3" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1">
+                                    <label for="rating-input-1-2" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1">
+                                    <label for="rating-input-1-1" class="rating-star"></label>
+                                </span>
+                                <span class="review-date">06/06/2015</span>
+                            </div>
+                            <span class="description">
+                                The amazing burger boasted more complexity due to the precision of the cooking process and the variery of fresh ingredients. Will cook again!
+                            </span>
+                            </div>
+                            <div class="list-review">
+                                <div class="list-header">
+                                    JERRY L.
+                                </div>
+                            <div class="rating">
+                                <span>
+                                    <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1">
+                                    <label for="rating-input-1-5" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
+                                    <label for="rating-input-1-4" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1">
+                                    <label for="rating-input-1-3" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1">
+                                    <label for="rating-input-1-2" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1">
+                                    <label for="rating-input-1-1" class="rating-star"></label>
+                                </span>
+                                <span class="review-date">06/06/2015</span>
+                            </div>
+                            <span class="description">
+                                The amazing burger boasted more complexity due to the precision of the cooking process and the variery of fresh ingredients. Will cook again!
+                            </span>
+                            </div>
+                            <div class="list-review">
+                                <div class="list-header">
+                                    JERRY L.
+                                </div>
+                            <div class="rating">
+                                <span>
+                                    <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1">
+                                    <label for="rating-input-1-5" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
+                                    <label for="rating-input-1-4" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1">
+                                    <label for="rating-input-1-3" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1">
+                                    <label for="rating-input-1-2" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1">
+                                    <label for="rating-input-1-1" class="rating-star"></label>
+                                </span>
+                                <span class="review-date">06/06/2015</span>
+                            </div>
+                            <span class="description">
+                                The amazing burger boasted more complexity due to the precision of the cooking process and the variery of fresh ingredients. Will cook again!
+                            </span>
+                            </div>
+                            <div class="list-review">
+                                <div class="list-header">
+                                    JERRY L.
+                                </div>
+                            <div class="rating">
+                                <span>
+                                    <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1">
+                                    <label for="rating-input-1-5" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
+                                    <label for="rating-input-1-4" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1">
+                                    <label for="rating-input-1-3" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1">
+                                    <label for="rating-input-1-2" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1">
+                                    <label for="rating-input-1-1" class="rating-star"></label>
+                                </span>
+                                <span class="review-date">06/06/2015</span>
+                            </div>
+                            <span class="description">
+                                The amazing burger boasted more complexity due to the precision of the cooking process and the variery of fresh ingredients. Will cook again!
+                            </span>
+                            </div>
+                            <div class="list-review">
+                                <div class="list-header">
+                                    JERRY L.
+                                </div>
+                            <div class="rating">
+                                <span>
+                                    <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1">
+                                    <label for="rating-input-1-5" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
+                                    <label for="rating-input-1-4" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1">
+                                    <label for="rating-input-1-3" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1">
+                                    <label for="rating-input-1-2" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1">
+                                    <label for="rating-input-1-1" class="rating-star"></label>
+                                </span>
+                                <span class="review-date">06/06/2015</span>
+                            </div>
+                            <span class="description">
+                                The amazing burger boasted more complexity due to the precision of the cooking process and the variery of fresh ingredients. Will cook again!
+                            </span>
+                            </div>
+                            <div class="list-review">
+                                <div class="list-header">
+                                    JERRY L.
+                                </div>
+                            <div class="rating">
+                                <span>
+                                    <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1">
+                                    <label for="rating-input-1-5" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
+                                    <label for="rating-input-1-4" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1">
+                                    <label for="rating-input-1-3" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1">
+                                    <label for="rating-input-1-2" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1">
+                                    <label for="rating-input-1-1" class="rating-star"></label>
+                                </span>
+                                <span class="review-date">06/06/2015</span>
+                            </div>
+                            <span class="description">
+                                The amazing burger boasted more complexity due to the precision of the cooking process and the variery of fresh ingredients. Will cook again!
+                            </span>
+                            </div>
+                            <div class="list-review">
+                                <div class="list-header">
+                                    JERRY L.
+                                </div>
+                            <div class="rating">
+                                <span>
+                                    <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1">
+                                    <label for="rating-input-1-5" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
+                                    <label for="rating-input-1-4" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1">
+                                    <label for="rating-input-1-3" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1">
+                                    <label for="rating-input-1-2" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1">
+                                    <label for="rating-input-1-1" class="rating-star"></label>
+                                </span>
+                                <span class="review-date">06/06/2015</span>
+                            </div>
+                            <span class="description">
+                                The amazing burger boasted more complexity due to the precision of the cooking process and the variery of fresh ingredients. Will cook again!
+                            </span>
+                            </div>
+                            <div class="list-review">
+                                <div class="list-header">
+                                    JERRY L.
+                                </div>
+                            <div class="rating">
+                                <span>
+                                    <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1">
+                                    <label for="rating-input-1-5" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
+                                    <label for="rating-input-1-4" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1">
+                                    <label for="rating-input-1-3" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1">
+                                    <label for="rating-input-1-2" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1">
+                                    <label for="rating-input-1-1" class="rating-star"></label>
+                                </span>
+                                <span class="review-date">06/06/2015</span>
+                            </div>
+                            <span class="description">
+                                The amazing burger boasted more complexity due to the precision of the cooking process and the variery of fresh ingredients. Will cook again!
+                            </span>
+                            </div>
+                            <div class="list-review">
+                                <div class="list-header">
+                                    JERRY L.
+                                </div>
+                            <div class="rating">
+                                <span>
+                                    <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1">
+                                    <label for="rating-input-1-5" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
+                                    <label for="rating-input-1-4" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1">
+                                    <label for="rating-input-1-3" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1">
+                                    <label for="rating-input-1-2" class="rating-star"></label>
+                                    <input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1">
+                                    <label for="rating-input-1-1" class="rating-star"></label>
+                                </span>
+                                <span class="review-date">06/06/2015</span>
+                            </div>
+                            <span class="description">
+                                The amazing burger boasted more complexity due to the precision of the cooking process and the variery of fresh ingredients. Will cook again!
+                            </span>
                             </div>
                         </div>
-                        <div class="right-arrow">
-                            <a class="next-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div></div>
-                    <div id="allYouNeed">All you need Body</div>
+                    </div>
                 </div>
             </div>
         </div>

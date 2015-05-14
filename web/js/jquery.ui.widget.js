@@ -561,3 +561,6 @@ var widget = $.widget;
 
 
 }));
+$('.meal-tab-container ul li').on("click",function(){
+	$('.meal-tab-container ul li').addClass('activeli');
+})

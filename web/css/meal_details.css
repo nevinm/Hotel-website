@@ -4,6 +4,7 @@
 
 #meal-tabs {
     position: relative;
+    margin-top: 30px;
 }
 
 .contentArea {
@@ -97,16 +98,35 @@
     width: 188px;
     color: #353535;
 }
+.selected-menu{
+    display: none;
+}
+.selected-menu hr{
+    height: 1px;
+    border: 0;
+    background-color: #A9D77B;
+    width: 30%;
+    float: left;
+    margin-right: 44%;
+    margin-top: 15px;
+
+}
 /*==============================*\
         &Meal Details
 \*==============================*/
 
 .meal-tab-container {
     height: 66px;
-    border: 1px solid white;
-    -webkit-box-shadow: 0 8px 6px -6px black;
+    -webkit-box-shadow: -1px 2px 4px -2px lightgrey;
     -moz-box-shadow: 0 8px 6px -6px black;
-    box-shadow: 0 8px 6px -6px black;
+    border-bottom: 1px solid #ddd;
+    border-left: nnoe;
+    box-shadow: -1px 2px 4px -2px lightgrey;
+    background-color: #f7f7f7;
+    font-family: 'BrandonGrotesque-Bold';
+    color: #9B9B9B;
+    font-size: 14px;
+    border-radius: 4px 4px 0 0;
 }
 
 .add-meal {
@@ -205,6 +225,192 @@
 .rating-input:checked~.rating-star {
     background-position: 0px 0;
 }
+
+
+#allYouNeed .container {
+  width: 100%;
+  padding: 0px 20px;
+  overflow: hidden;
+}
+.image-container,.list-container,.video-container {
+  width: 50%;
+  float: left;
+  color: #b0b0b0;
+  padding: 0 20px;
+}
+.list-container ul{
+    padding-left: 40px;
+    padding-bottom: 20px;
+    font-size: 14px;
+    word-break: break-all;
+    float: left;
+    width: 100%;
+    padding-right: 20px;
+    padding-top: 20px;
+}
+.list-container ul li{
+    list-style-type: disc;
+    font-size: 12px;
+    font-family: 'ProximaNova-regular';
+    padding: 5px 0;
+    color: #9B9B9B;
+} 
+.list-header,span.mob-view-header{
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: #6B6B6B;
+}
+span.mob-view-header{
+    display: none;
+}
+.section{
+    width: 100%;
+    float: left;
+    padding:10px 0;
+}
+.video-container iframe{
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+
+.list-review {
+  width: 33.3%;
+  float: left;
+  padding: 20px 20px;
+}
+.list-review .rating {
+  width: 100%;
+  padding: 0;
+  float: left;
+  padding-top: 10px;
+  margin-top: 0;
+}
+.list-review .list-header{
+    font-size: 16px;
+    font-family: 'BrandonGrotesque-bold';
+
+}
+.list-review .rating >*{
+    margin-left: 0;
+}
+.list-review .rating >* .rating-star:last-child{
+    margin-left: 0;
+}
+span.review-date {
+  padding-left: 20px;
+  font-size: 14px;
+  padding-top: 5px;
+  color: #d0d0d0;
+  font-family: 'BrandonGrotesque-Regular';
+}
+span.description,span.sub-description {
+  word-break: break-word;
+  font-family: 'ProximaNova-regular';
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #6b6b6b;
+  padding: 10px 0;
+}
+span.sub-header {
+  width: 100%;
+  float: left;
+  font-family: 'BrandonGrotesque-Regular';
+  padding: 10px 0;
+  font-size: 16px;
+}
+.table-container,.text-container {
+  width: 50%;
+  float: left;
+  padding: 0 20px;
+}
+#nutrient-table {
+  font-family: 'BrandonGrotesque-Regular';
+  color: #6B6B6B;
+  font-size: 12px;
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+}
+#nutrient-table th {
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #d0d0d0;
+  text-align: left;
+  padding: 5px 0;
+}
+#nutrient-table td {
+  padding: 5px 0;
+  padding-left: 10px;
+}
+span.sub-description{
+    width: 100%;
+    float: left;
+    line-height: 20px;
+    color: #9b9b9b;
+}
+.text-container .sub-header{
+    color: #6b6b6b;
+    font-family: 'BrandonGrotesque-bold';
+    font-size: 12px;
+    padding-top: 0;
+}
+td.sub-nutrients{
+    color: #9b9b9b;
+    padding-left: 20px !important;
+}
+table tr:last-child td:first-child {
+    -moz-border-radius-bottomleft:10px;
+    -webkit-border-bottom-left-radius:10px;
+    border-bottom-left-radius:10px
+}
+
+table tr:last-child td:last-child {
+    -moz-border-radius-bottomright:10px;
+    -webkit-border-bottom-right-radius:10px;
+    border-bottom-right-radius:10px
+}
+iframe{
+width: 100%;
+}
+.meal-tab-container ul{
+    width: 100%;
+}
+.meal-tab-container ul li {
+  /* padding: 17px 0%; */
+  width: 13.9%;
+  text-align: center !important;
+  float: left;
+  display: inline-block;
+   height: 66px; 
+  padding: 22px 6px;
+}
+.meal-tab-container ul li:hover{
+    border-bottom: 4px solid #A9D77B;
+}
+#meal-tabs {
+  position: relative;
+  /* margin-top: 30px; */
+  width: 100%;
+  float: left;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  margin: 0;
+  margin-bottom: 20px;
+}
+#details,#preparation,#allYouNeed,#tips-and-tricks,#review,#ingredients,#nutrients{
+    width: 100%;
+    float: left;
+    padding: 20px;
+}
+.activeli{
+    border-bottom: 4px solid #A9D77B;
+}
+.mobile-tab-header-container{
+    display: none;
+}
 /*==============================*\
         Media Query
 \*==============================*/
@@ -243,5 +449,130 @@
         border-bottom: 0;
         font-weight: normal;
         margin: 0;
+    }
+    .selected-menu{
+        display: block;
+        width: 90%;
+        margin: 0 auto;
+        max-width: 400px;
+        border: 1px solid #b0b0b0;
+        border-radius: 3px;
+        background: #fff;
+        box-shadow: 0 0 4px #b0b0b0;
+        margin-top: 120px;
+    }
+    .thumbnail{
+        width: 100%;
+    }
+    .menu-header{
+        font-size: 16px;
+        letter-spacing: 1px;
+        line-height: 20px;
+        color: #6B6B6B;
+    }
+    .selected-menu .price{
+        font-family: 'BrandonGrotesque-Regular';
+        font-size: 16px;
+        color: #6b6b6b;
+    }
+    .selected-menu .btn-small-primary{
+        min-width: 60px;
+        padding: 0 20px;
+
+    }
+    .selected-menu .contents{
+        padding: 10px 20px;
+    }
+    .meal-details{
+        display: none;
+    }
+    .image-container, .list-container {
+        width: 100%;
+    }
+    .ui-tabs .ui-tabs-panel {
+        height: auto;
+    }
+    .list-review{
+        width: 100%;
+    }
+    .table-container{
+        width: 100%;
+    }
+    .text-container{
+        display: none;
+    }
+    .video-container{
+        width: 100%;
+    }
+    span.mob-view-header{
+        display: block;
+        width: 100%;
+        float: left;
+        /* text-align: center; */
+        padding: 0 20px;
+        padding-bottom: 20px;
+        word-break:break-word;
+    }
+    #tips-and-tricks .list-header{
+        display: none;
+    }
+    .left-arrow{
+        float: left;
+        width: 20%;
+        text-align: center;
+    }
+    .right-arrow{
+        float: left;
+        width: 20%;
+        text-align: center;
+        -ms-transform: rotate(180deg); /* IE 9 */
+        -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+        transform: rotate(180deg);
+        margin-top: -5px;
+    }
+    .meal-tab-container ul{
+        width: 154px;
+        margin: 0 auto;
+    }
+    a.pc-tab{
+        font-size: 30px !important;
+    }
+    .meal-tab-container{
+        border: none;
+        box-shadow: none;
+        background-color: #fff;
+    }
+    #meal-tabs {
+        border-radius: 0px;
+        margin-top: 20px;
+    }
+    .contentArea{
+        width: 100%;
+    }
+    .details-part-1 img{
+        display: none;
+    }
+    .details-part-2{
+        width: 100%;
+    }
+    .meal-tab-container ul li:hover{
+        border-bottom: none;
+    } 
+    .mobile-tab-header{
+        width: 60%;
+        float: left;
+        text-align: center;
+    }
+    .mobile-tab-header-container{
+        display: block;
+        width: 100%;
+        float: left;
+    }
+    .activeli{
+        border: none !important;
+    }
+    a.ui-tabs-anchor:visited,
+    a.ui-tabs-anchor:hover,a.ui-tabs-anchor:focus{
+        color: #6b6b6b;
     }
 }

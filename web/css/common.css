@@ -931,6 +931,11 @@ span.icon-menu {
 		margin-left: 20px;
 		margin-top: 8px;
 	}
+	.socialMedia{
+		border: none;
+		margin:none;
+		padding-top: none;		
+	}
 }
 
 /*@media (min-width: 1302px) {*/
