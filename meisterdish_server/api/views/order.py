@@ -85,6 +85,7 @@ def get_orders(request, data, user=None):
                 "status":dict(settings.ORDER_STATUS)[order.status],
                 "status_id" : order.status,
                 "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
+                "order_num" : order.order_num,
                 "meals":meals,
                 "delivery_address" : {
                      "id":order.delivery_address.id,
@@ -284,6 +285,7 @@ def create_order(request, data, user):
                     "year" : data["exp_year"],
                     "cvc" : data["cvv2"],
                 }
+
                 payment = make_cc_payment_with_details(cc_data, total_amount, order.order_num)
             else:
                 payment = make_cc_payment_with_saved_card(data["card_id"], total_amount, order.order_num)
@@ -358,6 +360,9 @@ def get_order_details(request, data, user, order_id):
             "status":dict(settings.ORDER_STATUS)[order.status],
             "status_id" : order.status,
             "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
+            "payment_type": order.payment.get_payment_type_display() if order.payment else "Not Available",
+            "transaction_id":order.transaction_id,
+            "order_num" : order.order_num,
             "delivery_address" : {
                      "id":order.delivery_address.id,
                      "first_name":order.delivery_address.first_name,
