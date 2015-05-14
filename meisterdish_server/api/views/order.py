@@ -40,12 +40,13 @@ def get_orders(request, data, user=None):
             orders = orders.filter(Q(cart__user__first_name__icontains=data['search']) | Q(cart__user__last_name__icontains=data['search']))
         
         if "status" in data and str(data['status']).strip() != "":
-            orders = orders.filter(status=data['status'])
+            orders = orders.filter(status=int(data['status']))
 
         # End filter
         orders = orders.order_by("-id")
 
         actual_count = orders.count()
+
         try:
             paginator = Paginator(orders, limit)
             if page <1 or page > paginator.page_range:
@@ -429,13 +430,16 @@ def get_order_details(request, data, user, order_id):
 @check_input('POST', True)
 def update_order(request, data, user, order_id):
     try:
-        status = (data['status'])
+        status = int(data['status'])
         if status < 0 or status > 4:
             log.error("Invalid order status: " + str(status))
         order = Order.objects.get(pk=order_id, is_deleted=False)
 
         order.status = status
         order.save()
+        if status >=1:
+            order.cart.completed=True
+            order.cart.save()
         return json_response({"status":1, "message":"The order has been updated", "id":order_id+"."})
     except Exception as e:
         log.error("Update order status : " + e.message)
