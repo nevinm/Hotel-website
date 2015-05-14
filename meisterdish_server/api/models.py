@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
-from settings import PAYMENT_METHODS, ORDER_STATUS
+from settings import PAYMENT_METHODS, ORDER_STATUS, SHIPPING_CHARGE
 import logging
 log = logging.getLogger('model')
 import sys, traceback
@@ -368,7 +368,7 @@ class Order(models.Model):
             self.cart.completed = True
             self.cart.save()
         if not self.grand_total or self.grand_total == 0:
-            self.grand_total = self.total_amount + self.total_tax + self.tip + settings.SHIPPING_CHARGE
+            self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE
 
         super(Order, self).save(*args, **kwargs)
     
