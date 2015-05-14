@@ -610,7 +610,7 @@ var addAddressCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
         if(userDetails.status == 1){
-            populateAddedAddress(userDetails.delivery_address);
+            populateAddedAddress(userDetails.id);
         }
         else{
             showPopup(userDetails);
