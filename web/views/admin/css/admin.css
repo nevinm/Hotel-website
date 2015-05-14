@@ -397,6 +397,9 @@ table#userlist {
     font-size: 12px;
     margin-top: 10px;
 }
+.order-list-container .search-filters label{
+     margin-top: 5px;
+}
 #order-status-filters{
     margin-right: 20px;
 }
