@@ -336,6 +336,7 @@ span.sub-header {
   width: 100%;
   border: 1px solid #d0d0d0;
   border-radius: 4px;
+  box-shadow: 0 0 6px #d0d0d0;
 }
 #nutrient-table th {
   background-color: #f7f7f7;

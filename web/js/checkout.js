@@ -210,7 +210,7 @@ var getCartItemsCallback = {
             populateDate(cartItems);
         } else {
             $('.order-list-items').remove();
-            $(".emtpy-cart-message").show();
+            $(".emtpy-cart-message").append("<span>"+cartItems.message+"</span>");
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -522,7 +522,7 @@ function popuplateAddressList(data) {
         if (userDetails.address_list.length != 0) {
             $('.address-info-guest').hide();
             localStorage['delivery_addressess'] = data;
-            populateAddresstoInfoContainer(userDetails)
+            populateAddresstoInfoContainer(userDetails);
         } else {
             $('.address-info').hide();
             $('.address-info-guest').show();
@@ -534,6 +534,7 @@ function popuplateAddressList(data) {
 }
 
 function populateAddresstoInfoContainer(data) {
+    $('.address-info .contents').remove();
     var selectedId = data.delivery_address;
     if(selectedId){
         $.each(data.address_list, function(key, value) {
@@ -556,16 +557,24 @@ function populateAddresstoInfoContainer(data) {
 function populateAddressListPopup() {
     $('.address-container').remove();
     $('.address-list-popup .button').remove();
-    if (localStorage['delivery_addressess']) {
+    $('#save-delivery-address').addClass('button-disabled');
+    var checkLocal = JSON.parse(localStorage['delivery_addressess']).address_list.length;
+    if (checkLocal) {   
         addressList = JSON.parse(localStorage['delivery_addressess']);
         appendAddresscontent(addressList);
-        $('.address-list-popup .popup-container').append("<div class='button'>" +
-            "<a href='#' class='btn btn-medium-primary medium-green' id='save-delivery-address'>" + "SELECT" + "</a>" +
-            "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
+        // $('.address-list-popup .popup-container').append("<div class='button'>" +
+        //     "<a href='#' class='btn btn-medium-primary medium-green' id='save-delivery-address'>" + "SELECT" + "</a>" +
+        //     "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
         $('.address-list-popup').show();
     } else {
         getAddress("populateAddressToPopUp");
+        $('.address-list-popup').show();
     }
+    $('input[type=radio][name=address]').on("focus",function(){
+        $('#save-delivery-address').removeClass('button-disabled');
+    }) 
+        
+        
 }
 
 function appendAddresscontent(addressList) {
@@ -577,6 +586,9 @@ function appendAddresscontent(addressList) {
             "<span>" + value.city + "," + value.state + " " + value.zip + "</span>" +
             "<span>" + value.phone + "</span>" + "</label>" + "</div>");
     });
+    $('.address-list-popup .popup-container').append("<div class='button'>" +
+        "<a href='#' class='btn btn-medium-primary medium-green button-disabled' id='save-delivery-address'>" + "SELECT" + "</a>" +
+        "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
 }
 
 var setPrimaryAddCallback = {
@@ -694,9 +706,11 @@ function getCities(cityId) {
 }
 
 function populateAddedAddress(delivery_address) {
-    var addedAddress = [];
-    addedAddress.push(getNewAddress());
-    addedAddress.push({"id":delivery_address});
+    var addedAddress = [],
+        newAddress = getNewAddress();
+    newAddress.id =delivery_address; 
+    // localStorage['delivery_addressess'] = newAddress;
+    addedAddress.push(newAddress);
     data = {
         "address_list": addedAddress,
         "delivery_address":delivery_address
