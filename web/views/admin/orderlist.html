@@ -65,19 +65,17 @@
                                 <label for="user-name">User Name</label>
                             </div>
                             <div class='search-filters'>
-                                <input type="text" placeholder="Search by Order Id" id="order-id" />
-                                <label for="user-name">Order Id</label>
+                                <input type="text" placeholder="Search by order number" id="order-num" />
+                                <label for="user-name">Order NUM</label>
                             </div>
                             <div class='search-filters'>
                                 <select id="order-status-filter" name="status">
                                     <option value="">Select Status Filter</option>
-                                    <option value="0">Incomplete</option>
-                                    <option value="1">Payment failed</option>
-                                    <option value="2">Paid, not verified</option>
-                                    <option value="3">Payment verified</option>
-                                    <option value="4">Order placed</option>
-                                    <option value="5">Not delivered</option>
-                                    <option value="6">Complete</option>
+                                        <option value='0'>Incomplete</option>
+                                        <option value='1'>Order placed</option>
+                                        <option value='2'>Confirmed</option>
+                                        <option value='3'>Dispatched</option>
+                                        <option value='4'>Complete</option>
                                 </select>
                             </div>
                             <input type="button" class="btn btn-small-primary medium-green" id="search-orders" value="SEARCH">
@@ -85,7 +83,7 @@
                         <table id="order-list" class="display" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th>Order ID</th>
+                                    <th>Order NUM</th>
                                     <th>Name</th>
                                     <th>Phone Number</th>
                                     <th>Date & Time</th>
@@ -107,7 +105,7 @@
         </div>
         <div class='order-detail-popup'>
             <div class="accordion-header">
-                <h4 class='order-id'></h4>
+                <h4 class='order-num'></h4>
                 <h4 class="order-status-message"></h4>
                 <img class="remove" src="../../images/cross_black.png">
             </div>
@@ -119,7 +117,7 @@
                     </div>
                     <div class="accordion-subcontent">
                         <div class="order-head">ORDER DATE</div>
-                        <div class="order-content">12/12/2015</div>
+                        <div class="order-content order-date">12/12/2015</div>
                     </div>
                     <div class="accordion-subcontent">
                         <div class="order-head">SHIPPING INFROMATION</div>
@@ -141,37 +139,6 @@
                         <span class="content-heading">QUANTITY</span>
                         <span class="content-heading">PRICE</span>
                     </div>
-                    <div class="order-list-items" data-id="43">
-                        <img src="http://meisterdish.qburst.com/backend//media/images/1_thumbnail_yLC1oXa.png">
-                        <span class="body-text-small">Steak With Cheese</span>
-                        <div class="quantity-container">
-                            <input type="text" class="quantity" value="6" disabled>
-                        </div>
-                        <span class="price-container" data-tax="5">$4</span>
-                    </div>
-                    <div class="order-list-items" data-id="43">
-                        <img src="http://meisterdish.qburst.com/backend//media/images/1_thumbnail_yLC1oXa.png">
-                        <span class="body-text-small">Steak With Cheese</span>
-                        <div class="quantity-container">
-                            <input type="text" class="quantity" value="6" disabled>
-                        </div>
-                        <span class="price-container" data-tax="5">$4</span>
-                    </div>
-                    <div class="order-list-items" data-id="43">
-                        <img src="http://meisterdish.qburst.com/backend//media/images/1_thumbnail_yLC1oXa.png">
-                        <span class="body-text-small">Steak With Cheese</span>
-                        <div class="quantity-container">
-                            <input type="text" class="quantity" value="6" disabled>
-                        </div>
-                        <span class="price-container" data-tax="5">$4</span>
-                    </div>
-                    <div class="order-list-items" data-id="43">
-                        <img src="http://meisterdish.qburst.com/backend//media/images/1_thumbnail_yLC1oXa.png">
-                        <span class="body-text-small">Steak With Cheese</span>
-                        <div class="quantity-container">
-                            <input type="text" class="quantity" value="6" disabled>
-                        </div>
-                        <span class="price-container" data-tax="5">$4</span>
                     </div>
                 </div>
             </div>
