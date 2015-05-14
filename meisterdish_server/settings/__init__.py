@@ -219,12 +219,10 @@ PER_PAGE = 10
 
 ORDER_STATUS =  (
     (0, "Incomplete"),
-    (1, "Payment failed"),
-    (2, "Paid, not verified"),
-    (3, "Payment verified"),
-    (4, "Order placed"),
-    (5, "Not delivered"),
-    (6, "Complete"),
+    (1, "Order placed"),
+    (2, "Confirmed"),
+    (3, "Dispatched"),
+    (4, "Complete"),
     )
 
 if not Live:
@@ -249,3 +247,4 @@ DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
 DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
 
 ORDER_DELIVERY_WINDOW = 3 #Hours
+SHIPPING_CHARGE = 2 # in $

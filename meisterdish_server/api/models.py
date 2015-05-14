@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
-from settings import PAYMENT_METHODS, ORDER_STATUS
+from settings import PAYMENT_METHODS, ORDER_STATUS, SHIPPING_CHARGE
 import logging
 log = logging.getLogger('model')
 import sys, traceback
@@ -311,7 +311,7 @@ class Payment(models.Model):
     response = models.TextField(max_length=5000, null=True, blank=True)
     transaction_id = models.CharField(max_length=128, null=True, blank=True)
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
-    
+    transaction_verified = models.BooleanField(default=False)
     ipn_verified = models.BooleanField(default=False)
     ipn_response = models.TextField(max_length=5000, null=True, blank=True)
 
@@ -367,11 +367,11 @@ class Order(models.Model):
             self.created = datetime.datetime.now()
         self.updated = datetime.datetime.now()
 
-        if self.status >= 4:
+        if self.status >= 1:
             self.cart.completed = True
             self.cart.save()
         if not self.grand_total or self.grand_total == 0:
-            self.grand_total = self.total_amount + self.total_tax
+            self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE
 
         super(Order, self).save(*args, **kwargs)
     

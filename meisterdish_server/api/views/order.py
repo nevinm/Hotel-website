@@ -21,7 +21,7 @@ def get_orders(request, data, user=None):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(is_deleted=False)
+        orders = Order.objects.filter(is_deleted=False).exclude(status=0)
         
         #If user, list only his orders
         if user.role.pk == settings.ROLE_USER:
@@ -74,15 +74,16 @@ def get_orders(request, data, user=None):
             
             order_list.append({
                 "id":order.id,
-                "total_amount": order.total_amount,
-                "total_tax" : order.total_tax,
-                "tip" : order.tip,
+                #"total_amount": order.total_amount,
+                #"total_tax" : order.total_tax,
+                #"tip" : order.tip,
                 "grand_total" : order.grand_total,
                 "user_first_name" : order.cart.user.first_name,
                 "user_last_name" : order.cart.user.last_name,
-                "user_id" : order.cart.user.id,
-                "user_image" : settings.DEFAULT_USER_IMAGE if not order.cart.user.profile_image else order.cart.user.profile_image.thumb.url,
+                #"user_id" : order.cart.user.id,
+                #"user_image" : settings.DEFAULT_USER_IMAGE if not order.cart.user.profile_image else order.cart.user.profile_image.thumb.url,
                 "status":dict(settings.ORDER_STATUS)[order.status],
+                "status_id" : order.status,
                 "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                 "meals":meals,
                 "delivery_address" : {
@@ -299,7 +300,6 @@ def create_order(request, data, user):
             
         if paid:
             order.payment = payment
-            order.status = 3
             order.save()
         
         if payment_type == "CC":
@@ -307,8 +307,8 @@ def create_order(request, data, user):
         else:
             return json_response({"status":1, "message":"The request has been placed. You will be notified once the payment is verified. "})
 
-    except KeyError as e:
-        log.error("Failed to update order." + e.message)
+    except Exception as e:
+        log.error("Failed to create order." + e.message)
         return custom_error("Failed to place order.")
 
 #Admin only
@@ -356,6 +356,8 @@ def get_order_details(request, data, user, order_id):
             "user_image" : settings.DEFAULT_USER_IMAGE if not order.cart.user.profile_image else order.cart.user.profile_image.thumb.url,
             "meals":meals,
             "status":dict(settings.ORDER_STATUS)[order.status],
+            "status_id" : order.status,
+            "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
             "delivery_address" : {
                      "id":order.delivery_address.id,
                      "first_name":order.delivery_address.first_name,
@@ -388,16 +390,16 @@ def get_order_details(request, data, user, order_id):
 @check_input('POST', True)
 def update_order(request, data, user, order_id):
     try:
-        status = data['status']
-        if status < 0 or status > 5:
-            "Invalid order status."
+        status = (data['status'])
+        if status < 0 or status > 4:
+            log.error("Invalid order status: " + str(status))
         order = Order.objects.get(pk=order_id, is_deleted=False)
 
         order.status = status
         order.save()
         return json_response({"status":1, "message":"The order has been updated", "id":order_id+"."})
     except Exception as e:
-        log.error("Update order." + e.message)
+        log.error("Update order status : " + e.message)
         return custom_error("Failed to update the order.")
 
 @check_nvp_input()
@@ -435,17 +437,15 @@ def paypal_success(request, data):
         try:
             order = Order.objects.get(transaction_id=None, payment=None, cart__completed=False, cart__user__pk=user_dic["id"], status=0)
             if not success:
-                order.status = 1
-                order.save()
-                return HttpResponse("Failed to verify payment. Please contact customer support.")
+                return HttpResponse("Failed to verify transaction. Please contact customer support.")
 
-            if float(paypal_response["payment_gross"]) != float(order.grand_total + order.tip):
+            if float(paypal_response["payment_gross"]) != float(order.grand_total):
                 log.error("Paypal success : order and payment amounts not matching.")
                 return HttpResponse("The paid amount is different from order amount.")
 
             order.transaction_id = txn_id
             order.payment = payment
-            order.status = 2
+            order.status = 1
             order.save()
             error = ""
         except Exception as e:
@@ -462,6 +462,7 @@ def save_payment_data(paypal_response):
         payment.payment_type="pp"
         payment.response = paypal_response["text_response"]
         payment.transaction_id
+        payment.transaction_verified = True
         payment.status = True
         payment.amount = float(paypal_response['payment_gross'])
         payment.save()
@@ -488,15 +489,12 @@ def paypal_ipn(request, data, session_id):
         
         txn_id = data['txn_id']
         try:
-            order = Order.objects.get(transaction_id=txn_id, payment=None, cart__completed=False, cart__user__pk=user_dic["id"], status=2)
+            order = Order.objects.get(transaction_id=txn_id, payment=None, cart__completed=False, cart__user__pk=user_dic["id"], status=1)
             
             payment = order.payment
             payment.ipn_verified=True
             payment.ipn_response = payment_data
             payment.save()
-
-            order.status = 3
-            order.save()
 
         except Exception as e:
             log.error("Paypal IPN No valid Order Found with the given transaction ID " + txn_id)        
