@@ -74,15 +74,16 @@ def get_orders(request, data, user=None):
             
             order_list.append({
                 "id":order.id,
-                "total_amount": order.total_amount,
-                "total_tax" : order.total_tax,
-                "tip" : order.tip,
+                #"total_amount": order.total_amount,
+                #"total_tax" : order.total_tax,
+                #"tip" : order.tip,
                 "grand_total" : order.grand_total,
                 "user_first_name" : order.cart.user.first_name,
                 "user_last_name" : order.cart.user.last_name,
-                "user_id" : order.cart.user.id,
-                "user_image" : settings.DEFAULT_USER_IMAGE if not order.cart.user.profile_image else order.cart.user.profile_image.thumb.url,
+                #"user_id" : order.cart.user.id,
+                #"user_image" : settings.DEFAULT_USER_IMAGE if not order.cart.user.profile_image else order.cart.user.profile_image.thumb.url,
                 "status":dict(settings.ORDER_STATUS)[order.status],
+                "status_id" : order.status,
                 "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                 "meals":meals,
                 "delivery_address" : {
@@ -299,7 +300,6 @@ def create_order(request, data, user):
             
         if paid:
             order.payment = payment
-            order.status = 3
             order.save()
         
         if payment_type == "CC":
@@ -307,8 +307,8 @@ def create_order(request, data, user):
         else:
             return json_response({"status":1, "message":"The request has been placed. You will be notified once the payment is verified. "})
 
-    except KeyError as e:
-        log.error("Failed to update order." + e.message)
+    except Exception as e:
+        log.error("Failed to create order." + e.message)
         return custom_error("Failed to place order.")
 
 #Admin only
@@ -356,6 +356,7 @@ def get_order_details(request, data, user, order_id):
             "user_image" : settings.DEFAULT_USER_IMAGE if not order.cart.user.profile_image else order.cart.user.profile_image.thumb.url,
             "meals":meals,
             "status":dict(settings.ORDER_STATUS)[order.status],
+            "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
             "delivery_address" : {
                      "id":order.delivery_address.id,
                      "first_name":order.delivery_address.first_name,

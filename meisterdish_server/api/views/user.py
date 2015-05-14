@@ -173,7 +173,7 @@ def get_categories(request, data):
 def add_rating(request, data, user, meal_id):
     try:
         order = Order.objects.get(pk=data['order_id'], cart__cartitem__meal__pk=meal_id, cart__user=user)
-        if order.status != 4:
+        if not order.cart.completed or order.status < 4:
             custom_error("The order is not complete. Please complete the order before rating.")
         rating = MealRating()
         rating.order = order
@@ -182,7 +182,7 @@ def add_rating(request, data, user, meal_id):
         rating.save()
         return json_response({"status":1, "message":"Successfully added rating.", "order_id":data['order_id'], "meal_id":meal_id})
     except Exception as e:
-        log.error("Add review" + e.message)
+        log.error("Add rating" + e.message)
         return custom_error("Your are not authorized rate this meal/order.")
 
 @check_input('POST')

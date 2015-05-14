@@ -364,11 +364,11 @@ class Order(models.Model):
             self.created = datetime.datetime.now()
         self.updated = datetime.datetime.now()
 
-        if self.status >= 4:
+        if self.status >= 1:
             self.cart.completed = True
             self.cart.save()
         if not self.grand_total or self.grand_total == 0:
-            self.grand_total = self.total_amount + self.total_tax
+            self.grand_total = self.total_amount + self.total_tax + self.tip + settings.SHIPPING_CHARGE
 
         super(Order, self).save(*args, **kwargs)
     

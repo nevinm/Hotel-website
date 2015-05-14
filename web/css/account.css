@@ -1177,6 +1177,9 @@ input.radio-button-payment {
   top: 0;
   left: -37px;
 }
+#cc{
+	top:30px;
+}
 .paypal-container{
 	position: relative;
 }
@@ -1425,6 +1428,9 @@ input.radio-button-payment {
 	}
 	.payment-info .checkout-header{
 		padding-left: 6%;
+	}
+	#pp,#cc{
+		display: none;
 	}
 }
   	@media (max-width:400px){

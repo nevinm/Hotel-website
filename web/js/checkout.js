@@ -694,9 +694,10 @@ function getCities(cityId) {
 }
 
 function populateAddedAddress(delivery_address) {
-    var addedAddress = [];
-    addedAddress.push(getNewAddress());
-    addedAddress.push({"id":delivery_address});
+    var addedAddress = [],
+        newAddress = getNewAddress();
+        newAddress.id =delivery_address; 
+    addedAddress.push(newAddress);
     data = {
         "address_list": addedAddress,
         "delivery_address":delivery_address
