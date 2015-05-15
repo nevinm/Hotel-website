@@ -759,6 +759,9 @@ span.icon-menu {
     background-color: #d0d0d0 !important;
     border-color: #D0D0D0 !important;
 }
+.show-mobile{
+	display: block;
+}
 /*==============================*\
         &NAVBAR RESPONSIVE
 \*==============================*/
@@ -789,7 +792,7 @@ span.icon-menu {
     color: #8EC657;
 }
 
-@media only screen and (min-width: 768px)and (max-width: 1024px) {
+@media (min-width: 768px)and (max-width: 1024px) {
     ul#menu {
         display: none;
     }
@@ -821,13 +824,13 @@ span.icon-menu {
     }
 }
 
-@media only screen and (min-width: 1025px) {
+@media (min-width: 1025px) {
     .navMenu {
         display: none !important;
     }
 }
 
-@media only screen and (max-width: 1177px) {
+@media (max-width: 1177px) {
     /*DELIVERY ADDRESS*/
     
     .content .address {

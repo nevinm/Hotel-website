@@ -32,6 +32,7 @@
 .meal-details {
     width: 100%;
     overflow: hidden;
+    text-transform: uppercase;
 }
 
 .meal-details-main,
@@ -222,17 +223,12 @@
     margin-left: 4px;
     background: url(../images/star_sprite.png) -20px 0px
 }
-/*
+
 .rating-star:hover,
 .rating-star:hover~.rating-star,
 .rating-input:checked~.rating-star {
     background-position: 0px 0;
-}*/
-.rating-star:hover{
-    background-position: 0px 0;
-    cursor: pointer;
 }
-
 
 #allYouNeed .container {
   width: 100%;
@@ -418,10 +414,19 @@ width: 100%;
     border-bottom: 4px solid #A9D77B;
 }
 .mobile-tab-header-container{
+    font-family: 'BrandonGrotesque-bold';
+    color: #9B9B9B;
     display: none;
+    padding-bottom: 30px;
 }
 .change-color{
     background-position: 0px 0px;
+}
+#details .left-arrow img{
+    visibility: hidden;
+}
+#reviews .right-arrow{
+    display: none;
 }
 /*==============================*\
         Media Query
@@ -575,5 +580,8 @@ width: 100%;
     }
     .ui-state-active a:after{
         color:black;
+    }
+    .button-hr-container .add-meal{
+        display: block;
     }
 }

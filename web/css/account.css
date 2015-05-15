@@ -902,7 +902,7 @@ form.addaddress-popup {
 .payment-method-container img{
 	float: left;
 }
-.payment-method-container .body-text-small{
+.payment-method-container .body-text-small,.payment-popup-sub-container .body-text-small{
 	padding: 0;
 	float: left;
 	line-height: 12px;
@@ -994,6 +994,7 @@ form#pay-form {
 }
 .paypal{
 	cursor: pointer;
+	float: left;
 }
 .receipt-container .checkout-header{
 	padding-left: 5%;
@@ -1105,7 +1106,7 @@ input.radio-button-payment {
 	width: 80%;
 	padding-bottom: 20px;
 }
-#change-address {
+#change-address,#change-payment-method{
   cursor: pointer;
 }
 .address-payment-list-popup{
@@ -1155,8 +1156,8 @@ input.radio-button-payment {
 	float: left;
 	margin-left: 20px;
 }
-#save-delivery-address{
-	float: left;
+#save-delivery-address,#save-payment {
+   float: left;
 }
 .section2 .forminput-wrapper #address-line-1-error{
 	bottom: 97px;
@@ -1183,6 +1184,15 @@ input.radio-button-payment {
 .paypal-container{
 	position: relative;
 }
+.payment-popup-sub-container{
+	width: 33.3%;
+	float: left;
+	padding-left: 20px;
+	padding-bottom: 30px;
+}
+.payment-popup-sub-container label{
+	width: 80%;
+}
 /*==================================*\
 			&TABLET
 \*==================================*/
@@ -1198,6 +1208,30 @@ input.radio-button-payment {
 	.address-container{
 		width: 50%;
 	}
+
+	/**CHECKOUT PAGE MOBILE **/
+	/*.left-wrapper,.right-wrapper{
+		display: block;
+		float: left;
+		width: 100%;
+	}
+	.checkout-wrapper{
+		display: block;
+	}
+	.receipt-container{
+		width: 40%;
+		margin:0 auto;
+	}
+	.checkout-time-button{
+		width:17%;
+	}
+	.order-list-items .body-text-small{
+		width: 30%;
+		word-break:break-all;
+	}
+	.order-list-header .content-heading:first-child{
+		width: 30%;
+	}*/
 }
 /*==================================*\
 			&MOBILE

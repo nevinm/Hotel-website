@@ -39,10 +39,10 @@
                 <div class="navMenu" style="display:none">
                     <ul>
                         <li>
-                            <a href="../index.html">HOME</a>
+                            <a href="index.html">HOME</a>
                         </li>
                         <li>
-                            <a href="menu.html">THE MENU</a>
+                            <a href="views/menu.html">THE MENU</a>
                         </li>
                         <li>
                             <a href="">HOW IT WORKS</a>
@@ -60,6 +60,27 @@
                             <a href='views/account.html'></a>
                         </li>
                     </ul>
+                    <footer id="footer-navMenu">
+                        <div class="footerContent">
+                            <ul>
+                                <li>
+                                <a href="">CONTACT</a>
+                                </li>
+                                <li>
+                                <a href="">PRIVACY & TERMS</a>
+                                </li>
+                                <li >
+                                <a href="">HELP</a>
+                                </li>
+                            </ul>
+                            <ul class="footer-links">
+                                <li class="socialMedia" id="facebook"></li>
+                                <li class="socialMedia" id="twitter"></li>
+                                <li class="socialMedia" id="instagram"></li>
+                                <li class="socialMedia" id="pinterest"></li>
+                            </ul>
+                        </div>
+                    </footer>
                 </div>
                 <ul id="menu" class="pullRight">
                     <li>
@@ -202,9 +223,16 @@
                         </div>
                     <div class="payment-method-container">
                         <div class="contents">
-                            <span class="content-heading">PAYING WITH CREDIT CARD</span>
-                            <div class="saved-cards"></div>
-                             <span class="change-address-payment">CHANGE PAYMENT METHOD</span>
+                         <div class="paypal-container" style="display:none">
+                                <input type="radio" id="pp" name="payment-radio">
+                                <span class="content-heading"><input type="checkbox" id="pay-using-paypal"/>PAY WITH PAY PAL</span>
+                                <img class='paypal' src="../images/paypal_button.png">
+                            </div>
+                            <div class="credit-card-container">
+                                <span class="content-heading">PAYING WITH CREDIT CARD</span>
+                                <div class="saved-cards"></div>
+                             </div>
+                             <span class="change-address-payment" id="change-payment-method">CHANGE PAYMENT METHOD</span>
                         </div>
                     </div>
                     <div class="payment-method-guest-container">

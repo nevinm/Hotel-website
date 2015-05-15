@@ -3,7 +3,7 @@ $(document).ready(function() {
     var mealId = getParameterFromUrl("mealId");
     getMealDetails(mealId);
 
-    $(".add-meal").on('click', function() {
+    $(".add-meal,.add-meal-mobile").on('click', function() {
         var mealId = $(this).attr("data-id");
         addToCart(mealId);
     });
