@@ -339,6 +339,8 @@ def create_meal(request, data, user):
             meal.chef.image = Image.objects.get(pk=int(data['chef_image']))
             meal.chef.save()
 
+        if 'chef_comments' in data and data["chef_comments"].strip() != "":
+            meal.chef_comments = data["chef_comments"].strip()
         if 'cat_id' in data:
             try:
                 meal.category=Category.objects.get(is_hidden=False, is_deleted=False, pk=data['cat_id'])
