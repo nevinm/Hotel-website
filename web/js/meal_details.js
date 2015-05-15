@@ -68,12 +68,12 @@ $('.meal-tab-container ul li').on("click", function() {
 });
 
 //STAR RATING
-$('.rating-star').on('click',function(){
+$('.rating-star').on('click', function() {
     var param = $(this).prev().attr('data-id'),
         star = $(this).parent().find('.rating-star');
-   $(star).removeClass("change-color");
-   $($(star).get().reverse().slice(0,param)).each(function(key,value){
-        $(value).addClass('change-color');  
+    $(star).removeClass("change-color");
+    $($(star).get().reverse().slice(0, param)).each(function(key, value) {
+        $(value).addClass('change-color');
     })
 })
 
@@ -144,14 +144,14 @@ function populateMealDetails(mealDetails) {
 }
 
 function mealDetailsTab(mealDetails) {
-    var majorIngredients= "";
+    var majorIngredients = "";
     $(".add-meal").attr("data-id", mealDetails.id);
     $(".meal-name").text(mealDetails.name);
     $(".price").text(dollarConvert(mealDetails.price + mealDetails.tax));
     $(".thumbnail").attr('src', mealDetails.main_image.url);
     $(".thumbnail").attr('data-id', mealDetails.main_image.id);
-    $(".chef-img").attr("src", mealDetails.chef_image);
-    $(".chef-img").attr("data-id", mealDetails.chef_id);
+    $(".chef-img").attr("src", mealDetails.chef_image.url);
+    $(".chef-img").attr("data-id", mealDetails.chef_image.id);
     $(".chef-comments").attr("data-id", mealDetails.chef_comments);
     $(".details-description span").text('"' + mealDetails.description + '"');
     $(".chef-name").text("CHEF " + mealDetails.chef_name);
@@ -210,5 +210,25 @@ function nutrientsTab(mealDetails) {
                     "</tr>");
             });
         }
+    });
+}
+
+function reviewsTab(mealDetails) {
+    $.each(mealDetails.ratings, function(key, value) {
+        $("#reviews .container").append("<div class='list-review'>" +
+            "<div class='list-header'>"+value.user_first_name+ " " +value.user_last_name +"</div>" +
+            "<div class='rating'>" +
+            "<span><input type='radio' class='rating-input' id='rating-input-1-5' name='rating-input-1' data-id='5'>" +
+            "<label for='rating-input-1-5' class='rating-star'></label>" +
+            "<input type='radio' class='rating-input' id='rating-input-1-4' name='rating-input-1' data-id='4'>" +
+            "<label for='rating-input-1-4' class='rating-star'></label>" +
+            "<input type='radio' class='rating-input' id='rating-input-1-3' name='rating-input-1' data-id='3'>" +
+            "<label for='rating-input-1-3' class='rating-star'></label>" +
+            "<input type='radio' class='rating-input' id='rating-input-1-2' name='rating-input-1' data-id='2'>" +
+            "<label for='rating-input-1-2' class='rating-star'></label>" +
+            "<input type='radio' class='rating-input' id='rating-input-1-1' name='rating-input-1' data-id='1'>" +
+            "<label for='rating-input-1-1' class='rating-star'></label></span>" +
+            "<span class='review-date'>06/06/2015</span></div>" +
+            "<span class='description'>"+value.review+"</span></div>")
     });
 }

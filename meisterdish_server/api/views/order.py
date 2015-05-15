@@ -127,7 +127,7 @@ def get_orders(request, data, user=None):
     	log.error("Failed to list orders." + e.message)
     	return custom_error("Failed to get orders list.")
 
-def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
+def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0, user=None):
     try:
         # Create a card
         cc = card.Card(number=cc_data["number"],
@@ -144,7 +144,7 @@ def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
             log.error("User : " + user.email + ": Credit Card is expired.")
             return "The card is expired."
         elif save_card:
-            save_credit_card(cc_data, cc)
+            save_credit_card(cc_data, cc, user)
 
         funding_instruments = [{
             "credit_card":{
@@ -161,7 +161,7 @@ def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
         log.error("Failed to pay using CC (with card data)." + e.message)
         return "An error has occurred with payment using card. Please try again."
 
-def save_credit_card(cc_data, cc):
+def save_credit_card(cc_data, cc, user):
     try:
         configure_paypal_rest_sdk()
         credit_card = paypalrestsdk.CreditCard({
@@ -179,20 +179,14 @@ def save_credit_card(cc_data, cc):
                 log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + " : "+credit_card.error['details'][0]['issue'])
             return custom_error(credit_card.error['details'][0]['field'] + " : " +credit_card.error['details'][0]['issue'])
         
-        session = SessionStore(session_key=session_key)
-        if session and 'user' in session :
-            user = User.objects.get(pk=session['user']['id'])
-        else:
-            log.error("Anonimous user trying to save CC")
-            return False
 
         c_card = CreditCardDetails()
         c_card.user = user
         c_card.card_id = credit_card.id
         c_card.number = credit_card.number
         c_card.cvv2 = credit_card.cvv2
-        c_card.expire_year = exp_year
-        c_card.expire_month = exp_month
+        c_card.expire_year = cc_data['year']
+        c_card.expire_month = cc_data['month']
         c_card.card_type = credit_card.type
         c_card.save()
         return True
@@ -325,6 +319,19 @@ def create_order(request, data, user):
         elif data["payment_type"].lower() == "cc":
             payment_type = "CC"
             if "card_id" not in data:
+                if "number" not in data or str(data["number"]).strip() == "":
+                    log.error("invalid card number.")
+                    return custom_error("Invalid card number.")
+                if "exp_month" not in data or str(data["exp_month"]).strip() == "":
+                    log.error("Invalid expiry month.")
+                    return custom_error("The expiry month is invalid.")
+                if "exp_year" not in data or str(data["exp_year"]).strip() == "":
+                    log.error("Invalid expiry year.")
+                    return custom_error("The expiry year is invalid.")
+                if "cvv2" not in data or str(data["cvv2"]).strip() == "":
+                    log.error("Invalid cvv.")
+                    return custom_error("Invalid CVV.")
+                
                 cc_data = {
                     "number" : data["number"],
                     "holder" : data.get("first_name", "") + data.get("last_name", ""),
@@ -333,7 +340,7 @@ def create_order(request, data, user):
                     "cvc" : data["cvv2"],
                 }
 
-                payment = make_cc_payment_with_details(cc_data, total_amount, order.order_num, data.get("save_card", 0))
+                payment = make_cc_payment_with_details(cc_data, total_amount, order.order_num, data.get("save_card", 0), user)
             else:
                 payment = make_cc_payment_with_saved_card(data["card_id"], total_amount, order.order_num)
             
@@ -356,7 +363,7 @@ def create_order(request, data, user):
         else:
             return json_response({"status":1, "message":"The request has been placed. You will be notified once the payment is verified. "})
 
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to create order." + e.message)
         return custom_error("Failed to place order.")
 

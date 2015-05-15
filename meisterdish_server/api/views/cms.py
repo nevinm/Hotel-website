@@ -330,15 +330,17 @@ def create_meal(request, data, user):
         chef_id = False
         if 'chef_id' in data:
             chef_id = data['chef_id']
-            meal.chef = Chef.objects.get(pk=int(data['chef_id']))
-        
+            chef = Chef.objects.get(pk=int(data['chef_id']))
+            meal.chef = chef
         if 'chef_name' in data and 'chef_image' in data and data['chef_name'].strip() != '':
             if not chef_id:
-                meal.chef = Chef()
-            meal.chef.name = data['chef_name'].strip()
-            meal.chef.image = Image.objects.get(pk=int(data['chef_image']))
-            meal.chef.save()
-
+                chef = Chef()
+            chef.name = data['chef_name'].strip()
+            chef.image = Image.objects.get(pk=int(data['chef_image']))
+            chef.save()
+            meal.chef = chef
+        if 'chef_comments' in data and data["chef_comments"].strip() != "":
+            meal.chef_comments = data["chef_comments"].strip()
         if 'cat_id' in data:
             try:
                 meal.category=Category.objects.get(is_hidden=False, is_deleted=False, pk=data['cat_id'])
@@ -390,9 +392,10 @@ def create_meal(request, data, user):
         if 'saved_time' in data and data['saved_time'].strip() != '':
             meal.saved_time = data['saved_time'].strip()
         
+        my_tip_ids = []
         if "tips" in data and len(data['tips']) > 0:
             for tip in data['tips']:
-                if 'id' not in tip:
+                if 'id' not in tip or str(tip["id"]).strip() == "":
                     tip_obj = Tips()
                 else:
                     try:
@@ -408,9 +411,14 @@ def create_meal(request, data, user):
                 if "video_url" in tip:
                     tip_obj.video_url = tip['video_url'].strip()
                 tip_obj.save()
+                my_tip_ids.add(tip_obj.id)
                 if tip_obj not in meal.tips.all():
                     meal.tips.add(tip_obj)
                     meal.save()
+        try:
+            meal.tips.exclude(id__in=my_tip_ids).delete()
+        except Exception as e:
+            log.error("Cannot delete meal tips : "+e.message)
 
         if 'ingredients' in data and len(data['ingredients']) > 0:
             meal.ingredients = simplejson.dumps(data['ingredients'])
