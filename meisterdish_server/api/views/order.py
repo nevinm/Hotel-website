@@ -41,7 +41,6 @@ def get_orders(request, data, user=None):
         
         if "status" in data and str(data['status']).strip() != "":
             orders = orders.filter(status=int(data['status']))
-
         # End filter
         orders = orders.order_by("-id")
 
