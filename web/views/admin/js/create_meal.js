@@ -211,7 +211,6 @@ var createMealCallback = {
         console.log(data);
         var meal_message = JSON.parse(data);
         showPopup(meal_message);
-        debugger;
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -228,7 +227,8 @@ function createMeal() {
         meal_image_id = $('#meal-image').attr("data-id"),
         pre_requisites_image = $('#kitchen-image').attr("data-id"),
         chef_image = $('#chef-image').attr("data-id"),
-        ingredients_image = $('#ingredients-image').attr("data-id");
+        ingredients_image = $('#ingredients-image').attr("data-id"),
+        chef_comments = $("#chef-comments").val();
     var ingredients = [], // ingredient array
         temp = '',
         pre_requesties = [],
@@ -281,6 +281,7 @@ function createMeal() {
         "finished_preparation": prepared,
         "saved_time": saved_time,
         "tips": tips,
+        "chef_comments": chef_comments,
         "nutrients": nutrients
     }
 
