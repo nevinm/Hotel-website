@@ -330,15 +330,15 @@ def create_meal(request, data, user):
         chef_id = False
         if 'chef_id' in data:
             chef_id = data['chef_id']
-            meal.chef = Chef.objects.get(pk=int(data['chef_id']))
-        
+            chef = Chef.objects.get(pk=int(data['chef_id']))
+            meal.chef = chef
         if 'chef_name' in data and 'chef_image' in data and data['chef_name'].strip() != '':
             if not chef_id:
-                meal.chef = Chef()
-            meal.chef.name = data['chef_name'].strip()
-            meal.chef.image = Image.objects.get(pk=int(data['chef_image']))
-            meal.chef.save()
-
+                chef = Chef()
+            chef.name = data['chef_name'].strip()
+            chef.image = Image.objects.get(pk=int(data['chef_image']))
+            chef.save()
+            meal.chef = chef
         if 'chef_comments' in data and data["chef_comments"].strip() != "":
             meal.chef_comments = data["chef_comments"].strip()
         if 'cat_id' in data:
@@ -400,7 +400,6 @@ def create_meal(request, data, user):
                 else:
                     try:
                         tip_obj = Tips.objects.get(pk=int(tip['id']))
-                        my_tip_ids.add(int(tip["id"]))
                     except:
                         tip_obj = Tips()
                 tip_obj.title = tip['title'].strip().title()
@@ -412,6 +411,7 @@ def create_meal(request, data, user):
                 if "video_url" in tip:
                     tip_obj.video_url = tip['video_url'].strip()
                 tip_obj.save()
+                my_tip_ids.add(tip_obj.id)
                 if tip_obj not in meal.tips.all():
                     meal.tips.add(tip_obj)
                     meal.save()
