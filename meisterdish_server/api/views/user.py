@@ -244,6 +244,7 @@ def get_meal_details(request, data, meal_id):
                 "id":meal.chef.image.id,
                 "url":meal.chef.image.thumb.url,
                 },
+            "chef_comments": meal.chef_comments,
             "user_to_do" : "" if meal.user_to_do.strip() == "" else simplejson.loads(meal.user_to_do),
             "preparation_time" : meal.preparation_time,
 

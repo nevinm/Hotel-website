@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from libraries import  card, configure_paypal_rest_sdk, verify_paypal_transaction, verify_paypal_ipn
 import paypalrestsdk
 from django.db.models import Q
+import string, random
 
 log = logging.getLogger('order')
 
@@ -142,7 +143,7 @@ def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
             log.error("User : " + user.email + ": Credit Card is expired.")
             return "The card is expired."
         elif save_card:
-            save_credit_card(cc, user)
+            save_credit_card(cc)
 
         funding_instruments = [{
             "credit_card":{
@@ -159,7 +160,7 @@ def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
         log.error("Failed to pay using CC (with card data)." + e.message)
         return "An error has occurred with payment using card. Please try again."
 
-def save_credit_card(cc, user):
+def save_credit_card(cc):
     try:
         configure_paypal_rest_sdk()
         credit_card = paypalrestsdk.CreditCard({
@@ -177,6 +178,13 @@ def save_credit_card(cc, user):
                 log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + " : "+credit_card.error['details'][0]['issue'])
             return custom_error(credit_card.error['details'][0]['field'] + " : " +credit_card.error['details'][0]['issue'])
         
+        session = SessionStore(session_key=session_key)
+        if session and 'user' in session :
+            user = User.objects.get(pk=session['user']['id'])
+        else:
+            log.error("Anonimous user trying to save CC")
+            return False
+
         c_card = CreditCardDetails()
         c_card.user = user
         c_card.card_id = credit_card.id
@@ -217,10 +225,10 @@ def make_cc_payment(funding_instruments, amount, order_num):
             },
             "transactions": [{
                 "amount": {
-                    "total": amount,
+                    "total": "%0.2f" % (amount),
                     "currency": "USD" 
                 },
-                "description": "Meisterdish Order with ID : "+order_id + " on "+datetime.now().strftime("%m-%d-%Y %H:%M:%S")
+                "description": "Meisterdish Order with ID : "+order_num + " on "+datetime.now().strftime("%m-%d-%Y %H:%M:%S")
             }]
         })
         response = payment.create()
@@ -229,7 +237,7 @@ def make_cc_payment(funding_instruments, amount, order_num):
             log.error("CC Payment failed :"  + payment.error['details'][0]['field'] + " : "+payment.error['details'][0]['issue'])
             return str(payment.error['details'][0]['field'] + " : "+payment.error['details'][0]['issue'])
         else:
-            payment_obj = save_cc_payment(payment)
+            payment_obj = save_cc_payment(payment, amount)
             if not payment_obj:
                 log.info("### NOTE ### . The below payment response is not saved.")
                 log.info(payment)
@@ -239,12 +247,13 @@ def make_cc_payment(funding_instruments, amount, order_num):
         log.error("Failed to pay using CC." + e.message)
         return "Failed to pay using credit card."
 
-def save_cc_payment(payment_data):
+def save_cc_payment(payment_data, amount):
     try:
         payment = Payment()
         payment.payment_type = "CC"
         payment.response = str(payment_data)
         payment.transaction_id = payment_data["id"]
+        payment.amount = amount
         payment.save()
         return payment
     except Exception as e:
@@ -282,6 +291,8 @@ def create_order(request, data, user):
             bil_address = user.user_address.get(is_primary=True).id
         
         items = CartItem.objects.filter(cart__user=user, cart__completed=False)
+        if not items.exists():
+            return custom_error("There are no items in your cart.")
         for item in items:
             if not item.meal.available:
                 return custom_error("Sorry, The meal "+ item.meal.name.title() + " has gone out of stock. Please add another meals or continue checkout with out it.")
@@ -344,7 +355,7 @@ def create_order(request, data, user):
         else:
             return json_response({"status":1, "message":"The request has been placed. You will be notified once the payment is verified. "})
 
-    except Exception as e:
+    except KeyError as e:
         log.error("Failed to create order." + e.message)
         return custom_error("Failed to place order.")
 
