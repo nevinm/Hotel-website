@@ -325,6 +325,15 @@ def create_order(request, data, user):
         elif data["payment_type"].lower() == "cc":
             payment_type = "CC"
             if "card_id" not in data:
+                if "number" not in data or str(data["number"]).strip() == "":
+                    return custom_error("Invalid card number.")
+                if "exp_month" not in data or str(data["exp_month"]).strip() == "":
+                    return custom_error("The expiry month is invalid.")
+                if "exp_year" not in data or str(data["exp_year"]).strip() == "":
+                    return custom_error("The expiry year is invalid.")
+                if "cvv2" not in data or str(data["cvv2"]).strip() == "":
+                    return custom_error("Invalid CVV.")
+                
                 cc_data = {
                     "number" : data["number"],
                     "holder" : data.get("first_name", "") + data.get("last_name", ""),
