@@ -126,7 +126,7 @@ def get_orders(request, data, user=None):
     	log.error("Failed to list orders." + e.message)
     	return custom_error("Failed to get orders list.")
 
-def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0, user):
+def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0, user=None):
     try:
         # Create a card
         cc = card.Card(number=cc_data["number"],
