@@ -334,7 +334,7 @@ class CartItem(models.Model):
     quantity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
 class Order(models.Model):
-    order_num = models.CharField(db_index=True, max_length=20, null=True)
+    order_num = models.CharField(db_index=True, max_length=50, null=True)
     transaction_id = models.CharField(db_index=True, max_length=30, null=True)
     
     cart = models.ForeignKey(Cart)
