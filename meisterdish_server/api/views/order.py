@@ -184,8 +184,8 @@ def save_credit_card(cc_data, cc, user):
         c_card.card_id = credit_card.id
         c_card.number = credit_card.number
         c_card.cvv2 = credit_card.cvv2
-        c_card.expire_year = credit_card.exp_year
-        c_card.expire_month = credit_card.exp_month
+        c_card.expire_year = cc_data['year']
+        c_card.expire_month = cc_data['month']
         c_card.card_type = credit_card.type
         c_card.save()
         return True
