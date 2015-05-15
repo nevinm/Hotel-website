@@ -392,13 +392,15 @@ def create_meal(request, data, user):
         if 'saved_time' in data and data['saved_time'].strip() != '':
             meal.saved_time = data['saved_time'].strip()
         
+        my_tip_ids = []
         if "tips" in data and len(data['tips']) > 0:
             for tip in data['tips']:
-                if 'id' not in tip:
+                if 'id' not in tip or str(tip["id"]).strip() == "":
                     tip_obj = Tips()
                 else:
                     try:
                         tip_obj = Tips.objects.get(pk=int(tip['id']))
+                        my_tip_ids.add(int(tip["id"]))
                     except:
                         tip_obj = Tips()
                 tip_obj.title = tip['title'].strip().title()
@@ -413,6 +415,10 @@ def create_meal(request, data, user):
                 if tip_obj not in meal.tips.all():
                     meal.tips.add(tip_obj)
                     meal.save()
+        try:
+            meal.tips.exclude(id__in=my_tip_ids).delete()
+        except Exception as e:
+            log.error("Cannot delete meal tips : "+e.message)
 
         if 'ingredients' in data and len(data['ingredients']) > 0:
             meal.ingredients = simplejson.dumps(data['ingredients'])
