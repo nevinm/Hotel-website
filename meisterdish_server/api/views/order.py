@@ -143,7 +143,7 @@ def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
             log.error("User : " + user.email + ": Credit Card is expired.")
             return "The card is expired."
         elif save_card:
-            save_credit_card(cc, user)
+            save_credit_card(cc)
 
         funding_instruments = [{
             "credit_card":{
@@ -160,7 +160,7 @@ def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
         log.error("Failed to pay using CC (with card data)." + e.message)
         return "An error has occurred with payment using card. Please try again."
 
-def save_credit_card(cc, user):
+def save_credit_card(cc):
     try:
         configure_paypal_rest_sdk()
         credit_card = paypalrestsdk.CreditCard({
@@ -178,6 +178,13 @@ def save_credit_card(cc, user):
                 log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + " : "+credit_card.error['details'][0]['issue'])
             return custom_error(credit_card.error['details'][0]['field'] + " : " +credit_card.error['details'][0]['issue'])
         
+        session = SessionStore(session_key=session_key)
+        if session and 'user' in session :
+            user = User.objects.get(pk=session['user']['id'])
+        else:
+            log.error("Anonimous user trying to save CC")
+            return False
+
         c_card = CreditCardDetails()
         c_card.user = user
         c_card.card_id = credit_card.id
