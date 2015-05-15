@@ -355,7 +355,7 @@ def create_order(request, data, user):
         else:
             return json_response({"status":1, "message":"The request has been placed. You will be notified once the payment is verified. "})
 
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to create order." + e.message)
         return custom_error("Failed to place order.")
 
