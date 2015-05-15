@@ -135,6 +135,7 @@ def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
             year=int(cc_data["year"]),
             cvc=cc_data["cvc"],
         )
+
         if not cc.is_valid:
             log.error("User : " + user.email + ": Credit Card is invalid.")
             return "Invalid card details."
@@ -142,7 +143,7 @@ def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
             log.error("User : " + user.email + ": Credit Card is expired.")
             return "The card is expired."
         elif save_card:
-            save_credit_card(cc)
+            save_credit_card(cc_data, cc)
 
         funding_instruments = [{
             "credit_card":{
@@ -159,14 +160,14 @@ def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
         log.error("Failed to pay using CC (with card data)." + e.message)
         return "An error has occurred with payment using card. Please try again."
 
-def save_credit_card(cc):
+def save_credit_card(cc_data, cc):
     try:
         configure_paypal_rest_sdk()
         credit_card = paypalrestsdk.CreditCard({
             "type": cc.brand,
             "number": cc.number,
-            "expire_month": cc.month,
-            "expire_year": cc.year,
+            "expire_month": cc_data['month'],
+            "expire_year": cc_data['year'],
             "cvv2": cc.cvc,
             "first_name": cc.holder,
             })
