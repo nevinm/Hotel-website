@@ -239,7 +239,7 @@ def get_meal_details(request, data, meal_id):
                 },
             "chef_id" : "Not available"  if not meal.chef else meal.chef.id,
             "chef_name" : "Not available"  if not meal.chef else meal.chef.name.title(),
-            "chef_image" : settings.DEFAULT_USER_IMAGE if not meal.chef or not meal.chef.image else {
+            "chef_image" : {"url":settings.DEFAULT_USER_IMAGE, "id":""} if not meal.chef or not meal.chef.image else {
                 "id":meal.chef.image.id,
                 "url":meal.chef.image.thumb.url,
                 },
@@ -266,7 +266,7 @@ def get_meal_details(request, data, meal_id):
             "allergy_notice" : meal.allergy_notice,
             "images" : image_list,
             "ratings" : rating_list,
-            "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else {
+            "main_image" : {"url":settings.DEFAULT_MEAL_IMAGE, "id":""} if not meal.main_image else {
                 "id":meal.main_image.id,
                 "url":meal.main_image.image.url,
             },
