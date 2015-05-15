@@ -345,8 +345,9 @@ span.sub-header {
   padding: 5px 0;
 }
 #nutrient-table td {
-  padding: 5px 0;
-  padding-left: 10px;
+    text-transform: uppercase;
+    padding: 5px 0;
+    padding-left: 10px;
 }
 span.sub-description{
     width: 100%;
@@ -435,26 +436,7 @@ width: 100%;
     .add-meal {
         display: none;
     }
-    .ui-tabs .ui-tabs-nav li {
-        width: auto;
-    }
-    .ui-tabs .ui-tabs-nav .ui-tabs-anchor {
-        padding: 5px;
-    }
-    .ui-tabs .ui-tabs-nav li {
-        padding: 0px;
-    }
-    .ui-state-hover,
-    .ui-widget-content .ui-state-hover,
-    .ui-widget-header .ui-state-hover,
-    .ui-state-focus,
-    .ui-widget-content .ui-state-focus,
-    .ui-widget-header .ui-state-focus {
-        border-bottom: 0;
-        font-weight: normal;
-        margin: 0;
-    }
-    .selected-menu{
+      .selected-menu{
         display: block;
         width: 90%;
         margin: 0 auto;
@@ -482,7 +464,6 @@ width: 100%;
     .selected-menu .btn-small-primary{
         min-width: 60px;
         padding: 0 20px;
-
     }
     .selected-menu .contents{
         padding: 10px 20px;
@@ -512,7 +493,6 @@ width: 100%;
         display: block;
         width: 100%;
         float: left;
-        /* text-align: center; */
         padding: 0 20px;
         padding-bottom: 20px;
         word-break:break-word;
@@ -538,9 +518,7 @@ width: 100%;
         width: 154px;
         margin: 0 auto;
     }
-  /*  a.pc-tab{
-        font-size: 30px !important;
-    }*/
+  
     .meal-tab-container{
         border: none;
         box-shadow: none;

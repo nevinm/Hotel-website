@@ -302,14 +302,14 @@ table#userlist {
   font-family: 'BrandonGrotesque-Light';
   font-weight: normal;
 }
-.order-id{
+.order-num{
     float: left;
     padding-right: 116px;
 }
 .accordion-content .row {
     display: table;
     border-bottom: 1px solid rgb(234, 234, 234);
-    border-spacing: 10px 10px;
+    border-spacing: 10px 15px;
     border-collapse: separate;
 }
 .accordion-subcontent{
