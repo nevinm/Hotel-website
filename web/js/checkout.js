@@ -1,14 +1,11 @@
+var billingAddressId;
 $(document).ready(function() {
     getCartItems();
     populateYear();
     savedCardDetails();
     setCurrentTime();
     getAddress();
-    var cartItems, payPalEmail = "nazz007online-facilitator@gmail.com",
-        //returnUrl = "http://meisterdish.qburst.com/views/menu.html",
-        returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
-        cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
-        notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/"
+    var cartItems;
 
     //Remove cart items
     $(document).on('click', '#remove-cart-item', function() {
@@ -75,14 +72,9 @@ $(document).ready(function() {
     });
 
     //PayPal payment
-    $(".paypal").on('click', function() {
-        checkOutPayPal("PayPal", payPalEmail, {
-            "return": returnUrl,
-            "cancel_return": cancelReturnUrl,
-            "notify_url": notifyUrl,
-            "my_temp_id": "hai nazz"
-        });
-    });
+    // $(".paypal").on('click', function() {
+       
+    // });
 
     //populate year
     function populateYear() {
@@ -92,18 +84,18 @@ $(document).ready(function() {
             currentYear = currentYear + 1;
         }
     }
-    $('#save-credit-card').on("click",function(){      
-        if ($('input:checkbox[name=save-card-details]:checked')) {             
-            saveCreditCardDetails();
-        }
-    })
+    // $('#save-credit-card').on("click",function(){      
+    //     if ($('input:checkbox[name=save-card-details]:checked')) {             
+    //         saveCreditCardDetails();
+    //     }
+    // })
 
     $(document).on('click', '#change-address', function() {
         populateAddressListPopup();
     });
 
     $(document).on('click', '#cancel', function() {
-        $('.address-list-popup').hide();
+        $('.address-payment-list-popup').hide();
     });
 
     $(document).on('click', '#save-delivery-address', function() {
@@ -121,8 +113,9 @@ $(document).ready(function() {
     });
 
     $("#place-order").on("click", function() {
+        debugger;
         placeOrder();
-    });
+         });
 });
 
 
@@ -384,7 +377,7 @@ function checkOutPayPal(serviceName, merchantID, options) {
         }
         data["shipping_" + counter] = 2;
         data["handling_" + counter] = parseInt($('.driver-tip option:selected').text().substring(1));
-
+        data['custom'] = JSON.stringify(data);
         // build form
         var form = $('<form/></form>');
         form.attr("action", "https://www.sandbox.paypal.com/cgi-bin/webscr");
@@ -402,7 +395,10 @@ function checkOutPayPal(serviceName, merchantID, options) {
     //save credit card details call back
 var saveCreditCardDetailsCallback = {
     success: function(data, textStatus) {
-        savedCardDetails();
+        var response = JSON.parse(data);
+        if(response.status == 1){
+            savedCardDetails();
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -417,6 +413,7 @@ function saveCreditCardDetails() {
         header = {
             "session-key": localStorage["session_key"]
         },
+
         params = {
             "number": card_number,
             "exp_month": Exp_month,
@@ -461,10 +458,15 @@ function savedCardDetails() {
     savedCardDetailsInstance.sendPost(url, header, data, savedCardDetailsCallback);
 }
 
-function populateCardDetails(cards) {
+function populateCardDetails(cards,paypal) {
+    if(paypal){
+        $('.saved-cards').append("<input type='radio' class='added-card' name='saved-card' id='pp' class='radio-button-payment'>" +
+            "<label for='pp'>" +
+            "<img class='paypal' src='../images/paypal_button.png'>" +"</label>"+"</div>");
+        }
     $.each(cards, function(key, value) {
         last_num = cards[key].number.slice(-4);
-        $('.saved-cards').append("<input type='radio' name='card' id='" + value.id + "' class='radio-button-payment'>" +
+        $('.saved-cards').append("<input type='radio' class='added-card' name='saved-card' id='" + value.id + "' class='radio-button-payment'>" +
             "<label for='" + value.id + "'>" +
             "<img class='paypal' src='" + value.logo + "'>" +
             "<span class='body-text-small'>" + value.type + " " + "ending in" + " " + last_num + "</span>" +
@@ -495,8 +497,14 @@ function mobileResponsive() {
 //ADDRESS LIST
 var getAddressCallback = {
     success: function(data, textStatus, flag) {
+         userDetails = JSON.parse(data);
+         addressList = userDetails.address_list;
+         $.each(addressList,function(key,value){
+            if(value.is_primary == 1){
+                billingAddressId = value.id;
+            }
+         })
         if (flag == "populateAddressToPopUp") {
-            userDetails = JSON.parse(data);
             appendAddresscontent(userDetails);
         } else {
             popuplateAddressList(data);
@@ -539,7 +547,7 @@ function populateAddresstoInfoContainer(data) {
     if(selectedId){
         $.each(data.address_list, function(key, value) {
             if (value.id == selectedId) {
-                $('.address-info').append("<div class='contents'>" +
+                $('.address-info').append("<div class='contents' data-id='"+value.id+"'>" +
                     "<span class='content-heading'>" + "DELIVERY ADDRESS" + "</span>" +
                     "<span>" + value.first_name + " " + value.last_name + "</span>" +
                     "<span>" + value.building + "," + value.street + "</span>" +
@@ -556,19 +564,19 @@ function populateAddresstoInfoContainer(data) {
 //populate address list in popup
 function populateAddressListPopup() {
     $('.address-container').remove();
-    $('.address-list-popup .button').remove();
+    $('.address-payment-list-popup .button').remove();
     $('#save-delivery-address').addClass('button-disabled');
     var checkLocal = JSON.parse(localStorage['delivery_addressess']).address_list.length;
     if (checkLocal) {   
         addressList = JSON.parse(localStorage['delivery_addressess']);
         appendAddresscontent(addressList);
-        // $('.address-list-popup .popup-container').append("<div class='button'>" +
+        // $('.address-payment-list-popup .popup-container').append("<div class='button'>" +
         //     "<a href='#' class='btn btn-medium-primary medium-green' id='save-delivery-address'>" + "SELECT" + "</a>" +
         //     "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
-        $('.address-list-popup').show();
+        $('.address-payment-list-popup').show();
     } else {
         getAddress("populateAddressToPopUp");
-        $('.address-list-popup').show();
+        $('.address-payment-list-popup').show();
     }
     $('input[type=radio][name=address]').on("focus",function(){
         $('#save-delivery-address').removeClass('button-disabled');
@@ -579,14 +587,14 @@ function populateAddressListPopup() {
 
 function appendAddresscontent(addressList) {
     $.each(addressList.address_list, function(key, value) {
-        $('.address-list-popup .popup-container').append("<div class='address-container'>" + "<input type='radio' name='address' id='" + value.id + "' class='radio-button'>" +
+        $('.address-payment-list-popup .popup-container').append("<div class='address-container'>" + "<input type='radio' name='address' id='" + value.id + "' class='radio-button'>" +
             "<label class='list-address' for='" + value.id + "'>" +
             "<span>" + value.first_name + " " + value.last_name + "</span>" +
             "<span>" + value.building + "," + value.street + "</span>" +
             "<span>" + value.city + "," + value.state + " " + value.zip + "</span>" +
             "<span>" + value.phone + "</span>" + "</label>" + "</div>");
     });
-    $('.address-list-popup .popup-container').append("<div class='button'>" +
+    $('.address-payment-list-popup .popup-container').append("<div class='button'>" +
         "<a href='#' class='btn btn-medium-primary medium-green button-disabled' id='save-delivery-address'>" + "SELECT" + "</a>" +
         "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
 }
@@ -616,7 +624,7 @@ function changeDeliveryAddress(selectedId) {
         htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
     $('.address-info .contents').html(htmlContent);
-    $('.address-list-popup').hide();
+    $('.address-payment-list-popup').hide();
 }
 var addAddressCallback = {
     success: function(data, textStatus) {
@@ -720,7 +728,13 @@ function populateAddedAddress(delivery_address) {
 
 var placeOrderCallback = {
     success: function(data, textStatus) {
-        debugger;
+       var response = JSON.parse(data);
+       if(response.status == 1){
+         window.location.href = 'menu.html';
+       }
+       else{
+        showPopup(response);
+       }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -728,11 +742,13 @@ var placeOrderCallback = {
 function placeOrder() {
     var driverInstr = $("#driver-description").val(),
         driverTip = $('.driver-tip').find('option:selected').data().amount,
-        addressId = $(".address-info .contents .content-heading").attr('id')
+        addressId = $(".address-info .contents").attr('data-id');
     var $today_content = $(".today-content").find(".checkout-time-button-active"),
         $weekDatecontent = $(".week-content .date-content").find(".checkout-time-button-active"),
         $weekTimecontent = $(".week-content .time-content").find(".checkout-time-button-active"),
+        saveParam = 0,payment_type = 0,savedCardId,
         selected_day, selected_time, deliveryTime;
+    
     if ($today_content.length) {
         selected_day = $today_content.attr("data-date");
         selected_time = "0" + $today_content.attr("data-hr") + ":" + "00" + ":" + "00";
@@ -742,19 +758,80 @@ function placeOrder() {
         selected_time = "0" + $weekTimecontent.attr("data-hr") + ":" + "00" + ":" + "00";
         deliveryTime = selected_day + "/" + getCurrentYear() + " " + selected_time;
     }
+    debugger;
+    if($('input:checkbox[name=save-card-details]').prop('checked')){
+        saveParam = 1;
+    }
+
+    if($("#cc").prop('checked')){
+        payment_type = "cc";
+        $('#save-credit-card').removeAttr("disabled");
+    }
+
+    if($("#pp").prop('checked')){
+        payment_type = "pp";
+        var payPalEmail = "nazz007online-facilitator@gmail.com",
+            //returnUrl = "http://meisterdish.qburst.com/views/menu.html",
+            returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
+            cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
+            notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/";
+        checkOutPayPal("PayPal", payPalEmail, {
+            "return": returnUrl,
+            "cancel_return": cancelReturnUrl,
+            "notify_url": notifyUrl,
+            "my_temp_id": "hai nazz"
+        });
+    }
+    
     url = baseURL + "create_order/",
         header = {
             "session-key": localStorage["session_key"]
-        },
-        params = {
-            "delivery_time": deliveryTime,
-            "billing_address": addressId,
-            "delivery_address": addressId,
-            "payment_type": "pp", // OR "cc"
-            "tip": driverTip, //Optional
-            "driver_instructions": driverInstr,
         };
+        if(!$('.saved-cards').is(':empty')){
+           if($('.saved-card').prop('checked')){
+                savedCardId = $(this).attr('id');
+            }
+            params = {
+                "delivery_time": deliveryTime,
+                "billing_address": billingAddressId,
+                "delivery_address": addressId,
+                "payment_type": payment_type, // OR "cc"
+                "tip": driverTip, //Optional
+                "driver_instructions": driverInstr,
+                "card_id": savedCardId
+            }
+        }else{
+            var card_number = $('#card-number').val(),
+                cvv = $('#cvv-number').val(),
+                Exp_month = $("#ExpMonth").val(),
+                Exp_year = $("#ExpYear option:selected").text();
+                params = {
+                    "delivery_time": deliveryTime,
+                    "billing_address": billingAddressId,
+                    "delivery_address": addressId,
+                    "payment_type": payment_type,
+                    "tip": driverTip, 
+                    "driver_instructions": driverInstr,
+                    "save_card":saveParam,
+                    "number" : card_number, 
+                    "exp_month" : Exp_month,
+                    "exp_year" : Exp_year,
+                    "cvv2" : $('#cvv-number').val(), 
+                    "first_name" : "Abdul",
+                    "last_name" : "Nasar",
+                }
+        }
     data = JSON.stringify(params);
     var placeOrderInstance = new AjaxHttpSender();
     placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
 }
+$("#cc").on("click",function(){
+    if($("#cc").prop('checked')){
+        $('#save-credit-card').removeAttr("disabled");
+    }
+});
+$("#pp").on("click",function(){   
+    if($("#pp").prop('checked')){
+        $('#save-credit-card').attr("disabled","disabled");
+    }
+})

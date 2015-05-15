@@ -49,3 +49,13 @@ $('.meal-tab-container ul li').on("click",function(){
     $('.meal-tab-container ul li').removeClass('activeli');
     $(this).addClass('activeli');
 });
+
+//STAR RATING
+$('.rating-star').on('click',function(){
+    var param = $(this).prev().attr('data-id'),
+        star = $(this).parent().find('.rating-star');
+   $(star).removeClass("change-color");
+   $($(star).get().reverse().slice(0,param)).each(function(key,value){
+        $(value).addClass('change-color');  
+    })
+})
