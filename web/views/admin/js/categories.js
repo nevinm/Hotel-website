@@ -28,7 +28,7 @@ $(document).ready(function() {
     $(document).on('click', '.update', function() {
         $(".add-category-container, .update-category-container").hide();
         var updateId = $(this).data().id,
-            initialCategory = $(this).closest(".category").data().name;
+            initialCategory = $(this).data().name;
         $(".update-category-container").show();
         $(".update-category-container .new-category").attr("data-id",updateId);
         $(".update-category-container .new-category").val(initialCategory);
@@ -126,7 +126,7 @@ $(document).ready(function() {
             $("#categories tbody").append("<tr>" +
                 "<td class='category' data-name='" + value.name + "'>" + value.name +"</td>"+
                 "<td class='delete'><a data-id='" + value.id + "'class='cross'></a></td>" +
-                "<td class='update'><button class='update' type='button' data-id='" + value.id + "'>Update</button></td>"+
+                "<td class=''><button class='update' type='button' data-name='" + value.name + "' data-id='" + value.id + "'>Update</button></td>"+
                 "</tr>");
         })
         $(".pagination").pagination({
