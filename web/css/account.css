@@ -1108,16 +1108,16 @@ input.radio-button-payment {
 #change-address {
   cursor: pointer;
 }
-.address-list-popup{
+.address-payment-list-popup{
 	display: none;
 }
-.address-list-popup .popup{
+.address-payment-list-popup .popup{
 	width: 64%;
 	margin-left: -32%;
 	height: auto;
 	top: 50%;
 }
-.address-list-popup .header{
+.address-payment-list-popup .header{
 	font-family: 'BrandonGrotesque-Bold';
 	color: #000;
 	background-color: #f7f7f7;
@@ -1147,11 +1147,11 @@ input.radio-button-payment {
 	cursor: pointer;
 	margin-right: 8%;
 }
-.address-list-popup .button{
+.address-payment-list-popup .button{
 	padding-left: 20px;
 	float: left;
 }
-.address-list-popup .button #cancel{
+.address-payment-list-popup .button #cancel{
 	float: left;
 	margin-left: 20px;
 }
