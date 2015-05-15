@@ -126,7 +126,7 @@ def get_orders(request, data, user=None):
     	log.error("Failed to list orders." + e.message)
     	return custom_error("Failed to get orders list.")
 
-def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
+def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0, user):
     try:
         # Create a card
         cc = card.Card(number=cc_data["number"],
@@ -143,7 +143,7 @@ def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
             log.error("User : " + user.email + ": Credit Card is expired.")
             return "The card is expired."
         elif save_card:
-            save_credit_card(cc_data, cc)
+            save_credit_card(cc_data, cc, user)
 
         funding_instruments = [{
             "credit_card":{
@@ -160,7 +160,7 @@ def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
         log.error("Failed to pay using CC (with card data)." + e.message)
         return "An error has occurred with payment using card. Please try again."
 
-def save_credit_card(cc_data, cc):
+def save_credit_card(cc_data, cc, user):
     try:
         configure_paypal_rest_sdk()
         credit_card = paypalrestsdk.CreditCard({
@@ -178,12 +178,6 @@ def save_credit_card(cc_data, cc):
                 log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + " : "+credit_card.error['details'][0]['issue'])
             return custom_error(credit_card.error['details'][0]['field'] + " : " +credit_card.error['details'][0]['issue'])
         
-        session = SessionStore(session_key=session_key)
-        if session and 'user' in session :
-            user = User.objects.get(pk=session['user']['id'])
-        else:
-            log.error("Anonimous user trying to save CC")
-            return False
 
         c_card = CreditCardDetails()
         c_card.user = user
@@ -345,7 +339,7 @@ def create_order(request, data, user):
                     "cvc" : data["cvv2"],
                 }
 
-                payment = make_cc_payment_with_details(cc_data, total_amount, order.order_num, data.get("save_card", 0))
+                payment = make_cc_payment_with_details(cc_data, total_amount, order.order_num, data.get("save_card", 0), user)
             else:
                 payment = make_cc_payment_with_saved_card(data["card_id"], total_amount, order.order_num)
             
