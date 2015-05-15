@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from libraries import  card, configure_paypal_rest_sdk, verify_paypal_transaction, verify_paypal_ipn
 import paypalrestsdk
 from django.db.models import Q
+import string, random
 
 log = logging.getLogger('order')
 
@@ -40,12 +41,13 @@ def get_orders(request, data, user=None):
             orders = orders.filter(Q(cart__user__first_name__icontains=data['search']) | Q(cart__user__last_name__icontains=data['search']))
         
         if "status" in data and str(data['status']).strip() != "":
-            orders = orders.filter(status=data['status'])
+            orders = orders.filter(status=int(data['status']))
 
         # End filter
         orders = orders.order_by("-id")
 
         actual_count = orders.count()
+
         try:
             paginator = Paginator(orders, limit)
             if page <1 or page > paginator.page_range:
@@ -85,6 +87,7 @@ def get_orders(request, data, user=None):
                 "status":dict(settings.ORDER_STATUS)[order.status],
                 "status_id" : order.status,
                 "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
+                "order_num" : order.order_num,
                 "meals":meals,
                 "delivery_address" : {
                      "id":order.delivery_address.id,
@@ -124,7 +127,7 @@ def get_orders(request, data, user=None):
     	log.error("Failed to list orders." + e.message)
     	return custom_error("Failed to get orders list.")
 
-def make_cc_payment_with_details(cc_data, amount, order_num):
+def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0):
     try:
         # Create a card
         cc = card.Card(number=cc_data["number"],
@@ -139,7 +142,9 @@ def make_cc_payment_with_details(cc_data, amount, order_num):
         elif cc.is_expired:
             log.error("User : " + user.email + ": Credit Card is expired.")
             return "The card is expired."
-        
+        elif save_card:
+            save_credit_card(cc)
+
         funding_instruments = [{
             "credit_card":{
                 "type": cc.brand,
@@ -154,6 +159,45 @@ def make_cc_payment_with_details(cc_data, amount, order_num):
     except Exception as e:
         log.error("Failed to pay using CC (with card data)." + e.message)
         return "An error has occurred with payment using card. Please try again."
+
+def save_credit_card(cc):
+    try:
+        configure_paypal_rest_sdk()
+        credit_card = paypalrestsdk.CreditCard({
+            "type": cc.brand,
+            "number": cc.number,
+            "expire_month": cc.month,
+            "expire_year": cc.year,
+            "cvv2": cc.cvc,
+            "first_name": cc.holder,
+            })
+        res = credit_card.create()
+        
+        if not res:
+            if credit_card.error:
+                log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + " : "+credit_card.error['details'][0]['issue'])
+            return custom_error(credit_card.error['details'][0]['field'] + " : " +credit_card.error['details'][0]['issue'])
+        
+        session = SessionStore(session_key=session_key)
+        if session and 'user' in session :
+            user = User.objects.get(pk=session['user']['id'])
+        else:
+            log.error("Anonimous user trying to save CC")
+            return False
+
+        c_card = CreditCardDetails()
+        c_card.user = user
+        c_card.card_id = credit_card.id
+        c_card.number = credit_card.number
+        c_card.cvv2 = credit_card.cvv2
+        c_card.expire_year = exp_year
+        c_card.expire_month = exp_month
+        c_card.card_type = credit_card.type
+        c_card.save()
+        return True
+    except Exception as e:
+        log.error("Save credit card : " + e.message)
+        return False
 
 def make_cc_payment_with_saved_card(card_id, amount, order_num):
     try:
@@ -284,7 +328,8 @@ def create_order(request, data, user):
                     "year" : data["exp_year"],
                     "cvc" : data["cvv2"],
                 }
-                payment = make_cc_payment_with_details(cc_data, total_amount, order.order_num)
+
+                payment = make_cc_payment_with_details(cc_data, total_amount, order.order_num, data.get("save_card", 0))
             else:
                 payment = make_cc_payment_with_saved_card(data["card_id"], total_amount, order.order_num)
             
@@ -358,6 +403,9 @@ def get_order_details(request, data, user, order_id):
             "status":dict(settings.ORDER_STATUS)[order.status],
             "status_id" : order.status,
             "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
+            "payment_type": order.payment.get_payment_type_display() if order.payment else "Not Available",
+            "transaction_id":order.transaction_id,
+            "order_num" : order.order_num,
             "delivery_address" : {
                      "id":order.delivery_address.id,
                      "first_name":order.delivery_address.first_name,
@@ -390,13 +438,16 @@ def get_order_details(request, data, user, order_id):
 @check_input('POST', True)
 def update_order(request, data, user, order_id):
     try:
-        status = (data['status'])
+        status = int(data['status'])
         if status < 0 or status > 4:
             log.error("Invalid order status: " + str(status))
         order = Order.objects.get(pk=order_id, is_deleted=False)
 
         order.status = status
         order.save()
+        if status >=1:
+            order.cart.completed=True
+            order.cart.save()
         return json_response({"status":1, "message":"The order has been updated", "id":order_id+"."})
     except Exception as e:
         log.error("Update order status : " + e.message)

@@ -24,7 +24,8 @@ $(document).ready(function() {
     });
 
     $(document).on("click", '.thumbnail', function() {
-        window.location.href = 'meal_details.html';
+        mealId = this.dataset.id;
+        window.location.href = 'meal_details.html?mealId='+mealId;
     });
     //Categories
     $(document).on('click', '.menu-categories-list', function() {
@@ -175,7 +176,7 @@ function populateMealList(mealList, isInfinteScrolling) {
     } else {}
     $.each(mealList.aaData, function(key, value) {
         $(".listContainer").append("<div class='listItems'>" +
-            "<img src='" + value.main_image + "' class='thumbnail'>" +
+            "<img src='" + value.main_image + "' data-id='"+value.id+"' class='thumbnail'>" +
             "<section class='listItemDetails'>" +
             "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +
             "</section><section class='listItemDetails'>" +
