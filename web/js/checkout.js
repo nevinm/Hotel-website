@@ -275,7 +275,7 @@ function populateCartItems(data) {
             "<input type='text' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
             "<span class='price-container' data-tax='" + value.tax + "'>" + dollarConvert(value.price) + "</span>" +
-            "<img src='../images/cross_black.png' id='remove-cart-item'>" + "</div>");
+            "<img src='../images/hamburger-menu-close.png' id='remove-cart-item'>" + "</div>");
     });
     updateReciept();
 }
