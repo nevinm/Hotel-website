@@ -195,16 +195,19 @@ def get_meal_details(request, data, meal_id):
                 user = User.objects.get(pk=session['user']['id'])
             except Exception as e:
                 user = None
+        else:
+            user=None
 
         meal = Meal.objects.get(pk=meal_id, is_deleted=False)
         rating_list = []
         for rating in  meal.mealrating.all():
             rating_list.append({
-                "rating:":rating.rating,
+                "rating":rating.rating,
                 "review":rating.comment,
                 "user_first_name":rating.order.cart.user.first_name,
                 "user_last_name":rating.order.cart.user.last_name,
                 "user_image": settings.DEFAULT_USER_IMAGE if not rating.order.cart.user.profile_image else rating.order.cart.user.profile_image.thumb.url,
+                "date" : rating.created.strftime("%m-%d-%Y %H:%M:%S"),
                 })
         image_list = []
         for img in meal.images.all():
@@ -245,20 +248,20 @@ def get_meal_details(request, data, meal_id):
                 "url":meal.chef.image.thumb.url,
                 },
             "chef_comments": meal.chef_comments,
-            "user_to_do" : "" if meal.user_to_do.strip() == "" else simplejson.loads(meal.user_to_do),
+            "user_to_do" : "" if not meal.user_to_do or meal.user_to_do.strip() == "" else simplejson.loads(meal.user_to_do),
             "preparation_time" : meal.preparation_time,
 
-            "finished_preparation" : "" if meal.finished_preparation.strip() == "" else simplejson.loads(meal.finished_preparation),
+            "finished_preparation" : "" if not meal.finished_preparation or meal.finished_preparation.strip() == "" else simplejson.loads(meal.finished_preparation),
             "saved_time" : meal.saved_time,
 
-            "pre_requisites" : "" if meal.pre_requisites == "" else simplejson.loads(meal.pre_requisites),
+            "pre_requisites" : "" if not meal.pre_requisites or meal.pre_requisites == "" else simplejson.loads(meal.pre_requisites),
             "pre_requisites_image" : settings.DEFAULT_MEAL_IMAGE if meal.pre_requisites_image is None else {
                     "id":meal.pre_requisites_image.id,
                     "url":meal.pre_requisites_image.image.url,
                     },
 
-            "nutrients" : "" if meal.nutrients == "" else simplejson.loads(meal.nutrients),
-            "ingredients" : "" if meal.ingredients == "" else simplejson.loads(meal.ingredients),
+            "nutrients" : "" if not meal.nutrients or meal.nutrients == ""  else simplejson.loads(meal.nutrients),
+            "ingredients" : "" if not meal.ingredients or meal.ingredients == "" else simplejson.loads(meal.ingredients),
             "ingredients_image" : settings.DEFAULT_MEAL_IMAGE if meal.ingredients_image is None else {
                                                         "id" : meal.ingredients_image.id,
                                                         "url" : meal.ingredients_image.image.url
@@ -273,7 +276,7 @@ def get_meal_details(request, data, meal_id):
             },
             "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, meal__pk=meal.id).exists() else 0,
         })
-    except Exception as e:
+    except KeyError as e:
         log.error("get_meal details : " + e.message)
         return custom_error("Failed to get the meal details.")
          
@@ -372,3 +375,23 @@ def get_saved_cards(request, data, user):
     except Exception as e:
         log.error("List CC: user "+str(user.id) + " : "+ e.message)
         return custom_error("Failed to list saved cards.")
+
+@check_input('POST')
+def get_user_reviews(request, data, user):
+    try:
+        ratings = MealRating.objects.filter(order__cart__user__pk=user.pk, order__status__gte=2)
+        rating_list = []
+        for rating in ratings:
+            rating_list.append({
+                "rating":rating.rating,
+                "review":rating.comment,
+                "date" : rating.created.strftime("%m-%d-%Y %H:%M:%S"),
+                "meal_name" : rating.meal.name,
+                "meal_image":rating.meal.main_image.image.url,
+                "meal_id":rating.meal.id,
+                "order_id":rating.order.id,
+            })
+        return json_response({"status":1, "reviews":rating_list})
+    except Exception as e:
+        log.error("List user reviews: user "+str(user.id) + " : "+ e.message)
+        return custom_error("Failed to list user reviews.")

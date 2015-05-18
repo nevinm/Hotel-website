@@ -558,6 +558,37 @@ span.icon-menu {
 .menuPadding {
     padding-top: 6px;
 }
+.logo-mobile{
+	display: none;
+	margin-top: 5px;
+}	
+.logo-mobile-container {
+	width: 262px;
+	overflow: hidden;
+	margin: 0 auto;
+}
+.navMenu {
+		background: rgba(255, 255, 255, 1);
+		position: fixed;
+		height: 100%;
+		width: 60%;
+		left: 0;
+		top: 0;
+		overflow-y:auto; 
+	}
+	.icon-cancel{
+    	display: none;
+    	background-image: url(../images/hamburger-menu-close.png);
+    	height:20px;
+    	width: 19px;
+    	background-size: contain;
+    	float: left;
+    	cursor: pointer;
+    }
+	span.icon-cancel {
+		margin-left: 20px;
+		margin-top: 8px;
+	}
 /*==============================*\
             &FOOTER
 \*==============================*/
@@ -766,7 +797,7 @@ span.icon-menu {
         &NAVBAR RESPONSIVE
 \*==============================*/
 
-.navMenu {
+/*.navMenu {
      width: 51%;
   position: absolute;
   background: rgba(255, 255, 255, .85);
@@ -774,7 +805,7 @@ span.icon-menu {
   z-index: 99;
   left: 0;
   display: none;
-}
+}*/
 
 .navMenu ul li {
     list-style-type: none;
@@ -798,9 +829,13 @@ span.icon-menu {
     }
     span.icon-menu {
         display: block;
+        float: left;
+    }
+    .logo-mobile{
+    	display: block !important;
     }
     .logo {
-        padding-left: 10px;
+        display: none;
     }
     .cart {
         margin-right: 25px;
@@ -822,6 +857,39 @@ span.icon-menu {
         color: #A9D77B;
         text-transform: uppercase;
     }
+    .socialMedia{
+		padding: 0 !important;
+		border: 0 !important;
+		margin: 0 !important;
+		display: inline-block;
+		padding-right: 10px !important;
+		margin-right: 20px !important;	
+	}
+	.footer-links{
+		padding: 30px 0;
+	}
+	.navMenu ul li:first-child {
+        border-top: 2px solid #A9D77B;
+        margin-top: 100px;
+    }
+    #footer-navMenu.navMenu ul li:first-child {
+    	padding-top: 30px;
+    }
+    .navMenu ul{
+     	width: 90%;
+     	margin:0 auto;
+    }
+    .navMenu ul li {
+        padding-left:50px;
+    }
+    #navbar-username a {
+        color: #A9D77B;
+        text-transform: uppercase;
+    }
+    .icon-cancel{
+    	display: block;
+    }
+
 }
 
 @media (min-width: 1025px) {
@@ -884,15 +952,7 @@ span.icon-menu {
     .count {
         right: 16px;
     }
-	.navMenu {
-		background: rgba(255, 255, 255, 1);
-		position: fixed;
-		height: 100%;
-		width: 60%;
-		left: 0;
-		top: 0;
-		overflow-y:auto; 
-	}
+	
 	#page-container{
 		overflow-x:hidden; 
 	}
@@ -923,17 +983,7 @@ span.icon-menu {
     }
     .icon-cancel{
     	display: block;
-    	background-image: url(../images/hamburger-menu-close.png);
-    	height:20px;
-    	width: 19px;
-    	background-size: contain;
-    	float: left;
-    	cursor: pointer;
     }
-	span.icon-cancel {
-		margin-left: 20px;
-		margin-top: 8px;
-	}
 	.socialMedia{
 		padding: 0 !important;
 		border: 0 !important;

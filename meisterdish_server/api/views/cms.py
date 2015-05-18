@@ -410,13 +410,16 @@ def create_meal(request, data, user):
                 
                 if "video_url" in tip:
                     tip_obj.video_url = tip['video_url'].strip()
+                
                 tip_obj.save()
-                my_tip_ids.add(tip_obj.id)
+                my_tip_ids.append(tip_obj.id)
+                
                 if tip_obj not in meal.tips.all():
                     meal.tips.add(tip_obj)
                     meal.save()
         try:
             meal.tips.exclude(id__in=my_tip_ids).delete()
+            
         except Exception as e:
             log.error("Cannot delete meal tips : "+e.message)
 
