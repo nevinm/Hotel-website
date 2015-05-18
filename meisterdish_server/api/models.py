@@ -239,25 +239,25 @@ class Meal(models.Model):
     types = models.ManyToManyField(MealType, null=True, blank=True)
     category = models.ForeignKey(Category, null=True)
 
-    user_to_do = models.TextField(max_length=1024, null=True, blank=True)
-    preparation_time = models.CharField(max_length=30, null=True, blank=True)
+    user_to_do = models.TextField(max_length=1024, null=True, blank=True, default="")
+    preparation_time = models.CharField(max_length=30, null=True, blank=True, default="")
 
-    finished_preparation = models.TextField(max_length=1024, null=True, blank=True)
-    saved_time = models.CharField(max_length=30, null=True, blank=True)
+    finished_preparation = models.TextField(max_length=1024, null=True, blank=True, default="")
+    saved_time = models.CharField(max_length=30, null=True, blank=True, default="")
 
-    pre_requisites = models.TextField(max_length=1024, null=True, blank=True)
+    pre_requisites = models.TextField(max_length=1024, null=True, blank=True, default="")
     pre_requisites_image = models.ForeignKey(Image, null=True, blank=True, related_name="pre_requisites")
 
     #nutrients = models.ManyToManyField(Nutrient, through="MealNutrient", null=True, blank=True)
-    nutrients = models.TextField(max_length=1024, null=True, blank=True)
+    nutrients = models.TextField(max_length=1024, null=True, blank=True, default="")
 
     #ingredients = models.ManyToManyField(Ingredient, through="MealIngredient", null=True, blank=True)
-    ingredients = models.TextField(max_length=1024, null=True, blank=True)
+    ingredients = models.TextField(max_length=1024, null=True, blank=True, default="")
     ingredients_image = models.ForeignKey(Image, null=True, blank=True, related_name="ingredients")
     
     tips = models.ManyToManyField(Tips, null=True, blank=True)
 
-    allergy_notice = models.TextField(max_length=1024,  null=True, blank=True)
+    allergy_notice = models.TextField(max_length=1024,  null=True, blank=True, default="")
 
     
     price = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
