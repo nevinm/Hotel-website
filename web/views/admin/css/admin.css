@@ -257,6 +257,7 @@ table#userlist {
 }
 #order-list{
     width: 100%;
+    float: left;
 }
 
 #order-list tbody{

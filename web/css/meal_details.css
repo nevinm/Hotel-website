@@ -391,6 +391,7 @@ width: 100%;
 .meal-tab-container ul li a{
     padding: 22px 6px;
     display: inline-block;
+    width: 100%;
 }
 .meal-tab-container ul li:hover{
     border-bottom: 4px solid #A9D77B;
