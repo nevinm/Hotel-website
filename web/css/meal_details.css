@@ -42,20 +42,24 @@
 
 .meal-price-rating .price {
     font-family: 'BrandonGrotesque-Thin';
+    text-align: right;
+    width: 100%;
     font-size: 20px;
 }
 
-.meal-price-rating .mark {
+.rating .mark {
     font-family: 'ProximaNova-regular';
     font-size: 12px;
     color: #9B9B9B;
+    margin-left: 10px;
     margin-top: 5px;
 }
 
 .meal-price-rating>* {
     float: right;
-    width: 100%;
-    text-align: right;
+}
+.meal-price-rating .add-meal {
+    margin-top: 35px;
 }
 
 .meal-details-main {
@@ -75,7 +79,6 @@
 
 .meal-ingredients {
     color: #9B9B9B;
-    margin-bottom: 30px;
 }
 
 .backNav {
@@ -131,12 +134,6 @@
     color: #9B9B9B;
     font-size: 14px;
     border-radius: 4px 4px 0 0;
-}
-
-.add-meal {
-    position: absolute;
-    right: -35px;
-    top: -35px;
 }
 
 .details-part-1 {
@@ -196,13 +193,13 @@
 
 .rating >* {
     float: left;
-    margin-left: 10px;
 }
 
 .rating {
     width: 165px;
-    margin-top: 10px;
-    padding: 4px 6px 0;
+    margin-bottom: 10px;
+    margin-left: -5px;
+    padding: 4px 0;
     height: 33px;
     overflow: hidden;
     display: inline-block
@@ -226,8 +223,11 @@
 
 .rating-star:hover,
 .rating-star:hover~.rating-star,
-.rating-input:checked~.rating-star {
+{
     background-position: 0px 0;
+}
+.disable-star{
+    pointer-events:none;
 }
 
 #allYouNeed .container {
@@ -446,10 +446,7 @@ width: 100%;
     .right-arrow {
         display: block;
     }
-    .add-meal {
-        display: none;
-    }
-      .selected-menu{
+    .selected-menu{
         display: block;
         width: 90%;
         margin: 0 auto;
@@ -539,6 +536,7 @@ width: 100%;
     }
     #meal-tabs {
         border-radius: 0px;
+        min-height: 500px;
         margin-top: 20px;
     }
     .contentArea{
@@ -582,7 +580,4 @@ width: 100%;
     .ui-state-active a:after{
         color:black;
     }
-    .button-hr-container .add-meal{
-        display: block;
-    }
-}
+  }

@@ -3,7 +3,7 @@ $(document).ready(function() {
     var mealId = getParameterFromUrl("mealId");
     getMealDetails(mealId);
 
-    $(".add-meal,.add-meal-mobile").on('click', function() {
+    $(".add-meal").on('click', function() {
         var mealId = $(this).attr("data-id");
         addToCart(mealId);
     });
@@ -12,13 +12,6 @@ $(document).ready(function() {
 
 function tabRendering() {
     var $tabs = $("#meal-tabs").tabs({
-        activate: function(event, ui) {
-            $tabs.tabs('option', 'hide', false);
-            $tabs.tabs('option', 'show', false);
-        },
-        fx: {
-            opacity: 'toggle'
-        },
         select: function(event, ui) {
             jQuery(this).css('height', jQuery(this).height());
             jQuery(this).css('overflow', 'hidden');
@@ -68,7 +61,7 @@ $('.meal-tab-container ul li').on("click", function() {
 });
 
 //STAR RATING
-$('.rating-star').on('click', function() {
+$(document).on('click', '.rating-star', function() {
     var param = $(this).prev().attr('data-id'),
         star = $(this).parent().find('.rating-star');
     $(star).removeClass("change-color");
@@ -141,6 +134,7 @@ function populateMealDetails(mealDetails) {
     ingredientsTab(mealDetails);
     tipsTricksTab(mealDetails);
     nutrientsTab(mealDetails);
+    reviewsTab(mealDetails);
 }
 
 function mealDetailsTab(mealDetails) {
@@ -152,14 +146,31 @@ function mealDetailsTab(mealDetails) {
     $(".thumbnail").attr('data-id', mealDetails.main_image.id);
     $(".chef-img").attr("src", mealDetails.chef_image.url);
     $(".chef-img").attr("data-id", mealDetails.chef_image.id);
-    $(".chef-comments").attr("data-id", mealDetails.chef_comments);
+    $(".chef-comments").text(mealDetails.chef_comments);
     $(".details-description span").text('"' + mealDetails.description + '"');
     $(".chef-name").text("CHEF " + mealDetails.chef_name);
+    if (mealDetails.in_cart == 1) {
+        $(".add-meal").addClass("button-disabled");
+    }
     $(mealDetails.ingredients).each(function(key, value) {
         majorIngredients = majorIngredients + "," + value;
     });
     $(".meal-ingredients").text(majorIngredients.substring(1));
     $(".meal-ingredients").text(majorIngredients.substring(1));
+    // starRating = $(reviewsAll).find(".rating-star")[value.rating - 1];
+    // $(reviewsAll).find(".rating-star").each(function(key, value) {
+    //     $(value).addClass("disable-star");
+    // });
+    // $(starRating).trigger("click");
+
+    $("#meal-rating").find(".rating-star").each(function(key, value) {
+        if (mealDetails.avg_rating == (key + 1)) {
+            $(this).trigger("click");
+        }
+        $("#meal-rating").find(".rating-star").each(function(key, value) {
+            $(value).addClass("disable-star");
+        });
+    });
 }
 
 function mealPreparationTab(mealDetails) {
@@ -216,7 +227,7 @@ function nutrientsTab(mealDetails) {
 function reviewsTab(mealDetails) {
     $.each(mealDetails.ratings, function(key, value) {
         $("#reviews .container").append("<div class='list-review'>" +
-            "<div class='list-header'>"+value.user_first_name+ " " +value.user_last_name +"</div>" +
+            "<div class='list-header'>" + value.user_first_name + " " + value.user_last_name + "</div>" +
             "<div class='rating'>" +
             "<span><input type='radio' class='rating-input' id='rating-input-1-5' name='rating-input-1' data-id='5'>" +
             "<label for='rating-input-1-5' class='rating-star'></label>" +
@@ -228,7 +239,14 @@ function reviewsTab(mealDetails) {
             "<label for='rating-input-1-2' class='rating-star'></label>" +
             "<input type='radio' class='rating-input' id='rating-input-1-1' name='rating-input-1' data-id='1'>" +
             "<label for='rating-input-1-1' class='rating-star'></label></span>" +
-            "<span class='review-date'>06/06/2015</span></div>" +
-            "<span class='description'>"+value.review+"</span></div>")
+            "<span class='review-date'>" + value.date.substring(0, 10) + "</span></div>" +
+            "<span class='description'>" + value.review + "</span></div>");
+
+        var reviewsAll = $("#reviews .container").find(".list-review:last"),
+            starRating = $(reviewsAll).find(".rating-star")[value.rating - 1];
+        $(reviewsAll).find(".rating-star").each(function(key, value) {
+            $(value).addClass("disable-star");
+        });
+        $(starRating).trigger("click");
     });
 }

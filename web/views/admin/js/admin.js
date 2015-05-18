@@ -11,7 +11,7 @@ $(document).ready(function() {
                     localStorage['session_key']=adminDetails.session_key;
                     localStorage['admin_loggedIn']=true;
                     localStorage['loggedIn']=false;
-                    window.location.href = 'categories.html'
+                    window.location.href = 'orderlist.html'
                 }
                 else{
                     alert(adminDetails.message);
