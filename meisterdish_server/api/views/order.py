@@ -157,7 +157,7 @@ def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0, user=N
                 }
             }]
         return make_cc_payment(funding_instruments, amount, order_num)
-    except Exception as e:
+    except KeyError as e:
         log.error("Failed to pay using CC (with card data)." + e.message)
         return "An error has occurred with payment using card. Please try again."
 
