@@ -183,7 +183,7 @@ function populateOrderDetails(orderDetails) {
         $(".order-meal").append("<div class='order-list-items' data-id='" + value.id + "'>" +
             "<img src='" + value.image + "'>" + "<span class='body-text-small'>" + value.name + "</span>" +
             "<div class='quantity-container'>" +
-            "<input type='text' class='quantity' value='" + value.quantity + "'></div>" +
+            "<input type='text' disabled='disabled' class='quantity' value='" + value.quantity + "'></div>" +
             "<span class='price-container' data-tax='" + value.tax + "'>" + dollarConvert(value.price) + "</span></div>");
     });
 }
