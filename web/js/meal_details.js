@@ -157,11 +157,6 @@ function mealDetailsTab(mealDetails) {
     });
     $(".meal-ingredients").text(majorIngredients.substring(1));
     $(".meal-ingredients").text(majorIngredients.substring(1));
-    // starRating = $(reviewsAll).find(".rating-star")[value.rating - 1];
-    // $(reviewsAll).find(".rating-star").each(function(key, value) {
-    //     $(value).addClass("disable-star");
-    // });
-    // $(starRating).trigger("click");
 
     $("#meal-rating").find(".rating-star").each(function(key, value) {
         if (mealDetails.avg_rating == (key + 1)) {
@@ -204,6 +199,21 @@ function ingredientsTab(mealDetails) {
 function tipsTricksTab(mealDetails) {
     $("#tips-and-tricks .section").each(function(key, value) {
         $(this).find(".tips-header").text();
+    });
+    $(mealDetails.tips).each(function(key, value) {
+        $("#tips-and-tricks").append("<div class='section'>" +
+            "<div class='container'>" +
+            "<span class='mob-view-header tips-header'>" + value.title + "</span>" +
+            "<div class='video-container'>" +
+            "<iframe height='280' src='" + value.video_url + "' frameborder='0' allowfullscreen=''></iframe>" +
+            "</div><div class='list-container'>" +
+            "<span class='list-header tips-header'>" + value.title + "</span>" +
+            "<ul class='video-tips'></ul>" +
+            "</div></div></div>");
+
+        $(value.description).each(function(key, value){
+            $(".video-tips:last").append("<li>"+value+"</li>");
+        });
     });
 }
 
