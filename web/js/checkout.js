@@ -112,11 +112,11 @@ $(document).ready(function() {
 
     });
     $(document).on('click', '#save-payment', function() {
-        debugger;
         var selectedId = $('input[type=radio][name=change-card]:checked').attr('id');
         showSelectedPaymentMethod(selectedId);
         $('.address-payment-list-popup').hide();
-    })
+        $('#place-order').addClass('button-disabled');
+    });
 
     $('#add-guest-address').on("click", function(e) {
         e.preventDefault();
@@ -129,7 +129,8 @@ $(document).ready(function() {
         populateCreditCardDetails();
     })
 
-    $("#place-order").on("click", function() {
+    $("#place-order").on("click", function(e) {
+        e.preventDefault();
         placeOrder();
     });
 });
@@ -239,7 +240,6 @@ function getCartItems() {
 //Save delivery time
 var saveDeliveryTimeCallback = {
     success: function(data, textStatus) {
-        debugger;
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -333,6 +333,7 @@ var clearCartCallback = {
     success: function(data, textStatus) {
         CartItemCount();
         getCartItems();
+        window.location.href = 'menu.html';
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -474,16 +475,36 @@ function savedCardDetails() {
     savedCardDetailsInstance.sendPost(url, header, data, savedCardDetailsCallback);
 }
 
-function populateCardDetails(cards) {
-    $.each(cards, function(key, value) {
-        last_num = cards[key].number.slice(-4);
-        $('.saved-cards').append("<input type='radio' class='added-card pullLeft' name='saved-card' id='" + value.id + "' class='radio-button-payment'>" +
-            "<label for='" + value.id + "'>" +
-            "<img class='paypal' src='" + value.logo + "'>" +
-            "<span class='body-text-small'>" + value.type + " " + "ending in" + " " + last_num + "</span>" +
-            "<span class='body-text-small'>" + "Expires on" + " " + value.expire_month + "/" + value.expire_year + "</span>" + "</label>");
-    });
-}
+function populateCardDetails(cards,selectedId) {
+    if(selectedId){
+        $.each(cards, function(key, value) {
+            last_num = cards[key].number.slice(-4);
+            if(selectedId == value.id){
+                $('.saved-cards').append("<div class='saved-card-list'>"+
+                    "<input type='radio' class='added-card pullLeft' name='saved-card' id='" + value.id + 
+                    "' class='radio-button-payment'>" +
+                    "<label for='" + value.id + "'>" +
+                    "<img class='paypal' src='" + value.logo + "'>" +
+                    "<span class='body-text-small'>" + value.type + " " + "ending in" + " " + last_num + "</span>" +
+                    "<span class='body-text-small'>" + "Expires on" + " " + 
+                    value.expire_month + "/" + value.expire_year + "</span>" + "</label>"+"</div>");
+                }
+            });
+        
+    }else{
+        $.each(cards, function(key, value) {
+            last_num = cards[key].number.slice(-4);
+            $('.saved-cards').append("<div class='saved-card-list'>"+
+                "<input type='radio' class='added-card pullLeft' name='saved-card' id='" + value.id + 
+                "' class='radio-button-payment'>" +
+                "<label for='" + value.id + "'>" +
+                "<img class='paypal' src='" + value.logo + "'>" +
+                "<span class='body-text-small'>" + value.type + " " + "ending in" + " " + last_num + "</span>" +
+                "<span class='body-text-small'>" + "Expires on" + " " + 
+                value.expire_month + "/" + value.expire_year + "</span>" + "</label>"+"</div>");
+            });
+        }
+    }
 
 $(window).resize(function() {
     mobileResponsive();
@@ -744,7 +765,7 @@ var placeOrderCallback = {
     success: function(data, textStatus) {
        var response = JSON.parse(data);
        if(response.status == 1){
-         window.location.href = 'menu.html';
+        clearCart();
        }
        else{
         showPopup(response);
@@ -776,11 +797,9 @@ function placeOrder() {
         saveParam = 1;
     }
 
-    if($("#cc").prop('checked')){
-        payment_type = "cc";
-    }
+    
 
-    if($("#pp").prop('checked')){
+    if($("#pp").prop('checked') || $("#pp-guest").prop('checked')){
         payment_type = "pp";
         var payPalEmail = "nazz007online-facilitator@gmail.com",
             //returnUrl = "http://meisterdish.qburst.com/views/menu.html",
@@ -793,16 +812,16 @@ function placeOrder() {
             "notify_url": notifyUrl,
             "my_temp_id": "hai nazz"
         });
-    }
-    
-    url = baseURL + "create_order/",
+    }else{
+        if($("#cc").prop('checked')){
+            payment_type = "cc";
+        }
+        url = baseURL + "create_order/",
         header = {
             "session-key": localStorage["session_key"]
         };
-        if(!$('.saved-cards').is(':empty') || $("#pp").prop('checked')){
-           if(!$('.saved-cards').is(':empty')){
-                payment_type = "cc";
-           }
+        if(!$('.saved-cards').is(':empty')){
+            payment_type = "cc";
             savedCardId = $('.saved-cards .added-card').attr('id');
             params = {
                 "delivery_time": deliveryTime,
@@ -837,6 +856,7 @@ function placeOrder() {
     data = JSON.stringify(params);
     var placeOrderInstance = new AjaxHttpSender();
     placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
+}    
 }
 $("#cc").on("click",function(){
     if($("#cc").prop('checked')){
@@ -859,7 +879,7 @@ function populateCreditCardDetails(){
             "<label>"+"<img class='paypal' src='../images/paypal_button.png'>"+"</label>"+"</div>");
        $.each(cards,function(key,value){
             $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>"+
-                "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment'>"+
+                "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' id='"+value.id+"'>"+
                 "<label>"+"<img class='paypal' src='"+value.logo+"'>"+
                 "<span class='body-text-small'>" + value.type + " " + 
                 "ending in" + " " + last_num + "</span>" +
@@ -878,7 +898,6 @@ function populateCreditCardDetails(){
  function showSelectedPaymentMethod(selectedId){
        
     if(selectedId == "paypal-radio"){
-        debugger;
         $('.saved-cards').empty();
         $('.paypal-container').show();
         $('.credit-card-container').hide();
@@ -889,6 +908,12 @@ function populateCreditCardDetails(){
         $('.credit-card-container').show();
         $('.paypal-container').hide();
         $('.saved-cards').empty();
-        populateCardDetails(cardDetails.cards);
+        populateCardDetails(cardDetails.cards,selectedId);
     }
  }
+
+ //  create oredr button disabled on uncheck 
+
+ $(document).on('click', '#pp,#pp-guest,#cc,.added-card', function() {
+    $("#place-order").removeClass('button-disabled');
+ });
