@@ -750,7 +750,7 @@ form.addaddress-popup {
 	border-radius: 3px;
 	background-color: #f7f7f7;
 	box-shadow: 0 0 3px #d0d0d0;
-	width: 50px;
+	width: 17%;
 	margin-bottom: 10px;
 	font-size: 12px;
 }
@@ -950,6 +950,7 @@ form#pay-form {
 	padding-top: 30px;
 	width: 80%;
 	position: relative;
+	float: left;
 }
 .pay-by-credit-container .forminput-wrapper{
 	float: left;
@@ -1097,17 +1098,25 @@ input.radio-button-payment {
 	float: left;
 	margin-right: 30px;
 }
-.saved-cards{
-	width: 100%;
-	float: left;
+.saved-cards {
+  width: 100%;
+  float: left;
+  overflow-y: auto;
+  height: 187px;
+  margin-bottom: 20px;
 }
 .saved-cards label {
 	float: left;
 	width: 80%;
 	padding-bottom: 20px;
 }
+.saved-card-list{
+	width: 100%;
+	float: left;
+}
 #change-address,#change-payment-method{
   cursor: pointer;
+    width: 225px;
 }
 .address-payment-list-popup{
 	display: none;
@@ -1172,7 +1181,7 @@ input.radio-button-payment {
 	font-size: 12px;
 	color:#b0b0b0;
 }
-#pp, #cc {
+#pp, #cc ,#pp-guest {
   /* float: left; */
   position: absolute;
   top: 0;
@@ -1183,6 +1192,8 @@ input.radio-button-payment {
 }
 .paypal-container{
 	position: relative;
+	width: 100%;
+	float: left;
 }
 .payment-popup-sub-container{
 	width: 33.3%;
@@ -1207,6 +1218,22 @@ input.radio-button-payment {
 	}
 	.address-container{
 		width: 50%;
+	}
+	.checkout-wrapper{
+		display: block;
+	}
+	.left-wrapper{
+		display: block;
+		width: 100%;
+	}
+	.right-wrapper{
+		display: block;
+		width: 100%;
+		float: left;
+	}
+	.receipt-container{
+		width: 40%;
+		margin:0 auto;
 	}
 
 	/**CHECKOUT PAGE MOBILE **/
