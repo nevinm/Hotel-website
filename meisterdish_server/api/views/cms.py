@@ -417,6 +417,7 @@ def create_meal(request, data, user):
                     meal.save()
         try:
             meal.tips.exclude(id__in=my_tip_ids).delete()
+            
         except Exception as e:
             log.error("Cannot delete meal tips : "+e.message)
 
