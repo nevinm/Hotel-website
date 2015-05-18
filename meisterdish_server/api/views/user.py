@@ -383,7 +383,7 @@ def get_user_reviews(request, data, user):
         rating_list = []
         for rating in ratings:
             rating_list.append({
-                "rating:":rating.rating,
+                "rating":rating.rating,
                 "review":rating.comment,
                 "date" : rating.created.strftime("%m-%d-%Y %H:%M:%S"),
                 "meal_name" : rating.meal.name,
