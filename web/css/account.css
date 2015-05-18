@@ -779,9 +779,9 @@ form.addaddress-popup {
 	padding-left: 10px;
 }
 .order-list-header .content-heading{
-	width: 100px;
+	width: 21%;
 	float: left;
-	margin-right: 10px;
+	margin-right: 2%;
 	text-align: center;
 }
 .order-list-items {
@@ -790,7 +790,7 @@ form.addaddress-popup {
   margin-bottom: 10px;
 }
 .order-list-items img {
-	width: 30px;
+	width: 8%;
 	height: 30px;
 	float: left;
 	border-radius: 4px;
@@ -802,7 +802,7 @@ form.addaddress-popup {
 	width: 47%;
 }
 .order-list-header  .content-heading:first-child{
-	margin-right: 33%;
+	margin-right: 32%;
 	text-align: left;
 }
 .order-list-header  .content-heading:nth-child(3){
@@ -816,19 +816,21 @@ form.addaddress-popup {
 .order-list-items .body-text-small {
 	padding: 0;
 	padding: 5px 0px;
-	padding-left: 10px;
-	width: 243px;
-	margin-right: 21px;
+	padding-left: 2%;
+	width: 44%;
+	margin-right: 5%;
 }
 #remove-cart-item {
 	margin: 0;
 	float: left;
 	cursor: pointer;
 	color: #A9D77B;
-	width: 38px;
-	padding-left: 25px;
+	/* width: 38px; */
+	padding-left: 3px;
 	display: none;
-	height: 15px
+	height: 15px;
+	width: 20px;
+	margin-top: 4px;
 }
 .order-list-items input {
 	width: 30px;
@@ -845,9 +847,9 @@ form.addaddress-popup {
 	cursor: pointer;
 }
 .quantity-container {
-  width: 76px;
+    width: 18%;
   float: left;
-  margin-right: 57px;
+  margin-right: 10%;
 }
 .price-container{
 	font-family: 'BrandonGrotesque-Bold';
@@ -1235,6 +1237,12 @@ input.radio-button-payment {
 		width: 40%;
 		margin:0 auto;
 	}
+	.delivery-time-container,.delivery-info-container{
+		width: 100%;
+	}
+	.receipt-container .caption{
+		display: none;
+	}
 
 	/**CHECKOUT PAGE MOBILE **/
 	/*.left-wrapper,.right-wrapper{
@@ -1416,7 +1424,8 @@ input.radio-button-payment {
 		display: none;
 	}
 	.order-list-items .body-text-small{
-		width: 135px;
+		width: 35%;
+		margin-right: 2%;
 	}
 	.quantity-container{
 		margin-right: 20px;
@@ -1490,8 +1499,11 @@ input.radio-button-payment {
 	.payment-info .checkout-header{
 		padding-left: 6%;
 	}
-	#pp,#cc{
+	#pp,#cc,#pp-guest{
 		display: none;
+	}
+	.quantity-container{
+		width: 25%;
 	}
 }
   	@media (max-width:400px){
@@ -1520,5 +1532,11 @@ input.radio-button-payment {
   		}
   		#guest-address-info .section3 .forminput-wrapper{
   			width: 29.4%;
+  		}
+  		.quantity-container{
+  			width: 64px;
+  		}
+  		.order-list-items input{
+  			width: 24px;
   		}
 	}
