@@ -149,7 +149,7 @@ function mealDetailsTab(mealDetails) {
     $(".chef-comments").text(mealDetails.chef_comments);
     $(".details-description span").text('"' + mealDetails.description + '"');
     $(".chef-name").text("CHEF " + mealDetails.chef_name);
-    if(mealDetails.in_cart==1){
+    if (mealDetails.in_cart == 1) {
         $(".add-meal").addClass("button-disabled");
     }
     $(mealDetails.ingredients).each(function(key, value) {
@@ -157,6 +157,20 @@ function mealDetailsTab(mealDetails) {
     });
     $(".meal-ingredients").text(majorIngredients.substring(1));
     $(".meal-ingredients").text(majorIngredients.substring(1));
+    // starRating = $(reviewsAll).find(".rating-star")[value.rating - 1];
+    // $(reviewsAll).find(".rating-star").each(function(key, value) {
+    //     $(value).addClass("disable-star");
+    // });
+    // $(starRating).trigger("click");
+
+    $("#meal-rating").find(".rating-star").each(function(key, value) {
+        if (mealDetails.avg_rating == (key + 1)) {
+            $(this).trigger("click");
+        }
+        $("#meal-rating").find(".rating-star").each(function(key, value) {
+            $(value).addClass("disable-star");
+        });
+    });
 }
 
 function mealPreparationTab(mealDetails) {
@@ -213,7 +227,7 @@ function nutrientsTab(mealDetails) {
 function reviewsTab(mealDetails) {
     $.each(mealDetails.ratings, function(key, value) {
         $("#reviews .container").append("<div class='list-review'>" +
-            "<div class='list-header'>"+value.user_first_name+ " " +value.user_last_name +"</div>" +
+            "<div class='list-header'>" + value.user_first_name + " " + value.user_last_name + "</div>" +
             "<div class='rating'>" +
             "<span><input type='radio' class='rating-input' id='rating-input-1-5' name='rating-input-1' data-id='5'>" +
             "<label for='rating-input-1-5' class='rating-star'></label>" +
@@ -225,12 +239,12 @@ function reviewsTab(mealDetails) {
             "<label for='rating-input-1-2' class='rating-star'></label>" +
             "<input type='radio' class='rating-input' id='rating-input-1-1' name='rating-input-1' data-id='1'>" +
             "<label for='rating-input-1-1' class='rating-star'></label></span>" +
-            "<span class='review-date'>"+value.date.substring(0,10)+"</span></div>" +
-            "<span class='description'>"+value.review+"</span></div>");
+            "<span class='review-date'>" + value.date.substring(0, 10) + "</span></div>" +
+            "<span class='description'>" + value.review + "</span></div>");
 
         var reviewsAll = $("#reviews .container").find(".list-review:last"),
-        starRating = $(reviewsAll).find(".rating-star")[value.rating-1];
-        $(reviewsAll).find(".rating-star").each(function(key, value){
+            starRating = $(reviewsAll).find(".rating-star")[value.rating - 1];
+        $(reviewsAll).find(".rating-star").each(function(key, value) {
             $(value).addClass("disable-star");
         });
         $(starRating).trigger("click");
