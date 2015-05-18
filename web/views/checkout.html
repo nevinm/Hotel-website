@@ -36,6 +36,11 @@
                     </a>
                 </div>
                 <span class="icon-menu pullRight"></span>
+                <div class="logo-mobile-container">
+                    <a href="index.html">
+                        <img class="pullLeft logo-mobile" src="../images/logo.png" alt="MeisterDish">
+                    </a>
+                </div>
                 <div class="navMenu" style="display:none">
                     <ul>
                         <li>
@@ -51,15 +56,36 @@
                             <a href="">PARTNERS</a>
                         </li>
                         <li class="login-signup">
-                            <a href="views/login.html">LOG IN</a>
+                            <a href="login.html">LOG IN</a>
                         </li>
                         <li class='login-signup'>
-                            <a href="views/signup.html">SIGN UP</a>
+                            <a href="signup.html">SIGN UP</a>
                         </li>
                         <li id="navbar-username" class="bold green">
-                            <a href='views/account.html'></a>
+                            <a href='account.html'></a>
                         </li>
                     </ul>
+                    <footer id="footer-navMenu">
+                        <div class="footerContent">
+                            <ul>
+                                <li>
+                                <a href="">CONTACT</a>
+                                </li>
+                                <li>
+                                <a href="">PRIVACY & TERMS</a>
+                                </li>
+                                <li >
+                                <a href="">HELP</a>
+                                </li>
+                            </ul>
+                            <ul class="footer-links">
+                                <li class="socialMedia" id="facebook"></li>
+                                <li class="socialMedia" id="twitter"></li>
+                                <li class="socialMedia" id="instagram"></li>
+                                <li class="socialMedia" id="pinterest"></li>
+                            </ul>
+                        </div>
+                    </footer>
                 </div>
                 <ul id="menu" class="pullRight">
                     <li>
@@ -202,9 +228,16 @@
                         </div>
                     <div class="payment-method-container">
                         <div class="contents">
-                            <span class="content-heading">PAYING WITH CREDIT CARD</span>
-                            <div class="saved-cards"></div>
-                             <span class="change-address-payment">CHANGE PAYMENT METHOD</span>
+                         <div class="paypal-container" style="display:none">
+                                <input type="radio" id="pp" name="payment-radio">
+                                <span class="content-heading"><input type="checkbox" id="pay-using-paypal"/>PAY WITH PAY PAL</span>
+                                <img class='paypal' src="../images/paypal_button.png">
+                            </div>
+                            <div class="credit-card-container">
+                                <span class="content-heading">PAYING WITH CREDIT CARD</span>
+                                <div class="saved-cards"></div>
+                             </div>
+                             <span class="change-address-payment" id="change-payment-method">CHANGE PAYMENT METHOD</span>
                         </div>
                     </div>
                     <div class="payment-method-guest-container">

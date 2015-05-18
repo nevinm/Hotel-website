@@ -491,10 +491,11 @@ input#searchBy-name {
     float: left;
 }
 
-#meal-image {
+#meal-image ,#chef-image{
     width: auto;
     height: auto;
-    display: none;
+    max-width: 150px;
+    /*display: none;*/
 }
 
 .create-meal-container {
