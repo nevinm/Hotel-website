@@ -12,13 +12,6 @@ $(document).ready(function() {
 
 function tabRendering() {
     var $tabs = $("#meal-tabs").tabs({
-        activate: function(event, ui) {
-            $tabs.tabs('option', 'hide', false);
-            $tabs.tabs('option', 'show', false);
-        },
-        // fx: {
-        //     opacity: 'toggle'
-        // },
         select: function(event, ui) {
             jQuery(this).css('height', jQuery(this).height());
             jQuery(this).css('overflow', 'hidden');
@@ -153,7 +146,7 @@ function mealDetailsTab(mealDetails) {
     $(".thumbnail").attr('data-id', mealDetails.main_image.id);
     $(".chef-img").attr("src", mealDetails.chef_image.url);
     $(".chef-img").attr("data-id", mealDetails.chef_image.id);
-    $(".chef-comments").attr("data-id", mealDetails.chef_comments);
+    $(".chef-comments").text(mealDetails.chef_comments);
     $(".details-description span").text('"' + mealDetails.description + '"');
     $(".chef-name").text("CHEF " + mealDetails.chef_name);
     if(mealDetails.in_cart==1){
