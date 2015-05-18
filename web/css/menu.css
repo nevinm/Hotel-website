@@ -41,6 +41,7 @@
 #header{
     position: relative !important;
 }
+
 .fixedMenu {
   position: fixed;
   top:0; left:0;
@@ -70,7 +71,6 @@
     background-image: url('../images/white.png');
     color: #9B9B9B;
     box-shadow: 0 0 3px #b0b0b0;
->>>>>>> 05e0cf24b0e809df624a4c894b79249dd76d3df3
 }
 
 .subMenu ul li.menu-categories-list {
@@ -174,7 +174,7 @@
 	padding: 0 10px;
 }
 .listItems{
-	width: 32%;
+	width: 31%;
 	margin: 0 0 60px 2%;
 	float: left;
 }
@@ -359,6 +359,9 @@
     }
     .listContainer {
         margin: 40px 0 0 0;
+    }
+     .meal-area{
+        padding: 0 3.5em;
     }
 }
 

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var perPage = 3,
+    var perPage = 6,
         nextPage = 1,
         mealTypeFilter = [],
         endOfList = false,
