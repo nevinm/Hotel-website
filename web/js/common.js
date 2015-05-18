@@ -105,10 +105,6 @@ function verifyAccount() {
 }
 
 function logingOut() {
-    $('#navbar-username a').text('');
-    $userentry.show();
-    $('#menu').removeClass('menuPadding');
-    $(".logout").addClass('hide');
     localStorage.removeItem('username');
     localStorage.removeItem('session_key');
     localStorage.removeItem('cartItems');
@@ -117,6 +113,10 @@ function logingOut() {
     localStorage.removeItem('fb-image');
     localStorage['loggedIn'] = false;
     localStorage['admin_loggedIn'] = false;
+    $('#navbar-username a').text('');
+    $userentry.show();
+    $('#menu').removeClass('menuPadding');
+    $(".logout").addClass('hide');
     if (currentPage == "Meisterdish - Admin") {
         window.location.href = '../../index.html';
     } else {

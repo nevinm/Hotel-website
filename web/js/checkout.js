@@ -509,17 +509,20 @@ function mobileResponsive() {
 var getAddressCallback = {
     success: function(data, textStatus, flag) {
          userDetails = JSON.parse(data);
-         addressList = userDetails.address_list;
-         $.each(addressList,function(key,value){
-            if(value.is_primary == 1){
-                billingAddressId = value.id;
+         if(userDetails.status==1){
+             addressList = userDetails.address_list;
+             $.each(addressList,function(key,value){
+                if(value.is_primary == 1){
+                    billingAddressId = value.id;
+                }
+             })
+            if (flag == "populateAddressToPopUp") {
+                appendAddresscontent(userDetails);
+            } else {
+                popuplateAddressList(data);
             }
-         })
-        if (flag == "populateAddressToPopUp") {
-            appendAddresscontent(userDetails);
-        } else {
-            popuplateAddressList(data);
-        }
+         }
+         else{}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }

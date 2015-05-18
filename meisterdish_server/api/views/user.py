@@ -200,7 +200,11 @@ def get_meal_details(request, data, meal_id):
 
         meal = Meal.objects.get(pk=meal_id, is_deleted=False)
         rating_list = []
+        rating_sum = 0.0
+        rating_count = 0
         for rating in  meal.mealrating.all():
+            rating_sum += rating.rating
+            rating_count += 1
             rating_list.append({
                 "rating":rating.rating,
                 "review":rating.comment,
@@ -209,6 +213,7 @@ def get_meal_details(request, data, meal_id):
                 "user_image": settings.DEFAULT_USER_IMAGE if not rating.order.cart.user.profile_image else rating.order.cart.user.profile_image.thumb.url,
                 "date" : rating.created.strftime("%m-%d-%Y %H:%M:%S"),
                 })
+
         image_list = []
         for img in meal.images.all():
             image_list.append({
@@ -269,6 +274,7 @@ def get_meal_details(request, data, meal_id):
             "allergy_notice" : meal.allergy_notice,
             "images" : image_list,
             "ratings" : rating_list,
+            "avg_rating" : rating_sum/rating_count if int(rating_count) != 0 else 0,
             "main_image" : {"url":settings.DEFAULT_MEAL_IMAGE, "id":""} if not meal.main_image else {
                 "id":meal.main_image.id,
                 "url":meal.main_image.image.url,
