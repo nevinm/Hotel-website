@@ -200,7 +200,7 @@ def get_meal_details(request, data, meal_id):
         rating_list = []
         for rating in  meal.mealrating.all():
             rating_list.append({
-                "rating:":rating.rating,
+                "rating":rating.rating,
                 "review":rating.comment,
                 "user_first_name":rating.order.cart.user.first_name,
                 "user_last_name":rating.order.cart.user.last_name,
@@ -377,9 +377,9 @@ def get_saved_cards(request, data, user):
 @check_input('POST')
 def get_user_reviews(request, data, user):
     try:
-        ratings = MealRating.objects.filter(meal__order__cart__user__pk=user.pk, meal__order__status__gte=4)
+        ratings = MealRating.objects.filter(order__cart__user__pk=user.pk, order__status__gte=2)
         rating_list = []
-        for rating in rating:
+        for rating in ratings:
             rating_list.append({
                 "rating:":rating.rating,
                 "review":rating.comment,
@@ -389,7 +389,7 @@ def get_user_reviews(request, data, user):
                 "meal_id":rating.meal.id,
                 "order_id":rating.order.id,
             })
-        retutn json_response({"status":1, "reviews":rating_list})
+        return json_response({"status":1, "reviews":rating_list})
     except Exception as e:
         log.error("List user reviews: user "+str(user.id) + " : "+ e.message)
         return custom_error("Failed to list user reviews.")
