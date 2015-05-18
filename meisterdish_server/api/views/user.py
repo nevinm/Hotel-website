@@ -195,6 +195,8 @@ def get_meal_details(request, data, meal_id):
                 user = User.objects.get(pk=session['user']['id'])
             except Exception as e:
                 user = None
+        else:
+            user=None
 
         meal = Meal.objects.get(pk=meal_id, is_deleted=False)
         rating_list = []
