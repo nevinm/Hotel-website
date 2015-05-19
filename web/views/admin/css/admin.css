@@ -143,6 +143,7 @@ thead {
 
 .pagination {
     float: right;
+    padding: 20px 0;
 }
 
 .add-category-container,
@@ -257,6 +258,7 @@ table#userlist {
 }
 #order-list{
     width: 100%;
+    float: left;
 }
 
 #order-list tbody{
