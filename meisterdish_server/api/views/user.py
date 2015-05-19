@@ -385,18 +385,37 @@ def get_saved_cards(request, data, user):
 @check_input('POST')
 def get_user_reviews(request, data, user):
     try:
-        ratings = MealRating.objects.filter(order__cart__user__pk=user.pk, order__status__gte=2)
+        orders = Order.objects.filter(cart__user__pk=user.pk, status__gte=2)
         rating_list = []
-        for rating in ratings:
-            rating_list.append({
-                "rating":rating.rating,
-                "review":rating.comment,
-                "date" : rating.created.strftime("%m-%d-%Y %H:%M:%S"),
-                "meal_name" : rating.meal.name,
-                "meal_image":rating.meal.main_image.image.url,
-                "meal_id":rating.meal.id,
-                "order_id":rating.order.id,
-            })
+        meals_list = []
+        for order in orders:
+            meals = Meal.objects.filter(cartitem__cart__order=order)
+            for meal in meals:
+                try:
+                    rating = MealRating.objects.get(meal=meal, order=order)
+                except Exception as e:
+                    log.error("Rating list error :"+e.message)
+                    rating = False
+                if rating :    
+                    rating_list.append({
+                        "rating":rating.rating,
+                        "review":rating.comment,
+                        "date" : rating.created.strftime("%m-%d-%Y %H:%M:%S"),
+                        "meal_name" : rating.meal.name,
+                        "meal_image":rating.meal.main_image.image.url,
+                        "meal_id":rating.meal.id,
+                        "order_id":rating.order.id,
+                    })
+                else:
+                    rating_list.append({
+                        "rating":0,
+                        "review":"",
+                        "date" : "",
+                        "meal_name" : meal.name,
+                        "meal_image":meal.main_image.image.url if meal.main_image else "",
+                        "meal_id":meal.id,
+                        "order_id":order.id,
+                    })
         return json_response({"status":1, "reviews":rating_list})
     except Exception as e:
         log.error("List user reviews: user "+str(user.id) + " : "+ e.message)
