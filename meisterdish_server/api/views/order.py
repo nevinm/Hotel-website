@@ -362,14 +362,13 @@ def create_order(request, data, user):
                 return custom_error(payment)
             else:
                 paid = True
-                order.status = 1
-                order.save()
                 log.info("Order payment (CC) success.Payment id :"+str(payment.id))
         else: #PayPal
             payment_type = "PP"
             
         if paid:
             order.payment = payment
+            order.status = 1
             order.save()
         
         if payment_type == "CC":
