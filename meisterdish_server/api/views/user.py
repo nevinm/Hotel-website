@@ -175,7 +175,10 @@ def add_rating(request, data, user, meal_id):
         order = Order.objects.get(pk=data['order_id'], cart__cartitem__meal__pk=meal_id, cart__user=user)
         if not order.cart.completed or order.status < 4:
             custom_error("The order is not complete. Please complete the order before rating.")
-        rating = MealRating()
+        try:
+            rating = MealRating.objects.get(order=order, meal__pk=meal_id)
+        except:
+            rating = MealRating()
         rating.meal = Meal.objects.get(pk=meal_id)
         rating.order = order
         rating.rating = data['rating']
@@ -402,7 +405,7 @@ def get_user_reviews(request, data, user):
                         "review":rating.comment,
                         "date" : rating.created.strftime("%m-%d-%Y %H:%M:%S"),
                         "meal_name" : rating.meal.name,
-                        "meal_image":rating.meal.main_image.image.url,
+                        "meal_image":rating.meal.main_image.image.url if meal.main_image else settings.DEFAULT_MEAL_IMAGE,
                         "meal_id":rating.meal.id,
                         "order_id":rating.order.id,
                     })
@@ -412,7 +415,7 @@ def get_user_reviews(request, data, user):
                         "review":"",
                         "date" : "",
                         "meal_name" : meal.name,
-                        "meal_image":meal.main_image.image.url if meal.main_image else "",
+                        "meal_image":meal.main_image.image.url if meal.main_image else settings.DEFAULT_MEAL_IMAGE,
                         "meal_id":meal.id,
                         "order_id":order.id,
                     })
