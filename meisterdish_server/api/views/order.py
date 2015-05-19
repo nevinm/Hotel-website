@@ -6,6 +6,7 @@ import logging
 import settings
 from decorators import *
 from datetime import datetime
+from time import strptime
 from django.core.paginator import Paginator
 from libraries import  card, configure_paypal_rest_sdk, verify_paypal_transaction, verify_paypal_ipn
 import paypalrestsdk
@@ -42,6 +43,18 @@ def get_orders(request, data, user=None):
         
         if "status" in data and str(data['status']).strip() != "":
             orders = orders.filter(status=int(data['status']))
+
+        if "phone" in data and str(data["phone"]).strip() != "":
+            orders = orders.filter(cart__user__mobile__startswith=str(data['phone']).strip())
+
+        if "amount" in data and str(data["amount"]).strip() != "":
+            orders = orders.filter(grand_total=float(data['status']))
+        """
+        if "date" in data and str(data["date"]).strip() != "":
+            date_obj = strptime(data['date'], "%m-%d-%Y %H:%M:%S")
+            orders = orders.filter(delivery_time=date_obj)            
+            #pass
+        """
         # End filter
         orders = orders.order_by("-id")
 
@@ -349,6 +362,8 @@ def create_order(request, data, user):
                 return custom_error(payment)
             else:
                 paid = True
+                order.status = 1
+                order.save()
                 log.info("Order payment (CC) success.Payment id :"+str(payment.id))
         else: #PayPal
             payment_type = "PP"
@@ -413,9 +428,12 @@ def get_order_details(request, data, user, order_id):
             "status":dict(settings.ORDER_STATUS)[order.status],
             "status_id" : order.status,
             "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
-            "payment_type": order.payment.get_payment_type_display() if order.payment else "Not Available",
+            
+            "payment_type" : order.payment.get_payment_type_display() if order.payment else "Not Available",
+            "payment_date" : order.payment.created.strftime("%m-%d-%Y %H:%M:%S") if order.payment else "Not Available",
             "transaction_id":order.transaction_id,
             "order_num" : order.order_num,
+            
             "delivery_address" : {
                      "id":order.delivery_address.id,
                      "first_name":order.delivery_address.first_name,
