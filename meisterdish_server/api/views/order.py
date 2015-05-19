@@ -6,7 +6,6 @@ import logging
 import settings
 from decorators import *
 from datetime import datetime
-from time import strptime
 from django.core.paginator import Paginator
 from libraries import  card, configure_paypal_rest_sdk, verify_paypal_transaction, verify_paypal_ipn
 import paypalrestsdk
@@ -45,16 +44,15 @@ def get_orders(request, data, user=None):
             orders = orders.filter(status=int(data['status']))
 
         if "phone" in data and str(data["phone"]).strip() != "":
-            orders = orders.filter(cart__user__mobile__startswith=str(data['phone']).strip())
+            orders = orders.filter(billing_address__phone=str(data['phone']).strip())
 
         if "amount" in data and str(data["amount"]).strip() != "":
-            orders = orders.filter(grand_total=float(data['status']))
-        """
+            orders = orders.filter(grand_total=float(data['amount']))
+
         if "date" in data and str(data["date"]).strip() != "":
-            date_obj = strptime(data['date'], "%m-%d-%Y %H:%M:%S")
-            orders = orders.filter(delivery_time=date_obj)            
-            #pass
-        """
+            date_obj = datetime.strptime(data['date'], "%m-%d-%Y %H:%M:%S")
+            orders = orders.filter(delivery_time__year=date_obj.year, delivery_time__month=date_obj.month, delivery_time__day=date_obj.day)            
+
         # End filter
         orders = orders.order_by("-id")
 
