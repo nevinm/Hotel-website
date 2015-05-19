@@ -63,6 +63,7 @@ def check_nvp_input():
             log.info(func.__name__ + " called. Is it from Paypal ? ")
             data = nvp_request(request)
             if not data:
+                log.error("Failed to parse NVP data")
                 return HttpResponse("Failed to parse the request data.")
             return func(request, data, *args, **kwargs)
         return wraps(func)(inner_decorator)

@@ -172,7 +172,7 @@ def get_categories(request, data):
 @check_input('POST')
 def add_rating(request, data, user, meal_id):
     try:
-        order = Order.objects.get(pk=data['order_id'], cart__cartitem__meal__pk=meal_id, cart__user=user)
+        order = Order.objects.get(id=data['order_id'], cart__cartitem__meal__pk=meal_id, cart__user=user)
         if not order.cart.completed or order.status < 4:
             custom_error("The order is not complete. Please complete the order before rating.")
         try:
