@@ -103,7 +103,7 @@ var getCategoryCallback = {
         userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
             $.each(userDetails.categories, function(key, value) {
-                $('.category-wrapper .category-menu').append("<li class='menu-categories-list'><a href='javascript:void(0)'" +
+                $('.category-wrapper .category-menu').append("<li class='menu-categories-list'><a '" +
                     " class='menu-categories' data-id='" + value.id + "'>" + value.name + "</a></li>");
             });
             $.each(userDetails.meal_types, function(key, value) {
@@ -183,7 +183,7 @@ function populateMealList(mealList, isInfinteScrolling) {
             "</section><section class='listItemDetails'>" +
             "<h3 class='pullLeft itemCost'>" + dollarConvert(value.price + value.tax) + "</h3>" +
             "<span class='menuItemDetails caption'>Brioche Bun, Avocado, Tomato, Red Onions.</span>" +
-            "<span><a href='javascript:void(0)' class='btn btn-small-primary medium-green addItemButton' " +
+            "<span><a class='btn btn-small-primary medium-green addItemButton' " +
             "data-id='" + value.id + "'>ADD</a></span>" +
             "</section></div>");
         if (value.available && !value.in_cart) {} else {
