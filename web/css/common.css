@@ -373,7 +373,7 @@ body {
 }
 
 .bold {
-    font-weight: bold;
+    font-family: 'BrandonGrotesque-Bold' !important;
 }
 
 .hide {
@@ -477,6 +477,10 @@ label {
     color: #6b6b6b;
     display: none;
 }
+.max-width-adjust {
+	width: 90% !important;
+	max-width: 1100px;
+}
 /*==============================*\
             &HEADER
 \*==============================*/
@@ -497,7 +501,7 @@ label {
 
 .contentArea {
     max-width: 1100px;
-    width: 100%;
+    width: 90%;
     margin: 0 auto;
 }
 
@@ -523,6 +527,7 @@ label {
 .logo {
     width: 262px;
     height: 29px;
+    margin-top: 5px;
 }
 
 span.icon-menu {
@@ -537,7 +542,7 @@ span.icon-menu {
 .cart {
     position: relative;
     cursor: pointer;
-    margin-top: 6px;
+    margin-top: 10px;
     padding-right: 10px;
 }
 
@@ -548,15 +553,17 @@ span.icon-menu {
     top: -6px;
     right: 6px;
     color: white;
+    min-width: 15px;
     background-color: #A9D77B;
     font-size: 12px;
-    padding: 0px 5px;
     font-weight: bold;
     height: 18px;
+    min-width: 18px;
+    text-align: center;
 }
 
 .menuPadding {
-    padding-top: 6px;
+    padding-top: 10px;
 }
 .logo-mobile{
 	display: none;
@@ -695,7 +702,7 @@ span.icon-menu {
 	padding: 15px;
 }
 .popup .content{
-	padding: 43px 0 !important;
+	/*padding: 43px 0 !important;*/
 	float: none !important;
 }
  .popup-container .content span{
@@ -704,14 +711,19 @@ span.icon-menu {
 	text-align: center;
 	font-family: 'BrandonGrotesque-Regular';
 	font-size: 16px;
-	padding: 5px 0;
+	padding: 20px 0;
 	color: #5C5C5C;
+	word-break:break-word;
 }
 
 .popup-container .button{
 	width: 100%;
 	text-align: center;
-	padding: 20px 0px;
+	padding: 10px 0px;
+	overflow: hidden;
+	position: absolute;
+	bottom: 0;
+	left: 0;
 }
 
 #signup-firstname-error,#signup-lastname-error,#signup-email-error,#signup-password-error,
@@ -793,6 +805,51 @@ span.icon-menu {
 .show-mobile{
 	display: block;
 }
+
+/*==============================*\
+        &STAR RATING 
+\*==============================*/
+.rating >* {
+    float: left;
+}
+
+.rating {
+    width: 165px;
+    margin-bottom: 10px;
+    margin-left: -5px;
+    padding: 4px 0;
+    height: 33px;
+    overflow: hidden;
+    display: inline-block
+}
+
+.rating-input {
+    position: absolute;
+    left: 0;
+    display: none
+}
+
+.rating-star {
+    display: block;
+    float: right;
+    width: 17px;
+    height: 18px;
+    margin-top: 1px;
+    margin-left: 4px;
+    background: url(../images/star_sprite.png) -20px 0px
+}
+
+.rating-star:hover,
+.rating-star:hover~.rating-star{
+    background-position: 0px 0;
+}
+.disable-star{
+    pointer-events:none;
+}
+.change-color{
+    background-position: 0px 0px;
+}
+
 /*==============================*\
         &NAVBAR RESPONSIVE
 \*==============================*/
@@ -838,7 +895,6 @@ span.icon-menu {
         display: none;
     }
     .cart {
-        margin-right: 25px;
         margin-top: 9px;
         margin-left: 25px;
     }
@@ -925,7 +981,7 @@ span.icon-menu {
 @media (min-width: 320px)and (max-width: 767px) {
     #account-mainWrapper,
     #mainWrapper {
-        background-color: #CDD5CE;
+        background-color: #FCFDF9;
         background-image: none;
         border: none;
         overflow-x: hidden;
@@ -933,10 +989,13 @@ span.icon-menu {
     header#header {
         opacity: 1;
         background-color: #fff;
-        box-shadow: 0 0 15px #1A1A1A;
+        box-shadow: 0 0 15px rgba(26, 26, 26, 0.15);
     }
     .logo {
         display: none;
+    }
+    .contentArea{
+    	padding: 0;
     }
     ul#menu {
         display: none;

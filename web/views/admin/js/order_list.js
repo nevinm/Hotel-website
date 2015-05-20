@@ -19,8 +19,11 @@ $(document).ready(function() {
     $("#search-orders").on('click', function() {
         userName = $("#user-name").val();
         orderNum = $("#order-num").val();
+        total = $("#total-amount").val();
+        phone_num = $("#phone-num").val();
+        date = $("#date").val();
         status = $("#order-status-filter option:selected").val();
-        getOrders(1, userName, orderNum, status);
+        getOrders(1, userName, orderNum, status,total,phone_num,date);
     });
 
     $(document).on('change', ".order-status", function() {
@@ -67,7 +70,7 @@ var getOrdersCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getOrders(nextPage, userName, orderNum, status) {
+function getOrders(nextPage, userName, orderNum, status,total_amount,phone_num,date) {
     $('#order-list tbody').empty();
     var url = baseURL + "get_orders/",
         header = {
@@ -77,7 +80,10 @@ function getOrders(nextPage, userName, orderNum, status) {
             "nextPage": nextPage,
             "search": userName,
             "num": orderNum,
-            "status": status
+            "status": status,
+            "phone" : phone_num,
+            "date" : date,
+            "amount":total_amount
         }
     data = JSON.stringify(params);
     var getOrdersInstance = new AjaxHttpSender();
@@ -173,6 +179,9 @@ function populateOrderDetails(orderDetails) {
     $orderPopup.find(".order-name").text(orderDetails.order.user_first_name + " " + orderDetails.order.user_last_name);
     $orderPopup.find(".order-total").text(dollarConvert(orderDetails.order.grand_total));
     $orderPopup.find(".order-date").text(orderDetails.order.delivery_time);
+    $orderPopup.find(".order-payment_type").text(orderDetails.order.payment_type);
+    $orderPopup.find(".order-payment_date").text(orderDetails.order.payment_date);
+    $orderPopup.find(".order-transaction_id").text(orderDetails.order.transaction_id);
     $orderAddress.find('.building').text(orderDetails.order.delivery_address.building);
     $orderAddress.find('.building').text(orderDetails.order.delivery_address.building);
     $orderAddress.find('.street').text(orderDetails.order.delivery_address.street);

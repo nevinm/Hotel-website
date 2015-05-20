@@ -23,7 +23,6 @@ var getProfileCallback = {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
             localStorage['user_profile'] = data;
-            $(".cart span").text(userDetails.meals_in_cart_count);
             $(".account-credit").text(dollarConvert(userDetails.credits));
             profileAutoPopulate();
             if (profileId) {

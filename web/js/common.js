@@ -130,8 +130,8 @@ function showPopup(data) {
     var message = data.message;
     $('.popup-container .content span').text(message);
     $('.popup-wrapper').show();
-
-    $('#close').on("click", function() {
+}
+     $(document).on('click', '#close', function() {
         $('.popup-wrapper').hide();
         if (currentPage == "Meisterdish - Signup" || currentPage == "Meisterdish - Login") {
             if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
@@ -139,7 +139,7 @@ function showPopup(data) {
             }
         }
     })
-}
+
 
 //show Error popup
 function showErrorPopup(data) {
@@ -380,30 +380,27 @@ if ($.validator) {
 var CartItemCountCallback = {
     success: function(data, textStatus) {
         var numOfItems = JSON.parse(data);
-        // setInterval(function() {
-        //     $('span.c
-        //     ount').animate({
-        // //     height: '28px',
-        // //     padding: '0px 10px',
-        // //     fontSize: '16px'
-        // //     });
-        // // },3000);
         $('span.count').text(numOfItems.count);
+        localStorage['CartItemCount'] = numOfItems.count;
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function CartItemCount() {
-    var url = baseURL + 'get_cart_items_count/',
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        params = {};
-    data = JSON.stringify(params);
-    var CartItemCountInstance = new AjaxHttpSender();
-    CartItemCountInstance.sendPost(url, header, data, CartItemCountCallback);
+function CartItemCount(added) {
+    if (localStorage.getItem("CartItemCount") === null || added) {
+        var url = baseURL + 'get_cart_items_count/',
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+            params = {};
+        data = JSON.stringify(params);
+        var CartItemCountInstance = new AjaxHttpSender();
+        CartItemCountInstance.sendPost(url, header, data, CartItemCountCallback);
+    }   
+    else{
+        $('span.count').text(localStorage['CartItemCount']);
+    }
 }
-
 
 //Used to add form fields - paypal.
 function addFormFields(form, data) {

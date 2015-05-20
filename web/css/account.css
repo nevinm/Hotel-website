@@ -62,10 +62,11 @@ box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
 	display: none;
 }
 .accountNav {
-  width: 75%;
+  width: 90%;
   margin: 20px auto;
   padding-top: 23px;
   overflow: auto;
+  max-width: 1100px;
 }
 .backNav {
   float: left;
@@ -149,9 +150,10 @@ ul.accordion-content li {
 			&FORM
 \*==================================*/
 .account-wrapper{
-	width: 75%;
+	width: 90%;
 	margin: 0 auto;
 	/*overflow: auto;*/
+	max-width: 1100px;
 }
 form.form{
 	width: 60%;
@@ -256,19 +258,22 @@ span.body-text-small{
 	padding-top: 15px;
 }
 
-/*==================================*\
-			&CHANGE-ADDRESS
-\*==================================*/
-div#editaddress-container {
+/*============================================*\
+			&CHANGE-ADDRESS & REVIEW ADD
+\*============================================*/
+div#editaddress-container,
+ #review-container {
   margin-top: 10px;
   margin-bottom: 20px;
 }
-#editaddress-container .account-header{
+#editaddress-container .account-header, 
+#review-container .account-header{
 	font-size: 14px;
 	font-family: 'BrandonGrotesque-Bold';
 	padding: 10px 0 10px 20px; 
 }
-#editaddress-container .content{
+#editaddress-container .content, 
+#review-container .content{
 	 font-family: 'ProximaNova-regular';
 	 font-size: 12px;
 	 color: #9B9B9B;
@@ -297,19 +302,22 @@ ol{
 /*ol li{
 	list-style-type: decimal;
 }*/
-#editaddress-container .content ol li span{
+#editaddress-container .content ol li span,
+ #review-container .content ol li span{
 	width: 100%;
 	float: left;
 	padding: 6px 0;
 
 }
-#editaddress-container .content ol li span:last-child{
+#editaddress-container .content ol li span:last-child, 
+#review-container .content ol li span:last-child{
 	cursor: pointer;
 	font-family: 'BrandonGrotesque-Bold';
 	padding-top: 20px;
 	width: 240px;
 }
-#editaddress-container .content ol li span:nth-child(5){
+#editaddress-container .content ol li span:nth-child(5),
+#review-container .content ol li span:nth-child(5){
 	font-family: 'BrandonGrotesque-Bold';
 	padding-top: 20px;
 	width: 240px;
@@ -337,11 +345,13 @@ ol{
 .non-primary-address, .primary-address{
 	display: none;
 }
-#editaddress-container .content .message{
+#editaddress-container .content .message,
+#review-container .content .message{
 	display: none;
 	text-align: center;
 }
-#editaddress-container .content .message span{
+#editaddress-container .content .message span,
+#review-container .content .message span{
 	font-family: 'BrandonGrotesque-Regular';
 	font-size: 18px;
 	color: #A9D77B;	
@@ -644,6 +654,68 @@ form.addaddress-popup {
 	appearance:none !important;
 	-moz-appearance:none!important;
 }
+
+/*==================================*\
+			&REVIEWS
+\*==================================*/
+.meal-rewiew-wrapper{
+	width: 85%;
+	max-width: 1100px;
+}
+.meal-reviews-table{
+	display: table;
+	border-collapse: separate;
+	border-spacing: 10px;
+}
+.meal-review-container .user-reviews{
+	width: 80%;
+	height: 55px;
+	margin-left: 0px;
+	margin-right: 0px;
+	resize:none; 
+	font-family: 'ProximaNova-regular';
+	color: #9B9B9B;
+	border-radius: 3px;
+	border: 1px solid #D0D0D0;
+	padding: 8px;
+	background-color: #f1f1f1;
+}
+.meal-reviews-table a{
+	padding: 0;
+	margin: 0;
+}
+.meal-reviews-row {
+	display: table-row;
+}
+.meal-header-inner-second {
+	margin-left: 5px;
+}
+.meal-content{
+	max-height: 300px;
+	overflow: auto;
+}
+.meal-reivew-header{
+	margin-bottom: 20px;
+}
+.meal-reviews .details>*{
+	float: left;
+	line-height: 38px;
+}
+.meal-reviews .meal-name{
+	margin-left: 10px;
+}
+.meal-reivew-header>*{
+	width: 30%;
+	display:table-cell;
+}
+.meal-review-cell{
+	display: table-cell;
+	vertical-align: middle;
+}
+.meal-reviews .meal-image{
+	width: 60px;
+}
+
 /*==================================*\
 			&CHECHOUT PAGE
 \*==================================*/
@@ -652,6 +724,7 @@ form.addaddress-popup {
   margin: 0 auto;
   margin-top: 70px;
   display: table;
+  max-width: 1100px;
 }
 .box-border{
 	border:1px solid #D0D0D0;
@@ -866,6 +939,9 @@ form.addaddress-popup {
   min-height: 260px;
   position: relative;
 }
+.address-info-guest .content-heading{
+	text-transform: uppercase;
+}
 .address-info .contents{
 	padding-left: 30px;
 	padding-top: 20px;
@@ -932,7 +1008,7 @@ form.addaddress-popup {
 }
 #guest-address-info .section3 .forminput-wrapper .styled-select{
 	width: 100%;
-  	background: url(../images/selector_arrow.png) no-repeat 110px 6px #f7f7f7;
+  	background: url(../images/selector_arrow.png) no-repeat 97% 50% #f7f7f7;
 }
 #guest-address-info .section1 .forminput-wrapper{
 	width: 48%;
@@ -942,6 +1018,8 @@ form.addaddress-popup {
 	float: left;
 	padding-bottom: 20px;
 	display: none;
+	position: relative;
+	left: 30px;
 
 }
 form#pay-form {
@@ -969,8 +1047,9 @@ form#pay-form {
 	padding-top: 20px;
 	width: 30%;
 }
-.pay-by-credit-container .forminput-wrapper:nth-child(3) .styled-select{
-	background-position: 78px 6px;
+.pay-by-credit-container .forminput-wrapper:nth-child(3) .styled-select,
+.pay-by-credit-container .forminput-wrapper:nth-child(5) .styled-select{
+	background-position: 97% 50%;
 }
 .pay-by-credit-container .div{
 	width: 4%;
@@ -984,9 +1063,6 @@ form#pay-form {
 	padding-top: 43px;
 	width: 28%;
 	margin-right: 4%;
-}
-.pay-by-credit-container .forminput-wrapper:nth-child(5) .styled-select{
-	background-position: 52px 6px;
 }
 .pay-by-credit-container .forminput-wrapper:nth-child(6){
 	padding-top: 20px;
@@ -1021,6 +1097,7 @@ form#pay-form {
 	color: #b0b0b0;
 	font-weight: bold;
 	font-size: 12px !important;
+	width: 150px !important;
 }
 .driver-tip-container .inner-content span{
 	float: right;
@@ -1206,6 +1283,10 @@ input.radio-button-payment {
 .payment-popup-sub-container label{
 	width: 80%;
 }
+#guest-address-info .button{
+	float: left;
+	padding: 20px 0;
+}
 /*==================================*\
 			&TABLET
 \*==================================*/
@@ -1299,7 +1380,8 @@ input.radio-button-payment {
 		margin-left: 13px;
 	}
 	.account-wrapper{
-		width: 100%;
+		width: 90%;
+		max-width: 1100px;
 	}
 	#changecontact-container, #changeemail-container, #changepassword-container {
 		float: none;
@@ -1334,7 +1416,8 @@ input.radio-button-payment {
 		margin: 0 auto;
   		max-width: 400px;
 	}
-  	#editaddress-container{
+  	#editaddress-container,
+  	#review-container{
 		width: 90%;
 		margin: 0 auto;
 		max-width: 400px;
@@ -1364,7 +1447,8 @@ input.radio-button-payment {
 	.account-settings li{
 		color:#A9D77B;
 	}	
-	#editaddress-container .content ol li span:last-child{
+	#editaddress-container .content ol li span:last-child,
+	#review-container .content ol li span:last-child{
 		width: 300px;
 	}
 	.accordion-subcontent{
@@ -1392,8 +1476,8 @@ input.radio-button-payment {
 	}
 	.left-wrapper{
 		display: block;
-		width: 100%;
-		max-width: 400px;
+		width: 400px;
+		max-width: 90%;
 		float: none;
 		margin: 0 auto;
 	}
@@ -1482,6 +1566,7 @@ input.radio-button-payment {
 	}
 	.payment-method-guest-container{
 		padding: 0 20px;
+		left: 0;
 	}
 	..delivery-info-container{
 		width: 100%;
@@ -1513,7 +1598,8 @@ input.radio-button-payment {
   		.content .address{
   			padding-right: 10px;
   		}
-  		#editaddress-container .content ol li span:last-child{
+  		#editaddress-container .content ol li span:last-child,
+  		#review-container .content ol li span:last-child{
   			font-size: 11px;
   		}
   		.btn-large-primary, .btn-large-extended, .btn-large-secondary{

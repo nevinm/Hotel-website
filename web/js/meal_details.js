@@ -56,8 +56,8 @@ function tabRendering() {
 }
 
 $('.meal-tab-container ul li').on("click", function() {
-    $('.meal-tab-container ul li').removeClass('activeli');
-    $(this).addClass('activeli');
+    $('.meal-tab-container ul li a').removeClass('activeli');
+    $(this).find('a').addClass('activeli');
 });
 
 //STAR RATING
@@ -80,7 +80,7 @@ var addToCartCallback = {
         } else {
             $('*[data-id="' + mealId + '"]').addClass("button-disabled");
             showPopup(meal_details);
-            CartItemCount();
+            CartItemCount(true);
             if (meal_details.session_key && (meal_details.session_key).length) {
                 localStorage['session_key'] = meal_details.session_key;
             }
@@ -158,7 +158,7 @@ function mealDetailsTab(mealDetails) {
     $(".meal-ingredients").text(majorIngredients.substring(1));
     $(".meal-ingredients").text(majorIngredients.substring(1));
 
-    $("#meal-rating").find(".rating-star").each(function(key, value) {
+    $($("#meal-rating").find(".rating-star").get().reverse()).each(function(key, value) {
         if (mealDetails.avg_rating == (key + 1)) {
             $(this).trigger("click");
         }
@@ -253,7 +253,7 @@ function reviewsTab(mealDetails) {
             "<span class='description'>" + value.review + "</span></div>");
 
         var reviewsAll = $("#reviews .container").find(".list-review:last"),
-            starRating = $(reviewsAll).find(".rating-star")[value.rating - 1];
+            starRating = $($(reviewsAll).find(".rating-star").get().reverse())[value.rating - 1];
         $(reviewsAll).find(".rating-star").each(function(key, value) {
             $(value).addClass("disable-star");
         });

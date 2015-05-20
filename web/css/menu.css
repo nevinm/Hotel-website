@@ -155,6 +155,7 @@
 
 .filter-drop-down ul li:hover{
 	background-color: #E8E8E8;
+	color: #6b6b6b;
 }
 .filter-drop-down ul li div{
 	padding: 0px 21px;
@@ -163,8 +164,6 @@
 	border-bottom: 2px solid #a9d77b;
 	background-color: #F9F9F9;
 	box-sizing:border-box;
-	font-weight: bold;
-	color: #1a1a1a;
 }
 
 .listContainer{
