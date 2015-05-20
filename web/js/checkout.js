@@ -803,7 +803,6 @@ function placeOrder() {
         payment_type = "pp";
         var payPalEmail = "nazz007online-facilitator@gmail.com",
             returnUrl = "http://meisterdish.qburst.com/backend/api/paypal_success/",
-            //returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
             cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
             notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/";
             orderDetails = {
