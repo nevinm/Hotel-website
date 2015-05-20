@@ -76,7 +76,8 @@ $(document).ready(function() {
             stickyMenu.removeClass('fixedMenu');
         }
     });
-
+    
+    CartItemCount();
     getCategory();
     getmealList('', '', '', perPage, nextPage);
     infiniteScrolling();

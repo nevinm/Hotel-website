@@ -126,6 +126,7 @@ $(document).ready(function() {
     }
 
     getProfile();
+    CartItemCount();
     showAdminLink();
 });
 

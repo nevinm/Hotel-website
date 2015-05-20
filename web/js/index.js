@@ -2,6 +2,7 @@ $(document).ready(function() {
     ipadWidth = 767;
     isMobileRendered();
     destroyFullPageJS();
+    CartItemCount();
 });
 var mobileRendered;
 
