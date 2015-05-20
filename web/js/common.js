@@ -130,8 +130,8 @@ function showPopup(data) {
     var message = data.message;
     $('.popup-container .content span').text(message);
     $('.popup-wrapper').show();
-
-    $('#close').on("click", function() {
+}
+     $(document).on('click', '#close', function() {
         $('.popup-wrapper').hide();
         if (currentPage == "Meisterdish - Signup" || currentPage == "Meisterdish - Login") {
             if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
@@ -139,7 +139,7 @@ function showPopup(data) {
             }
         }
     })
-}
+
 
 //show Error popup
 function showErrorPopup(data) {

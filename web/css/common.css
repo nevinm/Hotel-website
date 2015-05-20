@@ -701,7 +701,7 @@ span.icon-menu {
 	padding: 15px;
 }
 .popup .content{
-	padding: 43px 0 !important;
+	/*padding: 43px 0 !important;*/
 	float: none !important;
 }
  .popup-container .content span{
@@ -710,14 +710,19 @@ span.icon-menu {
 	text-align: center;
 	font-family: 'BrandonGrotesque-Regular';
 	font-size: 16px;
-	padding: 5px 0;
+	padding: 20px 0;
 	color: #5C5C5C;
+	word-break:break-word;
 }
 
 .popup-container .button{
 	width: 100%;
 	text-align: center;
-	padding: 20px 0px;
+	padding: 10px 0px;
+	overflow: hidden;
+	position: absolute;
+	bottom: 0;
+	left: 0;
 }
 
 #signup-firstname-error,#signup-lastname-error,#signup-email-error,#signup-password-error,
