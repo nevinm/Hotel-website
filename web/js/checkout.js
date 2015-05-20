@@ -18,7 +18,6 @@ $(document).ready(function() {
     $(document).on('click', '#remove-cart-item', function() {
         var meal_id = $(this).parent().attr('data-id'); //may change
         removeCartItems(meal_id);
-        updateReciept();
     });
 
     $('.driver-tip').on('change', function() {
@@ -78,12 +77,7 @@ $(document).ready(function() {
         updateReciept();
     });
 
-    //PayPal payment
-    // $(".paypal").on('click', function() {
-       
-    // });
-
-    //populate year
+     //populate year
     function populateYear() {
         var currentYear = new Date().getFullYear();
         for (var i = 1; i <= 20; i++) {
@@ -220,7 +214,10 @@ var getCartItemsCallback = {
             populateDate(cartItems);
         } else {
             $('.order-list-items').remove();
+            $(".emtpy-cart-message").empty();
             $(".emtpy-cart-message").append("<span>"+cartItems.message+"</span>");
+            $(".emtpy-cart-message").show();
+            updateReciept();
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -302,14 +299,18 @@ function updateReciept() {
 //Remove cart items call back
 var removeCartItemsCallback = {
     success: function(data, textStatus) {
-        CartItemCount();
-        getCartItems();
-        var message = JSON.parse(data).message;
-        $('.popup-message span').text(message);
-        $('.popup-message').show();
-        setTimeout(function() {
-            $('.popup-message').hide();
-        }, 2000);
+        removeData = JSON.parse(data);
+        if(removeData.status==1){
+            CartItemCount(true);
+            getCartItems();
+            var message = removeData.message;
+            $('.popup-message span').text(message);
+            $('.popup-message').show();
+            setTimeout(function() {
+                $('.popup-message').hide();
+            }, 2000);
+        }
+        else{}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -331,7 +332,7 @@ function removeCartItems(meal_id) {
 //clear cart
 var clearCartCallback = {
     success: function(data, textStatus) {
-        CartItemCount();
+        CartItemCount(true);
         getCartItems();
         window.location.href = 'menu.html';
     },
@@ -797,8 +798,6 @@ function placeOrder() {
         saveParam = 1;
     }
 
-    
-
     if($("#pp").prop('checked') || $("#pp-guest").prop('checked')){
         payment_type = "pp";
         var payPalEmail = "nazz007online-facilitator@gmail.com",
@@ -915,5 +914,8 @@ function populateCreditCardDetails(){
  //  create oredr button disabled on uncheck 
 
  $(document).on('click', '#pp,#pp-guest,#cc,.added-card', function() {
-    $("#place-order").removeClass('button-disabled');
+    if(cartItems.status == 1){
+        $("#place-order").removeClass('button-disabled');
+    }else{
+    }
  });

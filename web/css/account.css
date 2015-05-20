@@ -258,19 +258,22 @@ span.body-text-small{
 	padding-top: 15px;
 }
 
-/*==================================*\
-			&CHANGE-ADDRESS
-\*==================================*/
-div#editaddress-container {
+/*============================================*\
+			&CHANGE-ADDRESS & REVIEW ADD
+\*============================================*/
+div#editaddress-container,
+ #review-container {
   margin-top: 10px;
   margin-bottom: 20px;
 }
-#editaddress-container .account-header{
+#editaddress-container .account-header, 
+#review-container .account-header{
 	font-size: 14px;
 	font-family: 'BrandonGrotesque-Bold';
 	padding: 10px 0 10px 20px; 
 }
-#editaddress-container .content{
+#editaddress-container .content, 
+#review-container .content{
 	 font-family: 'ProximaNova-regular';
 	 font-size: 12px;
 	 color: #9B9B9B;
@@ -299,19 +302,22 @@ ol{
 /*ol li{
 	list-style-type: decimal;
 }*/
-#editaddress-container .content ol li span{
+#editaddress-container .content ol li span,
+ #review-container .content ol li span{
 	width: 100%;
 	float: left;
 	padding: 6px 0;
 
 }
-#editaddress-container .content ol li span:last-child{
+#editaddress-container .content ol li span:last-child, 
+#review-container .content ol li span:last-child{
 	cursor: pointer;
 	font-family: 'BrandonGrotesque-Bold';
 	padding-top: 20px;
 	width: 240px;
 }
-#editaddress-container .content ol li span:nth-child(5){
+#editaddress-container .content ol li span:nth-child(5),
+#review-container .content ol li span:nth-child(5){
 	font-family: 'BrandonGrotesque-Bold';
 	padding-top: 20px;
 	width: 240px;
@@ -339,11 +345,13 @@ ol{
 .non-primary-address, .primary-address{
 	display: none;
 }
-#editaddress-container .content .message{
+#editaddress-container .content .message,
+#review-container .content .message{
 	display: none;
 	text-align: center;
 }
-#editaddress-container .content .message span{
+#editaddress-container .content .message span,
+#review-container .content .message span{
 	font-family: 'BrandonGrotesque-Regular';
 	font-size: 18px;
 	color: #A9D77B;	
@@ -646,6 +654,68 @@ form.addaddress-popup {
 	appearance:none !important;
 	-moz-appearance:none!important;
 }
+
+/*==================================*\
+			&REVIEWS
+\*==================================*/
+.meal-rewiew-wrapper{
+	width: 85%;
+	max-width: 1100px;
+}
+.meal-reviews-table{
+	display: table;
+	border-collapse: separate;
+	border-spacing: 10px;
+}
+.meal-review-container .user-reviews{
+	width: 80%;
+	height: 55px;
+	margin-left: 0px;
+	margin-right: 0px;
+	resize:none; 
+	font-family: 'ProximaNova-regular';
+	color: #9B9B9B;
+	border-radius: 3px;
+	border: 1px solid #D0D0D0;
+	padding: 8px;
+	background-color: #f1f1f1;
+}
+.meal-reviews-table a{
+	padding: 0;
+	margin: 0;
+}
+.meal-reviews-row {
+	display: table-row;
+}
+.meal-header-inner-second {
+	margin-left: 5px;
+}
+.meal-content{
+	max-height: 300px;
+	overflow: auto;
+}
+.meal-reivew-header{
+	margin-bottom: 20px;
+}
+.meal-reviews .details>*{
+	float: left;
+	line-height: 38px;
+}
+.meal-reviews .meal-name{
+	margin-left: 10px;
+}
+.meal-reivew-header>*{
+	width: 30%;
+	display:table-cell;
+}
+.meal-review-cell{
+	display: table-cell;
+	vertical-align: middle;
+}
+.meal-reviews .meal-image{
+	width: 60px;
+}
+
 /*==================================*\
 			&CHECHOUT PAGE
 \*==================================*/
@@ -1346,7 +1416,8 @@ input.radio-button-payment {
 		margin: 0 auto;
   		max-width: 400px;
 	}
-  	#editaddress-container{
+  	#editaddress-container,
+  	#review-container{
 		width: 90%;
 		margin: 0 auto;
 		max-width: 400px;
@@ -1376,7 +1447,8 @@ input.radio-button-payment {
 	.account-settings li{
 		color:#A9D77B;
 	}	
-	#editaddress-container .content ol li span:last-child{
+	#editaddress-container .content ol li span:last-child,
+	#review-container .content ol li span:last-child{
 		width: 300px;
 	}
 	.accordion-subcontent{
@@ -1526,7 +1598,8 @@ input.radio-button-payment {
   		.content .address{
   			padding-right: 10px;
   		}
-  		#editaddress-container .content ol li span:last-child{
+  		#editaddress-container .content ol li span:last-child,
+  		#review-container .content ol li span:last-child{
   			font-size: 11px;
   		}
   		.btn-large-primary, .btn-large-extended, .btn-large-secondary{

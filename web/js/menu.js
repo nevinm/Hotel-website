@@ -13,7 +13,8 @@ $(document).ready(function() {
         }
     });
     //Add to cart
-    $(document).on("click", '.addItemButton', function() {
+    $(document).on("click", '.addItemButton', function(e) {
+        e.preventDefault();
         var x = {},
             meal_id = $(this).attr('data-id');
         if (localStorage['loggedIn'] == 'true') {
@@ -102,7 +103,7 @@ var getCategoryCallback = {
         userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
             $.each(userDetails.categories, function(key, value) {
-                $('.category-wrapper .category-menu').append("<li class='menu-categories-list'><a href='#'" +
+                $('.category-wrapper .category-menu').append("<li class='menu-categories-list'><a href='javascript:void(0)'" +
                     " class='menu-categories' data-id='" + value.id + "'>" + value.name + "</a></li>");
             });
             $.each(userDetails.meal_types, function(key, value) {
@@ -182,7 +183,7 @@ function populateMealList(mealList, isInfinteScrolling) {
             "</section><section class='listItemDetails'>" +
             "<h3 class='pullLeft itemCost'>" + dollarConvert(value.price + value.tax) + "</h3>" +
             "<span class='menuItemDetails caption'>Brioche Bun, Avocado, Tomato, Red Onions.</span>" +
-            "<span><a href='#' class='btn btn-small-primary medium-green addItemButton' " +
+            "<span><a href='javascript:void(0)' class='btn btn-small-primary medium-green addItemButton' " +
             "data-id='" + value.id + "'>ADD</a></span>" +
             "</section></div>");
         if (value.available && !value.in_cart) {} else {
@@ -214,7 +215,7 @@ var addToCartCallback = {
         } else {
             $('*[data-id="' + mealId + '"]').addClass("button-disabled");
             showPopup(meal_details);
-            CartItemCount();
+            CartItemCount(true);
             if (meal_details.session_key && (meal_details.session_key).length) {
                 localStorage['session_key'] = meal_details.session_key;
             }
