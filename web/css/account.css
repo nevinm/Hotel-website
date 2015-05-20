@@ -1403,8 +1403,8 @@ input.radio-button-payment {
 	}
 	.left-wrapper{
 		display: block;
-		width: 100%;
-		max-width: 400px;
+		width: 400px;
+		max-width: 90%;
 		float: none;
 		margin: 0 auto;
 	}

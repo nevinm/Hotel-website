@@ -21,7 +21,7 @@
             }
             else{
                 $("#login-form")[0].reset();
-                var user_name = userDetails.user.first_name+ ' '+ userDetails.user.last_name;
+                var user_name = userDetails.user.first_name;
                 localStorage['username']=user_name;
                 localStorage['session_key']=userDetails.session_key;
                 localStorage['loggedIn']=true;
