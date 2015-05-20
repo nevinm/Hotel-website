@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    CartItemCount();
     //send email
     var forgotPasswordCallback = {
         success: function(data, textStatus) {

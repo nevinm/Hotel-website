@@ -5,6 +5,7 @@
 
 $(document).ready(function() {
 	setProfileImage();
+    CartItemCount();
     var dummyData={
         "get":1
     }

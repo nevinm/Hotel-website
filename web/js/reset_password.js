@@ -1,6 +1,5 @@
 $(document).ready(function() {
-    
-
+    CartItemCount();    
     var token = window.location.href.split("=")[1],
                                         password,
                                         newpassword ,

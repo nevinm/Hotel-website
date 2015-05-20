@@ -4,6 +4,7 @@ $(document).ready(function() {
         getCartItems();
         populateYear();
         savedCardDetails();
+        CartItemCount();
         setCurrentTime();
         getAddress();
     }else{
