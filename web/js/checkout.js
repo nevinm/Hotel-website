@@ -844,6 +844,7 @@ function placeOrder() {
                 "card_id": savedCardId
             }
         }else{
+            if ($("#pay-form").valid()) {
             var card_number = $('#card-number').val(),
                 cvv = $('#cvv-number').val(),
                 Exp_month = $("#ExpMonth").val(),
@@ -863,6 +864,7 @@ function placeOrder() {
                     "first_name" : firstname,
                     "last_name" : lastname,
                 }
+            }
         }
     data = JSON.stringify(params);
     var placeOrderInstance = new AjaxHttpSender();

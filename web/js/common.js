@@ -312,6 +312,21 @@ $("form").each(function() {
             cardnumber:{
                 required: true,
                 creditcard: true
+            },
+            nameOnCard:{
+                required:true,
+                minlength: 2,
+                maxlength: 20,
+                letters: true               
+            },
+            expirydate:{
+                required:true
+            },
+            cvv:{
+                number:true,
+                minlength:3,
+                maxlength:4,
+                required:true
             }
             // image_upload :{
             //     required:true
@@ -360,6 +375,9 @@ $("form").each(function() {
                 equalTo: "Email doesn't match.",
                 required: "Please provide email."
             },
+            nameOnCard:"Enter valid name.",
+            expiryMonth:"Enter exp month.",
+            expiryYear:"Enter exp year.",
             email: "Enter a valid email address.",
             zip: "Provide a valid zip.",
             street: "Provide a valid address.",
@@ -370,7 +388,8 @@ $("form").each(function() {
             mealtax: "Enter a valid meal tax.",
             mealname: "Enter a valid meal name.",
             chef_name: "Enter a valid chef name.",
-            mealdescription: "Meal description is not valid."
+            mealdescription: "Meal description is not valid.",
+            cvv:"provide a valid cvv."
                 // image_upload:"Please select an image."
         }
     });
