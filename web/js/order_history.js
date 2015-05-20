@@ -20,8 +20,9 @@
    }
 
    $(document).ready(function() {
-       // &ACCORDION
        getOrders();
+       CartItemCount();
+       // &ACCORDION
        $(document).on('click', '.accordion-header', function() {
            $(".accordion-content").slideUp();
 

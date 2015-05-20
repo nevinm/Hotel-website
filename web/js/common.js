@@ -1,7 +1,9 @@
 var baseURL = 'http://meisterdish.qburst.com/backend/api/',
-    userDetails, currentPage = $("title").text(),clicked=0;
+    userDetails, currentPage = $("title").text(),
+    clicked = 0;
 //If already logged in
 var $userentry = $('.login-signup');
+
 function checkLoggedIn() {
     if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
         $userentry.hide();
@@ -31,12 +33,10 @@ function dollarConvert(value) {
 }
 
 // delivery_time : 04-28-2015 20:15:20
-function getCurrentDateTime(days){
+function getCurrentDateTime(days) {
     var currentdate = new Date();
-    currentdate.setDate(currentdate.getDate()+days);
-    return datetime = ('0' + (currentdate.getMonth()+1)).slice(-2)  + "-" 
-                +('0'+ currentdate.getDate()).slice(-2) + "-"
-                + currentdate.getFullYear();
+    currentdate.setDate(currentdate.getDate() + days);
+    return datetime = ('0' + (currentdate.getMonth() + 1)).slice(-2) + "-" + ('0' + currentdate.getDate()).slice(-2) + "-" + currentdate.getFullYear();
 }
 
 function getCurrentHour() {
@@ -48,17 +48,17 @@ function getCurrentHour() {
     return strTime;
 }
 
-function getMonthDate(currentDate){
+function getMonthDate(currentDate) {
     return currentDate.replace(/\-/g, "/").substring(0, 5);
 }
 
 
-function getCurrentYear(){
+function getCurrentYear() {
     var currentdate = new Date();
     return currentdate.getFullYear();
 }
 
-function getDateTimeRequiredFormat(date){
+function getDateTimeRequiredFormat(date) {
     return date.replace(/\//g, "-");
 }
 
@@ -133,14 +133,14 @@ function showPopup(data) {
     $('.popup-container .content span').text(message);
     $('.popup-wrapper').show();
 }
-     $(document).on('click', '#close', function() {
-        $('.popup-wrapper').hide();
-        if (currentPage == "Meisterdish - Signup" || currentPage == "Meisterdish - Login") {
-            if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
-                window.location.href = 'menu.html';
-            }
+$(document).on('click', '#close', function() {
+    $('.popup-wrapper').hide();
+    if (currentPage == "Meisterdish - Signup" || currentPage == "Meisterdish - Login") {
+        if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
+            window.location.href = 'menu.html';
         }
-    })
+    }
+})
 
 
 //show Error popup
@@ -160,41 +160,40 @@ $(document).ready(function() {
 
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
-        clicked =1;
+        clicked = 1;
         $('.navMenu').show();
         $('#header').animate({
-            marginLeft:"60%"
-        })
-        // $("#page-container").css("position","fixed")
+                marginLeft: "60%"
+            })
+            // $("#page-container").css("position","fixed")
         $('#page-container').animate({
-             marginLeft:"60%"
+            marginLeft: "60%"
         })
         $('.navMenu').animate({
-            marginLeft:"0"
+            marginLeft: "0"
         });
-        setTimeout(function(){
-           $('.icon-menu').addClass('icon-cancel').removeClass('icon-menu'); 
-       },100)
+        setTimeout(function() {
+            $('.icon-menu').addClass('icon-cancel').removeClass('icon-menu');
+        }, 100)
     });
-   $(document).on('click', '.icon-cancel', function() {
+    $(document).on('click', '.icon-cancel', function() {
         clicked = 0;
         $('.navMenu').animate({
-            marginLeft:"-60%"
+            marginLeft: "-60%"
         });
         // $("#page-container").css("position","relative");
         $('#page-container').animate({
-            marginLeft:"0px"
-        })        
-        $('#header').animate({
-            marginLeft:"0px"
+            marginLeft: "0px"
         })
-        setTimeout(function(){
-           $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel'); 
-       },600)
+        $('#header').animate({
+            marginLeft: "0px"
+        })
+        setTimeout(function() {
+            $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
+        }, 600)
     })
 
     verifyAccount();
-    CartItemCount();
 });
 
 //JQuery Validation   
@@ -381,26 +380,25 @@ if ($.validator) {
 var CartItemCountCallback = {
     success: function(data, textStatus) {
         var numOfItems = JSON.parse(data);
-        $('span.count').text(numOfItems.count);
-        localStorage['CartItemCount'] = numOfItems.count;
+        if(numOfItems.status == 1){
+            $('span.count').text(numOfItems.count);
+        }
+        else{
+            $('span.count').text('0');
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
 function CartItemCount(added) {
-    if (localStorage.getItem("CartItemCount") === null || added) {
-        var url = baseURL + 'get_cart_items_count/',
-            header = {
-                "session-key": localStorage["session_key"]
-            },
-            params = {};
-        data = JSON.stringify(params);
-        var CartItemCountInstance = new AjaxHttpSender();
-        CartItemCountInstance.sendPost(url, header, data, CartItemCountCallback);
-    }   
-    else{
-        $('span.count').text(localStorage['CartItemCount']);
-    }
+    var url = baseURL + 'get_cart_items_count/',
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {};
+    data = JSON.stringify(params);
+    var CartItemCountInstance = new AjaxHttpSender();
+    CartItemCountInstance.sendPost(url, header, data, CartItemCountCallback);
 }
 
 //Used to add form fields - paypal.
@@ -415,23 +413,22 @@ function addFormFields(form, data) {
     }
 }
 
-$(window).resize(function(){
+$(window).resize(function() {
     mobileResponsive();
 });
 
-$(window).load(function(){
+$(window).load(function() {
     mobileResponsive();
 });
 
-function mobileResponsive(){
-    if ($(window).width() <= 767 && $(window).width() >= 320){ 
-        if(clicked ==1){
-            $('#page-container').css("margin-left","60%");
-            $('#header').css("margin-left","60%");
+function mobileResponsive() {
+    if ($(window).width() <= 767 && $(window).width() >= 320) {
+        if (clicked == 1) {
+            $('#page-container').css("margin-left", "60%");
+            $('#header').css("margin-left", "60%");
         }
-    }
-    else{
-        $('#page-container').css("margin-left","0px");
-        $('#header').css("margin-left","0px");
+    } else {
+        $('#page-container').css("margin-left", "0px");
+        $('#header').css("margin-left", "0px");
     }
 }

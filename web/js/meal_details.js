@@ -1,5 +1,6 @@
 $(document).ready(function() {
     tabRendering();
+    CartItemCount();
     var mealId = getParameterFromUrl("mealId");
     getMealDetails(mealId);
 
