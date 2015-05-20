@@ -568,6 +568,8 @@ def paypal_success(request, data):
         except KeyError as e:
             log.error("Paypal success error - Failed to create order object " + txn_id + e.message)
             error = "?error="+e.message
+        except Cart.DoesNotExist:
+            raise Exception("There are no items in cart.")
     except KeyError as e:
         log.error("Paypal success Error : " + e.message)
         error = "?error=Failed to verify payment."
