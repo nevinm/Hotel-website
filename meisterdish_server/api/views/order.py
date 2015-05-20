@@ -510,13 +510,13 @@ def paypal_success(request, data):
         paypal_response = verify_paypal_transaction(txn_id)
         if not paypal_response:
             log.error("Failed to verify paypal transaction.")
-            success=False
+            return HttpResponse("Failed to verify transaction. Please contact customer support.")
         else:
             payment = save_payment_data(paypal_response)
             if not payment:
-                success = False
+                return HttpResponse("Failed to update transaction details. Please contact customer support.")
 
-        custom = simplejson.loads(str(unquote(paypal_response["cm"])))
+        custom = simplejson.loads(str(unquote(paypal_response["custom"])))
         session_key = custom["session_key"]
         if session_key == "":
             log.error("PayPal Success: Invalid user session")
@@ -527,9 +527,8 @@ def paypal_success(request, data):
             return HttpResponse("No user session found.")
 
         try:
-            order = Order.objects.get(transaction_id=None, payment=None, cart__completed=False, cart__user__pk=user_dic["id"], status=0)
-            if not success:
-                return HttpResponse("Failed to verify transaction. Please contact customer support.")
+            order = Order()
+            order.cart = Cart.objects.get(user__pk=user_dic["id"], completed=False)
 
             if float(paypal_response["payment_gross"]) != float(order.grand_total):
                 log.error("Paypal success : order and payment amounts not matching.")
@@ -538,10 +537,16 @@ def paypal_success(request, data):
             order.transaction_id = txn_id
             order.payment = payment
             order.status = 1
+            order.delivery_time = custom["delivery_time"].strftime("%m/%d/%Y %H:%M:%S"),
+            order.billing_address = Address.objects.get(pk=custom["billing_address"])
+            order.delivery_address = Address.objects.get(pk=custom["delivery_address"])
+            order.tip = float(custom["tip"])
+            order.driver_instructions = custom["driver_instructions"]
+    
             order.save()
             error = ""
         except Exception as e:
-            log.error("Paypal success - No valid Order Found with the given transaction ID " + txn_id)
+            log.error("Paypal success error - Failed to create order object " + txn_id)
             error = "?error="+e.message
     except Exception as e:
         log.error("Paypal success Error : " + e.message)
