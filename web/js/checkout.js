@@ -18,7 +18,6 @@ $(document).ready(function() {
     $(document).on('click', '#remove-cart-item', function() {
         var meal_id = $(this).parent().attr('data-id'); //may change
         removeCartItems(meal_id);
-        updateReciept();
     });
 
     $('.driver-tip').on('change', function() {
@@ -218,6 +217,7 @@ var getCartItemsCallback = {
             $(".emtpy-cart-message").empty();
             $(".emtpy-cart-message").append("<span>"+cartItems.message+"</span>");
             $(".emtpy-cart-message").show();
+            updateReciept();
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -299,14 +299,18 @@ function updateReciept() {
 //Remove cart items call back
 var removeCartItemsCallback = {
     success: function(data, textStatus) {
-        CartItemCount(true);
-        getCartItems();
-        var message = JSON.parse(data).message;
-        $('.popup-message span').text(message);
-        $('.popup-message').show();
-        setTimeout(function() {
-            $('.popup-message').hide();
-        }, 2000);
+        removeData = JSON.parse(data);
+        if(removeData.status==1){
+            CartItemCount(true);
+            getCartItems();
+            var message = removeData.message;
+            $('.popup-message span').text(message);
+            $('.popup-message').show();
+            setTimeout(function() {
+                $('.popup-message').hide();
+            }, 2000);
+        }
+        else{}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -794,8 +798,6 @@ function placeOrder() {
         saveParam = 1;
     }
 
-    
-
     if($("#pp").prop('checked') || $("#pp-guest").prop('checked')){
         payment_type = "pp";
         var payPalEmail = "nazz007online-facilitator@gmail.com",
@@ -912,5 +914,8 @@ function populateCreditCardDetails(){
  //  create oredr button disabled on uncheck 
 
  $(document).on('click', '#pp,#pp-guest,#cc,.added-card', function() {
-    $("#place-order").removeClass('button-disabled');
+    if(cartItems.status == 1){
+        $("#place-order").removeClass('button-disabled');
+    }else{
+    }
  });
