@@ -538,18 +538,25 @@ def paypal_success(request, data):
         try:
             order = Order()
             order.cart = Cart.objects.get(user__pk=user_dic["id"], completed=False)
-
-            if float(paypal_response["payment_gross"]) != float(order.grand_total):
-                log.error("Paypal success : order and payment amounts not matching.")
+            order.tip = float(custom["tip"])
+            (price, tax) = get_cart_total(order.cart)
+            if float(price) == float(0):
+                raise Exception("There are no items in cart or the cart amount is 0.")
+            
+            if float(paypal_response["payment_gross"]) !=  price + tax + order.tip + settings.SHIPPING_CHARGE:
+                log.error("Paypal success : order and payment amounts not matching. "+ str(paypal_response["payment_gross"]) + " != " + str(get_cart_total(order.cart) + order.tip + settings.SHIPPING_CHARGE))
                 return HttpResponse("The paid amount is different from order amount.")
 
+            order.total_amount = price
+            order.total_tax = tax
             order.transaction_id = txn_id
             order.payment = payment
             order.status = 1
-            order.delivery_time = custom["delivery_time"].strftime("%m/%d/%Y %H:%M:%S"),
+            order.delivery_time = datetime.strptime(custom["delivery_time"], "%m/%d/%Y %H:%M:%S"),
             order.billing_address = Address.objects.get(pk=custom["billing_address"])
             order.delivery_address = Address.objects.get(pk=custom["delivery_address"])
-            order.tip = float(custom["tip"])
+
+            
             order.driver_instructions = custom["driver_instructions"]
     
             order.save()
@@ -558,13 +565,27 @@ def paypal_success(request, data):
             order.cart.save()
 
             error = ""
-        except Exception as e:
-            log.error("Paypal success error - Failed to create order object " + txn_id)
+        except KeyError as e:
+            log.error("Paypal success error - Failed to create order object " + txn_id + e.message)
             error = "?error="+e.message
+        except Cart.DoesNotExist:
+            raise Exception("There are no items in cart.")
     except KeyError as e:
         log.error("Paypal success Error : " + e.message)
         error = "?error=Failed to verify payment."
-    return HttpResponseRedirect("http://meisterdish.qburst.com/views/checkout.html" + error)
+    return HttpResponse("http://meisterdish.qburst.com/views/checkout.html" + error)
+
+def get_cart_total(cart):
+    try:
+        amount = 0.0
+        tax = 0.0
+        for ci in CartItem.objects.filter(cart=cart, cart__completed=False):
+            amount += ci.meal.price
+            tax += ci.meal.tax
+        
+    except Exception as e:
+        log.error("Error getting cart total: " + e.message)
+    return (amount, tx)
 
 def save_payment_data(paypal_response):
     try:

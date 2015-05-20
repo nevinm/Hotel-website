@@ -342,10 +342,10 @@ class Order(models.Model):
     
     cart = models.ForeignKey(Cart)
 
-    total_amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
-    total_tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
+    total_amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
+    total_tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
     tip = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(1000)])
-    grand_total = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
+    grand_total = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
     
     delivery_address = models.ForeignKey(Address, related_name="delivery_address")
     billing_address = models.ForeignKey(Address, related_name="billing_address")
