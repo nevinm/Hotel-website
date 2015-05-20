@@ -920,11 +920,12 @@ function populateCreditCardDetails(){
     }
  }
 
- //  create oredr button disabled on uncheck 
-
- $(document).on('click', '#pp,#pp-guest,#cc,.added-card', function() {
-    if(cartItems.status == 1){
+function validateCheckOrder(){
+    if(cartItems.status && $(".checkout-time-button-active").length){
         $("#place-order").removeClass('button-disabled');
-    }else{
-    }
+    }else{}
+}
+ //  create oredr button disabled on uncheck 
+ $(document).on('click', '#pp,#pp-guest,#cc,.added-card', function() {
+    validateCheckOrder();
  });
