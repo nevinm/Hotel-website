@@ -552,6 +552,7 @@ span.icon-menu {
     top: -6px;
     right: 6px;
     color: white;
+    min-width: 15px;
     background-color: #A9D77B;
     font-size: 12px;
     padding: 0px 5px;

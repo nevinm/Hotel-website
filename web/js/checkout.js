@@ -78,12 +78,7 @@ $(document).ready(function() {
         updateReciept();
     });
 
-    //PayPal payment
-    // $(".paypal").on('click', function() {
-       
-    // });
-
-    //populate year
+     //populate year
     function populateYear() {
         var currentYear = new Date().getFullYear();
         for (var i = 1; i <= 20; i++) {
@@ -220,7 +215,9 @@ var getCartItemsCallback = {
             populateDate(cartItems);
         } else {
             $('.order-list-items').remove();
+            $(".emtpy-cart-message").empty();
             $(".emtpy-cart-message").append("<span>"+cartItems.message+"</span>");
+            $(".emtpy-cart-message").show();
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -302,7 +299,7 @@ function updateReciept() {
 //Remove cart items call back
 var removeCartItemsCallback = {
     success: function(data, textStatus) {
-        CartItemCount();
+        CartItemCount(true);
         getCartItems();
         var message = JSON.parse(data).message;
         $('.popup-message span').text(message);
@@ -331,7 +328,7 @@ function removeCartItems(meal_id) {
 //clear cart
 var clearCartCallback = {
     success: function(data, textStatus) {
-        CartItemCount();
+        CartItemCount(true);
         getCartItems();
         window.location.href = 'menu.html';
     },

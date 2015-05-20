@@ -214,7 +214,7 @@ var addToCartCallback = {
         } else {
             $('*[data-id="' + mealId + '"]').addClass("button-disabled");
             showPopup(meal_details);
-            CartItemCount();
+            CartItemCount(true);
             if (meal_details.session_key && (meal_details.session_key).length) {
                 localStorage['session_key'] = meal_details.session_key;
             }
