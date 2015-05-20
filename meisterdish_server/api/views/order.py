@@ -289,12 +289,18 @@ def create_order(request, data, user):
         if 'delivery_address' in data:
             del_address = Address.objects.get(user=user, pk=data['delivery_address'])
         else:
-            del_address = user.user_address.get(is_primary=True).id
+            try:
+                del_address = user.user_address.get(is_primary=True).id
+            except:
+                return custom_error("Please choose a valid delivery address.")
         
         if 'billing_address' in data:
             bil_address = Address.objects.get(user=user, pk=data['billing_address'])
         else:
-            bil_address = user.user_address.get(is_primary=True).id
+            try:
+                bil_address = user.user_address.get(is_primary=True).id
+            except:
+                return custom_error("Please choose a valid billing address.")
         
         items = CartItem.objects.filter(cart__user=user, cart__completed=False)
         if not items.exists():
@@ -498,7 +504,7 @@ def paypal_success(request, data):
     try:
         log.info("PAYPAL Success")
         log.info(dict(data))
-        if "st" not in data or data["st"] != "Completed":
+        if "st" not in data or data["st"].lower() != "completed":
             log.error("PayPal Success: status not 'Completed' : " + data["st"])
             return HttpResponse("Payment failed.")
 
@@ -506,7 +512,6 @@ def paypal_success(request, data):
         if txn_id.strip() == "":
             return HttpResponse("Invalid payment.")
         
-        success = True
         paypal_response = verify_paypal_transaction(txn_id)
         if not paypal_response:
             log.error("Failed to verify paypal transaction.")
@@ -515,9 +520,16 @@ def paypal_success(request, data):
             payment = save_payment_data(paypal_response)
             if not payment:
                 return HttpResponse("Failed to update transaction details. Please contact customer support.")
-
+        
+        log.info(paypal_response["custom"])
+        
+        log.info("==========")
         custom = simplejson.loads(str(unquote(paypal_response["custom"])))
-        session_key = custom["session_key"]
+        
+        log.info("---------------")
+        log.info(custom)
+        
+        session_key = custom["session-key"]
         if session_key == "":
             log.error("PayPal Success: Invalid user session")
             return HttpResponse("Invalid session.")
@@ -544,11 +556,15 @@ def paypal_success(request, data):
             order.driver_instructions = custom["driver_instructions"]
     
             order.save()
+
+            order.cart.completed=True
+            order.cart.save()
+            
             error = ""
         except Exception as e:
             log.error("Paypal success error - Failed to create order object " + txn_id)
             error = "?error="+e.message
-    except Exception as e:
+    except KeyError as e:
         log.error("Paypal success Error : " + e.message)
         error = "?error=Failed to verify payment."
     return HttpResponseRedirect("http://meisterdish.qburst.com/views/checkout.html" + error)
