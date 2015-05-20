@@ -549,6 +549,8 @@ def paypal_success(request, data):
             order.delivery_time = custom["delivery_time"].strftime("%m/%d/%Y %H:%M:%S"),
             order.billing_address = Address.objects.get(pk=custom["billing_address"])
             order.delivery_address = Address.objects.get(pk=custom["delivery_address"])
+            log.error(custom["tip"])
+            log.error("nazz")
             order.tip = float(custom["tip"])
             order.driver_instructions = custom["driver_instructions"]
     
@@ -559,7 +561,7 @@ def paypal_success(request, data):
 
             error = ""
         except Exception as e:
-            log.error("Paypal success error - Failed to create order object " + txn_id)
+            log.error("Paypal success error - Failed to create order object " + txn_id + e.message)
             error = "?error="+e.message
     except KeyError as e:
         log.error("Paypal success Error : " + e.message)
