@@ -373,7 +373,7 @@ function updateCartItems(meal_id, quantity) {
     updateCartItemsInstance.sendPost(url, header, data, updateCartItemsCallback);
 }
 
-function checkOutPayPal(serviceName, merchantID, options) {
+function checkOutPayPal(serviceName, merchantID, options, orderDetails) {
         // global data
         var data = {
             cmd: "_cart",
@@ -395,7 +395,7 @@ function checkOutPayPal(serviceName, merchantID, options) {
         }
         data["shipping_" + counter] = 2;
         data["handling_" + counter] = parseInt($('.driver-tip option:selected').text().substring(1));
-        data['custom'] = JSON.stringify(data);
+        data['custom'] = JSON.stringify(orderDetails);
         // build form
         var form = $('<form/></form>');
         form.attr("action", "https://www.sandbox.paypal.com/cgi-bin/webscr");
@@ -805,12 +805,21 @@ function placeOrder() {
             returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
             cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
             notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/";
+            orderDetails = {
+                "delivery_time": deliveryTime,
+                "billing_address": billingAddressId,
+                "delivery_address": addressId,
+                "payment_type": "pp", 
+                "tip": driverTip, 
+                "driver_instructions": driverInstr,
+                "session-key": localStorage["session_key"]
+            }
         checkOutPayPal("PayPal", payPalEmail, {
             "return": returnUrl,
             "cancel_return": cancelReturnUrl,
             "notify_url": notifyUrl,
             "my_temp_id": "hai nazz"
-        });
+        },orderDetails);
     }else{
         if($("#cc").prop('checked')){
             payment_type = "cc";
