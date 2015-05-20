@@ -2,6 +2,22 @@ var baseURL = 'http://meisterdish.qburst.com/backend/api/',
     userDetails, currentPage = $("title").text(),clicked=0;
 //If already logged in
 var $userentry = $('.login-signup');
+function checkLoggedIn() {
+    if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
+        $userentry.hide();
+        $('#navbar-username a').text(localStorage['username']);
+        $(".account-header h2").text(localStorage['username'] + "'S ACCOUNT");
+        $('#menu').addClass('menuPadding');
+        $('.delivery-info-container').show();
+        $('.delivery-info-guest-container').hide();
+    } else {
+        $userentry.show();
+        $("#logout").hide();
+        $('#menu').removeClass('menuPadding');
+        $('li#navbar-username').hide();
+    }
+}
+checkLoggedIn();
 
 function redirectIfLoggedIn() {
     if (localStorage['loggedIn'] == 'true') {
@@ -53,21 +69,7 @@ function getParameterFromUrl(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function checkLoggedIn() {
-    if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
-        $userentry.hide();
-        $('#navbar-username a').text(localStorage['username']);
-        $(".account-header h2").text(localStorage['username'] + "'S ACCOUNT");
-        $('#menu').addClass('menuPadding');
-        $('.delivery-info-container').show();
-        $('.delivery-info-guest-container').hide();
-    } else {
-        $userentry.show();
-        $("#logout").hide();
-        $('#menu').removeClass('menuPadding');
-        $('li#navbar-username').hide();
-    }
-}
+
 
 function verifyAccount() {
     var verify_url = window.location.href;
@@ -192,7 +194,6 @@ $(document).ready(function() {
        },600)
     })
 
-    checkLoggedIn();
     verifyAccount();
     CartItemCount();
 });
