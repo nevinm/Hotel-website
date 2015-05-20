@@ -523,11 +523,7 @@ def paypal_success(request, data):
         
         log.info(paypal_response["custom"])
         
-        log.info("==========")
         custom = simplejson.loads(str(unquote(paypal_response["custom"])))
-        
-        log.info("---------------")
-        log.info(custom)
         
         session_key = custom["session-key"]
         if session_key == "":
@@ -535,7 +531,8 @@ def paypal_success(request, data):
             return HttpResponse("Invalid session.")
         try:
             user = user_dic = SessionStore(session_key=session_key)["user"]
-        except:
+        except Exception as e:
+            log.error("Failed to load session from paypal response")
             return HttpResponse("No user session found.")
 
         try:
@@ -559,7 +556,7 @@ def paypal_success(request, data):
 
             order.cart.completed=True
             order.cart.save()
-            
+
             error = ""
         except Exception as e:
             log.error("Paypal success error - Failed to create order object " + txn_id)
