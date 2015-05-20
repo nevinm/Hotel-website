@@ -539,15 +539,20 @@ def paypal_success(request, data):
             order = Order()
             order.cart = Cart.objects.get(user__pk=user_dic["id"], completed=False)
             order.tip = float(custom["tip"])
-
-            if float(paypal_response["payment_gross"]) != get_cart_total(order.cart) + order.tip + settings.SHIPPING_CHARGE:
+            (price, tax) = get_cart_total(order.cart)
+            if float(price) == float(0):
+                raise Exception("There are no items in cart or the cart amount is 0.")
+            
+            if float(paypal_response["payment_gross"]) !=  price + tax + order.tip + settings.SHIPPING_CHARGE:
                 log.error("Paypal success : order and payment amounts not matching. "+ str(paypal_response["payment_gross"]) + " != " + str(get_cart_total(order.cart) + order.tip + settings.SHIPPING_CHARGE))
                 return HttpResponse("The paid amount is different from order amount.")
 
+            order.total_amount = price
+            order.total_tax = tax
             order.transaction_id = txn_id
             order.payment = payment
             order.status = 1
-            order.delivery_time = custom["delivery_time"].strftime("%m/%d/%Y %H:%M:%S"),
+            order.delivery_time = datetime.strptime(custom["delivery_time"], "%m/%d/%Y %H:%M:%S"),
             order.billing_address = Address.objects.get(pk=custom["billing_address"])
             order.delivery_address = Address.objects.get(pk=custom["delivery_address"])
 
@@ -560,7 +565,7 @@ def paypal_success(request, data):
             order.cart.save()
 
             error = ""
-        except Exception as e:
+        except KeyError as e:
             log.error("Paypal success error - Failed to create order object " + txn_id + e.message)
             error = "?error="+e.message
     except KeyError as e:
@@ -570,13 +575,15 @@ def paypal_success(request, data):
 
 def get_cart_total(cart):
     try:
-        total = 0.0
+        amount = 0.0
+        tax = 0.0
         for ci in CartItem.objects.filter(cart=cart, cart__completed=False):
-            total += ci.meal.price + ci.meal.tax 
-        return total
-    except KeyError as e:
+            amount += ci.meal.price
+            tax += ci.meal.tax
+        
+    except Exception as e:
         log.error("Error getting cart total: " + e.message)
-        return 0.0
+    return (amount, tx)
 
 def save_payment_data(paypal_response):
     try:
