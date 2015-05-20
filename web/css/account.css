@@ -62,10 +62,11 @@ box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
 	display: none;
 }
 .accountNav {
-  width: 75%;
+  width: 90%;
   margin: 20px auto;
   padding-top: 23px;
   overflow: auto;
+  max-width: 1100px;
 }
 .backNav {
   float: left;
@@ -149,9 +150,10 @@ ul.accordion-content li {
 			&FORM
 \*==================================*/
 .account-wrapper{
-	width: 75%;
+	width: 90%;
 	margin: 0 auto;
 	/*overflow: auto;*/
+	max-width: 1100px;
 }
 form.form{
 	width: 60%;
@@ -652,6 +654,7 @@ form.addaddress-popup {
   margin: 0 auto;
   margin-top: 70px;
   display: table;
+  max-width: 1100px;
 }
 .box-border{
 	border:1px solid #D0D0D0;
@@ -866,6 +869,9 @@ form.addaddress-popup {
   min-height: 260px;
   position: relative;
 }
+.address-info-guest .content-heading{
+	text-transform: uppercase;
+}
 .address-info .contents{
 	padding-left: 30px;
 	padding-top: 20px;
@@ -932,7 +938,7 @@ form.addaddress-popup {
 }
 #guest-address-info .section3 .forminput-wrapper .styled-select{
 	width: 100%;
-  	background: url(../images/selector_arrow.png) no-repeat 110px 6px #f7f7f7;
+  	background: url(../images/selector_arrow.png) no-repeat 97% 50% #f7f7f7;
 }
 #guest-address-info .section1 .forminput-wrapper{
 	width: 48%;
@@ -942,6 +948,8 @@ form.addaddress-popup {
 	float: left;
 	padding-bottom: 20px;
 	display: none;
+	position: relative;
+	left: 30px;
 
 }
 form#pay-form {
@@ -969,8 +977,9 @@ form#pay-form {
 	padding-top: 20px;
 	width: 30%;
 }
-.pay-by-credit-container .forminput-wrapper:nth-child(3) .styled-select{
-	background-position: 78px 6px;
+.pay-by-credit-container .forminput-wrapper:nth-child(3) .styled-select,
+.pay-by-credit-container .forminput-wrapper:nth-child(5) .styled-select{
+	background-position: 97% 50%;
 }
 .pay-by-credit-container .div{
 	width: 4%;
@@ -984,9 +993,6 @@ form#pay-form {
 	padding-top: 43px;
 	width: 28%;
 	margin-right: 4%;
-}
-.pay-by-credit-container .forminput-wrapper:nth-child(5) .styled-select{
-	background-position: 52px 6px;
 }
 .pay-by-credit-container .forminput-wrapper:nth-child(6){
 	padding-top: 20px;
@@ -1206,6 +1212,10 @@ input.radio-button-payment {
 .payment-popup-sub-container label{
 	width: 80%;
 }
+#guest-address-info .button{
+	float: left;
+	padding: 20px 0;
+}
 /*==================================*\
 			&TABLET
 \*==================================*/
@@ -1299,7 +1309,8 @@ input.radio-button-payment {
 		margin-left: 13px;
 	}
 	.account-wrapper{
-		width: 100%;
+		width: 90%;
+		max-width: 1100px;
 	}
 	#changecontact-container, #changeemail-container, #changepassword-container {
 		float: none;
@@ -1482,6 +1493,7 @@ input.radio-button-payment {
 	}
 	.payment-method-guest-container{
 		padding: 0 20px;
+		left: 0;
 	}
 	..delivery-info-container{
 		width: 100%;
