@@ -554,9 +554,10 @@ span.icon-menu {
     color: white;
     background-color: #A9D77B;
     font-size: 12px;
-    padding: 0px 5px;
     font-weight: bold;
     height: 18px;
+    width: 18px;
+    text-align: center;
 }
 
 .menuPadding {
