@@ -1,4 +1,5 @@
 var baseURL = 'http://meisterdish.qburst.com/backend/api/',
+    homeUrl = "http://meisterdish.qburst.com",
     userDetails, currentPage = $("title").text(),
     clicked = 0;
 //If already logged in

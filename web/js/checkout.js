@@ -1,4 +1,9 @@
-var billingAddressId,cardDetails;
+var billingAddressId,cardDetails,
+    payPalEmail = "nazz007online-facilitator@gmail.com",
+    returnUrl = baseURL+"paypal_success/",
+    cancelReturnUrl = homeUrl+"/views/checkout.html",
+    notifyUrl = baseURL+"paypal_ipn/";
+
 $(document).ready(function() {
     if(localStorage["session_key"]){
         getCartItems();
@@ -801,10 +806,7 @@ function placeOrder() {
 
     if($("#pp").prop('checked') || $("#pp-guest").prop('checked')){
         payment_type = "pp";
-        var payPalEmail = "nazz007online-facilitator@gmail.com",
-            returnUrl = "http://meisterdish.qburst.com/backend/api/paypal_success/",
-            cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
-            notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/";
+        var 
             orderDetails = {
                 "delivery_time": deliveryTime,
                 "billing_address": billingAddressId,
