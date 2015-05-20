@@ -373,7 +373,7 @@ body {
 }
 
 .bold {
-    font-weight: bold;
+    font-family: 'BrandonGrotesque-Bold' !important;
 }
 
 .hide {
@@ -501,7 +501,7 @@ label {
 
 .contentArea {
     max-width: 1100px;
-    width: 100%;
+    width: 90%;
     margin: 0 auto;
 }
 
@@ -527,6 +527,7 @@ label {
 .logo {
     width: 262px;
     height: 29px;
+    margin-top: 5px;
 }
 
 span.icon-menu {
@@ -541,7 +542,7 @@ span.icon-menu {
 .cart {
     position: relative;
     cursor: pointer;
-    margin-top: 6px;
+    margin-top: 10px;
     padding-right: 10px;
 }
 
@@ -555,13 +556,14 @@ span.icon-menu {
     min-width: 15px;
     background-color: #A9D77B;
     font-size: 12px;
-    padding: 0px 5px;
     font-weight: bold;
     height: 18px;
+    min-width: 18px;
+    text-align: center;
 }
 
 .menuPadding {
-    padding-top: 6px;
+    padding-top: 10px;
 }
 .logo-mobile{
 	display: none;
@@ -888,7 +890,6 @@ span.icon-menu {
         display: none;
     }
     .cart {
-        margin-right: 25px;
         margin-top: 9px;
         margin-left: 25px;
     }
@@ -987,6 +988,9 @@ span.icon-menu {
     }
     .logo {
         display: none;
+    }
+    .contentArea{
+    	padding: 0;
     }
     ul#menu {
         display: none;
