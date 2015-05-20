@@ -504,7 +504,7 @@ def paypal_success(request, data):
     try:
         log.info("PAYPAL Success")
         log.info(dict(data))
-        if "st" not in data or data["st"] != "Completed":
+        if "st" not in data or data["st"].lower() != "completed":
             log.error("PayPal Success: status not 'Completed' : " + data["st"])
             return HttpResponse("Payment failed.")
 
@@ -512,7 +512,6 @@ def paypal_success(request, data):
         if txn_id.strip() == "":
             return HttpResponse("Invalid payment.")
         
-        success = True
         paypal_response = verify_paypal_transaction(txn_id)
         if not paypal_response:
             log.error("Failed to verify paypal transaction.")
@@ -521,11 +520,16 @@ def paypal_success(request, data):
             payment = save_payment_data(paypal_response)
             if not payment:
                 return HttpResponse("Failed to update transaction details. Please contact customer support.")
+        
         log.info(paypal_response["custom"])
+        
+        log.info("==========")
         custom = simplejson.loads(str(unquote(paypal_response["custom"])))
+        
         log.info("---------------")
         log.info(custom)
-        session_key = custom["session_key"]
+        
+        session_key = custom["session-key"]
         if session_key == "":
             log.error("PayPal Success: Invalid user session")
             return HttpResponse("Invalid session.")
@@ -552,6 +556,10 @@ def paypal_success(request, data):
             order.driver_instructions = custom["driver_instructions"]
     
             order.save()
+
+            order.cart.completed=True
+            order.cart.save()
+            
             error = ""
         except Exception as e:
             log.error("Paypal success error - Failed to create order object " + txn_id)
