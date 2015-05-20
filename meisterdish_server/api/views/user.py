@@ -172,18 +172,24 @@ def get_categories(request, data):
 @check_input('POST')
 def add_rating(request, data, user, meal_id):
     try:
-        order = Order.objects.get(pk=data['order_id'], cart__cartitem__meal__pk=meal_id, cart__user=user)
+        order = Order.objects.get(id=data['order_id'], cart__cartitem__meal__pk=meal_id, cart__user=user)
         if not order.cart.completed or order.status < 4:
             custom_error("The order is not complete. Please complete the order before rating.")
-        rating = MealRating()
+        try:
+            action = "update"
+            rating = MealRating.objects.get(order=order, meal__pk=meal_id)
+        except:
+            action = "add"
+            rating = MealRating()
+        rating.meal = Meal.objects.get(pk=meal_id)
         rating.order = order
         rating.rating = data['rating']
         rating.comment = data['comment'].strip()
         rating.save()
-        return json_response({"status":1, "message":"Successfully added rating.", "order_id":data['order_id'], "meal_id":meal_id})
+        return json_response({"status":1, "message":"Successfully "+action+"ed rating.", "order_id":data['order_id'], "meal_id":meal_id})
     except Exception as e:
-        log.error("Add rating" + e.message)
-        return custom_error("Your are not authorized rate this meal/order.")
+        log.error("Add rating " + e.message)
+        return custom_error("You are not authorized rate this meal/order.")
 
 @check_input('POST')
 def get_meal_details(request, data, meal_id):
@@ -385,18 +391,37 @@ def get_saved_cards(request, data, user):
 @check_input('POST')
 def get_user_reviews(request, data, user):
     try:
-        ratings = MealRating.objects.filter(order__cart__user__pk=user.pk, order__status__gte=2)
+        orders = Order.objects.filter(cart__user__pk=user.pk, status__gte=2)
         rating_list = []
-        for rating in ratings:
-            rating_list.append({
-                "rating":rating.rating,
-                "review":rating.comment,
-                "date" : rating.created.strftime("%m-%d-%Y %H:%M:%S"),
-                "meal_name" : rating.meal.name,
-                "meal_image":rating.meal.main_image.image.url,
-                "meal_id":rating.meal.id,
-                "order_id":rating.order.id,
-            })
+        meals_list = []
+        for order in orders:
+            meals = Meal.objects.filter(cartitem__cart__order=order)
+            for meal in meals:
+                try:
+                    rating = MealRating.objects.get(meal=meal, order=order)
+                except Exception as e:
+                    log.error("Rating list error :"+e.message)
+                    rating = False
+                if rating :    
+                    rating_list.append({
+                        "rating":rating.rating,
+                        "review":rating.comment,
+                        "date" : rating.created.strftime("%m-%d-%Y %H:%M:%S"),
+                        "meal_name" : rating.meal.name,
+                        "meal_image":rating.meal.main_image.image.url if meal.main_image else settings.DEFAULT_MEAL_IMAGE,
+                        "meal_id":rating.meal.id,
+                        "order_id":rating.order.id,
+                    })
+                else:
+                    rating_list.append({
+                        "rating":0,
+                        "review":"",
+                        "date" : "",
+                        "meal_name" : meal.name,
+                        "meal_image":meal.main_image.image.url if meal.main_image else settings.DEFAULT_MEAL_IMAGE,
+                        "meal_id":meal.id,
+                        "order_id":order.id,
+                    })
         return json_response({"status":1, "reviews":rating_list})
     except Exception as e:
         log.error("List user reviews: user "+str(user.id) + " : "+ e.message)

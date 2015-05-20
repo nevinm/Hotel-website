@@ -11,6 +11,7 @@ from libraries import  card, configure_paypal_rest_sdk, verify_paypal_transactio
 import paypalrestsdk
 from django.db.models import Q
 import string, random
+from urllib import unquote
 
 log = logging.getLogger('order')
 
@@ -42,6 +43,16 @@ def get_orders(request, data, user=None):
         
         if "status" in data and str(data['status']).strip() != "":
             orders = orders.filter(status=int(data['status']))
+
+        if "phone" in data and str(data["phone"]).strip() != "":
+            orders = orders.filter(billing_address__phone=str(data['phone']).strip())
+
+        if "amount" in data and str(data["amount"]).strip() != "":
+            orders = orders.filter(grand_total=float(data['amount']))
+
+        if "date" in data and str(data["date"]).strip() != "":
+            date_obj = datetime.strptime(data['date'], "%Y-%m-%d")# %H:%M:%S")
+            orders = orders.filter(delivery_time__year=date_obj.year, delivery_time__month=date_obj.month, delivery_time__day=date_obj.day)            
 
         # End filter
         orders = orders.order_by("-id")
@@ -356,7 +367,12 @@ def create_order(request, data, user):
             
         if paid:
             order.payment = payment
+            order.status = 1
             order.save()
+
+            if not order.cart.completed:
+                order.cart.completed=True
+                order.cart.save()
         
         if payment_type == "CC":
             return json_response({"status":1, "message":"The Order has been placed successully."})
@@ -414,9 +430,12 @@ def get_order_details(request, data, user, order_id):
             "status":dict(settings.ORDER_STATUS)[order.status],
             "status_id" : order.status,
             "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
-            "payment_type": order.payment.get_payment_type_display() if order.payment else "Not Available",
+            
+            "payment_type" : order.payment.get_payment_type_display() if order.payment else "Not Available",
+            "payment_date" : order.payment.created.strftime("%m-%d-%Y %H:%M:%S") if order.payment else "Not Available",
             "transaction_id":order.transaction_id,
             "order_num" : order.order_num,
+            
             "delivery_address" : {
                      "id":order.delivery_address.id,
                      "first_name":order.delivery_address.first_name,
@@ -459,6 +478,16 @@ def update_order(request, data, user, order_id):
         if status >=1:
             order.cart.completed=True
             order.cart.save()
+
+        if status == 2: #Confirmed
+            sent = send_order_confirmation_notification(order)
+            if not sent:
+                log.error("Failed to send order confirmation notification")
+        elif status == 4: #Delivered
+            sent = send_order_completed_notification(order)
+            if not sent:
+                log.error("Failed to send order complete notification")
+
         return json_response({"status":1, "message":"The order has been updated", "id":order_id+"."})
     except Exception as e:
         log.error("Update order status : " + e.message)
@@ -487,7 +516,8 @@ def paypal_success(request, data):
             if not payment:
                 success = False
 
-        session_key = paypal_response["custom"]
+        custom = simplejson.loads(str(unquote(paypal_response["cm"])))
+        session_key = custom["session_key"]
         if session_key == "":
             log.error("PayPal Success: Invalid user session")
             return HttpResponse("Invalid session.")
@@ -567,3 +597,8 @@ def paypal_ipn(request, data, session_id):
     log.error("Paypal IPN Finished")
     return HttpResponse("Done")
 
+def send_order_confirmation_notification(order, user):
+    pass
+
+def send_order_complete_notification(order):
+    pass    
