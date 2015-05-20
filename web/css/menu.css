@@ -239,6 +239,7 @@
 	width: 100%;
 	overflow: hidden;
 	text-align: center;
+    margin-left: 30px;
 	display: none;
 }
 .subMenu .category-header{
