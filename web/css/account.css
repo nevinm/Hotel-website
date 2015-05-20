@@ -1097,6 +1097,7 @@ form#pay-form {
 	color: #b0b0b0;
 	font-weight: bold;
 	font-size: 12px !important;
+	width: 150px !important;
 }
 .driver-tip-container .inner-content span{
 	float: right;
