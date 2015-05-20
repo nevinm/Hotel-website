@@ -61,14 +61,27 @@
                     <div class="order-list-container">
                         <div class="filter-container">
                             <div class='search-filters'>
-                                <input type="text" placeholder="Search by name" id="user-name" />
                                 <label for="user-name">User Name</label>
+                                <input type="text" id="user-name" />
                             </div>
                             <div class='search-filters'>
-                                <input type="text" placeholder="Search by order number" id="order-num" />
                                 <label for="user-name">Order NUM</label>
+                                <input type="text" id="order-num" />
                             </div>
                             <div class='search-filters'>
+                                <label for="user-name">Phone NUM</label>
+                                <input type="text" id="phone-num" />
+                            </div>
+                            <div class='search-filters'>
+                                <label for="user-name">Date</label>
+                                <input type="date" id="date" />
+                            </div>
+                            <div class="search-filters">
+                                <label for="user-name">Total amount</label>
+                                <input type="text" id="total-amount" />
+                            </div>
+                            <div class='search-filters'>
+                                <label for="user-name">Status</label>
                                 <select id="order-status-filter" name="status">
                                     <option value="">Select Status Filter</option>
                                         <option value='0'>Incomplete</option>
@@ -130,7 +143,21 @@
                     </div>
                     <div class="accordion-subcontent">
                         <div class="order-head">ORDER TOTAL</div>
-                        <div class="order-content order-total">$1333</div>
+                        <div class="order-content">$1333</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="accordion-subcontent">
+                        <div class="order-head">PAYMENT TYPE</div>
+                        <div class="order-content order-payment_type"></div>
+                    </div>
+                    <div class="accordion-subcontent">
+                        <div class="order-head">PAYMENT DATE</div>
+                        <div class="order-content order-payment_date"></div>
+                    </div>
+                    <div class="accordion-subcontent">
+                        <div class="order-head">TRANSACTION ID</div>
+                        <div class="order-content order-transaction_id"></div>
                     </div>
                 </div>
                 <div class="order-meal">

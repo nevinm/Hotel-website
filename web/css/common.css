@@ -477,6 +477,10 @@ label {
     color: #6b6b6b;
     display: none;
 }
+.max-width-adjust {
+	width: 90% !important;
+	max-width: 1100px;
+}
 /*==============================*\
             &HEADER
 \*==============================*/
@@ -970,7 +974,7 @@ span.icon-menu {
 @media (min-width: 320px)and (max-width: 767px) {
     #account-mainWrapper,
     #mainWrapper {
-        background-color: #CDD5CE;
+        background-color: #FCFDF9;
         background-image: none;
         border: none;
         overflow-x: hidden;
@@ -978,7 +982,7 @@ span.icon-menu {
     header#header {
         opacity: 1;
         background-color: #fff;
-        box-shadow: 0 0 15px #1A1A1A;
+        box-shadow: 0 0 15px rgba(26, 26, 26, 0.15);
     }
     .logo {
         display: none;
