@@ -158,7 +158,7 @@ function mealDetailsTab(mealDetails) {
     $(".meal-ingredients").text(majorIngredients.substring(1));
     $(".meal-ingredients").text(majorIngredients.substring(1));
 
-    $("#meal-rating").find(".rating-star").each(function(key, value) {
+    $($("#meal-rating").find(".rating-star").get().reverse()).each(function(key, value) {
         if (mealDetails.avg_rating == (key + 1)) {
             $(this).trigger("click");
         }
@@ -253,7 +253,7 @@ function reviewsTab(mealDetails) {
             "<span class='description'>" + value.review + "</span></div>");
 
         var reviewsAll = $("#reviews .container").find(".list-review:last"),
-            starRating = $(reviewsAll).find(".rating-star")[value.rating - 1];
+            starRating = $($(reviewsAll).find(".rating-star").get().reverse())[value.rating - 1];
         $(reviewsAll).find(".rating-star").each(function(key, value) {
             $(value).addClass("disable-star");
         });
