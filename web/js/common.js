@@ -133,6 +133,7 @@ function showPopup(data) {
 }
      $(document).on('click', '#close', function() {
         $('.popup-wrapper').hide();
+
         if (currentPage == "Meisterdish - Signup" || currentPage == "Meisterdish - Login") {
             if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
                 window.location.href = 'menu.html';
@@ -307,6 +308,10 @@ $("form").each(function() {
             meal_type: {
                 required: true
             },
+            cardnumber:{
+                required: true,
+                creditcard: true
+            }
             // image_upload :{
             //     required:true
             // }

@@ -778,7 +778,10 @@ var placeOrderCallback = {
 function placeOrder() {
     var driverInstr = $("#driver-description").val(),
         driverTip = $('.driver-tip').find('option:selected').data().amount,
-        addressId = $(".address-info .contents").attr('data-id');
+        addressId = $(".address-info .contents").attr('data-id'),
+        fullname = $('#name-on-card').val().split(" "),
+        firstname = fullname[0],
+        lastname = fullname[1];
     var $today_content = $(".today-content").find(".checkout-time-button-active"),
         $weekDatecontent = $(".week-content .date-content").find(".checkout-time-button-active"),
         $weekTimecontent = $(".week-content .time-content").find(".checkout-time-button-active"),
@@ -848,8 +851,8 @@ function placeOrder() {
                     "exp_month" : Exp_month,
                     "exp_year" : Exp_year,
                     "cvv2" : $('#cvv-number').val(), 
-                    "first_name" : "Abdul",
-                    "last_name" : "Nasar",
+                    "first_name" : firstname,
+                    "last_name" : lastname,
                 }
         }
     data = JSON.stringify(params);
@@ -919,3 +922,15 @@ function populateCreditCardDetails(){
     }else{
     }
  });
+
+// //Apply a space automaticaly after 4 charas
+// String.prototype.toCardFormat = function () {
+//    return this.replace(/[^0-9]/g, "").substr(0, 16).split("").reduce(cardFormat, "");
+//    function cardFormat(str, l, i) {
+//        return str + ((!i || (i % 4)) ? "" : " ") + l;
+//    }
+// };
+
+// $("#card-number").on("keyup", function () {
+//     $(this).val($(this).val().toCardFormat());
+// });
