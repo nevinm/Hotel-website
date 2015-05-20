@@ -249,7 +249,8 @@ $("form").each(function() {
             },
             password: {
                 required: true,
-                minlength: 6
+                minlength: 6,
+                maxlength: 20
             },
             email: {
                 required: true,
