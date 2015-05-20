@@ -571,7 +571,7 @@ def paypal_success(request, data):
 def get_cart_total(cart):
     try:
         total = 0.0
-        for ci in Cartitem.objects.filter(cart=cart, cart__completed=False):
+        for ci in CartItem.objects.filter(cart=cart, cart__completed=False):
             total += ci.meal.price + ci.meal.tax 
         return total
     except KeyError as e:
