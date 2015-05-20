@@ -538,9 +538,10 @@ def paypal_success(request, data):
         try:
             order = Order()
             order.cart = Cart.objects.get(user__pk=user_dic["id"], completed=False)
+            order.tip = float(custom["tip"])
 
-            if float(paypal_response["payment_gross"]) != float(order.grand_total):
-                log.error("Paypal success : order and payment amounts not matching.")
+            if float(paypal_response["payment_gross"]) != get_cart_total(order.cart) + order.tip + settings.SHIPPING_CHARGE:
+                log.error("Paypal success : order and payment amounts not matching. "+ str(paypal_response["payment_gross"]) + " != " + str(get_cart_total(order.cart) + order.tip + settings.SHIPPING_CHARGE))
                 return HttpResponse("The paid amount is different from order amount.")
 
             order.transaction_id = txn_id
@@ -549,9 +550,8 @@ def paypal_success(request, data):
             order.delivery_time = custom["delivery_time"].strftime("%m/%d/%Y %H:%M:%S"),
             order.billing_address = Address.objects.get(pk=custom["billing_address"])
             order.delivery_address = Address.objects.get(pk=custom["delivery_address"])
-            log.error(custom["tip"])
-            log.error("nazz")
-            order.tip = float(custom["tip"])
+
+            
             order.driver_instructions = custom["driver_instructions"]
     
             order.save()
@@ -566,7 +566,17 @@ def paypal_success(request, data):
     except KeyError as e:
         log.error("Paypal success Error : " + e.message)
         error = "?error=Failed to verify payment."
-    return HttpResponseRedirect("http://meisterdish.qburst.com/views/checkout.html" + error)
+    return HttpResponse("http://meisterdish.qburst.com/views/checkout.html" + error)
+
+def get_cart_total(cart):
+    try:
+        total = 0.0
+        for ci in Cartitem.objects.filter(cart=cart, cart__completed=False):
+            total += ci.meal.price + ci.meal.tax 
+        return total
+    except KeyError as e:
+        log.error("Error getting cart total: " + e.message)
+        return 0.0
 
 def save_payment_data(paypal_response):
     try:
