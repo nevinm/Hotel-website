@@ -7,7 +7,7 @@ import settings
 from decorators import *
 from datetime import datetime
 from django.core.paginator import Paginator
-from libraries import  card, configure_paypal_rest_sdk, verify_paypal_transaction, verify_paypal_ipn, mail
+from libraries import  card, configure_paypal_rest_sdk, verify_paypal_transaction, verify_paypal_ipn, mail, check_delivery_area
 import paypalrestsdk
 from django.db.models import Q
 import string, random
@@ -549,6 +549,10 @@ def paypal_success(request, data):
             log.info(data["cm"])
             custom = simplejson.loads(str(unquote(data["cm"])))
 
+        del_address = Address.objects.get(pk=custom["delivery_address"])
+        if not check_delivery_area(del_address.zip):
+            raise Exception("Delivery is not available at your location")
+
         session_key = custom["session-key"]
         if session_key == "":
             log.error("PayPal Success: Invalid user session")
@@ -587,7 +591,7 @@ def paypal_success(request, data):
             date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y+%H:%M:%S")
             order.delivery_time = date_obj
             order.billing_address = Address.objects.get(pk=custom["billing_address"])
-            order.delivery_address = Address.objects.get(pk=custom["delivery_address"])
+            order.delivery_address = del_address
 
             order.driver_instructions = custom["driver_instructions"]
             order.save()
@@ -646,9 +650,10 @@ def paypal_ipn(request, data, session_id):
             log.error("PayPal IPN: Invalid user session")
             return HttpResponse("None")
 
-        user = user_dic = SessionStore(session_key=session_key)["user"]
+        user_dic = SessionStore(session_key=session_key)["user"]
         payment_data = verify_paypal_ipn(data)
         if not payment_data:
+            log.error("None")
             return HttpResponse("None")
         
         txn_id = data['txn_id']
