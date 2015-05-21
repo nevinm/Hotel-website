@@ -9,13 +9,11 @@ function checkLoggedIn() {
         $userentry.hide();
         $('#navbar-username a').text(localStorage['username']);
         $(".account-header h2").text(localStorage['username'] + "'S ACCOUNT");
-        // $('#menu').addClass('menuPadding');
         $('.delivery-info-container').show();
         $('.delivery-info-guest-container').hide();
     } else {
         $userentry.show();
         $("#logout").hide();
-        // $('#menu').removeClass('menuPadding');
         $('li#navbar-username').hide();
     }
 }
