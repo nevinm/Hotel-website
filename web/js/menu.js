@@ -69,7 +69,7 @@ $(document).ready(function() {
         var menuNavHeight = 100,
             stickyMenu = $('.subMenu'),
             scroll = $(document).scrollTop();
-
+            console.log(scroll)
         if (scroll >= menuNavHeight) {
             stickyMenu.addClass('fixedMenu');
         } else {
@@ -216,10 +216,10 @@ var addToCartCallback = {
         } else {
             $('*[data-id="' + mealId + '"]').addClass("button-disabled");
             showPopup(meal_details);
-            CartItemCount(true);
             if (meal_details.session_key && (meal_details.session_key).length) {
                 localStorage['session_key'] = meal_details.session_key;
             }
+            CartItemCount(true);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
