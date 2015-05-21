@@ -534,6 +534,8 @@ def get_address_list(request, data, user):
         delivery_address = 0
 
         for add in addresses:
+            if "checkout" in data and data["checkout"] == 1 and not check_delivery_area(add.zip):
+                continue
             if add.is_primary:
                 delivery_address = add.id
             address_list.append({

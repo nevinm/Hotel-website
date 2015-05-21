@@ -158,3 +158,8 @@ def verify_paypal_ipn(data):
     else:
         log.error("Failed to verify IPN")
         return False
+
+def check_delivery_area(zip):
+    if DeliveryArea.objects.filter(zip=zip).exists():
+        return True
+    return False

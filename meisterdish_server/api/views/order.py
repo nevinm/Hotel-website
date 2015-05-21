@@ -7,11 +7,12 @@ import settings
 from decorators import *
 from datetime import datetime
 from django.core.paginator import Paginator
-from libraries import  card, configure_paypal_rest_sdk, verify_paypal_transaction, verify_paypal_ipn
+from libraries import  card, configure_paypal_rest_sdk, verify_paypal_transaction, verify_paypal_ipn, mail
 import paypalrestsdk
 from django.db.models import Q
 import string, random
 from urllib import unquote
+from django.template.loader import render_to_string
 
 log = logging.getLogger('order')
 
@@ -34,7 +35,7 @@ def get_orders(request, data, user=None):
         q = Q()
         #Filter
         if "num" in data and str(data['num']).strip() != "":
-            q &= Q(order_num=data['num'])
+            q &= Q(order_num__istartswith=data['num'])
         
         if "user_id" in data and str(data['user_id']).strip() != "":
             q &= Q(cart__user__pk=data['user_id'])
@@ -242,11 +243,15 @@ def make_cc_payment(funding_instruments, amount, order_num):
                 "description": "Meisterdish Order with ID : "+order_num + " on "+datetime.now().strftime("%m-%d-%Y %H:%M:%S")
             }]
         })
-        response = payment.create()
-        
+        try:
+            response = payment.create()
+        except Exception as e:
+            log.error("CC : PayPal server error : "+str(e.message))    
+            return "An error has occurred at payment server. Please try again later."
+
         if not response:
             log.error("CC Payment failed :"  + payment.error['details'][0]['field'] + " : "+payment.error['details'][0]['issue'])
-            return str(payment.error['details'][0]['field'] + " : "+payment.error['details'][0]['issue'])
+            return str(payment.error['details'][0]['field']) + " : "+ str(payment.error['details'][0]['issue'])
         else:
             payment_obj = save_cc_payment(payment, amount)
             if not payment_obj:
@@ -254,8 +259,10 @@ def make_cc_payment(funding_instruments, amount, order_num):
                 log.info(payment)
                 return "An error has occurred while saving payment response. Please try again later."
         return payment_obj
+    
     except Exception as e:
-        log.error("Failed to pay using CC." + e.message)
+        log.error("Failed to pay using CC." + str(e.message))
+
         return "Failed to pay using credit card."
 
 def save_cc_payment(payment_data, amount):
@@ -321,7 +328,7 @@ def create_order(request, data, user):
         total_amount = total_price + total_tax
         
         order = Order()
-        order.order_num = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(12))
+        order.order_num = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(12))
         order.cart = item.cart
         
         order.delivery_address = del_address
@@ -390,7 +397,7 @@ def create_order(request, data, user):
         else:
             return json_response({"status":1, "message":"The request has been placed. You will be notified once the payment is verified. "})
 
-    except Exception as e:
+    except KeyError as e:
         log.error("Failed to create order." + e.message)
         return custom_error("Failed to place order.")
 
@@ -526,7 +533,7 @@ def paypal_success(request, data):
         pdt = True
         if not paypal_response:
             log.error("Failed to verify paypal transaction.")
-            if data["st"] != 'Completed': #Immediate return from PayPal
+            if data["st"] != 'completed': #Immediate return from PayPal
                 return HttpResponse("Failed to verify transaction. Please contact customer support.")
             else:
                 pdt = False
@@ -565,7 +572,7 @@ def paypal_success(request, data):
             if pdt:
                 amt = float(paypal_response["payment_gross"])
             else:
-                amt = float(custom["amt"])
+                amt = float(data["amt"])
             
             if amt !=  price + tax + order.tip + settings.SHIPPING_CHARGE:
                 log.error("Paypal success : order and payment amounts not matching. "+ str(amt) + " != " + str(price + tax + order.tip + settings.SHIPPING_CHARGE))
@@ -577,7 +584,7 @@ def paypal_success(request, data):
             if pdt:
                 order.payment = payment
                 order.status = 1
-            date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y %H:%M:%S")
+            date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y+%H:%M:%S")
             order.delivery_time = date_obj
             order.billing_address = Address.objects.get(pk=custom["billing_address"])
             order.delivery_address = Address.objects.get(pk=custom["delivery_address"])
@@ -588,8 +595,9 @@ def paypal_success(request, data):
             if pdt:
                 order.cart.completed=True
                 order.cart.save()
-
-            error = "?message=The order is successfull. Order Number : " + order.order_num 
+                error = "?message=The order is successfull. Order Number : " + order.order_num 
+            else:
+                error = "?message=The order is placed and is pending verification. Order Number : " + order.order_num 
         except Exception as e:
             log.error("Paypal success error - Failed to create order object " + txn_id + e.message)
             error = "?error="+e.message
@@ -670,7 +678,7 @@ def paypal_ipn(request, data, session_id):
             try:
                 order = Order()
                 order.cart = Cart.objects.get(user__pk=user_dic["id"], completed=False)
-                order.order_num = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(12))
+                order.order_num = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(12))
                 order.tip = float(custom["tip"])
                 (price, tax) = get_cart_total(order.cart)
 
@@ -734,7 +742,7 @@ def send_order_confirmation_notification(order):
         user = order.cart.user
         dic = {
                "order_num" : order.order_num,
-               "transaction_id" : order.transction_id,
+               "transaction_id" : order.transaction_id,
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
                "grand_total":order.grand_total,
@@ -763,7 +771,7 @@ def send_order_complete_notification(order):
         user = order.cart.user
         dic = {
                "order_num" : order.order_num,
-               "transaction_id" : order.transction_id,
+               "transaction_id" : order.transaction_id,
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
                "grand_total":order.grand_total,
@@ -772,7 +780,7 @@ def send_order_complete_notification(order):
                }
         
         msg = render_to_string('order_complete_email_template.html', dic)
-        sub = 'Meisterdish : Your order is complete'
+        sub = 'Your order at Meisterdish is complete'
         to_email = user.email
         
         mail([to_email], sub, msg )
@@ -795,4 +803,4 @@ def send_sms_notification(dic):
         return True
     except KeyError as e:
         log.error("Send order SMS : " + e.message)
-        return False#Thakkali
+        return False

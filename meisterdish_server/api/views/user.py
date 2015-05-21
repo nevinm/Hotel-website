@@ -4,7 +4,7 @@ import json as simplejson
 import logging 
 import settings
 from decorators import *
-from libraries import validate_zipcode, validate_phone, card, configure_paypal_rest_sdk
+from libraries import validate_zipcode, validate_phone, card, configure_paypal_rest_sdk, check_delivery_area
 import paypalrestsdk
 from datetime import datetime
 
@@ -19,6 +19,11 @@ def add_address(request, data, user):
         building = data["building"].strip()
         city_id = data["city_id"]
         zip = data["zip"].strip()
+
+        if "checkout" in data and data["checkout"] == 1:
+            if not check_delivery_area(zip):
+                return custom_error("Delivery is not available at this location. Please choose a different Zip code.")
+
         phone = data["phone"].strip()
         is_primary = False
         if "is_primary" in data and data["is_primary"]:

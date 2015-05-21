@@ -22,7 +22,7 @@ def get_cart_items(request, data, user):
               "description": cart_item.meal.description,
               "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
               "available": 1 if cart_item.meal.available else 0,
-              "category": cart_item.meal.category.name.title(),
+              "category": cart_item.meal.category.name.title() if cart_item.meal.category else "Not Available",
               "price": cart_item.meal.price,
               "tax": cart_item.meal.tax,
               "quantity":cart_item.quantity,
