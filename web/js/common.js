@@ -4,19 +4,18 @@ var baseURL = 'http://meisterdish.qburst.com/backend/api/',
     clicked = 0;
 //If already logged in
 var $userentry = $('.login-signup');
-
 function checkLoggedIn() {
     if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
         $userentry.hide();
         $('#navbar-username a').text(localStorage['username']);
         $(".account-header h2").text(localStorage['username'] + "'S ACCOUNT");
-        $('#menu').addClass('menuPadding');
+        // $('#menu').addClass('menuPadding');
         $('.delivery-info-container').show();
         $('.delivery-info-guest-container').hide();
     } else {
         $userentry.show();
         $("#logout").hide();
-        $('#menu').removeClass('menuPadding');
+        // $('#menu').removeClass('menuPadding');
         $('li#navbar-username').hide();
     }
 }
