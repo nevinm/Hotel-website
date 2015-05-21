@@ -31,29 +31,34 @@ def get_orders(request, data, user=None):
 
         total_count = orders.count()
 
+        q = Q()
         #Filter
         if "num" in data and str(data['num']).strip() != "":
-            orders = orders.filter(order_num=data['num'])
+            q &= Q(order_num=data['num'])
         
         if "user_id" in data and str(data['user_id']).strip() != "":
-            orders = orders.filter(cart__user__pk=data['user_id'])
+            q &= Q(cart__user__pk=data['user_id'])
 
         if "search" in data and str(data['search']).strip() != "":
-            orders = orders.filter(Q(cart__user__first_name__icontains=data['search']) | Q(cart__user__last_name__icontains=data['search']))
-        
+            qs = Q()
+            for term in str(data['search']).strip().split():
+                qs |= Q(cart__user__first_name__icontains=term) | Q(cart__user__last_name__icontains=term)
+            q &= qs
+
         if "status" in data and str(data['status']).strip() != "":
-            orders = orders.filter(status=int(data['status']))
+             q |= Q(status=int(data['status']))
 
         if "phone" in data and str(data["phone"]).strip() != "":
-            orders = orders.filter(billing_address__phone=str(data['phone']).strip())
+            q &= Q(billing_address__phone=str(data['phone']).strip())
 
         if "amount" in data and str(data["amount"]).strip() != "":
-            orders = orders.filter(grand_total=float(data['amount']))
+            q &= Q(grand_total=float(data['amount']))
 
         if "date" in data and str(data["date"]).strip() != "":
             date_obj = datetime.strptime(data['date'], "%Y-%m-%d")# %H:%M:%S")
-            orders = orders.filter(delivery_time__year=date_obj.year, delivery_time__month=date_obj.month, delivery_time__day=date_obj.day)            
+            q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
 
+        orders = orders.filter(q)
         # End filter
         orders = orders.order_by("-id")
 
@@ -491,7 +496,7 @@ def update_order(request, data, user, order_id):
             if not sent:
                 log.error("Failed to send order confirmation notification")
         elif status == 4: #Delivered
-            sent = send_order_completed_notification(order)
+            sent = send_order_complete_notification(order)
             if not sent:
                 log.error("Failed to send order complete notification")
 
@@ -723,8 +728,71 @@ def paypal_ipn(request, data, session_id):
     log.error("Paypal IPN Finished")
     return HttpResponse("Done")
 
-def send_order_confirmation_notification(order, user):
-    pass
+def send_order_confirmation_notification(order):
+    try:
+        meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
+        user = order.cart.user
+        dic = {
+               "order_num" : order.order_num,
+               "transaction_id" : order.transction_id,
+               "date": order.updated.strftime("%B %d, %Y"),
+               "time" : order.updated.strftime("%I %M %p"),
+               "grand_total":order.grand_total,
+               "name" : user.last_name + " " + user.first_name,
+               "status":order.status,
+               }
+        
+        msg = render_to_string('order_confirmation_email_template.html', dic)
+        sub = 'Your order at Meisterdish is confirmed '
+        to_email = user.email
+        
+        mail([to_email], sub, msg )
+
+        if user.need_sms_notification:
+            if not send_sms_notification(dic):
+                return False
+        return True
+
+    except KeyError as e:
+        log.error("Send confirmation mail : " + e.message)
+        return False
 
 def send_order_complete_notification(order):
-    pass    
+    try:
+        meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
+        user = order.cart.user
+        dic = {
+               "order_num" : order.order_num,
+               "transaction_id" : order.transction_id,
+               "date": order.updated.strftime("%B %d, %Y"),
+               "time" : order.updated.strftime("%I %M %p"),
+               "grand_total":order.grand_total,
+               "name" : user.last_name + " " + user.first_name,
+               "status":order.status,
+               }
+        
+        msg = render_to_string('order_complete_email_template.html', dic)
+        sub = 'Meisterdish : Your order is complete'
+        to_email = user.email
+        
+        mail([to_email], sub, msg )
+
+        if user.need_sms_notification:
+            if not send_sms_notification(dic):
+                return False
+        return True
+    except KeyError as e:
+        log.error("Send order completion mail : " + e.message)
+        return False
+
+def send_sms_notification(dic):
+    try:
+        if dic["status"] == 2: #Confirmed
+            txt = render_to_string('order_confirmation_sms_template.html', dic)
+        else: #Complete
+            txt = render_to_string('order_complete_sms_template.html', dic)
+        #SEND SMS
+        return True
+    except KeyError as e:
+        log.error("Send order SMS : " + e.message)
+        return False        
