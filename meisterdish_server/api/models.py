@@ -347,7 +347,7 @@ class Order(models.Model):
     delivery_address = models.ForeignKey(Address, related_name="delivery_address")
     billing_address = models.ForeignKey(Address, related_name="billing_address")
     
-    delivery_time = models.DateTimeField(null=True)
+    delivery_time = models.DateTimeField()
     driver_instructions = models.TextField(max_length=1024, null=True)
     
     payment = models.ForeignKey(Payment, null=True, blank=True)

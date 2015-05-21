@@ -1,4 +1,6 @@
+//var baseURL = 'http://10.7.1.64:86/backend/api/',
 var baseURL = 'http://meisterdish.qburst.com/backend/api/',
+    homeUrl = "http://meisterdish.qburst.com",
     userDetails, currentPage = $("title").text(),
     clicked = 0;
 //If already logged in
@@ -42,10 +44,15 @@ function getCurrentDateTime(days) {
 function getCurrentHour() {
     var currentdate = new Date();
     var hours = currentdate.getHours();
+    if(hours>12){
+        meridiem="pm";
+    }else{
+        meridiem="am";
+    }
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     var strTime = hours;
-    return strTime;
+    return strTime+meridiem;
 }
 
 function getMonthDate(currentDate) {
@@ -308,6 +315,28 @@ $("form").each(function() {
             meal_type: {
                 required: true
             },
+            cardnumber:{
+                required: true,
+                creditcard: true
+            },
+            nameOnCard:{
+                required:true,
+                minlength: 2,
+                maxlength: 20,
+                letters: true               
+            },
+            expiryMonth:{
+                required:true
+            },
+            expiryYear:{
+                required:true
+            },
+            cvv:{
+                number:true,
+                minlength:3,
+                maxlength:4,
+                required:true
+            }
             // image_upload :{
             //     required:true
             // }
@@ -355,6 +384,9 @@ $("form").each(function() {
                 equalTo: "Email doesn't match.",
                 required: "Please provide email."
             },
+            nameOnCard:"Enter valid name.",
+            expiryMonth:"Enter exp month.",
+            expiryYear:"Enter exp year.",
             email: "Enter a valid email address.",
             zip: "Provide a valid zip.",
             street: "Provide a valid address.",
@@ -365,7 +397,8 @@ $("form").each(function() {
             mealtax: "Enter a valid meal tax.",
             mealname: "Enter a valid meal name.",
             chef_name: "Enter a valid chef name.",
-            mealdescription: "Meal description is not valid."
+            mealdescription: "Meal description is not valid.",
+            cvv:"provide a valid cvv."
                 // image_upload:"Please select an image."
         }
     });

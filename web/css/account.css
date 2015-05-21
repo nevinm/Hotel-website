@@ -826,6 +826,8 @@ form.addaddress-popup {
 	width: 17%;
 	margin-bottom: 10px;
 	font-size: 12px;
+	appearance:none;
+	-webkit-appearance:none;
 }
 .checkout-time-button:hover {
 	background-color: #A9D77B;
@@ -1034,6 +1036,7 @@ form#pay-form {
 }
 .pay-by-credit-container .forminput-wrapper{
 	float: left;
+	position: relative;
 }
 .pay-by-credit-container .forminput-wrapper:first-child{
 	float: left;
@@ -1206,6 +1209,7 @@ input.radio-button-payment {
 	margin-left: -32%;
 	height: auto;
 	top: 50%;
+	min-height: 260px;
 }
 .address-payment-list-popup .header{
 	font-family: 'BrandonGrotesque-Bold';
