@@ -62,6 +62,7 @@ def check_nvp_input():
     def wrapper(func):
         def inner_decorator(request, *args, **kwargs):
             log.info(func.__name__ + " called. Is it from Paypal ? ")
+	    log.info("qwqw")	
             data = nvp_request(request)
             log.info(data)
             if not data:

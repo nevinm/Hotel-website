@@ -256,7 +256,6 @@ def get_meal_details(request, data, meal_id):
                 "id":meal.category.id,
                 "name":meal.category.name.title(),
                 },
-            
             "chef_id" : "Not available"  if not meal.chef else meal.chef.id,
             "chef_name" : "Not available"  if not meal.chef else meal.chef.name.title(),
             "chef_image" : {"url":settings.DEFAULT_USER_IMAGE, "id":""} if not meal.chef or not meal.chef.image else {
@@ -343,7 +342,7 @@ def save_credit_card(request, data, user):
                 log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + " : "+credit_card.error['details'][0]['issue'])
             return custom_error(credit_card.error['details'][0]['field'] + " : " +credit_card.error['details'][0]['issue'])
         
-        c_card = CreditCardDetails()
+	c_card = CreditCardDetails()
         c_card.user = user
         c_card.card_id = credit_card.id
         c_card.number = credit_card.number

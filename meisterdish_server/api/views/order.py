@@ -581,7 +581,7 @@ def paypal_success(request, data):
             if amt !=  price + tax + order.tip + settings.SHIPPING_CHARGE:
                 log.error("Paypal success : order and payment amounts not matching. "+ str(amt) + " != " + str(price + tax + order.tip + settings.SHIPPING_CHARGE))
                 return HttpResponse("The paid amount is different from order amount.")
-
+	    log.error(custom["delivery_time"])
             order.total_amount = price
             order.total_tax = tax
             order.transaction_id = txn_id
