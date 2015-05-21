@@ -826,6 +826,8 @@ form.addaddress-popup {
 	width: 17%;
 	margin-bottom: 10px;
 	font-size: 12px;
+	appearance:none;
+	-webkit-appearance:none;
 }
 .checkout-time-button:hover {
 	background-color: #A9D77B;
@@ -1117,12 +1119,13 @@ form#pay-form {
 .total-container span:nth-child(2){
 	float: right;
 }
-input#driver-description {
+textarea#driver-description {
 	padding: 20px 10px;
 	background-color: #f7f7f7;
 	border: 1px solid #d0d0d0;
 	border-radius: 4px;
 	width: 100%;
+	resize : none;
 }
 .instruction-container .btn{
 	margin-top: 20px;

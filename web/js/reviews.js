@@ -1,5 +1,7 @@
 $(document).ready(function() {
     getReviews();
+    CartItemCount();  
+     
     //STAR RATING
     $(document).on('click', '.rating-star', function() {
         var param = $(this).prev().attr('data-id'),

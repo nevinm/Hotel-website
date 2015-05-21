@@ -310,4 +310,5 @@ $(document).ready(function() {
 
     getStates();
     getAddress();
+    CartItemCount();
 });
