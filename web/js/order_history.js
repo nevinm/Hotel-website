@@ -39,11 +39,11 @@
            deliveryAddress = value.delivery_address;
            meals = value.meals;
            $("#accordion ul").append("<li><div class='accordion-header'>" +
-               "<h4 style='float: left;padding-right: 116px;'>#123456</h4>" +
+               "<h4 style='float: left;padding-right: 116px;'>"+value.order_num+"</h4>" +
                "<h4 class='status'>"+value.status+"</h4></div><div class='accordion-content body-text-small'>" +
                "<div class='row'><div class='accordion-subcontent'>" +
                "<div class='order-head'>ORDER TOTAL</div>" +
-               "<div class='order-content'>" + dollarConvert(value.total_amount) + "</div>" +
+               "<div class='order-content'>" + dollarConvert(value.grand_total) + "</div>" +
                "</div>" +
                "<div class='accordion-subcontent'>" +
                "<div class='order-head'>ORDER DATE</div>" +

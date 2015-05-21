@@ -1,4 +1,9 @@
-var billingAddressId,cardDetails;
+var billingAddressId,cardDetails,
+    payPalEmail = "nazz007online-facilitator@gmail.com",
+    returnUrl = baseURL+"paypal_success/",
+    cancelReturnUrl = homeUrl+"/views/checkout.html",
+    notifyUrl = baseURL+"paypal_ipn/";
+
 $(document).ready(function() {
     if(localStorage["session_key"]){
         getCartItems();
@@ -134,9 +139,14 @@ $(document).ready(function() {
 function setCurrentTime() {
     currentHour = getCurrentHour();
     $(".today-content .checkout-time-button").each(function(key, value) {
-        if (getCurrentHour() == $(value).data().hr) {
-            $(this).val("NOW");
-            $(this).addClass("checkout-time-button-active");
+        currentHour= getCurrentHour();
+        meridiem= currentHour.substring(currentHour.length - 2);
+        if(meridiem=="pm"){
+            currentHour=currentHour.substring(0, currentHour.length - 2);
+            if (parseInt(currentHour) == $(value).data().hr) {
+                $(this).val("NOW");
+                $(this).addClass("checkout-time-button-active");
+            }
         }
     });
 
@@ -219,6 +229,8 @@ var getCartItemsCallback = {
             $(".emtpy-cart-message").append("<span>"+cartItems.message+"</span>");
             $(".emtpy-cart-message").show();
             updateReciept();
+            $("#place-order").removeClass('button-disabled');
+            $(".items-container .item-count").text('(0)');
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -804,10 +816,7 @@ function placeOrder() {
 
     if($("#pp").prop('checked') || $("#pp-guest").prop('checked')){
         payment_type = "pp";
-        var payPalEmail = "nazz007online-facilitator@gmail.com",
-            returnUrl = "http://meisterdish.qburst.com/backend/api/paypal_success/",
-            cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
-            notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/";
+        var 
             orderDetails = {
                 "delivery_time": deliveryTime,
                 "billing_address": billingAddressId,

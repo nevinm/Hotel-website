@@ -1,4 +1,5 @@
 var baseURL = 'http://meisterdish.qburst.com/backend/api/',
+    homeUrl = "http://meisterdish.qburst.com",
     userDetails, currentPage = $("title").text(),
     clicked = 0;
 //If already logged in
@@ -42,10 +43,15 @@ function getCurrentDateTime(days) {
 function getCurrentHour() {
     var currentdate = new Date();
     var hours = currentdate.getHours();
+    if(hours>12){
+        meridiem="pm";
+    }else{
+        meridiem="am";
+    }
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     var strTime = hours;
-    return strTime;
+    return strTime+meridiem;
 }
 
 function getMonthDate(currentDate) {
