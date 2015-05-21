@@ -799,7 +799,10 @@ var placeOrderCallback = {
 function placeOrder() {
     var driverInstr = $("#driver-description").val(),
         driverTip = $('.driver-tip').find('option:selected').data().amount,
-        addressId = $(".address-info .contents").attr('data-id');
+        addressId = $(".address-info .contents").attr('data-id'),
+        fullname = $('#name-on-card').val().split(" "),
+        firstname = fullname[0],
+        lastname = fullname[1];
     var $today_content = $(".today-content").find(".checkout-time-button-active"),
         $weekDatecontent = $(".week-content .date-content").find(".checkout-time-button-active"),
         $weekTimecontent = $(".week-content .time-content").find(".checkout-time-button-active"),
@@ -821,7 +824,11 @@ function placeOrder() {
 
     if($("#pp").prop('checked') || $("#pp-guest").prop('checked')){
         payment_type = "pp";
-        var 
+        var payPalEmail = "nazz007online-facilitator@gmail.com",
+            returnUrl = "http://meisterdish.qburst.com/backend/api/paypal_success/",
+            //returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
+            cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
+            notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/";
             orderDetails = {
                 "delivery_time": deliveryTime,
                 "billing_address": billingAddressId,
@@ -858,6 +865,8 @@ function placeOrder() {
                 "card_id": savedCardId
             }
         }else{
+            $("#pay-form").submit();
+            if ($("#pay-form").valid()) {
             var card_number = $('#card-number').val(),
                 cvv = $('#cvv-number').val(),
                 Exp_month = $("#ExpMonth").val(),
@@ -874,9 +883,10 @@ function placeOrder() {
                     "exp_month" : Exp_month,
                     "exp_year" : Exp_year,
                     "cvv2" : $('#cvv-number').val(), 
-                    "first_name" : "Abdul",
-                    "last_name" : "Nasar",
+                    "first_name" : firstname,
+                    "last_name" : lastname,
                 }
+            }
         }
     data = JSON.stringify(params);
     var placeOrderInstance = new AjaxHttpSender();
@@ -946,3 +956,15 @@ function validateCheckOrder(){
  $(document).on('click', '#pp,#pp-guest,#cc,.added-card', function() {
     validateCheckOrder();
  });
+
+// //Apply a space automaticaly after 4 charas
+// String.prototype.toCardFormat = function () {
+//    return this.replace(/[^0-9]/g, "").substr(0, 16).split("").reduce(cardFormat, "");
+//    function cardFormat(str, l, i) {
+//        return str + ((!i || (i % 4)) ? "" : " ") + l;
+//    }
+// };
+
+// $("#card-number").on("keyup", function () {
+//     $(this).val($(this).val().toCardFormat());
+// });
