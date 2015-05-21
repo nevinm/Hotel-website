@@ -1,4 +1,9 @@
-var billingAddressId,cardDetails;
+var billingAddressId,cardDetails,
+    payPalEmail = "nazz007online-facilitator@gmail.com",
+    returnUrl = baseURL+"paypal_success/",
+    cancelReturnUrl = homeUrl+"/views/checkout.html",
+    notifyUrl = baseURL+"paypal_ipn/";
+
 $(document).ready(function() {
     if(localStorage["session_key"]){
         getCartItems();
@@ -134,9 +139,14 @@ $(document).ready(function() {
 function setCurrentTime() {
     currentHour = getCurrentHour();
     $(".today-content .checkout-time-button").each(function(key, value) {
-        if (getCurrentHour() == $(value).data().hr) {
-            $(this).val("NOW");
-            $(this).addClass("checkout-time-button-active");
+        currentHour= getCurrentHour();
+        meridiem= currentHour.substring(currentHour.length - 2);
+        if(meridiem=="pm"){
+            currentHour=currentHour.substring(0, currentHour.length - 2);
+            if (parseInt(currentHour) == $(value).data().hr) {
+                $(this).val("NOW");
+                $(this).addClass("checkout-time-button-active");
+            }
         }
     });
 
@@ -219,6 +229,8 @@ var getCartItemsCallback = {
             $(".emtpy-cart-message").append("<span>"+cartItems.message+"</span>");
             $(".emtpy-cart-message").show();
             updateReciept();
+            $("#place-order").removeClass('button-disabled');
+            $(".items-container .item-count").text('(0)');
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -779,7 +791,10 @@ var placeOrderCallback = {
 function placeOrder() {
     var driverInstr = $("#driver-description").val(),
         driverTip = $('.driver-tip').find('option:selected').data().amount,
-        addressId = $(".address-info .contents").attr('data-id');
+        addressId = $(".address-info .contents").attr('data-id'),
+        fullname = $('#name-on-card').val().split(" "),
+        firstname = fullname[0],
+        lastname = fullname[1];
     var $today_content = $(".today-content").find(".checkout-time-button-active"),
         $weekDatecontent = $(".week-content .date-content").find(".checkout-time-button-active"),
         $weekTimecontent = $(".week-content .time-content").find(".checkout-time-button-active"),
@@ -842,6 +857,8 @@ function placeOrder() {
                 "card_id": savedCardId
             }
         }else{
+            $("#pay-form").submit();
+            if ($("#pay-form").valid()) {
             var card_number = $('#card-number').val(),
                 cvv = $('#cvv-number').val(),
                 Exp_month = $("#ExpMonth").val(),
@@ -858,9 +875,10 @@ function placeOrder() {
                     "exp_month" : Exp_month,
                     "exp_year" : Exp_year,
                     "cvv2" : $('#cvv-number').val(), 
-                    "first_name" : "Abdul",
-                    "last_name" : "Nasar",
+                    "first_name" : firstname,
+                    "last_name" : lastname,
                 }
+            }
         }
     data = JSON.stringify(params);
     var placeOrderInstance = new AjaxHttpSender();
@@ -930,3 +948,15 @@ function validateCheckOrder(){
  $(document).on('click', '#pp,#pp-guest,#cc,.added-card', function() {
     validateCheckOrder();
  });
+
+// //Apply a space automaticaly after 4 charas
+// String.prototype.toCardFormat = function () {
+//    return this.replace(/[^0-9]/g, "").substr(0, 16).split("").reduce(cardFormat, "");
+//    function cardFormat(str, l, i) {
+//        return str + ((!i || (i % 4)) ? "" : " ") + l;
+//    }
+// };
+
+// $("#card-number").on("keyup", function () {
+//     $(this).val($(this).val().toCardFormat());
+// });

@@ -298,6 +298,9 @@ hr{
     padding-left:5%;
     font-size: 12px;
   }
+  .login-wrapper{
+    margin-bottom: 20px;
+  }
 }
 @media only screen and (min-width: 320px)and (max-width:420px){
     .signup-input {

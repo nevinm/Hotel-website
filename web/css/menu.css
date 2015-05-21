@@ -438,6 +438,7 @@
         position: absolute;
         right: 0;
         top: -5px;
+        border: 0;
     }
     .category-wrapper {
         position: relative;
@@ -469,9 +470,14 @@
         padding: 26px 0;
     }
     .subMenuFilter {
-        padding: 26px 0;
+        padding: 29px 0;
     }
     .filter-container .arrow-down {
         top: 29px;
     }
 /*}*/
+@media (max-width: 440px) {
+	.subMenu .category-header{
+		float: left;
+	}
+}
