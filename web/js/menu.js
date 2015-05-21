@@ -219,7 +219,7 @@ var addToCartCallback = {
             if (meal_details.session_key && (meal_details.session_key).length) {
                 localStorage['session_key'] = meal_details.session_key;
             }
-            CartItemCount(true);
+            CartItemCount();
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
