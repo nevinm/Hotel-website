@@ -71,9 +71,9 @@ def check_nvp_input():
 
 def nvp_request(request):
     try:
+        log.info("NVP : " + request.method)
         if (request.method == 'GET'):
             return dict((itm.split('=')[0],itm.split('=')[1]) for itm in request.GET.urlencode().split('&'))
-            #return dict(request.GET)
         else:
             data = request.body
             return {item.split('=')[0] : item.split('=')[1]  for item in data.split('&')}
