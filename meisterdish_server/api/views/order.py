@@ -31,29 +31,34 @@ def get_orders(request, data, user=None):
 
         total_count = orders.count()
 
+        q = Q()
         #Filter
         if "num" in data and str(data['num']).strip() != "":
-            orders = orders.filter(order_num=data['num'])
+            q &= Q(order_num=data['num'])
         
         if "user_id" in data and str(data['user_id']).strip() != "":
-            orders = orders.filter(cart__user__pk=data['user_id'])
+            q &= Q(cart__user__pk=data['user_id'])
 
         if "search" in data and str(data['search']).strip() != "":
-            orders = orders.filter(Q(cart__user__first_name__icontains=data['search']) | Q(cart__user__last_name__icontains=data['search']))
-        
+            qs = Q()
+            for term in str(data['search']).strip().split():
+                qs |= Q(cart__user__first_name__icontains=term) | Q(cart__user__last_name__icontains=term)
+            q &= qs
+
         if "status" in data and str(data['status']).strip() != "":
-            orders = orders.filter(status=int(data['status']))
+             q |= Q(status=int(data['status']))
 
         if "phone" in data and str(data["phone"]).strip() != "":
-            orders = orders.filter(billing_address__phone=str(data['phone']).strip())
+            q &= Q(billing_address__phone=str(data['phone']).strip())
 
         if "amount" in data and str(data["amount"]).strip() != "":
-            orders = orders.filter(grand_total=float(data['amount']))
+            q &= Q(grand_total=float(data['amount']))
 
         if "date" in data and str(data["date"]).strip() != "":
             date_obj = datetime.strptime(data['date'], "%Y-%m-%d")# %H:%M:%S")
-            orders = orders.filter(delivery_time__year=date_obj.year, delivery_time__month=date_obj.month, delivery_time__day=date_obj.day)            
+            q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
 
+        orders = orders.filter(q)
         # End filter
         orders = orders.order_by("-id")
 
@@ -316,7 +321,7 @@ def create_order(request, data, user):
         total_amount = total_price + total_tax
         
         order = Order()
-        order.order_num = token = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
+        order.order_num = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(12))
         order.cart = item.cart
         
         order.delivery_address = del_address
@@ -427,6 +432,7 @@ def get_order_details(request, data, user, order_id):
             "total_amount": order.total_amount,
             "total_tax" : order.total_tax,
             "tip" : order.tip,
+            "delivery_charge":settings.SHIPPING_CHARGE,
             "grand_total" : order.grand_total,
             "user_first_name" : order.cart.user.first_name,
             "user_last_name" : order.cart.user.last_name,
@@ -490,7 +496,7 @@ def update_order(request, data, user, order_id):
             if not sent:
                 log.error("Failed to send order confirmation notification")
         elif status == 4: #Delivered
-            sent = send_order_completed_notification(order)
+            sent = send_order_complete_notification(order)
             if not sent:
                 log.error("Failed to send order complete notification")
 
@@ -512,25 +518,36 @@ def paypal_success(request, data):
         if txn_id.strip() == "":
             return HttpResponse("Invalid payment.")
         
+        if Order.objects.filter(transaction_id=txn_id.strip(), status__gte=1).exists():
+            return HttpResponse("Payment already verified")
+            raise Exception("Payment already verified")
+
         paypal_response = verify_paypal_transaction(txn_id)
+        pdt = True
         if not paypal_response:
             log.error("Failed to verify paypal transaction.")
-            return HttpResponse("Failed to verify transaction. Please contact customer support.")
+            if data["st"] != 'Completed': #Immediate return from PayPal
+                return HttpResponse("Failed to verify transaction. Please contact customer support.")
+            else:
+                pdt = False
         else:
             payment = save_payment_data(paypal_response)
             if not payment:
                 return HttpResponse("Failed to update transaction details. Please contact customer support.")
         
-        log.info(paypal_response["custom"])
-        
-        custom = simplejson.loads(str(unquote(paypal_response["custom"])))
-        
+        if pdt:
+            log.info(paypal_response["custom"])
+            custom = simplejson.loads(str(unquote(paypal_response["custom"])))
+        else:
+            log.info(data["cm"])
+            custom = simplejson.loads(str(unquote(data["cm"])))
+
         session_key = custom["session-key"]
         if session_key == "":
             log.error("PayPal Success: Invalid user session")
             return HttpResponse("Invalid session.")
         try:
-            user = user_dic = SessionStore(session_key=session_key)["user"]
+            user_dic = SessionStore(session_key=session_key)["user"]
         except Exception as e:
             log.error("Failed to load session from paypal response")
             return HttpResponse("No user session found.")
@@ -538,54 +555,62 @@ def paypal_success(request, data):
         try:
             order = Order()
             order.cart = Cart.objects.get(user__pk=user_dic["id"], completed=False)
+            order.order_num = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(12))
             order.tip = float(custom["tip"])
             (price, tax) = get_cart_total(order.cart)
+
             if float(price) == float(0):
                 raise Exception("There are no items in cart or the cart amount is 0.")
             
-            if float(paypal_response["payment_gross"]) !=  price + tax + order.tip + settings.SHIPPING_CHARGE:
-                log.error("Paypal success : order and payment amounts not matching. "+ str(paypal_response["payment_gross"]) + " != " + str(get_cart_total(order.cart) + order.tip + settings.SHIPPING_CHARGE))
+            if pdt:
+                amt = float(paypal_response["payment_gross"])
+            else:
+                amt = float(custom["amt"])
+            
+            if amt !=  price + tax + order.tip + settings.SHIPPING_CHARGE:
+                log.error("Paypal success : order and payment amounts not matching. "+ str(amt) + " != " + str(price + tax + order.tip + settings.SHIPPING_CHARGE))
                 return HttpResponse("The paid amount is different from order amount.")
 
             order.total_amount = price
             order.total_tax = tax
             order.transaction_id = txn_id
-            order.payment = payment
-            order.status = 1
-            order.delivery_time = datetime.strptime(custom["delivery_time"], "%m/%d/%Y %H:%M:%S"),
+            if pdt:
+                order.payment = payment
+                order.status = 1
+            date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y %H:%M:%S")
+            order.delivery_time = date_obj
             order.billing_address = Address.objects.get(pk=custom["billing_address"])
             order.delivery_address = Address.objects.get(pk=custom["delivery_address"])
 
-            
             order.driver_instructions = custom["driver_instructions"]
-    
             order.save()
+            
+            if pdt:
+                order.cart.completed=True
+                order.cart.save()
 
-            order.cart.completed=True
-            order.cart.save()
-
-            error = ""
-        except KeyError as e:
+            error = "?message=The order is successfull. Order Number : " + order.order_num 
+        except Exception as e:
             log.error("Paypal success error - Failed to create order object " + txn_id + e.message)
             error = "?error="+e.message
         except Cart.DoesNotExist:
             raise Exception("There are no items in cart.")
-    except KeyError as e:
+    except Exception as e:
         log.error("Paypal success Error : " + e.message)
         error = "?error=Failed to verify payment."
-    return HttpResponse("http://meisterdish.qburst.com/views/checkout.html" + error)
+    return HttpResponseRedirect(settings.SITE_URL + "views/checkout.html" + error)
 
 def get_cart_total(cart):
     try:
         amount = 0.0
         tax = 0.0
         for ci in CartItem.objects.filter(cart=cart, cart__completed=False):
-            amount += ci.meal.price
-            tax += ci.meal.tax
+            amount += ci.meal.price * ci.quantity
+            tax += ci.meal.tax * ci.quantity
         
     except Exception as e:
         log.error("Error getting cart total: " + e.message)
-    return (amount, tx)
+    return (amount, tax)
 
 def save_payment_data(paypal_response):
     try:
@@ -620,8 +645,75 @@ def paypal_ipn(request, data, session_id):
         
         txn_id = data['txn_id']
         try:
-            order = Order.objects.get(transaction_id=txn_id, payment=None, cart__completed=False, cart__user__pk=user_dic["id"], status=1)
+            order = Order.objects.get(transaction_id=txn_id, cart__user__pk=user_dic["id"])
+            if order.payment and order.cart.completed and order.status >= 1:
+                log.info("IPN transaction " + txn_id + " already verified.")
+                return HttpResponse("None")
+
+            payment = save_payment_data(paypal_response)
+            if not payment:
+                return HttpResponse("Failed to update transaction details. Please contact customer support.")
+        
+            log.info(paypal_response["custom"])
+            custom = simplejson.loads(str(unquote(paypal_response["custom"])))
+            session_key = custom["session-key"]
+            if session_key == "":
+                log.error("PayPal IPN: Invalid user session")
+                return HttpResponse("Invalid session.")
             
+            try:
+                user_dic = SessionStore(session_key=session_key)["user"]
+            except Exception as e:
+                log.error("IPN : Failed to load session from paypal response")
+                return HttpResponse("No user session found.")
+            ########
+            try:
+                order = Order()
+                order.cart = Cart.objects.get(user__pk=user_dic["id"], completed=False)
+                order.order_num = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(12))
+                order.tip = float(custom["tip"])
+                (price, tax) = get_cart_total(order.cart)
+
+                if float(price) == float(0):
+                    raise Exception("There are no items in cart or the cart amount is 0.")
+                
+                if pdt:
+                    amt = float(paypal_response["payment_gross"])
+                else:
+                    amt = float(custom["amt"])
+                
+                if amt !=  price + tax + order.tip + settings.SHIPPING_CHARGE:
+                    log.error("Paypal success : order and payment amounts not matching. "+ str(amt) + " != " + str(price + tax + order.tip + settings.SHIPPING_CHARGE))
+                    return HttpResponse("The paid amount is different from order amount.")
+
+                order.total_amount = price
+                order.total_tax = tax
+                order.transaction_id = txn_id
+                if pdt:
+                    order.payment = payment
+                    order.status = 1
+                date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y %H:%M:%S")
+                order.delivery_time = date_obj
+                order.billing_address = Address.objects.get(pk=custom["billing_address"])
+                order.delivery_address = Address.objects.get(pk=custom["delivery_address"])
+
+                order.driver_instructions = custom["driver_instructions"]
+                order.save()
+                
+                if pdt:
+                    order.cart.completed=True
+                    order.cart.save()
+
+                error = "?message=The order is successfull. Order Number : " + order.order_num 
+            except Exception as e:
+                log.error("Paypal IPN error - Failed to create order object " + txn_id + e.message)
+                error = "?error="+e.message
+            except Cart.DoesNotExist:
+                raise Exception("There are no items in cart.")
+
+            ########3
+
+            order.status = 1
             payment = order.payment
             payment.ipn_verified=True
             payment.ipn_response = payment_data
@@ -636,8 +728,71 @@ def paypal_ipn(request, data, session_id):
     log.error("Paypal IPN Finished")
     return HttpResponse("Done")
 
-def send_order_confirmation_notification(order, user):
-    pass
+def send_order_confirmation_notification(order):
+    try:
+        meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
+        user = order.cart.user
+        dic = {
+               "order_num" : order.order_num,
+               "transaction_id" : order.transction_id,
+               "date": order.updated.strftime("%B %d, %Y"),
+               "time" : order.updated.strftime("%I %M %p"),
+               "grand_total":order.grand_total,
+               "name" : user.last_name + " " + user.first_name,
+               "status":order.status,
+               }
+        
+        msg = render_to_string('order_confirmation_email_template.html', dic)
+        sub = 'Your order at Meisterdish is confirmed '
+        to_email = user.email
+        
+        mail([to_email], sub, msg )
+
+        if user.need_sms_notification:
+            if not send_sms_notification(dic):
+                return False
+        return True
+
+    except KeyError as e:
+        log.error("Send confirmation mail : " + e.message)
+        return False
 
 def send_order_complete_notification(order):
-    pass    
+    try:
+        meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
+        user = order.cart.user
+        dic = {
+               "order_num" : order.order_num,
+               "transaction_id" : order.transction_id,
+               "date": order.updated.strftime("%B %d, %Y"),
+               "time" : order.updated.strftime("%I %M %p"),
+               "grand_total":order.grand_total,
+               "name" : user.last_name + " " + user.first_name,
+               "status":order.status,
+               }
+        
+        msg = render_to_string('order_complete_email_template.html', dic)
+        sub = 'Meisterdish : Your order is complete'
+        to_email = user.email
+        
+        mail([to_email], sub, msg )
+
+        if user.need_sms_notification:
+            if not send_sms_notification(dic):
+                return False
+        return True
+    except KeyError as e:
+        log.error("Send order completion mail : " + e.message)
+        return False
+
+def send_sms_notification(dic):
+    try:
+        if dic["status"] == 2: #Confirmed
+            txt = render_to_string('order_confirmation_sms_template.html', dic)
+        else: #Complete
+            txt = render_to_string('order_complete_sms_template.html', dic)
+        #SEND SMS
+        return True
+    except KeyError as e:
+        log.error("Send order SMS : " + e.message)
+        return False        

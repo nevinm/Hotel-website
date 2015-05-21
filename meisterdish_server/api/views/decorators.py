@@ -24,6 +24,7 @@ def check_input(method, admin=False):
                                              "get_categories",
                                              "get_meal_details",
                                              "add_to_cart",
+                                             "check_delivery",
                                              ]:
                         #common_apis = ["get_meals"]
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
@@ -71,9 +72,9 @@ def check_nvp_input():
 
 def nvp_request(request):
     try:
+        log.info("NVP : " + request.method)
         if (request.method == 'GET'):
             return dict((itm.split('=')[0],itm.split('=')[1]) for itm in request.GET.urlencode().split('&'))
-            #return dict(request.GET)
         else:
             data = request.body
             return {item.split('=')[0] : item.split('=')[1]  for item in data.split('&')}

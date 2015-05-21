@@ -201,6 +201,80 @@ def save_delivery_time(request, data, user):
         cart.save()
 
         return json_response({"status":1, "message":"Successfully updated delivery " + field + "."})
-    except KeyError as e:
+    except Exception as e:
         log.error("Save delivery time/address " + e.message)
         return custom_error("Failed to update delivery " + field + ". Please try again later.")
+
+@check_input('POST')
+def check_delivery(request, data, user=None):
+    try:
+        zip = data["zip"].strip()
+        if DeliveryArea.objects.filter(zip=zip).exists():
+           return json_response({"status":1, "message":"Delivery is available for this location."})
+        return custom_error("Delivery is not available for this location.")
+    except Exception as e:
+        log.error("Check delivery by ZIP error : " + e.message)
+        return custom_error("An error has occurred. Please try again later.")
+
+@check_input('POST', True)
+def get_delivery_areas(request, data, user):
+    try:
+        limit = data.get('perPage', settings.PER_PAGE)
+        page = data.get("nextPage",1)
+
+        if "search" in data and data["search"].strip() != "":
+          areas = DeliveryArea.objects.filter(zip__startswith=data["search"].strip())
+        else:
+          areas = DeliveryArea.objects.all()
+        areas = areas.order_by("-id")
+        actual_count = areas.count()
+
+        try:
+            paginator = Paginator(areas, limit)
+            if page <1 or page > paginator.page_range:
+                page = 1
+            areas = paginator.page(page)
+
+        except Exception as e:
+            log.error("Delivery area list pagination : " + e.message)
+            custom_error("There was an error listing delivery areas.")
+
+        area_list = [str(area.zip) for area in areas]
+        return json_response({"status":1, 
+                              "aaData":area_list,
+                              "actual_count":actual_count,
+                              "num_pages" : paginator.num_pages,
+                              "page_range" : paginator.page_range,
+                              "current_page":page,
+                              "per_page" : limit,
+                              })
+    except Exception as e:
+        log.error("Get Delivery areas : " + e.message)
+        return custom_error("An error has occurred. Please try again later.")
+
+@check_input('POST', True)
+def manage_delivery_area(request, data, user):
+    try:
+        zip = data['zip'].strip()
+        if "edit_id" in data and str(data["edit_id"]).strip() != "":
+            action = "Updat"
+            if DeliveryArea.objects.exclude(pk=data["edit_id"]).filter(zip=zip).exists():
+                return custom_error("Zipcode already exists.")
+            area = DeliveryArea.objects.get(pk=data["edit_id"])
+        elif "delete_id" in data and data["delete_id"]:
+            DeliveryArea.objects.get(pk=data["delete_id"]).delete()
+            return json_response({"status":1, "id":data["delete_id"], "message": "Deleted "+zip})
+
+        else:
+            if DeliveryArea.objects.filter(zip=zip).exists():
+                return custom_error("Zipcode already exists.")
+            action = "Add"
+            area = DeliveryArea()
+        
+        area.zip = zip
+        area.save()
+        return json_response({"status":1, "id":area.id, "message": action + "ed "+zip})
+      
+    except Exception as e:
+        log.error("Manage delivery area error : " + e.message)
+        return custom_error("An error has occurred. Please try again later.")

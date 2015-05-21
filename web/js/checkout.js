@@ -17,7 +17,7 @@ $(document).ready(function() {
         $('.address-info').hide();
         $('.payment-method-guest-container').show();
     }
-    
+   
     var cartItems;
 
     //Remove cart items
@@ -135,6 +135,13 @@ $(document).ready(function() {
     });
 });
 
+ 
+function haveAccountCheck(){
+    loggedIn = localStorage["loggedIn"];
+    if(loggedIn =="true"){
+        $(".have-account").hide();
+    }
+}
 
 function setCurrentTime() {
     currentHour = getCurrentHour();
@@ -583,6 +590,7 @@ function popuplateAddressList(data) {
         } else {
             $('.address-info').hide();
             $('.address-info-guest').show();
+            haveAccountCheck();
             getCities();
         }
     } else {
@@ -816,7 +824,11 @@ function placeOrder() {
 
     if($("#pp").prop('checked') || $("#pp-guest").prop('checked')){
         payment_type = "pp";
-        var 
+        var payPalEmail = "nazz007online-facilitator@gmail.com",
+            returnUrl = "http://meisterdish.qburst.com/backend/api/paypal_success/",
+            //returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
+            cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
+            notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/";
             orderDetails = {
                 "delivery_time": deliveryTime,
                 "billing_address": billingAddressId,
