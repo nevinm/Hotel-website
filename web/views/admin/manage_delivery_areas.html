@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +9,6 @@
     <title>Meisterdish - Admin</title>
     <script type="text/javascript" src='js/redirect_admin.js'></script>
     <link rel="stylesheet" type="text/css" href="../../css/reset.css">
-    <link rel="stylesheet" type="text/css" href="../../css/fontello.css">
     <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
     <link rel="stylesheet" type="text/css" href="../../css/common.css">
     <link rel="stylesheet" type="text/css" href="css/admin.css">
@@ -46,50 +44,61 @@
         </header>
         <div id="page-container">
             <div class='admin-inner-wrapper'>
-                <div class="accountNav"><div class='create-meal-wrapper'>
-                <a href="create_meal.html">
-                   <input type="button" class="btn btn-small-primary medium-green" id="createMeals" value="Create Meal">
-                </a>
-                </div>
+                <div class="accountNav">
                     <div class="logout body-text-bold">
                         <a id='logout'>LOG OUT</a>
                     </div>
                 </div>
                 <div class="admin-page-container">
                     <div class="admin-header">
-                        <h2>MEAL LIST</h2>
+                        <h2>MANAGE DELIVERY AREA</h2>
                     </div>
-                    <div class="meal-list-container">
-                        <div class="filter-container">
-                            <select name="category" id="category" class="meallist-select">
-                                <option value="" selected>Category</option>
-                            </select>
-                            <select name="meal-type" id="meal-type" class="meallist-select" multiple>
-                                <option value="" selected>Meal-type</option>
-                            </select>
-                            <input type="text" placeholder="Search by name" id="searchBy-name" />
-                            <input type="button" class="btn btn-small-primary medium-green" id="searchinMeal" value="SEARCH">
-                        </div>
-                        <table id="meal-list" class="display" cellspacing="0" width="100%">
+                    <div class="manage-area-container">
+                        <div class="add-deliveryarea-wrapper">
+                            <input type="button" class="btn btn-small-primary medium-green" value="Add-zip" id="add-new-delivery-area">
+                        </div> 
+                        <table id="delivery-area" class="display" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Availability</th>
-                                    <th>Category</th>
-                                    <th>Meal Type</th>
-                                    <th>Price</th>
-                                    <th>Delete</th>
+                                    <th>Delivery area</th>
                                     <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
+                        <div class="admin-nav">
+                            <div class='pagination'></div>
+                        </div>
+                        <div class="popup-wrapper">
+                            <div class="bk-overlay"></div>
+                            <div class="popup">
+                                <div class="header"></div>
+                                <div class="popup-container">
+                                    <div class="content">
+                                    <span></span>
+                                    <div class="popup-input-wrapper">
+                                        <label class="body-text-small">New Zip:</label>
+                                        <input type="text" class="popup-input" id="new-address">
+                                        <input type="button" id="check-zip" class="btn btn-small-secondary" value="CHECK">
+                                    </div>
+                                    <span class="check-delivery"></span>
+                                    </div>
+                                    <div class="button">
+                                        <a href="#" class="btn btn-small-secondary button-disabled" id="edit-delivery-area">SUBMIT</a>
+                                        <a href="#" class="btn btn-small-secondary button-disabled" id="add-delivery-area">SUBMIT</a>
+                                        <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                
+                </div>      
             </div>
+        <div class="popup-message">
+            <span></span>
         </div>
+        </div>    
     </div>
     <script type="text/javascript" src='../../js/jquery.min.js'></script>
     <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
@@ -97,8 +106,6 @@
     <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
     <script type="text/javascript" src='../../js/common.js'></script>
     <script type="text/javascript" src='js/admin.js'></script>
-    <script type="text/javascript" src='js/categories.js'></script>
-    <script type="text/javascript" src='js/meal_list.js'></script>
+    <script type="text/javascript" src='js/manage_delivery_area.js'></script>
 </body>
-
 </html>

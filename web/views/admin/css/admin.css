@@ -85,7 +85,9 @@ li#navbar-username {
 /*=======================*\
        &Category-Page
 \*=======================*/
-
+.admin-header h2{
+    font-size: 20px;
+}
 .admin-inner-wrapper h2 {
     text-align: center
 }
@@ -100,7 +102,8 @@ li#navbar-username {
 
 #userlist,#userlist th,#userlist td,
 #categories,#categories th,#categories td,
-#meal-list,#meal-list th,#meal-list td
+#meal-list,#meal-list th,#meal-list td,
+#delivery-area,#delivery-area th,#delivery-area td
  {
     border: 1px solid #d0d0d0;
     padding: 10px;
@@ -445,7 +448,7 @@ table#userlist {
      &MEAL - LIST and ORDER - LIST
 \*====================================*/
 
-.meal-list-container, .order-list-container {
+.meal-list-container, .order-list-container,.manage-area-container {
     width: 90%;
     margin: 0 auto;
 }
@@ -455,7 +458,7 @@ table#userlist {
     float: left;
 }
 
-table#meal-list {
+table#meal-list,table#delivery-area {
     width: 100%;
     float: right;
     margin-top: 20px;
@@ -933,4 +936,73 @@ table#tips-and-tricks-table {
 .nutrient-main div,
 .nutrient-sub div {
     width: 100%
+}
+
+/**********************\
+  Manage delivery areas
+\**********************/
+#delivery-area .btn-small-primary{
+    line-height: 20px;
+    min-width: 80px;
+    padding: 0;
+    height: 25px;
+}
+.add-deliveryarea-wrapper{
+    padding-top: 20px;
+}
+.manage-area-container .popup{
+    height: 190px;
+}
+.manage-area-container .popup .header{
+    font-family: 'BrandonGrotesque-Bold';
+    color: rgb(107, 107, 107);
+    padding: 11px 0px;
+    background-color: #f7f7f7;
+    padding-left: 20px;
+}
+.popup-input-wrapper{
+    padding-left: 65px;
+}
+.manage-area-container .popup-container .button{
+    text-align: none;
+    padding: 10px 80px;
+}
+.manage-area-container .popup-container .content span{
+    display: none;
+}
+#edit-delivery-area,#add-delivery-area{
+    float: left;
+    display: none;
+}
+#close{
+    float: right;
+}
+span.check-delivery{
+    display: none;
+    padding: 0 !important;
+    font-family: 'ProximaNova-regular' !important;
+    color: #A9D77B !important;
+}
+input#check-zip {
+    height: 20px;
+    padding: 0;
+    line-height: 0px;
+    margin: 0;
+}
+.popup-message {
+    position: absolute;
+    width: 89%;
+    top: 103px;
+    padding: 10px 0px;
+    text-align: center;
+    background: #A9D77B;
+    display: none;
+    /* margin: 0 auto; */
+    left: 50%;
+    margin-left: -43%;
+    max-width: 1100px;
+}
+.popup-message span {
+    font-family: 'ProximaNova-semibold';
+    color: #fff;
 }
