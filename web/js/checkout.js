@@ -17,7 +17,7 @@ $(document).ready(function() {
         $('.address-info').hide();
         $('.payment-method-guest-container').show();
     }
-    
+   
     var cartItems;
 
     //Remove cart items
@@ -135,6 +135,13 @@ $(document).ready(function() {
     });
 });
 
+ 
+function haveAccountCheck(){
+    loggedIn = localStorage["loggedIn"];
+    if(loggedIn =="true"){
+        $(".have-account").hide();
+    }
+}
 
 function setCurrentTime() {
     currentHour = getCurrentHour();
@@ -583,6 +590,7 @@ function popuplateAddressList(data) {
         } else {
             $('.address-info').hide();
             $('.address-info-guest').show();
+            haveAccountCheck();
             getCities();
         }
     } else {
