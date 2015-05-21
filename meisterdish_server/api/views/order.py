@@ -795,4 +795,4 @@ def send_sms_notification(dic):
         return True
     except KeyError as e:
         log.error("Send order SMS : " + e.message)
-        return False        
+        return False#Thakkali
