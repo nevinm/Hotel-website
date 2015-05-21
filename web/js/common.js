@@ -1,5 +1,5 @@
-//var baseURL = 'http://10.7.1.64:86/backend/api/',
-var baseURL = 'http://meisterdish.qburst.com/backend/api/',
+var baseURL = 'http://10.7.1.64:86/backend/api/',
+//var baseURL = 'http://meisterdish.qburst.com/backend/api/',
     homeUrl = "http://meisterdish.qburst.com",
     userDetails, currentPage = $("title").text(),
     clicked = 0;
@@ -421,7 +421,7 @@ var CartItemCountCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function CartItemCount(added) {
+function CartItemCount() {
     var url = baseURL + 'get_cart_items_count/',
         header = {
             "session-key": localStorage["session_key"]

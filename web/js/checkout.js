@@ -321,7 +321,7 @@ var removeCartItemsCallback = {
     success: function(data, textStatus) {
         removeData = JSON.parse(data);
         if(removeData.status==1){
-            CartItemCount(true);
+            CartItemCount();
             getCartItems();
             var message = removeData.message;
             $('.popup-message span').text(message);
@@ -352,7 +352,7 @@ function removeCartItems(meal_id) {
 //clear cart
 var clearCartCallback = {
     success: function(data, textStatus) {
-        CartItemCount(true);
+        CartItemCount();
         getCartItems();
         window.location.href = 'menu.html';
     },
@@ -574,7 +574,9 @@ function getAddress(flag) {
         header = {
             "session-key": localStorage["session_key"]
         },
-        userData = {};
+        userData = {
+            "checkout":1
+        };
     data = JSON.stringify(userData);
     var getAddressInstance = new AjaxHttpSender();
     getAddressInstance.sendPost(url, header, data, getAddressCallback, flag);
@@ -701,7 +703,8 @@ function addAddress() {
     var newAddress = getNewAddress(),
         url = baseURL + "add_address/",
         header = {
-            "session-key": localStorage["session_key"]
+            "session-key": localStorage["session_key"],
+            "checkout":1
         },
         userData = {
             "first_name": newAddress.first_name,
@@ -825,8 +828,8 @@ function placeOrder() {
     if($("#pp").prop('checked') || $("#pp-guest").prop('checked')){
         payment_type = "pp";
         var payPalEmail = "nazz007online-facilitator@gmail.com",
-            returnUrl = "http://meisterdish.qburst.com/backend/api/paypal_success/",
-            //returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
+            //returnUrl = "http://meisterdish.qburst.com/backend/api/paypal_success/",
+            returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
             cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
             notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/";
             orderDetails = {

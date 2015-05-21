@@ -4,7 +4,7 @@ import json as simplejson
 import logging 
 import settings
 from decorators import *
-from libraries import validate_zipcode, validate_phone, card, configure_paypal_rest_sdk
+from libraries import validate_zipcode, validate_phone, card, configure_paypal_rest_sdk, check_delivery_area
 import paypalrestsdk
 from datetime import datetime
 
@@ -19,6 +19,11 @@ def add_address(request, data, user):
         building = data["building"].strip()
         city_id = data["city_id"]
         zip = data["zip"].strip()
+
+        if "checkout" in data and data["checkout"] == 1:
+            if not check_delivery_area(zip):
+                return custom_error("Delivery is not available at this location. Please choose a different Zip code.")
+
         phone = data["phone"].strip()
         is_primary = False
         if "is_primary" in data and data["is_primary"]:
@@ -251,7 +256,6 @@ def get_meal_details(request, data, meal_id):
                 "id":meal.category.id,
                 "name":meal.category.name.title(),
                 },
-            
             "chef_id" : "Not available"  if not meal.chef else meal.chef.id,
             "chef_name" : "Not available"  if not meal.chef else meal.chef.name.title(),
             "chef_image" : {"url":settings.DEFAULT_USER_IMAGE, "id":""} if not meal.chef or not meal.chef.image else {
@@ -338,7 +342,7 @@ def save_credit_card(request, data, user):
                 log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + " : "+credit_card.error['details'][0]['issue'])
             return custom_error(credit_card.error['details'][0]['field'] + " : " +credit_card.error['details'][0]['issue'])
         
-        c_card = CreditCardDetails()
+	c_card = CreditCardDetails()
         c_card.user = user
         c_card.card_id = credit_card.id
         c_card.number = credit_card.number
