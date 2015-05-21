@@ -3,6 +3,11 @@ $(document).ready(function() {
     isMobileRendered();
     destroyFullPageJS();
     CartItemCount();
+
+    $(".check-delivery").on('click', function(){
+        var zipcode = $("#zip-code").val();
+        locationCheck(zipcode);
+    });
 });
 var mobileRendered;
 
@@ -55,4 +60,28 @@ function destroyFullPageJS() {
         } else {}
         renderFullPageJS();
     }
+}
+
+//Get reviews API process
+var locationCheckCallback = {
+    success: function(data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            showPopup(userDetails);
+        } else {}
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function locationCheck(zipcode) {
+    var url = baseURL + "check_delivery/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+            'zip': zipcode
+        };
+    data = JSON.stringify(userData);
+    var locationCheckInstance = new AjaxHttpSender();
+    locationCheckInstance.sendPost(url, header, data, locationCheckCallback);
 }

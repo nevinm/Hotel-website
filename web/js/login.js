@@ -34,6 +34,7 @@
 
 $(document).ready(function() {
     redirectIfLoggedIn();
+    CartItemCount();
     //login form submit
     $("#login-button").on('click', function(e){
         e.preventDefault();

@@ -421,7 +421,7 @@ var CartItemCountCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function CartItemCount(added) {
+function CartItemCount() {
     var url = baseURL + 'get_cart_items_count/',
         header = {
             "session-key": localStorage["session_key"]

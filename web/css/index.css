@@ -187,6 +187,9 @@ input#zip-code[type="text"]{
 .logo-mobile{
 	display: none;
 }
+.deliver-message{
+	padding: 43px 0;
+}
 /*==============================*\
 			&Media-query
 \*==============================*/
