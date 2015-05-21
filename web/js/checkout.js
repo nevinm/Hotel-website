@@ -139,9 +139,14 @@ $(document).ready(function() {
 function setCurrentTime() {
     currentHour = getCurrentHour();
     $(".today-content .checkout-time-button").each(function(key, value) {
-        if (getCurrentHour() == $(value).data().hr) {
-            $(this).val("NOW");
-            $(this).addClass("checkout-time-button-active");
+        currentHour= getCurrentHour();
+        meridiem= currentHour.substring(currentHour.length - 2);
+        if(meridiem=="pm"){
+            currentHour=currentHour.substring(0, currentHour.length - 2);
+            if (parseInt(currentHour) == $(value).data().hr) {
+                $(this).val("NOW");
+                $(this).addClass("checkout-time-button-active");
+            }
         }
     });
 
