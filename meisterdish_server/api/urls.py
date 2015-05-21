@@ -53,4 +53,7 @@ urlpatterns = patterns('',
     url(r'^paypal_success/$', views.paypal_success, name='paypal_success'),
     url(r'^paypal_ipn/$', views.paypal_ipn, name='paypal_ipn'),
 
+    url(r'^check_delivery/$', views.check_delivery, name='check_delivery'),
+    url(r'^get_delivery_areas/$', views.get_delivery_areas, name='get_delivery_areas'),    
+    url(r'^manage_delivery_area/$', views.manage_delivery_area, name='manage_delivery_area'),    
 )

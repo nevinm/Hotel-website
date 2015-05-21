@@ -394,3 +394,9 @@ class GiftCardRedemption(models.Model):
     
     def __unicode__(self):
         return self.gift_card.code + " : " + str(self.time)
+
+class DeliveryArea(models.Model):
+    zip = models.CharField(max_length=10)
+    
+    def __unicode__(self):
+        return self.zip    
