@@ -229,6 +229,8 @@ var getCartItemsCallback = {
             $(".emtpy-cart-message").append("<span>"+cartItems.message+"</span>");
             $(".emtpy-cart-message").show();
             updateReciept();
+            $("#place-order").removeClass('button-disabled');
+            $(".items-container .item-count").text('(0)');
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
