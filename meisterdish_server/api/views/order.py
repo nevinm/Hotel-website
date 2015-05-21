@@ -546,13 +546,13 @@ def paypal_success(request, data):
             if float(paypal_response["payment_gross"]) !=  price + tax + order.tip + settings.SHIPPING_CHARGE:
                 log.error("Paypal success : order and payment amounts not matching. "+ str(paypal_response["payment_gross"]) + " != " + str(get_cart_total(order.cart) + order.tip + settings.SHIPPING_CHARGE))
                 return HttpResponse("The paid amount is different from order amount.")
-
+	    log.error(custom["delivery_time"])
             order.total_amount = price
             order.total_tax = tax
             order.transaction_id = txn_id
             order.payment = payment
             order.status = 1
-            order.delivery_time = datetime.strptime(custom["delivery_time"], "%m/%d/%Y %H:%M:%S"),
+            #order.delivery_time = datetime.strptime(custom["delivery_time"], "%m/%d/%Y %H:%M:%S"),
             order.billing_address = Address.objects.get(pk=custom["billing_address"])
             order.delivery_address = Address.objects.get(pk=custom["delivery_address"])
 
@@ -585,7 +585,7 @@ def get_cart_total(cart):
         
     except Exception as e:
         log.error("Error getting cart total: " + e.message)
-    return (amount, tx)
+    return (amount, tax)
 
 def save_payment_data(paypal_response):
     try:
