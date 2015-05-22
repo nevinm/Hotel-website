@@ -69,5 +69,6 @@
                $("#accordion .order-content:last").append("<span>" + meal.name + " x " + meal.quantity + "</span>");
            });
        });
+    $($(".accordion-header")[0]).trigger('click');
    }
 

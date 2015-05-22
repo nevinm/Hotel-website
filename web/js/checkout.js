@@ -347,7 +347,7 @@ var clearCartCallback = {
     success: function(data, textStatus) {
         CartItemCount();
         getCartItems();
-        window.location.href = 'menu.html';
+        window.location.href = 'orderhistory.html';
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
