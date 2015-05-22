@@ -137,8 +137,8 @@ $(document).ready(function() {
 
  
 function haveAccountCheck(){
-    loggedIn = localStorage["loggedIn"];
-    if(loggedIn =="true"){
+    loggedIn = (JSON.parse(localStorage["loggedIn"]) || JSON.parse(localStorage['admin_loggedIn']));
+    if(loggedIn){
         $(".have-account").hide();
     }
 }
