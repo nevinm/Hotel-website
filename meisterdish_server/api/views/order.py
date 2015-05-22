@@ -610,7 +610,7 @@ def paypal_success(request, data):
     except Exception as e:
         log.error("Paypal success Error : " + e.message)
         error = "?error=Failed to verify payment."
-    return HttpResponseRedirect(settings.SITE_URL + "views/checkout.html" + error)
+    return HttpResponse(settings.SITE_URL + "views/checkout.html" + error)
 
 def get_cart_total(cart):
     try:
