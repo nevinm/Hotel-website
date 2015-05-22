@@ -6,7 +6,7 @@ import settings
 from decorators import *
 from libraries import validate_zipcode, validate_phone, card, configure_paypal_rest_sdk, check_delivery_area
 import paypalrestsdk
-from datetime import datetime
+from datetime import datetime, timedelta
 
 log = logging.getLogger('api_user')
 
@@ -178,8 +178,12 @@ def get_categories(request, data):
 def add_rating(request, data, user, meal_id):
     try:
         order = Order.objects.get(id=data['order_id'], cart__cartitem__meal__pk=meal_id, cart__user=user)
+        
+        if order.created < datetime.now()-timedelta(days=30):
+            custom_error("You cannot add reviews after 30 days from the date of order.")
+
         if not order.cart.completed or order.status < 4:
-            custom_error("The order is not complete. Please wait for the order to be complete.")
+            custom_error("You cannot add reviews to an order that is not complete.")
         try:
             rating = MealRating.objects.get(order=order, meal__pk=meal_id)
             return custom_error("You have already added rating for this meal")
@@ -395,7 +399,7 @@ def get_saved_cards(request, data, user):
 @check_input('POST')
 def get_user_reviews(request, data, user):
     try:
-        orders = Order.objects.filter(cart__user__pk=user.pk, status__gte=2)
+        orders = Order.objects.filter(cart__user__pk=user.pk, status__gte=2, created__gte=datetime.now()-timedelta(days=30))
         rating_list = []
         meals_list = []
         for order in orders:
