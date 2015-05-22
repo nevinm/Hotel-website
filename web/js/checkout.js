@@ -71,6 +71,12 @@ $(document).ready(function() {
         updateReciept();
     });
 
+    $(document).on('click', '#save-payment', function() {
+        var selectedId = $('input[type=radio][name=change-card]:checked').attr('id');
+        showSelectedPaymentMethod(selectedId);
+        $('.address-payment-list-popup').hide();
+    });
+
     $(document).on('click', '.operator-minus', function() {
         var oldVal = parseInt($(this).parent().find('.quantity').val()),
             newVal = oldVal - 1,
@@ -495,7 +501,7 @@ function populateCardDetails(cards,selectedId) {
             last_num = cards[key].number.slice(-4);
             if(selectedId == value.id){
                 $('.saved-cards').append("<div class='saved-card-list'>"+
-                    "<input type='radio' class='added-card pullLeft' name='saved-card' id='" + value.id + 
+                    "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id + 
                     "' class='radio-button-payment'>" +
                     "<label for='" + value.id + "'>" +
                     "<img class='paypal' src='" + value.logo + "'>" +
@@ -509,7 +515,7 @@ function populateCardDetails(cards,selectedId) {
         $.each(cards, function(key, value) {
             last_num = cards[key].number.slice(-4);
             $('.saved-cards').append("<div class='saved-card-list'>"+
-                "<input type='radio' class='added-card pullLeft' name='saved-card' id='" + value.id + 
+                "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id + 
                 "' class='radio-button-payment'>" +
                 "<label for='" + value.id + "'>" +
                 "<img class='paypal' src='" + value.logo + "'>" +
@@ -615,7 +621,7 @@ function populateAddresstoInfoContainer(data) {
 
 //populate address list in popup
 function populateAddressListPopup() {
-    $('.popup-container').empty();
+    $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .button').remove();
     $('#save-delivery-address').addClass('button-disabled');
     var checkLocal = JSON.parse(localStorage['delivery_addressess']).address_list.length;
@@ -669,7 +675,7 @@ function setPrimaryAdd(selectedId) {
 }
 
 function changeDeliveryAddress(selectedId) {
-    var selectedAddress =$('.popup-container').find('#'+selectedId).parent().find('label'),
+    var selectedAddress =$('.address-payment-list-popup .popup-container').find('#'+selectedId).parent().find('label'),
         htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
     $('.address-info .contents').html(htmlContent);
@@ -905,7 +911,7 @@ $("#pp").on("click",function(){
 function populateCreditCardDetails(){
     var cards = cardDetails.cards;
     $('.address-payment-list-popup .button').remove();
-    $('.popup-container').empty();
+    $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .popup .header').text("SELECT YOUR PAYMENT METHOD");
        $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>"+
             "<input type='radio' id='paypal-radio'class='added-card pullLeft' name='change-card' class='radio-button-payment'>" +
@@ -947,6 +953,11 @@ function populateCreditCardDetails(){
 function validateOrder(){
     var data={};
     data.message="";
+    if(!$(".payment-checked:checked").length){
+        data.message="Add a method of payment and then proceed";
+        showPopup(data);
+        return false;
+    }
     if(typeof cartItems === 'undefined'){}
     else{
          if(cartItems.status=="-1"){
@@ -963,11 +974,6 @@ function validateOrder(){
 
     if(!$(".address-added").length){
         data.message="Add an addess then proceed";
-        showPopup(data);
-        return false;
-    }
-    if(!$(".payment-checked:checked").length){
-        data.message="Add a method of payment and then proceed";
         showPopup(data);
         return false;
     }
