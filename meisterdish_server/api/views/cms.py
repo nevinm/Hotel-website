@@ -260,6 +260,7 @@ def get_meals(request, data):
             meal_list.append({
                               "id":meal.id,
                               "name":meal.name,
+                              "sub":meal.sub,
                               "description":meal.description,
                               #"images":meal_images,
                               "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.thumb.url,
