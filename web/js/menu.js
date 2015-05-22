@@ -69,7 +69,6 @@ $(document).ready(function() {
         var menuNavHeight = 100,
             stickyMenu = $('.subMenu'),
             scroll = $(document).scrollTop();
-            console.log(scroll)
         if (scroll >= menuNavHeight) {
             stickyMenu.addClass('fixedMenu');
         } else {

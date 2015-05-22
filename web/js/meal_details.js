@@ -139,7 +139,6 @@ function populateMealDetails(mealDetails) {
 }
 
 function mealDetailsTab(mealDetails) {
-    var majorIngredients = "";
     $(".add-meal").attr("data-id", mealDetails.id);
     $(".meal-name").text(mealDetails.name);
     $(".price").text(dollarConvert(mealDetails.price + mealDetails.tax));
@@ -153,11 +152,8 @@ function mealDetailsTab(mealDetails) {
     if (mealDetails.in_cart == 1) {
         $(".add-meal").addClass("button-disabled");
     }
-    $(mealDetails.ingredients).each(function(key, value) {
-        majorIngredients = majorIngredients + "," + value;
-    });
-    $(".meal-ingredients").text(majorIngredients.substring(1));
-    $(".meal-ingredients").text(majorIngredients.substring(1));
+  
+    $(".meal-ingredients").text(mealDetails.sub);
 
     $($("#meal-rating").find(".rating-star").get().reverse()).each(function(key, value) {
         if (mealDetails.avg_rating == (key + 1)) {

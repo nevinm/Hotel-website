@@ -91,11 +91,6 @@ $(document).ready(function() {
             currentYear = currentYear + 1;
         }
     }
-    // $('#save-credit-card').on("click",function(){      
-    //     if ($('input:checkbox[name=save-card-details]:checked')) {             
-    //         saveCreditCardDetails();
-    //     }
-    // })
 
     $(document).on('click', '#change-address', function() {
         populateAddressListPopup();
@@ -109,13 +104,6 @@ $(document).ready(function() {
         var selectedId = $('input[type=radio][name=address]:checked').attr('id');
         changeDeliveryAddress(selectedId);
         saveDeliveryTime("",selectedId);
-
-    });
-    $(document).on('click', '#save-payment', function() {
-        var selectedId = $('input[type=radio][name=change-card]:checked').attr('id');
-        showSelectedPaymentMethod(selectedId);
-        $('.address-payment-list-popup').hide();
-        $('#place-order').addClass('button-disabled');
     });
 
     $('#add-guest-address').on("click", function(e) {
@@ -131,7 +119,9 @@ $(document).ready(function() {
 
     $("#place-order").on("click", function(e) {
         e.preventDefault();
-        placeOrder();
+        if(validateOrder()){
+            placeOrder();
+        }
     });
 });
 
@@ -236,7 +226,6 @@ var getCartItemsCallback = {
             $(".emtpy-cart-message").append("<span>"+cartItems.message+"</span>");
             $(".emtpy-cart-message").show();
             updateReciept();
-            $("#place-order").removeClass('button-disabled');
             $(".items-container .item-count").text('(0)');
         }
     },
@@ -606,7 +595,7 @@ function populateAddresstoInfoContainer(data) {
     if(selectedId){
         $.each(data.address_list, function(key, value) {
             if (value.id == selectedId) {
-                $('.address-info').append("<div class='contents' data-id='"+value.id+"'>" +
+                $('.address-info').append("<div class='contents address-added' data-id='"+value.id+"'>" +
                     "<span class='content-heading'>" + "DELIVERY ADDRESS" + "</span>" +
                     "<span>" + value.first_name + " " + value.last_name + "</span>" +
                     "<span>" + value.building + "," + value.street + "</span>" +
@@ -629,9 +618,6 @@ function populateAddressListPopup() {
     if (checkLocal) {   
         addressList = JSON.parse(localStorage['delivery_addressess']);
         appendAddresscontent(addressList);
-        // $('.address-payment-list-popup .popup-container').append("<div class='button'>" +
-        //     "<a href='#' class='btn btn-medium-primary medium-green' id='save-delivery-address'>" + "SELECT" + "</a>" +
-        //     "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
         $('.address-payment-list-popup').show();
     } else {
         getAddress("populateAddressToPopUp");
@@ -703,8 +689,7 @@ function addAddress() {
     var newAddress = getNewAddress(),
         url = baseURL + "add_address/",
         header = {
-            "session-key": localStorage["session_key"],
-            "checkout":1
+            "session-key": localStorage["session_key"]
         },
         userData = {
             "first_name": newAddress.first_name,
@@ -715,6 +700,7 @@ function addAddress() {
             "street": newAddress.street,
             "building": newAddress.building,
             "is_primary": newAddress.is_primary,
+            "checkout":1
         };
     data = JSON.stringify(userData);
     var addAddressInstance = new AjaxHttpSender();
@@ -939,7 +925,6 @@ function populateCreditCardDetails(){
         $('.saved-cards').empty();
         $('.paypal-container').show();
         $('.credit-card-container').hide();
-
     }
 
     else{
@@ -950,24 +935,32 @@ function populateCreditCardDetails(){
     }
  }
 
-function validateCheckOrder(){
-    if(cartItems.status && $(".checkout-time-button-active").length){
-        $("#place-order").removeClass('button-disabled');
-    }else{}
+function validateOrder(){
+    var data={};
+    data.message="";
+    if(typeof cartItems === 'undefined'){}
+    else{
+         if(cartItems.status=="-1"){
+            data.message="Add Meals to cart and then proceed";
+            showPopup(data);
+            return false;
+        }
+    }
+    if(!$(".checkout-time-button-active").length){
+        data.message="Add delivery time and then proceed";
+        showPopup(data);
+        return false;
+    }
+
+    if(!$(".address-added").length){
+        data.message="Add an addess then proceed";
+        showPopup(data);
+        return false;
+    }
+    if(!$(".payment-checked:checked").length){
+        data.message="Add a method of payment and then proceed";
+        showPopup(data);
+        return false;
+    }
+   return true;
 }
- //  create oredr button disabled on uncheck 
- $(document).on('click', '#pp,#pp-guest,#cc,.added-card', function() {
-    validateCheckOrder();
- });
-
-// //Apply a space automaticaly after 4 charas
-// String.prototype.toCardFormat = function () {
-//    return this.replace(/[^0-9]/g, "").substr(0, 16).split("").reduce(cardFormat, "");
-//    function cardFormat(str, l, i) {
-//        return str + ((!i || (i % 4)) ? "" : " ") + l;
-//    }
-// };
-
-// $("#card-number").on("keyup", function () {
-//     $(this).val($(this).val().toCardFormat());
-// });

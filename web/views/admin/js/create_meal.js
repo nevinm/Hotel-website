@@ -234,6 +234,7 @@ function createMeal() {
         ingredients_image = $('#ingredients-image').attr("data-id"),
         chef_comments = $("#chef-comments").val(),
         chef_name = $("#chef-name").val();
+        meal_sub = $("#meal-sub-name").val();
     var ingredients = [], // ingredient array
         temp = '',
         pre_requesties = [],
@@ -288,6 +289,7 @@ function createMeal() {
         "finished_preparation": prepared,
         "saved_time": saved_time,
         "tips": tips,
+        "sub":meal_sub,
         "nutrients": nutrients
     }
 
@@ -424,6 +426,7 @@ function populateMealDetails(mealDetails) {
     $("#chef-image").attr("data-id", mealDetails.chef_image.id);
     $("#meal-image").attr("src", mealDetails.main_image.url);
     $("#meal-image").attr("data-id", mealDetails.main_image.id);
+    $("#meal-sub-name").val(mealDetails.sub);
     $("#meal-price").val(mealDetails.price);
     $("#meal-tax").val(mealDetails.tax);
     $("#chef-name").val(mealDetails.chef_name);
