@@ -5,6 +5,7 @@ from settings import PAYMENT_METHODS, ORDER_STATUS, SHIPPING_CHARGE
 import logging
 log = logging.getLogger('model')
 import sys, traceback
+from django.db.models import Sum
 
 months = ((1, 'January'),
           (2, 'February'),
@@ -333,7 +334,7 @@ class Cart(models.Model):
 
     def str(self):
         return "Cart for user "+user,first_name + " "+user.last_name
-        
+
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart)
     meal = models.ForeignKey(Meal, related_name="cartitem")

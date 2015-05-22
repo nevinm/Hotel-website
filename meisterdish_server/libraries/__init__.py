@@ -164,7 +164,6 @@ def verify_paypal_ipn(data):
         return False
 
 def check_delivery_area(zip):
-    log.info("checking delivery availability at "+zip)
     if DeliveryArea.objects.filter(zip=zip).exists():
         return True
     return False

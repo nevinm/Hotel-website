@@ -14,6 +14,7 @@ import string, random
 from urllib import unquote
 from django.template.loader import render_to_string
 
+
 log = logging.getLogger('order')
 
 #Admin and User
