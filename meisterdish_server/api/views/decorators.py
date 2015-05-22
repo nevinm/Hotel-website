@@ -64,7 +64,6 @@ def check_nvp_input():
             log.info(func.__name__ + " called. Is it from Paypal ? ")
 	    log.info("qwqw")	
             data = nvp_request(request)
-            log.info(data)
             if not data:
                 log.error("Failed to parse NVP data")
                 return HttpResponse("Failed to parse the request data.")
@@ -76,11 +75,9 @@ def nvp_request(request):
     try:
         log.info("NVP : " + request.method)
         if (request.method == 'GET'):
-            return dict((itm.split('=')[0],itm.split('=')[1]) for itm in request.GET.urlencode().split('&'))
+            return request.GET
         else:
-            data = request.POST
-            return data
-            #return {item.split('=')[0] : item.split('=')[1]  for item in data.split('&')}
+            return request.POST
     except Exception as e:
         log.error("Failed to parse NVP Response : "+ e.message)
         return None

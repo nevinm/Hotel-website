@@ -239,7 +239,7 @@ def get_delivery_areas(request, data, user):
             log.error("Delivery area list pagination : " + e.message)
             custom_error("There was an error listing delivery areas.")
 
-        area_list = [str(area.zip) for area in areas]
+        area_list = [{"id":area.id, "zip":str(area.zip)} for area in areas]
         return json_response({"status":1, 
                               "aaData":area_list,
                               "actual_count":actual_count,
