@@ -23,7 +23,9 @@
                 $("#login-form")[0].reset();
                 var user_name = userDetails.user.first_name;
                 localStorage['username']=user_name;
-                localStorage['session_key']=userDetails.session_key;
+                if (localStorage.getItem("session_key") === null) {
+                    localStorage['session_key']=userDetails.session_key;
+                }
                 localStorage['loggedIn']=true;
                 checkLoggedIn();
                 window.location.href = 'menu.html'
