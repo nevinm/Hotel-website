@@ -23,6 +23,12 @@ input[type="password"] {
     font-weight: normal;
 }
 
+#meal-sub-name{
+    margin: 0px;
+    height: 89px;
+    width: 270px;
+}
+
 .adminlogin-wrapper {
     width: 400px;
     margin: 0 auto;
