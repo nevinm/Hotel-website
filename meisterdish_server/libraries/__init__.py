@@ -126,13 +126,17 @@ def verify_paypal_transaction(transaction_id):
     response_data = response.read()
     log.debug("PayPal response :"+str(response_data)) 
     if response_data[:7].upper() != 'SUCCESS':
-        log.info("PayPal Payment failed")
+        log.info("PayPal Payment verification failed")
         return False
     else:
-        log.info("PayPal Payment verified")
         response_dict = get_payment_dict(response_data)
-        response_dict["text_response"] = response_data
-        return response_dict
+        if response_dict["state"] == "approved":
+            log.info("PayPal Payment verified")
+            response_dict["text_response"] = response_data
+            return response_dict
+        else:
+            log.info("PayPal Payment verification failed")
+            return False 
 
 def get_payment_dict(data):
   dict_ = {}
@@ -160,6 +164,7 @@ def verify_paypal_ipn(data):
         return False
 
 def check_delivery_area(zip):
+    log.info("checking delivery availability at "+zip)
     if DeliveryArea.objects.filter(zip=zip).exists():
         return True
     return False
