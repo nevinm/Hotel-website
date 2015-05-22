@@ -982,6 +982,7 @@ span.check-delivery{
     padding: 0 !important;
     font-family: 'ProximaNova-regular' !important;
     color: #A9D77B !important;
+    font-size: 12px !important;
 }
 input#check-zip {
     height: 20px;

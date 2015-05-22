@@ -89,6 +89,7 @@ var manageDeliveryAreaCallback = {
 			showPopupMessage(deliveryData);
 		}else{
 			populateEditChanges();
+
 		}
 	},
 	failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -144,7 +145,7 @@ function showPopupMessage(data){
                 $('.popup-message').hide();
             }, 2000);
 }
-function populateEditChanges(current_tr){
+function populateEditChanges(){
 	var newZip = $('#new-address').val();
 	current_tr.find('.zip-value').text(newZip);
 }
