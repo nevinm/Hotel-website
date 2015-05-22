@@ -968,28 +968,31 @@ table#tips-and-tricks-table {
     padding: 10px 80px;
 }
 .manage-area-container .popup-container .content span{
-    display: none;
+    display: block;
 }
 #edit-delivery-area,#add-delivery-area{
     float: left;
     display: none;
 }
-#close{
+.manage-area-container #close{
     float: right;
 }
-span.check-delivery{
-    display: none;
+/*span.check-delivery{
+    display: block;
     padding: 0 !important;
     font-family: 'ProximaNova-regular' !important;
     color: #A9D77B !important;
     font-size: 12px !important;
+    margin-top: 10px;
+    text-align: left !important;
+    padding-left: 65px !important;
 }
 input#check-zip {
     height: 20px;
     padding: 0;
     line-height: 0px;
     margin: 0;
-}
+}*/
 .popup-message {
     position: absolute;
     width: 89%;
@@ -1006,4 +1009,7 @@ input#check-zip {
 .popup-message span {
     font-family: 'ProximaNova-semibold';
     color: #fff;
+}
+.confirm-popup-wrapper{
+    display: none;
 }
