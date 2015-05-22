@@ -123,6 +123,10 @@ $(document).ready(function() {
             placeOrder();
         }
     });
+
+    $("#pay-form").submit(function(e) {
+      e.preventDefault();
+    });
 });
 
  
@@ -877,7 +881,12 @@ function placeOrder() {
                 }
             }
         }
-    data = JSON.stringify(params);
+    if(typeof params === 'undefined'){
+        return;
+    }
+    else{
+        data = JSON.stringify(params);
+    }
     var placeOrderInstance = new AjaxHttpSender();
     placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
 }    

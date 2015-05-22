@@ -47,7 +47,7 @@
                "</div>" +
                "<div class='accordion-subcontent'>" +
                "<div class='order-head'>ORDER DATE</div>" +
-               "<div class='order-content'>12/12/2015</div>" +
+               "<div class='order-content'>"+value.delivery_time.substring(0,10)+"</div>" +
                "</div>" +
                "<div class='accordion-subcontent'>" +
                "<div class='order-head'>SHIPPING INFROMATION</div>" +
@@ -55,8 +55,7 @@
                "<span>" + deliveryAddress.first_name + " " + deliveryAddress.last_name + "</span>" +
                "<span>" + deliveryAddress.building + " " + deliveryAddress.street + "</span>" +
                "<span>" + deliveryAddress.city + "</span>" +
-               "<span>" + deliveryAddress.zip + "</span>" +
-               "+</div></div>" +
+               "<span>" + deliveryAddress.zip + "</span></div></div>" +
                "<div class='accordion-subcontent'>" +
                "<div class='order-head'>ITEMS ORDERD</div>" +
                "<div class='order-content'>" +
