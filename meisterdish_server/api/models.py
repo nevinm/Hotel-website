@@ -379,9 +379,12 @@ class Order(models.Model):
         if not self.grand_total or self.grand_total == 0:            
             promo_amt = 0 if not self.cart.promo_code else self.card.promo_code.amount
             gift_card_amt = 0
-            if self.cart.gift_cards:
-                gift_card_amt = float(self.cart.gift_cards.all().aggregate(s=Sum('amount'))['s'])
-
+            if self.cart.gift_cards.all().count:
+                try:
+                    gift_card_amt = float(self.cart.gift_cards.all().aggregate(s=Sum('amount'))['s'])
+		except Exception as e:
+	            log.error(e.message)
+		
             self.discount = gift_card_amt + promo_amt
 
             self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE
