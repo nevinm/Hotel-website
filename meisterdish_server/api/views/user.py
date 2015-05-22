@@ -179,19 +179,18 @@ def add_rating(request, data, user, meal_id):
     try:
         order = Order.objects.get(id=data['order_id'], cart__cartitem__meal__pk=meal_id, cart__user=user)
         if not order.cart.completed or order.status < 4:
-            custom_error("The order is not complete. Please complete the order before rating.")
+            custom_error("The order is not complete. Please wait for the order to be complete.")
         try:
-            action = "update"
             rating = MealRating.objects.get(order=order, meal__pk=meal_id)
-        except:
-            action = "add"
+            return custom_error("You have already added rating for this meal")
+        except MealRating.DoesNotExist:
             rating = MealRating()
-        rating.meal = Meal.objects.get(pk=meal_id)
-        rating.order = order
-        rating.rating = data['rating']
-        rating.comment = data['comment'].strip()
-        rating.save()
-        return json_response({"status":1, "message":"Successfully "+action+"ed rating.", "order_id":data['order_id'], "meal_id":meal_id})
+            rating.meal = Meal.objects.get(pk=meal_id)
+            rating.order = order
+            rating.rating = data['rating']
+            rating.comment = data['comment'].strip()
+            rating.save()
+            return json_response({"status":1, "message":"Successfully "+action+"ed rating.", "order_id":data['order_id'], "meal_id":meal_id})
     except Exception as e:
         log.error("Add rating " + e.message)
         return custom_error("You are not authorized rate this meal/order.")

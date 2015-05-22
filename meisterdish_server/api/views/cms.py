@@ -291,6 +291,7 @@ def create_meal(request, data, user):
     try:
         edit=False
         name = data['name'].strip()
+        sub = data['name'].strip()
         desc = data['description'].strip()
         
         price = float(data['price'])
@@ -310,6 +311,7 @@ def create_meal(request, data, user):
             meal = Meal()
         
         meal.name = name.title()
+        meal.sub = sub.title()
         meal.description = desc
         
         meal.price = price
