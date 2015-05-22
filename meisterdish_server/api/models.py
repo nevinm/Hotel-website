@@ -5,6 +5,7 @@ from settings import PAYMENT_METHODS, ORDER_STATUS, SHIPPING_CHARGE
 import logging
 log = logging.getLogger('model')
 import sys, traceback
+from django.db.models import Sum
 
 months = ((1, 'January'),
           (2, 'February'),
@@ -327,7 +328,12 @@ class Cart(models.Model):
     user = models.ForeignKey(User)
     delivery_time = models.DateTimeField(null=True)
     delivery_address = models.ForeignKey(Address, null=True, blank=True)
+    gift_cards = models.ManyToManyField("GiftCard", null=True)
+    promo_code = models.ForeignKey("PromoCode", null=True)
     completed = models.BooleanField(default=False)
+
+    def str(self):
+        return "Cart for user "+user,first_name + " "+user.last_name
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart)
@@ -343,8 +349,10 @@ class Order(models.Model):
     total_amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
     total_tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
     tip = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(1000)])
-    grand_total = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
     
+    grand_total = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
+    discount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
+
     delivery_address = models.ForeignKey(Address, related_name="delivery_address")
     billing_address = models.ForeignKey(Address, related_name="billing_address")
     
@@ -352,8 +360,7 @@ class Order(models.Model):
     driver_instructions = models.TextField(max_length=1024, null=True)
     
     payment = models.ForeignKey(Payment, null=True, blank=True)
-    
-    
+
     status = models.IntegerField(db_index=True, choices=ORDER_STATUS, default=0)
     is_deleted = models.BooleanField(db_index=True, default=False)
     
@@ -368,27 +375,44 @@ class Order(models.Model):
         if self.status >= 1:
             self.cart.completed = True
             self.cart.save()
-        if not self.grand_total or self.grand_total == 0:
+
+        if not self.grand_total or self.grand_total == 0:            
+            promo_amt = 0 if not self.cart.promo_code else self.card.promo_code.amount
+            gift_card_amt = 0
+            if self.cart.gift_cards:
+                gift_card_amt = float(self.cart.gift_cards.all().aggregate(s=Sum('amount'))['s'])
+
+            self.discount = gift_card_amt + promo_amt
+
             self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE
 
         super(Order, self).save(*args, **kwargs)
     
 class GiftCard(models.Model):
     code = models.CharField(max_length=10)
-    credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     
     def __unicode__(self):
         return self.code
 
-class GiftCardRedemption(models.Model):
+class PromoCode(models.Model):
+    code = models.CharField(max_length=10)
+    amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    
+    def __unicode__(self):
+        return self.code
+
+class GiftCardOrder(models.Model):
     user = models.ForeignKey(User)
-    gift_card = models.ForeignKey(GiftCard, related_name="redemption")
-    time = models.DateTimeField(null=True)
+    gift_card = models.ForeignKey(GiftCard, related_name="gc_order")
+    payment = models.ForeignKey(Payment)
+    status = models.IntegerField(choices=ORDER_STATUS, default=0)
+    created = models.DateTimeField(null=True)
     
     def save(self, *args, **kwargs):
         if not self.id:
             self.created = datetime.datetime.now()
-        super(GiftCardRedemption, self).save(*args, **kwargs)
+        super(GiftCardOrder, self).save(*args, **kwargs)
     
     def __unicode__(self):
         return self.gift_card.code + " : " + str(self.time)
