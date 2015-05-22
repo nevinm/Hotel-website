@@ -588,7 +588,7 @@ def paypal_success(request, data):
             if pdt:
                 order.payment = payment
                 order.status = 1 
-            date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y %H:%M:%S")
+            date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y %H:%M:%S") 
             order.delivery_time = date_obj
             order.billing_address = Address.objects.get(pk=custom["billing_address"])
             order.delivery_address = del_address
