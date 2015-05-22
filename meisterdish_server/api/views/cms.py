@@ -260,6 +260,7 @@ def get_meals(request, data):
             meal_list.append({
                               "id":meal.id,
                               "name":meal.name,
+                              "sub":meal.sub,
                               "description":meal.description,
                               #"images":meal_images,
                               "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.thumb.url,
@@ -291,6 +292,7 @@ def create_meal(request, data, user):
     try:
         edit=False
         name = data['name'].strip()
+        sub = data['sub'].strip()
         desc = data['description'].strip()
         
         price = float(data['price'])
@@ -310,6 +312,7 @@ def create_meal(request, data, user):
             meal = Meal()
         
         meal.name = name.title()
+        meal.sub = sub.title()
         meal.description = desc
         
         meal.price = price

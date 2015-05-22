@@ -227,7 +227,8 @@ class Tips(models.Model):
     video_url = models.CharField(max_length=1024, null=True, blank=True)
 
 class Meal(models.Model):
-    name = models.CharField(db_index=True, max_length=30)
+    name = models.CharField(db_index=True, max_length=50)
+    sub = models.CharField(db_index=True, max_length=50, default="")
     description = models.TextField(db_index=True, max_length=1024)
 
     main_image = models.ForeignKey(Image, null=True, blank=True, related_name="main_image")
