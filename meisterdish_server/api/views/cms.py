@@ -292,7 +292,7 @@ def create_meal(request, data, user):
     try:
         edit=False
         name = data['name'].strip()
-        sub = data['name'].strip()
+        sub = data['sub'].strip()
         desc = data['description'].strip()
         
         price = float(data['price'])
