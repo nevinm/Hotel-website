@@ -130,7 +130,7 @@ def verify_paypal_transaction(transaction_id):
         return False
     else:
         response_dict = get_payment_dict(response_data)
-        if response_dict["state"] == "approved":
+        if response_dict["payment_status"] == "Completed":
             log.info("PayPal Payment verified")
             response_dict["text_response"] = response_data
             return response_dict

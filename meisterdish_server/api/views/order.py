@@ -535,10 +535,17 @@ def paypal_success(request, data):
         if not paypal_response:
             log.error("Failed to verify paypal transaction.")
             if data["st"] != 'completed': #Immediate return from PayPal
+                log.error("paypal payment verification failed and status not 'completed'")
+                return HttpResponse("Failed to verify transaction. Please contact customer support.")
+            elif Order.objects.filter(transaction_id=txn_id.strip()).exists():
+                log.error("paypal return by clicking link multiple hit !!!")
                 return HttpResponse("Failed to verify transaction. Please contact customer support.")
             else:
                 pdt = False
         else:
+            if Order.objects.filter(transaction_id=txn_id.strip()).exists():
+                log.error("paypal return by auto-return  multiple hit !!!")
+                return HttpResponse("Failed to verify transaction. Please contact customer support.")
             payment = save_payment_data(paypal_response)
             if not payment:
                 return HttpResponse("Failed to update transaction details. Please contact customer support.")
