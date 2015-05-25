@@ -742,7 +742,8 @@ span.icon-menu {
 #city-error,#adminlogin-email-error,#meal-name-error,#description-error,#meal-price-error,
 #meal-tax-error,#chef-name-error,#create-meal-available-error,#create-meal-category-error,
 #create-meal-mealType-error,#chef-image-input-error,#meal-image-input-error,#billing-zip-error,
-#card-number-error,#name-on-card-error,#cvv-number-error,#ExpMonth-error,#ExpYear-error
+#card-number-error,#name-on-card-error,#cvv-number-error,#ExpMonth-error,#ExpYear-error,
+#new-address-error
 {
 	color: #ff7878;
 	background: white;
@@ -802,7 +803,7 @@ span.icon-menu {
 }
 
 .delivery-address-error-popup-wrapper .bk-overlay {
-    z-index: 99999;
+    z-index: 999999;
 }
 
 .button-disabled {

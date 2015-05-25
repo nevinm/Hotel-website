@@ -100,7 +100,7 @@
 
 .subMenuFilter {
     float: right;
-    padding: 20px 0;
+    padding: 26px 0;
 }
 
 .filter-container {
@@ -458,6 +458,7 @@
     }
     .subMenuFilter {
         color: #A9D77B;
+        padding: 29px 0;
     }
 }
 
@@ -468,9 +469,6 @@
     }
     .subMenu ul li.menu-categories-list a {
         padding: 26px 0;
-    }
-    .subMenuFilter {
-        padding: 29px 0;
     }
     .filter-container .arrow-down {
         top: 29px;

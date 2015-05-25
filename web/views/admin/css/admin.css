@@ -968,6 +968,7 @@ table#tips-and-tricks-table {
 }
 .popup-input-wrapper{
     padding-left: 65px;
+    position: relative;
 }
 .manage-area-container .popup-container .button{
     text-align: none;
@@ -1018,4 +1019,9 @@ input#check-zip {
 }
 .confirm-popup-wrapper{
     display: none;
+}
+#new-address-error{
+   left: 56px;
+  bottom: 23px;
+  width: 202px;
 }
