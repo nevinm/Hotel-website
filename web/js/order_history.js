@@ -11,21 +11,17 @@
            header = {
                "session-key": localStorage["session_key"]
            },
-           userData = {
-
-           };
+           userData = {};
        data = JSON.stringify(userData);
        var getOrdersInstance = new AjaxHttpSender();
        getOrdersInstance.sendPost(url, header, data, getOrdersCallback);
    }
 
    $(document).ready(function() {
-       getOrders();
-       CartItemCount();
+       checkFromPaypal();
        // &ACCORDION
        $(document).on('click', '.accordion-header', function() {
            $(".accordion-content").slideUp();
-
            if (!$(this).next().is(":visible")) {
                $(this).next().slideDown();
            }
@@ -34,7 +30,6 @@
 
 
    function populateOrdersList(ordersList) {
-       // ordersList = JSON.parse(dummyData);
        $.each(ordersList.aaData, function(key, value) {
            deliveryAddress = value.delivery_address;
            meals = value.meals;
@@ -72,7 +67,13 @@
     $($(".accordion-header")[0]).trigger('click');
    }
 
-
-//change session-key
-var newSession = getParameterFromUrl("sess");
-localStorage['session_key'] = newSession;
+function checkFromPaypal(){
+    if(currentUrl.indexOf("message")!=-1){
+      var data={};
+      data.message = getParameterFromUrl("message");
+      showPopup(data);
+    }
+    else{}
+        getOrders();
+        CartItemCount();
+}

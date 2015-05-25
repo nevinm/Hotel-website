@@ -70,7 +70,6 @@ function getParameterFromUrl(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
-        debugger;
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
@@ -103,7 +102,6 @@ function verifyAccount() {
             'message': "account is not verified"
         }
         if (verify_url.split("?")[1].split("=")[1] == "true") {
-            debugger;
             showPopup(trueMessage);
         } else {
             showPopup(falseMessage);
