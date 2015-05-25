@@ -1295,6 +1295,9 @@ input.radio-button-payment {
 	float: left;
 	padding: 20px 0;
 }
+.ok-container{
+	display: none;
+}
 /*==================================*\
 			&TABLET
 \*==================================*/
