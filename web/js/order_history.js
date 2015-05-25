@@ -11,9 +11,7 @@
            header = {
                "session-key": localStorage["session_key"]
            },
-           userData = {
-
-           };
+           userData = {};
        data = JSON.stringify(userData);
        var getOrdersInstance = new AjaxHttpSender();
        getOrdersInstance.sendPost(url, header, data, getOrdersCallback);
@@ -73,6 +71,3 @@
    }
 
 
-//change session-key
-var newSession = getParameterFromUrl("sess");
-localStorage['session_key'] = newSession;

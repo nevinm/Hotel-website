@@ -1,6 +1,5 @@
 $(document).ready(function() {
-    getReviews();
-    CartItemCount();  
+      
      
     //STAR RATING
     $(document).on('click', '.rating-star', function() {
@@ -106,7 +105,11 @@ function populateReviews(userDetails) {
     });
 }
 function changeSessionKey(){
-    var currentUrl = window.location.href,
+    var currentUrl = window.location.href;
+    if((currentUrl.indexOf("sess")!=-1) && (currentUrl.indexOf("order_id")!=-1)){
         newSession = getParameterFromUrl("sess");
-    localStorage['session-key'] = newSession;
+        localStorage['session_key'] = newSession;
+    }else{}
+    getReviews();
+    CartItemCount();
 }
