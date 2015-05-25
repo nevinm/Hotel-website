@@ -68,6 +68,7 @@
    }
 
 function checkFromPaypal(){
+    currentUrl = window.location.href;
     if(currentUrl.indexOf("message")!=-1){
       var data={};
       data.message = getParameterFromUrl("message");
