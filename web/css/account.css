@@ -104,6 +104,9 @@ ul.accordion-content li {
 .accordion-header h4{
 	font-family: 'BrandonGrotesque-bold';
 	font-weight: normal;
+	min-width: 400px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 .accordion-header h4:nth-child(2){
 	font-family: 'BrandonGrotesque-Light';
@@ -897,7 +900,7 @@ form.addaddress-popup {
 }
 #remove-cart-item {
 	margin: 0;
-	float: left;
+	float: right;
 	cursor: pointer;
 	color: #A9D77B;
 	/* width: 38px; */
@@ -922,9 +925,9 @@ form.addaddress-popup {
 	cursor: pointer;
 }
 .quantity-container {
-    width: 18%;
+   width: 18%;
   float: left;
-  margin-right: 10%;
+  margin-right: 8%;
 }
 .price-container{
 	font-family: 'BrandonGrotesque-Bold';
