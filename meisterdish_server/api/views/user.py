@@ -194,7 +194,7 @@ def add_rating(request, data, user, meal_id):
             rating.rating = data['rating']
             rating.comment = data['comment'].strip()
             rating.save()
-            return json_response({"status":1, "message":"Successfully "+action+"ed rating.", "order_id":data['order_id'], "meal_id":meal_id})
+            return json_response({"status":1, "message":"Successfully added rating.", "order_id":data['order_id'], "meal_id":meal_id})
     except Exception as e:
         log.error("Add rating " + e.message)
         return custom_error("You are not authorized rate this meal/order.")
