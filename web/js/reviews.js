@@ -1,6 +1,4 @@
 $(document).ready(function() {
-      
-     
     //STAR RATING
     $(document).on('click', '.rating-star', function() {
         var param = $(this).prev().attr('data-id'),
@@ -36,12 +34,14 @@ var getReviewsCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getReviews() {
+function getReviews(orderId) {
     var url = baseURL + "get_user_reviews/",
         header = {
             "session-key": localStorage["session_key"]
         },
-        userData = {};
+        userData = {
+            "order_id" : orderId
+        };
     data = JSON.stringify(userData);
     var getReviewsInstance = new AjaxHttpSender();
     getReviewsInstance.sendPost(url, header, data, getReviewsCallback);
@@ -91,7 +91,7 @@ function populateReviews(userDetails) {
             "<input type='radio' class='rating-input' id='rating-input-1-1' name='rating-input-1' data-id='1'>" +
             "<label for='rating-input-1-1' class='rating-star'></label></span>" +
             "</div><div class='meal-review-textarea meal-review-cell'>" +
-            "<textarea class='user-reviews'>"+value.review+"</textarea>" +
+            "<textarea maxlength='250' class='user-reviews'>"+value.review+"</textarea>" +
             "</div><div class='meal-review-submit meal-review-cell'>" +
             "<a href='#' class='btn btn-medium-primary medium-green add-review' data-meal-id='"+value.meal_id+"'"+
             "data-order-id='"+value.order_id+"' >Submit</a></div></div>");
@@ -105,11 +105,15 @@ function populateReviews(userDetails) {
     });
 }
 function changeSessionKey(){
-    var currentUrl = window.location.href;
+    var currentUrl = window.location.href,newSession,orderId;
     if((currentUrl.indexOf("sess")!=-1) && (currentUrl.indexOf("order_id")!=-1)){
         newSession = getParameterFromUrl("sess");
         localStorage['session_key'] = newSession;
-    }else{}
-    getReviews();
+        orderId = getParameterFromUrl("order_id");
+        getReviews(order_id);
+    }else{
+        getReviews();
+    }
+    
     CartItemCount();
 }
