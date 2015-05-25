@@ -104,6 +104,9 @@ ul.accordion-content li {
 .accordion-header h4{
 	font-family: 'BrandonGrotesque-bold';
 	font-weight: normal;
+	min-width: 400px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 .accordion-header h4:nth-child(2){
 	font-family: 'BrandonGrotesque-Light';
