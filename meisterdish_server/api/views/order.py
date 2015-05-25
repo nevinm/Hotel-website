@@ -303,7 +303,7 @@ def create_order(request, data, user):
             del_address = Address.objects.get(user=user, pk=data['delivery_address'])
         else:
             try:
-                del_address = user.user_address.get(is_primary=True).id
+                del_address = user.user_address.get(is_primary=True)
             except:
                 return custom_error("Please choose a valid delivery address.")
         
@@ -311,7 +311,7 @@ def create_order(request, data, user):
             bil_address = Address.objects.get(user=user, pk=data['billing_address'])
         else:
             try:
-                bil_address = user.user_address.get(is_primary=True).id
+                bil_address = user.user_address.get(is_primary=True)
             except:
                 return custom_error("Please choose a valid billing address.")
         
