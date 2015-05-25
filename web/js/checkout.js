@@ -703,8 +703,7 @@ function addAddress() {
     var newAddress = getNewAddress(),
         url = baseURL + "add_address/",
         header = {
-            "session-key": localStorage["session_key"],
-            "checkout":1
+            "session-key": localStorage["session_key"]
         },
         userData = {
             "first_name": newAddress.first_name,

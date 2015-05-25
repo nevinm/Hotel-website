@@ -897,7 +897,7 @@ form.addaddress-popup {
 }
 #remove-cart-item {
 	margin: 0;
-	float: left;
+	float: right;
 	cursor: pointer;
 	color: #A9D77B;
 	/* width: 38px; */
@@ -922,9 +922,9 @@ form.addaddress-popup {
 	cursor: pointer;
 }
 .quantity-container {
-    width: 18%;
+   width: 18%;
   float: left;
-  margin-right: 10%;
+  margin-right: 8%;
 }
 .price-container{
 	font-family: 'BrandonGrotesque-Bold';
