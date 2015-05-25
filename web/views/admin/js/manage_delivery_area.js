@@ -6,11 +6,18 @@ $(document).ready(function() {
 		$("#edit-delivery-area").hide();
 		$(".header").text("ADD NEW DELIVERY AREA");
 		$('.popup-wrapper').show();
+		if($("#new-address").hasClass("error")){
+			$('form.popup-container').valid();
+		}
+		$("form").data('validator').resetForm();		
 	});
-	$("#add-delivery-area").on("click",function(){
-		$('.popup-wrapper').hide();
-		var zip = $("#new-address").val();
-		manageDeliveryArea("","",zip,"add");
+	$("#add-delivery-area").on("click",function(e){
+		e.preventDefault();
+		if($(".popup-container").valid()){
+			$('.popup-wrapper').hide();
+			var zip = $("#new-address").val();
+			manageDeliveryArea("","",zip,"add");
+		}
 	});
 	$(document).on('click', '#delete-zip', function() {
 		
@@ -29,19 +36,26 @@ $(document).ready(function() {
 		$(".confirm-popup-wrapper").hide();
 	});
 	$(document).on('click', '#edit-zip', function() {
+		
 		var zip = $(this).closest('tr').find('.zip-value').text();
 		$("#add-delivery-area").hide();
 		$("#edit-delivery-area").show();
 		$(".header").text("CHANGE DELIVERY AREA");
 		$("#new-address").val(zip);
 		$('.popup-wrapper').show();
+		if($("#new-address").hasClass("error")){
+			$('form.popup-container').valid();
+		}	
 		current_tr = $(this).closest('tr');
 	});
-	$("#edit-delivery-area").on("click",function(){
-		$('.popup-wrapper').hide();
-		var id = current_tr.attr('data-id'),
-			zip = $('#new-address').val();
-		manageDeliveryArea(id,"",zip,"edit");
+	$("#edit-delivery-area").on("click",function(e){
+		e.preventDefault();
+		if($(".popup-container").valid()){
+			$('.popup-wrapper').hide();
+			var id = current_tr.attr('data-id'),
+				zip = $('#new-address').val();
+			manageDeliveryArea(id,"",zip,"edit");
+		}
 	})
 	getDeliveryAreas(1);
 });
