@@ -399,7 +399,10 @@ def get_saved_cards(request, data, user):
 @check_input('POST')
 def get_user_reviews(request, data, user):
     try:
-        orders = Order.objects.filter(cart__user__pk=user.pk, status__gte=2, created__gte=datetime.now()-timedelta(days=30))
+        orders = Order.objects.filter(cart__user__pk=user.pk, status__gte=1, created__gte=datetime.now()-timedelta(days=30))
+        if 'order_id' in data:
+            orders = orders.filter(pk=data['order_id'])
+
         rating_list = []
         meals_list = []
         for order in orders:

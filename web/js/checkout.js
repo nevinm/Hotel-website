@@ -53,11 +53,6 @@ $(document).ready(function() {
         $('span#remove-cart-item').show();
     });
 
-    //Clear cart
-    $(document).on('click', '.clear-cart', function() {
-        clearCart();
-    });
-
     //update cart items
     $(document).on('click', '.operator-plus', function() {
         var oldVal = parseInt($(this).parent().find('.quantity').val()),
@@ -137,7 +132,9 @@ $(document).ready(function() {
 
  
 function haveAccountCheck(){
-    loggedIn = (JSON.parse(localStorage["loggedIn"]) || JSON.parse(localStorage['admin_loggedIn']));
+    var userLoggedin = localStorage["loggedIn"]? JSON.parse(localStorage["loggedIn"]):null,
+        adminLoggedin = localStorage["admin_loggedIn"]? JSON.parse(localStorage['admin_loggedIn']):null;
+    loggedIn = (userLoggedin || adminLoggedin);
     if(loggedIn){
         $(".have-account").hide();
     }
@@ -353,7 +350,21 @@ var clearCartCallback = {
     success: function(data, textStatus) {
         CartItemCount();
         getCartItems();
-        window.location.href = 'orderhistory.html';
+        var userLoggedin = localStorage["loggedIn"]? JSON.parse(localStorage["loggedIn"]):null,
+        adminLoggedin = localStorage["admin_loggedIn"]? JSON.parse(localStorage['admin_loggedIn']):null,
+        loggedIn = (userLoggedin || adminLoggedin);
+        dataAfterOrdering={};
+        dataAfterOrdering.message="Your orders are successfully placed.";
+        $(".ok-container").show();
+        $(".close-container").hide();
+        if(loggedIn){
+            $(".ok-container a").attr("href","orderhistory.html");
+            showPopup(dataAfterOrdering);
+        }
+        else{
+            $(".ok-container a").attr("href","../index.html");
+            showPopup(dataAfterOrdering);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }

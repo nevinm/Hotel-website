@@ -21,6 +21,10 @@ $(document).ready(function() {
         mealId = $(this).data("mealId");
         addReviews(reviewValue, starRating , orderId, mealId);
     })
+
+    //change session-key
+    changeSessionKey();    
+   
 });
 //Get reviews API process
 var getReviewsCallback = {
@@ -100,4 +104,9 @@ function populateReviews(userDetails) {
         // });
         $(starRating).trigger("click");
     });
+}
+function changeSessionKey(){
+    var currentUrl = window.location.href,
+        newSession = getParameterFromUrl("sess");
+    localStorage['session-key'] = newSession;
 }
