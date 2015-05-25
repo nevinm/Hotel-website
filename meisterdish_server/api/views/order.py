@@ -195,7 +195,7 @@ def save_credit_card(cc_data, cc, user):
         if not res:
             if credit_card.error:
                 log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + " : "+credit_card.error['details'][0]['issue'])
-            return custom_error(credit_card.error['details'][0]['field'] + " : " +credit_card.error['details'][0]['issue'])
+            return custom_error(credit_card.error['details'][0]['issue'])
         
 
         c_card = CreditCardDetails()
@@ -612,13 +612,13 @@ def paypal_success(request, data):
                 error = "?message=The order is placed and is pending verification. Order Number : " + order.order_num 
         except Exception as e:
             log.error("Paypal success error - Failed to create order object " + txn_id + e.message)
-            error = "?error="+e.message
+            error = "?message="+e.message
         except Cart.DoesNotExist:
             raise Exception("There are no items in cart.")
     except Exception as e:
         log.error("Paypal success Error : " + e.message)
-        error = "?error=Failed to verify payment."
-    return HttpResponseRedirect(settings.SITE_URL + "views/checkout.html" + error)
+        error = "?message=Failed to verify payment."
+    return HttpResponseRedirect(settings.SITE_URL + "views/orderhistory.html" + error)
 
 def get_cart_total(cart):
     try:
@@ -632,11 +632,14 @@ def get_cart_total(cart):
         log.error("Error getting cart total: " + e.message)
     return (amount, tax)
 
-def save_payment_data(paypal_response):
+def save_payment_data(paypal_response, ipn=False):
     try:
         payment =Payment()
         payment.payment_type="pp"
-        payment.response = paypal_response["text_response"]
+        if not ipn:
+            payment.response = paypal_response["text_response"]
+        else:
+            payment.response = json.dumps(data)
         payment.transaction_id
         payment.transaction_verified = True
         payment.status = True
@@ -659,90 +662,83 @@ def paypal_ipn(request, data, session_id):
             return HttpResponse("None")
 
         user_dic = SessionStore(session_key=session_key)["user"]
-        payment_data = verify_paypal_ipn(data)
-        if not payment_data:
-            log.error("None")
-            return HttpResponse("None")
         
         txn_id = data['txn_id']
         try:
-            order = Order.objects.get(transaction_id=txn_id, cart__user__pk=user_dic["id"])
-            if order.payment and order.cart.completed and order.status >= 1:
-                log.info("IPN transaction " + txn_id + " already verified.")
+            try:
+                order = Order.objects.get(transaction_id=txn_id, cart__user__pk=user_dic["id"])
+                if order.payment and order.cart.completed and order.status >= 1:
+                    log.info("IPN transaction " + txn_id + " already verified.")
+                    return HttpResponse("None")
+                new = False
+            except Order.DoesNotExist:
+                order = Order()
+                new = True
+
+
+            if not verify_paypal_ipn(data):
+                log.error("Stopping execution.")
                 return HttpResponse("None")
 
-            payment = save_payment_data(paypal_response)
+            payment = save_payment_data(data, True)
             if not payment:
-                return HttpResponse("Failed to update transaction details. Please contact customer support.")
+                log.error("Failed to save payment data")
+                return HttpResponse("None.")
         
-            log.info(paypal_response["custom"])
-            custom = simplejson.loads(str(unquote(paypal_response["custom"])))
-            session_key = custom["session-key"]
-            if session_key == "":
-                log.error("PayPal IPN: Invalid user session")
-                return HttpResponse("Invalid session.")
-            
-            try:
-                user_dic = SessionStore(session_key=session_key)["user"]
-            except Exception as e:
-                log.error("IPN : Failed to load session from paypal response")
-                return HttpResponse("No user session found.")
-            ########
-            try:
-                order = Order()
+            log.info(data["custom"])
+            custom = simplejson.loads(str(unquote(data["custom"])))
+
+        except Exception as e:
+            log.error("IPN error " + e.message)
+            return HttpResponse("None")
+
+        try:
+            if new:
                 order.cart = Cart.objects.get(user__pk=user_dic["id"], completed=False)
                 order.order_num = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(12))
                 order.tip = float(custom["tip"])
                 (price, tax) = get_cart_total(order.cart)
 
-                if float(price) == float(0):
-                    raise Exception("There are no items in cart or the cart amount is 0.")
-                
-                if pdt:
-                    amt = float(paypal_response["payment_gross"])
-                else:
-                    amt = float(custom["amt"])
-                
-                if amt !=  price + tax + order.tip + settings.SHIPPING_CHARGE:
-                    log.error("Paypal success : order and payment amounts not matching. "+ str(amt) + " != " + str(price + tax + order.tip + settings.SHIPPING_CHARGE))
-                    return HttpResponse("The paid amount is different from order amount.")
+            if float(price) == float(0):
+                log.error("IPN : There are no items in cart or the cart amount is 0.")
+                raise Exception("None")
+            
+            amt = float(paypal_response["payment_gross"])
+            
+            if amt !=  price + tax + order.tip + settings.SHIPPING_CHARGE:
+                log.error("Paypal success : order and payment amounts not matching. "+ str(amt) + " != " + str(price + tax + order.tip + settings.SHIPPING_CHARGE))
+                return HttpResponse("The paid amount is different from order amount.")
 
-                order.total_amount = price
-                order.total_tax = tax
-                order.transaction_id = txn_id
-                if pdt:
-                    order.payment = payment
-                    order.status = 1
-                date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y %H:%M:%S")
-                order.delivery_time = date_obj
-                order.billing_address = Address.objects.get(pk=custom["billing_address"])
-                order.delivery_address = Address.objects.get(pk=custom["delivery_address"])
+            order.total_amount = price
+            order.total_tax = tax
+            order.transaction_id = txn_id
+            if pdt:
+                order.payment = payment
+                order.status = 1
+            date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y %H:%M:%S")
+            order.delivery_time = date_obj
+            order.billing_address = Address.objects.get(pk=custom["billing_address"])
+            order.delivery_address = Address.objects.get(pk=custom["delivery_address"])
 
-                order.driver_instructions = custom["driver_instructions"]
-                order.save()
-                
-                if pdt:
-                    order.cart.completed=True
-                    order.cart.save()
+            order.driver_instructions = custom["driver_instructions"]
+            order.save()
+            
+            if pdt:
+                order.cart.completed=True
+                order.cart.save()
 
-                error = "?message=The order is successfull. Order Number : " + order.order_num 
-            except Exception as e:
-                log.error("Paypal IPN error - Failed to create order object " + txn_id + e.message)
-                error = "?error="+e.message
-            except Cart.DoesNotExist:
-                raise Exception("There are no items in cart.")
-
-            ########3
-
-            order.status = 1
-            payment = order.payment
-            payment.ipn_verified=True
-            payment.ipn_response = payment_data
-            payment.save()
-
+            error = "?message=The order is successfull. Order Number : " + order.order_num 
         except Exception as e:
-            log.error("Paypal IPN No valid Order Found with the given transaction ID " + txn_id)        
-            return HttpResponse("None")
+            log.error("Paypal IPN error - Failed to create order object " + txn_id + e.message)
+            error = "?error="+e.message
+        except Cart.DoesNotExist:
+            raise Exception("There are no items in cart.")
+
+        order.status = 1
+        payment = order.payment
+        payment.ipn_verified=True
+        payment.ipn_response = payment_data
+        payment.save()
     except Exception as e:
         log.error("Paypal IPN ERROR : " + e.message)
         return HttpResponse("None")

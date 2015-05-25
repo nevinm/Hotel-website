@@ -158,7 +158,12 @@ def verify_paypal_ipn(data):
     if response_data.find('VERIFIED') >= 0:
         log.info(response_data.find('VERIFIED'))
         log.info("verified IPN")
-        return response_data
+
+        response_dict = get_payment_dict(response_data)
+        if response_dict["payment_status"] == "Completed":
+            return True
+        log.error("IPN : payment_status != Completed")
+        return False
     else:
         log.error("Failed to verify IPN")
         return False
