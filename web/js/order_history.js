@@ -18,12 +18,10 @@
    }
 
    $(document).ready(function() {
-       getOrders();
-       CartItemCount();
+       checkFromPaypal();
        // &ACCORDION
        $(document).on('click', '.accordion-header', function() {
            $(".accordion-content").slideUp();
-
            if (!$(this).next().is(":visible")) {
                $(this).next().slideDown();
            }
@@ -32,7 +30,6 @@
 
 
    function populateOrdersList(ordersList) {
-       // ordersList = JSON.parse(dummyData);
        $.each(ordersList.aaData, function(key, value) {
            deliveryAddress = value.delivery_address;
            meals = value.meals;
@@ -70,4 +67,13 @@
     $($(".accordion-header")[0]).trigger('click');
    }
 
-
+function checkFromPaypal(){
+    if(currentUrl.indexOf("message")!=-1){
+      var data={};
+      data.message = getParameterFromUrl("message");
+      showPopup(data);
+    }
+    else{}
+        getOrders();
+        CartItemCount();
+}

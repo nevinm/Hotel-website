@@ -1,6 +1,4 @@
 $(document).ready(function() {
-      
-     
     //STAR RATING
     $(document).on('click', '.rating-star', function() {
         var param = $(this).prev().attr('data-id'),
@@ -36,12 +34,14 @@ var getReviewsCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getReviews() {
+function getReviews(orderId) {
     var url = baseURL + "get_user_reviews/",
         header = {
             "session-key": localStorage["session_key"]
         },
-        userData = {};
+        userData = {
+            "order_id" : orderId
+        };
     data = JSON.stringify(userData);
     var getReviewsInstance = new AjaxHttpSender();
     getReviewsInstance.sendPost(url, header, data, getReviewsCallback);
@@ -105,11 +105,12 @@ function populateReviews(userDetails) {
     });
 }
 function changeSessionKey(){
-    var currentUrl = window.location.href;
+    var currentUrl = window.location.href,newSession,orderId;
     if((currentUrl.indexOf("sess")!=-1) && (currentUrl.indexOf("order_id")!=-1)){
         newSession = getParameterFromUrl("sess");
         localStorage['session_key'] = newSession;
+        orderId = getParameterFromUrl("order_id");
     }else{}
-    getReviews();
+    getReviews(order_id);
     CartItemCount();
 }
