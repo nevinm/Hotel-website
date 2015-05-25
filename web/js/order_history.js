@@ -72,3 +72,7 @@
     $($(".accordion-header")[0]).trigger('click');
    }
 
+
+//change session-key
+var newSession = getParameterFromUrl("sess");
+localStorage['session_key'] = newSession;

@@ -19,7 +19,7 @@ $(document).ready(function() {
             meal_id = $(this).attr('data-id');
         if (localStorage['loggedIn'] == 'true') {
             addToCart(meal_id);
-        } else if (localStorage['loggedIn'] == 'false') {
+        } else if (localStorage['loggedIn'] == 'false' || localStorage.getItem('loggedIn')===null) {
             addToCart(meal_id);
         }
     });

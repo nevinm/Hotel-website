@@ -1,0 +1,28 @@
+.tab-container {
+	position: absolute;
+	bottom: 0;
+	height: 73px;
+	width: 100%;
+	background-color: rgba(255, 255, 255, 0.35);
+	font-family: 'BrandonGrotesque-bold';
+	color: #6b6b6b;
+	font-size: 13px;
+}
+.tab-container  ul {
+  height: 73px;
+  width: 90%;
+  margin: 0 auto;
+  max-width: 1100px;
+}
+.tab-container  ul li {
+	display: inline-block;
+	width: 19%;
+	text-align: center;
+}
+.tab-container  ul li a{
+	padding: 27px 20px;
+	display: inline-block;
+}
+.tab-container  ul li a:hover{
+	border-top: 4px solid #A9D77B;
+}
