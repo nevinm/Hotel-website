@@ -595,7 +595,7 @@ def paypal_success(request, data):
             order.transaction_id = txn_id
             if pdt:
                 order.payment = payment
-                order.status = 1 
+            order.status = 1  # Move this
             date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y %H:%M:%S") 
             order.delivery_time = date_obj
             order.billing_address = Address.objects.get(pk=custom["billing_address"])
@@ -604,7 +604,7 @@ def paypal_success(request, data):
             order.driver_instructions = custom["driver_instructions"]
             order.save()
             
-            if pdt:
+            if 1:#pdt:
                 order.cart.completed=True
                 order.cart.save()
                 error = "?message=The order is successfull. Order Number : " + order.order_num 
