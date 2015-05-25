@@ -14,6 +14,7 @@ import string, random
 from urllib import unquote
 from django.template.loader import render_to_string
 
+
 log = logging.getLogger('order')
 
 #Admin and User
@@ -534,10 +535,17 @@ def paypal_success(request, data):
         if not paypal_response:
             log.error("Failed to verify paypal transaction.")
             if data["st"] != 'completed': #Immediate return from PayPal
+                log.error("paypal payment verification failed and status not 'completed'")
+                return HttpResponse("Failed to verify transaction. Please contact customer support.")
+            elif Order.objects.filter(transaction_id=txn_id.strip()).exists():
+                log.error("paypal return by clicking link multiple hit !!!")
                 return HttpResponse("Failed to verify transaction. Please contact customer support.")
             else:
                 pdt = False
         else:
+            if Order.objects.filter(transaction_id=txn_id.strip()).exists():
+                log.error("paypal return by auto-return  multiple hit !!!")
+                return HttpResponse("Failed to verify transaction. Please contact customer support.")
             payment = save_payment_data(paypal_response)
             if not payment:
                 return HttpResponse("Failed to update transaction details. Please contact customer support.")
@@ -581,14 +589,14 @@ def paypal_success(request, data):
             if amt !=  price + tax + order.tip + settings.SHIPPING_CHARGE:
                 log.error("Paypal success : order and payment amounts not matching. "+ str(amt) + " != " + str(price + tax + order.tip + settings.SHIPPING_CHARGE))
                 return HttpResponse("The paid amount is different from order amount.")
-	    log.error(custom["delivery_time"])
+	        
             order.total_amount = price
             order.total_tax = tax
             order.transaction_id = txn_id
             if pdt:
                 order.payment = payment
-                order.status = 1
-            date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y+%H:%M:%S")
+                order.status = 1 
+            date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y %H:%M:%S") 
             order.delivery_time = date_obj
             order.billing_address = Address.objects.get(pk=custom["billing_address"])
             order.delivery_address = del_address

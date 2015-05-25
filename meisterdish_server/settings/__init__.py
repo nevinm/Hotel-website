@@ -1,4 +1,4 @@
-import os
+import os      
 if os.path.dirname(__file__) == "/home/staging/settings":
     from live import *
     Live = True
@@ -247,3 +247,9 @@ DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
 DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
 ORDER_DELIVERY_WINDOW = 3 #Hours
 SHIPPING_CHARGE = 2 # in $
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}

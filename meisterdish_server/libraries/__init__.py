@@ -126,13 +126,17 @@ def verify_paypal_transaction(transaction_id):
     response_data = response.read()
     log.debug("PayPal response :"+str(response_data)) 
     if response_data[:7].upper() != 'SUCCESS':
-        log.info("PayPal Payment failed")
+        log.info("PayPal Payment verification failed")
         return False
     else:
-        log.info("PayPal Payment verified")
         response_dict = get_payment_dict(response_data)
-        response_dict["text_response"] = response_data
-        return response_dict
+        if response_dict["payment_status"] == "Completed":
+            log.info("PayPal Payment verified")
+            response_dict["text_response"] = response_data
+            return response_dict
+        else:
+            log.info("PayPal Payment verification failed")
+            return False 
 
 def get_payment_dict(data):
   dict_ = {}

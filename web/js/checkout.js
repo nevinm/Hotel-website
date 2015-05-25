@@ -71,6 +71,12 @@ $(document).ready(function() {
         updateReciept();
     });
 
+    $(document).on('click', '#save-payment', function() {
+        var selectedId = $('input[type=radio][name=change-card]:checked').attr('id');
+        showSelectedPaymentMethod(selectedId);
+        $('.address-payment-list-popup').hide();
+    });
+
     $(document).on('click', '.operator-minus', function() {
         var oldVal = parseInt($(this).parent().find('.quantity').val()),
             newVal = oldVal - 1,
@@ -91,11 +97,6 @@ $(document).ready(function() {
             currentYear = currentYear + 1;
         }
     }
-    // $('#save-credit-card').on("click",function(){      
-    //     if ($('input:checkbox[name=save-card-details]:checked')) {             
-    //         saveCreditCardDetails();
-    //     }
-    // })
 
     $(document).on('click', '#change-address', function() {
         populateAddressListPopup();
@@ -109,13 +110,6 @@ $(document).ready(function() {
         var selectedId = $('input[type=radio][name=address]:checked').attr('id');
         changeDeliveryAddress(selectedId);
         saveDeliveryTime("",selectedId);
-
-    });
-    $(document).on('click', '#save-payment', function() {
-        var selectedId = $('input[type=radio][name=change-card]:checked').attr('id');
-        showSelectedPaymentMethod(selectedId);
-        $('.address-payment-list-popup').hide();
-        $('#place-order').addClass('button-disabled');
     });
 
     $('#add-guest-address').on("click", function(e) {
@@ -131,14 +125,20 @@ $(document).ready(function() {
 
     $("#place-order").on("click", function(e) {
         e.preventDefault();
-        placeOrder();
+        if(validateOrder()){
+            placeOrder();
+        }
+    });
+
+    $("#pay-form").submit(function(e) {
+      e.preventDefault();
     });
 });
 
  
 function haveAccountCheck(){
-    loggedIn = localStorage["loggedIn"];
-    if(loggedIn =="true"){
+    loggedIn = (JSON.parse(localStorage["loggedIn"]) || JSON.parse(localStorage['admin_loggedIn']));
+    if(loggedIn){
         $(".have-account").hide();
     }
 }
@@ -236,7 +236,6 @@ var getCartItemsCallback = {
             $(".emtpy-cart-message").append("<span>"+cartItems.message+"</span>");
             $(".emtpy-cart-message").show();
             updateReciept();
-            $("#place-order").removeClass('button-disabled');
             $(".items-container .item-count").text('(0)');
         }
     },
@@ -354,7 +353,7 @@ var clearCartCallback = {
     success: function(data, textStatus) {
         CartItemCount();
         getCartItems();
-        window.location.href = 'menu.html';
+        window.location.href = 'orderhistory.html';
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -502,7 +501,7 @@ function populateCardDetails(cards,selectedId) {
             last_num = cards[key].number.slice(-4);
             if(selectedId == value.id){
                 $('.saved-cards').append("<div class='saved-card-list'>"+
-                    "<input type='radio' class='added-card pullLeft' name='saved-card' id='" + value.id + 
+                    "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id + 
                     "' class='radio-button-payment'>" +
                     "<label for='" + value.id + "'>" +
                     "<img class='paypal' src='" + value.logo + "'>" +
@@ -516,7 +515,7 @@ function populateCardDetails(cards,selectedId) {
         $.each(cards, function(key, value) {
             last_num = cards[key].number.slice(-4);
             $('.saved-cards').append("<div class='saved-card-list'>"+
-                "<input type='radio' class='added-card pullLeft' name='saved-card' id='" + value.id + 
+                "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id + 
                 "' class='radio-button-payment'>" +
                 "<label for='" + value.id + "'>" +
                 "<img class='paypal' src='" + value.logo + "'>" +
@@ -606,7 +605,7 @@ function populateAddresstoInfoContainer(data) {
     if(selectedId){
         $.each(data.address_list, function(key, value) {
             if (value.id == selectedId) {
-                $('.address-info').append("<div class='contents' data-id='"+value.id+"'>" +
+                $('.address-info').append("<div class='contents address-added' data-id='"+value.id+"'>" +
                     "<span class='content-heading'>" + "DELIVERY ADDRESS" + "</span>" +
                     "<span>" + value.first_name + " " + value.last_name + "</span>" +
                     "<span>" + value.building + "," + value.street + "</span>" +
@@ -622,16 +621,13 @@ function populateAddresstoInfoContainer(data) {
 
 //populate address list in popup
 function populateAddressListPopup() {
-    $('.popup-container').empty();
+    $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .button').remove();
     $('#save-delivery-address').addClass('button-disabled');
     var checkLocal = JSON.parse(localStorage['delivery_addressess']).address_list.length;
     if (checkLocal) {   
         addressList = JSON.parse(localStorage['delivery_addressess']);
         appendAddresscontent(addressList);
-        // $('.address-payment-list-popup .popup-container').append("<div class='button'>" +
-        //     "<a href='#' class='btn btn-medium-primary medium-green' id='save-delivery-address'>" + "SELECT" + "</a>" +
-        //     "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
         $('.address-payment-list-popup').show();
     } else {
         getAddress("populateAddressToPopUp");
@@ -679,7 +675,7 @@ function setPrimaryAdd(selectedId) {
 }
 
 function changeDeliveryAddress(selectedId) {
-    var selectedAddress =$('.popup-container').find('#'+selectedId).parent().find('label'),
+    var selectedAddress =$('.address-payment-list-popup .popup-container').find('#'+selectedId).parent().find('label'),
         htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
     $('.address-info .contents').html(htmlContent);
@@ -714,6 +710,7 @@ function addAddress() {
             "street": newAddress.street,
             "building": newAddress.building,
             "is_primary": newAddress.is_primary,
+            "checkout":1
         };
     data = JSON.stringify(userData);
     var addAddressInstance = new AjaxHttpSender();
@@ -827,8 +824,8 @@ function placeOrder() {
     if($("#pp").prop('checked') || $("#pp-guest").prop('checked')){
         payment_type = "pp";
         var payPalEmail = "nazz007online-facilitator@gmail.com",
-            //returnUrl = "http://meisterdish.qburst.com/backend/api/paypal_success/",
-            returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
+            returnUrl = "http://meisterdish.qburst.com/backend/api/paypal_success/",
+            //returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
             cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
             notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/";
             orderDetails = {
@@ -890,7 +887,12 @@ function placeOrder() {
                 }
             }
         }
-    data = JSON.stringify(params);
+    if(typeof params === 'undefined'){
+        return;
+    }
+    else{
+        data = JSON.stringify(params);
+    }
     var placeOrderInstance = new AjaxHttpSender();
     placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
 }    
@@ -909,7 +911,7 @@ $("#pp").on("click",function(){
 function populateCreditCardDetails(){
     var cards = cardDetails.cards;
     $('.address-payment-list-popup .button').remove();
-    $('.popup-container').empty();
+    $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .popup .header').text("SELECT YOUR PAYMENT METHOD");
        $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>"+
             "<input type='radio' id='paypal-radio'class='added-card pullLeft' name='change-card' class='radio-button-payment'>" +
@@ -938,7 +940,6 @@ function populateCreditCardDetails(){
         $('.saved-cards').empty();
         $('.paypal-container').show();
         $('.credit-card-container').hide();
-
     }
 
     else{
@@ -949,24 +950,32 @@ function populateCreditCardDetails(){
     }
  }
 
-function validateCheckOrder(){
-    if(cartItems.status && $(".checkout-time-button-active").length){
-        $("#place-order").removeClass('button-disabled');
-    }else{}
+function validateOrder(){
+    var data={};
+    data.message="";
+    if(!$(".payment-checked:checked").length){
+        data.message="Add a method of payment and then proceed";
+        showPopup(data);
+        return false;
+    }
+    if(typeof cartItems === 'undefined'){}
+    else{
+         if(cartItems.status=="-1"){
+            data.message="Add Meals to cart and then proceed";
+            showPopup(data);
+            return false;
+        }
+    }
+    if(!$(".checkout-time-button-active").length){
+        data.message="Add delivery time and then proceed";
+        showPopup(data);
+        return false;
+    }
+
+    if(!$(".address-added").length){
+        data.message="Add an addess then proceed";
+        showPopup(data);
+        return false;
+    }
+   return true;
 }
- //  create oredr button disabled on uncheck 
- $(document).on('click', '#pp,#pp-guest,#cc,.added-card', function() {
-    validateCheckOrder();
- });
-
-// //Apply a space automaticaly after 4 charas
-// String.prototype.toCardFormat = function () {
-//    return this.replace(/[^0-9]/g, "").substr(0, 16).split("").reduce(cardFormat, "");
-//    function cardFormat(str, l, i) {
-//        return str + ((!i || (i % 4)) ? "" : " ") + l;
-//    }
-// };
-
-// $("#card-number").on("keyup", function () {
-//     $(this).val($(this).val().toCardFormat());
-// });
