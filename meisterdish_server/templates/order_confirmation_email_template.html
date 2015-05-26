@@ -1,0 +1,31 @@
+<html>
+    <body>
+        <p>Hi {{name}},</p>
+        <p>Your Meisterdish order ({{order_num}}) has been confirmed.</p>
+        <p>Your order:</p><br />
+        <div>
+            {% for meal in meals%}
+                <div style="width:100%;">
+                    <div style="float:left;">
+                        <img src="{{meal.main_image.image.url}}" height="100px;" width="100px;" />
+                    </div>
+                    <div style="float:left;">
+                        {{meal.name}}
+                    </div>
+                    <div style="float:left;">
+                        $ {{meal.grand_total}}
+                    </div>
+                </div>
+            {% endfor %}
+        
+        </div>
+        
+        <p>The meals will be delivered to you shortly.</p> 
+        <p>You can give the review for meals using <a href="{{review_link}}">this link.</p>
+        <br />
+        --
+        <br />
+        Meisterdish
+        <br />
+    </body> 
+</html>
