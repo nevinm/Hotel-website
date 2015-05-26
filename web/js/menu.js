@@ -42,7 +42,7 @@ $(document).ready(function() {
     });
 
     //Filter toggle
-    $(".filter-container, .subMenuFilter").on('click', function(e) {
+    $(".filter-container, .subMenuFilter,.filter-container .arrow-down ").on('click', function(e) {
         if (e.target === this) {
             $(".filter-drop-down").slideToggle();
         }
