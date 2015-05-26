@@ -9,12 +9,13 @@ $(document).ready(function() {
 
     $("#add-cancel, #update-cancel").on('click', hideAddCategory);
     $("#add-confirm").on('click', function() {
-        if ($(".new-category").val().length === 0) {
+        if ($(".add-category-container .new-category").val().length === 0) {
             $(".add-status").text("No category present");
         } else {
             addCategories();
         }
     });
+
     $("#update-confirm").on('click', function() {
         var newCategory = $(".update-category-container .new-category").val(),
             Id=$(".update-category-container .new-category").attr('data-id');
@@ -97,6 +98,7 @@ $(document).ready(function() {
                 totalPage=$('.pagination').pagination('getPagesCount');
                 $('.pagination').pagination('selectPage', totalPage);
                 $(".new-category").val("");
+                $(".update-category-container").hide();
             } else {
                 alert("Something went wrong")
             }
@@ -163,7 +165,7 @@ $(document).ready(function() {
 
     function addCategories() {
         $(".add-status").hide();
-        var newCategory = $(".new-category").val(),
+        var newCategory = $(".add-category-container .new-category").val(),
             url = baseURL + 'cms/add_category/',
             header = {
                 "session-key": localStorage['session_key']

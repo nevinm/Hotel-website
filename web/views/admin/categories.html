@@ -69,23 +69,36 @@
                     </table>
                     <br>
                     <div class="admin-nav">
-                        <a id="add-category" class="btn btn-small-secondary">Add Categories</a>
+                        <a id="add-category" class="btn btn-small-primary medium-green">Add Categories</a>
                         <div class='pagination'></div>
-                        <div class='add-category-container'>
-                            <div class='add-category-inner-container'>
-                                <input class='new-category' type='text' placeholder='Add Category'></input>
-                                <button id='add-confirm'>Add</button>
-                                <button id='add-cancel'>Cancel</button>
-                            </div>
-                        </div>
-                        <div class='update-category-container'>
-                            <div class='add-category-inner-container'>
-                                <input class='new-category' data-id='' type='text' placeholder='Add Category'></input>
-                                <button id='update-confirm'>Update</button>
-                                <button id='update-cancel'>Cancel</button>
-                            </div>
-                        </div>
                         <div class='add-status'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="add-category-container">
+            <div class="bk-overlay"></div>
+            <div class="popup">
+                <div class="header">Add Categories</div>
+                <div class="popup-container">
+                    <input class='new-category' type='text' placeholder='Add Category'></input>
+                    <div class="button">
+                        <a href="#" class="btn btn-small-secondary" id='add-confirm'>Add
+                        </a>
+                        <a href="#" class="btn btn-small-secondary" id='add-cancel'>Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="update-category-container">
+            <div class="bk-overlay"></div>
+            <div class="popup">
+                <div class="header">Add Categories</div>
+                <div class="popup-container">
+                    <input class='new-category' data-id='' type='text' placeholder='Add Category'></input>
+                    <div class="button">
+                        <a href="#" class="btn btn-small-secondary" id='update-confirm'>Update</a>
+                        <a href="#" class="btn btn-small-secondary" id='update-cancel'>Cancel</a>
                     </div>
                 </div>
             </div>

@@ -698,6 +698,13 @@ span.icon-menu {
 	border-radius: 4px;
 
 }
+.add-category-container .header {
+    font-family: 'BrandonGrotesque-Bold';
+    color: rgb(107, 107, 107);
+    padding: 11px 0px;
+    background-color: #f7f7f7;
+}
+
 .popup .header,.delivery-address-error-popup .header{
 	border-bottom: 1px solid #D0D0D0;
 	height: 46px;
