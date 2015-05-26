@@ -4,4 +4,15 @@ $(document).ready(function() {
 	    $(this).find('a').addClass('activeli');
 	});
 	$(".how-it-works-tab").tabs();
+	
+	$('#left-arrow').on("click",function(){
+		$('#we-source,#our-suppliers').animate({
+			left: '+=100%'
+		},600);
+	})
+	$('#right-arrow').on("click",function(){
+		$('#we-source,#our-suppliers').animate({
+			left: '-=100%'
+		},600);
+	})
 });

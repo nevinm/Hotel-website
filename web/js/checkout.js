@@ -148,6 +148,7 @@ function setCurrentTime() {
         if(meridiem=="pm"){
             currentHour=currentHour.substring(0, currentHour.length - 2);
             if (parseInt(currentHour) == $(value).data().hr) {
+                $(this).prevAll('.set-time-button').remove();
                 $(this).val("NOW");
                 $(this).addClass("checkout-time-button-active");
             }
@@ -163,6 +164,7 @@ function setCurrentTime() {
     //Setting the future dates and blocking the dates other than tomorrow.
     $(".date-content .checkout-time-button").each(function(key, value) {
         var tomorrowDate = getMonthDate(getCurrentDateTime(key + 1));
+        $(".week-content .content-heading").text("TOMORROW " + tomorrowDate);
         $(value).val(tomorrowDate);
         if (key != 0) {
             $(value).addClass("button-disabled");
