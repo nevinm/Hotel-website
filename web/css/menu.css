@@ -71,6 +71,7 @@
     background-image: url('../images/white.png');
     color: #9B9B9B;
     box-shadow: 0 0 3px #b0b0b0;
+    border-top: 1px solid #ededed;
 }
 
 .subMenu ul li.menu-categories-list {
