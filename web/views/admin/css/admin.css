@@ -14,7 +14,7 @@ input[type="password"] {
     border-left: 10px solid #fff;
     float: left;
     padding-bottom: 50px;
-    background-color: #f1f1f1;
+    background-color: #F9FAF7;
     min-height: 100%;
 }
 
@@ -107,6 +107,7 @@ li#navbar-username {
 }
 
 #userlist,#userlist th,#userlist td,
+#giftcards-list,#giftcards-list th,#giftcards-list td,
 #categories,#categories th,#categories td,
 #meal-list,#meal-list th,#meal-list td,
 #delivery-area,#delivery-area th,#delivery-area td
@@ -464,7 +465,7 @@ table#userlist {
     float: left;
 }
 
-table#meal-list,table#delivery-area {
+table#meal-list,table#delivery-area,table#giftcards-list {
     width: 100%;
     float: right;
     margin-top: 20px;
@@ -984,22 +985,6 @@ table#tips-and-tricks-table {
 .manage-area-container #close{
     float: right;
 }
-/*span.check-delivery{
-    display: block;
-    padding: 0 !important;
-    font-family: 'ProximaNova-regular' !important;
-    color: #A9D77B !important;
-    font-size: 12px !important;
-    margin-top: 10px;
-    text-align: left !important;
-    padding-left: 65px !important;
-}
-input#check-zip {
-    height: 20px;
-    padding: 0;
-    line-height: 0px;
-    margin: 0;
-}*/
 .popup-message {
     position: absolute;
     width: 89%;
@@ -1025,3 +1010,7 @@ input#check-zip {
   bottom: 23px;
   width: 202px;
 }
+
+/*=======================*\
+        &GIFT-CARDS
+\*=======================*/

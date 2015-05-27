@@ -41,7 +41,15 @@
 #header{
     position: relative !important;
 }
-
+.meal-area{
+    overflow: auto;
+}
+.menu-header{
+    padding: 20px 0;
+}
+.menu-header h2{
+    color: #6B6B6B;
+}
 .fixedMenu {
   position: fixed;
   top:0; left:0;
@@ -66,9 +74,9 @@
     width: 100%;
     float: left;
     border-bottom: 1px solid #ededed;
-    background-color: transparent;
+    background-color: white;
     background-repeat-x: inherit;
-    background-image: url('../images/white.png');
+    /*background-image: url('../images/white.png');*/
     color: #9B9B9B;
     box-shadow: 0 0 3px #b0b0b0;
     border-top: 1px solid #ededed;
@@ -170,8 +178,6 @@
 .listContainer{
 	float: left;
 	width: 100%;
-	margin: 75px 0 0 0;
-	/*padding: 0 10px;*/   
 }
 .listItems{
 	width: 32%;
@@ -184,7 +190,7 @@
 	height: 250px;
 	border-radius: 5px;
 	margin-bottom: 10px;
-	border: 0.5px solid #9b9b9b;
+	border: 1px solid #9b9b9b;
 	cursor: pointer;
 }
 .listItemDetails{
@@ -212,15 +218,7 @@
 	color: #fff;
 	left: 94px;
 }
-.addItemButton{
-	height: 32px;
-	min-width: 75px;
-	font-size: 12px;
-	line-height: 30px;
-	padding: 0 0px;
-	border-radius: 4px;
-	float: right;
-}
+
 .menuItemName{
 	color: #9B9B9B;
   	text-transform: uppercase;
@@ -251,13 +249,6 @@
     text-transform: uppercase;
     font-family: 'BrandonGrotesque-bold';
     font-size: 13px;
-}
-
-.thumbnail {
-    min-width: 100%;
-    height: 250px;
-    border-radius: 5px;
-    margin-bottom: 10px;
 }
 
 .listItemDetails {
@@ -291,7 +282,6 @@
     position: absolute;
     bottom: 0;
     color: #fff;
-    /*left: 94px;*/
 }
 
 .addItemButton {
@@ -305,8 +295,10 @@
 }
 
 .menuItemName {
-    color: #9B9B9B;
+    color: #6B6B6B;
+    font-family: 'BrandonGrotesque-Medium';
     text-transform: uppercase;
+    letter-spacing: 1.5px;
 }
 
 .menuItemDetails {
@@ -359,10 +351,7 @@
         display: block;
         width: 100%;
     }
-    .listContainer {
-        margin: 40px 0 0 0;
-    }
-     .meal-area{
+    .meal-area{
         padding: 0 3.5em;
     }
 }

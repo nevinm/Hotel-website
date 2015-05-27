@@ -15,7 +15,7 @@
 #meal-details-wrapper {
     width: 100%;
     float: left;
-    background-image: url(../images/meal_bg.jpg);
+    background-color: #F9FAF7;
     min-height: 100%;
     margin-bottom: -143px;
     background-size: cover;
@@ -337,22 +337,23 @@ table tr:last-child td:last-child {
     border-bottom-right-radius:10px
 }
 iframe{
-width: 100%;
+    width: 100%;
 }
 .meal-tab-container ul{
     width: 100%;
 }
 .meal-tab-container ul li {
-  width: 13.9%;
-  text-align: center !important;
-  float: left;
-   height: 66px; 
+    width: 13.9%;
+    text-align: center !important;
+    float: left;
+    height: 66px; 
+    margin: 0 3px;
 }
 .meal-tab-container ul li a{
     padding: 21px 6px;
     display: inline-block;
 }
-.meal-tab-container ul li a:hover{
+.meal-tab-container ul li:hover{
     border-bottom: 4px solid #A9D77B;
 }
 #meal-tabs {
