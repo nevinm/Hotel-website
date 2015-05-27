@@ -255,3 +255,8 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
 }
+
+EMAIL_IMAGES = {
+    "meisterdish_logo" : os.path.join(STATIC_ROOT, "default", "logo.png"),
+    "meisterdish_social" : os.path.join(STATIC_ROOT, "default", "social_icon_sprite.png"),
+}

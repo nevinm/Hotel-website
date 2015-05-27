@@ -1,4 +1,5 @@
 from django.core.mail import EmailMessage
+from email.MIMEImage import MIMEImage
 import logging
 from api.models import Image, User, Role, DeliveryArea
 import re
@@ -12,9 +13,17 @@ log = logging.getLogger('libraries')
 def mail(to_list, subject, message, sender="Meisterdish Test<meisterdishtest@gmail.com>", headers = {
               'Reply-To': "Meisterdish Test<meisterdishtest@gmail.com>",
               'From':"Meisterdish Test<meisterdishtest@gmail.com>",
-              }):
+              }, design=True):
+    
     msg = EmailMessage(subject, message, sender, to_list, headers=headers)
     msg.content_subtype = "html"
+    if design:
+      for cid, img in settings.EMAIL_IMAGES.items():
+          fp = open(img, 'rb')
+          msgImage = MIMEImage(fp.read())
+          fp.close()
+          msgImage.add_header('Content-ID', '<'+cid+'>')
+          msg.attach(msgImage)
     return msg.send()
 
 def manage_image_upload(request):

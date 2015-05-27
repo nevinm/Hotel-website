@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from api.views import cms, order
+from api.views import cms, order, promotions
 
 urlpatterns = patterns('',
     url(r'^$', cms.home, name='cms_home'),
@@ -18,5 +18,13 @@ urlpatterns = patterns('',
     url(r'^delete_meal/(?P<meal_id>[0-9]+)/$', cms.delete_meal, name='delete_meal'),
 
     url(r'^delete_order/(?P<order_id>[0-9]+)/$', order.delete_order, name='delete_order'),
-    url(r'^update_order/(?P<order_id>[0-9]+)/$', order.update_order, name='update_order'),    
+    url(r'^update_order/(?P<order_id>[0-9]+)/$', order.update_order, name='update_order'),
+
+    #url(r'^purchase_gift_card/$', promotions.manage_delivery_area, name='add_gift_card'),  TODO
+
+    url(r'^manage_gift_card/$', promotions.manage_gift_card, name='manage_gift_card'), 
+    url(r'^list_gift_cards/$', promotions.list_gift_cards, name='list_gift_cards'), 
+    
+    url(r'^manage_promocode/$', promotions.manage_promocode, name='manage_promocode'), 
+    url(r'^list_promocodes/$', promotions.list_promocodes, name='list_promocodes'), 
 )
