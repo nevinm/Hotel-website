@@ -1379,7 +1379,7 @@ input.radio-button-payment {
 	}
 	.backNav-mobile span:first-child {
 		float: left;
-		margin-top: 8px;
+		 margin-top: 15px;
 		padding-left: 20px;
 	}
 	.backNav-mobile span:nth-child(2) {
@@ -1387,7 +1387,7 @@ input.radio-button-payment {
 		font-size: 16px;
 		color: #353535;
 		float: left;
-		margin-top: 6px;
+		margin-top: 13px;
 		/* padding-left: 0px; */
 		margin-left: 13px;
 	}

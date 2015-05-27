@@ -44,31 +44,6 @@ SLIDER
 .footer-links{
 	text-align: center;
 }
-.socialMedia{
-	background-image: url('../images/social_icon_sprite.png');
-	background-repeat: no-repeat;
-	margin: 0 22px 15px 0;
-}
-#facebook{
-	background-position:-3px 0;
-	width: 10px;
-	height: 16px;
-}
-#twitter{
-	background-position: -16px 0;
-	width: 16px;
-	height: 16px;
-}
-#instagram{
-	background-position: -32px 0;
-	width: 16px;
-	height: 16px;
-}
-#pinterest{
-	background-position: -49px 0;
-	width: 14px;
-	height: 16px;
-}
 
 
 /*==============================*\

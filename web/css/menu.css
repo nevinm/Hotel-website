@@ -322,14 +322,22 @@
 .subMenu .category-header {
     display: none;
 }
-
+.subMenu {
+        height: 70px;
+    }
+.subMenu ul li.menu-categories-list a {
+    padding: 26px 0;
+}
+.filter-container .arrow-down {
+    top: 29px;
+}
 /*==============================*\
         &MENU - MOBILE
 \*==============================*/
 
-#header h3 {
+/*#header h3 {
     display: none;
-}
+}*/
 
 @media (min-width: 768px)and (max-width: 1024px) {
     .listItems {
@@ -351,6 +359,7 @@
      .meal-area{
         padding: 0 3.5em;
     }
+
 }
 
 @media (min-width: 1025px) {
@@ -374,15 +383,18 @@
         margin: 50px auto;
         overflow: hidden;
         border-radius: 2px;
-        -webkit-box-shadow: 0px 4px 5px 0px rgba(145, 145, 145, 1);
-        -moz-box-shadow: 0px 4px 5px 0px rgba(145, 145, 145, 1);
-        box-shadow: 0px 4px 5px 0px rgba(145, 145, 145, 1);
+        -webkit-box-shadow: 0px 2px 5px 0px rgba(187, 187, 187, 1);
+        -moz-box-shadow: 0px 2px 5px 0px rgba(187, 187, 187, 1);
+        box-shadow: 0px 2px 5px 0px rgba(187, 187, 187, 1);
     }
     .listItemDetails {
         padding: 0 10px;
     }
     .listContainer {
         margin: 0px;
+    }
+    .subMenu{
+        height: 35px;
     }
     .subMenu ul.category-menu {
         width: 100%;
@@ -402,10 +414,11 @@
         width: 190px;
         text-align: center;
         position: relative;
+        padding: 6px 0px;
     }
     .subMenu .arrow-down {
         position: absolute;
-        top: 27px;
+        top: 15px;
         right: 0px;
         border-left: 7px solid transparent;
         border-right: 7px solid transparent;
@@ -446,21 +459,18 @@
     }
     .subMenuFilter {
         color: #A9D77B;
-        padding: 29px 0;
+        padding: 15px 0;
+    }
+/*    .meal-area h3:first-child{
+        display: none;
+    }*/
+    .filter-menu-label{
+        float: right;
     }
 }
 
 
 /*@media (min-width: 1302px) {*/
-    .subMenu {
-        height: 70px;
-    }
-    .subMenu ul li.menu-categories-list a {
-        padding: 26px 0;
-    }
-    .filter-container .arrow-down {
-        top: 29px;
-    }
 /*}*/
 @media (max-width: 440px) {
 	.subMenu .category-header{
