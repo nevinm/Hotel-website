@@ -40,13 +40,13 @@
 	top: 0;
 	left: 0;
 	background-size: cover;
-	background-position: 50% 50%;
+	/*background-position: 50% 50%;*/
 }
 #you-cook .image-wrapper{
 	background-image: url('../images/how_it_works/banner1.jpg');
 }
 #what-you-get .image-wrapper{
-	background-image: url('../images/how_it_works/banner2.jpg');
+	background-image: url('../images/how_it_works/wyg-bg.jpg');
 }
 #we-source .image-wrapper{
 	background-image: url('../images/how_it_works/banner3.jpg');
@@ -140,7 +140,8 @@
 #our-suppliers .contentWrapper{
 	width: 80%;
 }
-#we-source .h0,#our-suppliers .h0{
+#we-source .h0,#our-suppliers .h0,
+#what-you-get .h0,#we-deliver .h0{
 	color: #fff;
 }
 #our-suppliers .contentWrapper .box-contentWrapper{
@@ -157,6 +158,7 @@
 	height: 60px;
 	width: 37px;
 	cursor: pointer;
+	margin-top: -30px;
 }
 .right-arrow{
 	background-image: url(../images/Arrow.png);
@@ -166,6 +168,7 @@
 	height: 60px;
 	width: 37px;
 	cursor: pointer;
+	margin-top: -30px;
 }
 .sub-tab-container{
 	height: 60px;
@@ -225,7 +228,7 @@
 }
 .sub-contentWrapper .caption{
 	padding-top: 0;
-	color: #dddddd;
+	color: #c8c8c8;
 }
 .sub-contentWrapper img{
 	padding-right: 10px;
@@ -235,4 +238,27 @@
 #plantation,
 #common-thread-farm{
 	display: none;
+}
+.group-image{
+	padding-top: 20px;
+}
+/*.ui-tabs-anchor:after {
+    display: none;
+    content: "\25CF";
+}*/
+@media (min-width: 768px)and (max-width: 1024px) {
+	.contentWrapper .h0{
+		font-size: 40px;
+	}
+	.contentWrapper {
+		left: 50%;
+  		margin-left: -30%;
+  		width: 60%;
+	}
+	.box-contentWrapper{
+		width: 100%;
+	}
+	img.image-small {
+  		width: 32.6%;
+	}
 }
