@@ -337,6 +337,9 @@
 .filter-container .arrow-down {
     top: 29px;
 }
+.logo-mobile-container h3{
+    display: none;
+}
 /*==============================*\
         &MENU - MOBILE
 \*==============================*/
@@ -353,14 +356,18 @@
     }
     .listContainer div:nth-child(2n+1) {
         margin-left: 0;
+        padding-right: 2%;
     }
+     .listContainer div:nth-child(2n) {
+        padding-left: 2%;
+     }
     .thumbnail {
         margin: 0px auto 10px auto;
         display: block;
         width: 100%;
     }
     .meal-area{
-        padding: 0 3.5em;
+        /*padding: 0 3.5em;*/
     }
 
 }
@@ -437,6 +444,7 @@
         font-family: 'BrandonGrotesque-Bold';
         display: block;
         color: #5A5A5A;
+        margin-top: 10px;
     }
     .filter-container {
         position: absolute;
@@ -464,9 +472,9 @@
         color: #A9D77B;
         padding: 15px 0;
     }
-/*    .meal-area h3:first-child{
+    .meal-area h3:first-child{
         display: none;
-    }*/
+    }
     .filter-menu-label{
         float: right;
     }

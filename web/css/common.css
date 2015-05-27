@@ -1163,6 +1163,10 @@ span.icon-menu {
         width: 40px;
         height: 40px;
     }
+    .image-wrapper{
+        position: relative;
+        height: 250px;
+    }
 
 }
 
@@ -1188,4 +1192,11 @@ span.icon-menu {
 	.count{
 		right: 8px;
 	}
+}
+@media (max-width: 443px) {
+    .popup{
+        width: 75%;
+        margin-left: -37.5%;
+        height: 225px;
+    }
 }
