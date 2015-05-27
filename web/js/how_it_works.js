@@ -20,7 +20,16 @@ $(document).ready(function() {
 	});
 	$('.sub-tab-container li').on("click",function(){
 		$('#farm,#roamimg-acres,#blue-ribbon-fish,#plantation,#common-thread-farm').hide();
-		var clicked_id =$(this).find('a').attr('href');
+		var clicked_id =$(this).find('a').attr('data-id');
 		$(clicked_id).show();
 	});
+	// $(document).keydown(function(e){
+ //    	if (e.keyCode == 37) { 
+ //    		$('.left-arrow').trigger("click");
+ //    		debugger
+ //    	}
+ //    	if (e.keyCode == 39) {
+ //    		$('.right-arrow').trigger("click");
+ //    	} 
+	// });
 });
