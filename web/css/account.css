@@ -730,12 +730,12 @@ form.addaddress-popup {
   max-width: 1100px;
 }
 .box-border{
-	border:1px solid #D0D0D0;
+	border: 1px solid #9B9B9B;
 	border-radius: 4px;
 	background-color: #fff;
-	-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+	/*-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
 	-moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-	box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+	box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);*/
 	margin-bottom: 20px;
 }
 .delivery-time-container {
@@ -769,13 +769,13 @@ form.addaddress-popup {
 /*	display: none;*/
 }
 .receipt-container{
-	border:1px solid #D0D0D0;
+	border: 1px solid #9B9B9B;
 	border-radius: 4px;
 	width: 100%;
 	background-color: #fff;
-	-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+	/*-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
 	-moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-	box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+	box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);*/
 	position: relative;
 }
 .receipt-container .caption{
@@ -795,7 +795,7 @@ form.addaddress-popup {
   font-weight: normal;
   padding: 10px 0;
   padding-left: 20px;
-  background-color: #f7f7f7;
+  background-color: #eeefeb;
   border-bottom: 1px solid #d0d0d0;
   color:dimgrey;
   font-size: 16px;
@@ -1219,6 +1219,7 @@ input.radio-button-payment {
 	color: #000;
 	background-color: #f7f7f7;
 	padding-left: 20px;
+	letter-spacing: 1px;
 	padding-top: 12px;
 	padding-right: 20px;
 }
@@ -1506,12 +1507,12 @@ input.radio-button-payment {
 	}
 	.delivery-order-container {
 		width: 100%;
-		border:1px solid #D0D0D0;
+		border: 1px solid #9B9B9B;
 		border-radius: 4px;
 		background-color: #fff;
-		-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+		/*-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
 		-moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-		box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+		box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);*/
 		margin-bottom: 20px;
 		float: left;
 	}
