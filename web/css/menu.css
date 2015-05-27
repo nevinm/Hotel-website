@@ -41,7 +41,15 @@
 #header{
     position: relative !important;
 }
-
+.meal-area{
+    overflow: auto;
+}
+.menu-header{
+    padding: 20px 0;
+}
+.menu-header h2{
+    color: #6B6B6B;
+}
 .fixedMenu {
   position: fixed;
   top:0; left:0;
@@ -170,8 +178,6 @@
 .listContainer{
 	float: left;
 	width: 100%;
-	margin: 75px 0 0 0;
-	/*padding: 0 10px;*/   
 }
 .listItems{
 	width: 32%;
@@ -353,10 +359,7 @@
         display: block;
         width: 100%;
     }
-    .listContainer {
-        margin: 40px 0 0 0;
-    }
-     .meal-area{
+    .meal-area{
         padding: 0 3.5em;
     }
 

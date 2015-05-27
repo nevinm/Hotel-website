@@ -387,15 +387,17 @@ class Order(models.Model):
     
 class GiftCard(models.Model):
     code = models.CharField(max_length=10)
+    name = models.CharField(max_length=100)
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
-    
+
     def __unicode__(self):
         return self.code
 
 class PromoCode(models.Model):
     code = models.CharField(max_length=10)
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
-    
+    expiry_date = models.DateTimeField()
+
     def __unicode__(self):
         return self.code
 

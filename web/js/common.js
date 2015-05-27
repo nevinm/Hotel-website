@@ -471,3 +471,4 @@ function mobileResponsive() {
         $('#header').css("margin-left", "0px");
     }
 }
+
