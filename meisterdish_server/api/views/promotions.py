@@ -116,7 +116,7 @@ def manage_promocode(request, data, user):
         if "edit_id" in data and str(data["edit_id"]).strip() != "":
             code = data['code'].strip()
             amount = float(str(data['amount']).strip())
-            expiry_date = datetime.strptime(str(data['expiry_date']).strip(),"%m/%d/%Y %H:%M:%S")
+            expiry_date = datetime.strptime(str(data['expiry_date']).strip()+" 23:59:59","%Y-%m-%d %H:%M:%S")
 
             if code == "":
                 return custom_error("Please enter valid promo code.")
@@ -140,7 +140,7 @@ def manage_promocode(request, data, user):
         else:
             code = data['code'].strip()
             amount = float(str(data['amount']).strip())
-            expiry_date = datetime.strptime(str(data['expiry_date']).strip(),"%m/%d/%Y %H:%M:%S")
+            expiry_date = datetime.strptime(str(data['expiry_date']).strip()+" 23:59:59","%Y-%m-%d %H:%M:%S")
 
             if code == "":
                 return custom_error("Please enter valid promo code.")
