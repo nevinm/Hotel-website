@@ -38,7 +38,7 @@ def manage_gift_card(request, data, user):
             if name == "" or code == "":
                 return custom_error("Please enter valid gift card details.")
             elif amount < 10 or amount > 1000:
-                return custom_error("Please enter a valid amount.")
+                return custom_error("Please enter an amount between $ 10 and $ 1000.")
 
             if GiftCard.objects.filter(Q(code=code) | Q(name=name)).exists():
                 return custom_error("Either Gift Card code or name already exists.")
@@ -199,7 +199,8 @@ def list_promocodes(request, data, user):
                 "id" : promo.id,
                 "code":promo.code,
                 "amount":promo.amount,
-                "expiry_date":promo.expiry_date.strftime("%m/%d/%Y %H:%M:%S")
+                "expiry_date":promo.expiry_date.strftime("%m/%d/%Y %H:%M:%S"),
+                "expiry_date_format":promo.expiry_date.strftime("%Y-%m-%d")
                 })
         #End format response
         return json_response({"status":1, 
