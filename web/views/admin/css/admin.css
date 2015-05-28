@@ -969,6 +969,7 @@ table#tips-and-tricks-table {
 }
 .popup-input-wrapper{
     padding-left: 65px;
+    margin-bottom: 10px;
     position: relative;
 }
 .manage-area-container .popup-container .button{
@@ -1014,3 +1015,13 @@ table#tips-and-tricks-table {
 /*=======================*\
         &GIFT-CARDS
 \*=======================*/
+.popup-giftcard{
+    height: 300px;
+}
+.popup-giftcard input{
+    width: 170px;
+}
+
+.giftcard-list-empty{
+    display: none;
+}
