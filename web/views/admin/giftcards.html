@@ -46,11 +46,9 @@
         </header>
         <div id="page-container">
             <div class='admin-inner-wrapper'>
-                <div class="accountNav"><div class='create-meal-wrapper'>
-                <a href="create_meal.html">
-                   <input type="button" class="btn btn-small-primary medium-green" id="createMeals" value="Create Meal">
-                </a>
-                </div>
+                <div class="accountNav">
+                    <div class='create-meal-wrapper'>
+                    </div>
                     <div class="logout body-text-bold">
                         <a id='logout'>LOG OUT</a>
                     </div>
@@ -60,7 +58,7 @@
                         <h2>GIFTCARDS LIST</h2>
                     </div>
                     <div class="meal-list-container">
-                       <!--  <div class="filter-container">
+                        <!--  <div class="filter-container">
                             <select name="category" id="category" class="meallist-select">
                                 <option value="" selected>Category</option>
                             </select>
@@ -75,8 +73,7 @@
                                 <tr>
                                     <th>Code</th>
                                     <th>Name</th>
-                                    <th>Time</th>
-                                    <th>Expiry Date</th>
+                                    <th>Amount</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -85,8 +82,36 @@
                         </table>
                         <div class='giftcard-list-empty'>Gift Card list is Empty</div>
                     </div>
-                     <div class="admin-nav">
+                    <div class="admin-nav">
                         <div class='pagination'></div>
+                    </div>
+                </div>
+                <div class="popup-wrapper">
+                    <div class="bk-overlay"></div>
+                    <div class="popup popup-giftcard">
+                        <div class="header"></div>
+                        <form class="popup-container">
+                            <div class="content">
+                                <div class="popup-input-wrapper">
+                                    <label class="body-text-small">Code:</label>
+                                    <input type="text" class="popup-input" id="new-code">
+                                </div>
+                                <div class="popup-input-wrapper">
+                                    <label class="body-text-small">Name:</label>
+                                    <input type="text" class="popup-input" id="new-name">
+                                </div>
+                                <div class="popup-input-wrapper">
+                                    <label class="body-text-small">Amount:</label>
+                                    <input type="number" class="popup-input" id="new-amount">
+                                </div>
+                            </div>
+                            <div class="button">
+                                <input type="submit" class="btn btn-small-secondary" id="edit-delivery-area" value="SUMBIT">
+                                <input type="submit" class="btn btn-small-secondary" id="add-delivery-area" value="SUBMIT">
+                                <a href="#" class="btn btn-small-secondary" id="update">UPDATE</a>
+                                <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

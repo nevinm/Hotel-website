@@ -16,7 +16,7 @@ $(document).ready(function() {
         $('.address-info').hide();
         $('.payment-method-guest-container').show();
     }
-    setCurrentTime();
+        setCurrentTime();
    
     var cartItems;
 
