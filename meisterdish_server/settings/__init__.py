@@ -1,6 +1,5 @@
 import os
 
-
 if os.path.dirname(__file__) == "/home/staging/settings":
     from live import *
     Live = True
