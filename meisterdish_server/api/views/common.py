@@ -307,9 +307,9 @@ def forgot_password(request, data):
     except User.DoesNotExist as e:
         log.error("Forgot password request with non-existing email: "+email)
         return custom_error("No user exists with the given email address.")
-    #except IOError as e:
-    #    log.error("Failed to send the password reset email : "+e.message)
-    #    return custom_error("Failed to send the password reset email.")
+    except Exception as e:
+        log.error("Failed to send the password reset email : "+e.message)
+        return custom_error("Failed to send the password reset email.")
     else:
         log.info("Reset password mail sent to : "+email)
         return json_response({"status":1, "message":"Password reset link has been sent to "+user.email+"."})
