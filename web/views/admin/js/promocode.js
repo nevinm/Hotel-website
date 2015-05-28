@@ -1,23 +1,23 @@
 $(document).ready(function() {
-    listGiftCards(0);
+    listPromoCode(0);
     giftcardParams = {};
-    $(document).on('click', ".giftcard-delete", function() {
+    $(document).on('click', ".promocard-delete", function() {
         giftcardParams = {};
         cardId = $(this).data().id;
-        if (confirm('Are you sure you want to delete this giftcard?')) {
+        if (confirm('Are you sure you want to delete this order?')) {
             giftcardParams.deleteId = cardId;
-            manageGiftcards(giftcardParams);
+            managePromoCodes(giftcardParams);
         } else {}
     });
 
-    $(document).on('click', ".giftcard-edit", function() {
+    $(document).on('click', ".promocard-edit", function() {
         giftcardParams = {};
         $this = $(this);
         var code = $this.parents().eq(1).find('.card-code').text(),
-            name = $this.parents().eq(1).find('.card-name').text(),
+            date =  $this.parents().eq(1).find('.card-name').data().date,
             amount = $this.parents().eq(1).find('.card-amount').data("amount");
         $("#new-code").val(code);
-        $("#new-name").val(name);
+        $("#new-date").val(date);
         $("#new-amount").val(amount);
         $("#update").data("id", $this.data('id'));
         $(".popup-wrapper").show();
@@ -25,7 +25,7 @@ $(document).ready(function() {
 
     $("#update").on('click', function() {
         var newCode = $("#new-code").val(),
-            newName = $("#new-name").val(),
+            newName = $("#new-date").val(),
             newAmount = $("#new-amount").val(),
             giftcardId = $(this).data('id');
         giftcardDetails = {
@@ -34,23 +34,23 @@ $(document).ready(function() {
             "name": newName,
             "amount": newAmount
         }
-        manageGiftcards(giftcardDetails);
+        managePromoCodes(giftcardDetails);
     });
 });
 
 //List gift cards
-var listGiftCardsCallback = {
+var listPromoCodeCallback = {
     success: function(data, textStatus) {
-        var giftcardList = JSON.parse(data);
-        if (giftcardList.status == 1) {
-            populateGiftCardsList(giftcardList);
+        var promoCodes = JSON.parse(data);
+        if (promoCodes.status == 1) {
+            populatePromoCodes(promoCodes);
         } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function listGiftCards(currentPage) {
-    var url = baseURL + "cms/list_gift_cards/";
+function listPromoCode(currentPage) {
+    var url = baseURL + "cms/list_promocodes/";
     header = {
         "session-key": localStorage['session_key']
     }
@@ -58,25 +58,22 @@ function listGiftCards(currentPage) {
         "nextPage": currentPage
     }
     data = JSON.stringify(params);
-    var listGiftCardsInstance = new AjaxHttpSender();
-    listGiftCardsInstance.sendPost(url, header, data, listGiftCardsCallback);
+    var listPromoCodeInstance = new AjaxHttpSender();
+    listPromoCodeInstance.sendPost(url, header, data, listPromoCodeCallback);
 }
 
-function populateGiftCardsList(giftcardList) {
-    $('#giftcards-list tbody').empty();
-    if (giftcardList.aaData.length == 0) {
-        $("#giftcard-list-empty").show();
+function populatePromoCodes(promoCodes) {
+    $('#promocodes-list tbody').empty();
+    if (promoCodes.aaData.length == 0) {
+        $("#promocodes-list-empty").show();
     } else {
-        $.each(giftcardList.aaData, function(key, value) {
-            $('#giftcards-list tbody').append("<tr data-id='" + value.id + "'>" +
+        $.each(promoCodes.aaData, function(key, value) {
+            $('#promocodes-list tbody').append("<tr data-id='" + value.id + "'>" +
                 "<td class='card-code'>" + value.code + "</td>" +
-                "<td class='card-name'>" + value.name + "</td>" +
+                "<td class='card-name' data-date='"+value.expiry_date_format+"'>" + value.expiry_date + "</td>" +
                 "<td class='card-amount' data-amount='" + value.amount + "'>" + dollarConvert(value.amount) + "</td>" +
-                "<td class='no-popup'><button type='button' class='giftcard-edit' data-id='" + value.id + "'>Edit</button></td>" +
-                "<td class='no-popup'><button type='button' class='giftcard-delete' data-id='" + value.id + "'>Delete</button></td></tr>");
-
-            currentStatus = value.status_id;
-            $(".order-status:last").val(currentStatus);
+                "<td class='no-popup'><button type='button' class='promocard-edit' data-id='" + value.id + "'>Edit</button></td>" +
+                "<td class='no-popup'><button type='button' class='promocard-delete' data-id='" + value.id + "'>Delete</button></td></tr>");
         });
 
         $(".pagination").pagination({
@@ -95,28 +92,28 @@ function populateGiftCardsList(giftcardList) {
 //Delete giftcards API process
 var manageGiftcardsCallback = {
     success: function(data, textStatus) {
-        var manageGiftcards = JSON.parse(data);
-        if (manageGiftcards.status == 1) {
+        var managePromoCodes = JSON.parse(data);
+        if (managePromoCodes.status == 1) {
             currentPage = $('.pagination').pagination('getCurrentPage');
-            listGiftCards(currentPage);
+            listPromoCode(currentPage);
         } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function manageGiftcards(giftcardDetails) {
-    var url = baseURL + "cms/manage_gift_card/",
+function managePromoCodes(giftcardDetails) {
+    var url = baseURL + "cms/manage_promocode/",
         header = {
             "session-key": localStorage["session_key"]
         },
-        giftcards = {
+        giftcardParams = {
             "edit_id": giftcardDetails.editId,
             "delete_id": giftcardDetails.deleteId,
             "code": giftcardDetails.code,
-            "name": giftcardDetails.name,
+            "expiry_date": giftcardDetails.name,
             "amount": giftcardDetails.amount
         }
-    $.each(giftcards, function(key, value) {
+    $.each(giftcardParams, function(key, value) {
         giftcardEmptyCheck(key, value);
     });
     data = JSON.stringify(giftcardParams);
