@@ -10,27 +10,7 @@ $(document).ready(function() {
     });
 
 });
-var listGiftCardsResponse = {
-    "status": 1,
-    "actual_count": 4,
-    "num_pages": 1,
-    "current_page": 1,
-    "page_range": [
-        1
-    ],
-    "per_page": 10,
-    "aaData": [{
-            "id": 1,
-            "code": "ABCD",
-            "name": "asdasd"
-        }, {
-            "id": 1,
-            "code": "ABCD",
-            "expiry_date": "02/23/2015 10:10:10"
-        },
 
-    ]
-};
 //List gift cards
 var listGiftCardsCallback = {
     success: function(data, textStatus) {

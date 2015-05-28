@@ -10,13 +10,13 @@ $(document).ready(function() {
         populateYear();
         savedCardDetails();
         CartItemCount();
-        setCurrentTime();
         getAddress();
     }else{
         $('.address-info-guest').show();
         $('.address-info').hide();
         $('.payment-method-guest-container').show();
     }
+    setCurrentTime();
    
     var cartItems;
 
