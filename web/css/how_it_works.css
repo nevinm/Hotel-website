@@ -242,10 +242,14 @@
 .group-image{
 	padding-top: 20px;
 }
-/*.ui-tabs-anchor:after {
+.ui-tabs-anchor:after {
     display: none;
     content: "\25CF";
-}*/
+}
+.left-arrow-mobile , .right-arrow-mobile,
+.logo-mobile-container h3,  .box-contentWrapper hr{
+	display: none;
+}
 @media (min-width: 768px)and (max-width: 1024px) {
 	.contentWrapper .h0{
 		font-size: 40px;
@@ -261,4 +265,106 @@
 	img.image-small {
   		width: 32.6%;
 	}
+}
+
+@media (min-width: 320px)and (max-width: 767px) {
+	 a.ui-tabs-anchor:visited,
+    a.ui-tabs-anchor:hover,a.ui-tabs-anchor:focus{
+        color: #6b6b6b;
+    }
+    .ui-tabs-anchor:after {
+        display: block;
+        color: #9B9B9B;
+        font-size: 12px;
+        padding: 0 5px; 
+    }
+    .ui-tabs-anchor {
+        font-size: 0 !important;
+    }
+    .ui-state-active a:after{
+        color:black;
+    }
+    .tab-container ul{
+    	text-align: center;
+    }
+    .tab-container ul li{
+    	width: 8%;
+    }
+    .tab-container  ul li a:hover{
+		border-top:none;
+	}
+	.tab-container  ul li a:active{
+	 	border-top: none !important;
+	 }
+	.image-wrapper{
+        position: relative;
+        height: 250px;
+        margin-top: 60px;
+    }
+    .contentWrapper {
+		width: 100%;
+		top: 0%; 
+		position: relative;
+		left: 0%; 
+		margin-top: 73px;
+	}
+	.box-contentWrapper{
+		border:none;
+		box-shadow: none;
+		width: 100%;
+		padding-top: 0px;
+	}
+	.contentWrapper{
+		width: 100%;
+		margin-top: 0px;
+	}
+	.button-container{
+		text-align: center;
+	}
+	.contentWrapper .h0{
+		padding-left: 20px;
+		font-size: 35px;
+	}
+	.tab-container{
+		position: relative;
+		z-index: 9999999999999999;
+	}
+	.left-arrow-mobile {
+        position: absolute;
+        top: 50%;
+        margin-top: -6px;
+        left: 20px;
+        height: 16px;
+        display: block;
+    }
+    .right-arrow-mobile{
+        position: absolute;
+        top: 50%;
+        margin-top: -6px;
+        -ms-transform: rotate(180deg); /* IE 9 */
+        -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+        transform: rotate(180deg);
+        right: 20px;
+        height: 16px;
+        display: block;
+    }
+    .right-arrow{
+    	display: none;
+    }
+    .activeli{
+    	border-top: none;
+    }
+    .logo-mobile-container h3{
+		text-align: center;
+		margin-top: 10px;
+		color: #6b6b6b;
+		display: block;
+    }
+    .box-contentWrapper hr{
+		height: 1px;
+		border: 0;
+		background-color: #A9D77B;
+		width: 17%;
+		display: block;
+    }
 }

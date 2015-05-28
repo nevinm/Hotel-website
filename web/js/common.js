@@ -167,11 +167,15 @@ $(document).ready(function() {
         clicked = 1;
         $('.navMenu').show();
         $('#header').animate({
-                marginLeft: "60%"
+                marginLeft: "80%"
+
             })
             // $("#page-container").css("position","fixed")
         $('#page-container').animate({
-            marginLeft: "60%"
+            marginLeft: "80%"
+        })
+        setTimeout(function() {
+            $('#page-container').hide();
         })
         $('.navMenu').animate({
             marginLeft: "0"
@@ -183,12 +187,16 @@ $(document).ready(function() {
     $(document).on('click', '.icon-cancel', function() {
         clicked = 0;
         $('.navMenu').animate({
-            marginLeft: "-60%"
+            marginLeft: "-80%"
         });
         // $("#page-container").css("position","relative");
         $('#page-container').animate({
             marginLeft: "0px"
         })
+        setTimeout(function() {
+            $('#page-container').show();
+        },700)
+        
         $('#header').animate({
             marginLeft: "0px"
         })

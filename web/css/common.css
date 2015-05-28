@@ -577,7 +577,7 @@ span.icon-menu {
 		background: rgba(255, 255, 255, 1);
 		position: fixed;
 		height: 100%;
-		width: 60%;
+		width: 80%;
 		left: 0;
 		top: 0;
 		overflow-y:auto; 
@@ -860,7 +860,8 @@ span.icon-menu {
 }
 
 .navMenu ul li a {
-    color: #9B9B9B;
+    color: #6B6B6B;
+    letter-spacing: 2px;
 }
 
 .navMenu ul li a:hover {
@@ -868,7 +869,14 @@ span.icon-menu {
 }
 
 @media (min-width: 768px)and (max-width: 1024px) {
+    #account-mainWrapper,
+    #mainWrapper {
+        overflow-x: hidden;
+    }
     ul#menu {
+        display: none;
+    }
+    #footer{
         display: none;
     }
     span.icon-menu {
@@ -911,26 +919,79 @@ span.icon-menu {
 	.footer-links{
 		padding: 30px 0;
 	}
-	.navMenu ul li:first-child {
-        border-top: 2px solid #A9D77B;
-        margin-top: 100px;
-    }
     #footer-navMenu.navMenu ul li:first-child {
     	padding-top: 30px;
     }
-    .navMenu ul{
-     	width: 90%;
-     	margin:0 auto;
+    .navMenu ul:first-child{
+        border-top: 2px solid #A9D77B;
+        border-bottom: 2px solid #A9D77B;
+        margin-top: 100px;
+        padding: 20px 0;
     }
     .navMenu ul li {
-        padding-left:50px;
+        padding:20px 0px;
+        padding-left: 100px;
     }
     #navbar-username a {
         color: #A9D77B;
         text-transform: uppercase;
+
     }
     .icon-cancel{
     	display: block;
+    }
+    .socialMedia{
+        padding: 0 !important;
+        border: 0 !important;
+        margin: 0 !important;
+        display: inline-block;
+        padding-right: 10px !important;
+        margin-right: 20px !important;  
+    }
+    .footer-links{
+        padding: 30px 0;
+    }
+/*    ul.footer-links{
+        position: absolute;
+        bottom: 20px;
+    }*/
+    .footerContent ul{
+        margin-top: 42px !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        margin-bottom: 20px;
+    }
+    .footerContent ul li a{
+        color: #6b6b6b;
+        font-size: 12px;
+        letter-spacing: 2px;
+    }
+    .socialMedia{
+        background-image: url(../images/social_sprite_green.png);
+        background-size: cover;
+    }
+    #facebook {
+        background-position: 3px 0;
+        width: 43px;
+        height: 40px;
+    }
+
+    #twitter {
+        background-position: -120px 0;
+        width: 43px;
+        height: 40px;
+    }
+
+    #instagram {
+        background-position: -40px 0;
+        width: 40px;
+        height: 40px;
+    }
+
+    #pinterest {
+        background-position: -80px 0;
+        width: 40px;
+        height: 40px;
     }
 
 }
@@ -977,6 +1038,8 @@ span.icon-menu {
         opacity: 1;
         background-color: #fff;
         box-shadow: 0 0 15px rgba(26, 26, 26, 0.15);
+        height: 50px;
+        padding: 0;
     }
     #footer{
     	display: none;
@@ -1000,10 +1063,14 @@ span.icon-menu {
 		background-position: 3px 3px;
 		background-size: 32px 20px;
 		background-repeat: no-repeat;
+        margin: 10px 0 0 25px;
 
     }
+    .logo-mobile{
+        margin-top: 10px !important;
+    }
     .cart {
-        margin-top: 11px;
+        margin-top: 14px;
         padding-right: 20px;
     }
     .count {
@@ -1016,10 +1083,6 @@ span.icon-menu {
 	#slider-footer {
 		display: none;
 	}
-    .navMenu ul li:first-child {
-        border-top: 2px solid #A9D77B;
-        margin-top: 100px;
-    }
     #footer-navMenu.navMenu ul li:first-child {
     	padding-top: 30px;
     }
@@ -1027,12 +1090,18 @@ span.icon-menu {
      	width: 90%;
      	margin:0 auto;
     }
+    .navMenu ul:first-child{
+        border-top: 1px solid #A9D77B;
+        border-bottom: 1px solid #A9D77B;
+        margin-top: 100px;
+    }
     .navMenu ul li {
-        padding-left:50px;
+        padding:20px 40px;
     }
     #navbar-username a {
         color: #A9D77B;
         text-transform: uppercase;
+
     }
     .account-header h3 {
         letter-spacing: 0px;
@@ -1052,6 +1121,53 @@ span.icon-menu {
 	.footer-links{
 		padding: 30px 0;
 	}
+/*    ul.footer-links{
+        position: absolute;
+        bottom: 20px;
+    }*/
+    .footerContent ul{
+        margin-top: 42px !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        margin-bottom: 20px;
+    }
+    .footerContent ul li a{
+        color: #6b6b6b;
+        font-size: 12px;
+        letter-spacing: 2px;
+    }
+    .socialMedia{
+        background-image: url(../images/social_sprite_green.png);
+        background-size: cover;
+    }
+    #facebook {
+        background-position: 3px 0;
+        width: 43px;
+        height: 40px;
+    }
+
+    #twitter {
+        background-position: -120px 0;
+        width: 43px;
+        height: 40px;
+    }
+
+    #instagram {
+        background-position: -40px 0;
+        width: 40px;
+        height: 40px;
+    }
+
+    #pinterest {
+        background-position: -80px 0;
+        width: 40px;
+        height: 40px;
+    }
+    .image-wrapper{
+        position: relative;
+        height: 250px;
+    }
+
 }
 
 /*@media (min-width: 1302px) {*/
@@ -1076,4 +1192,11 @@ span.icon-menu {
 	.count{
 		right: 8px;
 	}
+}
+@media (max-width: 443px) {
+    .popup{
+        width: 75%;
+        margin-left: -37.5%;
+        height: 225px;
+    }
 }
