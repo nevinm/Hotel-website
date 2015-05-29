@@ -151,9 +151,9 @@ $(document).on('click', '#close', function() {
 function showErrorPopup(data) {
     var message = data.message;
     $('.popup-container .content span').text(message);
-    $('.delivery-address-error-popup-wrapper').show();
+    $('.error-popup-wrapper').show();
     $('#ok-button').on("click", function() {
-        $('.delivery-address-error-popup-wrapper').hide();
+        $('.error-popup-wrapper').hide();
     })
 }
 $(document).ready(function() {

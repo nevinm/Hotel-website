@@ -57,8 +57,8 @@ function tabRendering() {
 }
 
 $('.meal-tab-container ul li').on("click", function() {
-    $('.meal-tab-container ul li a').removeClass('activeli');
-    $(this).find('a').addClass('activeli');
+    $('.meal-tab-container ul li').removeClass('activeli');
+    $(this).addClass('activeli');
 });
 
 //STAR RATING

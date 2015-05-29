@@ -108,6 +108,7 @@ li#navbar-username {
 
 #userlist,#userlist th,#userlist td,
 #giftcards-list,#giftcards-list th,#giftcards-list td,
+#promocodes-list,#promocodes-list th,#promocodes-list td,
 #categories,#categories th,#categories td,
 #meal-list,#meal-list th,#meal-list td,
 #delivery-area,#delivery-area th,#delivery-area td
@@ -465,7 +466,7 @@ table#userlist {
     float: left;
 }
 
-table#meal-list,table#delivery-area,table#giftcards-list {
+table#promocodes-list, table#meal-list,table#delivery-area,table#giftcards-list {
     width: 100%;
     float: right;
     margin-top: 20px;
@@ -1007,9 +1008,9 @@ table#tips-and-tricks-table {
     display: none;
 }
 #new-address-error{
-   left: 56px;
-  bottom: 23px;
-  width: 202px;
+    left: 56px;
+    bottom: 23px;
+    width: 202px;
 }
 
 /*=======================*\
@@ -1022,6 +1023,6 @@ table#tips-and-tricks-table {
     width: 170px;
 }
 
-.giftcard-list-empty{
+.giftcard-list-empty, .promocodes-list-empty{
     display: none;
 }
