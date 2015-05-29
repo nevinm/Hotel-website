@@ -265,7 +265,7 @@ def make_cc_payment(funding_instruments, amount, order_num):
         log.error("Failed to pay using CC." + str(e.message))
 
         return "Failed to pay using credit card."
-
+"""
 def save_cc_payment(payment_data, amount):
     try:
         payment = Payment()
@@ -278,6 +278,7 @@ def save_cc_payment(payment_data, amount):
     except Exception as e:
         log.error("Failed to save CC payment details." + e.message)
         return False
+"""
 
 @check_input('POST')
 def create_order(request, data, user):
@@ -287,6 +288,8 @@ def create_order(request, data, user):
         total_tax = 0.0
         paid = False
         
+        del_type = data["delivery_type"].strip()
+
         try:
             del_time = data['delivery_time'].strip()
             delivery_time = datetime.strptime(del_time,"%m/%d/%Y %H:%M:%S")
@@ -294,27 +297,29 @@ def create_order(request, data, user):
             log.error("Invalid delivery time : "+e.message)
             return custom_error("Please provide a valid delivery time.")
 
-        driver_instructions = data.get('driver_instructions', "")
         tip = int(data.get('tip', 5))
         if tip < 5:
             return custom_error("Miniumum tip amount is $5.") 
 
-        if 'delivery_address' in data:
-            del_address = Address.objects.get(user=user, pk=data['delivery_address'])
-        else:
-            try:
-                del_address = user.user_address.get(is_primary=True)
-            except:
-                return custom_error("Please choose a valid delivery address.")
-        
-        if 'billing_address' in data:
-            bil_address = Address.objects.get(user=user, pk=data['billing_address'])
-        else:
-            try:
-                bil_address = user.user_address.get(is_primary=True)
-            except:
-                return custom_error("Please choose a valid billing address.")
-        
+        if del_type == "delivery":
+            driver_instructions = data.get('driver_instructions', "")
+            if 'delivery_address' in data:
+                del_address = Address.objects.get(user=user, pk=data['delivery_address'])
+            else:
+                try:
+                    del_address = user.user_address.get(is_primary=True)
+                except:
+                    return custom_error("Please choose a valid delivery address.")
+            """
+            if 'billing_address' in data:
+                bil_address = Address.objects.get(user=user, pk=data['billing_address'])
+            else:
+                try:
+                    bil_address = user.user_address.get(is_primary=True)
+                except:
+                    return custom_error("Please choose a valid billing address.")
+            """
+
         items = CartItem.objects.filter(cart__user=user, cart__completed=False)
         if not items.exists():
             return custom_error("There are no items in your cart.")
@@ -332,12 +337,12 @@ def create_order(request, data, user):
         order.order_num = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(12))
         order.cart = item.cart
         
-        order.delivery_address = del_address
-        order.billing_address = bil_address
-        
+        if del_type == "delivery":
+            order.delivery_address = del_address
+            #order.billing_address = bil_address
+            order.driver_instructions = driver_instructions
 
         order.delivery_time = delivery_time
-        order.driver_instructions = driver_instructions
         
         order.total_amount = total_price
         order.total_tax = total_tax
