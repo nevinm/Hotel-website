@@ -170,6 +170,7 @@ $('#add-address').on("click", function() {
     $("#addpopup-data").show();
 });
 $('#cancel').on("click", function() {
+    $(".addaddress-popup").validate().resetForm();
     $(".addresspopup-wrapper").hide();
 });
 
