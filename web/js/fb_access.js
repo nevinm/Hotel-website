@@ -1,3 +1,5 @@
+    var isLoaded = false;
+
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
     // The response object is returned with a status field that lets the
@@ -14,7 +16,7 @@ function statusChangeCallback(response) {
             'into this app.';
     } else {
         fbLogin();
-        // The person is not logged into Facebook, so we're not sure if
+            // The person is not logged into Facebook, so we're not sure if
         // they are logged into this app or not.
     }
 }
@@ -23,9 +25,11 @@ function statusChangeCallback(response) {
 // Button.  See the onlogin handler attached to it in the sample
 // code below.
 function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
-    });
+    fbLogin();
+    //Use this fo status check.
+    // FB.getLoginStatus(function(response) {
+    //     statusChangeCallback(response);
+    // });
 }
 
 window.fbAsyncInit = function() {
@@ -37,6 +41,7 @@ window.fbAsyncInit = function() {
         xfbml: true, // parse social plugins on this page
         version: 'v2.2' // use version 2.2
     });
+    isLoaded = true;
 
     // Now that we've initialized the JavaScript SDK, we call 
     // FB.getLoginStatus().  This function gets the state of the
@@ -132,3 +137,8 @@ function fbLogin() {
         scope: 'publish_stream,email'
     });
 }
+
+$(window).load(function(){
+
+});
+
