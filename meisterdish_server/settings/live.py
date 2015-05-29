@@ -20,6 +20,5 @@ DATABASES = {
     }
 }
 
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/home/user/tiatech/media/'
+STRIPE_SECRET_KEY = "sk_live_m3lyGeCDn11XqWf2UiOMFwvi"
+STRIPE_PUBLIC_KEY = "pk_live_nvqCYAD2W5rL3TY9okuAb3Zm"
