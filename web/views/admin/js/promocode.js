@@ -25,13 +25,13 @@ $(document).ready(function() {
 
     $("#update").on('click', function() {
         var newCode = $("#new-code").val(),
-            newName = $("#new-date").val(),
+            newDate = $("#new-date").val(),
             newAmount = $("#new-amount").val(),
             giftcardId = $(this).data('id');
         giftcardDetails = {
             "editId": giftcardId,
             "code": newCode,
-            "name": newName,
+            "name": newDate,
             "amount": newAmount
         }
         managePromoCodes(giftcardDetails);
@@ -44,7 +44,9 @@ var listPromoCodeCallback = {
         var promoCodes = JSON.parse(data);
         if (promoCodes.status == 1) {
             populatePromoCodes(promoCodes);
-        } else {}
+        } else {
+            showErrorPopup(promoCodes);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -96,7 +98,9 @@ var manageGiftcardsCallback = {
         if (managePromoCodes.status == 1) {
             currentPage = $('.pagination').pagination('getCurrentPage');
             listPromoCode(currentPage);
-        } else {}
+        } else {
+            showErrorPopup(managePromoCodes);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }

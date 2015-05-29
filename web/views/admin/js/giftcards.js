@@ -44,7 +44,9 @@ var listGiftCardsCallback = {
         var giftcardList = JSON.parse(data);
         if (giftcardList.status == 1) {
             populateGiftCardsList(giftcardList);
-        } else {}
+        } else {
+            showErrorPopup(giftcardList);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -99,7 +101,9 @@ var manageGiftcardsCallback = {
         if (manageGiftcards.status == 1) {
             currentPage = $('.pagination').pagination('getCurrentPage');
             listGiftCards(currentPage);
-        } else {}
+        } else {
+            showErrorPopup(manageGiftcards);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
