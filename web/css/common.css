@@ -504,6 +504,9 @@ label {
     width: 90%;
     margin: 0 auto;
 }
+.adminContentArea{
+    max-width: 1250px;
+}
 
 #menu {
     margin: 0;
@@ -772,7 +775,7 @@ span.icon-menu {
     transition: 0.5s;
 }
 
-.delivery-address-error-popup-wrapper {
+.error-popup-wrapper {
     display: none;
 }
 
@@ -789,7 +792,7 @@ span.icon-menu {
     border-radius: 4px;
 }
 
-.delivery-address-error-popup-wrapper .bk-overlay {
+.error-popup-wrapper .bk-overlay {
     z-index: 999999;
 }
 
