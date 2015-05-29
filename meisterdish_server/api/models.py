@@ -340,6 +340,11 @@ class CartItem(models.Model):
     meal = models.ForeignKey(Meal, related_name="cartitem")
     quantity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
+delivery_types = (
+        ("pickup", "Pick Up"),
+        ("delivery", "Delivery"),
+    )
+
 class Order(models.Model):
     order_num = models.CharField(db_index=True, max_length=50, null=True)
     transaction_id = models.CharField(db_index=True, max_length=30, null=True)
@@ -353,8 +358,10 @@ class Order(models.Model):
     grand_total = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
     discount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
 
-    delivery_address = models.ForeignKey(Address, related_name="delivery_address")
-    billing_address = models.ForeignKey(Address, related_name="billing_address")
+    delivery_type = models.CharField(choices=delivery_types, max_length=8, default="delivery")
+
+    delivery_address = models.ForeignKey(Address, related_name="delivery_address", null=True)
+    billing_address = models.ForeignKey(Address, related_name="billing_address", null=True)
     
     delivery_time = models.DateTimeField()
     driver_instructions = models.TextField(max_length=1024, null=True)
