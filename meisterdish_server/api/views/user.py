@@ -130,25 +130,6 @@ def remove_address(request, data, user):
         return custom_error("Failed to remove address")
 
 @check_input('POST')
-def redeem_gift_card(request, data, user):
-    try:
-        code = data["code"].strip()
-        try:
-            gift_card = user.gift_cards.get(code=code)
-        except Exception as e:
-            return custom_error("Invalid gift card code entered.")
-        else:
-            credits = gift_card.credits
-            user.credits = user.credits + credits
-            user.gift_cards.remove(gift_card)
-            user.save()
-            gift_card.delete()
-        return json_response({"status":1, "message": " Success, $"+str(credits) +" have been added to your credits."})
-    except Exception as e:
-        log.error("Redeem gift card error : " + e.message)
-        return custom_error("Failed to redeem gift card ")
-
-@check_input('POST')
 def get_categories(request, data):
     try:
         cats = Category.objects.filter(is_hidden=False, is_deleted=False).order_by("name")

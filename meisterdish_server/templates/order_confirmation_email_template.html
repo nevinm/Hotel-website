@@ -1,7 +1,9 @@
 <html>
     <body>
         <p>Hi {{name}},</p>
-        <p>Your Meisterdish order ({{order_num}}) has been confirmed.</p>
+        <p>Your {%if delivery_type == "pickup"%} pickup order {% else %} delivery {%endif%} ({{order_num}}) from Meisterdish is confirmed.</p>
+        <p>Check your meal's All You Need page to get ready to cook.</p>
+{% if False %}
         <p>Your order:</p><br />
         <div>
             {% for meal in meals%}
@@ -22,6 +24,7 @@
         
         <p>The meals will be delivered to you shortly.</p> 
         <p>You can give the review for meals using <a href="{{review_link}}">this link.</p>
+{%endif%}
         <br />
         --
         <br />

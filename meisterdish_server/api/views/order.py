@@ -13,6 +13,7 @@ from django.db.models import Q
 import string, random
 from urllib import unquote
 from django.template.loader import render_to_string
+from twilio.rest import TwilioRestClient
 
 
 log = logging.getLogger('order')
@@ -756,12 +757,14 @@ def send_order_confirmation_notification(order):
         user = order.cart.user
         dic = {
                "order_num" : order.order_num,
+               "mobile" : order.cart.user.mobile if order.cart.user.mobile else None,
                "transaction_id" : order.transaction_id,
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
                "grand_total":order.grand_total,
                "name" : user.last_name + " " + user.first_name,
                "status":order.status,
+               "delivery_type":order.delivery_type,
                "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + order_id
                }
         
@@ -786,12 +789,14 @@ def send_order_complete_notification(order):
         user = order.cart.user
         dic = {
                "order_num" : order.order_num,
+               "mobile" : order.cart.user.mobile if order.cart.user.mobile else None,
                "transaction_id" : order.transaction_id,
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
                "grand_total":order.grand_total,
                "name" : user.last_name + " " + user.first_name,
                "status":order.status,
+               "delivery_type":order.delivery_type,
                "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + order_id,
                }
         
@@ -811,12 +816,26 @@ def send_order_complete_notification(order):
 
 def send_sms_notification(dic):
     try:
+        log.info("Sending SMS")
+        if not dic["mobile"]:
+            log.error("No mobile number available to send SMS.")
+            return False
         if dic["status"] == 2: #Confirmed
             txt = render_to_string('order_confirmation_sms_template.html', dic)
         else: #Complete
             txt = render_to_string('order_complete_sms_template.html', dic)
-        #SEND SMS
-        return True
+        
+        client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+ 
+        message = client.messages.create(body=txt,
+                to= "+1"+str(dic["mobile"]).strip(),
+                from_=settings.TWILIO_NUMBER)
+        if message:
+            log.info("Sent SMS to +1 "+str(dic["mobile"]))
+            return True
+        else:
+            log.error("Failed to send SMS")
+            return False
     except KeyError as e:
-        log.error("Send order SMS : " + e.message)
+        log.error("Failed to send order SMS : " + e.message)
         return False
