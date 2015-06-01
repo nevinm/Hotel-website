@@ -117,7 +117,7 @@ def get_users(request, data, user):
         
         page = data.get("nextPage", 1)
         user_list = []
-        users = User.objects.filter(deleted=False)
+        users = User.objects.exclude(role__pk=settings.ROLE_GUEST).filter(deleted=False)
         total_count = users.count()
          
         if "search" in data:
