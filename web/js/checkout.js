@@ -1,23 +1,23 @@
-var billingAddressId,cardDetails,
+var billingAddressId, cardDetails,
     payPalEmail = "nazz007online-facilitator@gmail.com",
-    returnUrl = baseURL+"paypal_success/",
-    cancelReturnUrl = homeUrl+"/views/checkout.html",
-    notifyUrl = baseURL+"paypal_ipn/";
+    returnUrl = baseURL + "paypal_success/",
+    cancelReturnUrl = homeUrl + "/views/checkout.html",
+    notifyUrl = baseURL + "paypal_ipn/";
 
 $(document).ready(function() {
-    if(localStorage["session_key"]){
+    if (localStorage["session_key"]) {
         getCartItems();
         populateYear();
         savedCardDetails();
         CartItemCount();
         getAddress();
-    }else{
+    } else {
         $('.address-info-guest').show();
         $('.address-info').hide();
         $('.payment-method-guest-container').show();
     }
-        setCurrentTime();
-   
+    setCurrentTime();
+
     var cartItems;
 
     //Remove cart items
@@ -42,12 +42,9 @@ $(document).ready(function() {
     //Separate the today and week buttons
     timeActiveRestriction(".week-content input[type=button]", "checkout-time-button-active", ".today-content input[type=button]");
     timeActiveRestriction(".today-content input[type=button]", "checkout-time-button-active", ".week-content input[type=button]");
-    //Within Week button restriction
-    timeActiveRestriction(".week-content .date-content .checkout-time-button", "checkout-time-button-active", ".week-content .date-content .checkout-time-button");
-    timeActiveRestriction(".week-content .time-content .checkout-time-button", "checkout-time-button-active", ".week-content .time-content .checkout-time-button");
-
     //Today button restriction
     timeActiveRestriction(".today-content .checkout-time-button", "checkout-time-button-active", ".today-content .checkout-time-button");
+    timeActiveRestriction(".week-content .checkout-time-button", "checkout-time-button-active", ".week-content .checkout-time-button");
 
     $(document).on('click', '.order-list-items', function() {
         $('span#remove-cart-item').show();
@@ -84,7 +81,7 @@ $(document).ready(function() {
         updateReciept();
     });
 
-     //populate year
+    //populate year
     function populateYear() {
         var currentYear = new Date().getFullYear();
         for (var i = 1; i <= 20; i++) {
@@ -104,7 +101,7 @@ $(document).ready(function() {
     $(document).on('click', '#save-delivery-address', function() {
         var selectedId = $('input[type=radio][name=address]:checked').attr('id');
         changeDeliveryAddress(selectedId);
-        saveDeliveryTime("",selectedId);
+        saveDeliveryTime("", selectedId);
     });
 
     $('#add-guest-address').on("click", function(e) {
@@ -114,28 +111,28 @@ $(document).ready(function() {
         }
     });
 
-    $('#change-payment-method').on("click",function(){
+    $('#change-payment-method').on("click", function() {
         populateCreditCardDetails();
     })
 
     $("#place-order").on("click", function(e) {
         e.preventDefault();
-        if(validateOrder()){
+        if (validateOrder()) {
             placeOrder();
         }
     });
 
     $("#pay-form").submit(function(e) {
-      e.preventDefault();
+        e.preventDefault();
     });
 });
 
- 
-function haveAccountCheck(){
-    var userLoggedin = localStorage["loggedIn"]? JSON.parse(localStorage["loggedIn"]):null,
-        adminLoggedin = localStorage["admin_loggedIn"]? JSON.parse(localStorage['admin_loggedIn']):null;
+
+function haveAccountCheck() {
+    var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
+        adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null;
     loggedIn = (userLoggedin || adminLoggedin);
-    if(loggedIn){
+    if (loggedIn) {
         $(".have-account").hide();
     }
 }
@@ -143,10 +140,10 @@ function haveAccountCheck(){
 function setCurrentTime() {
     currentHour = getCurrentHour();
     $(".today-content .checkout-time-button").each(function(key, value) {
-        currentHour= getCurrentHour();
-        meridiem= currentHour.substring(currentHour.length - 2);
-        if(meridiem=="pm"){
-            currentHour=currentHour.substring(0, currentHour.length - 2);
+        currentHour = getCurrentHour();
+        meridiem = currentHour.substring(currentHour.length - 2);
+        if (meridiem == "pm") {
+            currentHour = currentHour.substring(0, currentHour.length - 2);
             if (parseInt(currentHour) == $(value).data().hr) {
                 $(this).prevAll('.set-time-button').remove();
                 $(this).val("NOW");
@@ -161,14 +158,12 @@ function setCurrentTime() {
     $('.today-content').find('.checkout-time-button').each(function(key, value) {
         $(value).attr("data-date", getMonthDate(getCurrentDateTime(0)) + "/" + getCurrentYear());
     });
+
     //Setting the future dates and blocking the dates other than tomorrow.
-    $(".date-content .checkout-time-button").each(function(key, value) {
-        var tomorrowDate = getMonthDate(getCurrentDateTime(key + 1));
-        $(".week-content .content-heading").text("TOMORROW " + tomorrowDate);
-        $(value).val(tomorrowDate);
-        if (key != 0) {
-            $(value).addClass("button-disabled");
-        }
+    var tomorrowDate = getMonthDate(getCurrentDateTime(1));
+    $(".week-content .content-heading").text("TOMORROW " + tomorrowDate);
+    $(".week-content .checkout-time-button").each(function(key, value) {
+        $(value).attr("data-date", getMonthDate(getCurrentDateTime(1)) + "/" + getCurrentYear());
     });
 }
 
@@ -177,18 +172,6 @@ function timeActiveRestriction(buttonSelector, activeClass, oppositeSelector) {
     $(buttonSelector).on('click', function() {
         $(oppositeSelector).removeClass(activeClass);
         $(this).addClass(activeClass);
-        if (buttonSelector == ".today-content input[type=button]") {
-            $(".week-content .time-content .checkout-time-button").addClass("button-disabled");
-        } else if (buttonSelector == ".week-content .date-content .checkout-time-button") {
-            $(".week-content .time-content .checkout-time-button").removeClass("button-disabled");
-            var date = $(this).val() + "/" + getCurrentYear();
-            console.log(date);
-            $(this).parents().eq(1).find('.time-content .checkout-time-button').each(function(key, value) {
-                $(value).attr('data-date', date);
-            });
-            firstDate = $(buttonSelector).parents().eq(1).find('.time-content .checkout-time-button')[0];
-            $(firstDate).trigger("click");
-        }
     });
 }
 
@@ -232,7 +215,7 @@ var getCartItemsCallback = {
         } else {
             $('.order-list-items').remove();
             $(".emtpy-cart-message").empty();
-            $(".emtpy-cart-message").append("<span>"+cartItems.message+"</span>");
+            $(".emtpy-cart-message").append("<span>" + cartItems.message + "</span>");
             $(".emtpy-cart-message").show();
             updateReciept();
             $(".items-container .item-count").text('(0)');
@@ -254,26 +237,25 @@ function getCartItems() {
 
 //Save delivery time
 var saveDeliveryTimeCallback = {
-    success: function(data, textStatus) {
-    },
+    success: function(data, textStatus) {},
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function saveDeliveryTime(date,delivery_Id) {
+function saveDeliveryTime(date, delivery_Id) {
     var url = baseURL + "save_delivery_time/",
         header = {
             "session-key": localStorage["session_key"]
         };
-        if(date){
-            params = {
-                "delivery_time": date
-            };
-        }
-        if(delivery_Id){
-            params = {
-                "delivery_address": delivery_Id
-            };
-        }
+    if (date) {
+        params = {
+            "delivery_time": date
+        };
+    }
+    if (delivery_Id) {
+        params = {
+            "delivery_address": delivery_Id
+        };
+    }
     data = JSON.stringify(params);
     var saveDeliveryTimeInstance = new AjaxHttpSender();
     saveDeliveryTimeInstance.sendPost(url, header, data, saveDeliveryTimeCallback);
@@ -318,7 +300,7 @@ function updateReciept() {
 var removeCartItemsCallback = {
     success: function(data, textStatus) {
         removeData = JSON.parse(data);
-        if(removeData.status==1){
+        if (removeData.status == 1) {
             CartItemCount();
             getCartItems();
             var message = removeData.message;
@@ -327,8 +309,7 @@ var removeCartItemsCallback = {
             setTimeout(function() {
                 $('.popup-message').hide();
             }, 2000);
-        }
-        else{}
+        } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -352,19 +333,18 @@ var clearCartCallback = {
     success: function(data, textStatus) {
         CartItemCount();
         getCartItems();
-        var userLoggedin = localStorage["loggedIn"]? JSON.parse(localStorage["loggedIn"]):null,
-        adminLoggedin = localStorage["admin_loggedIn"]? JSON.parse(localStorage['admin_loggedIn']):null,
-        loggedIn = (userLoggedin || adminLoggedin);
-        dataAfterOrdering={};
-        dataAfterOrdering.message="Your orders are successfully placed.";
+        var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
+            adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null,
+            loggedIn = (userLoggedin || adminLoggedin);
+        dataAfterOrdering = {};
+        dataAfterOrdering.message = "Your orders are successfully placed.";
         $(".ok-container").show();
         $(".close-container").hide();
-        if(loggedIn){
-            $(".ok-container a").attr("href","orderhistory.html");
+        if (loggedIn) {
+            $(".ok-container a").attr("href", "orderhistory.html");
             showPopup(dataAfterOrdering);
-        }
-        else{
-            $(".ok-container a").attr("href","../index.html");
+        } else {
+            $(".ok-container a").attr("href", "../index.html");
             showPopup(dataAfterOrdering);
         }
     },
@@ -446,7 +426,7 @@ function checkOutPayPal(serviceName, merchantID, options, orderDetails) {
 var saveCreditCardDetailsCallback = {
     success: function(data, textStatus) {
         var response = JSON.parse(data);
-        if(response.status == 1){
+        if (response.status == 1) {
             savedCardDetails();
         }
     },
@@ -479,9 +459,9 @@ function saveCreditCardDetails() {
 
 //Get saved cards
 var savedCardDetailsCallback = {
-    success: function(data, textStatus) {     
-            var last_num;
-            cardDetails = JSON.parse(data);
+    success: function(data, textStatus) {
+        var last_num;
+        cardDetails = JSON.parse(data);
         if (cardDetails.status == 1) {
             if (cardDetails.cards.length != 0) {
                 populateCardDetails(cardDetails.cards);
@@ -508,36 +488,36 @@ function savedCardDetails() {
     savedCardDetailsInstance.sendPost(url, header, data, savedCardDetailsCallback);
 }
 
-function populateCardDetails(cards,selectedId) {
-    if(selectedId){
+function populateCardDetails(cards, selectedId) {
+    if (selectedId) {
         $.each(cards, function(key, value) {
             last_num = cards[key].number.slice(-4);
-            if(selectedId == value.id){
-                $('.saved-cards').append("<div class='saved-card-list'>"+
-                    "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id + 
+            if (selectedId == value.id) {
+                $('.saved-cards').append("<div class='saved-card-list'>" +
+                    "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
                     "' class='radio-button-payment'>" +
                     "<label for='" + value.id + "'>" +
                     "<img class='paypal' src='" + value.logo + "'>" +
                     "<span class='body-text-small'>" + value.type + " " + "ending in" + " " + last_num + "</span>" +
-                    "<span class='body-text-small'>" + "Expires on" + " " + 
-                    value.expire_month + "/" + value.expire_year + "</span>" + "</label>"+"</div>");
-                }
-            });
-        
-    }else{
+                    "<span class='body-text-small'>" + "Expires on" + " " +
+                    value.expire_month + "/" + value.expire_year + "</span>" + "</label>" + "</div>");
+            }
+        });
+
+    } else {
         $.each(cards, function(key, value) {
             last_num = cards[key].number.slice(-4);
-            $('.saved-cards').append("<div class='saved-card-list'>"+
-                "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id + 
+            $('.saved-cards').append("<div class='saved-card-list'>" +
+                "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
                 "' class='radio-button-payment'>" +
                 "<label for='" + value.id + "'>" +
                 "<img class='paypal' src='" + value.logo + "'>" +
                 "<span class='body-text-small'>" + value.type + " " + "ending in" + " " + last_num + "</span>" +
-                "<span class='body-text-small'>" + "Expires on" + " " + 
-                value.expire_month + "/" + value.expire_year + "</span>" + "</label>"+"</div>");
-            });
-        }
+                "<span class='body-text-small'>" + "Expires on" + " " +
+                value.expire_month + "/" + value.expire_year + "</span>" + "</label>" + "</div>");
+        });
     }
+}
 
 $(window).resize(function() {
     mobileResponsive();
@@ -562,21 +542,20 @@ function mobileResponsive() {
 //ADDRESS LIST
 var getAddressCallback = {
     success: function(data, textStatus, flag) {
-         userDetails = JSON.parse(data);
-         if(userDetails.status==1){
-             addressList = userDetails.address_list;
-             $.each(addressList,function(key,value){
-                if(value.is_primary == 1){
+        userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            addressList = userDetails.address_list;
+            $.each(addressList, function(key, value) {
+                if (value.is_primary == 1) {
                     billingAddressId = value.id;
                 }
-             })
+            })
             if (flag == "populateAddressToPopUp") {
                 appendAddresscontent(userDetails);
             } else {
                 popuplateAddressList(data);
             }
-         }
-         else{}
+        } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -587,7 +566,7 @@ function getAddress(flag) {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "checkout":1
+            "checkout": 1
         };
     data = JSON.stringify(userData);
     var getAddressInstance = new AjaxHttpSender();
@@ -615,10 +594,10 @@ function popuplateAddressList(data) {
 function populateAddresstoInfoContainer(data) {
     $('.address-info .contents').remove();
     var selectedId = data.delivery_address;
-    if(selectedId){
+    if (selectedId) {
         $.each(data.address_list, function(key, value) {
             if (value.id == selectedId) {
-                $('.address-info').append("<div class='contents address-added' data-id='"+value.id+"'>" +
+                $('.address-info').append("<div class='contents address-added' data-id='" + value.id + "'>" +
                     "<span class='content-heading'>" + "DELIVERY ADDRESS" + "</span>" +
                     "<span>" + value.first_name + " " + value.last_name + "</span>" +
                     "<span>" + value.building + "," + value.street + "</span>" +
@@ -638,7 +617,7 @@ function populateAddressListPopup() {
     $('.address-payment-list-popup .button').remove();
     $('#save-delivery-address').addClass('button-disabled');
     var checkLocal = JSON.parse(localStorage['delivery_addressess']).address_list.length;
-    if (checkLocal) {   
+    if (checkLocal) {
         addressList = JSON.parse(localStorage['delivery_addressess']);
         appendAddresscontent(addressList);
         $('.address-payment-list-popup').show();
@@ -646,11 +625,11 @@ function populateAddressListPopup() {
         getAddress("populateAddressToPopUp");
         $('.address-payment-list-popup').show();
     }
-    $('input[type=radio][name=address]').on("focus",function(){
+    $('input[type=radio][name=address]').on("focus", function() {
         $('#save-delivery-address').removeClass('button-disabled');
-    }) 
-        
-        
+    })
+
+
 }
 
 function appendAddresscontent(addressList) {
@@ -688,7 +667,7 @@ function setPrimaryAdd(selectedId) {
 }
 
 function changeDeliveryAddress(selectedId) {
-    var selectedAddress =$('.address-payment-list-popup .popup-container').find('#'+selectedId).parent().find('label'),
+    var selectedAddress = $('.address-payment-list-popup .popup-container').find('#' + selectedId).parent().find('label'),
         htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
     $('.address-info .contents').html(htmlContent);
@@ -697,10 +676,9 @@ function changeDeliveryAddress(selectedId) {
 var addAddressCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
-        if(userDetails.status == 1){
+        if (userDetails.status == 1) {
             populateAddedAddress(userDetails.id);
-        }
-        else{
+        } else {
             showPopup(userDetails);
             $('.address-info-guest').show();
         }
@@ -723,7 +701,7 @@ function addAddress() {
             "street": newAddress.street,
             "building": newAddress.building,
             "is_primary": newAddress.is_primary,
-            "checkout":1
+            "checkout": 1
         };
     data = JSON.stringify(userData);
     var addAddressInstance = new AjaxHttpSender();
@@ -785,25 +763,24 @@ function getCities(cityId) {
 function populateAddedAddress(delivery_address) {
     var addedAddress = [],
         newAddress = getNewAddress();
-    newAddress.id =delivery_address; 
+    newAddress.id = delivery_address;
     // localStorage['delivery_addressess'] = newAddress;
     addedAddress.push(newAddress);
     data = {
-        "address_list": addedAddress,
-        "delivery_address":delivery_address
-    },
-    populateAddresstoInfoContainer(data);
+            "address_list": addedAddress,
+            "delivery_address": delivery_address
+        },
+        populateAddresstoInfoContainer(data);
 }
 
 var placeOrderCallback = {
     success: function(data, textStatus) {
-       var response = JSON.parse(data);
-       if(response.status == 1){
-        clearCart();
-       }
-       else{
-        showPopup(response);
-       }
+        var response = JSON.parse(data);
+        if (response.status == 1) {
+            clearCart();
+        } else {
+            showPopup(response);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -818,9 +795,11 @@ function placeOrder() {
     var $today_content = $(".today-content").find(".checkout-time-button-active"),
         $weekDatecontent = $(".week-content .date-content").find(".checkout-time-button-active"),
         $weekTimecontent = $(".week-content .time-content").find(".checkout-time-button-active"),
-        saveParam = 0,payment_type = 0,savedCardId,
+        saveParam = 0,
+        payment_type = 0,
+        savedCardId,
         selected_day, selected_time, deliveryTime;
-    
+
     if ($today_content.length) {
         selected_day = $today_content.attr("data-date");
         selected_time = "0" + $today_content.attr("data-hr") + ":" + "00" + ":" + "00";
@@ -830,41 +809,41 @@ function placeOrder() {
         selected_time = "0" + $weekTimecontent.attr("data-hr") + ":" + "00" + ":" + "00";
         deliveryTime = selected_day + "/" + getCurrentYear() + " " + selected_time;
     }
-    if($('input:checkbox[name=save-card-details]').prop('checked')){
+    if ($('input:checkbox[name=save-card-details]').prop('checked')) {
         saveParam = 1;
     }
 
-    if($("#pp").prop('checked') || $("#pp-guest").prop('checked')){
+    if ($("#pp").prop('checked') || $("#pp-guest").prop('checked')) {
         payment_type = "pp";
         var payPalEmail = "nazz007online-facilitator@gmail.com",
             returnUrl = "http://meisterdish.qburst.com/backend/api/paypal_success/",
             //returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
             cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
             notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/";
-            orderDetails = {
-                "delivery_time": deliveryTime,
-                "billing_address": billingAddressId,
-                "delivery_address": addressId,
-                "payment_type": "pp", 
-                "tip": driverTip, 
-                "driver_instructions": driverInstr,
-                "session-key": localStorage["session_key"]
-            }
+        orderDetails = {
+            "delivery_time": deliveryTime,
+            "billing_address": billingAddressId,
+            "delivery_address": addressId,
+            "payment_type": "pp",
+            "tip": driverTip,
+            "driver_instructions": driverInstr,
+            "session-key": localStorage["session_key"]
+        }
         checkOutPayPal("PayPal", payPalEmail, {
             "return": returnUrl,
             "cancel_return": cancelReturnUrl,
             "notify_url": notifyUrl,
             "my_temp_id": "hai nazz"
-        },orderDetails);
-    }else{
-        if($("#cc").prop('checked')){
+        }, orderDetails);
+    } else {
+        if ($("#cc").prop('checked')) {
             payment_type = "cc";
         }
         url = baseURL + "create_order/",
-        header = {
-            "session-key": localStorage["session_key"]
-        };
-        if(!$('.saved-cards').is(':empty')){
+            header = {
+                "session-key": localStorage["session_key"]
+            };
+        if (!$('.saved-cards').is(':empty')) {
             payment_type = "cc";
             savedCardId = $('.saved-cards .added-card').attr('id');
             params = {
@@ -876,119 +855,116 @@ function placeOrder() {
                 "driver_instructions": driverInstr,
                 "card_id": savedCardId
             }
-        }else{
+        } else {
             $("#pay-form").submit();
             if ($("#pay-form").valid()) {
-            var card_number = $('#card-number').val(),
-                cvv = $('#cvv-number').val(),
-                Exp_month = $("#ExpMonth").val(),
-                Exp_year = $("#ExpYear option:selected").text();
+                var card_number = $('#card-number').val(),
+                    cvv = $('#cvv-number').val(),
+                    Exp_month = $("#ExpMonth").val(),
+                    Exp_year = $("#ExpYear option:selected").text();
                 params = {
                     "delivery_time": deliveryTime,
                     "billing_address": billingAddressId,
                     "delivery_address": addressId,
                     "payment_type": payment_type,
-                    "tip": driverTip, 
+                    "tip": driverTip,
                     "driver_instructions": driverInstr,
-                    "save_card":saveParam,
-                    "number" : card_number, 
-                    "exp_month" : Exp_month,
-                    "exp_year" : Exp_year,
-                    "cvv2" : $('#cvv-number').val(), 
-                    "first_name" : firstname,
-                    "last_name" : lastname,
+                    "save_card": saveParam,
+                    "number": card_number,
+                    "exp_month": Exp_month,
+                    "exp_year": Exp_year,
+                    "cvv2": $('#cvv-number').val(),
+                    "first_name": firstname,
+                    "last_name": lastname,
                 }
             }
         }
-    if(typeof params === 'undefined'){
-        return;
+        if (typeof params === 'undefined') {
+            return;
+        } else {
+            data = JSON.stringify(params);
+        }
+        var placeOrderInstance = new AjaxHttpSender();
+        placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
     }
-    else{
-        data = JSON.stringify(params);
-    }
-    var placeOrderInstance = new AjaxHttpSender();
-    placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
-}    
 }
-$("#cc").on("click",function(){
-    if($("#cc").prop('checked')){
+$("#cc").on("click", function() {
+    if ($("#cc").prop('checked')) {
         $('#save-credit-card').removeAttr("disabled");
     }
 });
-$("#pp").on("click",function(){   
-    if($("#pp").prop('checked')){
-        $('#save-credit-card').attr("disabled","disabled");
+$("#pp").on("click", function() {
+    if ($("#pp").prop('checked')) {
+        $('#save-credit-card').attr("disabled", "disabled");
     }
 })
 
-function populateCreditCardDetails(){
+function populateCreditCardDetails() {
     var cards = cardDetails.cards;
     $('.address-payment-list-popup .button').remove();
     $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .popup .header').text("SELECT YOUR PAYMENT METHOD");
-       $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>"+
-            "<input type='radio' id='paypal-radio'class='added-card pullLeft' name='change-card' class='radio-button-payment'>" +
-            "<label>"+"<img class='paypal' src='../images/paypal_button.png'>"+"</label>"+"</div>");
-       $.each(cards,function(key,value){
-            $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>"+
-                "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' id='"+value.id+"'>"+
-                "<label>"+"<img class='paypal' src='"+value.logo+"'>"+
-                "<span class='body-text-small'>" + value.type + " " + 
-                "ending in" + " " + last_num + "</span>" +
-                "<span class='body-text-small'>" + "Expires on" + 
-                " " + value.expire_month + "/" + value.expire_year + "</span>" +"</label>"+"</div>")
-       });
-       $('.address-payment-list-popup .popup-container').append("<div class='button'>" +
+    $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>" +
+        "<input type='radio' id='paypal-radio'class='added-card pullLeft' name='change-card' class='radio-button-payment'>" +
+        "<label>" + "<img class='paypal' src='../images/paypal_button.png'>" + "</label>" + "</div>");
+    $.each(cards, function(key, value) {
+        $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>" +
+            "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' id='" + value.id + "'>" +
+            "<label>" + "<img class='paypal' src='" + value.logo + "'>" +
+            "<span class='body-text-small'>" + value.type + " " +
+            "ending in" + " " + last_num + "</span>" +
+            "<span class='body-text-small'>" + "Expires on" +
+            " " + value.expire_month + "/" + value.expire_year + "</span>" + "</label>" + "</div>")
+    });
+    $('.address-payment-list-popup .popup-container').append("<div class='button'>" +
         "<a href='#' class='btn btn-medium-primary medium-green' id='save-payment'>" + "SELECT" + "</a>" +
         "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
-       $('#save-payment').addClass('button-disabled');
-       $('.address-payment-list-popup').show();
-        $('input[type=radio][name=change-card]').on("focus",function(){
-            $('#save-payment').removeClass('button-disabled');
-        })
-    }
- function showSelectedPaymentMethod(selectedId){
-       
-    if(selectedId == "paypal-radio"){
+    $('#save-payment').addClass('button-disabled');
+    $('.address-payment-list-popup').show();
+    $('input[type=radio][name=change-card]').on("focus", function() {
+        $('#save-payment').removeClass('button-disabled');
+    })
+}
+
+function showSelectedPaymentMethod(selectedId) {
+
+    if (selectedId == "paypal-radio") {
         $('.saved-cards').empty();
         $('.paypal-container').show();
         $('.credit-card-container').hide();
-    }
-
-    else{
+    } else {
         $('.credit-card-container').show();
         $('.paypal-container').hide();
         $('.saved-cards').empty();
-        populateCardDetails(cardDetails.cards,selectedId);
+        populateCardDetails(cardDetails.cards, selectedId);
     }
- }
+}
 
-function validateOrder(){
-    var data={};
-    data.message="";
-    if(!$(".payment-checked:checked").length){
-        data.message="Add a method of payment and then proceed";
+function validateOrder() {
+    var data = {};
+    data.message = "";
+    if (!$(".payment-checked:checked").length) {
+        data.message = "Add a method of payment and then proceed";
         showPopup(data);
         return false;
     }
-    if(typeof cartItems === 'undefined'){}
-    else{
-         if(cartItems.status=="-1"){
-            data.message="Add Meals to cart and then proceed";
+    if (typeof cartItems === 'undefined') {} else {
+        if (cartItems.status == "-1") {
+            data.message = "Add Meals to cart and then proceed";
             showPopup(data);
             return false;
         }
     }
-    if(!$(".checkout-time-button-active").length){
-        data.message="Add delivery time and then proceed";
+    if (!$(".checkout-time-button-active").length) {
+        data.message = "Add delivery time and then proceed";
         showPopup(data);
         return false;
     }
 
-    if(!$(".address-added").length){
-        data.message="Add an addess then proceed";
+    if (!$(".address-added").length) {
+        data.message = "Add an address then proceed";
         showPopup(data);
         return false;
     }
-   return true;
+    return true;
 }
