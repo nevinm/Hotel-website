@@ -25,12 +25,12 @@
         </tr>
         <tr>
             <td align="center" style="padding: 10px 0 5px 0;" ;>
-                <h4 style='margin: 0'>Your order is complete is complete.</h4>
+                <h4 style='margin: 0'>Your {%if delivery_type == "pickup"%} order {% else %} delivery{% endif %} ({{order_num}})is complete.</h4>
             </td>
         </tr>
         <tr>
             <td align="center" style="padding: 5px 0 10px 0;">
-                <h4 style='margin: 0'>Thanks for using Meisterdish. We hope you enjoyed your meal!</h4>
+                <h4 style='margin: 0'>Want a free meal? Tell your friends about Meisterdish! See our homepage for details.</h4>
             </td>
         </tr>
     </table>

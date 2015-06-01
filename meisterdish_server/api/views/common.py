@@ -57,8 +57,8 @@ def login(request, data):
                 
             user_dic = {"id":user.id,
                               "email":user.email,
-                              "first_name":user.first_name,
-                              "last_name":user.last_name,
+                              "first_name":user.first_name.title(),
+                              "last_name":user.last_name.title(),
                               "role" : user.role.id,
                               }
             

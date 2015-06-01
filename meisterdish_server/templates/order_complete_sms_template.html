@@ -1,1 +1,5 @@
-order complete sms
+{% if delivery_type == "pickup" %}
+Your order ({{order_num}}) at Meisterdish is complete.
+{% else %}
+Your order ({{order_num}}) at Meisterdish is complete.
+{% endif %}

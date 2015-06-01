@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from api import views
+from api.views import promotions
 urlpatterns = patterns('',
     url(r'^$', views.home, name='home'),
     url(r'^cms/', include('api.cms_urls')),
@@ -21,7 +22,7 @@ urlpatterns = patterns('',
     url(r'^get_states/$', views.get_states, name='get_states'),
     url(r'^get_cities/$', views.get_cities, name='get_cities'),
  
-    url(r'^redeem_gift_card/$', views.redeem_gift_card, name='redeem_gift_card'),
+    url(r'^redeem_gift_card/$', promotions.redeem_gift_card, name='redeem_gift_card'),
     url(r'^upload_picture/$', views.upload_picture, name='upload_picture'),
     
     url(r'^get_categories/$', views.get_categories, name='get_categories'),
@@ -54,6 +55,9 @@ urlpatterns = patterns('',
     url(r'^paypal_ipn/$', views.paypal_ipn, name='paypal_ipn'),
 
     url(r'^check_delivery/$', views.check_delivery, name='check_delivery'),
-    url(r'^get_delivery_areas/$', views.get_delivery_areas, name='get_delivery_areas'),    
-    url(r'^manage_delivery_area/$', views.manage_delivery_area, name='manage_delivery_area'),    
+    url(r'^get_delivery_areas/$', views.get_delivery_areas, name='get_delivery_areas'),
+    url(r'^manage_delivery_area/$', views.manage_delivery_area, name='manage_delivery_area'),
+
+    url(r'^apply_promocode/$', promotions.apply_promocode, name='apply_promocode'),
+    
 )
