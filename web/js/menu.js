@@ -42,11 +42,10 @@ $(document).ready(function() {
     });
 
     //Filter toggle
-    $(".filter-container, .subMenuFilter,.filter-container .arrow-down ").on('click', function(e) {
-        // e.preventDefault();
-        if (e.target === this) {
+    $(".filter-container").on('click', function(e) {
+        // if (e.target === this) {
             $(".filter-drop-down").slideToggle();
-        }
+        // }
     })
 
     //Filters
