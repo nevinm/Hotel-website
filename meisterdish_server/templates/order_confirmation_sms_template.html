@@ -1,1 +1,5 @@
-confirmation SMS
+{% if delivery_type == "pickup" %}
+Your order ({{order_num}}) at Meisterdish is confirmed.
+{% else %}
+Your order ({{order_num}}) at Meisterdish is confirmed.
+{% endif %}

@@ -412,6 +412,8 @@ class PromoCode(models.Model):
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     expiry_date = models.DateTimeField()
 
+    deleted = models.BooleanField(default=False)
+
     def __unicode__(self):
         return self.code
 
