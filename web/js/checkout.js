@@ -15,9 +15,10 @@ $(document).ready(function() {
         $('.address-info').hide();
         $('.payment-method-guest-container').show();
     }
+    
     setCurrentTime();
     populateYear();
-
+    
     var cartItems;
 
     //Remove cart items

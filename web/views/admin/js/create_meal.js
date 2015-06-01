@@ -44,11 +44,14 @@ $(document).ready(function() {
     });
 
     //Add tips n tricks main
-    $('#add-tips-main').on("click", function() {
+    $('#add-tips-main').on("click", function(e) {
+        e.preventDefault();
         var video_URL = $('#tips-video-url').val(),
             tips_heading = $('#tips-and-tricks').val();
-        if ((video_URL != undefined && tips_heading != undefined) && (video_URL != "" && tips_heading != ""))
-            addMainTipsTricks(video_URL, tips_heading);
+                if (tips_heading != undefined && tips_heading != ""){
+                    addMainTipsTricks(video_URL, tips_heading);    
+                }
+        }
     });
 
     //Add sublist field to tips & ticks

@@ -19,6 +19,14 @@
         <header id="header">
             <div class="contentArea">
                 <a href="../index.html"><img class="pullLeft logo logo-tab" src="../images/logo.png" alt="MeisterDish"></a>
+                <div class="backNav-mobile" style="display:none">
+                    <span>
+                        <a href="How_it_works.html">
+                            <img src="../images/back_arrowMobile.png">
+                        </a>
+                    </span>
+                    <span><a href="How_it_works.html">BACK TO HOW IT WORKS</a></span>
+                </div>
                 <div class="cart pullRight">
                     <a href="checkout.html">
                         <span class="count"></span>
@@ -95,11 +103,7 @@
             </div>
         </header>
         <div class="how-it-works-tab">
-            <div id="you-cook-container">
-                <div id="you-cook">
-                    <div class="image-wrapper"></div>
-                    <div class="right-arrow"></div>
-                    <div class="tab-container">
+            <div class="tab-container">
                         <div class="left-arrow-mobile">
                             <a class="prev-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
                         </div>
@@ -114,6 +118,10 @@
                             <li><a class='pc-tab ' href="#we-deliver">WE DELIVER</a></li>
                         </ul>
                     </div>
+            <div id="you-cook-container">
+                <div id="you-cook">
+                    <div class="image-wrapper"></div>
+                    <div class="right-arrow"></div>
                     <div class="contentWrapper">
                         <h0 class="h0">YOU COOK</h0>
                         <div class="box-contentWrapper">
@@ -129,7 +137,7 @@
                                 Oh, and eating. Everyone love to eat.
                             </p>
                             <div class="button-container">
-                                <a href="#" class="btn btn-small-extended medium-green">WHAT YOU GET</a>
+                                <a href="#" class="btn btn-small-extended medium-green" id="btn-what-you-get">WHAT YOU GET</a>
                             </div>
                         </div>
                     </div>
@@ -137,25 +145,34 @@
                 <div id="what-you-get">
                     <div class="image-wrapper"></div>
                     <div class="left-arrow"></div>
-                    <div class="tab-container">
-                        <div class="left-arrow-mobile">
-                            <a class="prev-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
-                        <div class="right-arrow-mobile">
-                            <a class="next-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
-                        <ul>
-                            <li><a class='pc-tab activeli' href="#you-cook-container">YOU COOK</a></li>
-                            <li><a class='pc-tab' href="#we-source-container">WE SOURCE</a></li>
-                            <li><a class='pc-tab' href="#we-inspire">WE INSPIRE</a></li>
-                            <li><a class='pc-tab' href="#we-prep">WE PREP</a></li>
-                            <li><a class='pc-tab ' href="#we-deliver">WE DELIVER</a></li>
-                        </ul>
-                    </div>
+                    <div class="sub-tab-container">
+                                    <div class="left-arrow-mobile prev-sub-tab">
+                                        <img src="../images/back_arrowMobile.png" />
+                                    </div>
+                                    <div class="right-arrow-mobile next-sub-tab">
+                                        <img src="../images/back_arrowMobile.png" />
+                                    </div>
+                                    <ul>
+                                        <li><a  data-id="#first-tab" class="subactiveli">LANCASTER FARM FRESH CO-OP</a></li>
+                                        <li><a  data-id="#second-tab">ROAMING ACRES</a></li>
+                                        <li><a  data-id="#third-tab"> BLUE RIBBON FISH CO.</a>
+                                        </li>
+                                        <li><a  data-id="#forth-tab">OAK GROVE PLANTATION</a></li>
+                                        <li><a  data-id="#fifth-tab">COMMON THREAD COMMUNITY FARM </a></li>
+                                        <span class="tablet-dropdown-btn"></span>
+                                        <div class="tab-header-drop-down">
+                                            <ul>
+                                                <li><a  data-id="#second-tab">OAK GROVE PLANTATION</a></li>
+                                                <li><a  data-id="#second-tab">COMMON THREAD COMMUNITY FARM </a></li>
+                                            </ul>
+                                        </div>
+                                    </ul>
+                                </div>
                     <div class="contentWrapper">
                         <h0 class="h0">WHAT YOU GET</h0>
                         <div class="box-contentWrapper">
                             <h3>EVERYTHING YOU NEED</h3>
+                            <hr>
                             <p class="body-text-small">
                                We've neatly placed everything Inside the 100% recylable Meisterdish box. 
                             </p>
@@ -175,25 +192,11 @@
                 <div id="we-source">
                     <div class="image-wrapper"></div>
                     <div class="right-arrow"></div>
-                    <div class="tab-container">
-                        <div class="left-arrow-mobile">
-                            <a class="prev-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
-                        <div class="right-arrow-mobile">
-                            <a class="next-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
-                        <ul>
-                            <li><a class='pc-tab activeli' href="#you-cook-container">YOU COOK</a></li>
-                            <li><a class='pc-tab' href="#we-source-container">WE SOURCE</a></li>
-                            <li><a class='pc-tab' href="#we-inspire">WE INSPIRE</a></li>
-                            <li><a class='pc-tab' href="#we-prep">WE PREP</a></li>
-                            <li><a class='pc-tab ' href="#we-deliver">WE DELIVER</a></li>
-                        </ul>
-                    </div>
                     <div class="contentWrapper">
                         <h0 class="h0">WE SOURCE</h0>
                         <div class="box-contentWrapper">
                             <h3>100% LOCALLY GROWN PRODUCE</h3>
+                             <hr>
                             <p class="body-text-small">
                                Our Ingredients are sourced every day from local farmers. 
                             </p>
@@ -204,7 +207,7 @@
                                 So you'll be supporting the local economy by cooking with the freshest produce avallalbe—everyone wins. 
                             </p>
                             <div class="button-container">
-                                <a href="#" class="btn btn-small-extended medium-green">OUR SUPPLIERS</a>
+                                <a href="#" class="btn btn-small-extended medium-green" id="btn-our-suppliers">OUR SUPPLIERS</a>
                             </div>
                         </div>
                     </div>
@@ -212,38 +215,38 @@
                 <div id="our-suppliers">
                     <div class="image-wrapper"></div>
                     <div class="left-arrow"></div>
-                    <div class="tab-container">
-                        <div class="left-arrow-mobile">
-                            <a class="prev-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
-                        <div class="right-arrow-mobile">
-                            <a class="next-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
-                        <ul>
-                            <li><a class='pc-tab activeli' href="#you-cook-container">YOU COOK</a></li>
-                            <li><a class='pc-tab' href="#we-source-container">WE SOURCE</a></li>
-                            <li><a class='pc-tab' href="#we-inspire">WE INSPIRE</a></li>
-                            <li><a class='pc-tab' href="#we-prep">WE PREP</a></li>
-                            <li><a class='pc-tab ' href="#we-deliver">WE DELIVER</a></li>
-                        </ul>
-                    </div>
                     <div class="contentWrapper">
                         <h0 class="h0">OUR SUPPLIERS</h0>
                         <div class="box-contentWrapper">
                             <div class="our-suppliers-tab">
                                 <div class="sub-imageWrapper"></div>
                                 <div class="sub-tab-container">
+                                    <div class="left-arrow-mobile prev-sub-tab">
+                                        <img src="../images/back_arrowMobile.png" />
+                                    </div>
+                                    <div class="right-arrow-mobile next-sub-tab">
+                                        <img src="../images/back_arrowMobile.png" />
+                                    </div>
                                     <ul>
-                                        <li><a  data-id="#farm">LANCASTER FARM FRESH CO-OP</a></li>
+                                        <li><a  data-id="#farm" class="subactiveli">LANCASTER FARM FRESH CO-OP</a></li>
                                         <li><a  data-id="#roamimg-acres">ROAMING ACRES</a></li>
-                                        <li><a  data-id="#blue-ribbon-fish"> BLUE RIBBON FISH CO.</a></li>
+                                        <li><a  data-id="#blue-ribbon-fish"> BLUE RIBBON FISH CO.</a>
+                                        </li>
                                         <li><a  data-id="#plantation">OAK GROVE PLANTATION</a></li>
                                         <li><a  data-id="#common-thread-farm">COMMON THREAD COMMUNITY FARM </a></li>
+                                        <span class="tablet-dropdown-btn"></span>
+                                        <div class="tab-header-drop-down">
+                                            <ul>
+                                                <li><a  data-id="#plantation">OAK GROVE PLANTATION</a></li>
+                                                <li><a  data-id="#common-thread-farm">COMMON THREAD COMMUNITY FARM </a></li>
+                                            </ul>
+                                        </div>
                                     </ul>
                                 </div>
                                 <div id="farm">
                                     <div class="sub-contentWrapper">
                                         <h3>LANCASTER FARM FRESH COOPERATIVE </h3>
+                                         <hr>
                                         <p class="caption">
                                             <img src="../images/link.png"><a href="https://www.lancasterfarmfresh.com">WWW.LANCASTERFARMFRESH.COM </a>
                                         </p>
@@ -253,16 +256,24 @@
                                     </div>
                                 </div>
                                 <div id="roamimg-acres">
-                                    <p>Roaming acres</p>
+                                    <div class="sub-contentWrapper">
+                                        <p class="body-text-small">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    </div>
                                 </div>
                                 <div id="blue-ribbon-fish">
-                                    <p>In blue ribbon fish</p>
+                                    <div class="sub-contentWrapper">
+                                        <p class="body-text-small">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+                                    </div>
                                 </div>
                                 <div id="plantation">
-                                    <p>In plantation</p>
+                                    <div class="sub-contentWrapper">
+                                        <p class="body-text-small">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC.</p>
+                                    </div>
                                 </div>
                                 <div id="common-thread-farm">
-                                    <p>In common thread farm</p>
+                                    <div class="sub-contentWrapper">
+                                        <p class="body-text-small">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>                                 
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -271,25 +282,11 @@
             </div>
             <div id="we-inspire">
                 <div class="image-wrapper"></div>
-                <div class="tab-container">
-                        <div class="left-arrow-mobile">
-                            <a class="prev-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
-                        <div class="right-arrow-mobile">
-                            <a class="next-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
-                        <ul>
-                            <li><a class='pc-tab activeli' href="#you-cook-container">YOU COOK</a></li>
-                            <li><a class='pc-tab' href="#we-source-container">WE SOURCE</a></li>
-                            <li><a class='pc-tab' href="#we-inspire">WE INSPIRE</a></li>
-                            <li><a class='pc-tab' href="#we-prep">WE PREP</a></li>
-                            <li><a class='pc-tab ' href="#we-deliver">WE DELIVER</a></li>
-                        </ul>
-                    </div>
                 <div class="contentWrapper">
                     <h0 class="h0">WE INSPIRE</h0>
                     <div class="box-contentWrapper">
                         <h3>YOU CAN SAY IT WAS YOUR IDEA</h3>
+                         <hr>
                         <p class="body-text-small">
                            Inspired by our desire to bring modern restaurant cuisine to your kitchen and dining table In minutes. we've partnered with top chefs to help us create a menu for everyone's taste.
                         </p>
@@ -315,25 +312,11 @@
             </div>
             <div id="we-prep">
                 <div class="image-wrapper"></div>
-                <div class="tab-container">
-                        <div class="left-arrow-mobile">
-                            <a class="prev-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
-                        <div class="right-arrow-mobile">
-                            <a class="next-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
-                        <ul>
-                            <li><a class='pc-tab activeli' href="#you-cook-container">YOU COOK</a></li>
-                            <li><a class='pc-tab' href="#we-source-container">WE SOURCE</a></li>
-                            <li><a class='pc-tab' href="#we-inspire">WE INSPIRE</a></li>
-                            <li><a class='pc-tab' href="#we-prep">WE PREP</a></li>
-                            <li><a class='pc-tab ' href="#we-deliver">WE DELIVER</a></li>
-                        </ul>
-                    </div>
                 <div class="contentWrapper">
                     <h0 class="h0">WE PREP</h0>
                     <div class="box-contentWrapper">
                         <h3>YES, CHEF. WASHED & CHOPPED.</h3>
+                         <hr>
                         <p class="body-text-small">
                            We get things delivered to make our lives easier. So why do we still order boxes of unwashed and uncut vegetables and call that convenience? 
                         </p>
@@ -351,25 +334,11 @@
             </div>
             <div id="we-deliver">
                 <div class="image-wrapper"></div>
-                <div class="tab-container">
-                        <div class="left-arrow-mobile">
-                            <a class="prev-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
-                        <div class="right-arrow-mobile">
-                            <a class="next-tab" href="#"><img src="../images/back_arrowMobile.png" /></a>
-                        </div>
-                        <ul>
-                            <li><a class='pc-tab activeli' href="#you-cook-container">YOU COOK</a></li>
-                            <li><a class='pc-tab' href="#we-source-container">WE SOURCE</a></li>
-                            <li><a class='pc-tab' href="#we-inspire">WE INSPIRE</a></li>
-                            <li><a class='pc-tab' href="#we-prep">WE PREP</a></li>
-                            <li><a class='pc-tab ' href="#we-deliver">WE DELIVER</a></li>
-                        </ul>
-                    </div>
                 <div class="contentWrapper">
                     <h0 class="h0">WE DELIVER</h0>
                     <div class="box-contentWrapper">
                         <h3>QUICK DELIVERY ON DEMAND</h3>
+                        <hr>
                         <p class="body-text-small">
                            Almost home and you realize your fridge Is empty? Don't worry-it happens to the best of us. 
                         </p>

@@ -48,11 +48,10 @@ $(document).ready(function() {
         filterMenuLabel = document.getElementsByClassName("filter-menu-label")[0];
         arrowDown = document.getElementsByClassName("arrow-down")[1];
         subMenuFilter = document.getElementsByClassName("subMenuFilter")[0];
-        if ((e.target == filterContainer) || (e.target == filterCenter) || 
+        if ((e.target == filterContainer) || (e.target == filterCenter) ||
             (e.target == filterMenuLabel) || (e.target == arrowDown) || (e.target == subMenuFilter)) {
             $(".filter-drop-down").slideToggle();
-        }
-        else{
+        } else {
             return;
         }
     })
@@ -191,7 +190,7 @@ function populateMealList(mealList, isInfinteScrolling) {
             "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +
             "</section><section class='listItemDetails'>" +
             "<h3 class='pullLeft itemCost'>" + dollarConvert(value.price + value.tax) + "</h3>" +
-            "<span class='menuItemDetails caption'>Brioche Bun, Avocado, Tomato, Red Onions.</span>" +
+            "<span class='menuItemDetails caption'>" + value.sub + "</span>" +
             "<span><a class='btn btn-small-primary medium-green addItemButton' " +
             "data-id='" + value.id + "'>ADD</a></span>" +
             "</section></div>");
