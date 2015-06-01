@@ -1,9 +1,18 @@
 $(document).ready(function() {
+	tabRendering();
+
 	$('.tab-container ul li').on("click", function() {
 	    $('.tab-container ul li a').removeClass('activeli');
 	    $(this).find('a').addClass('activeli');
 	});
-	$(".how-it-works-tab").tabs();
+	$(".how-it-works-tab").tabs({
+		activate: function(event,ui){
+			if((ui.newTab.context.id)=="ui-id-5")
+				$(".next-tab").hide();
+			else
+				$(".next-tab").show();
+		}
+	});
 	$('.left-arrow').on("click",function(){
 		$('#we-source,#you-cook,#our-suppliers,#what-you-get').animate({
 			left: '+=100%'
@@ -19,17 +28,131 @@ $(document).ready(function() {
 	    $(this).find('a').addClass('subactiveli');
 	});
 	$('.sub-tab-container li').on("click",function(){
-		$('#farm,#roamimg-acres,#blue-ribbon-fish,#plantation,#common-thread-farm').hide();
+		$('#farm,#roamimg-acres,#blue-ribbon-fish,#plantation,#common-thread-farm').hide();		
 		var clicked_id =$(this).find('a').attr('data-id');
+		if($(window).width()<=767){
+			$('.next-sub-tab').show();
+			$('.prev-sub-tab').show();
+		}
 		$(clicked_id).show();
+		if(clicked_id == "#common-thread-farm"){
+			$('.next-sub-tab').hide();
+		}
+		if(clicked_id == "#farm"){
+			$('.prev-sub-tab').hide();
+		}
+
 	});
-	// $(document).keydown(function(e){
- //    	if (e.keyCode == 37) { 
- //    		$('.left-arrow').trigger("click");
- //    		debugger
- //    	}
- //    	if (e.keyCode == 39) {
- //    		$('.right-arrow').trigger("click");
- //    	} 
-	// });
+	$('.next-sub-tab').on("click",function(){
+		$('.prev-sub-tab').show();
+		var selected_a = $('.subactiveli').parent().next().find('a');
+		selected_a.trigger("click");
+		
+	})
+	$('.prev-sub-tab').on("click",function(){
+		$('.next-sub-tab').show();
+		var selected_a = $('.subactiveli').parent().prev().find('a');
+		selected_a.trigger("click");
+		
+	})
+	
+	$(document).on('click', '.icon-cancel', function() {
+		setTimeout(function(){
+			$('.how-it-works-tab').show();
+		},700);
+		
+	});
+	
+	$('.icon-menu').on("click",function(){
+		$('.how-it-works-tab').hide();
+	})
+	
+	$("#btn-what-you-get").on("click",function(){
+		$('#you-cook,#what-you-get').animate({
+			left: '-=100%'
+		},"slow","easeOutQuart");
+		$('#what-you-get').show();
+		if($(window).width()<=767){
+			$(".backNav-mobile").show();
+			$('.logo-mobile-container,.icon-menu').hide();
+		}
+	});
+	
+	$('#btn-our-suppliers').on("click",function(){
+		$('#we-source,#our-suppliers').animate({
+			left: '-=100%'
+		},"slow","easeOutQuart");
+		$('#our-suppliers').show();
+		if($(window).width()<=767){
+			$(".backNav-mobile").show();
+			$('.logo-mobile-container,.icon-menu').hide();
+		}
+	})
+	
+	$('.backNav-mobile').on("click",function(){
+		$(".backNav-mobile").hide();
+		$('.logo-mobile-container,.icon-menu').show();
+	})
+
+	$('.tablet-dropdown-btn').on("click",function(){
+		$('.tab-header-drop-down').slideToggle();
+	})
+
+	$(window).resize(function() {
+		if ($(window).width() <= 767 && $(window).width() >= 320) {
+			$("#what-you-get, #our-suppliers").show();
+			$('.tab-header-drop-down').hide();
+		}
+		else{
+			$('.backNav-mobile').hide();
+			$('.tab-header-drop-down').hide();
+			$('.next-sub-tab').hide();
+			$('.prev-sub-tab').hide();
+		}
+	})
+function tabRendering() {
+    var $tabs = $(".how-it-works-tab").tabs({
+        select: function(event, ui) {
+            jQuery(this).css('height', jQuery(this).height());
+            jQuery(this).css('overflow', 'hidden');
+        },
+        show: function(event, ui) {
+            jQuery(this).css('height', 'auto');
+            jQuery(this).css('overflow', 'visible');
+        }
+    });
+
+$('.next-tab').click(function(e) {
+        e.preventDefault();
+        $tabs.tabs('option', 'hide', {
+            effect: 'slide',
+            direction: 'left',
+            duration: 300
+        });
+        $tabs.tabs('option', 'show', {
+            effect: 'slide',
+            direction: 'right',
+            duration: 300
+        });
+        var selected = $tabs.tabs('option', 'active');
+        $tabs.tabs('option', 'active', (selected + 1));
+
+    });
+
+    $('.prev-tab').click(function(e) {
+        e.preventDefault();
+        $tabs.tabs('option', 'hide', {
+            effect: 'slide',
+            direction: 'right',
+            duration: 300
+        });
+        $tabs.tabs('option', 'show', {
+            effect: 'slide',
+            direction: 'left',
+            duration: 300
+        });
+        var selected = $tabs.tabs('option', 'active');
+        $tabs.tabs('option', 'active', (selected - 1));
+    });
+	}
 });

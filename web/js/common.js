@@ -341,6 +341,9 @@ $("form").each(function() {
                 minlength:3,
                 maxlength:4,
                 required:true
+            },
+            url:{
+                youtube_url:true
             }
             // image_upload :{
             //     required:true
@@ -359,7 +362,7 @@ $("form").each(function() {
                 minlength: "Name should contain atleast 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
-            phonenumber: "Provide a valid number.",
+            phonenumber: "Provide valid phone",
             fullname: {
                 required: "Please enter your first name.",
                 letters: "Name should contain only alphabets.",
@@ -403,7 +406,8 @@ $("form").each(function() {
             mealname: "Enter a valid meal name.",
             chef_name: "Enter a valid chef name.",
             mealdescription: "Meal description is not valid.",
-            cvv:"provide a valid cvv."
+            cvv:"provide a valid cvv.",
+            url:"Enter valid url."
                 // image_upload:"Please select an image."
         }
     });
@@ -412,6 +416,9 @@ $("form").each(function() {
 if ($.validator) {
     $.validator.addMethod('letters', function(value) {
         return value.match(/^[- a-zA-Z]+$/);
+    });
+    $.validator.addMethod('youtube_url', function(value) {
+        return value.match(/^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/);
     });
 }
 

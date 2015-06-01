@@ -6,18 +6,17 @@ var billingAddressId,cardDetails,
 
 $(document).ready(function() {
     if(localStorage["session_key"]){
-        getCartItems();
-        populateYear();
+        getCartItems();       
         savedCardDetails();
-        CartItemCount();
-        setCurrentTime();
+        CartItemCount();        
         getAddress();
     }else{
         $('.address-info-guest').show();
         $('.address-info').hide();
         $('.payment-method-guest-container').show();
     }
-   
+    populateYear();
+    setCurrentTime();
     var cartItems;
 
     //Remove cart items

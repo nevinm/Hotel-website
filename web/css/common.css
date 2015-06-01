@@ -743,7 +743,7 @@ span.icon-menu {
 #meal-tax-error,#chef-name-error,#create-meal-available-error,#create-meal-category-error,
 #create-meal-mealType-error,#chef-image-input-error,#meal-image-input-error,#billing-zip-error,
 #card-number-error,#name-on-card-error,#cvv-number-error,#ExpMonth-error,#ExpYear-error,
-#new-address-error
+#new-address-error,#tips-video-url-error
 {
 	color: #ff7878;
 	background: white;
@@ -966,7 +966,7 @@ span.icon-menu {
         font-size: 12px;
         letter-spacing: 2px;
     }
-    .socialMedia{
+    /*.socialMedia{
         background-image: url(../images/social_sprite_green.png);
         background-size: cover;
     }
@@ -992,7 +992,7 @@ span.icon-menu {
         background-position: -80px 0;
         width: 40px;
         height: 40px;
-    }
+    }*/
 
 }
 
