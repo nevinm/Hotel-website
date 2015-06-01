@@ -39,6 +39,7 @@ function signingup() {
 
 $(document).ready(function() {
     redirectIfLoggedIn();
+    CartItemCount();
 
     $('#signup-button').on('click', function(e) {
         e.preventDefault();
