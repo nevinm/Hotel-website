@@ -623,12 +623,12 @@ span.icon-menu {
     display: inline-block;
     font-family: 'ProximaNova-semibold';
     font-size: 12px;
-    cursor: pointer;
 }
 
 #footer ul li a {
     margin: 0 40px 0 0;
     color: #9B9B9B;
+    cursor: pointer;
 }
 
 .footer-links {
