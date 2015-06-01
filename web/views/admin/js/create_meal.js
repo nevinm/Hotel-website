@@ -50,8 +50,10 @@ $(document).ready(function() {
             tips_heading = $('#tips-and-tricks').val(),valid_url,valid_title;
             valid_url = ytVidId(video_URL);
             valid_title = emptyvalidation(tips_heading);
-             if (valid_url && valid_title) {
+            if (valid_url && valid_title) {
                 addMainTipsTricks(video_URL, tips_heading);    
+            }else{
+                $("#tips-video-url,#tips-and-tricks").addClass('error');
             }
     });
 
