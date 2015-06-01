@@ -621,8 +621,8 @@ span.icon-menu {
 
 #footer ul li {
     display: inline-block;
-    font-family: 'ProximaNova-semibold';
-    font-size: 12px;
+    font-family: 'ProximaNova-regular';
+    font-size: 11px;
 }
 
 #footer ul li a {

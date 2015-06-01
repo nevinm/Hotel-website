@@ -7,7 +7,6 @@ var billingAddressId, cardDetails,
 $(document).ready(function() {
     if (localStorage["session_key"]) {
         getCartItems();
-        populateYear();
         savedCardDetails();
         CartItemCount();
         getAddress();
@@ -17,6 +16,7 @@ $(document).ready(function() {
         $('.payment-method-guest-container').show();
     }
     setCurrentTime();
+    populateYear();
 
     var cartItems;
 

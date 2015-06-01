@@ -19,14 +19,14 @@ $(document).ready(function() {
             meal_id = $(this).attr('data-id');
         if (localStorage['loggedIn'] == 'true') {
             addToCart(meal_id);
-        } else if (localStorage['loggedIn'] == 'false' || localStorage.getItem('loggedIn')===null) {
+        } else if (localStorage['loggedIn'] == 'false' || localStorage.getItem('loggedIn') === null) {
             addToCart(meal_id);
         }
     });
 
     $(document).on("click", '.thumbnail', function() {
         mealId = this.dataset.id;
-        window.location.href = 'meal_details.html?mealId='+mealId;
+        window.location.href = 'meal_details.html?mealId=' + mealId;
     });
     //Categories
     $(document).on('click', '.menu-categories-list', function() {
@@ -43,9 +43,18 @@ $(document).ready(function() {
 
     //Filter toggle
     $(".filter-container").on('click', function(e) {
-        // if (e.target === this) {
+        filterContainer = document.getElementsByClassName("filter-container")[0];
+        filterCenter = document.getElementsByClassName("filter-center")[0];
+        filterMenuLabel = document.getElementsByClassName("filter-menu-label")[0];
+        arrowDown = document.getElementsByClassName("arrow-down")[1];
+        subMenuFilter = document.getElementsByClassName("subMenuFilter")[0];
+        if ((e.target == filterContainer) || (e.target == filterCenter) || 
+            (e.target == filterMenuLabel) || (e.target == arrowDown) || (e.target == subMenuFilter)) {
             $(".filter-drop-down").slideToggle();
-        // }
+        }
+        else{
+            return;
+        }
     })
 
     //Filters
@@ -75,7 +84,7 @@ $(document).ready(function() {
             stickyMenu.removeClass('fixedMenu');
         }
     });
-    
+
     CartItemCount();
     getCategory();
     getmealList('', '', '', perPage, nextPage);
@@ -177,7 +186,7 @@ function populateMealList(mealList, isInfinteScrolling) {
     } else {}
     $.each(mealList.aaData, function(key, value) {
         $(".listContainer").append("<div class='listItems'>" +
-            "<img src='" + value.main_image + "' data-id='"+value.id+"' class='thumbnail'>" +
+            "<img src='" + value.main_image + "' data-id='" + value.id + "' class='thumbnail'>" +
             "<section class='listItemDetails'>" +
             "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +
             "</section><section class='listItemDetails'>" +
