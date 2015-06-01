@@ -805,8 +805,6 @@ form.addaddress-popup {
 }
 .checkout-header span:nth-child(2){
 	 padding-left: 190px;
-	/*width: 60%;*/
-	/*padding-left: 5%;*/
 }
 .contents {
 	width: 100%;
@@ -817,6 +815,9 @@ form.addaddress-popup {
 	width: 100%;
 	padding: 10px 0;
 	padding-left: 20px;
+}
+.week-content .time-content{
+	margin-bottom: 35px;
 }
 .checkout-time-button {
 	padding: 9px 0px;
