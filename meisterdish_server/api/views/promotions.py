@@ -38,7 +38,7 @@ def manage_gift_card(request, data, user):
             if name == "" or code == "":
                 return custom_error("Please enter valid gift card details.")
             elif amount < 10 or amount > 1000:
-                return custom_error("Please enter a valid amount.")
+                return custom_error("Please enter an amount between $ 10 and $ 1000.")
 
             if GiftCard.objects.filter(Q(code=code) | Q(name=name)).exists():
                 return custom_error("Either Gift Card code or name already exists.")
@@ -116,7 +116,7 @@ def manage_promocode(request, data, user):
         if "edit_id" in data and str(data["edit_id"]).strip() != "":
             code = data['code'].strip()
             amount = float(str(data['amount']).strip())
-            expiry_date = datetime.strptime(str(data['expiry_date']).strip(),"%m/%d/%Y %H:%M:%S")
+            expiry_date = datetime.strptime(str(data['expiry_date']).strip()+" 23:59:59","%Y-%m-%d %H:%M:%S")
 
             if code == "":
                 return custom_error("Please enter valid promo code.")
@@ -133,14 +133,14 @@ def manage_promocode(request, data, user):
 
         elif "delete_id" in data and data["delete_id"]:
             promo_obj = PromoCode.objects.get(pk=data["delete_id"])
-            message = "Deleted " + promo_obj.name
+            message = "Deleted " + promo_obj.code
             promo_obj.delete()
             return json_response({"status":1, "id":data["delete_id"], "message": message})
 
         else:
             code = data['code'].strip()
             amount = float(str(data['amount']).strip())
-            expiry_date = datetime.strptime(str(data['expiry_date']).strip(),"%m/%d/%Y %H:%M:%S")
+            expiry_date = datetime.strptime(str(data['expiry_date']).strip()+" 23:59:59","%Y-%m-%d %H:%M:%S")
 
             if code == "":
                 return custom_error("Please enter valid promo code.")
@@ -199,7 +199,8 @@ def list_promocodes(request, data, user):
                 "id" : promo.id,
                 "code":promo.code,
                 "amount":promo.amount,
-                "expiry_date":promo.expiry_date.strftime("%m/%d/%Y %H:%M:%S")
+                "expiry_date":promo.expiry_date.strftime("%m/%d/%Y %H:%M:%S"),
+                "expiry_date_format":promo.expiry_date.strftime("%Y-%m-%d")
                 })
         #End format response
         return json_response({"status":1, 
@@ -214,3 +215,38 @@ def list_promocodes(request, data, user):
     except Exception as e:
         log.error("Failed to list promo codes." + e.message)
         return custom_error("Failed to get promo codes.")
+
+@check_input('POST', True)
+def apply_promocode(request, data, user):
+    try:
+        cart = Cart.objects.get(completed=False, user=user)
+        if cart.promo_code and cart.promo_code != None:
+            return custom_error("You cannot apply more than one promo code for a single transaction.")
+
+        code = data["code"].strip()
+        code_obj = PromoCode.objects.get(code=code, deleted=False)
+
+        cart.promo_code = code_obj
+        cart.save()
+    except Exception as e:
+        log.error("Failed to apply promo code." + e.message)
+        return custom_error("Failed to get apply promo code.")
+
+@check_input('POST')
+def redeem_gift_card(request, data, user):
+    try:
+        code = data["code"].strip()
+        try:
+            gift_card = GiftCard.objects.get(user=user, code=code)
+        except Exception as e:
+            return custom_error("Invalid gift card code entered.")
+        else:
+            credits = gift_card.credits
+            user.credits = user.credits + credits
+            user.gift_cards.remove(gift_card)
+            user.save()
+            gift_card.delete()
+        return json_response({"status":1, "message": " Success, $"+str(credits) +" have been added to your credits."})
+    except Exception as e:
+        log.error("Redeem gift card error : " + e.message)
+        return custom_error("Failed to redeem gift card ")

@@ -19,12 +19,18 @@
 <body>
     <div id="admin-mainWrapper">
         <header id="header">
-            <div class="contentArea">
+            <div class="contentArea adminContentArea">
                 <a href="../../index.html"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
                 </a>
                 <ul id="menu" class="pullRight">
                     <li>
                         <a href="manage_delivery_areas.html">DELIVERY AREA</a>
+                    </li>
+                    <li>
+                        <a href="promocode.html">PROMOCODES</a>
+                    </li>
+                    <li>
+                        <a href="giftcards.html">GIFTCARDS</a>
                     </li>
                     <li>
                         <a href="orderlist.html">ORDERS</a>
@@ -46,11 +52,12 @@
         </header>
         <div id="page-container">
             <div class='admin-inner-wrapper'>
-                <div class="accountNav"><div class='create-meal-wrapper'>
-                <a href="create_meal.html">
-                   <input type="button" class="btn btn-small-primary medium-green" id="createMeals" value="Create Meal">
-                </a>
-                </div>
+                <div class="accountNav">
+                    <div class='create-meal-wrapper'>
+                        <a href="create_meal.html">
+                            <input type="button" class="btn btn-small-primary medium-green" id="createMeals" value="Create Meal">
+                        </a>
+                    </div>
                     <div class="logout body-text-bold">
                         <a id='logout'>LOG OUT</a>
                     </div>
@@ -86,8 +93,11 @@
                             <tbody></tbody>
                         </table>
                     </div>
+                     <div class="admin-nav">
+                        <div class='pagination'></div>
+                        <div class='add-status'></div>
+                    </div>
                 </div>
-                
             </div>
         </div>
     </div>

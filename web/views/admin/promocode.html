@@ -26,10 +26,10 @@
                     <li>
                         <a href="manage_delivery_areas.html">DELIVERY AREA</a>
                     </li>
-                    <li>
-                        <a href="promocode.html">PROMOCODES</a>
-                    </li>
                     <li class="bold">
+                        <a href="#">PROMOCODES</a>
+                    </li>
+                    <li>
                         <a href="giftcards.html">GIFTCARDS</a>
                     </li>
                     <li>
@@ -61,14 +61,14 @@
                 </div>
                 <div class="admin-page-container">
                     <div class="admin-header">
-                        <h2>GIFTCARDS LIST</h2>
+                        <h2>PROMOCODES LIST</h2>
                     </div>
                     <div class="meal-list-container">
-                        <table id="giftcards-list" class="display" cellspacing="0" width="100%">
+                        <table id="promocodes-list" class="display" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th>Code</th>
-                                    <th>Name</th>
+                                    <th>Date</th>
                                     <th>Amount</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
@@ -76,7 +76,7 @@
                             </thead>
                             <tbody></tbody>
                         </table>
-                        <div class='giftcard-list-empty'>Gift Card list is Empty</div>
+                        <div class='promocodes-list-empty'>Gift Card list is Empty</div>
                     </div>
                     <div class="admin-nav">
                         <div class='pagination'></div>
@@ -89,12 +89,12 @@
                         <form class="popup-container">
                             <div class="content">
                                 <div class="popup-input-wrapper">
-                                    <label class="body-text-small">Code:</label>
+                                    <label class="body-text-small">Promo Code:</label>
                                     <input type="text" class="popup-input" id="new-code">
                                 </div>
                                 <div class="popup-input-wrapper">
-                                    <label class="body-text-small">Name:</label>
-                                    <input type="text" class="popup-input" id="new-name">
+                                    <label class="body-text-small">Date:</label>
+                                    <input type="date" class="popup-input" id="new-date">
                                 </div>
                                 <div class="popup-input-wrapper">
                                     <label class="body-text-small">Amount:</label>
@@ -133,7 +133,7 @@
     <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
     <script type="text/javascript" src='../../js/common.js'></script>
     <script type="text/javascript" src='js/admin.js'></script>
-    <script type="text/javascript" src='js/giftcards.js'></script>
+    <script type="text/javascript" src='js/promocode.js'></script>
 </body>
 
 </html>

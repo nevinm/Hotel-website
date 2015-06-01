@@ -1,4 +1,4 @@
-//var baseURL = 'http://meisterdish.qburst.com/backend/api/',
+//var baseURL = 'http://10.7.1.64:86/backend/api/',
 //var baseURL = 'http://10.1.4.32:8083/api',
 var baseURL = 'http://meisterdish.qburst.com/backend/api/',
     homeUrl = "http://meisterdish.qburst.com",
@@ -151,9 +151,9 @@ $(document).on('click', '#close', function() {
 function showErrorPopup(data) {
     var message = data.message;
     $('.popup-container .content span').text(message);
-    $('.delivery-address-error-popup-wrapper').show();
+    $('.error-popup-wrapper').show();
     $('#ok-button').on("click", function() {
-        $('.delivery-address-error-popup-wrapper').hide();
+        $('.error-popup-wrapper').hide();
     })
 }
 $(document).ready(function() {

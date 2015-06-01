@@ -148,8 +148,6 @@ class User(models.Model):
     facebook_login = models.BooleanField(default=False)
     credits = models.FloatField(db_index=True, validators=[MinValueValidator(0), MaxValueValidator(1000)], default=0)
     
-    gift_cards = models.ManyToManyField("GiftCard", null=True, blank=True)
-    
     need_sms_notification = models.BooleanField(default=True)
     deleted = models.BooleanField(db_index=True, default=False)
     
@@ -294,6 +292,7 @@ class MealNutrient(models.Model):
     
     def __unicode__(self):
         return self.meal.name + " - " + self.nutrient.name
+
 """    
 class MealIngredient(models.Model):
     meal = models.ForeignKey(Meal)
@@ -303,18 +302,17 @@ class MealIngredient(models.Model):
     
     def __unicode__(self):
         return self.meal.name + " - " + self.ingredient.name
-"""        
+"""
+
 class Payment(models.Model):
     methods = PAYMENT_METHODS
-    payment_type = models.CharField(choices=methods, max_length=2)
+
     response = models.TextField(max_length=5000, null=True, blank=True)
     transaction_id = models.CharField(max_length=128, null=True, blank=True)
+    transaction_date = models.DateTimeField(null=True)
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
-    transaction_verified = models.BooleanField(default=False)
-    ipn_verified = models.BooleanField(default=False)
-    ipn_response = models.TextField(max_length=5000, null=True, blank=True)
-
-    status = models.BooleanField(default=False)
+    verified = models.BooleanField(default=False)
+    
     created = models.DateTimeField(null=True)
     updated = models.DateTimeField(null=True)
     
@@ -340,6 +338,11 @@ class CartItem(models.Model):
     meal = models.ForeignKey(Meal, related_name="cartitem")
     quantity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
+delivery_types = (
+        ("pickup", "Pick Up"),
+        ("delivery", "Delivery"),
+    )
+
 class Order(models.Model):
     order_num = models.CharField(db_index=True, max_length=50, null=True)
     transaction_id = models.CharField(db_index=True, max_length=30, null=True)
@@ -353,8 +356,10 @@ class Order(models.Model):
     grand_total = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
     discount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
 
-    delivery_address = models.ForeignKey(Address, related_name="delivery_address")
-    billing_address = models.ForeignKey(Address, related_name="billing_address")
+    delivery_type = models.CharField(choices=delivery_types, max_length=8, default="delivery")
+
+    delivery_address = models.ForeignKey(Address, related_name="delivery_address", null=True)
+    billing_address = models.ForeignKey(Address, related_name="billing_address", null=True)
     
     delivery_time = models.DateTimeField()
     driver_instructions = models.TextField(max_length=1024, null=True)
@@ -386,35 +391,31 @@ class Order(models.Model):
         super(Order, self).save(*args, **kwargs)
     
 class GiftCard(models.Model):
+    user = models.ForeignKey(User)
     code = models.CharField(max_length=10)
     name = models.CharField(max_length=100)
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
+    payment = models.ForeignKey(Payment)
+    created = models.DateTimeField(null=True)
+    
     def __unicode__(self):
         return self.code
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = datetime.datetime.now()
+        super(GiftCard, self).save(*args, **kwargs)
 
 class PromoCode(models.Model):
     code = models.CharField(max_length=10)
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     expiry_date = models.DateTimeField()
 
+    deleted = models.BooleanField(default=False)
+
     def __unicode__(self):
         return self.code
-
-class GiftCardOrder(models.Model):
-    user = models.ForeignKey(User)
-    gift_card = models.ForeignKey(GiftCard, related_name="gc_order")
-    payment = models.ForeignKey(Payment)
-    status = models.IntegerField(choices=ORDER_STATUS, default=0)
-    created = models.DateTimeField(null=True)
-    
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = datetime.datetime.now()
-        super(GiftCardOrder, self).save(*args, **kwargs)
-    
-    def __unicode__(self):
-        return self.gift_card.code + " : " + str(self.time)
 
 class DeliveryArea(models.Model):
     zip = models.CharField(max_length=10)

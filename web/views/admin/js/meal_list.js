@@ -22,7 +22,7 @@ $(document).ready(function() {
             deleteMeal(currentMealId);
         } else {}
     });
-    getmealList();
+    getmealList('','','',0);
     getFilterContent();
 });
 
@@ -56,7 +56,7 @@ var getmealListCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getmealList(search_name, category, mealtype) {
+function getmealList(search_name, category, mealtype,pageNumber) {
         var url = baseURL + "cms/get_meals/";
         if(mealtype==""){
             mealtype.length=0;
@@ -67,7 +67,8 @@ function getmealList(search_name, category, mealtype) {
         params = {
             "search": search_name,
             "category_id": category,
-            "type_ids": mealtype
+            "type_ids": mealtype,
+            "nextPage": pageNumber
         }
         data = JSON.stringify(params);
         var getmeallistInstance = new AjaxHttpSender();
@@ -120,5 +121,14 @@ function populateMealList(data) {
             "<td>" + dollarConvert(value.price) + "</td>" +
             "<td><button type='button' class='meal-delete' data-id='" + value.id + "'>Delete</button></td>" +
             "<td><button type='button' class='meal-edit' data-id='" + value.id + "'>Edit</button></td>" + "</tr>");
+    });
+    $(".pagination").pagination({
+        items: fullMealList.total_count,
+        itemsOnPage: fullMealList.per_page,
+        currentPage: fullMealList.current_page,
+        cssStyle: 'light-theme',
+        onPageClick: function(pageNumber, event) {
+            getmealList('','','',pageNumber);
+        }
     });
 }
