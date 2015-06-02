@@ -200,7 +200,7 @@ def send_user_verification_mail(user, change_email=False, email=""):
         dic = {
                "email" : user.email,
                "link" : link,
-               "name" : user.last_name + " " + user.first_name,
+               "name" : user.last_name.title() + " " + user.first_name.title(),
                "username" : user.email,
                }
         if change_email:
