@@ -6,7 +6,7 @@ import settings
 from decorators import *
 from django.core.paginator import Paginator
 from datetime import datetime, timedelta
-from libraries import get_request_user, create_guest_user
+from libraries import get_request_user, create_guest_user, validate_zipcode
 
 log = logging.getLogger('cart')
 
@@ -258,6 +258,9 @@ def manage_delivery_area(request, data, user):
         
         if "edit_id" in data and str(data["edit_id"]).strip() != "":
             zip = data['zip'].strip()
+            if not validate_zipcode(zip):
+                return custom_error("Please enter a valid zipcode.")
+
             action = "Updat"
             if DeliveryArea.objects.exclude(pk=data["edit_id"]).filter(zip=zip).exists():
                 return custom_error("Zipcode already exists.")
@@ -270,6 +273,8 @@ def manage_delivery_area(request, data, user):
 
         else:
             zip = data['zip'].strip()
+            if not validate_zipcode(zip):
+                return custom_error("Please enter a valid zipcode.")
             if DeliveryArea.objects.filter(zip=zip).exists():
                 return custom_error("Zipcode already exists.")
             action = "Add"
