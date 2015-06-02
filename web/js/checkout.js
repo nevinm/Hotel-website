@@ -126,6 +126,12 @@ $(document).ready(function() {
     $("#pay-form").submit(function(e) {
         e.preventDefault();
     });
+    $('#pickup-radio').on("click",function(){
+        $('.pickup-content').show();
+    })
+    $('#delivery-radio').on("click",function(){
+        $('.pickup-content').hide();
+    })
 });
 
 
