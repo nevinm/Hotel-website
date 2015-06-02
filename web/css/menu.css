@@ -485,6 +485,9 @@
     .filter-menu-label{
         float: right;
     }
+    #mainWrapper{
+        overflow: visible;
+    }
 }
 
 

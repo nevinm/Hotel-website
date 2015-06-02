@@ -47,11 +47,14 @@ $(document).ready(function() {
     $('#add-tips-main').on("click", function(e) {
         e.preventDefault();
         var video_URL = $('#tips-video-url').val(),
-            tips_heading = $('#tips-and-tricks').val();
-                if (tips_heading != undefined && tips_heading != ""){
-                    addMainTipsTricks(video_URL, tips_heading);    
-                }
-        }
+            tips_heading = $('#tips-and-tricks').val(),valid_url,valid_title;
+            valid_url = ytVidId(video_URL);
+            valid_title = emptyvalidation(tips_heading);
+            if (valid_url && valid_title) {
+                addMainTipsTricks(video_URL, tips_heading);    
+            }else{
+                $("#tips-video-url,#tips-and-tricks").addClass('error');
+            }
     });
 
     //Add sublist field to tips & ticks
@@ -453,4 +456,14 @@ function populateMealDetails(mealDetails) {
     $.each(mealDetails.tips, function(key, value) {
         addMainTipsTricks(value.video_url, value.title, value.description, value.id);
     });
+}
+
+
+function ytVidId(url) {
+  var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+  return (url.match(p)) ? RegExp.$1 : false;
+}
+function emptyvalidation(value){
+    var p = /^[\s\t\r\n]*\S+/ig;
+    return (value.match(p)) ? RegExp.$1 : false;
 }
