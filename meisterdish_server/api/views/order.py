@@ -331,14 +331,18 @@ def update_order(request, data, user, order_id):
             order.cart.completed=True
             order.cart.save()
         order.session_key = request.META.get('HTTP_SESSION_KEY', None)
-        if status == 2: #Confirmed
-            sent = send_order_confirmation_notification(order)
-            if not sent:
-                log.error("Failed to send order confirmation notification")
-        elif status == 4: #Delivered
-            sent = send_order_complete_notification(order)
-            if not sent:
-                log.error("Failed to send order complete notification")
+        
+        if order.cart.user.role_id != settings.ROLE_USER:
+            log.error("Not sending notifications for guest users.")
+
+            if status == 2: #Confirmed
+                sent = send_order_confirmation_notification(order)
+                if not sent:
+                    log.error("Failed to send order confirmation notification")
+            elif status == 4: #Delivered
+                sent = send_order_complete_notification(order)
+                if not sent:
+                    log.error("Failed to send order complete notification")
 
         return json_response({"status":1, "message":"The order has been updated", "id":order_id+"."})
     except Exception as e:
