@@ -200,7 +200,8 @@ def send_user_verification_mail(user, change_email=False, email=""):
         dic = {
                "email" : user.email,
                "link" : link,
-               "name" : user.last_name + " " + user.first_name,
+               "first_name" : user.first_name.title(),
+               "last_name" : user.last_name.title(),
                "username" : user.email,
                }
         if change_email:
@@ -295,7 +296,8 @@ def forgot_password(request, data):
         dic = {
                "email" : email,
                "link" : link,
-               "name" : user.last_name + " " + user.first_name,
+               "first_name" : user.first_name.title(),
+               "last_name" : user.last_name.title(),
                "username" : user.email,
                }
         msg = render_to_string('forgot_password_email_template.html', dic)

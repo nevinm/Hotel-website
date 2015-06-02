@@ -285,9 +285,6 @@ def get_meal_details(request, data, meal_id):
 @check_input('POST')
 def save_credit_card(request, data, user):
     try:
-        num = str(data["number"]).strip()
-        exp_month = int(str(data["exp_month"]).strip())
-        exp_year = int(str(data["exp_year"]).strip())
         token = data["stripeToken"].strip()
 
         if user.stripe_customer_id:
@@ -296,7 +293,7 @@ def save_credit_card(request, data, user):
         else:
             customer = stripe.Customer.create(
                 source=token,
-                description="meisterdish_user_"+user.id
+                description="meisterdish_user_"+str(user.id)
             )
             user.stripe_customer_id = customer.id
             user.save()
@@ -306,7 +303,7 @@ def save_credit_card(request, data, user):
     	    c_card = CreditCardDetails()
             c_card.user = user
             c_card.card_id = card.id
-            c_card.number = '#### #### #### '+card.last4
+            c_card.number = '#### #### #### '+str(card.last4)
             c_card.funding = card.funding
             c_card.expire_year = card.exp_year
             c_card.expire_month = card.exp_month
@@ -315,7 +312,7 @@ def save_credit_card(request, data, user):
             return json_response({"message":"Successfully saved credit card details.", "id":c_card.id})
         else:
             return custom_error("Failed to save card details.")
-    except Exception as e:
+    except KeyError as e:
         log.error("Save CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to save credit card details.")
 
