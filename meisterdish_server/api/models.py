@@ -325,10 +325,10 @@ class Payment(models.Model):
         
 class Cart(models.Model):
     user = models.ForeignKey(User)
-    delivery_time = models.DateTimeField(null=True)
+    delivery_time = models.DateTimeField(null=True, blank=True)
     delivery_address = models.ForeignKey(Address, null=True, blank=True)
-    gift_cards = models.ManyToManyField("GiftCard", null=True)
-    promo_code = models.ForeignKey("PromoCode", null=True)
+    gift_cards = models.ManyToManyField("GiftCard", null=True, blank=True)
+    promo_code = models.ForeignKey("PromoCode", null=True, blank=True)
     completed = models.BooleanField(default=False)
 
     def str(self):
