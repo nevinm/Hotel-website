@@ -30,9 +30,10 @@ def login(request, data):
                 raise Exception("Invalid email or password")
             
             if 'is_admin' in data and data['is_admin'] == 1:
-                user = User.objects.get(email=email, role__id=1)
+                role_id = 1
             else:
-                user = User.objects.get(email=email, role__id=2)
+                role_id = 2    
+            user = User.objects.get(email__iexact=email, role__id=role_id)
                 
             if md5.new(password).hexdigest() == user.password:
                 valid = True
@@ -42,7 +43,7 @@ def login(request, data):
         else:
             try:
                 fb_id = data["fb_id"].strip()
-                user = User.objects.get(fb_user_id=fb_id, email=email)
+                user = User.objects.get(fb_user_id=fb_id, email__iexact=email)
             except:
                 return custom_error("No user found with the given details")
             else:
@@ -107,7 +108,7 @@ def logout(request, data):
 def signup(request, data):
     try:
         password = data['password'].strip()
-        email = data['email'].strip()
+        email = data['email'].strip().lower()
         first_name = data['first_name'].strip()
         last_name = data['last_name'].strip()
         
@@ -128,7 +129,7 @@ def signup(request, data):
             log.error(email + " : Sign up failed. Fill required fields.")
             return custom_error("Please fill in all the required fields")
         
-        if User.objects.filter(email=email).exists():
+        if User.objects.filter(email__iexact=email).exists():
             return custom_error("Email already exists.")
         try:
             user = User()
@@ -409,6 +410,7 @@ def get_profile(request, data, user):
                      "address_list" : address_list,
                      "first_name" : user.first_name.title(),
                      "last_name" : user.last_name.title(),
+                     "stripe_id":user.stripe_customer_id if user.stripe_customer_id else "",
                      }
         return json_response(user_data)
     except KeyError as e:

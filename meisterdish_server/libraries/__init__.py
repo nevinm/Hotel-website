@@ -76,13 +76,6 @@ def validate_phone(phone):
     return False
   return True  
 
-def configure_paypal_rest_sdk():
-  import paypalrestsdk
-  paypalrestsdk.configure({
-    "mode": settings.PAYPAL_MODE, # sandbox or live
-    "client_id": settings.PAYPAL_CLIENT_ID,
-    "client_secret": settings.PAYPAL_CLIENT_SECRET,
-  })
 
 def get_request_user(request):
   session_key = request.META.get('HTTP_SESSION_KEY', None)
@@ -124,58 +117,6 @@ def create_guest_user(request):
     log.error("Failed to add guest user " +e.message )
     return (None, None)
 
-def verify_paypal_transaction(transaction_id):
-    url = settings.PAYPAL_PAYMENT_URL
-    token = settings.PAYPAL_ID_TOKEN
-
-    sending_data = "tx=" + transaction_id + "&at=" + token + "&cmd=_notify-synch"
-    log.info("Verifying paypal transaction:"+sending_data)
-    req = Request(url, sending_data)
-    response = urlopen(req)
-    response_data = response.read()
-    log.debug("PayPal response :"+str(response_data)) 
-    if response_data[:7].upper() != 'SUCCESS':
-        log.info("PayPal Payment verification failed")
-        return False
-    else:
-        response_dict = get_payment_dict(response_data)
-        if response_dict["payment_status"] == "Completed":
-            log.info("PayPal Payment verified")
-            response_dict["text_response"] = response_data
-            return response_dict
-        else:
-            log.info("PayPal Payment verification failed")
-            return False 
-
-def get_payment_dict(data):
-  dict_ = {}
-  for eachItem in data.split("\n")[1:]:
-      if eachItem != "":
-          ar = unquote_plus(unquote(eachItem)).split("=")
-          if len(ar) >= 2:
-              if ar[1] != "":            
-                  dict_[ar[0]] = ar[1]                                  
-  return dict_
-
-def verify_paypal_ipn(data):
-    url = settings.PAYPAL_PAYMENT_URL
-    req_data = 'cmd=_notify-validate&'+urllib.urlencode(data)
-    req = Request(url, req_data)
-    response = urlopen(req)
-    response_data = response.read()
-
-    if response_data.find('VERIFIED') >= 0:
-        log.info(response_data.find('VERIFIED'))
-        log.info("verified IPN")
-
-        response_dict = get_payment_dict(response_data)
-        if response_dict["payment_status"] == "Completed":
-            return True
-        log.error("IPN : payment_status != Completed")
-        return False
-    else:
-        log.error("Failed to verify IPN")
-        return False
 
 def check_delivery_area(zip):
     if DeliveryArea.objects.filter(zip=zip).exists():
