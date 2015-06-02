@@ -98,6 +98,12 @@ $(document).ready(function() {
 		$('.tab-header-drop-down').slideToggle();
 	})
 
+	//check delivery area
+	$('#check-delivery-area').on('click',function(){
+		var zip = $('#zip-code').val();
+		locationCheck(zip);
+	})
+	
 	$(window).resize(function() {
 		if ($(window).width() <= 767 && $(window).width() >= 320) {
 			$("#what-you-get, #our-suppliers").show();
@@ -156,3 +162,28 @@ $('.next-tab').click(function(e) {
     });
 	}
 });
+
+
+//Get reviews API process
+var locationCheckCallback = {
+    success: function(data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            showPopup(userDetails);
+        } else {}
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function locationCheck(zipcode) {
+    var url = baseURL + "check_delivery/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+            'zip': zipcode
+        };
+    data = JSON.stringify(userData);
+    var locationCheckInstance = new AjaxHttpSender();
+    locationCheckInstance.sendPost(url, header, data, locationCheckCallback);
+}

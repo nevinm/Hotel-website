@@ -2,6 +2,7 @@
    var getOrdersCallback = {
        success: function(data, textStatus) {
            populateOrdersList(JSON.parse(data));
+           isOrder();
        },
        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
    }
@@ -77,4 +78,11 @@ function checkFromPaypal(){
     else{}
         getOrders();
         CartItemCount();
+}
+function isOrder(){
+  if($('#accordion ul').is(':empty')){
+    $('#accordion .message').show();
+  }else{
+    $('#accordion .message').hide();
+  }
 }

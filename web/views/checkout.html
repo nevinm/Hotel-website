@@ -104,48 +104,6 @@
         <div id="page-container">
             <div class="checkout-wrapper">
                 <div class="left-wrapper">
-                    <div class="delivery-time-container box-border">
-                        <div class="time-container ">
-                            <div class="checkout-header">
-                                <span>DELIVERY TIME</span>
-                            </div>
-                            <div class="contents contents-time-date">
-                                <div class="today-content">
-                                    <span class="content-heading"></span>
-                                    <input type="button" data-hr='4' value="4-5pm" class="checkout-time-button set-time-button">
-                                    <input type="button" data-hr='5' value="5-6pm" class="checkout-time-button set-time-button">
-                                    <input type="button" data-hr='6' value="6-7pm" class="checkout-time-button set-time-button">
-                                    <input type="button" data-hr='7' value="7-8pm" class="checkout-time-button set-time-button">
-                                    <input type="button" data-hr='8' value="8-9pm" class="checkout-time-button set-time-button">
-                                </div>
-                                <div class="week-content">
-                                    <span class="content-heading"></span>
-                                    <div class="time-content">
-                                        <input type="button" data-hr='5' value="4-5pm" class="checkout-time-button set-time-button">
-                                        <input type="button" data-hr='6' value="5-6pm" class="checkout-time-button set-time-button">
-                                        <input type="button" data-hr='7' value="6-7pm" class="checkout-time-button set-time-button">
-                                        <input type="button" data-hr='8' value="7-8pm" class="checkout-time-button set-time-button">
-                                        <input type="button" data-hr='9' value="8-9pm" class="checkout-time-button set-time-button">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="delivery-order-container">
-                            <div class="checkout-header">
-                                <span>YOUR ORDER</span>
-                            </div>
-                            <div class="contents">
-                                <div class="order-list-container">
-                                    <div class="order-list-header">
-                                        <span class="content-heading">ITEMS</span>
-                                        <span class="content-heading">QUANTITY</span>
-                                        <span class="content-heading">PRICE</span>
-                                    </div>
-                                    <div class="emtpy-cart-message body-text-small"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="delivery-info-container box-border">
                         <div class="delivery-info">
                             <div class="checkout-header">
@@ -279,6 +237,56 @@
                                             </div>
                                         </form>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="delivery-time-container box-border">
+                        <div class="time-container ">
+                            <div class="checkout-header">
+                                <span>PICKUP OR DELIVERY</span>
+                            </div>
+                            <div class="contents contents-time-date">
+                                <div class="select-delivery-method">
+                                    <div class="pickup">
+                                        <input type="radio" name="delivery-method" id="pickup-radio"><span>PICKUP</span>
+                                    </div>
+                                    <div class="delivery">
+                                        <input type="radio" name="delivery-method" id="delivery-radio"><span>DELIVERY</span>
+                                    </div>
+                                </div>
+                                <div class="today-content">
+                                    <span class="content-heading"></span>
+                                    <input type="button" data-hr='4' value="4-5pm" class="checkout-time-button set-time-button">
+                                    <input type="button" data-hr='5' value="5-6pm" class="checkout-time-button set-time-button">
+                                    <input type="button" data-hr='6' value="6-7pm" class="checkout-time-button set-time-button">
+                                    <input type="button" data-hr='7' value="7-8pm" class="checkout-time-button set-time-button">
+                                    <input type="button" data-hr='8' value="8-9pm" class="checkout-time-button set-time-button">
+                                </div>
+                                <div class="week-content">
+                                    <span class="content-heading"></span>
+                                    <div class="time-content">
+                                        <input type="button" data-hr='5' value="4-5pm" class="checkout-time-button set-time-button">
+                                        <input type="button" data-hr='6' value="5-6pm" class="checkout-time-button set-time-button">
+                                        <input type="button" data-hr='7' value="6-7pm" class="checkout-time-button set-time-button">
+                                        <input type="button" data-hr='8' value="7-8pm" class="checkout-time-button set-time-button">
+                                        <input type="button" data-hr='9' value="8-9pm" class="checkout-time-button set-time-button">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delivery-order-container">
+                            <div class="checkout-header">
+                                <span>YOUR ORDER</span>
+                            </div>
+                            <div class="contents">
+                                <div class="order-list-container">
+                                    <div class="order-list-header">
+                                        <span class="content-heading">ITEMS</span>
+                                        <span class="content-heading">QUANTITY</span>
+                                        <span class="content-heading">PRICE</span>
+                                    </div>
+                                    <div class="emtpy-cart-message body-text-small"></div>
                                 </div>
                             </div>
                         </div>
