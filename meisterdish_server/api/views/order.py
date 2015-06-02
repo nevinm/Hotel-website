@@ -389,7 +389,7 @@ def send_order_confirmation_notification(order):
                "last_name" : user.last_name.title(),
                "status":order.status,
                "delivery_type":order.delivery_type,
-               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + order_id
+               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + order.id
                }
         
         msg = render_to_string('order_confirmation_email_template.html', dic)
@@ -421,7 +421,7 @@ def send_order_complete_notification(order):
                "name" : user.last_name + " " + user.first_name,
                "status":order.status,
                "delivery_type":order.delivery_type,
-               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + order_id,
+               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + order.id,
                }
         
         msg = render_to_string('order_complete_email_template.html', dic)
