@@ -385,7 +385,8 @@ def send_order_confirmation_notification(order):
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
                "grand_total":order.grand_total,
-               "name" : user.last_name + " " + user.first_name,
+               "first_name" : user.first_name.title(),
+               "last_name" : user.last_name.title(),
                "status":order.status,
                "delivery_type":order.delivery_type,
                "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + order_id
