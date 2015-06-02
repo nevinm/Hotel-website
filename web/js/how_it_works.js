@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	tabRendering();
+	CartItemCount();
 
 	$('.tab-container ul li').on("click", function() {
 	    $('.tab-container ul li a').removeClass('activeli');
@@ -103,7 +104,7 @@ $(document).ready(function() {
 		var zip = $('#zip-code').val();
 		locationCheck(zip);
 	})
-	
+
 	$(window).resize(function() {
 		if ($(window).width() <= 767 && $(window).width() >= 320) {
 			$("#what-you-get, #our-suppliers").show();
@@ -170,7 +171,9 @@ var locationCheckCallback = {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
             showPopup(userDetails);
-        } else {}
+        } else {
+        	showPopup(userDetails);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
