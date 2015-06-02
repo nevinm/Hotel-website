@@ -911,7 +911,7 @@ function populateCreditCardDetails() {
     $('.address-payment-list-popup .button').remove();
     $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .popup .header').text("SELECT YOUR PAYMENT METHOD");
-    $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>" +
+    $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container' style='display:none'>" +
         "<input type='radio' id='paypal-radio'class='added-card pullLeft' name='change-card' class='radio-button-payment'>" +
         "<label>" + "<img class='paypal' src='../images/paypal_button.png'>" + "</label>" + "</div>");
     $.each(cards, function(key, value) {
