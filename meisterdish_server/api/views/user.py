@@ -285,9 +285,6 @@ def get_meal_details(request, data, meal_id):
 @check_input('POST')
 def save_credit_card(request, data, user):
     try:
-        num = str(data["number"]).strip()
-        exp_month = int(str(data["exp_month"]).strip())
-        exp_year = int(str(data["exp_year"]).strip())
         token = data["stripeToken"].strip()
 
         if user.stripe_customer_id:
