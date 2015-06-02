@@ -14,13 +14,23 @@ $(document).ready(function() {
 				$(".next-tab").show();
 		}
 	});
-	$('.left-arrow').on("click",function(){
-		$('#we-source,#you-cook,#our-suppliers,#what-you-get').animate({
+	$('#what-you-get .left-arrow').on("click",function(){
+		$('#you-cook,#what-you-get').animate({
 			left: '+=100%'
 		},"slow","easeOutQuart");
 	})
-	$('.right-arrow').on("click",function(){
-		$('#we-source,#you-cook,#our-suppliers,#what-you-get').animate({
+	$('#our-suppliers .left-arrow').on("click",function(){
+		$('#we-source,#our-suppliers').animate({
+			left: '+=100%'
+		},"slow","easeOutQuart");
+	})
+	$('#you-cook .right-arrow').on("click",function(){
+		$('#you-cook,#what-you-get').animate({
+			left: '-=100%'
+		},"slow","easeOutQuart");
+	})
+	$('#we-source .right-arrow').on("click",function(){
+		$('#we-source,#our-suppliers').animate({
 			left: '-=100%'
 		},"slow","easeOutQuart");
 	})
