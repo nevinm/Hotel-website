@@ -33,7 +33,7 @@ def login(request, data):
                 role_id = 1
             else:
                 role_id = 2    
-            user = User.objects.get(email__iexact=email, role_id)
+            user = User.objects.get(email__iexact=email, role__id=role_id)
                 
             if md5.new(password).hexdigest() == user.password:
                 valid = True
