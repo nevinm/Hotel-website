@@ -331,7 +331,7 @@ def delete_credit_card(request, data, user, card_id):
         log.info("Delete card from stripe: response below")
         log.info(response)
         
-        if response["deleted"] = True:
+        if response["deleted"] == True:
             card.delete()
             return json_response({"message":"Successfully deleted credit card.", "id":c_card.id})
         else:
