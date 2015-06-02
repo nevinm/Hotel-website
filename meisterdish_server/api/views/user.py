@@ -4,10 +4,11 @@ import json as simplejson
 import logging 
 import settings
 from decorators import *
-from libraries import validate_zipcode, validate_phone, card, configure_paypal_rest_sdk, check_delivery_area
-import paypalrestsdk
+from libraries import validate_zipcode, validate_phone, check_delivery_area
+import stripe
 from datetime import datetime, timedelta
 
+stripe.api_key = settings.STRIPE_SECRET_KEY
 log = logging.getLogger('api_user')
 
 @check_input('POST')
@@ -287,57 +288,34 @@ def save_credit_card(request, data, user):
         num = str(data["number"]).strip()
         exp_month = int(str(data["exp_month"]).strip())
         exp_year = int(str(data["exp_year"]).strip())
-        cvv2 = int(str(data["cvv2"]).strip())
-        if "first_name" in data and data["first_name"].strip() != "":
-            name = data["first_name"].strip()
+        token = data["stripeToken"].strip()
 
-            if "last_name" in data and data["last_name"].strip() != "":
-                name = name + " " + data["last_name"].strip()
+        if user.stripe_customer_id:
+            customer = stripe.Customer.retrieve(user.stripe_customer_id)
+            card = customer.sources.create(source=token)
         else:
-            name = ""
+            customer = stripe.Customer.create(
+                source=token,
+                description="meisterdish_user_"+user.id
+            )
+            user.stripe_customer_id = customer.id
+            user.save()
+            card = customer.sources.retrieve(token)
 
-        # Create a card
-        cc = card.Card(
-            number=num,
-            month=exp_month,
-            year=exp_year,
-            cvc=cvv2,
-            holder = name
-        )
-
-        if not cc.is_valid or cc.is_expired:
-            log.error("User : " + user.email + ": Credit Card : valid? "+str(cc.is_valid) + " , expired? "+str(cc.is_expired))
-            return custom_error("Please enter valid card details.")
-        
-        configure_paypal_rest_sdk()
-        
-        credit_card = paypalrestsdk.CreditCard({
-            "type": cc.brand,
-            "number": num,
-            "expire_month": exp_month,
-            "expire_year": exp_year,
-            "cvv2": cvv2,
-            "first_name": name,
-            #"last_name": lname
-            })
-        res = credit_card.create()
-        
-        if not res:
-            if credit_card.error:
-                log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + " : "+credit_card.error['details'][0]['issue'])
-            return custom_error(credit_card.error['details'][0]['field'] + " : " +credit_card.error['details'][0]['issue'])
-        
-	c_card = CreditCardDetails()
-        c_card.user = user
-        c_card.card_id = credit_card.id
-        c_card.number = credit_card.number
-        c_card.cvv2 = credit_card.cvv2
-        c_card.expire_year = exp_year
-        c_card.expire_month = exp_month
-        c_card.card_type = credit_card.type
-        c_card.save()
-        return json_response({"message":"Successfully saved credit card details.", "id":c_card.id})
-    except KeyError as e:
+        if card:
+    	    c_card = CreditCardDetails()
+            c_card.user = user
+            c_card.card_id = card.id
+            c_card.number = '#### #### #### '+card.last4
+            c_card.funding = card.funding
+            c_card.expire_year = card.exp_year
+            c_card.expire_month = card.exp_month
+            c_card.card_type = card.brand
+            c_card.save()
+            return json_response({"message":"Successfully saved credit card details.", "id":c_card.id})
+        else:
+            return custom_error("Failed to save card details.")
+    except Exception as e:
         log.error("Save CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to save credit card details.")
 
@@ -347,12 +325,17 @@ def delete_credit_card(request, data, user, card_id):
         card = CreditCardDetails.objects.get(pk=card_id)
         c_id = card.card_id
 
-        configure_paypal_rest_sdk()
-        credit_card = paypalrestsdk.CreditCard({"id":c_id})
-        credit_card.delete()
-
-        card.delete()
-        return json_response({"message":"Successfully deleted credit card.", "id":c_card.id})
+        customer = stripe.Customer.retrieve(user.stripe_customer_id)
+        response = customer.sources.retrieve(c_id).delete()
+        
+        log.info("Delete card from stripe: response below")
+        log.info(response)
+        
+        if response["deleted"] = True:
+            card.delete()
+            return json_response({"message":"Successfully deleted credit card.", "id":c_card.id})
+        else:
+            return custom_error("Failed to delete card details. Please try again later.")
     except Exception as e:
         log.error("Delete CC: user "+str(user.id) + " : "+ e.message)
         return custom_error("Failed to delete credit card details.")
