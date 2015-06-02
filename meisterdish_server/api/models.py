@@ -152,7 +152,7 @@ class User(models.Model):
     deleted = models.BooleanField(db_index=True, default=False)
     
     created = models.DateTimeField()
-    stripe_customer_id = models.CharField(max_length=50, null=True, default=None)
+    stripe_customer_id = models.CharField(max_length=50, null=True, default=None, blank=True)
     
     def save(self, *args, **kwargs):
         if not self.id:
