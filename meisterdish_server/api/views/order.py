@@ -376,6 +376,7 @@ def save_payment_data(data):
 
 def send_order_confirmation_notification(order):
     try:
+        log.info("sending confirmation mail")
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
         user = order.cart.user
         dic = {
@@ -409,6 +410,7 @@ def send_order_confirmation_notification(order):
 
 def send_order_complete_notification(order):
     try:
+        log.info("sending completion mail")
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
         user = order.cart.user
         dic = {
