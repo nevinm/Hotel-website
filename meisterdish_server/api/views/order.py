@@ -335,11 +335,11 @@ def update_order(request, data, user, order_id):
         if order.cart.user.role_id != settings.ROLE_USER:
             log.error("Not sending notifications for guest users.")
 
-            if status == 2: #Confirmed
+            if int(status) == 2: #Confirmed
                 sent = send_order_confirmation_notification(order)
                 if not sent:
                     log.error("Failed to send order confirmation notification")
-            elif status == 4: #Delivered
+            elif int(status) == 4: #Delivered
                 sent = send_order_complete_notification(order)
                 if not sent:
                     log.error("Failed to send order complete notification")
