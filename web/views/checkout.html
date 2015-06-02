@@ -12,6 +12,12 @@
     <link rel="stylesheet" type="text/css" href="../css/fontello.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/account.css">
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript">
+    // This identifies your website in the createToken call below
+    Stripe.setPublishableKey('pk_test_x6GvEhpNpDiolk868qYrUPQg');
+    // ...
+    </script>
 </head>
 
 <body>
@@ -191,29 +197,29 @@
                                     <div class="pay-by-credit-container">
                                         <input type="radio" id="cc" class='payment-checked' name="payment-radio">
                                         <span class="content-heading"><input type="checkbox" id="pay-using-card"/>PAY BY CREDIT CARD</span>
-                                        <form id="pay-form" autocomplete='off'>
+                                        <form id="pay-form" action="" method="POST" autocomplete='off'>
                                             <div class="forminput-wrapper">
                                                 <label class="body-text-small">Credit card number</label>
-                                                <input type="text" autocomplete="off" name="cardnumber" class="popup-input" id="card-number">
+                                                <input type="text" autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number">
                                             </div>
                                             <div class="forminput-wrapper">
                                                 <label class="body-text-small">CVV</label>
-                                                <input type="password" name="cvv" class="popup-input" id="cvv-number">
+                                                <input type="password" size="4" data-stripe="cvc" class="popup-input" id="cvv-number">
                                             </div>
                                             <div class="forminput-wrapper">
                                                 <label class="body-text-small">Expiry Date</label>
                                                 <div class="styled-select">
-                                                    <select name="expiryMonth" id="ExpMonth">
+                                                    <select name="expiryMonth" id="ExpMonth" data-stripe="exp-month">
                                                         <option value=""></option>
-                                                        <option value="1">JAN</option>
-                                                        <option value="2">FEB</option>
-                                                        <option value="3">MAR</option>
-                                                        <option value="4">APR</option>
-                                                        <option value="5">MAY</option>
-                                                        <option value="6">JUN</option>
-                                                        <option value="7">JUL</option>
-                                                        <option value="8">AUG</option>
-                                                        <option value="9">SEP</option>
+                                                        <option value="01">JAN</option>
+                                                        <option value="02">FEB</option>
+                                                        <option value="03">MAR</option>
+                                                        <option value="04">APR</option>
+                                                        <option value="05">MAY</option>
+                                                        <option value="06">JUN</option>
+                                                        <option value="07">JUL</option>
+                                                        <option value="08">AUG</option>
+                                                        <option value="09">SEP</option>
                                                         <option value="10">OCT</option>
                                                         <option value="11">NOV</option>
                                                         <option value="12">DEC</option>
@@ -223,7 +229,7 @@
                                             <span class="div">/</span>
                                             <div class="forminput-wrapper">
                                                 <div class="styled-select">
-                                                    <select id="ExpYear" name="expiryYear">
+                                                    <select id="ExpYear" data-stripe="exp-year">
                                                         <option value=""></option>
                                                     </select>
                                                 </div>
@@ -232,8 +238,9 @@
                                                 <label class="body-text-small">Name</label>
                                                 <input type="text" name="nameOnCard" class="popup-input" id="name-on-card">
                                             </div>
+                                            <button type="submit">Submit Payment</button>
                                             <div class="button">
-                                                <input type="checkbox" name="save-card-details" id="save-credit-card" disabled="disabled"><span>Save card details?</span>
+                                                <!--  <input type="checkbox" name="save-card-details" id="save-credit-card" disabled="disabled"><span>Save card details?</span> -->
                                             </div>
                                         </form>
                                     </div>
@@ -393,6 +400,7 @@
     <script type="text/javascript" src='../js/common.js'></script>
     <script type="text/javascript" src='../js/account.js'></script>
     <script type="text/javascript" src='../js/checkout.js'></script>
+    <script type="text/javascript" src='../js/stripe_integration.js'></script>
 </body>
 
 </html>
