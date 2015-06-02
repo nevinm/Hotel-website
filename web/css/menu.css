@@ -497,4 +497,7 @@
 	.subMenu .category-header{
 		float: left;
 	}
+    .logo-mobile-container{
+        width: 213px;
+    }
 }
