@@ -746,9 +746,9 @@ form.addaddress-popup {
 	box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);*/
 	margin-bottom: 20px;
 }
-.delivery-time-container {
+.delivery-time-container,.delivery-info-container {
  	width: 98%; 
- 	height: 265px;
+ 	float: left;
 }
 .time-container{
 	width: 36%;
@@ -764,17 +764,6 @@ form.addaddress-popup {
 }
 .payment-info .checkout-header{
 	padding-left: 1%;
-}
-.delivery-info-container{
-	/*border:1px solid #D0D0D0;
-	border-radius: 4px;*/
-	float: left;
-	width: 98%;
-	/*background-color: #fff;
-	-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-	-moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-	box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);*/
-/*	display: none;*/
 }
 .receipt-container{
 	border: 1px solid #C7C7C7;
@@ -1155,6 +1144,7 @@ textarea#driver-description {
 .right-wrapper{
 	width: 20%;
 	display: table-cell;
+	vertical-align: top;
 }
 .order-list-items:hover #remove-cart-item{
 	display: block;
@@ -1310,6 +1300,22 @@ input.radio-button-payment {
 }
 form#guest-address-info #address-line-1-error{
 	bottom: 97px;
+}
+.select-delivery-method{
+	font-family: 'BrandonGrotesque-Bold';
+	letter-spacing: 0.7px;
+	color: #6b6b6b;
+	font-size: 12px;
+	padding:10px 0 10px 15px;
+	width: 100%;
+	float: left;
+}
+.pickup,.delivery{
+	width: 50%;
+	float: left;
+}
+.select-delivery-method input[type=radio]{
+	float: left;
 }
 /*==================================*\
 			&TABLET
