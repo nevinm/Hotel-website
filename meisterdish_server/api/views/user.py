@@ -293,7 +293,7 @@ def save_credit_card(request, data, user):
         else:
             customer = stripe.Customer.create(
                 source=token,
-                description="meisterdish_user_"+user.id
+                description="meisterdish_user_"+str(user.id)
             )
             user.stripe_customer_id = customer.id
             user.save()
@@ -303,7 +303,7 @@ def save_credit_card(request, data, user):
     	    c_card = CreditCardDetails()
             c_card.user = user
             c_card.card_id = card.id
-            c_card.number = '#### #### #### '+card.last4
+            c_card.number = '#### #### #### '+str(card.last4)
             c_card.funding = card.funding
             c_card.expire_year = card.exp_year
             c_card.expire_month = card.exp_month
