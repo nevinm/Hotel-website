@@ -344,6 +344,10 @@ $("form").each(function() {
             },
             url:{
                 youtube_url:true
+            },
+            tips_details:{
+                required:true,
+                minlength:2
             }
             // image_upload :{
             //     required:true
@@ -407,7 +411,8 @@ $("form").each(function() {
             chef_name: "Enter a valid chef name.",
             mealdescription: "Meal description is not valid.",
             cvv:"provide a valid cvv.",
-            url:"Enter valid url."
+            url:"Enter valid url.",
+            tips_details:"Enter valid title."
                 // image_upload:"Please select an image."
         }
     });

@@ -152,6 +152,7 @@ class User(models.Model):
     deleted = models.BooleanField(db_index=True, default=False)
     
     created = models.DateTimeField()
+    stripe_customer_id = models.CharField(max_length=50, null=True, default=None)
     
     def save(self, *args, **kwargs):
         if not self.id:
@@ -181,7 +182,7 @@ class CreditCardDetails(models.Model):
     number = models.CharField(max_length=16)
     expire_month = models.CharField(max_length=16)
     expire_year = models.CharField(max_length=16)
-    cvv2 = models.CharField(db_index=True, max_length=5)
+    funding = models.CharField(max_length=20)
     card_type = models.CharField(max_length=15)
     
     def __unicode__(self):

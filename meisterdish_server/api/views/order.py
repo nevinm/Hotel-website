@@ -7,8 +7,7 @@ import settings
 from decorators import *
 from datetime import datetime
 from django.core.paginator import Paginator
-from libraries import  card, configure_paypal_rest_sdk, verify_paypal_transaction, verify_paypal_ipn, mail, check_delivery_area
-import paypalrestsdk
+from libraries import mail, check_delivery_area
 from django.db.models import Q
 import string, random
 from urllib import unquote
@@ -146,141 +145,6 @@ def get_orders(request, data, user=None):
     	log.error("Failed to list orders." + e.message)
     	return custom_error("Failed to get orders list.")
 
-def make_cc_payment_with_details(cc_data, amount, order_num, save_card=0, user=None):
-    try:
-        # Create a card
-        cc = card.Card(number=cc_data["number"],
-            holder=cc_data["holder"],
-            month=int(cc_data["month"]),
-            year=int(cc_data["year"]),
-            cvc=cc_data["cvc"],
-        )
-
-        if not cc.is_valid:
-            log.error("User : " + user.email + ": Credit Card is invalid.")
-            return "Invalid card details."
-        elif cc.is_expired:
-            log.error("User : " + user.email + ": Credit Card is expired.")
-            return "The card is expired."
-        elif save_card:
-            save_credit_card(cc_data, cc, user)
-
-        funding_instruments = [{
-            "credit_card":{
-                "type": cc.brand,
-                "number": cc_data["number"],
-                "expire_month": cc_data["month"],
-                "expire_year": cc_data["year"],
-                "cvv2": cc_data["cvc"],
-                "first_name": cc_data["holder"],
-                }
-            }]
-        return make_cc_payment(funding_instruments, amount, order_num)
-    except KeyError as e:
-        log.error("Failed to pay using CC (with card data)." + e.message)
-        return "An error has occurred with payment using card. Please try again."
-
-def save_credit_card(cc_data, cc, user):
-    try:
-        configure_paypal_rest_sdk()
-        credit_card = paypalrestsdk.CreditCard({
-            "type": cc.brand,
-            "number": cc.number,
-            "expire_month": cc_data['month'],
-            "expire_year": cc_data['year'],
-            "cvv2": cc.cvc,
-            "first_name": cc.holder,
-            })
-        res = credit_card.create()
-        
-        if not res:
-            if credit_card.error:
-                log.error("Save Credit card error : " + credit_card.error['details'][0]['field'] + " : "+credit_card.error['details'][0]['issue'])
-            return custom_error(credit_card.error['details'][0]['issue'])
-        
-
-        c_card = CreditCardDetails()
-        c_card.user = user
-        c_card.card_id = credit_card.id
-        c_card.number = credit_card.number
-        c_card.cvv2 = credit_card.cvv2
-        c_card.expire_year = cc_data['year']
-        c_card.expire_month = cc_data['month']
-        c_card.card_type = credit_card.type
-        c_card.save()
-        return True
-    except Exception as e:
-        log.error("Save credit card : " + e.message)
-        return False
-
-def make_cc_payment_with_saved_card(card_id, amount, order_num):
-    try:
-        card_id = CreditCardDetails.objects.get(pk=card_id).card_id
-        funding_instruments = [{
-            "credit_card_token":{
-                "credit_card_id" : card_id,
-                #"payer_id" : "ppuser12345"
-            }
-        }]
-        return make_cc_payment(funding_instruments, amount, order_num)
-    except Exception as e:
-        log.error("Failed to pay using CC (Saved card)." + e.message)
-        return e.message
-
-def make_cc_payment(funding_instruments, amount, order_num):
-    try:
-        import paypalrestsdk
-        configure_paypal_rest_sdk()
-        payment = paypalrestsdk.Payment({
-            "intent": "sale",
-            "payer": {
-                "payment_method": "credit_card",
-                "funding_instruments": funding_instruments
-            },
-            "transactions": [{
-                "amount": {
-                    "total": "%0.2f" % (amount),
-                    "currency": "USD" 
-                },
-                "description": "Meisterdish Order with ID : "+order_num + " on "+datetime.now().strftime("%m-%d-%Y %H:%M:%S")
-            }]
-        })
-        try:
-            response = payment.create()
-        except Exception as e:
-            log.error("CC : PayPal server error : "+str(e.message))    
-            return "An error has occurred at payment server. Please try again later."
-
-        if not response:
-            log.error("CC Payment failed :"  + payment.error['details'][0]['field'] + " : "+payment.error['details'][0]['issue'])
-            return str(payment.error['details'][0]['field']) + " : "+ str(payment.error['details'][0]['issue'])
-        else:
-            payment_obj = save_cc_payment(payment, amount)
-            if not payment_obj:
-                log.info("### NOTE ### . The below payment response is not saved.")
-                log.info(payment)
-                return "An error has occurred while saving payment response. Please try again later."
-        return payment_obj
-    
-    except Exception as e:
-        log.error("Failed to pay using CC." + str(e.message))
-
-        return "Failed to pay using credit card."
-"""
-def save_cc_payment(payment_data, amount):
-    try:
-        payment = Payment()
-        payment.payment_type = "CC"
-        payment.response = str(payment_data)
-        payment.transaction_id = payment_data["id"]
-        payment.amount = amount
-        payment.save()
-        return payment
-    except Exception as e:
-        log.error("Failed to save CC payment details." + e.message)
-        return False
-"""
-
 @check_input('POST')
 def create_order(request, data, user):
     try:
@@ -311,22 +175,14 @@ def create_order(request, data, user):
                     del_address = user.user_address.get(is_primary=True)
                 except:
                     return custom_error("Please choose a valid delivery address.")
-            """
-            if 'billing_address' in data:
-                bil_address = Address.objects.get(user=user, pk=data['billing_address'])
-            else:
-                try:
-                    bil_address = user.user_address.get(is_primary=True)
-                except:
-                    return custom_error("Please choose a valid billing address.")
-            """
-
+            
         items = CartItem.objects.filter(cart__user=user, cart__completed=False)
         if not items.exists():
             return custom_error("There are no items in your cart.")
+        
         for item in items:
             if not item.meal.available:
-                return custom_error("Sorry, The meal "+ item.meal.name.title() + " has gone out of stock. Please add another meals or continue checkout with out it.")
+                return custom_error("Sorry, The meal "+ item.meal.name.title() + " has gone out of stock.")
             
             quantity += item.quantity
             total_price += item.meal.price
@@ -349,46 +205,18 @@ def create_order(request, data, user):
         order.total_tax = total_tax
         order.tip = tip
 
-        if "payment_type" not in data:
-            return custom_error("Please choose a valid payment type")
-         
-        elif data["payment_type"].lower() == "cc":
-            payment_type = "CC"
-            if "card_id" not in data:
-                if "number" not in data or str(data["number"]).strip() == "":
-                    log.error("invalid card number.")
-                    return custom_error("Invalid card number.")
-                if "exp_month" not in data or str(data["exp_month"]).strip() == "":
-                    log.error("Invalid expiry month.")
-                    return custom_error("The expiry month is invalid.")
-                if "exp_year" not in data or str(data["exp_year"]).strip() == "":
-                    log.error("Invalid expiry year.")
-                    return custom_error("The expiry year is invalid.")
-                if "cvv2" not in data or str(data["cvv2"]).strip() == "":
-                    log.error("Invalid cvv.")
-                    return custom_error("Invalid CVV.")
-                
-                cc_data = {
-                    "number" : data["number"],
-                    "holder" : data.get("first_name", "") + data.get("last_name", ""),
-                    "month" : data['exp_month'],
-                    "year" : data["exp_year"],
-                    "cvc" : data["cvv2"],
-                }
+        #Payment
 
-                payment = make_cc_payment_with_details(cc_data, total_amount, order.order_num, data.get("save_card", 0), user)
-            else:
-                payment = make_cc_payment_with_saved_card(data["card_id"], total_amount, order.order_num)
+        token = data["stripeToken"].strip()
+        payment = make_payment(total_amount, order.order_num, data.get("save_card"), user)
             
-            if type(payment) == False:
-                return custom_error("An error has occurred while payment with Credit Card. Please try agiain.")
-            elif type(payment) == str:
-                return custom_error(payment)
-            else:
-                paid = True
-                log.info("Order payment (CC) success.Payment id :"+str(payment.id))
-        else: #PayPal
-            payment_type = "PP"
+        if type(payment) == False:
+            return custom_error("An error has occurred while paying with Credit Card. Please try agian.")
+        elif type(payment) == str:
+            return custom_error(payment)
+        else:
+            paid = True
+            log.info("Order payment (CC) success.Payment id :"+str(payment.id))        
             
         if paid:
             order.payment = payment
@@ -399,11 +227,9 @@ def create_order(request, data, user):
                 order.cart.completed=True
                 order.cart.save()
         
-        if payment_type == "CC":
             return json_response({"status":1, "message":"The Order has been placed successully."})
         else:
-            return json_response({"status":1, "message":"The request has been placed. You will be notified once the payment is verified. "})
-
+            return custom_error("An error has occurred. Please try again later.")
     except KeyError as e:
         log.error("Failed to create order." + e.message)
         return custom_error("Failed to place order.")
@@ -457,7 +283,7 @@ def get_order_details(request, data, user, order_id):
             "status_id" : order.status,
             "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
             
-            "payment_type" : order.payment.get_payment_type_display() if order.payment else "Not Available",
+            "delivery_type" : order.get_delivery_type_display(),
             "payment_date" : order.payment.created.strftime("%m-%d-%Y %H:%M:%S") if order.payment else "Not Available",
             "transaction_id":order.transaction_id,
             "order_num" : order.order_num,
@@ -519,113 +345,6 @@ def update_order(request, data, user, order_id):
         log.error("Update order status : " + e.message)
         return custom_error("Failed to update the order.")
 
-@check_nvp_input()
-def paypal_success(request, data):
-    try:
-        log.info("PAYPAL Success")
-        log.info(dict(data))
-        if "st" not in data or data["st"].lower() != "completed":
-            log.error("PayPal Success: status not 'Completed' : " + data["st"])
-            return HttpResponse("Payment failed.")
-
-        txn_id = data["tx"]
-        if txn_id.strip() == "":
-            return HttpResponse("Invalid payment.")
-        
-        if Order.objects.filter(transaction_id=txn_id.strip(), status__gte=1).exists():
-            return HttpResponse("Payment already verified")
-            raise Exception("Payment already verified")
-
-        paypal_response = verify_paypal_transaction(txn_id)
-        pdt = True
-        if not paypal_response:
-            log.error("Failed to verify paypal transaction.")
-            if data["st"] != 'completed': #Immediate return from PayPal
-                log.error("paypal payment verification failed and status not 'completed'")
-                return HttpResponse("Failed to verify transaction. Please contact customer support.")
-            elif Order.objects.filter(transaction_id=txn_id.strip()).exists():
-                log.error("paypal return by clicking link multiple hit !!!")
-                return HttpResponse("Failed to verify transaction. Please contact customer support.")
-            else:
-                pdt = False
-        else:
-            if Order.objects.filter(transaction_id=txn_id.strip()).exists():
-                log.error("paypal return by auto-return  multiple hit !!!")
-                return HttpResponse("Failed to verify transaction. Please contact customer support.")
-            payment = save_payment_data(paypal_response)
-            if not payment:
-                return HttpResponse("Failed to update transaction details. Please contact customer support.")
-        
-        if pdt:
-            log.info(paypal_response["custom"])
-            custom = simplejson.loads(str(unquote(paypal_response["custom"])))
-        else:
-            log.info(data["cm"])
-            custom = simplejson.loads(str(unquote(data["cm"])))
-
-        del_address = Address.objects.get(pk=custom["delivery_address"])
-        if not check_delivery_area(del_address.zip):
-            raise Exception("Delivery is not available at your location")
-
-        session_key = custom["session-key"]
-        if session_key == "":
-            log.error("PayPal Success: Invalid user session")
-            return HttpResponse("Invalid session.")
-        try:
-            user_dic = SessionStore(session_key=session_key)["user"]
-        except Exception as e:
-            log.error("Failed to load session from paypal response")
-            return HttpResponse("No user session found.")
-
-        try:
-            order = Order()
-            order.cart = Cart.objects.get(user__pk=user_dic["id"], completed=False)
-            order.order_num = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(12))
-            order.tip = float(custom["tip"])
-            (price, tax) = get_cart_total(order.cart)
-
-            if float(price) == float(0):
-                raise Exception("There are no items in cart or the cart amount is 0.")
-            
-            if pdt:
-                amt = float(paypal_response["payment_gross"])
-            else:
-                amt = float(data["amt"])
-            
-            if amt !=  price + tax + order.tip + settings.SHIPPING_CHARGE:
-                log.error("Paypal success : order and payment amounts not matching. "+ str(amt) + " != " + str(price + tax + order.tip + settings.SHIPPING_CHARGE))
-                return HttpResponse("The paid amount is different from order amount.")
-	        
-            order.total_amount = price
-            order.total_tax = tax
-            order.transaction_id = txn_id
-            if pdt:
-                order.payment = payment
-            order.status = 1  # Move this
-            date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y %H:%M:%S") 
-            order.delivery_time = date_obj
-            order.billing_address = Address.objects.get(pk=custom["billing_address"])
-            order.delivery_address = del_address
-
-            order.driver_instructions = custom["driver_instructions"]
-            order.save()
-            
-            if 1:#pdt:
-                order.cart.completed=True
-                order.cart.save()
-                error = "?message=The order is successfull. Order Number : " + order.order_num 
-            else:
-                error = "?message=The order is placed and is pending verification. Order Number : " + order.order_num 
-        except Exception as e:
-            log.error("Paypal success error - Failed to create order object " + txn_id + e.message)
-            error = "?message="+e.message
-        except Cart.DoesNotExist:
-            raise Exception("There are no items in cart.")
-    except Exception as e:
-        log.error("Paypal success Error : " + e.message)
-        error = "?message=Failed to verify payment."
-    return HttpResponseRedirect(settings.SITE_URL + "views/orderhistory.html" + error)
-
 def get_cart_total(cart):
     try:
         amount = 0.0
@@ -638,118 +357,18 @@ def get_cart_total(cart):
         log.error("Error getting cart total: " + e.message)
     return (amount, tax)
 
-def save_payment_data(paypal_response, ipn=False):
+def save_payment_data(data):
     try:
         payment =Payment()
-        payment.payment_type="pp"
-        if not ipn:
-            payment.response = paypal_response["text_response"]
-        else:
-            payment.response = json.dumps(data)
+        payment.response = json.dumps(data)
         payment.transaction_id
-        payment.transaction_verified = True
-        payment.status = True
-        payment.amount = float(paypal_response['payment_gross'])
+        payment.verified = True
+        payment.amount = data["amount"]
         payment.save()
         return payment
     except Exception as e:
-        log.error("Failed to save Paypal payment data on success URl " + e.message)
+        log.error("Failed to save payment data " + e.message)
         return False
-
-@check_nvp_input()
-def paypal_ipn(request, data, session_id):
-    try:
-        log.info("PAYPAL IPN")
-        log.info(data)
-
-        session_key = data["custom"]
-        if session_key == "":
-            log.error("PayPal IPN: Invalid user session")
-            return HttpResponse("None")
-
-        user_dic = SessionStore(session_key=session_key)["user"]
-        
-        txn_id = data['txn_id']
-        try:
-            try:
-                order = Order.objects.get(transaction_id=txn_id, cart__user__pk=user_dic["id"])
-                if order.payment and order.cart.completed and order.status >= 1:
-                    log.info("IPN transaction " + txn_id + " already verified.")
-                    return HttpResponse("None")
-                new = False
-            except Order.DoesNotExist:
-                order = Order()
-                new = True
-
-
-            if not verify_paypal_ipn(data):
-                log.error("Stopping execution.")
-                return HttpResponse("None")
-
-            payment = save_payment_data(data, True)
-            if not payment:
-                log.error("Failed to save payment data")
-                return HttpResponse("None.")
-        
-            log.info(data["custom"])
-            custom = simplejson.loads(str(unquote(data["custom"])))
-
-        except Exception as e:
-            log.error("IPN error " + e.message)
-            return HttpResponse("None")
-
-        try:
-            if new:
-                order.cart = Cart.objects.get(user__pk=user_dic["id"], completed=False)
-                order.order_num = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(12))
-                order.tip = float(custom["tip"])
-                (price, tax) = get_cart_total(order.cart)
-
-            if float(price) == float(0):
-                log.error("IPN : There are no items in cart or the cart amount is 0.")
-                raise Exception("None")
-            
-            amt = float(paypal_response["payment_gross"])
-            
-            if amt !=  price + tax + order.tip + settings.SHIPPING_CHARGE:
-                log.error("Paypal success : order and payment amounts not matching. "+ str(amt) + " != " + str(price + tax + order.tip + settings.SHIPPING_CHARGE))
-                return HttpResponse("The paid amount is different from order amount.")
-
-            order.total_amount = price
-            order.total_tax = tax
-            order.transaction_id = txn_id
-            if pdt:
-                order.payment = payment
-                order.status = 1
-            date_obj = datetime.strptime(str(custom["delivery_time"]), "%m/%d/%Y %H:%M:%S")
-            order.delivery_time = date_obj
-            order.billing_address = Address.objects.get(pk=custom["billing_address"])
-            order.delivery_address = Address.objects.get(pk=custom["delivery_address"])
-
-            order.driver_instructions = custom["driver_instructions"]
-            order.save()
-            
-            if pdt:
-                order.cart.completed=True
-                order.cart.save()
-
-            error = "?message=The order is successfull. Order Number : " + order.order_num 
-        except Exception as e:
-            log.error("Paypal IPN error - Failed to create order object " + txn_id + e.message)
-            error = "?error="+e.message
-        except Cart.DoesNotExist:
-            raise Exception("There are no items in cart.")
-
-        order.status = 1
-        payment = order.payment
-        payment.ipn_verified=True
-        payment.ipn_response = payment_data
-        payment.save()
-    except Exception as e:
-        log.error("Paypal IPN ERROR : " + e.message)
-        return HttpResponse("None")
-    log.error("Paypal IPN Finished")
-    return HttpResponse("Done")
 
 def send_order_confirmation_notification(order):
     try:
@@ -816,7 +435,6 @@ def send_order_complete_notification(order):
 
 def send_sms_notification(dic):
     try:
-        log.info("Sending SMS")
         if not dic["mobile"]:
             log.error("No mobile number available to send SMS.")
             return False
@@ -826,16 +444,19 @@ def send_sms_notification(dic):
             txt = render_to_string('order_complete_sms_template.html', dic)
         
         client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
- 
+
+        country_code = "+1" if settings.Live else "+91"
+        number = country_code + str(dic["mobile"]).strip()
+
         message = client.messages.create(body=txt,
-                to= "+1"+str(dic["mobile"]).strip(),
+                to= number,
                 from_=settings.TWILIO_NUMBER)
         if message:
-            log.info("Sent SMS to +1 "+str(dic["mobile"]))
+            log.info("Sent SMS to " + number)
             return True
         else:
-            log.error("Failed to send SMS")
+            log.error("Failed to send SMS to " + number)
             return False
     except KeyError as e:
-        log.error("Failed to send order SMS : " + e.message)
+        log.error("Failed to send order SMS to : " + number + " : "+e.message)
         return False

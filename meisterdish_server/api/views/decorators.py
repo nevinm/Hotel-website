@@ -58,30 +58,6 @@ def check_input(method, admin=False):
         return wraps(func)(inner_decorator)
     return wrapper
 
-def check_nvp_input():
-    def wrapper(func):
-        def inner_decorator(request, *args, **kwargs):
-            log.info(func.__name__ + " called. Is it from Paypal ? ")
-	    log.info("qwqw")	
-            data = nvp_request(request)
-            if not data:
-                log.error("Failed to parse NVP data")
-                return HttpResponse("Failed to parse the request data.")
-            return func(request, data, *args, **kwargs)
-        return wraps(func)(inner_decorator)
-    return wrapper
-
-def nvp_request(request):
-    try:
-        log.info("NVP : " + request.method)
-        if (request.method == 'GET'):
-            return request.GET
-        else:
-            return request.POST
-    except Exception as e:
-        log.error("Failed to parse NVP Response : "+ e.message)
-        return None
-
 def json_request(request):
     if (request.method == 'GET'):
         req = request.GET
