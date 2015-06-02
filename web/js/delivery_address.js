@@ -260,12 +260,14 @@ function getCities(stateId, cityId) {
     getCitiesInstance.sendPost(url, header, data, getCitiesCallback, cityId);
 }
 
-//check is ther any addresses exist 
+//check is there any addresses exist 
 function isAddress() {
     if ($('#editaddress-container .content ol').is(':empty')) {
         $('#editaddress-container .content .message').show();
+        $('.update-delivery-address').hide();
     } else {
         $('#editaddress-container .content .message').hide();
+        $('.update-delivery-address').show();
     }
 }
 
