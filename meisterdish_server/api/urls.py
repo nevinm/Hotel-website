@@ -51,8 +51,8 @@ urlpatterns = patterns('',
     url(r'^save_credit_card/$', views.save_credit_card, name='save_credit_card'),
     url(r'^delete_credit_card/(?P<card_id>[0-9]+)/$', views.delete_credit_card, name='delete_credit_card'),
 
-    url(r'^paypal_success/$', views.paypal_success, name='paypal_success'),
-    url(r'^paypal_ipn/$', views.paypal_ipn, name='paypal_ipn'),
+    #url(r'^paypal_success/$', views.paypal_success, name='paypal_success'),
+    #url(r'^paypal_ipn/$', views.paypal_ipn, name='paypal_ipn'),
 
     url(r'^check_delivery/$', views.check_delivery, name='check_delivery'),
     url(r'^get_delivery_areas/$', views.get_delivery_areas, name='get_delivery_areas'),
