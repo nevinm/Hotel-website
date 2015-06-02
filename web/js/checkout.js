@@ -15,10 +15,10 @@ $(document).ready(function() {
         $('.address-info').hide();
         $('.payment-method-guest-container').show();
     }
-    
+    stripeIntegration();
     setCurrentTime();
     populateYear();
-    
+
     var cartItems;
 
     //Remove cart items
@@ -86,7 +86,7 @@ $(document).ready(function() {
     function populateYear() {
         var currentYear = new Date().getFullYear();
         for (var i = 1; i <= 20; i++) {
-            $('#ExpYear').append("<option value='" + i + "'>" + currentYear + "</option>");
+            $('#ExpYear').append("<option value='" + currentYear + "'>" + currentYear + "</option>");
             currentYear = currentYear + 1;
         }
     }
@@ -911,7 +911,7 @@ function populateCreditCardDetails() {
     $('.address-payment-list-popup .button').remove();
     $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .popup .header').text("SELECT YOUR PAYMENT METHOD");
-    $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>" +
+    $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container' style='display:none'>" +
         "<input type='radio' id='paypal-radio'class='added-card pullLeft' name='change-card' class='radio-button-payment'>" +
         "<label>" + "<img class='paypal' src='../images/paypal_button.png'>" + "</label>" + "</div>");
     $.each(cards, function(key, value) {
@@ -975,3 +975,5 @@ function validateOrder() {
     }
     return true;
 }
+
+

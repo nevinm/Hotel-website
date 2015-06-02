@@ -9,12 +9,16 @@
     <meta name="author" content="">
     <title>Meisterdish - Add a payment method</title>
     <script type="text/javascript" src='../js/redirect.js'></script>
-
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/fontello.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/account.css">
-
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript">
+    // This identifies your website in the createToken call below
+    Stripe.setPublishableKey('pk_test_x6GvEhpNpDiolk868qYrUPQg');
+    // ...
+    </script>
 </head>
 
 <body>
@@ -28,7 +32,7 @@
                             <img src="../images/back_arrowMobile.png">
                         </a>
                     </span>
-                    <span><a href="account.html">BACK TO ACCOUNT</a></span>
+                    <span><a href="payment_method.html">BACK TO PAYMENT METHODS</a></span>
                 </div>
                 <div class="cart pullRight">
                     <a href="checkout.html">
@@ -51,7 +55,7 @@
                             <a href="menu.html">MENU</a>
                         </li>
                         <li>
-                            <a href="">HOW IT WORKS</a>
+                            <a href="How_it_works.html">HOW IT WORKS</a>
                         </li>
                         <li class="login-signup">
                             <a href="login.html">LOG IN</a>
@@ -67,13 +71,13 @@
                         <div class="footerContent">
                             <ul>
                                 <li>
-                                <a href="">CONTACT</a>
+                                    <a href="">CONTACT</a>
                                 </li>
                                 <li>
-                                <a href="">PRIVACY & TERMS</a>
+                                    <a href="">PRIVACY & TERMS</a>
                                 </li>
-                                <li >
-                                <a href="">HELP</a>
+                                <li>
+                                    <a href="">HELP</a>
                                 </li>
                             </ul>
                             <ul class="footer-links">
@@ -84,13 +88,13 @@
                             </ul>
                         </div>
                     </footer>
-                    </div>
-                    <ul id="menu" class="pullRight">
+                </div>
+                <ul id="menu" class="pullRight">
                     <li>
                         <a href="menu.html">MENU</a>
                     </li>
                     <li>
-                        <a href="">HOW IT WORKS</a>
+                        <a href="How_it_works.html">HOW IT WORKS</a>
                     </li>
                     <li class="bold login-signup">
                         <a href="login.html">LOG IN</a>
@@ -102,15 +106,15 @@
                         <a href='account.html'></a>
                     </li>
                 </ul>
-            </div>   
+            </div>
         </header>
         <div id="page-container">
             <div class="accountNav">
                 <div class="backNav">
-                     <a href="account.html"><img src="../images/back_arrow.png"></a>
+                    <a href="account.html"><img src="../images/back_arrow.png"></a>
                     <span><a href="payment_method.html">BACK TO PAYMENT METHOD</a></span>
                 </div>
-               <div class="logout body-text-bold">
+                <div class="logout body-text-bold">
                     <a id='logout'>LOG OUT</a>
                 </div>
                 <div class="admin-button body-text-bold">
@@ -118,7 +122,7 @@
                 </div>
             </div>
             <div class="account-wrapper">
-                <div class="account-container" id="add-payment-method-container">  
+                <div class="account-container" id="add-payment-method-container">
                     <div class="account-header">
                         <h3 style="color:#000;font-size:20px">ADD A PAYMENT METHOD</h3>
                     </div>
@@ -128,26 +132,26 @@
                             <form id="pay-form" autocomplete='off'>
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">Credit card number</label>
-                                    <input type="text" autocomplete="off" name="cardnumber" class="popup-input" id="card-number">
+                                    <input type="text" autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number">
                                 </div>
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">CVV</label>
-                                    <input type="password" name="cvv" class="popup-input" id="cvv-number">
+                                    <input type="password" size="4" data-stripe="cvc" class="popup-input" id="cvv-number">
                                 </div>
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">Expiry Date</label>
                                     <div class="styled-select">
-                                        <select name="expiryMonth" id="ExpMonth">
+                                        <select name="expiryMonth" id="ExpMonth" data-stripe="exp-month">
                                             <option value=""></option>
-                                            <option value="1">JAN</option>
-                                            <option value="2">FEB</option>
-                                            <option value="3">MAR</option>
-                                            <option value="4">APR</option>
-                                            <option value="5">MAY</option>
-                                            <option value="6">JUN</option>
-                                            <option value="7">JUL</option>
-                                            <option value="8">AUG</option>
-                                            <option value="9">SEP</option>
+                                            <option value="01">JAN</option>
+                                            <option value="02">FEB</option>
+                                            <option value="03">MAR</option>
+                                            <option value="04">APR</option>
+                                            <option value="05">MAY</option>
+                                            <option value="06">JUN</option>
+                                            <option value="07">JUL</option>
+                                            <option value="08">AUG</option>
+                                            <option value="09">SEP</option>
                                             <option value="10">OCT</option>
                                             <option value="11">NOV</option>
                                             <option value="12">DEC</option>
@@ -157,7 +161,7 @@
                                 <span class="div">/</span>
                                 <div class="forminput-wrapper">
                                     <div class="styled-select">
-                                        <select id="ExpYear" name="expiryYear">
+                                        <select id="ExpYear" data-stripe="exp-year">
                                             <option value=""></option>
                                         </select>
                                     </div>
@@ -167,33 +171,34 @@
                                     <input type="text" name="nameOnCard" class="popup-input" id="name-on-card">
                                 </div>
                                 <div class="button-container">
-                                    <a href="#" class="btn btn-small-extended medium-green">UPDATE</a>
+                                    <a href="#" onclick="$(this).closest('form').submit()" class="btn btn-small-extended medium-green">ADD</a>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
             <div class="popup-wrapper">
                 <div class="bk-overlay"></div>
                 <div class="popup">
                     <div class="header"></div>
                     <div class="popup-container">
                         <div class="content">
-                        <span>SOMTHING WENT WRONG</span>
+                            <span>SOMTHING WENT WRONG</span>
                         </div>
                         <div class="button">
                             <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
     </div>
-	<script type="text/javascript" src='../js/jquery.min.js'></script>
+    <script type="text/javascript" src='../js/jquery.min.js'></script>
     <script type="text/javascript" src='../js/jquery.validate.min.js'></script>
-	<script type="text/javascript" src='../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../js/ajax_reusable.js'></script>
     <script type="text/javascript" src='../js/common.js'></script>
+    <script type="text/javascript" src='../js/stripe_integration.js'></script>
     <script type="text/javascript" src='../js/add_payment.js'></script>
 </body>
 

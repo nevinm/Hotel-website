@@ -839,7 +839,7 @@ form.addaddress-popup {
 }
 .content-heading {
 	font-family: 'BrandonGrotesque-Bold';
-	color: #b0b0b0;
+	color: #6b6b6b;
 	width: 100%;
 	float: left;
 	padding-bottom: 10px;
@@ -1280,6 +1280,7 @@ input.radio-button-payment {
 	position: relative;
 	width: 100%;
 	float: left;
+	display: none !important;
 }
 .payment-popup-sub-container{
 	width: 33.3%;
@@ -1305,7 +1306,7 @@ form#guest-address-info #address-line-1-error{
 	letter-spacing: 0.7px;
 	color: #6b6b6b;
 	font-size: 12px;
-	padding:10px 0 10px 15px;
+	padding:20px 0 20px 15px;
 	width: 100%;
 	float: left;
 }
@@ -1314,11 +1315,19 @@ form#guest-address-info #address-line-1-error{
 	width: 50%;
 	float: left;
 }
-.select-delivery-method input[type=radio]{
+.pickup span, .delivery span{
+	padding-left: 10px;
+}
+
+.pickup input[type=radio], .delivery input[type=radio]{
+	margin: 0;
+}
+.select-delivery-method input[type=radio],
+.card-list-container  input[type=radio]{
 	float: left;
 }
 .card-list-container{
-	width: 90%;
+	width: 100%;
 	float: left;
 	padding-left: 20px;
 }
@@ -1339,6 +1348,9 @@ form#guest-address-info #address-line-1-error{
 .card-list-container .styled-select select{
 	width: 150px!important;
 }
+.card-list-container .button-container{
+	padding-left:0; 
+}
 .pickup-content {
   font-family: 'BrandonGrotesque-Regular';
   font-size: 12px;
@@ -1355,6 +1367,29 @@ form#guest-address-info #address-line-1-error{
 }
 #pickup-radio,#delivery-radio{
 	cursor: pointer;
+}
+#manage-payment-method-container .saved-card-list{
+	width: 50%;
+	padding: 20px 0;
+}
+.card-details-small{
+	float: left;
+	padding-left: 20px;
+}
+.card-details-small .body-text-small{
+	line-height: 10px;
+}
+#manage-payment-method-container .paypal{
+	padding-left: 20px;
+}
+.addNewPaymentMethod{
+	font-family: 'BrandonGrotesque-bold';
+  	font-size: 12px;
+  	color: #A9D77B;
+  	width: 100%;
+  	float: left;
+  	display: none;
+  	padding:20px 0;
 }
 /*==================================*\
 			&TABLET
@@ -1417,6 +1452,9 @@ form#guest-address-info #address-line-1-error{
 	.order-list-header .content-heading:first-child{
 		width: 30%;
 	}*/
+	#manage-payment-method-container{
+		width: 75%;
+	}
 }
 /*==================================*\
 			&MOBILE
@@ -1662,6 +1700,23 @@ form#guest-address-info #address-line-1-error{
 	form#guest-address-info #address-line-1-error{
 		bottom: 104px;
 	}
+	#add-payment-method-container,#manage-payment-method-container{
+		float: none;
+		overflow: hidden;
+		width: 100%;
+	}
+	#add-payment-method-container .pay-by-credit-container{
+		padding-right:20px; 
+	}
+	#manage-payment-method-container .saved-card-list{
+		width: 100%;
+	}
+	.addNewPaymentMethod{
+		display: block;
+	}
+	#add-new-paymentmethod{
+		display: none;
+	}
 }
   	@media (max-width:400px){
   		.address-content{
@@ -1696,5 +1751,10 @@ form#guest-address-info #address-line-1-error{
   		}
   		.order-list-items input{
   			width: 24px;
+  		}
+	}
+	@media (max-width: 1177px){
+		.btn-small-secondary {
+  			height: 35px !important;
   		}
 	}
