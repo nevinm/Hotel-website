@@ -17,9 +17,7 @@ var saveCreditCardDetailsCallback = {
     success: function(data, textStatus) {
         var response = JSON.parse(data);
         if (response.status == 1) {
-            showPopup(response);
             $("#pay-form")[0].reset();
-            window.location.href = 'payment_method.html';
         } else {}
         showPopup(response);
     },

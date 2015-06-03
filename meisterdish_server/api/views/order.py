@@ -13,7 +13,7 @@ import string, random
 from urllib import unquote
 from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
-
+import stripe
 
 log = logging.getLogger('order')
 
@@ -191,7 +191,7 @@ def create_order(request, data, user):
         total_amount = total_price + total_tax
         
         order = Order()
-        order.order_num = "MD_ORDER_" + ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(12))
+        order.order_num = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
         order.cart = item.cart
         
         if del_type == "delivery":
@@ -205,10 +205,11 @@ def create_order(request, data, user):
         order.total_tax = total_tax
         order.tip = tip
 
+        total_amount = total_price + total_tax + tip + settings.SHIPPING_CHARGE
         #Payment
 
-        token = data["stripeToken"].strip()
-        payment = make_payment(total_amount, order.order_num, data.get("save_card"), user)
+        order.token = data["stripeToken"].strip()
+        payment = make_payment(order, user, data.get("save_card"))
             
         if type(payment) == False:
             return custom_error("An error has occurred while paying with Credit Card. Please try agian.")
@@ -233,6 +234,15 @@ def create_order(request, data, user):
     except KeyError as e:
         log.error("Failed to create order." + e.message)
         return custom_error("Failed to place order.")
+
+def make_payment(order, user, save_card=False):
+    try:
+        
+
+        return True
+    except KeyError as e:
+        log.error("Failed to make payment." + e.message)
+        return False
 
 #Admin only
 @check_input('POST', True)
@@ -418,7 +428,8 @@ def send_order_complete_notification(order):
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
                "grand_total":order.grand_total,
-               "name" : user.last_name + " " + user.first_name,
+               "first_name" : user.first_name.title(),
+               "last_name" : user.last_name.title(),
                "status":order.status,
                "delivery_type":order.delivery_type,
                "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id),
