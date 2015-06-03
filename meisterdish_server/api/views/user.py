@@ -297,8 +297,12 @@ def save_credit_card(request, data, user):
             )
             user.stripe_customer_id = customer.id
             user.save()
-            card = customer.sources.retrieve(token)
-
+            cards = customer.sources.all(object="card")
+            if cards:
+                card = cards.data[0]
+            else:
+                card = None
+        
         if card:
     	    c_card = CreditCardDetails()
             c_card.user = user
@@ -312,7 +316,7 @@ def save_credit_card(request, data, user):
             return json_response({"message":"Successfully saved credit card details.", "id":c_card.id})
         else:
             return custom_error("Failed to save card details.")
-    except KeyError as e:
+    except Exception as e:
         log.error("Save CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to save credit card details.")
 

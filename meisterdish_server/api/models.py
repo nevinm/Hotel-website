@@ -178,8 +178,8 @@ class Address(models.Model):
     
 class CreditCardDetails(models.Model):
     user = models.ForeignKey(User, related_name="cc_details")
-    card_id = models.CharField(db_index=True, max_length=35) 
-    number = models.CharField(max_length=16)
+    card_id = models.CharField(db_index=True, max_length=50) 
+    number = models.CharField(max_length=25)
     expire_month = models.CharField(max_length=16)
     expire_year = models.CharField(max_length=16)
     funding = models.CharField(max_length=20)
