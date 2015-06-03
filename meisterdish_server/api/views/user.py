@@ -287,7 +287,7 @@ def save_credit_card(request, data, user):
     try:
         token = data["stripeToken"].strip()
 
-        if user.stripe_customer_id:
+        if user.stripe_customer_id and str(user.stripe_customer_id).strip() != "":
             customer = stripe.Customer.retrieve(user.stripe_customer_id)
             card = customer.sources.create(source=token)
         else:
