@@ -1186,7 +1186,7 @@ input.radio-button-payment {
   width: 100%;
   float: left;
   overflow-y: auto;
-  height: 187px;
+  height: 165px;
   margin-bottom: 20px;
 }
 .saved-cards label {
@@ -1280,7 +1280,7 @@ input.radio-button-payment {
 	position: relative;
 	width: 100%;
 	float: left;
-	display: none !important;
+	/*display: none !important;*/
 }
 .payment-popup-sub-container{
 	width: 33.3%;

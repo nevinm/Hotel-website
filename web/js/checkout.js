@@ -128,10 +128,10 @@ $(document).ready(function() {
     $("#pay-form").submit(function(e) {
         e.preventDefault();
     });
-    $('#pickup-radio').on("click",function(){
+    $('#pickup-radio').on("click", function() {
         $('.pickup-content').show();
     })
-    $('#delivery-radio').on("click",function(){
+    $('#delivery-radio').on("click", function() {
         $('.pickup-content').hide();
     })
 });
@@ -799,7 +799,8 @@ function placeOrder() {
         driverTip = $('.driver-tip').find('option:selected').data().amount,
         addressId = $(".address-info .contents").attr('data-id'),
         fullname = $('#name-on-card').val().split(" "),
-        firstname = fullname[0],
+        deliveryType = $("input[name='delivery-method']:checked").data("type");
+    firstname = fullname[0],
         lastname = fullname[1];
     var $today_content = $(".today-content").find(".checkout-time-button-active"),
         $weekDatecontent = $(".week-content .date-content").find(".checkout-time-button-active"),
@@ -822,100 +823,102 @@ function placeOrder() {
         saveParam = 1;
     }
 
-    if ($("#pp").prop('checked') || $("#pp-guest").prop('checked')) {
-        payment_type = "pp";
-        var payPalEmail = "nazz007online-facilitator@gmail.com",
-            returnUrl = "http://meisterdish.qburst.com/backend/api/paypal_success/",
-            //returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
-            cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
-            notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/";
-        orderDetails = {
+    // if ($("#pp").prop('checked') || $("#pp-guest").prop('checked')) {
+    //     payment_type = "pp";
+    //     var payPalEmail = "nazz007online-facilitator@gmail.com",
+    //         returnUrl = "http://meisterdish.qburst.com/backend/api/paypal_success/",
+    //         //returnUrl = "http://10.7.1.64:86/backend/api/paypal_success/",
+    //         cancelReturnUrl = "http://meisterdish.qburst.com/views/checkout.html",
+    //         notifyUrl = "http://meisterdish.qburst.com/backend/api/paypal_ipn/";
+    //     orderDetails = {
+    //         "delivery_time": deliveryTime,
+    //         "billing_address": billingAddressId,
+    //         "delivery_address": addressId,
+    //         "payment_type": "pp",
+    //         "tip": driverTip,
+    //         "driver_instructions": driverInstr,
+    //         "session-key": localStorage["session_key"]
+    //     }
+    //     checkOutPayPal("PayPal", payPalEmail, {
+    //         "return": returnUrl,
+    //         "cancel_return": cancelReturnUrl,
+    //         "notify_url": notifyUrl,
+    //         "my_temp_id": "hai nazz"
+    //     }, orderDetails);}
+    // else {
+    if ($("#cc").prop('checked')) {
+        payment_type = "cc";
+    }
+    url = baseURL + "create_order/",
+        header = {
+            "session-key": localStorage["session_key"]
+        };
+    if (!$('.saved-cards').is(':empty')) {
+        payment_type = "cc";
+        savedCardId = $('.saved-cards .added-card').attr('id');
+        params = {
             "delivery_time": deliveryTime,
             "billing_address": billingAddressId,
             "delivery_address": addressId,
-            "payment_type": "pp",
-            "tip": driverTip,
+            "payment_type": payment_type, // OR "cc"
+            "tip": driverTip, //Optional
+            "delivery_type": deliveryType,
             "driver_instructions": driverInstr,
-            "session-key": localStorage["session_key"]
+            "card_id": savedCardId
         }
-        checkOutPayPal("PayPal", payPalEmail, {
-            "return": returnUrl,
-            "cancel_return": cancelReturnUrl,
-            "notify_url": notifyUrl,
-            "my_temp_id": "hai nazz"
-        }, orderDetails);
     } else {
-        if ($("#cc").prop('checked')) {
-            payment_type = "cc";
-        }
-        url = baseURL + "create_order/",
-            header = {
-                "session-key": localStorage["session_key"]
-            };
-        if (!$('.saved-cards').is(':empty')) {
-            payment_type = "cc";
-            savedCardId = $('.saved-cards .added-card').attr('id');
+        $("#pay-form").submit();
+        if ($("#pay-form").valid()) {
+            var card_number = $('#card-number').val(),
+                cvv = $('#cvv-number').val(),
+                Exp_month = $("#ExpMonth").val(),
+                Exp_year = $("#ExpYear option:selected").text();
             params = {
                 "delivery_time": deliveryTime,
                 "billing_address": billingAddressId,
                 "delivery_address": addressId,
-                "payment_type": payment_type, // OR "cc"
-                "tip": driverTip, //Optional
+                "payment_type": payment_type,
+                "tip": driverTip,
                 "driver_instructions": driverInstr,
-                "card_id": savedCardId
-            }
-        } else {
-            $("#pay-form").submit();
-            if ($("#pay-form").valid()) {
-                var card_number = $('#card-number').val(),
-                    cvv = $('#cvv-number').val(),
-                    Exp_month = $("#ExpMonth").val(),
-                    Exp_year = $("#ExpYear option:selected").text();
-                params = {
-                    "delivery_time": deliveryTime,
-                    "billing_address": billingAddressId,
-                    "delivery_address": addressId,
-                    "payment_type": payment_type,
-                    "tip": driverTip,
-                    "driver_instructions": driverInstr,
-                    "save_card": saveParam,
-                    "number": card_number,
-                    "exp_month": Exp_month,
-                    "exp_year": Exp_year,
-                    "cvv2": $('#cvv-number').val(),
-                    "first_name": firstname,
-                    "last_name": lastname,
-                }
+                "save_card": saveParam,
+                "number": card_number,
+                "delivery_type": deliveryType,
+                "exp_month": Exp_month,
+                "exp_year": Exp_year,
+                "cvv2": $('#cvv-number').val(),
+                "first_name": firstname,
+                "last_name": lastname,
             }
         }
-        if (typeof params === 'undefined') {
-            return;
-        } else {
-            data = JSON.stringify(params);
-        }
-        var placeOrderInstance = new AjaxHttpSender();
-        placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
     }
+    if (typeof params === 'undefined') {
+        return;
+    } else {
+        data = JSON.stringify(params);
+    }
+    var placeOrderInstance = new AjaxHttpSender();
+    placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
+    // }
 }
 $("#cc").on("click", function() {
     if ($("#cc").prop('checked')) {
         $('#save-credit-card').removeAttr("disabled");
     }
 });
-$("#pp").on("click", function() {
-    if ($("#pp").prop('checked')) {
-        $('#save-credit-card').attr("disabled", "disabled");
-    }
-})
+// $("#pp").on("click", function() {
+//     if ($("#pp").prop('checked')) {
+//         $('#save-credit-card').attr("disabled", "disabled");
+//     }
+// })
 
 function populateCreditCardDetails() {
     var cards = cardDetails.cards;
     $('.address-payment-list-popup .button').remove();
     $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .popup .header').text("SELECT YOUR PAYMENT METHOD");
-    $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container' style='display:none'>" +
-        "<input type='radio' id='paypal-radio'class='added-card pullLeft' name='change-card' class='radio-button-payment'>" +
-        "<label>" + "<img class='paypal' src='../images/paypal_button.png'>" + "</label>" + "</div>");
+    // $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container' style='display:none'>" +
+    //     "<input type='radio' id='paypal-radio'class='added-card pullLeft' name='change-card' class='radio-button-payment'>" +
+    //     "<label>" + "<img class='paypal' src='../images/paypal_button.png'>" + "</label>" + "</div>");
     $.each(cards, function(key, value) {
         $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>" +
             "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' id='" + value.id + "'>" +
@@ -937,16 +940,16 @@ function populateCreditCardDetails() {
 
 function showSelectedPaymentMethod(selectedId) {
 
-    if (selectedId == "paypal-radio") {
-        $('.saved-cards').empty();
-        $('.paypal-container').show();
-        $('.credit-card-container').hide();
-    } else {
-        $('.credit-card-container').show();
-        $('.paypal-container').hide();
-        $('.saved-cards').empty();
-        populateCardDetails(cardDetails.cards, selectedId);
-    }
+    // if (selectedId == "paypal-radio") {
+    //     $('.saved-cards').empty();
+    //     $('.paypal-container').show();
+    //     $('.credit-card-container').hide();
+    // } else {
+    $('.credit-card-container').show();
+    // $('.paypal-container').hide();
+    $('.saved-cards').empty();
+    populateCardDetails(cardDetails.cards, selectedId);
+    // }
 }
 
 function validateOrder() {
@@ -977,5 +980,3 @@ function validateOrder() {
     }
     return true;
 }
-
-
