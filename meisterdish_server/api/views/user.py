@@ -343,11 +343,12 @@ def update_credit_card(request, data, user, card_id):
             card.exp_year = data["exp_year"]
             card_obj.expire_year = data["exp_year"]
 
-        if card.save() and card_obj.save():
+        if card.save():
+            card_obj.save()
             return json_response({"status":1, "message":"Successfully updated credit card details.", "id":card_obj.id})
         else:
             return custom_error("Failed to update card details.")
-    except KeyError as e:
+    except IOError as e:
         log.error("Save CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to save credit card details.")
 
