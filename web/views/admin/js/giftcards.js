@@ -20,22 +20,41 @@ $(document).ready(function() {
         $("#new-name").val(name);
         $("#new-amount").val(amount);
         $("#update").data("id", $this.data('id'));
+         $('#update').text("update");
         $(".popup-wrapper").show();
     });
 
-    $("#update").on('click', function() {
-        var newCode = $("#new-code").val(),
+    $("#update").on('click', function() {        
+        
+        if($('#update').text() == "add"){
+            var newCode = $("#new-code").val(),
             newName = $("#new-name").val(),
-            newAmount = $("#new-amount").val(),
-            giftcardId = $(this).data('id');
-        giftcardDetails = {
-            "editId": giftcardId,
+            newAmount = $("#new-amount").val();
+            giftcardaddDetails = {
             "code": newCode,
             "name": newName,
             "amount": newAmount
+            }
+            manageGiftcards(giftcardaddDetails);
+        }else{
+           var newCode = $("#new-code").val(),
+            newName = $("#new-name").val(),
+            newAmount = $("#new-amount").val(),
+            giftcardId = $(this).data('id');
+            giftcardDetails = {
+                "editId": giftcardId,
+                "code": newCode,
+                "name": newName,
+                "amount": newAmount
+            } 
+            manageGiftcards(giftcardDetails);
         }
-        manageGiftcards(giftcardDetails);
     });
+    $(document).on('click', "#add-gift-card", function() {  
+        $('#update').text("add");
+        $('form.popup-container')[0].reset();
+        $(".popup-wrapper").show();
+    }); 
 });
 
 //List gift cards

@@ -39,7 +39,6 @@ function savedCardDetails() {
 }
 
 function populateCardDetails(cards){
-	debugger;
 	var last_num;
 	 $.each(cards, function(key, value) {
 	 	last_num = cards[key].number.slice(-4);

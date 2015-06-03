@@ -1026,3 +1026,9 @@ table#tips-and-tricks-table {
 .giftcard-list-empty, .promocodes-list-empty{
     display: none;
 }
+input#add-gift-card,input#add-new-promo{
+    margin-top: 20px;
+}
+input#add-gift-card{
+    display: none;
+}

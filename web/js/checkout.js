@@ -14,6 +14,8 @@ $(document).ready(function() {
         $('.address-info-guest').show();
         $('.address-info').hide();
         $('.payment-method-guest-container').show();
+        $(".emtpy-cart-message").text("There are no items in cart.");
+        $(".emtpy-cart-message").show();
     }
     stripeIntegration();
     setCurrentTime();
@@ -276,7 +278,7 @@ function populateCartItems(data) {
         $('.order-list-container').append("<div class='order-list-items' data-id='" + value.id + "'>" +
             "<img src='" + value.image + "'>" + "<span class='body-text-small'>" + value.name + "</span>" +
             "<div class='quantity-container'>" + "<span class='operator-minus' data-min='1'>" + '-' + "</span>" +
-            "<input type='text' class='quantity' value='" + value.quantity + "'>" +
+            "<input type='text' disabled='disabled' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
             "<span class='price-container' data-tax='" + value.tax + "'>" + dollarConvert(value.price) + "</span>" +
             "<img src='../images/hamburger-menu-close.png' id='remove-cart-item'>" + "</div>");
