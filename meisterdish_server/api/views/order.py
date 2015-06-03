@@ -288,8 +288,8 @@ def save_payment_data(data):
     try:
         payment =Payment()
         payment.response = json.dumps(data)
-        payment.transaction_id = datetime.fromtimestamp(data["created"])
-        payment.transaction_date = 
+        payment.transaction_id = ""
+        payment.transaction_date = datetime.fromtimestamp(data["created"])
         payment.amount = data["amount"]
 
         if data["status"].lower() == "succeeded":
