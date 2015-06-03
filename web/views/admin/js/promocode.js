@@ -20,21 +20,41 @@ $(document).ready(function() {
         $("#new-date").val(date);
         $("#new-amount").val(amount);
         $("#update").data("id", $this.data('id'));
+        $("#update").text("update");
         $(".popup-wrapper").show();
     });
+    
+    $(document).on('click', "#add-new-promo", function() {
+        debugger;
+        $("#update").text("add");
+        $('form.popup-container')[0].reset();
+        $(".popup-wrapper").show();
+    })
 
     $("#update").on('click', function() {
-        var newCode = $("#new-code").val(),
-            newDate = $("#new-date").val(),
-            newAmount = $("#new-amount").val(),
-            giftcardId = $(this).data('id');
-        giftcardDetails = {
-            "editId": giftcardId,
-            "code": newCode,
-            "name": newDate,
-            "amount": newAmount
+        if($("#update").text() == "add"){    
+            var newCode = $("#new-code").val(),
+                newDate = $("#new-date").val(),
+                newAmount = $("#new-amount").val(),
+                promoaddDetails = {
+                    "code": newCode,
+                    "name": newDate,
+                    "amount": newAmount
+                }
+            managePromoCodes(promoaddDetails);
+        }else{
+           var newCode = $("#new-code").val(),
+                newDate = $("#new-date").val(),
+                newAmount = $("#new-amount").val(),
+                giftcardId = $(this).data('id');
+                giftcardDetails = {
+                    "editId": giftcardId,
+                    "code": newCode,
+                    "name": newDate,
+                    "amount": newAmount
+                }
+            managePromoCodes(giftcardDetails); 
         }
-        managePromoCodes(giftcardDetails);
     });
 });
 
