@@ -206,9 +206,11 @@ def create_order(request, data, user):
         order.total_amount = total_price + total_tax + tip + settings.SHIPPING_CHARGE
         
         #Payment
-        order.token = data["stripeToken"].strip()
         order.save_card = bool(data.get("save_card", 0))
         order.card_id = data.get("card_id", False)
+        
+        if not order.card_id:
+            order.token = data["stripeToken"].strip()
 
         payment = make_payment(order, user)
             
@@ -241,7 +243,7 @@ def make_payment(order, user):
             else:
                 #Add the entered card to the exising customer
                 card = customer.sources.create(source=order.token)
-        else:
+        elif not order.card_id:
             #Create new customer
             customer = stripe.Customer.create(
                 source=order.token,
