@@ -12,7 +12,8 @@ pyasn1==0.1.7
 pycparser==2.12
 pyOpenSSL==0.15.1
 pytz==2015.4
-requests==2.6.2
+requests==2.7.0
 six==1.9.0
+stripe==1.22.2
 twilio==4.4.0
 urllib3==1.10.3

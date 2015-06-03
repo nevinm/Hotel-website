@@ -320,6 +320,38 @@ def save_credit_card(request, data, user):
         log.error("Save CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to save credit card details.")
 
+         
+@check_input('POST')
+def update_credit_card(request, data, user, card_id):
+    try:
+        
+        if user.stripe_customer_id and str(user.stripe_customer_id).strip() != "":
+            customer = stripe.Customer.retrieve(user.stripe_customer_id)
+        else:
+            return custom_error("You have no cards saved in your account.")
+        
+        card_obj = CreditCardDetails.objects.get(pk=card_id)
+        card = customer.sources.retrieve(card_obj.card_id)
+
+        if "name" in data and data["name"].strip() != "":
+            card.name = data["name"].strip()
+
+        if "exp_month" in data:
+            card.exp_month = data["exp_month"]
+            card_obj.expire_month = data["exp_month"]
+        if "exp_year" in data:
+            card.exp_year = data["exp_year"]
+            card_obj.expire_year = data["exp_year"]
+
+        if card.save():
+            card_obj.save()
+            return json_response({"status":1, "message":"Successfully updated credit card details.", "id":card_obj.id})
+        else:
+            return custom_error("Failed to update card details.")
+    except IOError as e:
+        log.error("Save CC: user"+str(user.id) + " : "+ e.message)
+        return custom_error("Failed to save credit card details.")
+
 @check_input('POST')
 def delete_credit_card(request, data, user, card_id):
     try:
@@ -334,7 +366,7 @@ def delete_credit_card(request, data, user, card_id):
         
         if response["deleted"] == True:
             card.delete()
-            return json_response({"message":"Successfully deleted credit card.", "id":c_card.id})
+            return json_response({"message":"Successfully deleted saved card."})
         else:
             return custom_error("Failed to delete card details. Please try again later.")
     except Exception as e:
@@ -354,7 +386,7 @@ def get_saved_cards(request, data, user):
                 "expire_month" : card.expire_month,
                 "expire_year" : card.expire_year,
                 "type" : card.card_type,
-                "logo" : settings.STATIC_URL + "default/"+card.card_type+".png",
+                "logo" : settings.STATIC_URL + "default/"+card.card_type.lower()+".png",
                 })
         return json_response({"cards":cards_list, "status":1})
     except Exception as e:

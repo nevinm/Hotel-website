@@ -488,6 +488,9 @@
     #mainWrapper{
         overflow: visible;
     }
+    .filter-drop-down{
+        top: 40px;
+    }
 }
 
 

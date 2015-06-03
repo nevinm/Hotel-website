@@ -14,7 +14,7 @@ from urllib import unquote
 from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
 import stripe
-
+stripe.api_key = settings.STRIPE_SECRET_KEY
 log = logging.getLogger('order')
 
 #Admin and User
@@ -188,8 +188,6 @@ def create_order(request, data, user):
             total_price += item.meal.price
             total_tax += item.meal.tax
 
-        total_amount = total_price + total_tax
-        
         order = Order()
         order.order_num = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
         order.cart = item.cart
@@ -205,21 +203,21 @@ def create_order(request, data, user):
         order.total_tax = total_tax
         order.tip = tip
 
-        total_amount = total_price + total_tax + tip + settings.SHIPPING_CHARGE
+        order.total_amount = total_price + total_tax + tip + settings.SHIPPING_CHARGE
+        
         #Payment
+        order.save_card = bool(data.get("save_card", 0))
+        order.card_id = data.get("card_id", False)
+        
+        if not order.card_id:
+            order.token = data["stripeToken"].strip()
 
-        order.token = data["stripeToken"].strip()
-        payment = make_payment(order, user, data.get("save_card"))
+        payment = make_payment(order, user)
             
-        if type(payment) == False:
+        if not payment:
             return custom_error("An error has occurred while paying with Credit Card. Please try agian.")
-        elif type(payment) == str:
-            return custom_error(payment)
         else:
-            paid = True
-            log.info("Order payment (CC) success.Payment id :"+str(payment.id))        
-            
-        if paid:
+            log.info("Order payment success.Payment id :"+str(payment.id))        
             order.payment = payment
             order.status = 1
             order.save()
@@ -229,19 +227,79 @@ def create_order(request, data, user):
                 order.cart.save()
         
             return json_response({"status":1, "message":"The Order has been placed successully."})
-        else:
-            return custom_error("An error has occurred. Please try again later.")
+        
     except KeyError as e:
         log.error("Failed to create order." + e.message)
         return custom_error("Failed to place order.")
 
-def make_payment(order, user, save_card=False):
+def make_payment(order, user):
     try:
-        
+        if user.stripe_customer_id and str(user.stripe_customer_id).strip() != "":
+            customer = stripe.Customer.retrieve(user.stripe_customer_id)
+            if order.card_id:
+                #Using pre-saved card
+                card_id = CreditCardDetails.objects.get(pk=order.card_id).card_id
+                card = customer.sources.retrieve(card_id)
+            else:
+                #Add the entered card to the exising customer
+                card = customer.sources.create(source=order.token)
+        elif not order.card_id:
+            #Create new customer
+            customer = stripe.Customer.create(
+                source=order.token,
+                description="meisterdish_user_"+str(user.id)
+            )
 
-        return True
+            #Save customer id to user table, for future use
+            user.stripe_customer_id = customer.id
+            user.save()
+
+            cards = customer.sources.all(object="card")
+            if cards:
+                card = cards.data[0]
+            else:
+                log.error("Failed to save Stripe card")
+            
+            if order.save_card:
+                c_card = CreditCardDetails()
+                c_card.user = user
+                c_card.card_id = card.id
+                c_card.number = '#### #### #### '+str(card.last4)
+                c_card.funding = card.funding
+                c_card.expire_year = card.exp_year
+                c_card.expire_month = card.exp_month
+                c_card.card_type = card.brand
+                c_card.save()
+
+
+        response = stripe.Charge.create(
+            amount=order.total_amount * 100, #Cents
+            currency="usd",
+            customer=customer.id,
+            source = card.id
+        )
+
+        log.info(response)
+        payment = save_payment_data(response)
+        return payment
     except KeyError as e:
         log.error("Failed to make payment." + e.message)
+        return False
+
+def save_payment_data(data):
+    try:
+        payment =Payment()
+        payment.response = json.dumps(data)
+        payment.transaction_id = ""
+        payment.transaction_date = datetime.fromtimestamp(data["created"])
+        payment.amount = data["amount"]
+
+        if data["status"].lower() == "succeeded":
+            payment.verified = True
+        payment.save()
+        return payment
+    except Exception as e:
+        log.error("Failed to save payment data " + e.message)
         return False
 
 #Admin only
@@ -370,19 +428,6 @@ def get_cart_total(cart):
     except Exception as e:
         log.error("Error getting cart total: " + e.message)
     return (amount, tax)
-
-def save_payment_data(data):
-    try:
-        payment =Payment()
-        payment.response = json.dumps(data)
-        payment.transaction_id
-        payment.verified = True
-        payment.amount = data["amount"]
-        payment.save()
-        return payment
-    except Exception as e:
-        log.error("Failed to save payment data " + e.message)
-        return False
 
 def send_order_confirmation_notification(order):
     try:
