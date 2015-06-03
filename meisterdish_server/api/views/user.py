@@ -313,10 +313,10 @@ def save_credit_card(request, data, user):
             c_card.expire_month = card.exp_month
             c_card.card_type = card.brand
             c_card.save()
-            return json_response({"message":"Successfully saved credit card details.", "id":c_card.id})
+            return json_response({"status":1, "message":"Successfully saved credit card details.", "id":c_card.id})
         else:
             return custom_error("Failed to save card details.")
-    except KeyError as e:
+    except Exception as e:
         log.error("Save CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to save credit card details.")
 
