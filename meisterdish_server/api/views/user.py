@@ -377,7 +377,11 @@ def delete_credit_card(request, data, user, card_id):
 def get_saved_cards(request, data, user):
     try:
         cards_list = []
+
         cards = CreditCardDetails.objects.filter(user=user)
+        if "card_id" in data and data["card_id"]:
+            cards = cards.filter(pk=data["card_id"])
+            
         for card in cards:
             cards_list.append({
                 "id": card.id,
