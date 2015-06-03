@@ -366,7 +366,7 @@ def delete_credit_card(request, data, user, card_id):
         
         if response["deleted"] == True:
             card.delete()
-            return json_response({"message":"Successfully deleted credit card.", "id":c_card.id})
+            return json_response({"message":"Successfully deleted saved card."})
         else:
             return custom_error("Failed to delete card details. Please try again later.")
     except Exception as e:
