@@ -205,6 +205,9 @@ def create_order(request, data, user):
 
         order.total_amount = total_price + total_tax + tip + settings.SHIPPING_CHARGE
         
+        if order.cart.promo_code:
+            order.discount +=  order.cart.promo_code.amount
+
         #Payment
         order.save_card = bool(data.get("save_card", 0))
         order.card_id = data.get("card_id", False)
