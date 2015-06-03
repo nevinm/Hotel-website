@@ -225,8 +225,7 @@ def create_order(request, data, user):
                 order.cart.save()
         
             return json_response({"status":1, "message":"The Order has been placed successully."})
-        else:
-            return custom_error("An error has occurred. Please try again later.")
+        
     except KeyError as e:
         log.error("Failed to create order." + e.message)
         return custom_error("Failed to place order.")
