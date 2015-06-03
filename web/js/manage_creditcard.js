@@ -1,6 +1,18 @@
 $(document).ready(function() {
 	CartItemCount();
 	savedCardDetails();
+    $(document).on('click', 'input[name=saved-card]', function() {
+        $('#delete-card').removeClass('button-disabled');
+    })
+    $("#delete-card").on("click",function(){
+        $("input[name=saved-card]").each(function(){
+            var $this = $(this);    
+             if($this.is(":checked")){
+                delete_id = $this.attr("id");   
+                deleteCreditCard(delete_id)
+            }
+        });
+    })
 });
 
 
@@ -50,4 +62,29 @@ function populateCardDetails(cards){
 			"<div class='body-text-small'>" + "Expires on" + " " +
 			value.expire_month + "/" + value.expire_year + "</div>" + "</div>" + "</div>");
 		});
+}
+var deleteCreditCardCallback = {
+    success: function(data, textStatus,delete_id) {
+        var cardDetails = JSON.parse(data);
+        showPopup(cardDetails);
+        $("#"+delete_id).parent().remove();
+        if ($('.card-list-container').is(':empty')){
+            $('#manage-payment-method-container .message').show();
+        }else{
+            $('#manage-payment-method-container .message').hide();
+        }
+        
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+//delete credit card
+function deleteCreditCard(delete_id) {
+    var url = baseURL + "delete_credit_card/"+delete_id+"/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {}
+    data = JSON.stringify(params);
+    var deleteCreditCardInstance = new AjaxHttpSender();
+    deleteCreditCardInstance.sendPost(url, header, data, deleteCreditCardCallback,delete_id);
 }
