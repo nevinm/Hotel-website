@@ -175,11 +175,11 @@
                             </div>
                             <div class="payment-method-container">
                                 <div class="contents">
-                                    <div class="paypal-container" style="display:none">
+                                    <!-- <div class="paypal-container" style="display:none">
                                         <input type="radio" id="pp" class='payment-checked' name="payment-radio">
                                         <span class="content-heading"><input type="checkbox" id="pay-using-paypal"/>PAY WITH PAY PAL</span>
                                         <img class='paypal' src="../images/paypal_button.png">
-                                    </div>
+                                    </div> -->
                                     <div class="credit-card-container">
                                         <span class="content-heading">PAYING WITH CREDIT CARD</span>
                                         <div class="saved-cards"></div>
@@ -189,11 +189,11 @@
                             </div>
                             <div class="payment-method-guest-container">
                                 <div class="content">
-                                    <div class="paypal-container">
+                                    <!-- <div class="paypal-container">
                                         <input type="radio" id="pp-guest" class='payment-checked' name="payment-radio">
                                         <span class="content-heading"><input type="checkbox" id="pay-using-paypal"/>PAY WITH PAY PAL</span>
                                         <img class='paypal' src="../images/paypal_button.png">
-                                    </div>
+                                    </div> -->
                                     <div class="pay-by-credit-container">
                                         <input type="radio" id="cc" class='payment-checked' name="payment-radio">
                                         <span class="content-heading"><input type="checkbox" id="pay-using-card"/>PAY BY CREDIT CARD</span>
@@ -256,10 +256,10 @@
                             <div class="contents contents-time-date">
                                 <div class="select-delivery-method">
                                     <div class="pickup">
-                                        <input type="radio" name="delivery-method" id="pickup-radio"><span>PICKUP</span>
+                                        <input type="radio" name="delivery-method" data-type='pickup'i d="pickup-radio"><span>PICKUP</span>
                                     </div>
                                     <div class="delivery">
-                                        <input type="radio" name="delivery-method" id="delivery-radio"><span>DELIVERY</span>
+                                        <input type="radio" checked="checked" name="delivery-method" data-type='delivery' id="delivery-radio"><span>DELIVERY</span>
                                     </div>
                                 </div>
                                 <div class="today-content">
