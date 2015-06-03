@@ -1280,6 +1280,7 @@ input.radio-button-payment {
 	position: relative;
 	width: 100%;
 	float: left;
+	display: none !important;
 }
 .payment-popup-sub-container{
 	width: 33.3%;
