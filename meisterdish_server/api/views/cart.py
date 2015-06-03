@@ -177,7 +177,10 @@ def delete_cart(request, data, user):
 @check_input('POST')
 def get_cart_items_count(request, data, user):
     try:
-      count = CartItem.objects.filter(cart__user=user, cart__completed=False).count()
+      count = 0
+      items = CartItem.objects.filter(cart__user=user, cart__completed=False)
+      for item in items:
+          count += item.quantity
       return json_response({"status":1, "count":count})
     except Exception as e:
       return custom_error("Failed to clear cart. Please try again later.")
