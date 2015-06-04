@@ -6,6 +6,7 @@ $(document).ready(function() {
 	    $('.tab-container ul li a').removeClass('activeli');
 	    $(this).find('a').addClass('activeli');
 	});
+	
 	$(".how-it-works-tab").tabs({
 		activate: function(event,ui){
 			if((ui.newTab.context.id)=="ui-id-5")
@@ -14,30 +15,36 @@ $(document).ready(function() {
 				$(".next-tab").show();
 		}
 	});
+	
 	$('#what-you-get .left-arrow').on("click",function(){
 		$('#you-cook,#what-you-get').animate({
 			left: '+=100%'
 		},"slow","easeOutQuart");
 	})
+	
 	$('#our-suppliers .left-arrow').on("click",function(){
 		$('#we-source,#our-suppliers').animate({
 			left: '+=100%'
 		},"slow","easeOutQuart");
 	})
+	
 	$('#you-cook .right-arrow').on("click",function(){
 		$('#you-cook,#what-you-get').animate({
 			left: '-=100%'
 		},"slow","easeOutQuart");
 	})
+	
 	$('#we-source .right-arrow').on("click",function(){
 		$('#we-source,#our-suppliers').animate({
 			left: '-=100%'
 		},"slow","easeOutQuart");
 	})
+	
 	$('.sub-tab-container  ul li').on("click", function() {
 	    $('.sub-tab-container ul li a').removeClass('subactiveli');
 	    $(this).find('a').addClass('subactiveli');
 	});
+	
 	$('.sub-tab-container li').on("click",function(){
 		$('#farm,#roamimg-acres,#blue-ribbon-fish,#plantation,#common-thread-farm').hide();		
 		var clicked_id =$(this).find('a').attr('data-id');
@@ -54,12 +61,14 @@ $(document).ready(function() {
 		}
 
 	});
+	
 	$('.next-sub-tab').on("click",function(){
 		$('.prev-sub-tab').show();
 		var selected_a = $('.subactiveli').parent().next().find('a');
 		selected_a.trigger("click");
 		
 	})
+	
 	$('.prev-sub-tab').on("click",function(){
 		$('.next-sub-tab').show();
 		var selected_a = $('.subactiveli').parent().prev().find('a');
@@ -123,8 +132,8 @@ $(document).ready(function() {
 		else{
 			$('.backNav-mobile').hide();
 			$('.tab-header-drop-down').hide();
-			// $('.next-sub-tab').hide();
-			// $('.prev-sub-tab').hide();
+			$('.next-sub-tab').hide();
+			$('.prev-sub-tab').hide();
 		}
 	})
 function tabRendering() {
@@ -139,7 +148,8 @@ function tabRendering() {
         }
     });
 	$('.ui-tabs-anchor').keydown(function (event) {
-		return false;
+		// debugger;
+		// return false;
 	});
 
 $('.next-tab').click(function(e) {
