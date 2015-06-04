@@ -6,6 +6,7 @@ var baseURL = 'http://meisterdish.qburst.com/backend/api/',
     clicked = 0;
 //If already logged in
 var $userentry = $('.login-signup');
+
 function checkLoggedIn() {
     if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
         $userentry.hide();
@@ -42,15 +43,15 @@ function getCurrentDateTime(days) {
 function getCurrentHour() {
     var currentdate = new Date();
     var hours = currentdate.getHours();
-    if(hours>12){
-        meridiem="pm";
-    }else{
-        meridiem="am";
+    if (hours > 12) {
+        meridiem = "pm";
+    } else {
+        meridiem = "am";
     }
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     var strTime = hours;
-    return strTime+meridiem;
+    return strTime + meridiem;
 }
 
 function getMonthDate(currentDate) {
@@ -74,7 +75,10 @@ function getParameterFromUrl(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-
+function getCurrentPage(firstChar, secondChar, url) {
+    currentPage = url.substring(url.lastIndexOf(firstChar) + 1, url.lastIndexOf(secondChar));
+    return currentPage;
+}
 
 function verifyAccount() {
     var verify_url = window.location.href;
@@ -195,8 +199,8 @@ $(document).ready(function() {
         })
         setTimeout(function() {
             $('#page-container').show();
-        },700)
-        
+        }, 700)
+
         $('#header').animate({
             marginLeft: "0px"
         })
@@ -320,34 +324,34 @@ $("form").each(function() {
             meal_type: {
                 required: true
             },
-            cardnumber:{
+            cardnumber: {
                 required: true,
                 creditcard: true
             },
-            nameOnCard:{
-                required:true,
+            nameOnCard: {
+                required: true,
                 minlength: 2,
                 maxlength: 20,
-                letters: true               
+                letters: true
             },
-            expiryMonth:{
-                required:true
+            expiryMonth: {
+                required: true
             },
-            expiryYear:{
-                required:true
+            expiryYear: {
+                required: true
             },
-            cvv:{
-                number:true,
-                minlength:3,
-                maxlength:4,
-                required:true
+            cvv: {
+                number: true,
+                minlength: 3,
+                maxlength: 4,
+                required: true
             },
-            url:{
-                youtube_url:true
+            url: {
+                youtube_url: true
             },
-            tips_details:{
-                required:true,
-                minlength:2
+            tips_details: {
+                required: true,
+                minlength: 2
             }
             // image_upload :{
             //     required:true
@@ -396,9 +400,9 @@ $("form").each(function() {
                 equalTo: "Email doesn't match.",
                 required: "Please provide email."
             },
-            nameOnCard:"Enter valid name.",
-            expiryMonth:"Enter exp month.",
-            expiryYear:"Enter exp year.",
+            nameOnCard: "Enter valid name.",
+            expiryMonth: "Enter exp month.",
+            expiryYear: "Enter exp year.",
             email: "Enter a valid email address.",
             zip: "Provide a valid zip.",
             street: "Provide a valid address.",
@@ -410,9 +414,9 @@ $("form").each(function() {
             mealname: "Enter a valid meal name.",
             chef_name: "Enter a valid chef name.",
             mealdescription: "Meal description is not valid.",
-            cvv:"provide a valid cvv.",
-            url:"Enter valid url.",
-            tips_details:"Enter valid title."
+            cvv: "provide a valid cvv.",
+            url: "Enter valid url.",
+            tips_details: "Enter valid title."
                 // image_upload:"Please select an image."
         }
     });
@@ -431,10 +435,9 @@ if ($.validator) {
 var CartItemCountCallback = {
     success: function(data, textStatus) {
         var numOfItems = JSON.parse(data);
-        if(numOfItems.status == 1){
+        if (numOfItems.status == 1) {
             $('span.count').text(numOfItems.count);
-        }
-        else{
+        } else {
             $('span.count').text('0');
         }
     },
@@ -483,4 +486,3 @@ function mobileResponsive() {
         $('#header').css("margin-left", "0px");
     }
 }
-
