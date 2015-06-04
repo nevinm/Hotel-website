@@ -21,6 +21,8 @@ MANAGERS = ADMINS
 ROLE_ADMIN = 1
 ROLE_USER = 2
 ROLE_GUEST = 3
+ROLE_KITCHEN = 4
+ROLE_DELIVERY = 5
 
 ALLOWED_HOSTS = []
 # Local time zone for this installation. Choices can be found here:

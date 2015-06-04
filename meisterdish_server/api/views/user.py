@@ -4,7 +4,7 @@ import json as simplejson
 import logging 
 import settings
 from decorators import *
-from libraries import validate_zipcode, validate_phone, check_delivery_area
+from libraries import validate_zipcode, validate_phone, check_delivery_area, validate_email
 import stripe
 from datetime import datetime, timedelta
 
@@ -20,12 +20,14 @@ def add_address(request, data, user):
         building = data["building"].strip()
         city_id = data["city_id"]
         zip = data["zip"].strip()
+        phone = data["phone"].strip()
+        
+        email = data.get("email", False)
 
         if "checkout" in data and data["checkout"] == 1:
             if not check_delivery_area(zip):
                 return custom_error("Delivery is not available at this location. Please choose a different Zip code.")
-
-        phone = data["phone"].strip()
+        
         is_primary = False
         if "is_primary" in data and data["is_primary"]:
             is_primary = True
@@ -34,16 +36,26 @@ def add_address(request, data, user):
             return custom_error("Please provide a valid zip code.")
         elif not validate_phone(phone):
             return custom_error("Please provide a valid phone number.")
+        elif email and email.strip() == "" or not validate_email(email):
+            return custom_error("Invalid email address.")
+
         add = Address()
+        add.is_primary = is_primary
         add.user = user
+        
         add.first_name = fname
         add.last_name = lname
-        add.is_primary = is_primary
         add.street = street
         add.building = building
         add.city = City.objects.get(id=city_id)
         add.zip = zip
         add.phone = phone
+        if email:
+            add.email = email
+        elif user.role == settings.ROLE_USER:
+            add.email = user.email
+        else:
+            return custom_error("Please enter email.")
         add.save()
         
         if add.id and is_primary:

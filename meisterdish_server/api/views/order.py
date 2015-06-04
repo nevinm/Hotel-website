@@ -7,7 +7,7 @@ import settings
 from decorators import *
 from datetime import datetime
 from django.core.paginator import Paginator
-from libraries import mail, check_delivery_area
+from libraries import mail, check_delivery_area, validate_phone, validate_email
 from django.db.models import Q
 import string, random
 from urllib import unquote
@@ -153,8 +153,6 @@ def create_order(request, data, user):
         total_tax = 0.0
         paid = False
         
-        del_type = data["delivery_type"].strip()
-
         try:
             del_time = data['delivery_time'].strip()
             delivery_time = datetime.strptime(del_time,"%m/%d/%Y %H:%M:%S")
@@ -165,15 +163,25 @@ def create_order(request, data, user):
         tip = int(data.get('tip', 5))
         if tip < 5:
             return custom_error("Miniumum tip amount is $5.") 
-
-        if del_type == "delivery":
+        
+        del_type = data["delivery_type"].strip()
+        if del_type.lower() == "pickup":
+            email = data["email"].strip()
+            phone = data["phone"].strip()
+            if not validate_email(email):
+                return custom_error("Please enter a valid email.")
+            elif not validate_phone(phone):
+                return custom_error("Please enter a valid phone number.")
+        else: #Delivery
             driver_instructions = data.get('driver_instructions', "")
             if 'delivery_address' in data:
                 del_address = Address.objects.get(user=user, pk=data['delivery_address'])
             else:
+                log.info("Delivery order but no address. Checking Primary address.")
                 try:
                     del_address = user.user_address.get(is_primary=True)
                 except:
+                    log.error("Delivery order but no address. No Primary address. Aborting.")
                     return custom_error("Please choose a valid delivery address.")
             
         items = CartItem.objects.filter(cart__user=user, cart__completed=False)
@@ -189,13 +197,16 @@ def create_order(request, data, user):
             total_tax += item.meal.tax
 
         order = Order()
-        order.order_num = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
+        #order.order_num = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
         order.cart = item.cart
         
-        if del_type == "delivery":
+        if del_type.lower() == "delivery":
             order.delivery_address = del_address
             #order.billing_address = bil_address
             order.driver_instructions = driver_instructions
+        else:
+            order.email = email
+            order.phone = phone
 
         order.delivery_time = delivery_time
         
@@ -204,10 +215,32 @@ def create_order(request, data, user):
         order.tip = tip
 
         order.total_amount = total_price + total_tax + tip + settings.SHIPPING_CHARGE
-        
-        if order.cart.promo_code:
-            order.discount +=  order.cart.promo_code.amount
+        """
+        TODO
 
+        if user.credits > 0:
+            log.info("User has credits : "+str(user.credits))
+            if credits > order.total_amount:
+                user.credits = credits - order.total_amount
+                order.credits = order.total_amount
+                order.total_amount = 0
+            else:
+                order.total_amount = order.total_amount - user.credits
+                order.credits = user.credits
+                user.credits = 0
+
+        if order.cart.promo_code:
+            if order.cart.promo_code.amount > order.total_amount:
+                order.total_amount = 0
+                order.discount = order.total_amount
+            else:
+                order.total_amount -= order.cart.promo_code.amount
+                order.discount += order.cart.promo_code.amount
+
+        gc_amount = 0
+        if order.cart.gift_cards.count():
+            gc_amount = cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
+        """
         #Payment
         order.save_card = bool(data.get("save_card", 0))
         order.card_id = data.get("card_id", False)
@@ -233,7 +266,7 @@ def create_order(request, data, user):
         
     except KeyError as e:
         log.error("Failed to create order." + e.message)
-        return custom_error("Failed to place order.")
+        return custom_error(e.message + "is missing.")
 
 def make_payment(order, user):
     try:
@@ -285,6 +318,9 @@ def make_payment(order, user):
         log.info(response)
         payment = save_payment_data(response)
         return payment
+    except APIConnectionError as e:
+        log.error("Error connecting with Stripe.")
+        return False
     except KeyError as e:
         log.error("Failed to make payment." + e.message)
         return False
@@ -293,7 +329,7 @@ def save_payment_data(data):
     try:
         payment =Payment()
         payment.response = simplejson.dumps(data)
-        payment.transaction_id = ""
+        payment.transaction_id = data["id"]
         payment.transaction_date = datetime.fromtimestamp(data["created"])
         payment.amount = data["amount"]
 
@@ -356,7 +392,7 @@ def get_order_details(request, data, user, order_id):
             
             "delivery_type" : order.get_delivery_type_display(),
             "payment_date" : order.payment.created.strftime("%m-%d-%Y %H:%M:%S") if order.payment else "Not Available",
-            "transaction_id":order.transaction_id,
+            "transaction_id":order.payment.transaction_id if order.payment else "Not Available",
             "order_num" : order.order_num,
             
             "delivery_address" : {
@@ -391,21 +427,28 @@ def get_order_details(request, data, user, order_id):
 @check_input('POST', True)
 def update_order(request, data, user, order_id):
     try:
-        status = int(data['status'])
-        if status < 0 or status > 4:
-            log.error("Invalid order status: " + str(status))
-        order = Order.objects.get(pk=order_id, is_deleted=False)
+        order = Order.objects.get(pk=order_id, is_deleted=False, cart__completed=True)
+        if "produced_meals" in data and len(data["produced_meals"]):
+            if user.role.id != settings.ROLE_KITCHEN:
+                return custom_error("You are not authorized to do this operation.")
 
-        order.status = status
-        order.save()
-        if status >=1:
-            order.cart.completed=True
-            order.cart.save()
-        order.session_key = request.META.get('HTTP_SESSION_KEY', None)
+            for order_meal in data["meals"]:
+                cart_item = order.cart.cartitem_set.filter(meals__pk=order_meal["id"])
+                cart_item.produced = True
+                cart_item.save()
+
+        if "status" in data:
+            status = int(data['status'])
+            if status < 0 or status > 4:
+                log.error("Invalid order status: " + str(status))
+            order.status = status
+            order.save()
         
-        if order.cart.user.role_id != settings.ROLE_USER:
-            log.error("Not sending notifications for guest users.")
-        else:
+            if status >=1:
+                order.cart.completed=True
+                order.cart.save()
+            order.session_key = request.META.get('HTTP_SESSION_KEY', None)
+            
             if int(status) == 2: #Confirmed
                 sent = send_order_confirmation_notification(order)
                 if not sent:
@@ -438,13 +481,13 @@ def send_order_confirmation_notification(order):
         user = order.cart.user
         dic = {
                "order_num" : order.order_num,
-               "mobile" : order.cart.user.mobile if order.cart.user.mobile else None,
-               "transaction_id" : order.transaction_id,
+               "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
+               "transaction_id" : order.payment.transaction_id if order.payment else "Not Available",
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
                "grand_total":order.grand_total,
-               "first_name" : user.first_name.title(),
-               "last_name" : user.last_name.title(),
+               "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
+               "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
                "status":order.status,
                "delivery_type":order.delivery_type,
                "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id)
@@ -452,8 +495,8 @@ def send_order_confirmation_notification(order):
         
         msg = render_to_string('order_confirmation_email_template.html', dic)
         sub = 'Your order at Meisterdish is confirmed '
-        to_email = user.email
-        
+        to_email = order.delivery_address.email if order.delivery_address else order.email
+
         mail([to_email], sub, msg )
 
         if user.need_sms_notification:
@@ -471,13 +514,13 @@ def send_order_complete_notification(order):
         user = order.cart.user
         dic = {
                "order_num" : order.order_num,
-               "mobile" : order.cart.user.mobile if order.cart.user.mobile else None,
-               "transaction_id" : order.transaction_id,
+               "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
+               "transaction_id" : order.payment.transaction_id if order.payment else "",
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
                "grand_total":order.grand_total,
-               "first_name" : user.first_name.title(),
-               "last_name" : user.last_name.title(),
+               "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
+               "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
                "status":order.status,
                "delivery_type":order.delivery_type,
                "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id),
@@ -485,7 +528,7 @@ def send_order_complete_notification(order):
         
         msg = render_to_string('order_complete_email_template.html', dic)
         sub = 'Your order at Meisterdish is complete'
-        to_email = user.email
+        to_email = order.delivery_address.email if order.delivery_address else order.email
         
         mail([to_email], sub, msg )
 

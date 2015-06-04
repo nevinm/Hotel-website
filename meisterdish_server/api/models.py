@@ -135,7 +135,7 @@ class User(models.Model):
     role = models.ForeignKey(Role)
     first_name = models.CharField(db_index=True, max_length=25, default="")
     last_name = models.CharField(db_index=True, max_length=25, default="")
-    
+    zipcode = models.CharField(db_index=True, max_length=6, null=True, blank=True)
     email = models.EmailField(db_index=True, max_length=30, unique=True, null=True)
     mobile = models.CharField(max_length=15, null=True)
     profile_image = models.ForeignKey(Image, null=True)
@@ -172,6 +172,7 @@ class Address(models.Model):
     city = models.ForeignKey(City)
     zip = models.CharField(max_length=10)
     phone = models.CharField(max_length=15)
+    email = models.CharField(max_length=50, null=True, blank=True)
 
     def __unicode__(self):
         return str(self.user.email) + " : " + self.first_name +" "+ self.last_name
@@ -338,6 +339,7 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart)
     meal = models.ForeignKey(Meal, related_name="cartitem")
     quantity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+    produced = models.BooleanField(default=False)
 
 delivery_types = (
         ("pickup", "Pick Up"),
@@ -346,7 +348,6 @@ delivery_types = (
 
 class Order(models.Model):
     order_num = models.CharField(db_index=True, max_length=50, null=True)
-    transaction_id = models.CharField(db_index=True, max_length=30, null=True)
     
     cart = models.ForeignKey(Cart)
 
@@ -355,6 +356,9 @@ class Order(models.Model):
     tip = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(1000)])
     
     grand_total = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
+    
+    credits = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
+
     discount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10000)], default=0)
 
     delivery_type = models.CharField(choices=delivery_types, max_length=8, default="delivery")
@@ -362,6 +366,9 @@ class Order(models.Model):
     delivery_address = models.ForeignKey(Address, related_name="delivery_address", null=True)
     billing_address = models.ForeignKey(Address, related_name="billing_address", null=True)
     
+    email = models.CharField(db_index=True, max_length=50, null=True)
+    phone = models.CharField(db_index=True, max_length=15, null=True)
+
     delivery_time = models.DateTimeField()
     driver_instructions = models.TextField(max_length=1024, null=True)
     
@@ -376,6 +383,7 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.created = datetime.datetime.now()
+
         self.updated = datetime.datetime.now()
 
         if self.status >= 1:
@@ -389,6 +397,8 @@ class Order(models.Model):
 
             self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE
 
+        super(Order, self).save(*args, **kwargs)
+        self.order_num = '0' * (6-len(str(self.id))) + str(self.id)
         super(Order, self).save(*args, **kwargs)
     
 class GiftCard(models.Model):
