@@ -266,7 +266,7 @@ def create_order(request, data, user):
         
     except KeyError as e:
         log.error("Failed to create order." + e.message)
-        return custom_error("Failed to place order.")
+        return custom_error(e.message + "is missing.")
 
 def make_payment(order, user):
     try:
