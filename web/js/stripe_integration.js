@@ -22,7 +22,14 @@ function stripeResponseHandler(status, response) {
         $form.find('button').prop('disabled', false);
     } else {
         // response contains id and card, which contains additional card details
-        var token = response.id;
-        saveCreditCardDetails(token);
+        var token = response.id,
+            currentPage = getCurrentPage("/", ".html", window.location.href);
+        if (currentPage == "add_creditcard") {
+            saveCreditCardDetails(token);
+        } else if (currentPage == "checkout") {
+            cardNotSavedCreateOrder(token);
+        }
     }
 };
+
+
