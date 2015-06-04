@@ -133,18 +133,26 @@
                                         </div>
                                         <div class="section2">
                                             <div class="forminput-wrapper">
+                                                <label class="body-text-small">Email</label>
+                                                <input type="email" name="email" class="popup-input" id="guest-email">
+                                            </div>
+                                            <div class="forminput-wrapper">
                                                 <label class="body-text-small">Delivery Address</label>
                                                 <div class="primary-wrapper">
                                                     <input type="checkbox" name="is-primary" class="popup-input checkbox">
-                                                    <span class="checkbox-span">Primary</span>
+                                                    <span class="checkbox-span">Business?</span>
                                                 </div>
                                                 <input type="text" name="street" class="popup-input" id="address-line-1" style="
-                                        margin-bottom: 30px;
-                                        ">
+                                                margin-bottom: 10px;">
                                                 <input type="text" name="building" class="popup-input" id="address-line-2">
                                             </div>
                                         </div>
                                         <div class="section3">
+                                            
+                                            <div class="forminput-wrapper">
+                                                <label class="body-text-small">Zip</label>
+                                                <input type="text" name="zip" class="popup-input">
+                                            </div>
                                             <div class="forminput-wrapper">
                                                 <label class="body-text-small">City</label>
                                                 <div class="styled-select">
@@ -152,10 +160,6 @@
                                                         <option value=""></option>
                                                     </select>
                                                 </div>
-                                            </div>
-                                            <div class="forminput-wrapper">
-                                                <label class="body-text-small">Zip</label>
-                                                <input type="text" name="zip" class="popup-input">
                                             </div>
                                             <div class="forminput-wrapper">
                                                 <label class="body-text-small">Phone</label>
@@ -171,7 +175,7 @@
                         </div>
                         <div class="payment-info">
                             <div class="checkout-header">
-                                <span>PAYMENT METHOD</span>
+                                <span>PAYMENT DETAILS</span>
                             </div>
                             <div class="payment-method-container">
                                 <div class="contents">
@@ -180,6 +184,16 @@
                                         <span class="content-heading"><input type="checkbox" id="pay-using-paypal"/>PAY WITH PAY PAL</span>
                                         <img class='paypal' src="../images/paypal_button.png">
                                     </div> -->
+                                    <div class="accepted-cards-wrapper">
+                                        <label class="body-text-small">Accepted cards</label>
+                                        <div class="accepted-cards">
+                                           <img class='accepted-cards' src="../images/card_icon.png">
+                                           <img class='accepted-cards' src="../images/amex_card_icon.png">
+                                           <img class='accepted-cards' src="../images/card_icon.png">
+                                           <img class='accepted-cards' src="../images/amex_card_icon.png">
+                                           <img class='accepted-cards' src="../images/card_icon.png">
+                                        </div>
+                                    </div>
                                     <div class="credit-card-container">
                                         <span class="content-heading">PAYING WITH CREDIT CARD</span>
                                         <div class="saved-cards"></div>
@@ -194,10 +208,22 @@
                                         <span class="content-heading"><input type="checkbox" id="pay-using-paypal"/>PAY WITH PAY PAL</span>
                                         <img class='paypal' src="../images/paypal_button.png">
                                     </div> -->
+                                    <div class="accepted-cards-wrapper">
+                                        <label class="body-text-small">Accepted cards</label>
+                                        <div class="accepted-cards">
+                                           <img class='accepted-cards' src="../images/card_icon.png">
+                                           <img class='accepted-cards' src="../images/amex_card_icon.png">
+                                           <img class='accepted-cards' src="../images/card_icon.png">
+                                           <img class='accepted-cards' src="../images/amex_card_icon.png">
+                                           <img class='accepted-cards' src="../images/card_icon.png">
+                                        </div>
+                                    </div>
                                     <div class="pay-by-credit-container">
-                                        <input type="radio" id="cc" class='payment-checked' name="payment-radio">
-                                        <span class="content-heading"><input type="checkbox" id="pay-using-card"/>PAY BY CREDIT CARD</span>
                                         <form id="pay-form" action="" method="POST" autocomplete='off'>
+                                            <div class="forminput-wrapper">
+                                                 <label class="body-text-small">Card Holder Name</label>
+                                                <input type="text" name="nameOnCard" class="popup-input" id="name-on-card">
+                                            </div>
                                             <div class="forminput-wrapper">
                                                 <label class="body-text-small">Credit card number</label>
                                                 <input type="text" autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number">
@@ -235,8 +261,8 @@
                                                 </div>
                                             </div>
                                             <div class="forminput-wrapper">
-                                                <label class="body-text-small">Name</label>
-                                                <input type="text" name="nameOnCard" class="popup-input" id="name-on-card">
+                                                <label class="body-text-small">Billing zip</label>
+                                                <input type="text" name="zip" class="popup-input" id="billing-zip">
                                             </div>
                                             <button id='credit-card-submit' type="submit"></button>
                                             <div class="button">
@@ -283,7 +309,7 @@
                             </div>
                             <div class="pickup-content">
                                 <span>
-                                    OUR ADDRESS IS <b>218 EAST 81st ST,10028</b>
+                                    OUR ADDRESS IS <b>218 EAST 81st ST, 10028</b>
                                 </span>
                                 <span>(WE'LL SEND YOU AN SMS WITH THE DETAILS)</span>
                             </div>
@@ -352,7 +378,7 @@
                             </div>
                             <div class="instruction-container">
                                 <span class="content-heading">DRIVER INSTRUCTIONS</span>
-                                <textarea placeholder="Anything that might help our drive to get you faster" id="driver-description"></textarea>
+                                <textarea placeholder="Anything that might help our drive to get you faster?" id="driver-description"></textarea>
                                 <div style="width:100%;text-align:center">
                                     <a href="#" class="btn btn-small-primary medium-green" id="place-order">PLACE ORDER</a>
                                 </div>

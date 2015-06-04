@@ -484,6 +484,7 @@ label {
 
 input[type='radio'] {
   -webkit-appearance:none;
+  -moz-appearance:none;
   width:16px;
   height:16px;
   border:2px solid #9b9b9b;
@@ -501,7 +502,7 @@ input[type='radio']:before {
   border-radius:50%;    
 }
 input[type='radio']:checked:before {
-  background:#A9D77B;;
+  background-color: #A9D77B;;
 }
 /*==============================*\
             &HEADER
@@ -768,7 +769,7 @@ span.icon-menu {
 #meal-tax-error,#chef-name-error,#create-meal-available-error,#create-meal-category-error,
 #create-meal-mealType-error,#chef-image-input-error,#meal-image-input-error,#billing-zip-error,
 #card-number-error,#name-on-card-error,#cvv-number-error,#ExpMonth-error,#ExpYear-error,
-#new-address-error,#tips-video-url-error,#tips-and-tricks-error
+#new-address-error,#tips-video-url-error,#tips-and-tricks-error,#guest-email-error
 {
 	color: #ff7878;
 	background: white;

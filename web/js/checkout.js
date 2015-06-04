@@ -188,7 +188,7 @@ function populateDate(cartItems) {
     dateTime = cartItems.delivery_time.split(" ")[0];
     dateMonth = cartItems.delivery_time.substring(0, 5).replace('-', '/');
     hour = cartItems.delivery_time.substring(11, 13);
-    currentDate = getCurrentDateTime(0).replace(/\//g, "-");
+    currentDate = getCurrentDateTime(0).replace(/\//, "-");
     tomorrowDate = getCurrentDateTime(1).replace(/\//g, "-");
     if (dateTime == currentDate) {
         $('.today-content .checkout-time-button').each(function(key, value) {
