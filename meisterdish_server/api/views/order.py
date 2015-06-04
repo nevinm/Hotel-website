@@ -86,7 +86,7 @@ def get_orders(request, data, user=None):
                   "description": cart_item.meal.description,
                   "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
                   "available": 1 if cart_item.meal.available else 0,
-                  "category": cart_item.meal.category.name.title(),
+                  "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
                   "price": cart_item.meal.price,
                   "tax": cart_item.meal.tax,
                   "quantity":cart_item.quantity,
@@ -108,7 +108,7 @@ def get_orders(request, data, user=None):
                 "order_num" : order.order_num,
                 "meals":meals,
                 "delivery_address" : {
-                     "id":order.delivery_address.id,
+                     "id":order.delivery_address.id ,
                      "first_name":order.delivery_address.first_name,
                      "last_name":order.delivery_address.last_name,
                      "street":order.delivery_address.street,
@@ -117,7 +117,7 @@ def get_orders(request, data, user=None):
                      "state":order.delivery_address.city.state.name,
                      "zip":order.delivery_address.zip,
                      "phone":order.delivery_address.phone,
-                    },
+                    } if order.delivery_address else "",
                 "billing_address" : {
                      "id":order.billing_address.id,
                      "first_name":order.billing_address.first_name,
@@ -128,7 +128,7 @@ def get_orders(request, data, user=None):
                      "state":order.billing_address.city.state.name,
                      "zip":order.billing_address.zip,
                      "phone":order.billing_address.phone,
-                    }
+                    } if order.billing_address else "",
                 })
 
         #End format response
@@ -141,7 +141,7 @@ def get_orders(request, data, user=None):
                               "current_page":page,
                               "per_page" : limit,
                               })
-    except Exception as e:
+    except KeyError as e:
     	log.error("Failed to list orders." + e.message)
     	return custom_error("Failed to get orders list.")
 
@@ -205,10 +205,15 @@ def create_order(request, data, user):
 
         order.total_amount = total_price + total_tax + tip + settings.SHIPPING_CHARGE
         
+        if order.cart.promo_code:
+            order.discount +=  order.cart.promo_code.amount
+
         #Payment
-        order.token = data["stripeToken"].strip()
         order.save_card = bool(data.get("save_card", 0))
         order.card_id = data.get("card_id", False)
+        
+        if not order.card_id:
+            order.token = data["stripeToken"].strip()
 
         payment = make_payment(order, user)
             
@@ -241,7 +246,7 @@ def make_payment(order, user):
             else:
                 #Add the entered card to the exising customer
                 card = customer.sources.create(source=order.token)
-        else:
+        elif not order.card_id:
             #Create new customer
             customer = stripe.Customer.create(
                 source=order.token,
@@ -271,7 +276,7 @@ def make_payment(order, user):
 
 
         response = stripe.Charge.create(
-            amount=order.total_amount * 100, #Cents
+            amount=int(order.total_amount * 100), #Cents
             currency="usd",
             customer=customer.id,
             source = card.id
@@ -287,7 +292,7 @@ def make_payment(order, user):
 def save_payment_data(data):
     try:
         payment =Payment()
-        payment.response = json.dumps(data)
+        payment.response = simplejson.dumps(data)
         payment.transaction_id = ""
         payment.transaction_date = datetime.fromtimestamp(data["created"])
         payment.amount = data["amount"]
