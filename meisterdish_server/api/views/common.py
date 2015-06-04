@@ -111,6 +111,7 @@ def signup(request, data):
         email = data['email'].strip().lower()
         first_name = data['first_name'].strip()
         last_name = data['last_name'].strip()
+        zipcode = data.get("zipcode", False)
         
         fb = False
         fb_id = ""
@@ -140,6 +141,8 @@ def signup(request, data):
             user.role = Role.objects.get(pk=2)
             user.fb_user_id = fb_id
             user.profile_image = profile_image
+            if zipcode:
+                user.zipcode = zipcode
             user.save()
             
             user_dic = {"id":user.id,
