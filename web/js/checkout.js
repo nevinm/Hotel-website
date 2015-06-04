@@ -782,9 +782,9 @@ function createOrderParams() {
         selected_time = "0" + $today_content.attr("data-hr") + ":" + "00" + ":" + "00";
         deliveryTime = selected_day + " " + selected_time;
     } else {
-        selected_day = $weekDatecontent.val();
+        selected_day = $weekTimecontent.attr("data-date");
         selected_time = "0" + $weekTimecontent.attr("data-hr") + ":" + "00" + ":" + "00";
-        deliveryTime = selected_day + "/" + getCurrentYear() + " " + selected_time;
+        deliveryTime = selected_day + " " + selected_time;
     }
     if ($('input:checkbox[name=save-card-details]').prop('checked')) {
         saveParam = 1;
