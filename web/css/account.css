@@ -1028,6 +1028,9 @@ form#pay-form {
   width: 100%;
   float: left;
 }
+#credit-card-submit{
+	display: none;
+}
 .pay-by-credit-container{
 	padding-top: 30px;
 	width: 80%;

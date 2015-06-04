@@ -238,9 +238,9 @@
                                                 <label class="body-text-small">Name</label>
                                                 <input type="text" name="nameOnCard" class="popup-input" id="name-on-card">
                                             </div>
-                                            <button type="submit">Submit Payment</button>
+                                            <button id='credit-card-submit' type="submit"></button>
                                             <div class="button">
-                                                <!--  <input type="checkbox" name="save-card-details" id="save-credit-card" disabled="disabled"><span>Save card details?</span> -->
+                                                 <input type="checkbox" name="save-card-details" id="save-credit-card"><span>Save card details?</span>
                                             </div>
                                         </form>
                                     </div>
@@ -256,7 +256,7 @@
                             <div class="contents contents-time-date">
                                 <div class="select-delivery-method">
                                     <div class="pickup">
-                                        <input type="radio" name="delivery-method" data-type='pickup'i d="pickup-radio"><span>PICKUP</span>
+                                        <input type="radio" name="delivery-method" data-type='pickup'id="pickup-radio"><span>PICKUP</span>
                                     </div>
                                     <div class="delivery">
                                         <input type="radio" checked="checked" name="delivery-method" data-type='delivery' id="delivery-radio"><span>DELIVERY</span>
@@ -399,8 +399,8 @@
     <script type="text/javascript" src='../js/ajax_reusable.js'></script>
     <script type="text/javascript" src='../js/common.js'></script>
     <script type="text/javascript" src='../js/account.js'></script>
-    <script type="text/javascript" src='../js/checkout.js'></script>
     <script type="text/javascript" src='../js/stripe_integration.js'></script>
+    <script type="text/javascript" src='../js/checkout.js'></script>
 </body>
 
 </html>
