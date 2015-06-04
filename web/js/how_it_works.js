@@ -123,8 +123,8 @@ $(document).ready(function() {
 		else{
 			$('.backNav-mobile').hide();
 			$('.tab-header-drop-down').hide();
-			// $('.next-sub-tab').hide();
-			// $('.prev-sub-tab').hide();
+			$('.next-sub-tab').hide();
+			$('.prev-sub-tab').hide();
 		}
 	})
 function tabRendering() {
