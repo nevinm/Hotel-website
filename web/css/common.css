@@ -477,6 +477,11 @@ label {
     display: none;
     margin-top: -10px;
 }
+.login-signup .btn-small-secondary{
+    color: #fff;
+    border:none;
+    background-color: #BEE09B;
+}
 .max-width-adjust {
 	width: 90% !important;
 	max-width: 1100px;

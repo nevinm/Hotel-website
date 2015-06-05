@@ -1409,6 +1409,15 @@ form#guest-address-info #address-line-2-error{
 }
 img.accepted-cards {
 	height: auto;
+	margin-right: 5px;
+}
+.accepted-cards-wrapper,.accepted-cards-list{
+	width: 100%;
+	float: left;
+	padding-bottom: 10px;
+}
+.accepted-cards-wrapper .body-text-small{
+	padding-left: 0;
 }
 /*==================================*\
 			&TABLET

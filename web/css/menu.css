@@ -40,7 +40,7 @@
 \*==============================*/
 #header{
     position: relative !important;
-    border-bottom: none;
+    border-bottom: 1px solid #ededed;
 }
 .meal-area{
     overflow: auto;
@@ -87,6 +87,7 @@
     color: #6B6B6B;
     box-shadow: 0 0 3px #b0b0b0;
     border-top: 1px solid #ededed;
+    display: none;
 }
 
 .subMenu ul li.menu-categories-list {
