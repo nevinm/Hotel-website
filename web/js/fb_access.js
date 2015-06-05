@@ -68,7 +68,7 @@ var loginFBCallback = {
             showPopup(userDetails);
         } else {
             showPopup(userDetails);
-            var user_name = userDetails.user.first_name + ' ' + userDetails.user.last_name;
+            var user_name = userDetails.user.first_name;
             localStorage['username'] = user_name;
             if (localStorage.getItem("session_key") === null) {
                 localStorage['session_key']=userDetails.session_key;
@@ -137,8 +137,3 @@ function fbLogin() {
         scope: 'publish_stream,email'
     });
 }
-
-$(window).load(function(){
-
-});
-
