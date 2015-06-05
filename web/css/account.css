@@ -1024,7 +1024,7 @@ form.addaddress-popup {
 	left: 30px;
 
 }
-form#pay-form {
+form#pay-form,form#credit-card-form {
   width: 100%;
   float: left;
 }
@@ -1407,7 +1407,8 @@ form#guest-address-info #address-line-2-error{
   	display: none;
   	padding:20px 0;
 }
-img.accepted-cards {
+img.accepted-cards
+ {
 	height: auto;
 	margin-right: 5px;
 }
@@ -1418,6 +1419,34 @@ img.accepted-cards {
 }
 .accepted-cards-wrapper .body-text-small{
 	padding-left: 0;
+}
+.card-list-container .pay-by-credit-container .forminput-wrapper:first-child{
+	float: left;
+	width: 68%;
+	padding-bottom: 0;
+}
+.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(2){
+	width: 28%;
+	margin-left: 4%;
+}
+.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(3){
+	padding-top: 20px;
+	width: 30%;
+	margin-left: 0;
+}
+.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(3) .styled-select,
+.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(5) .styled-select{
+	background-position: 97% 50%;
+}
+.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(5){
+	padding-top: 43px;
+	width: 28%;
+	margin-right: 4%;
+}
+.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(6){
+	padding-top: 20px;
+	width: 34%;
+	margin-right: 0;
 }
 /*==================================*\
 			&TABLET
@@ -1686,7 +1715,7 @@ img.accepted-cards {
 	.pay-by-credit-container{
 		width: 100%;
 	}
-	form#pay-form{
+	form#pay-form,form#credit-card-from{
 		padding-bottom: 20px;
 	}
 	#guest-address-info{

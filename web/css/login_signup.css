@@ -17,7 +17,7 @@
     background-color: #fff;
     margin-top: 150px;
     border-radius: 4px;
-    max-width: 400px;
+    max-width: 470px;
 }
 .login-wrapper h3{
 	color: #6B6B6B;
@@ -35,19 +35,19 @@
   padding-left: 35px;
   width: 100%;
   float: left;
-  padding-top: 30px;
+  padding-top: 20px;
+  padding-right: 35px;
 }
 .username-wrapper, .password-wrapper{
   width: 100%;
   float: left;
-  padding-right: 20px;
   position: relative;
 }
 .password-wrapper{
   margin-top: 10px;
 }
 .username-wrapper input, .password-wrapper input{
-  width: 60%;
+  width: 100%;
 }
 .fb-signupButton img{
   
@@ -63,7 +63,7 @@ span.forgot-password{
   width: 90%;
   margin: 0 auto;
   margin-top: 150px;
-  max-width: 400px;
+  max-width: 470px;
 }
 .signup-container{
   background-color: #ffffff;
@@ -72,14 +72,34 @@ span.forgot-password{
   float: left;
   width: 100%;
 }
+.signup-container .header-small,.login-wrapper .header-small {
+  text-align: center;
+  padding-right: 35px;
+  color: #6B6B6B;
+  font-weight: normal
+}
+.signup-container .header-small h4,.login-wrapper .header-small h4{
+  font-family: 'BrandonGrotesque-Bold';
+}
 .fb-signupButton{
   margin-top: 10px;
+  text-align: center;
+  padding: 20px 0;
 }
 .facebook-signup,.facebook-login{
   font-family: 'BrandonGrotesque-Bold';
   font-size: 12px;
-  padding: 20px 0 10px 35px;
   color: #737475;
+  text-align: center;
+  padding: 10px 35px;
+  width: 100%;
+  float: left;
+  padding-bottom: 20px;
+}
+.facebook-signup span.body-text-small{
+  padding:20px 0;
+  width: 100%;
+  float: left;
 }
 span.login-link {
   color: #A9D77B;
@@ -89,17 +109,19 @@ span.or p{
   color: #5A5555;
   padding-left: 35px;
   font-family: 'BrandonGrotesque-Bold';
+  padding-right: 35px;
+  text-align: center;
 }
 form.signup-formcontainer {
   padding-left: 35px;
   width: 100%;
   float: left;
-  padding-top: 30px;
+  padding-top: 20px;
+  padding-right: 35px;
 }
 .signup-input {
-  width: 164px;
+  width: 48%;
   float: left;
-  padding-right: 20px;
   position: relative;
 }
 .email-wrapper {
@@ -112,13 +134,28 @@ form.signup-formcontainer {
   /*padding: 10px 0px 20px 0px;*/
   padding: 10px 0;
 }
+.login-button .btn-large-primary{
+  width: 100%;
+}
 .email-wrapper .signup-input:nth-child(2){
   margin-top: 10px;
+  width: 48%;
+  margin-right: 4%;
+}
+.email-wrapper .signup-input:nth-child(3){
+  margin-top: 10px;
+  width: 48%;
 }
 .email-wrapper .signup-input{
-    width: 235px;
+    width: 100%;
 }
-
+.signup-formcontainer .marginRight{
+  margin-right: 4%;
+}
+.login-signup .btn-small-secondary:hover{
+  color: #fff;
+  background-color:#A9D77B;
+}
 /*==================================*\
       &RESET PASSWORD
 \*==================================*/
@@ -212,15 +249,15 @@ hr{
   }*/
   .facebook-signup, .facebook-login{
     text-align: center;
-    padding: 0;
-    padding-top: 30px;
+    /*padding: 0;
+    padding-top: 30px;*/
   }
   span.or{
     width: 100%;
     position: relative;
     padding: 0;
     float: left;
-    margin-top: 30px;
+    /*margin-top: 30px;*/
   }
   span.or p{
     position: absolute;
@@ -242,7 +279,7 @@ hr{
   }
   #login-form,form.signup-formcontainer {
     width: 90%;
-    padding: 30px 0;
+    padding: 5px 0;
     margin: 0 auto;
     overflow: hidden;
     float: none;
