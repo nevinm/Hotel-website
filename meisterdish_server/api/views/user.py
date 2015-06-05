@@ -402,7 +402,7 @@ def get_saved_cards(request, data, user):
                 "expire_month" : card.expire_month,
                 "expire_year" : card.expire_year,
                 "type" : card.card_type,
-                "logo" : settings.STATIC_URL + "default/"+card.card_type.lower()+".png",
+                "logo" : settings.STATIC_URL + "default/"+card.card_type.lower().replace(" ", "_")+".png",
                 })
         return json_response({"cards":cards_list, "status":1})
     except Exception as e:
