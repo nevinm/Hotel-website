@@ -429,9 +429,10 @@ def update_order(request, data, user, order_id):
     try:
         order = Order.objects.get(pk=order_id, is_deleted=False, cart__completed=True)
         if "produced_meals" in data and len(data["produced_meals"]):
+            """ TODO
             if user.role.id != settings.ROLE_KITCHEN:
-                return custom_error("You are not authorized to do this operation.")
-
+                return custom_error("Only the kitchen staff is authorized to do this operation.")
+            """
             for order_meal in data["meals"]:
                 cart_item = order.cart.cartitem_set.filter(meals__pk=order_meal["id"])
                 cart_item.produced = True
