@@ -405,7 +405,7 @@ def get_saved_cards(request, data, user):
                 "logo" : settings.STATIC_URL + "default/"+card.card_type.lower().replace(" ", "_")+".png",
                 })
         return json_response({"cards":cards_list, "status":1})
-    except Exception as e:
+    except KeyError as e:
         log.error("List CC: user "+str(user.id) + " : "+ e.message)
         return custom_error("Failed to list saved cards.")
 
