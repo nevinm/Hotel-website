@@ -1448,6 +1448,9 @@ img.accepted-cards
 	width: 34%;
 	margin-right: 0;
 }
+#update-payment{
+	display: none;
+}
 /*==================================*\
 			&TABLET
 \*==================================*/
