@@ -129,10 +129,18 @@ $(document).ready(function() {
         e.preventDefault();
     });
     $('#pickup-radio').on("click", function() {
+        $("#guest-address-info").find("input").not("#guest-email, #guest-phone").attr("disabled", "disabled");
+        $("#guest-address-info").find("input").not("#guest-email, #guest-phone").addClass("button-disabled");
         $('.pickup-content').show();
+        $("#add-guest-address").hide();
+        $(".city-selector-container").hide();
     })
     $('#delivery-radio').on("click", function() {
+        $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeAttr("disabled");
+        $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeClass("button-disabled");
         $('.pickup-content').hide();
+        $("#add-guest-address").show();
+        $(".city-selector-container").show();
     })
 });
 
@@ -188,7 +196,7 @@ function populateDate(cartItems) {
     dateTime = cartItems.delivery_time.split(" ")[0];
     dateMonth = cartItems.delivery_time.substring(0, 5).replace('-', '/');
     hour = cartItems.delivery_time.substring(11, 13);
-    currentDate = getCurrentDateTime(0).replace(/\//g, "-");
+    currentDate = getCurrentDateTime(0).replace(/\//, "-");
     tomorrowDate = getCurrentDateTime(1).replace(/\//g, "-");
     if (dateTime == currentDate) {
         $('.today-content .checkout-time-button').each(function(key, value) {
@@ -553,6 +561,11 @@ function popuplateAddressList(data) {
             localStorage['delivery_addressess'] = data;
             populateAddresstoInfoContainer(userDetails);
         } else {
+            if (!(localStorage.getItem('user_profile') === null)) {
+                var userProfile = JSON.parse(localStorage['user_profile']);
+                $(".address-info-guest").find("#guest-email").val(userProfile.email);
+                $(".address-info-guest").find("#guest-phone").val(userProfile.mobile);
+            } else {}
             $('.address-info').hide();
             $('.address-info-guest').show();
             haveAccountCheck();
@@ -669,6 +682,7 @@ function addAddress() {
             "last_name": newAddress.last_name,
             "phone": newAddress.phone,
             "zip": newAddress.zip,
+            "email": newAddress.email,
             "city_id": newAddress.city_id,
             "street": newAddress.street,
             "building": newAddress.building,
@@ -690,6 +704,7 @@ function getNewAddress() {
         phone: $addressContainer.find("input[name*='phonenumber']").val(),
         zip: $addressContainer.find("input[name*='zip']").val(),
         street: $addressContainer.find("input[name*='street']").val(),
+        email: $("#guest-email").val(),
         city_id: cityId,
         building: $addressContainer.find("input[name*='building']").val(),
         is_primary: $addressContainer.find("input[type*='checkbox']").val() == "on" ? 1 : 0,
@@ -775,7 +790,9 @@ function createOrderParams() {
         card_number = $('#card-number').val(),
         cvv = $('#cvv-number').val(),
         Exp_month = $("#ExpMonth").val(),
-        Exp_year = $("#ExpYear option:selected").text();
+        Exp_year = $("#ExpYear option:selected").text(),
+        phoneNumber = $("#guest-phone").val(),
+        email = $("#guest-email").val();
 
     if ($today_content.length) {
         selected_day = $today_content.attr("data-date");
@@ -809,7 +826,9 @@ function createOrderParams() {
         "number": card_number,
         "exp_month": Exp_month,
         "cvv2": $('#cvv-number').val(),
-        "exp_year": Exp_year
+        "exp_year": Exp_year,
+        "email": email,
+        "phone": phoneNumber
     }
 }
 
@@ -834,6 +853,8 @@ function cardSavedParams() {
         "delivery_time": totalOrderParams.delivery_time,
         "billing_address": totalOrderParams.billing_address,
         "delivery_address": totalOrderParams.delivery_address,
+        "email": totalOrderParams.email,
+        "phone": totalOrderParams.phone,
         "payment_type": "cc", // OR "cc"
         "tip": totalOrderParams.tip, //Optional
         "delivery_type": totalOrderParams.delivery_type,
@@ -852,6 +873,8 @@ function cardNotSavedCreateOrder(token) {
         "delivery_time": totalOrderParams.delivery_time,
         "billing_address": totalOrderParams.billing_address,
         "delivery_address": totalOrderParams.delivery_address,
+        "email": totalOrderParams.email,
+        "phone": totalOrderParams.phone,
         "payment_type": "cc", // OR "cc"
         "tip": totalOrderParams.tip, //Optional
         "delivery_type": totalOrderParams.delivery_type,
@@ -918,11 +941,12 @@ function validateOrder() {
         showPopup(data);
         return false;
     }
-
-    if (!$(".address-added").length) {
-        data.message = "Add an address then proceed";
-        showPopup(data);
-        return false;
+    if ($("#delivery-radio:checked").is(":checked")) {
+        if (!$(".address-added").length) {
+            data.message = "Add an address then proceed";
+            showPopup(data);
+            return false;
+        }
     }
     return true;
 }

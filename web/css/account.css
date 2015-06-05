@@ -642,7 +642,7 @@ form.addaddress-popup {
 	border: 1px solid #ddd;
 	border-radius: 4px;
 }
-#address-line-1-error {
+#address-line-1-error,#address-line-2-error {
 	width: 200px;
 	left: 0;
 }
@@ -928,7 +928,7 @@ form.addaddress-popup {
 }
 .price-container{
 	font-family: 'BrandonGrotesque-Bold';
-	color: #b0b0b0;
+	color: #888;
 	float: left;
 	width: 30px;
 }
@@ -1032,7 +1032,7 @@ form#pay-form {
 	display: none;
 }
 .pay-by-credit-container{
-	padding-top: 30px;
+	padding-top: 20px;
 	width: 80%;
 	position: relative;
 	float: left;
@@ -1043,18 +1043,23 @@ form#pay-form {
 }
 .pay-by-credit-container .forminput-wrapper:first-child{
 	float: left;
-	width: 68%;
+	width: 100%;
+	padding-bottom: 20px;
 }
 .pay-by-credit-container .forminput-wrapper:nth-child(2){
+	float: left;
+	width: 68%;
+}
+.pay-by-credit-container .forminput-wrapper:nth-child(3){
 	width: 28%;
 	margin-left: 4%;
 }
-.pay-by-credit-container .forminput-wrapper:nth-child(3){
+.pay-by-credit-container .forminput-wrapper:nth-child(4){
 	padding-top: 20px;
 	width: 30%;
 }
-.pay-by-credit-container .forminput-wrapper:nth-child(3) .styled-select,
-.pay-by-credit-container .forminput-wrapper:nth-child(5) .styled-select{
+.pay-by-credit-container .forminput-wrapper:nth-child(4) .styled-select,
+.pay-by-credit-container .forminput-wrapper:nth-child(6) .styled-select{
 	background-position: 97% 50%;
 }
 .pay-by-credit-container .div{
@@ -1065,12 +1070,12 @@ form#pay-form {
 	color: #b0b0b0;
 	text-align: center;
 }
-.pay-by-credit-container .forminput-wrapper:nth-child(5){
+.pay-by-credit-container .forminput-wrapper:nth-child(6){
 	padding-top: 43px;
 	width: 28%;
 	margin-right: 4%;
 }
-.pay-by-credit-container .forminput-wrapper:nth-child(6){
+.pay-by-credit-container .forminput-wrapper:nth-child(7){
 	padding-top: 20px;
 	width: 34%;
 }
@@ -1092,6 +1097,9 @@ form#pay-form {
 .gift-card-container,.total-container,.instruction-container{
 	padding: 2% 5%;
 	overflow: hidden;
+}
+.instruction-container {
+	padding-top: 20px;
 }
 .driver-tip-container .styled-select{
 	background: url(../images/selector_arrow.png) no-repeat 57px 6px #f7f7f7;
@@ -1301,8 +1309,9 @@ input.radio-button-payment {
 .ok-container{
 	display: none;
 }
-form#guest-address-info #address-line-1-error{
-	bottom: 97px;
+form#guest-address-info #address-line-1-error,
+form#guest-address-info #address-line-2-error{
+	bottom: 76px;
 }
 .select-delivery-method{
 	font-family: 'BrandonGrotesque-Bold';
@@ -1365,6 +1374,7 @@ form#guest-address-info #address-line-1-error{
   width: 100%;
   float: left;
   padding-bottom: 30px;
+  letter-spacing: .7px;
   display: none;
 }
 .pickup-content span{
@@ -1396,6 +1406,18 @@ form#guest-address-info #address-line-1-error{
   	float: left;
   	display: none;
   	padding:20px 0;
+}
+img.accepted-cards {
+	height: auto;
+	margin-right: 5px;
+}
+.accepted-cards-wrapper,.accepted-cards-list{
+	width: 100%;
+	float: left;
+	padding-bottom: 10px;
+}
+.accepted-cards-wrapper .body-text-small{
+	padding-left: 0;
 }
 /*==================================*\
 			&TABLET

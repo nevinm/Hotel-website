@@ -75,6 +75,10 @@
 #what-you-get .contentWrapper {
 	left: 50%;
 }
+img.image-small{
+	width: 32.5%;
+	height: auto;
+}
 .contentWrapper .h0{
 	color: #6b6b6b;
 	font-size: 50px;
@@ -83,13 +87,20 @@
 	border: 1px solid rgb(208, 208, 208);
 	box-shadow: rgb(208, 208, 208) 0px 0px 4px;
 	border-radius: 5px;
-	width: 77%;
+	width: 69%;
 	background-color:rgba(255, 255, 255, 0.85);
 	padding: 20px;
 }
 .box-contentWrapper h3{
 	font-weight: normal;
 	padding-bottom: 10px; 
+}
+#what-you-get .box-contentWrapper{
+	width: 77%;
+}
+#what-you-get .h0{
+	width: 77%;
+	text-align: right;
 }
 .button-container {
 	padding-top: 20px;
@@ -144,7 +155,8 @@
 	width: 80%;
 }
 #we-source .h0,#our-suppliers .h0,
-#what-you-get .h0,#we-deliver .h0{
+#what-you-get .h0,#we-deliver .h0,
+#we-inspire .h0{
 	color: #fff;
 }
 #our-suppliers .contentWrapper .box-contentWrapper{
@@ -266,7 +278,7 @@
 	}
 	.box-contentWrapper,.tab-header-drop-down ul,
 	.tab-header-drop-down ul li,.tab-header-drop-down ul li a{
-		width: 100%;
+		width: 100% !important;
 	}
 	.tab-header-drop-down ul li a:first-child{
 		border-bottom: 2px solid #A9D77B;
