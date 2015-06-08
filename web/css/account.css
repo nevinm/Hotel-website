@@ -1555,7 +1555,7 @@ img.accepted-cards
 	}
 	.backNav-mobile span:first-child {
 		float: left;
-		 margin-top: 15px;
+		 margin-top: 26px;
 		padding-left: 20px;
 	}
 	.backNav-mobile span:nth-child(2) {
@@ -1563,7 +1563,7 @@ img.accepted-cards
 		font-size: 16px;
 		color: #353535;
 		float: left;
-		margin-top: 13px;
+		margin-top: 24px;
 		/* padding-left: 0px; */
 		margin-left: 13px;
 	}

@@ -21,11 +21,11 @@ function checkIfEdit() {
         savedCardDetails(card_id);      
         $("#update-credit-card").addClass('show');
         $("#add-credit-card").hide();
+        return card_id;
     }else{
         $("#update-credit-card").hide();
         $("#add-credit-card").addClass('show');
     }
-    return card_id;
 }
 
 function populateYear() {
