@@ -170,15 +170,15 @@ function setCurrentTime() {
     });
 
     //Setting the correct date.
-    var currentDate = getMonthDate(getCurrentDateTime(0));
-    $(".today-content .content-heading").text("TODAY " + currentDate);
+    var currentDate = getCurrentDateMonth(0);
+    $(".today-content .content-heading").text("TODAY - " + currentDate);
     $('.today-content').find('.checkout-time-button').each(function(key, value) {
         $(value).attr("data-date", getMonthDate(getCurrentDateTime(0)) + "/" + getCurrentYear());
     });
 
     //Setting the future dates and blocking the dates other than tomorrow.
-    var tomorrowDate = getMonthDate(getCurrentDateTime(1));
-    $(".week-content .content-heading").text("TOMORROW " + tomorrowDate);
+    var tomorrowDate = getCurrentDateMonth(1);
+    $(".week-content .content-heading").text("TOMORROW - " + tomorrowDate);
     $(".week-content .checkout-time-button").each(function(key, value) {
         $(value).attr("data-date", getMonthDate(getCurrentDateTime(1)) + "/" + getCurrentYear());
     });
@@ -510,12 +510,16 @@ $(window).load(function() {
 function mobileResponsive() {
     if ($(window).width() <= 767 && $(window).width() >= 320) {
         $('.delivery-info-container').removeClass('box-border');
+        $('.delivery-time-container').removeClass('box-border');
         $('.delivery-info').addClass('box-border');
         $('.payment-info').addClass('box-border');
+        $('.time-container').addClass('box-border');
     } else {
+        $('.delivery-time-container').addClass('box-border');
         $('.delivery-info-container').addClass('box-border');
         $('.delivery-info').removeClass('box-border');
         $('.payment-info').removeClass('box-border');
+        $('.time-container').removeClass('box-border');
     }
 }
 

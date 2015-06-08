@@ -105,6 +105,7 @@ function getNewAddressFromForm() {
         city_id: $addressPopup.find(".city-selector").val(),
         building: $addressPopup.find("input[name*='building']").val(),
         is_primary: $addressPopup.find("input[type*='checkbox']").val() == "on" ? 1 : 0,
+        email: JSON.parse(localStorage['user_profile']).email
     }
     return newAddress;
 }
@@ -123,7 +124,8 @@ function addAddress() {
             "city_id": newAddress.city_id,
             "street": newAddress.street,
             "building": newAddress.building,
-            "is_primary": newAddress.is_primary
+            "is_primary": newAddress.is_primary,
+            "email" : newAddress.email
         };
     data = JSON.stringify(userData);
     var addAddressInstance = new AjaxHttpSender();
@@ -279,9 +281,12 @@ $(document).ready(function() {
 
     $("#savepopup-data").on('click', function(e) {
         e.preventDefault();
-        var currentId = $(this).attr("data-id");
+        var currentId = $(this).attr("data-id"),isPrimary=0;
         if ($('form.addaddress-popup').valid()) {
-            editAddress(currentId);
+            if($("input[name='is-primary']").is(":checked")){
+                isPrimary=1;
+            }
+            editAddress(currentId ,isPrimary);
         }
     });
 

@@ -10,6 +10,7 @@
 
 .small-profile-pic{
 	height: 148px;
+	max-width: 250px;
 	float: left;
 	margin-top: 15px;
 	margin-right: 30px;
@@ -22,9 +23,9 @@
 	/*float: left;*/
 	width: 100%;
 	-webkit-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
--moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
-margin-bottom: 30px;
+	-moz-box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+	box-shadow: 0px 4px 15px -4px rgba(117,117,117,1);
+	margin-bottom: 30px;
 }
 .account-header{
 	border-bottom: 1px solid #D0D0D0;
@@ -303,6 +304,7 @@ ol{
 	max-height: 140px;
 	font-weight: normal;
 	margin-top: -6px;
+	word-break:break-word;
 }
 /*ol li{
 	list-style-type: decimal;
@@ -644,7 +646,7 @@ form.addaddress-popup {
 }
 #address-line-1-error,#address-line-2-error {
 	width: 200px;
-	left: 0;
+	left: -9px;
 }
 .section3 .forminput-wrapper .styled-select-state{
 	width: 134px;
@@ -815,6 +817,11 @@ form.addaddress-popup {
 	padding: 10px 0;
 	padding-left: 20px;
 }
+
+.today-content .content-heading, .week-content .content-heading{
+	  text-transform: uppercase;
+}
+
 .checkout-time-button {
 	padding: 9px 0px;
 	font-family: 'ProximaNova-semibold';
@@ -938,8 +945,10 @@ form.addaddress-popup {
   color: #b0b0b0;
   font-size: 12px;
   float: left;
-  min-height: 260px;
+  min-height: 278px;
   position: relative;
+  word-break:break-word;
+
 }
 .address-info-guest .content-heading{
 	text-transform: uppercase;
@@ -952,6 +961,8 @@ form.addaddress-popup {
 	width: 100%;
 	float: left;
 	line-height: 20px;
+	max-width: 300px;
+	word-break: break-word;
 }
 .change-address-payment{
 	font-family: 'BrandonGrotesque-Regular';
@@ -1197,8 +1208,8 @@ input.radio-button-payment {
   width: 100%;
   float: left;
   overflow-y: auto;
-  height: 145px;
-  margin-bottom: 20px;
+  height: 105px;
+  margin-bottom: 40px;
 }
 .saved-cards label {
 	float: left;
@@ -1208,6 +1219,7 @@ input.radio-button-payment {
 .saved-card-list{
 	width: 100%;
 	float: left;
+	padding-top: 5px;
 }
 #change-address,#change-payment-method{
   cursor: pointer;
@@ -1391,6 +1403,7 @@ form#guest-address-info #address-line-2-error{
 .card-details-small{
 	float: left;
 	padding-left: 20px;
+	cursor: pointer;
 }
 .card-details-small .body-text-small{
 	line-height: 10px;
@@ -1419,6 +1432,7 @@ img.accepted-cards
 }
 .accepted-cards-wrapper .body-text-small{
 	padding-left: 0;
+	margin-bottom: 20px;
 }
 .card-list-container .pay-by-credit-container .forminput-wrapper:first-child{
 	float: left;
@@ -1448,6 +1462,16 @@ img.accepted-cards
 	width: 34%;
 	margin-right: 0;
 }
+#update-payment {
+  display: none;
+  float: left;
+  margin-right: 5px;
+}
+#update-credit-card,#add-credit-card{
+	display: none;
+	width: 20%;
+}
+
 /*==================================*\
 			&TABLET
 \*==================================*/
@@ -1531,7 +1555,7 @@ img.accepted-cards
 	}
 	.backNav-mobile span:first-child {
 		float: left;
-		 margin-top: 15px;
+		 margin-top: 26px;
 		padding-left: 20px;
 	}
 	.backNav-mobile span:nth-child(2) {
@@ -1539,7 +1563,7 @@ img.accepted-cards
 		font-size: 16px;
 		color: #353535;
 		float: left;
-		margin-top: 13px;
+		margin-top: 24px;
 		/* padding-left: 0px; */
 		margin-left: 13px;
 	}
@@ -1773,6 +1797,9 @@ img.accepted-cards
 	}
 	#add-new-paymentmethod{
 		display: none;
+	}
+	.accepted-cards{
+		width: 40px;
 	}
 }
   	@media (max-width:400px){

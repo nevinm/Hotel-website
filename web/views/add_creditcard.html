@@ -129,14 +129,14 @@
                     <div class="card-list-container">
                         <div class="pay-by-credit-container">
                             <span class="content-heading">ADD A CREDIT CARD</span>
-                            <form id="credit-card-form" autocomplete='off'>
+                            <form id="pay-form" autocomplete='off'>
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">Credit card number</label>
-                                    <input type="text" autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number">
+                                    <input type="text" name='cardnumber' autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number">
                                 </div>
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">CVV</label>
-                                    <input type="password" size="4" autocomplete="off" data-stripe="cvc" class="popup-input" id="cvv-number">
+                                    <input type="password" name='cvv' size="4" autocomplete="off" data-stripe="cvc" class="popup-input" id="cvv-number">
                                 </div>
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">Expiry Date</label>
@@ -161,7 +161,7 @@
                                 <span class="div">/</span>
                                 <div class="forminput-wrapper">
                                     <div class="styled-select">
-                                        <select id="ExpYear" data-stripe="exp-year">
+                                        <select id="ExpYear" name='expiryYear' data-stripe="exp-year">
                                             <option value=""></option>
                                         </select>
                                     </div>
@@ -171,7 +171,8 @@
                                     <input type="text" name="nameOnCard" class="popup-input" id="name-on-card">
                                 </div>
                                 <div class="button-container">
-                                    <a href="#" onclick="$(this).closest('form').submit()" class="btn btn-small-extended medium-green">ADD</a>
+                                    <a href="#" onclick="$(this).closest('form').submit()" class="btn btn-small-extended medium-green" id="add-credit-card">ADD</a>
+                                    <input type='submit' class="btn btn-small-extended medium-green" id='update-credit-card' value="UPDATE">
                                 </div>
                             </form>
                         </div>

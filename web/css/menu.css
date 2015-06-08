@@ -50,10 +50,9 @@
     padding: 20px 0;
 }
 
-.menu-header h3{
-    font-size: 24px;
+.menu-header h1{
     color: #6B6B6B;
-    font-family: 'BrandonGrotesque-Bold';
+    font-size: 24px;
 }
 .menu-header h2{
     color: #6B6B6B;
@@ -245,12 +244,11 @@
 	float: right;
 	padding-bottom: 10px;
 }
-.menu-loading-gif,{
+.menu-loading-gif{
 	width: 100%;
 	overflow: hidden;
 	text-align: center;
-    margin-left: 30px;
-	display: none;
+	/*display: none;*/
 }
 .subMenu .category-header{
 	display: none;
@@ -325,14 +323,6 @@
 .menu-pagination {
     float: right;
     padding-bottom: 10px;
-}
-
-.menu-loading-gif,
-{
-    width: 100%;
-    overflow: hidden;
-    text-align: center;
-    display: none;
 }
 
 .subMenu .category-header {
@@ -452,7 +442,7 @@
         font-family: 'BrandonGrotesque-Bold';
         display: block;
         color: #5A5A5A;
-        margin-top: 10px;
+        margin-top: 23px;
     }
     .filter-container {
         position: absolute;
@@ -491,6 +481,9 @@
     }
     .filter-drop-down{
         top: 40px;
+    }
+    .menu-header h1{
+        display: none;
     }
 }
 
