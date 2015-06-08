@@ -1,7 +1,7 @@
 from django.core.mail import EmailMessage
 from email.MIMEImage import MIMEImage
 import logging
-from api.models import Image, User, Role, DeliveryArea
+from meisterdish_server.models import Image, User, Role, DeliveryArea
 import re
 import settings
 from django.contrib.sessions.backends.db import SessionStore

@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from django.contrib.sessions.backends.db import SessionStore
-from api.models import *
+from meisterdish_server.models import *
 import json as simplejson
 import logging 
 import settings

@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from api.models import *
+from meisterdish_server.models import *
 import json as simplejson
 import logging 
 import settings

@@ -1,7 +1,7 @@
 from django.db.models import Q
 from decorators import *
 from django.core.paginator import Paginator
-from api.models import GiftCard, PromoCode
+from meisterdish_server.models import GiftCard, PromoCode
 from datetime import datetime
 import settings 
 from order import save_payment_data
