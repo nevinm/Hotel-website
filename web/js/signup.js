@@ -1,11 +1,11 @@
 //signup process
 var signupCallback = {
     success: function(data, textStatus) {
-        $('.signup-formcontainer')[0].reset();
         userDetails = JSON.parse(data);
         if (userDetails.status == -1) {
             showPopup(userDetails);
         } else {
+            $('.signup-formcontainer')[0].reset();
             showPopup(userDetails);
         }
     },
