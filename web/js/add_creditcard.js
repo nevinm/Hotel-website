@@ -97,8 +97,8 @@ function populateCardDetails(cardDetails) {
     $('#card-number').val(card_num);
     $('#card-number').prop('readonly', true);
     // $('#cvv-number').prop('readonly',true);
-    $('#ExpMonth  option[value="' + exp_month + '"]').prop('selected', true)
-    $('#ExpYear option:selected').text(exp_year);
+    $('#ExpMonth  option[value="' + exp_month + '"]').prop('selected', true);
+    $('#ExpYear option[value="' + exp_year + '"]').prop('selected', true);
 }
 
 //Update card details 
