@@ -136,6 +136,8 @@ def manage_promocode(request, data, user):
 
         elif "delete_id" in data and data["delete_id"]:
             promo_obj = PromoCode.objects.get(pk=data["delete_id"])
+            if Cart.objects.filter(completed=True, promo_code=promo_obj).exists():
+                return custom_error("Cannot delete this code. This code is used somewhere.")
             message = "Deleted " + promo_obj.code
             promo_obj.delete()
             return json_response({"status":1, "id":data["delete_id"], "message": message})
