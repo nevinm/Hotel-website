@@ -33,7 +33,7 @@ def check_input(method, admin=False):
                             if "user_id" in req and int(req['user_id'] != session['user']["id"]):
                                 log.error('API : USER in session and request does not match. : '+req["user_id"])
                                 return custom_error('You are not authorized.')
-                            elif admin is True and session["user"]["role"] != 1:
+                            elif admin and session["user"]["role"] != 1:
                                 log.error('API : User requesting admin only features.'+session["user"]["email"] +str(session["user"]["role"]))
                                 return custom_error('You are not authorized.')
                             else:

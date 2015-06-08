@@ -350,4 +350,18 @@ def gift_card_order(request, data, user):
 
 def send_gift_card(gc):
     # TODO
+    dic = {
+        "code" : gc.code,
+        "name" : gc.name,
+        "first_name" : gc.user.first_name.title(),
+        "last_name" : gc.user.last_name.title(),
+        "amount" : str(gc.amount),
+    }
+
+    msg = render_to_string('gift_card_email.html', dic)
+    sub = 'Your Gift Card for Meisterdish'
+    to_email = gc.user.email
+        
+    mail([to_email], sub, msg )
+
     return True

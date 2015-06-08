@@ -99,17 +99,9 @@
                     <div class="header-small">
                         <h4>SIGN UP</h4>
                     </div>
-                    <div class="facebook-signup">
-                        <span class="signup-message">ALREADY HAVE AN ACCOUNT?</span>
-                            <span class="login-link">
-                                <a href='login.html'>
-                                LOG IN
-                                </a>
-                        </span>    
-                        <div class="fb-signupButton">
-                            <a onclick="checkLoginState();"><img src="../images/fb_signup.png" border="0" alt=""></a>
-                            <div id='status'></div>
-                        </div>
+                    <div class="fb-signupButton">
+                        <a onclick="checkLoginState();"><img src="../images/fb_signup.png" border="0" alt=""></a>
+                        <div id='status'></div>
                     </div>
                     <span class="or">
                         <hr>
@@ -132,16 +124,29 @@
                                 <input class="arrange" type="email" id="signup-email" name="email"></input>
                             </div>
                             <div class="signup-input">
-                                <label class="body-text-small" >Password (Minimum 6 Characters)</label>
+                                <label class="body-text-small" >Password</label>
                                 <input class="arrange" type="password" id="signup-password" name="password"></input>
-
-    
+                            </div>
+                            <div class="signup-input">
+                                <label class="body-text-small" >ZIP code</label>
+                                <input class="arrange" type="text" id="zip-code" name="zip"></input>
                             </div>
                         </div>
                         <div class="login-button">
                             <input type="submit" class="btn btn-large-primary medium-green" id="signup-button" value="SIGN UP">
                         </div>
                     </form>
+                    <div class="facebook-signup">
+                        <span class="signup-message">ALREADY HAVE AN ACCOUNT?</span>
+                        <span class="login-link">
+                            <a href='login.html'>
+                            LOG IN
+                            </a>
+                        </span>    
+                    <span class="body-text-small">
+                        By signing up, you agree to our Privacy Policy & Terms of Service 
+                    </span>
+                    </div>
                 </div>
             </div>
             <div class="popup-wrapper">

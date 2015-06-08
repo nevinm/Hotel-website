@@ -1,6 +1,6 @@
 $(document).ready(function() {
     setTimeout(function() {
-        $('#pay-form')[0].reset();
+        $('#credit-card-form')[0].reset();
     },50)
     populateYear();
     CartItemCount();
