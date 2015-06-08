@@ -519,9 +519,9 @@ input[type='radio']:checked:before {
     width: 100%;
     padding: 18px 0;
     position: fixed;
-    background-color: transparent;
-    background-repeat-x: inherit;
-    background-image: url('../images/white.png');
+    background-color: white;
+    /*background-repeat-x: inherit;*/
+    /*background-image: url('../images/white.png');*/
     left: 0;
     z-index: 999999;
     height: 73px;

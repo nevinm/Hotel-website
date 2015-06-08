@@ -1,16 +1,20 @@
+setTimeout(function() {
+    $('#pay-form')[0].reset();
+}, 50);
 $(document).ready(function() {
-    setTimeout(function() {
-        $('#credit-card-form')[0].reset();
-    },50)
     populateYear();
     CartItemCount();
     stripeIntegration();
-    var siteUrl = window.location.href,card_id;
-    if(siteUrl.indexOf('?')!=-1){
-        card_id = siteUrl.split('=')[1];
-        savedCardDetails(card_id); 
-    }
+    checkIfEdit();
 });
+
+function checkIfEdit() {
+    var siteUrl = window.location.href;
+    if (siteUrl.indexOf('cardId') != -1) {
+        card_id = getParameterFromUrl('cardId');
+        savedCardDetails(card_id);
+    }
+}
 
 function populateYear() {
     var currentYear = new Date().getFullYear();
@@ -26,8 +30,10 @@ var saveCreditCardDetailsCallback = {
         var response = JSON.parse(data);
         if (response.status == 1) {
             $("#pay-form")[0].reset();
-        } else {}
-        showPopup(response);
+            window.location.href = 'manage_creditcard.html';
+        } else {
+            showPopup(response);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -50,9 +56,9 @@ function saveCreditCardDetails(token) {
 var savedCardDetailsCallback = {
     success: function(data, textStatus) {
         var cardDetails = JSON.parse(data);
-        if(cardDetails.status == 1){
+        if (cardDetails.status == 1) {
             populateCardDetails(cardDetails.cards[0]);
-        }else{
+        } else {
             showPopup(cardDetails);
         }
     },
@@ -72,13 +78,13 @@ function savedCardDetails(card_id) {
     savedCardDetailsInstance.sendPost(url, header, data, savedCardDetailsCallback);
 }
 
-function  populateCardDetails(cardDetails){
+function populateCardDetails(cardDetails) {
     var card_num = cardDetails.number,
         exp_year = cardDetails.expire_year,
         exp_month = cardDetails.expire_month;
-        $('#card-number').val(card_num);
-        $('#card-number').prop('readonly',true);
-        // $('#cvv-number').prop('readonly',true);
-        $('#ExpMonth  option[value="'+exp_month+'"]').prop('selected', true)
-        $('#ExpYear option:selected').text(exp_year);        
+    $('#card-number').val(card_num);
+    $('#card-number').prop('readonly', true);
+    // $('#cvv-number').prop('readonly',true);
+    $('#ExpMonth  option[value="' + exp_month + '"]').prop('selected', true)
+    $('#ExpYear option:selected').text(exp_year);
 }

@@ -42,6 +42,27 @@ function getCurrentDateTime(days) {
     return datetime = ('0' + (currentdate.getMonth() + 1)).slice(-2) + "-" + ('0' + currentdate.getDate()).slice(-2) + "-" + currentdate.getFullYear();
 }
 
+function getCurrentDateMonth(days) {
+    var currentdate = new Date(),
+        month = [];
+    currentdate.setDate(currentdate.getDate() + days);
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+    var monthName = month[currentdate.getMonth()];
+
+    return dateMonth = ('0' + currentdate.getDate()).slice(-2) + " " + monthName;
+}
+
 function getCurrentHour() {
     var currentdate = new Date();
     var hours = currentdate.getHours();
@@ -150,8 +171,7 @@ $(document).on('click', '#close', function() {
             window.location.href = 'menu.html';
         }
     }
-})
-
+});
 
 //show Error popup
 function showErrorPopup(data) {
