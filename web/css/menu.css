@@ -52,6 +52,7 @@
 
 .menu-header h1{
     color: #6B6B6B;
+    font-size: 24px;
 }
 .menu-header h2{
     color: #6B6B6B;
@@ -243,12 +244,11 @@
 	float: right;
 	padding-bottom: 10px;
 }
-.menu-loading-gif,{
+.menu-loading-gif{
 	width: 100%;
 	overflow: hidden;
 	text-align: center;
-    margin-left: 30px;
-	display: none;
+	/*display: none;*/
 }
 .subMenu .category-header{
 	display: none;
@@ -323,14 +323,6 @@
 .menu-pagination {
     float: right;
     padding-bottom: 10px;
-}
-
-.menu-loading-gif,
-{
-    width: 100%;
-    overflow: hidden;
-    text-align: center;
-    display: none;
 }
 
 .subMenu .category-header {
