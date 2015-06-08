@@ -134,7 +134,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'corsheaders',
+    "meisterdish_server",
     'api',
+    "cms",
 )
 
 LOGGING = {

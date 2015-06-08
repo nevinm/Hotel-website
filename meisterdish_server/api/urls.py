@@ -3,7 +3,6 @@ from api import views
 from api.views import promotions
 urlpatterns = patterns('',
     url(r'^$', views.home, name='home'),
-    url(r'^cms/', include('api.cms_urls')),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
