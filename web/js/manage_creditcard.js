@@ -13,8 +13,8 @@ $(document).ready(function() {
             }
         });
     })
-    $(document).on('click', 'img.paypal', function() {
-        var card_id = $(this).prev().attr('id');
+    $(document).on('click', 'img.paypal,.card-details-small', function() {
+        var card_id = $(this).parent().find('input[type=radio]').attr('id');
         window.location = "add_creditcard.html"+"?cardId="+card_id;
     });
 });
@@ -28,7 +28,6 @@ var savedCardDetailsCallback = {
         if (cardDetails.status == 1) {
             if (cardDetails.cards.length != 0) {
             	$('#manage-payment-method-container .message').hide();
-            	$('#update-payment').show();
                 populateCardDetails(cardDetails.cards);
                 // $('.payment-method-container').show();
                 // $('.payment-method-guest-container').hide();
@@ -77,7 +76,6 @@ var deleteCreditCardCallback = {
         }else{
             $('#manage-payment-method-container .message').hide();
         }
-        
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }

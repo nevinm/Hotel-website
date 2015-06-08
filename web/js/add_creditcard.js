@@ -5,15 +5,27 @@ $(document).ready(function() {
     populateYear();
     CartItemCount();
     stripeIntegration();
-    checkIfEdit();
+    var card_id = checkIfEdit();
+    $('#update-credit-card').on('click',function(e){
+        e.preventDefault();
+        if($('#pay-form').valid()){
+            updateCardDetails(card_id);
+        }
+    })
 });
 
 function checkIfEdit() {
     var siteUrl = window.location.href;
     if (siteUrl.indexOf('cardId') != -1) {
         card_id = getParameterFromUrl('cardId');
-        savedCardDetails(card_id);
+        savedCardDetails(card_id);      
+        $("#update-credit-card").addClass('show');
+        $("#add-credit-card").hide();
+    }else{
+        $("#update-credit-card").hide();
+        $("#add-credit-card").addClass('show');
     }
+    return card_id;
 }
 
 function populateYear() {
@@ -87,4 +99,35 @@ function populateCardDetails(cardDetails) {
     // $('#cvv-number').prop('readonly',true);
     $('#ExpMonth  option[value="' + exp_month + '"]').prop('selected', true)
     $('#ExpYear option:selected').text(exp_year);
+}
+
+//Update card details 
+var updateCardDetailsCallback = {
+    success: function(data, textStatus) {
+        var cardDetails = JSON.parse(data);
+        if(cardDetails.status == 1){
+            window.location.href="manage_creditcard.html";
+        }else{
+            showPopup(cardDetails);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function updateCardDetails(card_id) {
+    var url = baseURL + "update_credit_card/"+card_id+"/",
+        name = $('#name-on-card').val(),
+        month = $('#ExpMonth option:selected').val(),
+        year = $('#ExpYear option:selected').text(),
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {
+            "name":name,
+            "exp_month" : month,
+            "exp_year":year 
+        }
+    data = JSON.stringify(params);
+    var updateCardDetailsInstance = new AjaxHttpSender();
+    updateCardDetailsInstance.sendPost(url, header, data, updateCardDetailsCallback);
 }

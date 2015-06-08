@@ -1403,6 +1403,7 @@ form#guest-address-info #address-line-2-error{
 .card-details-small{
 	float: left;
 	padding-left: 20px;
+	cursor: pointer;
 }
 .card-details-small .body-text-small{
 	line-height: 10px;
@@ -1466,6 +1467,11 @@ img.accepted-cards
   float: left;
   margin-right: 5px;
 }
+#update-credit-card,#add-credit-card{
+	display: none;
+	width: 20%;
+}
+
 /*==================================*\
 			&TABLET
 \*==================================*/
