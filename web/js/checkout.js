@@ -510,12 +510,16 @@ $(window).load(function() {
 function mobileResponsive() {
     if ($(window).width() <= 767 && $(window).width() >= 320) {
         $('.delivery-info-container').removeClass('box-border');
+        $('.delivery-time-container').removeClass('box-border');
         $('.delivery-info').addClass('box-border');
         $('.payment-info').addClass('box-border');
+        $('.time-container').addClass('box-border');
     } else {
+        $('.delivery-time-container').addClass('box-border');
         $('.delivery-info-container').addClass('box-border');
         $('.delivery-info').removeClass('box-border');
         $('.payment-info').removeClass('box-border');
+        $('.time-container').removeClass('box-border');
     }
 }
 

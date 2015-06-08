@@ -171,8 +171,7 @@ $(document).on('click', '#close', function() {
             window.location.href = 'menu.html';
         }
     }
-})
-
+});
 
 //show Error popup
 function showErrorPopup(data) {
@@ -393,7 +392,7 @@ $("form").each(function() {
                 minlength: "Name should contain atleast 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
-            phonenumber: "Provide valid phone",
+            phonenumber: "Provide valid number",
             fullname: {
                 required: "Please enter your first name.",
                 letters: "Name should contain only alphabets.",
