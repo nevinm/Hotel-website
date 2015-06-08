@@ -63,7 +63,7 @@ span.forgot-password{
 .signup-wrapper{
   width: 90%;
   margin: 0 auto;
-  margin-top: 150px;
+  margin-top: 120px;
   max-width: 470px;
 }
 .signup-container{
@@ -83,7 +83,6 @@ span.forgot-password{
   font-family: 'BrandonGrotesque-Bold';
 }
 .fb-signupButton{
-  margin-top: 10px;
   text-align: center;
   padding: 20px 0;
 }
@@ -95,6 +94,9 @@ span.forgot-password{
   padding: 10px 35px;
   width: 100%;
   float: left;
+  padding-bottom: 0;
+}
+.facebook-login{
   padding-bottom: 20px;
 }
 .facebook-signup span.body-text-small{

@@ -442,7 +442,7 @@
         font-family: 'BrandonGrotesque-Bold';
         display: block;
         color: #5A5A5A;
-        margin-top: 10px;
+        margin-top: 23px;
     }
     .filter-container {
         position: absolute;
@@ -481,6 +481,9 @@
     }
     .filter-drop-down{
         top: 40px;
+    }
+    .menu-header h1{
+        display: none;
     }
 }
 

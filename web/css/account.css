@@ -1342,7 +1342,7 @@ form#guest-address-info #address-line-2-error{
 #manage-payment-method-container{
 	width: 65%;
 }
-.pickup span, .delivery span{
+.pickup label, .delivery label{
 	padding-left: 10px;
 }
 
@@ -1797,6 +1797,9 @@ img.accepted-cards
 	}
 	#add-new-paymentmethod{
 		display: none;
+	}
+	.accepted-cards{
+		width: 40px;
 	}
 }
   	@media (max-width:400px){
