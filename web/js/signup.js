@@ -19,7 +19,8 @@ function signingup() {
         password = $('#signup-password').val(),
         first_name = $('#signup-firstname').val(),
         last_name = $('#signup-lastname').val(),
-        email = $('#signup-email').val();
+        email = $('#signup-email').val(),
+        zip = $("#zip-code").val();
     if (localStorage["fb-id"]) {
         fbId = JSON.parse(localStorage["fb-id"]);
     }
@@ -29,7 +30,8 @@ function signingup() {
             "last_name": last_name,
             "email": email,
             "fb_id": fbId,
-            "image_url": localStorage['fb-image']
+            "image_url": localStorage['fb-image'],
+            "zipcode" : zip
         },
         data = JSON.stringify(userInfo);
 
