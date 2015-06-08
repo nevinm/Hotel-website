@@ -3,7 +3,7 @@ var adminCallback = {
         success: function(data, textStatus) {
             var adminDetails = JSON.parse(data);
             if(adminDetails.status==1){
-                var userName = adminDetails.user.first_name+ ' ' + adminDetails.user.last_name;
+                var userName = adminDetails.user.first_name;
                 localStorage['username']=userName;
                 localStorage['session_key']=adminDetails.session_key;
                 localStorage['admin_loggedIn']=true;
