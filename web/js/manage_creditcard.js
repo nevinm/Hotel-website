@@ -15,7 +15,7 @@ $(document).ready(function() {
     })
     $(document).on('click', 'img.paypal', function() {
         var card_id = $(this).prev().attr('id');
-        window.location = "add_creditcard.html"+"?id="+card_id;
+        window.location = "add_creditcard.html"+"?cardId="+card_id;
     });
 });
 

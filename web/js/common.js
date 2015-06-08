@@ -171,8 +171,7 @@ $(document).on('click', '#close', function() {
             window.location.href = 'menu.html';
         }
     }
-})
-
+});
 
 //show Error popup
 function showErrorPopup(data) {
