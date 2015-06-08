@@ -1342,7 +1342,7 @@ form#guest-address-info #address-line-2-error{
 #manage-payment-method-container{
 	width: 65%;
 }
-.pickup label, .delivery label{
+.pickup span, .delivery span{
 	padding-left: 10px;
 }
 
