@@ -646,7 +646,7 @@ form.addaddress-popup {
 }
 #address-line-1-error,#address-line-2-error {
 	width: 200px;
-	left: 0;
+	left: -9px;
 }
 .section3 .forminput-wrapper .styled-select-state{
 	width: 134px;
