@@ -35,7 +35,7 @@
 	border-radius: 7px 7px 0 0;
 }
 .account-container .user-name-wrapper{
-	float: left;;
+	float: left;
 	margin-left: 20px;
 }
 .account-settings{
@@ -691,6 +691,7 @@ form.addaddress-popup {
 	font-family: 'ProximaNova-regular';
 	color: #9B9B9B;
 	border-radius: 3px;
+	padding: 20px;
 	border: 1px solid #D0D0D0;
 	padding: 8px;
 	background-color: #f1f1f1;
@@ -1475,6 +1476,46 @@ img.accepted-cards
 /*==================================*\
 			&TABLET
 \*==================================*/
+@media (min-width: 320px)and (max-width:1024px){
+	.meal-reviews-row, .meal-review-cell, .meal-reviews-table{
+		display: block;
+		text-align: center;
+		width: 100%;
+	}
+	.meal-reivew-header{
+		display: none;
+	}
+	.meal-reviews-row{
+		margin: 10px 0;
+  		border: 1px solid #cbcbcb;
+  		border-radius: 10px;
+	}
+	.meal-reviews .meal-image{
+		width: 85%;
+		float: none;
+	}
+	.meal-name{
+		width: 100%
+	}
+	#add-review{
+		margin-bottom: 20px;
+	}
+	.rating >*{
+		float: none;
+		display: inline-block;
+	}
+	.meal-review-container .user-reviews{
+		padding-top: 19px;
+		width: 85%;
+		margin: 10px 0;
+	}
+	.meal-reviews .meal-name{
+		margin: 0;
+	}
+	.meal-content{
+		max-height: none;
+	}
+}
 @media (min-width: 768px)and (max-width:1024px){
 	.sub-content1 {
 		float: left;
@@ -1510,29 +1551,10 @@ img.accepted-cards
 		display: none;
 	}
 
-	/**CHECKOUT PAGE MOBILE **/
-	/*.left-wrapper,.right-wrapper{
-		display: block;
-		float: left;
-		width: 100%;
+	.meal-reviews-row{
+  		border: none;
 	}
-	.checkout-wrapper{
-		display: block;
-	}
-	.receipt-container{
-		width: 40%;
-		margin:0 auto;
-	}
-	.checkout-time-button{
-		width:17%;
-	}
-	.order-list-items .body-text-small{
-		width: 30%;
-		word-break:break-all;
-	}
-	.order-list-header .content-heading:first-child{
-		width: 30%;
-	}*/
+
 	#manage-payment-method-container{
 		width: 75%;
 	}
@@ -1604,8 +1626,8 @@ img.accepted-cards
 		margin: 0 auto;
   		max-width: 400px;
 	}
-  	#editaddress-container,
-  	#review-container{
+  	#editaddress-container
+  	{
 		width: 90%;
 		margin: 0 auto;
 		max-width: 400px;
@@ -1800,6 +1822,18 @@ img.accepted-cards
 	}
 	.accepted-cards{
 		width: 40px;
+	}
+	.meal-reviews .meal-image{
+		width: 100%;
+	}
+	.meal-rewiew-wrapper .account-header{
+		display: none;
+	}
+	#review-container{
+		width: 100%;
+		-webkit-box-shadow:none;
+		box-shadow:none;
+		border:none;
 	}
 }
   	@media (max-width:400px){
