@@ -280,5 +280,7 @@ function twitterShare(site_url){
         popitup('http://twitter.com/share?url='+site_url+'&text='+subjText);
 }
 function emailShare(site_url){
-    
+    var subjText = "Just visit "+site_url;
+    var subject = "MeisterDish !";
+    $("#email-share a").attr('href', "mailto:?subject="+subject+"&body="+encodeURIComponent(subjText));
 }
