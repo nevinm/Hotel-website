@@ -69,13 +69,18 @@ function populateCardDetails(cards){
 var deleteCreditCardCallback = {
     success: function(data, textStatus,delete_id) {
         var cardDetails = JSON.parse(data);
-        showPopup(cardDetails);
-        $("#"+delete_id).parent().remove();
-        if ($('.card-list-container').is(':empty')){
-            $('#manage-payment-method-container .message').show();
+        if(cardDetails.status == 1){
+            showPopup(cardDetails);
+            $("#"+delete_id).parent().remove();
+            if ($('.card-list-container').is(':empty')){
+                $('#manage-payment-method-container .message').show();
+            }else{
+                $('#manage-payment-method-container .message').hide();
+            }
         }else{
-            $('#manage-payment-method-container .message').hide();
+            showPopup(cardDetails);
         }
+        
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
