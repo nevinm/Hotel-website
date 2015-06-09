@@ -7,7 +7,7 @@ import settings
 from datetime import datetime
 from django.db.models import Q
 from django.template.loader import render_to_string
-from decorators import *
+from api.views.decorators import *
 import sys, traceback
 from libraries import manage_image_upload, check_delivery_area
 
@@ -597,12 +597,3 @@ def upload_image(request, data, user):
     except Exception as e:
         log.error("Failed to upload image : " + e.message)
         return custom_error("Failed to upload image. Please try again later.")
-
-@check_input('POST', True)
-def delete_image(request, data, user, pk):
-    try:
-        image = Image.objects.get(pk=pk).delete()
-        return json_response({"status":1, "message":"Deleted image", "id":pk})
-    except Exception as e:
-        log.error("Failed to delete image " + e.message)
-        return custom_error("Failed to delete image. Please try again later.")

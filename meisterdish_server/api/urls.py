@@ -55,9 +55,8 @@ urlpatterns = patterns('',
     #url(r'^paypal_ipn/$', views.paypal_ipn, name='paypal_ipn'),
 
     url(r'^check_delivery/$', views.check_delivery, name='check_delivery'),
-    url(r'^get_delivery_areas/$', views.get_delivery_areas, name='get_delivery_areas'),
-    url(r'^manage_delivery_area/$', views.manage_delivery_area, name='manage_delivery_area'),
-
     url(r'^apply_promocode/$', promotions.apply_promocode, name='apply_promocode'),
+
+    #url(r'^purchase_gift_card/$', promotions.manage_delivery_area, name='add_gift_card'),  TODO
     
 )

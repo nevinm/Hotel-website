@@ -178,7 +178,7 @@ LOGGING = {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },
-        'cms_api': {
+        'cms': {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },

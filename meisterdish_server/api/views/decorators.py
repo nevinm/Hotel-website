@@ -1,12 +1,12 @@
-from django.http import HttpResponse, HttpResponseNotAllowed
-import json as simplejson
+from django.http import HttpResponse
 from django.contrib.sessions.backends.db import SessionStore
 from functools import wraps
-import logging
+import logging, settings
+from libraries import json_request, json_response, custom_error
 from meisterdish_server.models import User
 log = logging.getLogger('api')
 
-def check_input(method, admin=False):
+def check_input(method):
     def wrapper(func):
         def inner_decorator(request, *args, **kwargs):
             if request.method.upper() == method.upper():
@@ -33,12 +33,9 @@ def check_input(method, admin=False):
                             if "user_id" in req and int(req['user_id'] != session['user']["id"]):
                                 log.error('API : USER in session and request does not match. : '+req["user_id"])
                                 return custom_error('You are not authorized.')
-                            elif admin and session["user"]["role"] != 1:
-                                log.error('API : User requesting admin only features.'+session["user"]["email"] +str(session["user"]["role"]))
-                                return custom_error('You are not authorized.')
                             else:
                                 try:
-                                    user = User.objects.get(pk=session['user']['id'])
+                                    user = User.objects.get(pk=session['user']['id'], role__pk=settings.ROLE_USER)
                                 except Exception as e:
                                     log.error("No user in session !!" + str(session['user']['id']))
                                     return custom_error("This user is no more available. Please login again.")
@@ -57,37 +54,3 @@ def check_input(method, admin=False):
                 return custom_error('The Requested method is not allowed')
         return wraps(func)(inner_decorator)
     return wrapper
-
-def json_request(request):
-    if (request.method == 'GET'):
-        req = request.GET
-        return req
-    else:
-        req = request.body
-
-        if not req:
-            req='{"a":"b"}'
-
-    if (req):
-        try:
-            if request.FILES:
-                return request.POST
-            else:
-                return simplejson.loads(req, "ISO-8859-1")
-        except Exception as e:
-            log.error("Error json-decoding input : " +e.message)
-            return None
-    else:
-        return None
-
-def json_response(response, wrap=False):
-    if (wrap == True):
-        final_response = {"data" : response}
-    else:
-        final_response = response
-    header_res = HttpResponse(simplejson.dumps(final_response))
-    return header_res
-
-def custom_error(message):
-    #log.error("Error : "+message)
-    return json_response({'status' : -1, 'message' : message})

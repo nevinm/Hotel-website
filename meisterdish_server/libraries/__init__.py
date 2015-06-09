@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.core.mail import EmailMessage
 from email.MIMEImage import MIMEImage
 import logging
@@ -7,6 +8,7 @@ import settings
 from django.contrib.sessions.backends.db import SessionStore
 from urllib import unquote_plus, unquote
 from urllib2 import Request, urlopen
+import json as simplejson
 
 log = logging.getLogger('libraries')
  
@@ -122,3 +124,53 @@ def check_delivery_area(zip):
     if DeliveryArea.objects.filter(zip=zip).exists():
         return True
     return False
+
+def json_request(request):
+    if (request.method == 'GET'):
+        req = request.GET
+        return req
+    else:
+        req = request.body
+
+        if not req:
+            req='{"a":"b"}'
+
+    if (req):
+        try:
+            if request.FILES:
+                return request.POST
+            else:
+                return simplejson.loads(req, "ISO-8859-1")
+        except Exception as e:
+            log.error("Error json-decoding input : " +e.message)
+            return None
+    else:
+        return None
+
+def json_response(response, wrap=False):
+    if (wrap == True):
+        final_response = {"data" : response}
+    else:
+        final_response = response
+    header_res = HttpResponse(simplejson.dumps(final_response))
+    return header_res
+
+def custom_error(message):
+    #log.error("Error : "+message)
+    return json_response({'status' : -1, 'message' : message})
+
+def save_payment_data(data):
+    try:
+        payment =Payment()
+        payment.response = simplejson.dumps(data)
+        payment.transaction_id = data["id"]
+        payment.transaction_date = datetime.fromtimestamp(data["created"])
+        payment.amount = data["amount"]
+
+        if data["status"].lower() == "succeeded":
+            payment.verified = True
+        payment.save()
+        return payment
+    except Exception as e:
+        log.error("Failed to save payment data " + e.message)
+        return False

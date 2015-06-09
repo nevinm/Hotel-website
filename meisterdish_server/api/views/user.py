@@ -3,7 +3,7 @@ from meisterdish_server.models import *
 import json as simplejson
 import logging 
 import settings
-from decorators import *
+from api.views.decorators import *
 from libraries import validate_zipcode, validate_phone, check_delivery_area, validate_email
 import stripe
 from datetime import datetime, timedelta

@@ -1,16 +1,12 @@
-from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
-from django.contrib.sessions.backends.db import SessionStore
 from meisterdish_server.models import *
 import json as simplejson
 import logging 
 import settings
-from decorators import *
+from api.views.decorators import *
 from datetime import datetime
 from django.core.paginator import Paginator
-from libraries import mail, check_delivery_area, validate_phone, validate_email
+from libraries import mail, check_delivery_area, validate_phone, validate_email, save_payment_data
 from django.db.models import Q
-import string, random
-from urllib import unquote
 from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
 import stripe
@@ -197,7 +193,6 @@ def create_order(request, data, user):
             total_tax += item.meal.tax
 
         order = Order()
-        #order.order_num = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
         order.cart = item.cart
         
         if del_type.lower() == "delivery":
@@ -325,34 +320,6 @@ def make_payment(order, user):
         log.error("Failed to make payment." + e.message)
         return False
 
-def save_payment_data(data):
-    try:
-        payment =Payment()
-        payment.response = simplejson.dumps(data)
-        payment.transaction_id = data["id"]
-        payment.transaction_date = datetime.fromtimestamp(data["created"])
-        payment.amount = data["amount"]
-
-        if data["status"].lower() == "succeeded":
-            payment.verified = True
-        payment.save()
-        return payment
-    except Exception as e:
-        log.error("Failed to save payment data " + e.message)
-        return False
-
-#Admin only
-@check_input('POST', True)
-def delete_order(request, data, user, order_id):
-    try:
-    	order = Order.objects.get(pk=order_id, is_deleted=False)
-        order.is_deleted = True
-        order.save()
-        return json_response({"status":1, "message":"The order has been deleted", "id":order_id+"."})
-    except Exception as e:
-    	log.error("Delete order." + e.message)
-    	return custom_error("Failed to delete the order.")
-
 @check_input('POST')
 def get_order_details(request, data, user, order_id):
     try:
@@ -422,47 +389,6 @@ def get_order_details(request, data, user, order_id):
     except Exception as e:
         log.error("get order details." + e.message)
         return custom_error("Failed to list order details.")
-
-#Admin only
-@check_input('POST', True)
-def update_order(request, data, user, order_id):
-    try:
-        order = Order.objects.get(pk=order_id, is_deleted=False, cart__completed=True)
-        if "produced_meals" in data and len(data["produced_meals"]):
-            """ TODO
-            if user.role.id != settings.ROLE_KITCHEN:
-                return custom_error("Only the kitchen staff is authorized to do this operation.")
-            """
-            for order_meal in data["meals"]:
-                cart_item = order.cart.cartitem_set.filter(meals__pk=order_meal["id"])
-                cart_item.produced = True
-                cart_item.save()
-
-        if "status" in data:
-            status = int(data['status'])
-            if status < 0 or status > 4:
-                log.error("Invalid order status: " + str(status))
-            order.status = status
-            order.save()
-        
-            if status >=1:
-                order.cart.completed=True
-                order.cart.save()
-            order.session_key = request.META.get('HTTP_SESSION_KEY', None)
-            
-            if int(status) == 2: #Confirmed
-                sent = send_order_confirmation_notification(order)
-                if not sent:
-                    log.error("Failed to send order confirmation notification")
-            elif int(status) == 4: #Delivered
-                sent = send_order_complete_notification(order)
-                if not sent:
-                    log.error("Failed to send order complete notification")
-
-        return json_response({"status":1, "message":"The order has been updated", "id":str(order_id)+"."})
-    except Exception as e:
-        log.error("Update order status : " + e.message)
-        return custom_error("Failed to update the order.")
 
 def get_cart_total(cart):
     try:
