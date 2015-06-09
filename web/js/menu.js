@@ -3,8 +3,9 @@ $(document).ready(function() {
         nextPage = 1,
         mealTypeFilter = [],
         endOfList = false,
-        ipadWidth = 767;
-
+        ipadWidth = 767,
+        site_url ="http://meisterdish.qburst.com/"; 
+    
     $(document).on("click", '.subMenu .menu-categories-list', function() {
         $(document).find(".subMenu ul li").removeClass("activeOption");
         $(this).addClass("activeOption");
@@ -83,6 +84,24 @@ $(document).ready(function() {
             stickyMenu.removeClass('fixedMenu');
         }
     });
+
+    //share with friends
+
+    $('#done-share').on('click',function(){
+        $('.share-popup-wrapper').hide();
+    })
+
+    $('#facebook-share').on('click',function(){
+        facebookShare(site_url);
+    })
+    
+    $('#twitter-share').on('click',function(){
+        twitterShare(site_url);
+    })
+    
+    $('#email-share').on('click',function(){
+        emailShare(site_url);
+    })
 
     CartItemCount();
     getCategory();
@@ -243,4 +262,23 @@ function addToCart(meal_id) {
     data = JSON.stringify(params);
     var addToCartInstance = new AjaxHttpSender();
     addToCartInstance.sendPost(url, header, data, addToCartCallback, meal_id);
+}
+
+
+//share functions
+function popitup(url) {
+    var left = Number((screen.width / 2) - (700 / 2));
+    var top = Number((screen.height / 2) - (500 / 2));
+    var windowFeatures = 'channelmode=0,directories=0,fullscreen=0,location=0,menubar=0,resizable=0,scrollbars=0,status=0,width=700,height=500,top=' + top + ',left=' + left;
+    window.open(url, '', windowFeatures);
+}
+function facecookShare(site_url){
+    
+}
+function twitterShare(site_url){
+    var subjText = "meisterDish :-) :-)";
+        popitup('http://twitter.com/share?url='+site_url+'&text='+subjText);
+}
+function emailShare(site_url){
+    
 }
