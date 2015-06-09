@@ -460,7 +460,7 @@ def update_order(request, data, user, order_id):
                     log.error("Failed to send order complete notification")
 
         return json_response({"status":1, "message":"The order has been updated", "id":str(order_id)+"."})
-    except Exception as e:
+    except KeyError as e:
         log.error("Update order status : " + e.message)
         return custom_error("Failed to update the order.")
 
@@ -565,6 +565,7 @@ def send_sms_notification(dic):
         else:
             log.error("Failed to send SMS to " + number)
             return False
+
     except KeyError as e:
         log.error("Failed to send order SMS to : " + number + " : "+e.message)
         return False
