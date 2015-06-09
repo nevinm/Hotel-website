@@ -335,7 +335,7 @@
     padding: 20px 0;
 }
 
-.logo-mobile-container h3{
+.logo-mobile-container h3,.share-popup-wrapper{
     display: none;
 }
 
