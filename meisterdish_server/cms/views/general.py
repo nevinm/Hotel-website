@@ -11,7 +11,81 @@ log = logging.getLogger('cms')
 
 def home(request):
     return HttpResponse("Welcome to Meisterdish CMS")
+
+@check_input('POST',)
+def login(request, data):
+    try:
+        email = data['username'].strip()
+        valid = False
+        
+        
+        password = data['password'].strip()
+        remember = str(data['remember']).strip()
+        if email == '' or password == '':
+            log.error("Empty email or password.")
+            raise Exception("Invalid email or password")
+        
+        user = User.objects.get(email__iexact=email)
+            
+        if md5.new(password).hexdigest() == user.password:
+            valid = True
+            if user.role.id in [settings.ROLE_GUEST, settings.ROLE_USER]:
+                return custom_error("You are not authorized to login here.")
+            elif not user.is_active:
+                return custom_error("The user is not active")
+        else:
+            return custom_error("Invalid email or password.")
+                
+        
+        if valid:
+            log.info(user.email + "logged in at admin panel")
+            
+                
+            user_dic = {"id":user.id,
+                              "email":user.email,
+                              "first_name":user.first_name.title(),
+                              "last_name":user.last_name.title(),
+                              "role" : user.role.id,
+                              }
+            
+            session_key = request.META.get('HTTP_SESSION_KEY', None)
+            if session_key :
+                session = SessionStore(session_key=session_key)
+                log.info("Logging in to guest session")
+            else:
+                session = SessionStore()
+            
+            session["user"] = user_dic
+            if str(remember) == "1":
+                session.set_expiry = 0
+            else:
+                session.set_expiry = settings.SESSION_EXPIRY
+            session.save()
+
+            log.info(email+" logged in ..")
+            return json_response({"status":1, "message": "Logged in succesfully", "user":user_dic, "session_key":session.session_key})
+        else:
+            log.error("Login failed")
+            raise Exception("Login failed. Please try again later.")
     
+    except Exception as e:
+        log.error("Login : " + e.message)
+        return json_response({"status":-1, "message": "Login failed. Please try again later."})
+
+@check_input('POST')
+def logout(request, data):
+    if 'HTTP_SESSION_KEY' not in request.META:
+        log.error("API:logout, Invalid session.")
+        response = {'status': -1, "message": "Invalid session."}
+    else:
+        session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
+        if 'user' in session:
+            del session['user']
+        session.flush()
+        log.info("API:logout, success")
+        response = {'status': 1, "message" : "Successfully logged out"}
+    return json_response(response)
+
 @check_input('POST', True)
 def get_categories(request, data, user=None):
     try:
@@ -202,6 +276,18 @@ def change_user_status(request, data, session_user):
         log.error("Failed to change user status : "+e.message)
         return custom_error("Failed to change user status")
 
+@check_input('POST', settings.ROLE_ADMIN)
+def upload_image(request, data, user):
+    try:
+        response = manage_image_upload(request)
+        if response is None:
+            return custom_error("There was an error uploading image. Please try again later.")
+
+        return json_response(response)
+    except Exception as e:
+        log.error("Failed to upload image : " + e.message)
+        return custom_error("Failed to upload image. Please try again later.")
+
 @check_input('POST', True)
 def delete_image(request, data, user, pk):
     try:
@@ -210,3 +296,4 @@ def delete_image(request, data, user, pk):
     except Exception as e:
         log.error("Failed to delete image " + e.message)
         return custom_error("Failed to delete image. Please try again later.")
+

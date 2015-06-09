@@ -3,6 +3,10 @@ from cms.views import general, order, promotions, meals, delivery
 
 urlpatterns = patterns('',
     url(r'^$', general.home, name='cms_home'),
+
+    url(r'^login/$', general.login, name='login'),
+    url(r'^logout/$', general.logout, name='logout'),
+
     url(r'^get_categories/$', general.get_categories, name='get_categories'),
     url(r'^add_category/$', general.add_category, name='add_category'),
     url(r'^remove_category/$', general.remove_category, name='remove_category'),
@@ -28,4 +32,6 @@ urlpatterns = patterns('',
 
     url(r'^get_delivery_areas/$', delivery.get_delivery_areas, name='get_delivery_areas'),
     url(r'^manage_delivery_area/$', delivery.manage_delivery_area, name='manage_delivery_area'),
+
+    url(r'^upload_image/$', general.upload_image, name='upload_image'),
 )

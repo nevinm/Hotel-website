@@ -1,7 +1,8 @@
 var baseURL = 'http://10.7.2.42:86/backend/api/',
 //var baseURL = 'http://10.1.4.32:8083/api/',
 //var baseURL = 'http://meisterdish.qburst.com/backend/api/',
-    homeUrl = "http://meisterdish.qburst.com",
+//    homeUrl = "http://meisterdish.qburst.com",
+    homeUrl = "http://10.7.2.42:86",
     userDetails, currentPage = $("title").text(),
     clicked = 0;
 //If already logged in

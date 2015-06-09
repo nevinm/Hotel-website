@@ -1,19 +1,17 @@
-from django.http import HttpResponse
 from meisterdish_server.models import *
 import json as simplejson
-import logging 
-import settings
-from datetime import datetime
+import logging, settings
+
 from django.db.models import Q
 from django.template.loader import render_to_string
-from decorators import *
+from cms.views.decorators import *
 from django.core.paginator import Paginator
 from django.core.files.uploadedfile import UploadedFile
 from libraries import get_request_user
 
 log = logging.getLogger('cms')
 
-@check_input('POST')
+@check_input('POST', settings.ROLE_ADMIN)
 def get_meals(request, data):
     try:
         user = get_request_user(request)
@@ -57,12 +55,7 @@ def get_meals(request, data):
             """
             ingredients = simplejson.loads(meal.ingredients) if meal.ingredients is not None and len(meal.ingredients) > 0 else []
             
-            meal_types = []
-            for ty in meal.types.all():
-                meal_types.append({
-                                    "id":ty.id,
-                                    "name":ty.name.title()
-                                    })
+            meal_types = [{"id":ty.id, "name":ty.name.title()} for ty in meal.types.all()]
 
             meal_list.append({
                               "id":meal.id,

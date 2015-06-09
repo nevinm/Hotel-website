@@ -26,7 +26,7 @@ def check_input(method):
                                              "add_to_cart",
                                              "check_delivery",
                                              ]:
-                        #common_apis = ["get_meals"]
+
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
                         session = SessionStore(session_key=session_key)
                         if session and 'user' in session :

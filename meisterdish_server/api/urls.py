@@ -37,9 +37,6 @@ urlpatterns = patterns('',
     url(r'^get_meal_details/(?P<meal_id>[0-9]+)/$', views.get_meal_details, name='get_meal_details'),
     url(r'^get_user_reviews/$', views.get_user_reviews, name='get_user_reviews'),
     
-
-    url(r'^upload_image/$', views.upload_image, name='upload_image'),
-    
     url(r'^get_orders/$', views.get_orders, name='get_orders'),
     url(r'^get_order_details/(?P<order_id>[0-9]+)/$', views.get_order_details, name='get_order_details'),
     url(r'^create_order/$', views.create_order, name='create_order'),
