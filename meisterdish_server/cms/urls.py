@@ -35,4 +35,7 @@ urlpatterns = patterns('',
     url(r'^manage_delivery_area/$', delivery.manage_delivery_area, name='manage_delivery_area'),
 
     url(r'^upload_image/$', general.upload_image, name='upload_image'),
+
+    url(r'^get_orders/$', order.get_orders, name='get_orders'),
+    url(r'^get_order_details/(?P<order_id>[0-9]+)/$', order.get_order_details, name='get_order_details'),
 )

@@ -23,13 +23,12 @@ var adminCallback = {
 function adminLogin() {
     var adminUserName = $("#adminlogin-email").val();
         adminPassword = $("#adminlogin-password").val();
-    var url = baseURL + 'login/';
+    var url = baseURL + 'cms/login/';
     header = {},
     params = {
         "username": adminUserName,
         "password": adminPassword,
-        "remember": 1,
-        "is_admin":1
+        "remember": 1
     }
 
     data = JSON.stringify(params);

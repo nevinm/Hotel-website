@@ -13,11 +13,10 @@ import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 log = logging.getLogger('order')
 
-#Admin and User
 @check_input('POST')
-def get_orders(request, data, user=None):
+def get_orders(request, data, user):
     try:
-    	limit = data.get('perPage', settings.PER_PAGE)
+        limit = data.get('perPage', settings.PER_PAGE)
         page = data.get("nextPage",1)
                     
         order_list = []
@@ -90,14 +89,9 @@ def get_orders(request, data, user=None):
             
             order_list.append({
                 "id":order.id,
-                #"total_amount": order.total_amount,
-                #"total_tax" : order.total_tax,
-                #"tip" : order.tip,
                 "grand_total" : order.grand_total,
                 "user_first_name" : order.cart.user.first_name,
                 "user_last_name" : order.cart.user.last_name,
-                #"user_id" : order.cart.user.id,
-                #"user_image" : settings.DEFAULT_USER_IMAGE if not order.cart.user.profile_image else order.cart.user.profile_image.thumb.url,
                 "status":dict(settings.ORDER_STATUS)[order.status],
                 "status_id" : order.status,
                 "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
@@ -137,10 +131,10 @@ def get_orders(request, data, user=None):
                               "current_page":page,
                               "per_page" : limit,
                               })
-    except KeyError as e:
-    	log.error("Failed to list orders." + e.message)
-    	return custom_error("Failed to get orders list.")
-
+    except Exception as e:
+        log.error("Failed to list orders." + e.message)
+        return custom_error("Failed to get orders list.")
+        
 @check_input('POST')
 def create_order(request, data, user):
     try:

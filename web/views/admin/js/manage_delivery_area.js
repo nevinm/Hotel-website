@@ -68,7 +68,7 @@ var getDeliveryAreasCallback = {
 	failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 function getDeliveryAreas(nextPage){
-	var url = baseURL + 'get_delivery_areas/';
+	var url = baseURL + 'cms/get_delivery_areas/';
 	header = {
 		"session-key": localStorage['session_key']
 	},

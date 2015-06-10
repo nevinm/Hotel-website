@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from meisterdish_server.models import *
-import logging 
-import settings
+import logging, md5, settings 
 from datetime import datetime
 from django.db.models import Q
 from decorators import *
