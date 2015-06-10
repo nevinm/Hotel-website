@@ -12,7 +12,7 @@ from libraries import get_request_user
 log = logging.getLogger('cms')
 
 @check_input('POST', settings.ROLE_ADMIN)
-def get_meals(request, data):
+def get_meals(request, data, user):
     try:
         user = get_request_user(request)
 

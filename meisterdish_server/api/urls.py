@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from api import views
-from api.views import promotions
+from api.views import promotions, meals
 urlpatterns = patterns('',
     url(r'^$', views.home, name='home'),
     url(r'^signup/$', views.signup, name='signup'),
@@ -17,6 +17,8 @@ urlpatterns = patterns('',
     url(r'^remove_address/$', views.remove_address, name='remove_address'),
     url(r'^update_address/(?P<address_id>[0-9]+)/$', views.update_address, name='update_address'),
     url(r'^get_address_list/$', views.get_address_list, name='get_address_list'),
+
+    url(r'^get_meals/$', meals.get_meals, name='get_meals'),
 
     url(r'^get_states/$', views.get_states, name='get_states'),
     url(r'^get_cities/$', views.get_cities, name='get_cities'),

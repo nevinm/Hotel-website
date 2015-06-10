@@ -87,7 +87,7 @@ def logout(request, data):
     return json_response(response)
 
 @check_input('POST', True)
-def get_categories(request, data, user=None):
+def get_categories(request, data, user):
     try:
         limit = settings.PER_PAGE
         page = 1
@@ -114,9 +114,7 @@ def get_categories(request, data, user=None):
             log.error("category list pagination : " + e.message)
             custom_error("There was an error listing categories.")
         
-        cat_list = []
-        for cat in cats.object_list:
-            cat_list.append({"id":cat.id, "name":cat.name})
+        cat_list = [{"id":cat.id, "name":cat.name} for cat in cats.object_list]
         
         return json_response({
                               "status":1,
@@ -131,6 +129,21 @@ def get_categories(request, data, user=None):
     except Exception as e:
         log.error("Failed to return category list : "+e.message)
         return custom_error("Failed to retrieve category list")
+
+@check_input('POST')
+def get_categories_filters(request, data, user):
+    try:
+        cats = Category.objects.filter(is_hidden=False, is_deleted=False).order_by("name")
+        cat_list = [{"id":cat.id, "name":cat.name.title()} for cat in cats]
+        
+        #Meal Types / Filters
+        types = MealType.objects.filter(is_hidden=False, is_deleted=False)
+        type_list = [{"id":type.id, "name":type.name.title()} for type in types]
+        
+        return json_response({"status":1, "categories":cat_list, "meal_types":type_list})
+    except Exception as e:
+        log.error("get categories +filters: " + e.message)
+        return custom_error("Failed to list categories and meal filters")
 
 @check_input('POST', True)
 def add_category(request, data, user):

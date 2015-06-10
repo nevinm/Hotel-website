@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', general.logout, name='logout'),
 
     url(r'^get_categories/$', general.get_categories, name='get_categories'),
+    url(r'^get_categories_filters/$', general.get_categories_filters, name='get_categories_filters'),
     url(r'^add_category/$', general.add_category, name='add_category'),
     url(r'^remove_category/$', general.remove_category, name='remove_category'),
     url(r'^update_category/$', general.update_category, name='update_category'),
