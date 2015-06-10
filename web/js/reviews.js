@@ -91,16 +91,17 @@ function populateReviews(userDetails) {
             "<input type='radio' class='rating-input' id='rating-input-1-1' name='rating-input-1' data-id='1'>" +
             "<label for='rating-input-1-1' class='rating-star'></label></span>" +
             "</div><div class='meal-review-textarea meal-review-cell'>" +
-            "<textarea maxlength='250' class='user-reviews'>"+value.review+"</textarea>" +
+            "<textarea maxlength='250' class='user-reviews' placeholder='Leave a reivew (Optional) '>"+value.review+"</textarea>" +
             "</div><div class='meal-review-submit meal-review-cell'>" +
-            "<a href='#' class='btn btn-medium-primary medium-green add-review' data-meal-id='"+value.meal_id+"'"+
+            "<a href='#' class='btn btn-medium-primary medium-green add-review' id='add-review' dddata-meal-id='"+value.meal_id+"'"+
             "data-order-id='"+value.order_id+"' >Submit</a></div></div>");
 
         var reviewMeal = $(".meal-review-container").find(".meal-reviews:last"),
             starRating = $($(reviewMeal).find(".rating-star").get().reverse())[value.rating - 1];
-        // $(reviewMeal).find(".rating-star").each(function(key, value) {
-        //     $(value).addClass("disable-star");
-        // });
+        if(value.review.length){
+            $(".user-reviews:last").attr("disabled",true);
+            $(".meal-star-rating:last").find(".rating-star").addClass("disable-star");
+        }
         $(starRating).trigger("click");
     });
 }

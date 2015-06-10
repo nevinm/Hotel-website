@@ -335,8 +335,44 @@
     padding: 20px 0;
 }
 
-.logo-mobile-container h3{
+.logo-mobile-container h3,.share-popup-wrapper{
     display: none;
+}
+
+.share-popup-wrapper .header{
+    font-family: 'BrandonGrotesque-Bold';
+    font-size: 20px;
+    padding-left: 30px;
+    padding-top: 6px;
+}
+.share-button-wrapper{
+    padding: 20px 35px;
+}
+.share-popup-wrapper .popup-container{
+    padding: 15px 5px;
+    text-align: center;
+}
+.share-button{
+    width: 100%;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    border: 1px hidden;
+    color: #fff;
+    border-radius: 3px;
+    font-family: 'BrandonGrotesque-Bold';
+    font-size: 20px;
+}
+.share-popup-wrapper .popup{
+    height: 390px;
+}
+#facebook-share{
+    background-color:#4E7AAD;
+}
+#twitter-share{
+    background-color:#79B9EA;
+}
+#email-share{
+    background-color:#6B6B6B;
 }
 /*==============================*\
         &MENU - MOBILE
