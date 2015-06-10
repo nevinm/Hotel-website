@@ -928,7 +928,7 @@ function showSelectedPaymentMethod(selectedId) {
 function validateOrder() {
     var data = {};
     data.message = "";
-    if (!$(".payment-checked:checked").length) {
+    if ( $(".saved-card-list").length && !$(".payment-checked:checked").length) {
         data.message = "Add a method of payment and then proceed";
         showPopup(data);
         return false;
