@@ -64,6 +64,13 @@ MOBILE RESPONSIVE
     font-style: normal;
     font-variant: normal;
 }
+@font-face {
+    font-family: 'BrandonGrotesque-RegularItalic';
+    src: url('../fonts/Brandon Grotesque/BrandonGrotesque-RegularItalic.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
 
 @font-face {
     font-family: 'BrandonGrotesque-Bold';
