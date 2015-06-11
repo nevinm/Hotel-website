@@ -20,7 +20,6 @@ $(document).ready(function() {
     stripeIntegration();
     setCurrentTime();
     populateYear();
-
     var cartItems;
 
     //Remove cart items

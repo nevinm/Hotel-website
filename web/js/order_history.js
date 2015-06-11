@@ -46,14 +46,14 @@
                "<div class='order-content'>"+value.delivery_time.substring(0,10)+"</div>" +
                "</div>" +
                "<div class='accordion-subcontent'>" +
-               "<div class='order-head'>SHIPPING INFROMATION</div>" +
+               "<div class='order-head'>SHIPPING INFORMATION</div>" +
                "<div class='order-content'>" +
                "<span>" + deliveryAddress.first_name + " " + deliveryAddress.last_name + "</span>" +
                "<span>" + deliveryAddress.building + " " + deliveryAddress.street + "</span>" +
                "<span>" + deliveryAddress.city + "</span>" +
                "<span>" + deliveryAddress.zip + "</span></div></div>" +
                "<div class='accordion-subcontent'>" +
-               "<div class='order-head'>ITEMS ORDERD</div>" +
+               "<div class='order-head'>ITEMS ORDERED</div>" +
                "<div class='order-content'>" +
                "</div></div></div>" +
                "</li>");
