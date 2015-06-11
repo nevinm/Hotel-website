@@ -1,0 +1,110 @@
+/*Checbox Select Giftcard*/
+
+.giftcard-selector-checkbox {
+    width: 25%;
+}
+
+.giftcard-amount {
+    width: 75%;
+}
+
+.giftcard-select-amount > div:last-of-type {
+    margin-right: 0px
+}
+
+.giftcard-selector {
+    overflow: hidden;
+    float: left;
+    border: 1px solid black;
+    width: 21.25%;
+    margin-right: 5%;
+    padding: 10px 20px;
+}
+
+.giftcard-selected {
+    background-color: #A9D77B;
+}
+
+.giftcard-selector-checkbox label {
+    cursor: pointer;
+    position: relative;
+    padding-left: 10px;
+}
+
+.giftcard-selector-checkbox label:before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    border: 1px solid #d0d0d0;
+}
+
+.giftcard-selector-checkbox input[type=radio] {
+    display: none;
+}
+
+.giftcard-selector-checkbox input[type=radio]:checked + label:before {
+    content: "";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: #f3f3f3;
+    text-align: center;
+    line-height: 15px;
+    background: center url(../images/checkbox_tick.png) no-repeat;
+    background-color: #A9D77B;
+    border-color: #FFF;
+    color: #F7EBEB;
+}
+
+#giftcards-wrapper {
+    width: 100%;
+    float: left;
+    min-height: 100%;
+    margin-bottom: -143px;
+    background-color: #F9FAF7;
+    background-size: cover;
+}
+
+#giftcards-wrapper:after {
+    height: 143px;
+    content: "";
+    float: left;
+    width: 100%;
+}
+
+.giftcard-container {}
+
+.giftcard-banner {
+    max-height: 300px;
+    overflow: hidden;
+    margin-top: 100px;
+    height: 250px;
+}
+
+.giftcard-banner img {
+    height: auto;
+    width: 100%;
+    margin-top: -70px;
+}
+
+.giftcard-select-amount {
+    padding: 50px 0;
+}
+
+@media (max-width: 1366px) {
+    .privacy-terms-heading {
+        font-size: 45px;
+    }
+}
+
+@media (min-width: 320px)and (max-width: 767px) {
+    #giftcards-wrapper {
+        background-color: #FCFDF9;
+        background-image: none;
+        border: none;
+        overflow-x: hidden;
+    }
+}

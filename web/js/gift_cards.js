@@ -1,5 +1,7 @@
-$("#redeem-card").on('click', function(){
-    var code =  $(".card-code").val();
+//Old giftcard page
+
+$("#redeem-card").on('click', function() {
+    var code = $(".card-code").val();
     redeemGiftCard(code);
 })
 
@@ -7,7 +9,7 @@ $("#redeem-card").on('click', function(){
 var redeemGiftCardCallback = {
     success: function(data, textStatus) {
         userDetails = JSON.parse(data);
-            showPopup(userDetails);
+        showPopup(userDetails);
         if (userDetails.status == 1) {
             $(".card-code").val("");
         } else {
@@ -30,3 +32,9 @@ function redeemGiftCard(code) {
     var redeemGiftCardInstance = new AjaxHttpSender();
     redeemGiftCardInstance.sendPost(url, header, data, redeemGiftCardCallback);
 }
+
+//New Gift Card pages.
+
+$(".giftcard-selector").on("click", function() {
+    $(this);
+});
