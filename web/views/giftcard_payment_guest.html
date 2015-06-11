@@ -114,79 +114,68 @@
                 </div>    
             </div>
             <div class='giftcard-container contentArea'>
-                <div class='giftcard-flow-amount'>
-                    <div class='giftcard-select-amount'>
-                        <p><b>1.</b> SELECT AN AMOUNT</p>
-                        <div class='giftcard-selector'>
-                            <div class='giftcard-amount pullLeft'><span>$50</span><span>.00</span></div>
-                            <div class='giftcard-selector-checkbox pullLeft'>
-                                <div>
-                                    <input id="giftcard50" type="checkbox" name="giftcard" value="1">
-                                    <label for="giftcard50"></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="giftcard-selector">
-                            <div class="giftcard-amount pullLeft"><span>$50</span><span>.00</span></div>
-                            <div class="giftcard-selector-checkbox pullLeft">
-                                <div>
-                                    <input id="giftcar100" type="checkbox" name="giftcard" value="1">
-                                    <label for="giftcar100"></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="giftcard-selector giftcard-selected">
-                            <div class="giftcard-amount pullLeft"><span>$50</span><span>.00</span></div>
-                            <div class="giftcard-selector-checkbox pullLeft">
-                                <div>
-                                    <input id="giftcard150" type="checkbox" name="giftcard" value="1">
-                                    <label for="giftcard150"></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="giftcard-selector">
-                            <div class="giftcard-amount pullLeft"><span>$50</span><span>.00</span></div>
-                            <div class="giftcard-selector-checkbox pullLeft">
-                                <div>
-                                    <input id="giftcard250" type="checkbox" name="giftcard" value="1">
-                                    <label for="giftcard250"></label>
-                                </div>
-                            </div>
-                        </div>
+                <div class="gift-card-details-container">
+                    <div class="details-main-header">3. GIFT CARD CHECKOUT</div>
+                    <div class="details">
+                        <div class="details-sub-header">GIFT CARD DETAILS</div>                    
+                    <div class="row">
+                        <span class="details-label">Recepient:</span>
+                        <span class="details-content">john@email.com</span>
                     </div>
-                    <div class='giftcard-custom-amount pullRight'>
-                        <span class="body-text-small">Or enter your amount: $</span>
-                        <input type='number' min='25' placeholder='MINIMUM $25' />
+                    <div class="row">
+                        <span class="details-label">Recepient's Email</span>
+                        <span class="details-content">John Smith</span>
+                    </div>
+                    <div class="row">
+                        <span class="details-label">Message:</span>
+                        <span class="details-content">Hi john! Enjoy meisterdish on me.</span>
+                    </div>
+                    <div class="row">
+                        <span class="details-label">Amount:</span>
+                        <span class="details-content">$150</span>
+                    </div>
+                        <span class="details-foot">EDIT GIFT CARD</span>
                     </div>
                 </div>
-                <div class='giftcard-flow-recipient'>
-                    <div class='giftcard-flow-header'>
-                        <p><b>2.</b> RECIPIENT INFO</p>
+                <div class="payment-container">
+                     <div class="your-info-container">
+                         <form id="address">
+                            <div class="row">
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">First Name</label>
+                                    <input type="text" name="firstname" class="popup-input">
+                                </div>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Last Name</label>
+                                    <input type="text" name="lastname" class="popup-input">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Email</label>
+                                    <input type="email" name="email" class="popup-input" id="guest-email">
+                                </div>
+                            </div>
+                             <div class="row">
+                                 <div class="forminput-wrapper">
+                                    <label class="body-text-small">Zip</label>
+                                    <input type="text" name="zip" class="popup-input">
+                                </div>
+                             </div>
+                         </form>
+                     </div>
+                     <div class="payment-info-container"></div>
+                </div>       
+                <div class="payment-mount-container">
+                    <div class="row">
+                        <span>SUBTOTAL</span>
+                        <span>$150.00</span>
                     </div>
-                    <div class='giftcard-form-container'>
-                        <div class="forminput-wrapper recipient-form recipient-name-form">
-                            <label for='name' class="body-text-small">Recipient's Name</label>
-                            <input id='recipient-name' type="text" name="name" class="popup-input">
-                        </div>
-                        <div class="forminput-wrapper recipient-form">
-                            <label for='email' class="body-text-small">Recipient's Email</label>
-                            <input id='recipient-email' type="email" name="email" class="popup-input">
-                        </div>
-                        <div class="forminput-wrapper form-message">
-                            <label for='message' class="body-text-small">Message</label>
-                            <textarea name='message' id='recipient-message'></textarea>
-                        </div>
+                    <hr>
+                    <div class="row">
+                        <span>TOTAL</span>
+                        <span>$150.00</span>
                     </div>
-                    <div class='giftcard-message'>
-                        <div class='giftcard-message-inner'>
-                            <p class="body-text-small">Gift cards have no expiry</p>
-                            <p class="body-text-small">Unused value is applied to the </p>
-                            <p class="body-text-small">recipient's account as credit. </p>
-                        </div>
-                    </div>
-                </div>
-                <div class='proceed-checkout-container'>
-                    <a href="#" class="btn btn-medium-extended medium-green proceed-checkout">PROCEED TO CHECKOUT</a>
                 </div>
             </div>
         </div>

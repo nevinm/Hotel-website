@@ -60,5 +60,6 @@ urlpatterns = patterns('',
     url(r'^manage_delivery_area/$', views.manage_delivery_area, name='manage_delivery_area'),
 
     url(r'^apply_promocode/$', promotions.apply_promocode, name='apply_promocode'),
+    url(r'^gift_card_order/$', promotions.gift_card_order, name='gift_card_order'),
     
 )

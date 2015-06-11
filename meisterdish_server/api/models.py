@@ -405,6 +405,8 @@ class GiftCard(models.Model):
     user = models.ForeignKey(User)
     code = models.CharField(max_length=10)
     name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    message = models.TextField(max_length=1000)
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     payment = models.ForeignKey(Payment)
@@ -422,7 +424,7 @@ class PromoCode(models.Model):
     code = models.CharField(max_length=10)
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     expiry_date = models.DateTimeField()
-
+    active = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
 
     def __unicode__(self):
