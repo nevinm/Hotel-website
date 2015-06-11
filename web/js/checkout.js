@@ -743,7 +743,7 @@ function getCities(cityId) {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "state_id": 52
+            "state_id": 1
         };
     data = JSON.stringify(userData);
     var getCitiesInstance = new AjaxHttpSender();

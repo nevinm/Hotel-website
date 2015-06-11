@@ -69,7 +69,7 @@ def add_address(request, data, user):
                 primary.is_primary=False
                 primary.save()
         return json_response({"status":1, "message":"Added Address", "id":add.id})
-    except KeyError as e:
+    except Exception as e:
         log.error("Add address failed : "+e.message)
         return custom_error("Failed to add address. ")
     except Exception as e:
@@ -81,7 +81,6 @@ def update_address(request, data, user, address_id):
     try:
         try:
             add = Address.objects.get(id=address_id, user=user)
-            add.user = user
         except Exception as e:
             log.error("Updated address "+e.message)
             return custom_error("You are not authorized to modify this address.")
@@ -146,7 +145,6 @@ def remove_address(request, data, user):
         if adds.count() > 0:
             adds[0].is_primary = True
             adds[0].save()
-            
         return json_response({"status":1, "message":"Successfully Deleted Address.", "id":address_id})
     except Exception as e:
         log.error("Failed to delete Address : "+e.message)
@@ -327,7 +325,7 @@ def save_credit_card(request, data, user):
             return json_response({"status":1, "message":"Successfully saved credit card details.", "id":c_card.id})
         else:
             return custom_error("Failed to save card details.")
-    except Exception as e:
+    except KeyError as e:
         log.error("Save CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to save credit card details.")
 
