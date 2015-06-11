@@ -343,11 +343,11 @@ iframe{
     width: 100%;
 }
 .meal-tab-container ul li {
-    width: 13.9%;
+    width: 12.285%;
     text-align: center !important;
     float: left;
     height: 66px; 
-    margin: 0 5px;
+    margin: 0 1%;
 }
 .meal-tab-container ul li a{
     padding: 21px 6px;
@@ -399,6 +399,9 @@ iframe{
         max-width: 768px;
         width: 95%;
     }
+    .meal-tab-container ul li a{
+        font-size: 12px;
+    }
 }
 
 @media (min-width: 320px)and (max-width: 767px) {
@@ -420,6 +423,7 @@ iframe{
     }
     .backNav{
         width: 70%;
+        padding-top: 16px;
     }
     .thumbnail{
         width: 100%;

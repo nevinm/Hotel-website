@@ -6,6 +6,8 @@ function setProfileImage() {
 $(document).ready(function() {
     setProfileImage();
     CartItemCount();
+
+    $("#profile_picture_id").attr("data-url", baseURL + "upload_picture/");
     var dummyData = {
         "get": 1
     }
@@ -13,7 +15,7 @@ $(document).ready(function() {
     $('#profile_picture_id').fileupload({
         add: function(e, data) {
             var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i,
-            error=[];
+                error = [];
             if (data.originalFiles[0]['type'] && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
                 error.message = 'Not an accepted file type';
                 showPopup(error);
@@ -23,8 +25,7 @@ $(document).ready(function() {
                 error.message = 'Filesize is too big';
                 showPopup(error);
                 return;
-            }
-            else{
+            } else {
                 data.submit();
             }
         },
