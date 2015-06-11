@@ -16,4 +16,9 @@ $(document).ready(function() {
         $("#terms-policy").removeClass("btn-medium-secondary background-button");
         $("#terms-policy").addClass("btn-medium-extended medium-green");
     });
+    $('#show-more').on("click",function(e){
+        e.preventDefault();
+        $('.hidden-details').slideDown();
+        $(this).hide();
+    })
 });

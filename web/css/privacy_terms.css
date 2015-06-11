@@ -95,6 +95,10 @@
     width: 90%;
     padding: 50px 0;
     margin: 0 auto;
+    margin-bottom: 30px;
+}
+.hidden-details{
+    display: none;
 }
 
 @media (max-width: 1366px) {

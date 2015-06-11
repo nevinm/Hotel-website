@@ -497,7 +497,6 @@ label {
 
 input[type='radio'] {
  -webkit-appearance:none;
- -moz-appearance:none;
  width:16px;
  height:16px;
  border:2px solid #9b9b9b;
@@ -523,23 +522,29 @@ input[type='radio']:checked:before {
 input[type=radio] + label{
   cursor:pointer;
 }
-input[type=radio] + label:before{ 
+input[type=radio] + label{ 
   margin-right: 4px;
   content: " ";
   display:inline-block;
   vertical-align: baseline;
   transition: 0.3s;
   border:2px solid #9b9b9b;
-  border-radius:10px;
+  border-radius:50%;
   height: 16px;
+   width:16px;
+   position: relative;
 }
 
-input[type=radio] + label:before{
-  border-radius:50%;
-  width:16px;
-}
-input[type=radio]:checked + label:before{
-     background-color: #A9D77B;
+input[type=radio]:checked + label:before {
+  background-color: #A9D77B;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: block;
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 2px;
 }*/
 /*==============================*\
             &HEADER

@@ -3,8 +3,7 @@ $(document).ready(function() {
         nextPage = 1,
         mealTypeFilter = [],
         endOfList = false,
-        ipadWidth = 767,
-        site_url ="http://meisterdish.qburst.com/"; 
+        ipadWidth = 767;
     
     $(document).on("click", '.subMenu .menu-categories-list', function() {
         $(document).find(".subMenu ul li").removeClass("activeOption");
@@ -92,15 +91,15 @@ $(document).ready(function() {
     })
 
     $('#facebook-share').on('click',function(){
-        facebookShare(site_url);
+        facebookShare(homeUrl);
     })
     
     $('#twitter-share').on('click',function(){
-        twitterShare(site_url);
+        twitterShare(homeUrl);
     })
     
     $('#email-share').on('click',function(){
-        emailShare(site_url);
+        emailShare(homeUrl);
     })
 
     CartItemCount();
@@ -272,8 +271,9 @@ function popitup(url) {
     var windowFeatures = 'channelmode=0,directories=0,fullscreen=0,location=0,menubar=0,resizable=0,scrollbars=0,status=0,width=700,height=500,top=' + top + ',left=' + left;
     window.open(url, '', windowFeatures);
 }
-function facecookShare(site_url){
-    
+function facebookShare(site_url){
+    window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(homeUrl),'facebook-share-dialog','width=626,height=436');
+     return false;
 }
 function twitterShare(site_url){
     var subjText = "meisterDish :-) :-)";

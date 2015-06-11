@@ -47,14 +47,15 @@ $(document).ready(function() {
     $('#add-tips-main').on("click", function(e) {
         e.preventDefault();
         var video_URL = $('#tips-video-url').val(),
-            tips_heading = $('#tips-and-tricks').val(),valid_url,valid_title;
-            valid_url = ytVidId(video_URL);
-            valid_title = emptyvalidation(tips_heading);
-            if (valid_url && valid_title) {
-                addMainTipsTricks(video_URL, tips_heading);    
-            }else{
-                $("#tips-video-url,#tips-and-tricks").addClass('error');
-            }
+            tips_heading = $('#tips-and-tricks').val(),
+            valid_url, valid_title;
+        valid_url = ytVidId(video_URL);
+        valid_title = emptyvalidation(tips_heading);
+        if (valid_url && valid_title) {
+            addMainTipsTricks(video_URL, tips_heading);
+        } else {
+            $("#tips-video-url,#tips-and-tricks").addClass('error');
+        }
     });
 
     //Add sublist field to tips & ticks
@@ -90,9 +91,17 @@ $(document).ready(function() {
     $("#ingredients-image-input").on('click', function() {
         uploadImage("ingredients-image-input", "ingredients-image");
     });
-
+    addDynamicApiUrlUploadPicture("meal-image-input");
+    addDynamicApiUrlUploadPicture("chef-image-input");
+    addDynamicApiUrlUploadPicture("kitchen-image-input");
+    addDynamicApiUrlUploadPicture("ingredients-image-input");
     getFilterContent();
 });
+
+
+function addDynamicApiUrlUploadPicture(element) {
+    $("#" + element).attr("data-url", baseURL + "upload_picture/");
+}
 
 function addMainTipsTricks(video_URL, tips_heading, isEditingdescription, tipsId) {
     $('#tips-and-tricks-table').append('<tr data-id="' + tipsId + '">' + '<td><span class="video-url">' + video_URL +
@@ -187,13 +196,13 @@ function extractTipsAndTricks(self) {
     $(self).find("ul li").each(function() {
         videoPointers.push($(this).text());
     });
-     tipsObject= {
-            "video_url": videoUrl,
-            "title": videoHeading,
-            "description": videoPointers
-        };
+    tipsObject = {
+        "video_url": videoUrl,
+        "title": videoHeading,
+        "description": videoPointers
+    };
     if (tipsID != "undefined") {
-        tipsObject['id']= tipsID;
+        tipsObject['id'] = tipsID;
     } else {}
 
     return tipsObject;
@@ -240,7 +249,7 @@ function createMeal() {
         ingredients_image = $('#ingredients-image').attr("data-id"),
         chef_comments = $("#chef-comments").val(),
         chef_name = $("#chef-name").val();
-        meal_sub = $("#meal-sub-name").val();
+    meal_sub = $("#meal-sub-name").val();
     var ingredients = [], // ingredient array
         temp = '',
         pre_requesties = [],
@@ -295,7 +304,7 @@ function createMeal() {
         "finished_preparation": prepared,
         "saved_time": saved_time,
         "tips": tips,
-        "sub":meal_sub,
+        "sub": meal_sub,
         "nutrients": nutrients
     }
 
@@ -460,10 +469,11 @@ function populateMealDetails(mealDetails) {
 
 
 function ytVidId(url) {
-  var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-  return (url.match(p)) ? RegExp.$1 : false;
+    var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    return (url.match(p)) ? RegExp.$1 : false;
 }
-function emptyvalidation(value){
+
+function emptyvalidation(value) {
     var p = /^[\s\t\r\n]*\S+/ig;
     return (value.match(p)) ? RegExp.$1 : false;
 }
