@@ -31,6 +31,8 @@ def add_address(request, data, user):
         is_primary = False
         if "is_primary" in data and data["is_primary"]:
             is_primary = True
+        elif not Address.objects.filter(user=user, is_primary=True).exists():
+            is_primary = True
         
         if not validate_zipcode(zip):
             return custom_error("Please provide a valid zip code.")
