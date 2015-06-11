@@ -110,6 +110,8 @@ def update_address(request, data, user, address_id):
             
         if "is_primary" in data and data["is_primary"]:
             add.is_primary = True
+        elif not Address.objects.exclude(id=add.id).filter(user=user, is_primary=True).exists():
+            add.is_primary = True
         else:
             add.is_primary = False
         add.save()
