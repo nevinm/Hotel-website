@@ -31,6 +31,8 @@ def add_address(request, data, user):
         is_primary = False
         if "is_primary" in data and data["is_primary"]:
             is_primary = True
+        elif not Address.objects.filter(user=user, is_primary=True).exists():
+            is_primary = True
         
         if not validate_zipcode(zip):
             return custom_error("Please provide a valid zip code.")
@@ -67,7 +69,7 @@ def add_address(request, data, user):
                 primary.is_primary=False
                 primary.save()
         return json_response({"status":1, "message":"Added Address", "id":add.id})
-    except KeyError as e:
+    except Exception as e:
         log.error("Add address failed : "+e.message)
         return custom_error("Failed to add address. ")
     except Exception as e:
@@ -79,7 +81,6 @@ def update_address(request, data, user, address_id):
     try:
         try:
             add = Address.objects.get(id=address_id, user=user)
-            add.user = user
         except Exception as e:
             log.error("Updated address "+e.message)
             return custom_error("You are not authorized to modify this address.")
@@ -107,6 +108,8 @@ def update_address(request, data, user, address_id):
             add.phone = phone
             
         if "is_primary" in data and data["is_primary"]:
+            add.is_primary = True
+        elif not Address.objects.exclude(id=add.id).filter(user=user, is_primary=True).exists():
             add.is_primary = True
         else:
             add.is_primary = False
@@ -137,6 +140,12 @@ def remove_address(request, data, user):
         if add.user.id != user.id:
             return custom_error("You are not auhorized to delete this address")
         add.delete()
+
+        adds = Address.objects.filter(user=user, is_primary=False)
+        if adds.count() > 0:
+            adds[0].is_primary = True
+            adds[0].save()
+
         return json_response({"status":1, "message":"Successfully Deleted Address.", "id":address_id})
     except Exception as e:
         log.error("Failed to delete Address : "+e.message)
