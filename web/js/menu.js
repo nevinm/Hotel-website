@@ -272,8 +272,9 @@ function popitup(url) {
     var windowFeatures = 'channelmode=0,directories=0,fullscreen=0,location=0,menubar=0,resizable=0,scrollbars=0,status=0,width=700,height=500,top=' + top + ',left=' + left;
     window.open(url, '', windowFeatures);
 }
-function facecookShare(site_url){
-    
+function facebookShare(site_url){
+    window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(homeUrl),'facebook-share-dialog','width=626,height=436');
+     return false;
 }
 function twitterShare(site_url){
     var subjText = "meisterDish :-) :-)";
