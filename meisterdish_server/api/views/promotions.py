@@ -6,6 +6,7 @@ from datetime import datetime
 import settings 
 from order import save_payment_data
 import string, random
+from libraries import get_request_user, create_guest_user, validate_email
 
 @check_input('POST', True)
 def manage_gift_card(request, data, user):
@@ -261,13 +262,24 @@ def redeem_gift_card(request, data, user):
         return custom_error("Failed to redeem gift card ")
 
 @check_input('POST')
-def gift_card_order(request, data, user):
+def gift_card_order(request, data, user=None):
     try:
         name = data["name"].strip()
+        email = data["email"].strip()
+        message = data["message"].strip()
         amount = data["amount"]
+        if name == "" or email == "" or message == "":
+            return custom_error("Please provide valid details.")
+        elif not validate_email(email):
+            return custom_error("Please provide valid email.")
+        elif float(amount) < 25:
+            return custom_error("The minimum gift card amount should be $25.")
 
-        if amount < 10 or amount > 1000:
-            return custom_error("Please enter a valid gift card amount.")
+        user = get_request_user(request)
+        if not user:
+            (user, session_key) = create_guest_user(request)
+        else:
+            session_key = None
 
         save_card = bool(data.get("save_card", 0))
         card_id = data.get("card_id", False)
@@ -331,6 +343,8 @@ def gift_card_order(request, data, user):
         gc.user = user
         gc.code = code
         gc.name = name
+        gc.email = email
+        gc.message = message
         gc.amount = amount
         gc.payment = payment
         gc.save()
@@ -338,8 +352,6 @@ def gift_card_order(request, data, user):
         if not gc.id:
             log.error("Gift card payment success, but failed to create card.")
             return custom_error("Failed to create GiftCard. Please contact customer support.")
-
-        gc.to_email = data.get("email", user.email)
 
         if send_gift_card(gc):
             return json_response({"status":1, "messge":"The Gift Card coupon has been sent to " + gc.to_email, "id":gc.id})
@@ -355,15 +367,15 @@ def send_gift_card(gc):
     dic = {
         "code" : gc.code,
         "name" : gc.name,
+        "message":gc.message
         "first_name" : gc.user.first_name.title(),
         "last_name" : gc.user.last_name.title(),
         "amount" : str(gc.amount),
     }
 
     msg = render_to_string('gift_card_email.html', dic)
-    sub = 'Your Gift Card for Meisterdish'
-    to_email = gc.user.email
+    sub = 'Your Gift Card for Meisterdish'    
         
-    mail([to_email], sub, msg )
+    mail([gc.email], sub, msg )
 
     return True
