@@ -146,6 +146,7 @@
     overflow: hidden;
     margin-top: 100px;
     height: 250px;
+    position: relative;
 }
 
 .giftcard-banner img {
@@ -156,6 +157,77 @@
 
 .giftcard-select-amount {
     padding: 50px 0;
+}
+.logo-banner{
+    left: 50%;
+    position: absolute;
+    margin-left: -110px;
+    width: 220px;
+    top:65%;
+    margin-top: -77.5px; 
+    text-align: center;
+}
+.gift-card-details-container,.payment-mount-container{
+    width: 100%;
+    float:left;
+}
+.logo-banner img{
+    width: 40px;
+    height: 60px;
+}
+.logo-banner hr{
+    height: 1px;
+    border: 0;
+    background-color: #9b9b9b;
+    width: 50%;
+    display: block;
+}
+.details-main-header {
+    font-family: 'BrandonGrotesque-bold';
+    font-size: 24px;
+    color: #394543;
+    letter-spacing: 1px;
+    padding: 20px 0;
+}
+.details-sub-header {
+  font-family: 'BrandonGrotesque-bold';
+  color: #5a5a5a;
+  padding: 20px 0;
+  letter-spacing: 1px;
+  font-size: 18px;
+}
+.details {
+  padding-left: 30px;
+  width: 40%;
+  letter-spacing: 1px;
+}
+.details-label {
+  font-family: 'ProximaNova-semibold';
+  color: #1a1a1a;
+  font-size: 14px;
+  text-align: left;
+}
+.row{
+    width: 100%;
+    float: left;
+    padding: 10px 0;
+}
+.row span{
+    width: 50%;
+    float: left;
+}
+.details-content {
+  font-family: 'ProximaNova-semibold';
+  color: #5a5a5a;
+  font-size: 14px;
+}
+.details-foot{
+   font-family: 'BrandonGrotesque-bold';
+   color: #9b9b9b;
+   font-size: 12px; 
+   padding-top: 20px;
+   float: left;
+   width: 100%;
 }
 
 .giftcard-select-amount p,
@@ -217,7 +289,6 @@ input.popup-input {
     letter-spacing: 0.5px;
     font-family: "BrandonGrotesque-Regular";
 }
-
 @media (max-width: 1366px) {
     .privacy-terms-heading {
         font-size: 45px;
