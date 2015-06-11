@@ -5,9 +5,8 @@ var removeAddressCallback = {
         if (userDetails.status == 1) {
             getAddress();
             isAddress();
-        } 
-        else {
-           showErrorPopup(userDetails); 
+        } else {
+            showErrorPopup(userDetails);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -62,7 +61,7 @@ function autoPopulateAdressess(userDetails) {
             '<a href="#" data-id="' + value.id + '" class="edit-address btn btn-small-secondary">EDIT</a>' +
             '<a href="#" data-id="' + value.id + '" class="remove-address btn btn-small-secondary">REMOVE</a></div>' +
             '<div class="address-content">' +
-            '<span class="address-name">' + value.first_name +" "+ value.last_name + '</span>' +
+            '<span class="address-name">' + value.first_name + " " + value.last_name + '</span>' +
             '<span class="address-street">' + value.street + ', ' + value.building + '</span>' +
             '<span class="address-city">' + value.city + ', ' + value.state + '</span>' +
             '<span class="address-mobile">' + value.phone + '</span>' +
@@ -104,7 +103,7 @@ function getNewAddressFromForm() {
         street: $addressPopup.find("input[name*='street']").val(),
         city_id: $addressPopup.find(".city-selector").val(),
         building: $addressPopup.find("input[name*='building']").val(),
-        is_primary: $addressPopup.find("input[type*='checkbox']").val() == "on" ? 1 : 0,
+        is_primary: $addressPopup.find("input[type*='checkbox']").is(":checked") == true ? 1 : 0,
         email: JSON.parse(localStorage['user_profile']).email
     }
     return newAddress;
@@ -125,7 +124,7 @@ function addAddress() {
             "street": newAddress.street,
             "building": newAddress.building,
             "is_primary": newAddress.is_primary,
-            "email" : newAddress.email
+            "email": newAddress.email
         };
     data = JSON.stringify(userData);
     var addAddressInstance = new AjaxHttpSender();
@@ -153,7 +152,7 @@ function populateAddressToForm(id) {
         if (value.id == id) {
             $addressPopup.find(".state-selector").val(value.state_id);
             $addressPopup.find("input[name*='firstname']").val(value.first_name);
-            $addressPopup.find("input[name*='lastname']").val(value.last_name   );
+            $addressPopup.find("input[name*='lastname']").val(value.last_name);
             $addressPopup.find("input[name*='phonenumber']").val(value.phone);
             $addressPopup.find("input[name*='zip']").val(value.zip);
             $addressPopup.find("input[name*='street']").val(value.street);
@@ -168,28 +167,27 @@ function populateAddressToForm(id) {
     });
 }
 
-function editAddress(currentId, primaryAdd) {
+function editAddress(currentId, primaryAdd, selector) {
     var url = baseURL + "update_address/" + currentId + "/",
-       header = {
+        header = {
             "session-key": localStorage["session_key"]
-        },userData;
-    if(primaryAdd){
-        userData={
-            "is_primary": primaryAdd
-        }
+        },
+        userData = {};
+    if (primaryAdd) {
+        userData.is_primary = primaryAdd;
     }
-    else{
-         var newAddress = getNewAddressFromForm();
-         userData = {
-            "first_name": newAddress.first_name,
-            "last_name": newAddress.last_name,
-            "phone": newAddress.phone,
-            "zip": newAddress.zip,
-            "city_id": newAddress.city_id,
-            "street": newAddress.street,
-            "building": newAddress.building,
-        };
+    // else{
+    if (selector != "justId") {
+        var newAddress = getNewAddressFromForm();
+        userData.first_name = newAddress.first_name;
+        userData.last_name = newAddress.last_name;
+        userData.phone = newAddress.phone;
+        userData.zip = newAddress.zip;
+        userData.city_id = newAddress.city_id;
+        userData.street = newAddress.street;
+        userData.building = newAddress.building;
     }
+    // }
     data = JSON.stringify(userData);
     var editAddressInstance = new AjaxHttpSender();
     editAddressInstance.sendPost(url, header, data, editAddressCallback);
@@ -281,19 +279,21 @@ $(document).ready(function() {
 
     $("#savepopup-data").on('click', function(e) {
         e.preventDefault();
-        var currentId = $(this).attr("data-id"),isPrimary=0;
+        var currentId = $(this).attr("data-id"),
+            isPrimary = 0;
         if ($('form.addaddress-popup').valid()) {
-            if($("input[name='is-primary']").is(":checked")){
-                isPrimary=1;
+            if ($("input[name='is-primary']").is(":checked")) {
+                isPrimary = 1;
             }
-            editAddress(currentId ,isPrimary);
+            editAddress(currentId, isPrimary);
         }
     });
 
-   
-    $(document).on('click','.non-primary-address.add-primary',function(){
+
+    $(document).on('click', '.non-primary-address.add-primary', function() {
         var currentId = $(this).data().id;
-        editAddress(currentId, 1);
+        // populateAddressToForm(currentId);
+        editAddress(currentId, 1, "justId");
     });
 
     $("#addpopup-data").on('click', function(e) {
@@ -304,6 +304,7 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.remove-address', function() {
+        $(".popup-wrapper .content").find("span").text("Are you sure want to remove this address?");
         $(".popup-wrapper").show();
         var deleteId = $(this).data().id;
         $('#yes-button').on('click', function() {

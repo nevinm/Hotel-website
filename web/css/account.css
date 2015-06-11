@@ -1229,6 +1229,9 @@ input.radio-button-payment {
 	float: left;
 	padding-top: 5px;
 }
+#save-credit-card{
+	display: none;
+}
 #change-address,#change-payment-method{
   cursor: pointer;
     width: 225px;
