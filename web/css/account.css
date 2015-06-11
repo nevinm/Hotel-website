@@ -301,10 +301,11 @@ ol{
 .address-content{
 	width: 150px;
 	float: left;
-	max-height: 140px;
+	/*max-height: 140px;*/
 	font-weight: normal;
 	margin-top: -6px;
 	word-break:break-word;
+	height: auto;
 }
 /*ol li{
 	list-style-type: decimal;
@@ -1296,6 +1297,7 @@ input.radio-button-payment {
 	font-family: 'ProximaNova-Regular';
 	font-size: 12px;
 	color:#b0b0b0;
+	display: none;
 }
 #pp, #cc ,#pp-guest {
   /* float: left; */

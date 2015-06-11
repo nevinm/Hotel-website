@@ -3,8 +3,7 @@ $(document).ready(function() {
         nextPage = 1,
         mealTypeFilter = [],
         endOfList = false,
-        ipadWidth = 767,
-        site_url ="http://meisterdish.qburst.com/"; 
+        ipadWidth = 767;
     
     $(document).on("click", '.subMenu .menu-categories-list', function() {
         $(document).find(".subMenu ul li").removeClass("activeOption");
@@ -92,15 +91,15 @@ $(document).ready(function() {
     })
 
     $('#facebook-share').on('click',function(){
-        facebookShare(site_url);
+        facebookShare(homeUrl);
     })
     
     $('#twitter-share').on('click',function(){
-        twitterShare(site_url);
+        twitterShare(homeUrl);
     })
     
     $('#email-share').on('click',function(){
-        emailShare(site_url);
+        emailShare(homeUrl);
     })
 
     CartItemCount();
