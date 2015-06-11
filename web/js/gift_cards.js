@@ -36,5 +36,10 @@ function redeemGiftCard(code) {
 //New Gift Card pages.
 
 $(".giftcard-selector").on("click", function() {
-    $(this);
+    $(".giftcard-selector").removeClass("giftcard-selected");
+    $(this).addClass("giftcard-selected");
+    $(".giftcard-selector").find(":checkbox").removeAttr("checked");
+    // $("input:radio[name='giftcard']").removeAttr("checked");
+    $(this).find(":checkbox").attr("checked","checked");
+    console.log($(this));
 });
