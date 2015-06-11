@@ -25,6 +25,7 @@ def check_input(method):
                                              "get_meal_details",
                                              "add_to_cart",
                                              "check_delivery",
+                                             "gift_card_order"
                                              ]:
 
                         session_key = request.META.get('HTTP_SESSION_KEY', None)

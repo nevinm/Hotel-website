@@ -55,7 +55,6 @@ urlpatterns = patterns('',
 
     url(r'^check_delivery/$', views.check_delivery, name='check_delivery'),
     url(r'^apply_promocode/$', promotions.apply_promocode, name='apply_promocode'),
-
-    #url(r'^purchase_gift_card/$', promotions.manage_delivery_area, name='add_gift_card'),  TODO
+    url(r'^gift_card_order/$', promotions.gift_card_order, name='gift_card_order'),
     
 )
