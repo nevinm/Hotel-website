@@ -218,6 +218,13 @@ input.popup-input {
     font-family: "BrandonGrotesque-Regular";
 }
 
+.proceed-checkout-container {
+    text-align: center;
+    padding: 40px 0;
+    width: 100%;
+    display: inline-block;
+}
+
 @media (max-width: 1366px) {
     .privacy-terms-heading {
         font-size: 45px;
