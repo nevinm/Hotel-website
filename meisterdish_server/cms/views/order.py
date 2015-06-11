@@ -253,3 +253,101 @@ def get_order_details(request, data, user, order_id):
     except Exception as e:
         log.error("get order details." + e.message)
         return custom_error("Failed to list order details.")
+
+def send_order_confirmation_notification(order):
+    try:
+        meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
+        user = order.cart.user
+        dic = {
+               "order_num" : order.order_num,
+               "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
+               "transaction_id" : order.payment.transaction_id if order.payment else "Not Available",
+               "date": order.updated.strftime("%B %d, %Y"),
+               "time" : order.updated.strftime("%I %M %p"),
+               "grand_total":order.grand_total,
+               "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
+               "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
+               "status":order.status,
+               "delivery_type":order.delivery_type,
+               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id)
+               }
+        
+        msg = render_to_string('order_confirmation_email_template.html', dic)
+        sub = 'Your order at Meisterdish is confirmed '
+        to_email = order.delivery_address.email if order.delivery_address else order.email
+
+        mail([to_email], sub, msg )
+
+        if user.need_sms_notification:
+            if not send_sms_notification(dic):
+                return False
+        return True
+
+    except KeyError as e:
+        log.error("Send confirmation mail : " + e.message)
+        return False
+
+def send_order_complete_notification(order):
+    try:
+        meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
+        user = order.cart.user
+        dic = {
+               "order_num" : order.order_num,
+               "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
+               "transaction_id" : order.payment.transaction_id if order.payment else "",
+               "date": order.updated.strftime("%B %d, %Y"),
+               "time" : order.updated.strftime("%I %M %p"),
+               "grand_total":order.grand_total,
+               "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
+               "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
+               "status":order.status,
+               "delivery_type":order.delivery_type,
+               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id),
+               }
+        
+        msg = render_to_string('order_complete_email_template.html', dic)
+        sub = 'Your order at Meisterdish is complete'
+        to_email = order.delivery_address.email if order.delivery_address else order.email
+        
+        mail([to_email], sub, msg )
+
+        if user.need_sms_notification:
+            if not send_sms_notification(dic):
+                return False
+        return True
+    except KeyError as e:
+        log.error("Send order completion mail : " + e.message)
+        return False
+
+def send_sms_notification(dic):
+    try:
+        if not dic["mobile"]:
+            log.error("No mobile number available to send SMS.")
+            return False
+        if dic["status"] == 2: #Confirmed
+            txt = render_to_string('order_confirmation_sms_template.html', dic)
+        else: #Complete
+            txt = render_to_string('order_complete_sms_template.html', dic)
+        
+        client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+
+        country_code = "+1" if settings.Live else "+91"
+        number = country_code + str(dic["mobile"]).strip()
+
+        message = client.messages.create(body=txt,
+                to= number,
+                from_=settings.TWILIO_NUMBER)
+        if message:
+            log.info("Sent SMS to " + number)
+            return True
+        else:
+            log.error("Failed to send SMS to " + number)
+            return False
+
+    except KeyError as e:
+        log.error("Failed to send order SMS to : " + number + " : "+e.message)
+        return False
+
+@check_input('POST')
+def export_orders(request, data, user):
+    pass

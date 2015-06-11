@@ -309,3 +309,6 @@ def delete_image(request, data, user, pk):
         log.error("Failed to delete image " + e.message)
         return custom_error("Failed to delete image. Please try again later.")
 
+@check_input('POST', settings.ROLE_ADMIN)
+def export_users(request, data, user):
+    pass

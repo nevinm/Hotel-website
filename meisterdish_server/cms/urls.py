@@ -17,10 +17,12 @@ urlpatterns = patterns('',
     url(r'^update_user/$', general.update_user, name='update_user'),
     url(r'^get_users/$', general.get_users, name='get_users'),
     url(r'^change_user_status/$', general.change_user_status, name='change_user_status'),
+    url(r'^export_users/$', general.export_users, name='export_users'),
     
     url(r'^get_meals/$', meals.get_meals, name='get_meals'),
     url(r'^create_meal/$', meals.create_meal, name='create_meal'),
     url(r'^delete_meal/(?P<meal_id>[0-9]+)/$', meals.delete_meal, name='delete_meal'),
+    url(r'^export_meals/$', meals.export_meals, name='export_meals'),
 
     url(r'^delete_order/(?P<order_id>[0-9]+)/$', order.delete_order, name='delete_order'),
     url(r'^update_order/(?P<order_id>[0-9]+)/$', order.update_order, name='update_order'),
@@ -38,4 +40,6 @@ urlpatterns = patterns('',
 
     url(r'^get_orders/$', order.get_orders, name='get_orders'),
     url(r'^get_order_details/(?P<order_id>[0-9]+)/$', order.get_order_details, name='get_order_details'),
+    url(r'^export_orders/$', order.export_orders, name='export_orders'),
+
 )

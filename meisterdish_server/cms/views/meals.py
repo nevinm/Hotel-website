@@ -87,7 +87,7 @@ def get_meals(request, data, user):
         log.error("Failed to list meals : "+e.message)
         return custom_error("Failed to list meals")
     
-@check_input('POST', True)
+@check_input('POST', settings.ROLE_ADMIN)
 def create_meal(request, data, user):
     try:
         edit=False
@@ -248,7 +248,7 @@ def create_meal(request, data, user):
         action = "update" if edit else "create"
         return custom_error("Failed to "+action+" meal. Please try again later.")
     
-@check_input('POST', True)
+@check_input('POST', settings.ROLE_ADMIN)
 def delete_meal(request, data, user, meal_id):
     try:
         meal = Meal.objects.get(is_deleted=False, pk=meal_id)
@@ -258,3 +258,7 @@ def delete_meal(request, data, user, meal_id):
     except Exception as e:
         log.error("Failed to delete meal : "+e.message)
         return json_response({"status":-1, "message":"Failed to delete meal. Does that exist?"})
+
+@check_input('POST', settings.ROLE_ADMIN)
+def export_meals(request, data, user):
+    pass
