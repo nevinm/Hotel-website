@@ -141,6 +141,12 @@ def remove_address(request, data, user):
         if add.user.id != user.id:
             return custom_error("You are not auhorized to delete this address")
         add.delete()
+
+        adds = Address.objects.filter(user=user, is_primary=False)
+        if adds.count() > 0:
+            adds[0].is_primary = True
+            adds[0].save()
+            
         return json_response({"status":1, "message":"Successfully Deleted Address.", "id":address_id})
     except Exception as e:
         log.error("Failed to delete Address : "+e.message)
