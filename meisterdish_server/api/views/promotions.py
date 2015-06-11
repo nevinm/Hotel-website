@@ -367,7 +367,7 @@ def send_gift_card(gc):
     dic = {
         "code" : gc.code,
         "name" : gc.name,
-        "message":gc.message
+        "message":gc.message,
         "first_name" : gc.user.first_name.title(),
         "last_name" : gc.user.last_name.title(),
         "amount" : str(gc.amount),
