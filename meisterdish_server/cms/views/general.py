@@ -1,6 +1,6 @@
 from meisterdish_server.models import *
 import logging, md5, settings 
-from datetime import datetime, date
+from datetime import datetime, date as dt
 from django.db.models import Q
 from decorators import *
 from django.core.paginator import Paginator
@@ -314,7 +314,7 @@ def export_users(request, data, user):
         users = User.objects.exclude(role__pk=settings.ROLE_GUEST).filter(deleted=False)
         
         if "new" in data and data["new"]==1:
-            today = date.today()
+            today = dt.today()
             users = users.filter(created__year=today.year, created__month=today.month, created__day=today.day)
 
         if "search" in data:
