@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.core.mail import EmailMessage
 from email.MIMEImage import MIMEImage
 import logging
-from meisterdish_server.models import Image, User, Role, DeliveryArea
+from meisterdish_server.models import Image, User, Role, DeliveryArea, Payment, Address
 import re
 import settings
 from django.contrib.sessions.backends.db import SessionStore
