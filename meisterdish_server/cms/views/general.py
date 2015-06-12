@@ -4,7 +4,7 @@ from datetime import datetime, date
 from django.db.models import Q
 from decorators import *
 from django.core.paginator import Paginator
-from libraries import export_csv
+from libraries import export_csv, manage_image_upload
 log = logging.getLogger('cms')
 
 def home(request):
