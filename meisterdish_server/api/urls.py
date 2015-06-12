@@ -1,9 +1,8 @@
 from django.conf.urls import patterns, include, url
 from api import views
-from api.views import promotions
+from api.views import promotions, meals
 urlpatterns = patterns('',
     url(r'^$', views.home, name='home'),
-    url(r'^cms/', include('api.cms_urls')),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
@@ -18,6 +17,8 @@ urlpatterns = patterns('',
     url(r'^remove_address/$', views.remove_address, name='remove_address'),
     url(r'^update_address/(?P<address_id>[0-9]+)/$', views.update_address, name='update_address'),
     url(r'^get_address_list/$', views.get_address_list, name='get_address_list'),
+
+    url(r'^get_meals/$', meals.get_meals, name='get_meals'),
 
     url(r'^get_states/$', views.get_states, name='get_states'),
     url(r'^get_cities/$', views.get_cities, name='get_cities'),
@@ -38,9 +39,6 @@ urlpatterns = patterns('',
     url(r'^get_meal_details/(?P<meal_id>[0-9]+)/$', views.get_meal_details, name='get_meal_details'),
     url(r'^get_user_reviews/$', views.get_user_reviews, name='get_user_reviews'),
     
-
-    url(r'^upload_image/$', views.upload_image, name='upload_image'),
-    
     url(r'^get_orders/$', views.get_orders, name='get_orders'),
     url(r'^get_order_details/(?P<order_id>[0-9]+)/$', views.get_order_details, name='get_order_details'),
     url(r'^create_order/$', views.create_order, name='create_order'),
@@ -56,9 +54,6 @@ urlpatterns = patterns('',
     #url(r'^paypal_ipn/$', views.paypal_ipn, name='paypal_ipn'),
 
     url(r'^check_delivery/$', views.check_delivery, name='check_delivery'),
-    url(r'^get_delivery_areas/$', views.get_delivery_areas, name='get_delivery_areas'),
-    url(r'^manage_delivery_area/$', views.manage_delivery_area, name='manage_delivery_area'),
-
     url(r'^apply_promocode/$', promotions.apply_promocode, name='apply_promocode'),
     url(r'^gift_card_order/$', promotions.gift_card_order, name='gift_card_order'),
     

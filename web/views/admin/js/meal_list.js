@@ -85,7 +85,7 @@ var getFilterContentCallback = {
 }
 
 function getFilterContent() {
-    var url = baseURL + "get_categories/";
+    var url = baseURL + "cms/get_categories_filters/";
     header = {
         "session-key": localStorage['session_key']
     }

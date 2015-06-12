@@ -68,7 +68,7 @@ var getDeliveryAreasCallback = {
 	failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 function getDeliveryAreas(nextPage){
-	var url = baseURL + 'get_delivery_areas/';
+	var url = baseURL + 'cms/get_delivery_areas/';
 	header = {
 		"session-key": localStorage['session_key']
 	},
@@ -119,7 +119,7 @@ var manageDeliveryAreaCallback = {
 	failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 function manageDeliveryArea(edit_id,delete_id,zip, deliveryArea){
-	var url = baseURL + 'manage_delivery_area/';
+	var url = baseURL + 'cms/manage_delivery_area/';
 	header = {
 		"session-key": localStorage['session_key']
 	},
