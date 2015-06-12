@@ -2,16 +2,65 @@ from meisterdish_server.models import *
 import json as simplejson
 import logging 
 import settings
-from api.views.decorators import *
+from cms.views.decorators import *
 from datetime import datetime
 from django.core.paginator import Paginator
-from libraries import mail, check_delivery_area, validate_phone, validate_email, save_payment_data
+from libraries import mail, check_delivery_area, validate_phone, validate_email, create_address_text_from_model, export_csv
 from django.db.models import Q
 from django.template.loader import render_to_string
-from twilio.rest import TwilioRestClient
-import stripe
-stripe.api_key = settings.STRIPE_SECRET_KEY
-log = logging.getLogger('order')
+
+log = logging.getLogger('cms')
+
+@check_input('POST', settings.ROLE_ADMIN)
+def delete_order(request, data, user, order_id):
+    try:
+        order = Order.objects.get(pk=order_id, is_deleted=False)
+        order.is_deleted = True
+        order.save()
+        return json_response({"status":1, "message":"The order has been deleted", "id":order_id+"."})
+    except Exception as e:
+        log.error("Delete order." + e.message)
+        return custom_error("Failed to delete the order.")
+
+@check_input('POST', settings.ROLE_ADMIN)
+def update_order(request, data, user, order_id):
+    try:
+        order = Order.objects.get(pk=order_id, is_deleted=False, cart__completed=True)
+        if "produced_meals" in data and len(data["produced_meals"]):
+            """ TODO
+            if user.role.id != settings.ROLE_KITCHEN:
+                return custom_error("Only the kitchen staff is authorized to do this operation.")
+            """
+            for order_meal in data["meals"]:
+                cart_item = order.cart.cartitem_set.filter(meals__pk=order_meal["id"])
+                cart_item.produced = True
+                cart_item.save()
+
+        if "status" in data:
+            status = int(data['status'])
+            if status < 0 or status > 4:
+                log.error("Invalid order status: " + str(status))
+            order.status = status
+            order.save()
+        
+            if status >=1:
+                order.cart.completed=True
+                order.cart.save()
+            order.session_key = request.META.get('HTTP_SESSION_KEY', None)
+            
+            if int(status) == 2: #Confirmed
+                sent = send_order_confirmation_notification(order)
+                if not sent:
+                    log.error("Failed to send order confirmation notification")
+            elif int(status) == 4: #Delivered
+                sent = send_order_complete_notification(order)
+                if not sent:
+                    log.error("Failed to send order complete notification")
+
+        return json_response({"status":1, "message":"The order has been updated", "id":str(order_id)+"."})
+    except Exception as e:
+        log.error("Update order status : " + e.message)
+        return custom_error("Failed to update the order.")
 
 @check_input('POST')
 def get_orders(request, data, user):
@@ -22,10 +71,6 @@ def get_orders(request, data, user):
         order_list = []
         orders = Order.objects.filter(is_deleted=False).exclude(status=0)
         
-        #If user, list only his orders
-        if user.role.pk == settings.ROLE_USER:
-            orders = orders.filter(cart__user=user)
-
         total_count = orders.count()
 
         q = Q()
@@ -134,185 +179,6 @@ def get_orders(request, data, user):
     except Exception as e:
         log.error("Failed to list orders." + e.message)
         return custom_error("Failed to get orders list.")
-        
-@check_input('POST')
-def create_order(request, data, user):
-    try:
-        quantity = 0
-        total_price = 0.0
-        total_tax = 0.0
-        paid = False
-        
-        try:
-            del_time = data['delivery_time'].strip()
-            delivery_time = datetime.strptime(del_time,"%m/%d/%Y %H:%M:%S")
-        except Exception as e:
-            log.error("Invalid delivery time : "+e.message)
-            return custom_error("Please provide a valid delivery time.")
-
-        tip = int(data.get('tip', 5))
-        if tip < 5:
-            return custom_error("Miniumum tip amount is $5.") 
-        
-        del_type = data["delivery_type"].strip()
-        if del_type.lower() == "pickup":
-            email = data["email"].strip()
-            phone = data["phone"].strip()
-            if not validate_email(email):
-                return custom_error("Please enter a valid email.")
-            elif not validate_phone(phone):
-                return custom_error("Please enter a valid phone number.")
-        else: #Delivery
-            driver_instructions = data.get('driver_instructions', "")
-            if 'delivery_address' in data:
-                del_address = Address.objects.get(user=user, pk=data['delivery_address'])
-            else:
-                log.info("Delivery order but no address. Checking Primary address.")
-                try:
-                    del_address = user.user_address.get(is_primary=True)
-                except:
-                    log.error("Delivery order but no address. No Primary address. Aborting.")
-                    return custom_error("Please choose a valid delivery address.")
-            
-        items = CartItem.objects.filter(cart__user=user, cart__completed=False)
-        if not items.exists():
-            return custom_error("There are no items in your cart.")
-        
-        for item in items:
-            if not item.meal.available:
-                return custom_error("Sorry, The meal "+ item.meal.name.title() + " has gone out of stock.")
-            
-            quantity += item.quantity
-            total_price += item.meal.price
-            total_tax += item.meal.tax
-
-        order = Order()
-        order.cart = item.cart
-        
-        if del_type.lower() == "delivery":
-            order.delivery_address = del_address
-            #order.billing_address = bil_address
-            order.driver_instructions = driver_instructions
-        else:
-            order.email = email
-            order.phone = phone
-
-        order.delivery_time = delivery_time
-        
-        order.total_amount = total_price
-        order.total_tax = total_tax
-        order.tip = tip
-
-        order.total_amount = total_price + total_tax + tip + settings.SHIPPING_CHARGE
-        """
-        TODO
-
-        if user.credits > 0:
-            log.info("User has credits : "+str(user.credits))
-            if credits > order.total_amount:
-                user.credits = credits - order.total_amount
-                order.credits = order.total_amount
-                order.total_amount = 0
-            else:
-                order.total_amount = order.total_amount - user.credits
-                order.credits = user.credits
-                user.credits = 0
-
-        if order.cart.promo_code:
-            if order.cart.promo_code.amount > order.total_amount:
-                order.total_amount = 0
-                order.discount = order.total_amount
-            else:
-                order.total_amount -= order.cart.promo_code.amount
-                order.discount += order.cart.promo_code.amount
-
-        gc_amount = 0
-        if order.cart.gift_cards.count():
-            gc_amount = cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
-        """
-        #Payment
-        order.save_card = bool(data.get("save_card", 0))
-        order.card_id = data.get("card_id", False)
-        
-        if not order.card_id:
-            order.token = data["stripeToken"].strip()
-
-        payment = make_payment(order, user)
-            
-        if not payment:
-            return custom_error("An error has occurred while paying with Credit Card. Please try agian.")
-        else:
-            log.info("Order payment success.Payment id :"+str(payment.id))        
-            order.payment = payment
-            order.status = 1
-            order.save()
-
-            if not order.cart.completed:
-                order.cart.completed=True
-                order.cart.save()
-        
-            return json_response({"status":1, "message":"The Order has been placed successully."})
-        
-    except KeyError as e:
-        log.error("Failed to create order." + e.message)
-        return custom_error(e.message + "is missing.")
-
-def make_payment(order, user):
-    try:
-        if user.stripe_customer_id and str(user.stripe_customer_id).strip() != "":
-            customer = stripe.Customer.retrieve(user.stripe_customer_id)
-            if order.card_id:
-                #Using pre-saved card
-                card_id = CreditCardDetails.objects.get(pk=order.card_id).card_id
-                card = customer.sources.retrieve(card_id)
-            else:
-                #Add the entered card to the exising customer
-                card = customer.sources.create(source=order.token)
-        elif not order.card_id:
-            #Create new customer
-            customer = stripe.Customer.create(
-                source=order.token,
-                description="meisterdish_user_"+str(user.id)
-            )
-
-            #Save customer id to user table, for future use
-            user.stripe_customer_id = customer.id
-            user.save()
-
-            cards = customer.sources.all(object="card")
-            if cards:
-                card = cards.data[0]
-            else:
-                log.error("Failed to save Stripe card")
-            
-            if order.save_card:
-                c_card = CreditCardDetails()
-                c_card.user = user
-                c_card.card_id = card.id
-                c_card.number = '#### #### #### '+str(card.last4)
-                c_card.funding = card.funding
-                c_card.expire_year = card.exp_year
-                c_card.expire_month = card.exp_month
-                c_card.card_type = card.brand
-                c_card.save()
-
-
-        response = stripe.Charge.create(
-            amount=int(order.total_amount * 100), #Cents
-            currency="usd",
-            customer=customer.id,
-            source = card.id
-        )
-
-        log.info(response)
-        payment = save_payment_data(response)
-        return payment
-    except APIConnectionError as e:
-        log.error("Error connecting with Stripe.")
-        return False
-    except KeyError as e:
-        log.error("Failed to make payment." + e.message)
-        return False
 
 @check_input('POST')
 def get_order_details(request, data, user, order_id):
@@ -384,14 +250,145 @@ def get_order_details(request, data, user, order_id):
         log.error("get order details." + e.message)
         return custom_error("Failed to list order details.")
 
-def get_cart_total(cart):
+def send_order_confirmation_notification(order):
     try:
-        amount = 0.0
-        tax = 0.0
-        for ci in CartItem.objects.filter(cart=cart, cart__completed=False):
-            amount += ci.meal.price * ci.quantity
-            tax += ci.meal.tax * ci.quantity
+        meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
+        user = order.cart.user
+        dic = {
+               "order_num" : order.order_num,
+               "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
+               "transaction_id" : order.payment.transaction_id if order.payment else "Not Available",
+               "date": order.updated.strftime("%B %d, %Y"),
+               "time" : order.updated.strftime("%I %M %p"),
+               "grand_total":order.grand_total,
+               "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
+               "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
+               "status":order.status,
+               "delivery_type":order.delivery_type,
+               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id)
+               }
         
+        msg = render_to_string('order_confirmation_email_template.html', dic)
+        sub = 'Your order at Meisterdish is confirmed '
+        to_email = order.delivery_address.email if order.delivery_address else order.email
+
+        mail([to_email], sub, msg )
+
+        if user.need_sms_notification:
+            if not send_sms_notification(dic):
+                return False
+        return True
+
+    except KeyError as e:
+        log.error("Send confirmation mail : " + e.message)
+        return False
+
+def send_order_complete_notification(order):
+    try:
+        meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
+        user = order.cart.user
+        dic = {
+               "order_num" : order.order_num,
+               "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
+               "transaction_id" : order.payment.transaction_id if order.payment else "",
+               "date": order.updated.strftime("%B %d, %Y"),
+               "time" : order.updated.strftime("%I %M %p"),
+               "grand_total":order.grand_total,
+               "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
+               "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
+               "status":order.status,
+               "delivery_type":order.delivery_type,
+               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id),
+               }
+        
+        msg = render_to_string('order_complete_email_template.html', dic)
+        sub = 'Your order at Meisterdish is complete'
+        to_email = order.delivery_address.email if order.delivery_address else order.email
+        
+        mail([to_email], sub, msg )
+
+        if user.need_sms_notification:
+            if not send_sms_notification(dic):
+                return False
+        return True
+    except KeyError as e:
+        log.error("Send order completion mail : " + e.message)
+        return False
+
+def send_sms_notification(dic):
+    try:
+        if not dic["mobile"]:
+            log.error("No mobile number available to send SMS.")
+            return False
+        if dic["status"] == 2: #Confirmed
+            txt = render_to_string('order_confirmation_sms_template.html', dic)
+        else: #Complete
+            txt = render_to_string('order_complete_sms_template.html', dic)
+        
+        client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+
+        country_code = "+1" if settings.Live else "+91"
+        number = country_code + str(dic["mobile"]).strip()
+
+        message = client.messages.create(body=txt,
+                to= number,
+                from_=settings.TWILIO_NUMBER)
+        if message:
+            log.info("Sent SMS to " + number)
+            return True
+        else:
+            log.error("Failed to send SMS to " + number)
+            return False
+
+    except KeyError as e:
+        log.error("Failed to send order SMS to : " + number + " : "+e.message)
+        return False
+
+@check_input('POST')
+def export_orders(request, data, user):
+    try:
+        orders = Order.objects.filter(is_deleted=False).exclude(status=0)
+        
+        q = Q()
+        #Filter
+        
+        if "user_id" in data and str(data['user_id']).strip() != "":
+            q &= Q(cart__user__pk=data['user_id'])
+
+        if "status" in data and str(data['status']).strip() != "":
+             q |= Q(status=int(data['status']))
+
+        if "date" in data and str(data["date"]).strip() != "":
+            date_obj = datetime.strptime(data['date'], "%Y-%m-%d")# %H:%M:%S")
+            q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
+
+        orders = orders.filter(q)
+        # End filter
+        orders = orders.order_by("-id")
+        export_list = [[
+                'Order Number', 
+                'Order Date',
+                'Name',
+                'Phone',
+                'Delivery Address',
+                'Amount',
+                'Delivery Date',
+                "Status"
+            ]]
+        
+        for order in orders:
+            export_list.append([
+                order.order_num,
+                order.created.strftime("%m-%d-%Y %H:%M:%S"),
+                order.cart.user.first_name.title() + " " + order.cart.user.last_name.title(),
+                order.cart.phone,
+                create_address_text_from_model(order.delivery_address),
+                order.grand_total,
+                order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
+                dict(settings.ORDER_STATUS)[order.status],
+            ])
     except Exception as e:
-        log.error("Error getting cart total: " + e.message)
-    return (amount, tax)
+        log.error("Failed to export orders." + e.message)
+        return HttpResponseRedirect(settings.SITE_URL + "views/admin/orderlist.html")
+    else:
+        return export_csv(export_list, "orders_list.csv")

@@ -1,12 +1,14 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotAllowed
+import json as simplejson
 from django.contrib.sessions.backends.db import SessionStore
 from functools import wraps
-import logging, settings
-from libraries import json_request, json_response, custom_error
+import logging
 from meisterdish_server.models import User
-log = logging.getLogger('api')
+import settings
+from libraries import json_request, json_response, custom_error
+log = logging.getLogger('cms')
 
-def check_input(method):
+def check_input(method, role=False): # Allow all users by default
     def wrapper(func):
         def inner_decorator(request, *args, **kwargs):
             if request.method.upper() == method.upper():
@@ -14,32 +16,27 @@ def check_input(method):
                 if req is not None:
                     log.info('API : '+func.__name__+', Input: '+str(req))
                     if func.__name__ not in ['login',
-                                             'signup', 
-                                             'forgot_password', 
-                                             'logout', 
-                                             'reset_password', 
-                                             'verify_user', 
-                                             'verify_email',
-                                             'get_meals',
-                                             "get_categories",
-                                             "get_meal_details",
-                                             "add_to_cart",
-                                             "check_delivery",
-                                             "gift_card_order"
+                                             'logout',
                                              ]:
-
+                        
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
                         session = SessionStore(session_key=session_key)
                         if session and 'user' in session :
                             if "user_id" in req and int(req['user_id'] != session['user']["id"]):
                                 log.error('API : USER in session and request does not match. : '+req["user_id"])
                                 return custom_error('You are not authorized.')
+                            elif role and session["user"]["role"] != role:
+                                log.error('API : User requesting role('+str(role)+') only features.'+session["user"]["email"] +str(session["user"]["role"]))
+                                return custom_error('You are not authorized.')
                             else:
                                 try:
-                                    user = User.objects.get(pk=session['user']['id'], role__pk=settings.ROLE_USER)
+                                    if not role:
+                                        user = User.objects.get(pk=session['user']['id'])
+                                    else:
+                                        user = User.objects.get(pk=session['user']['id'], role__pk=role)
                                 except Exception as e:
                                     log.error("No user in session !!" + str(session['user']['id']))
-                                    return custom_error("This user is no more available. Please login again.")
+                                    return custom_error("You are not authorized to make this request.")
                                 return func(request, req, user, *args, **kwargs)
                         else:
                             message = 'The session is invalid. Please login again.'

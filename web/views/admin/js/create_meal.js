@@ -100,7 +100,7 @@ $(document).ready(function() {
 
 
 function addDynamicApiUrlUploadPicture(element) {
-    $("#" + element).attr("data-url", baseURL + "upload_picture/");
+    $("#" + element).attr("data-url", baseURL + "cms/upload_image/");
 }
 
 function addMainTipsTricks(video_URL, tips_heading, isEditingdescription, tipsId) {
@@ -354,7 +354,7 @@ var getFilterContentCallback = {
 }
 
 function getFilterContent() {
-    var url = baseURL + "get_categories/";
+    var url = baseURL + "cms/get_categories_filters/";
     header = {
         "session-key": localStorage['session_key']
     }
@@ -424,7 +424,7 @@ var getMealsContentCallback = {
 }
 
 function getMeals(mealId) {
-    var url = baseURL + "get_meal_details/" + mealId + "/";
+    var url = baseURL + "cms/get_meal_details/" + mealId + "/";
     header = {
         "session-key": localStorage['session_key']
     }

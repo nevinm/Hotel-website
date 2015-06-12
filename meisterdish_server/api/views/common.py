@@ -1,13 +1,13 @@
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from django.contrib.sessions.backends.db import SessionStore
-from api.models import *
+from meisterdish_server.models import *
 import md5
 import logging 
 import settings
 from datetime import datetime
 from django.db.models import Q
 from django.template.loader import render_to_string
-from decorators import *
+from api.views.decorators import *
 import sys, traceback
 from libraries import manage_image_upload, check_delivery_area
 
@@ -83,9 +83,6 @@ def login(request, data):
             log.error("Login failed")
             raise Exception("Login failed. Please try again later.")
     
-    except KeyError as e:
-        log.error("Login :" + str(e) + " missing" )
-        return json_response({"status":-1, "message":"Please fill all the fields."})
     except Exception as e:
         log.error("Login : " + e.message)
         return json_response({"status":-1, "message": "Login failed. Please try again later."})
@@ -570,6 +567,7 @@ def get_address_list(request, data, user):
         log.error("Failed to send address list : " + e.message)
         return custom_error("Failed to retrieve address list")
 
+#For uploading profile picture
 @check_input('POST')
 def upload_picture(request, data, user):
     try:
@@ -583,26 +581,3 @@ def upload_picture(request, data, user):
     except Exception as e:
         log.error("Failed to upload profile picture : " + e.message)
         return custom_error("Failed to upload profile picture. Please try again later.")
-
-@check_input('POST')
-def upload_image(request, data, user):
-    try:
-        response = manage_image_upload(request)
-        if response is None:
-            return custom_error("There was an error uploading image. Please try again later.")
-
-        user.profile_image = Image.objects.get(pk=response['id'])
-        user.save()
-        return json_response(response)
-    except Exception as e:
-        log.error("Failed to upload image : " + e.message)
-        return custom_error("Failed to upload image. Please try again later.")
-
-@check_input('POST', True)
-def delete_image(request, data, user, pk):
-    try:
-        image = Image.objects.get(pk=pk).delete()
-        return json_response({"status":1, "message":"Deleted image", "id":pk})
-    except Exception as e:
-        log.error("Failed to delete image " + e.message)
-        return custom_error("Failed to delete image. Please try again later.")
