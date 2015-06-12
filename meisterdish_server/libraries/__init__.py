@@ -174,3 +174,21 @@ def save_payment_data(data):
     except Exception as e:
         log.error("Failed to save payment data " + e.message)
         return False
+
+def create_address_text_from_model(address):
+    if not address or not isinstance(address, Address):
+        return ""
+    text = address.first_name.title() + " " + address.last_name.title() + "\n"
+    text += address.street + ", " + address.building + "\n"
+    text += address.city.name + ", "+address.city.state.name + "\n"
+    text += str(address.zip) + ", Ph: +1 "+str(address.phone)
+    return text
+
+def export_csv(export_list, filename):
+    import csv, os
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="'+filename+'"'
+    writer = csv.writer(response)
+    for row in export_list:
+        writer.writerow(row)
+    return response

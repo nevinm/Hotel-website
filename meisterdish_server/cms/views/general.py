@@ -1,17 +1,16 @@
-from django.http import HttpResponse
 from meisterdish_server.models import *
 import logging, md5, settings 
-from datetime import datetime
+from datetime import datetime, date
 from django.db.models import Q
 from decorators import *
 from django.core.paginator import Paginator
-
+from libraries import export_csv
 log = logging.getLogger('cms')
 
 def home(request):
     return HttpResponse("Welcome to Meisterdish CMS")
 
-@check_input('POST',)
+@check_input('POST')
 def login(request, data):
     try:
         email = data['username'].strip()
@@ -240,7 +239,7 @@ def get_users(request, data, user):
                               "per_page" : limit,
                               })
         
-    except KeyError as e:
+    except Exception as e:
         log.error("User list "+ e.message)
         return custom_error("Failed to retrieve users list.")
 
@@ -311,4 +310,35 @@ def delete_image(request, data, user, pk):
 
 @check_input('POST', settings.ROLE_ADMIN)
 def export_users(request, data, user):
-    pass
+    try:
+        users = User.objects.exclude(role__pk=settings.ROLE_GUEST).filter(deleted=False)
+        
+        if "new" in data and data["new"]==1:
+            today = date.today()
+            users = users.filter(created__year=today.year, created__month=today.month, created__day=today.day)
+
+        if "search" in data:
+            search = data["search"]
+            users = users.filter(Q(first_name__istartswith=search)| Q(last_name__istartswith=search))
+        users = users.order_by('-id')
+        users_list = [[
+            'Name',
+            "Role",
+            'Email',
+            'Mobile',
+            'Credits',
+            'Activation Status',
+        ]]
+        for user in users:
+            users_list.append([
+                (user.first_name + " "+ user.last_name).title(),
+                settings.ROLE_DIC[user.role.pk],
+                user.email,
+                "Not Available" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
+                "$ "+str(user.credits),
+                "Active" if user.is_active else "Inactive",
+            ])
+        return export_csv(users_list, "users_list.csv")
+    except Exception as e:
+        log.error("Export User list "+ e.message)
+        return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")

@@ -259,6 +259,8 @@ def delete_meal(request, data, user, meal_id):
         log.error("Failed to delete meal : "+e.message)
         return json_response({"status":-1, "message":"Failed to delete meal. Does that exist?"})
 
+"""
 @check_input('POST', settings.ROLE_ADMIN)
 def export_meals(request, data, user):
     pass
+"""
