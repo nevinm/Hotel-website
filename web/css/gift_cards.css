@@ -282,7 +282,8 @@
     font-size: 12px;
     padding-top: 20px;
     float: left;
-    width: 100%;
+    width: 50%;
+    cursor: pointer;
 }
 
 .giftcard-select-amount p,
@@ -478,14 +479,17 @@ input.popup-input {
     margin-top: 20px;
     padding-left: 10%;
 }
-input[type=radio],.saved-card-list img{
+input[type=radio],.saved-card-list img,.payment-popup-sub-container img{
     float: left;
     margin-right:20px; 
 }
-.saved-card-list label{
+.payment-popup-sub-container img{
+    margin-right: 8px;
+}
+.saved-card-list label,.payment-popup-sub-container label{
     width: 80%;
 }
-.saved-card-list label span{
+.saved-card-list label span,.payment-popup-sub-container label span{
     padding: 0;
   float: left;
   line-height: 12px;
@@ -505,7 +509,38 @@ input[type=radio],.saved-card-list img{
     text-align: center;
     padding:20px 0; 
 }
-
+.address-payment-list-popup{
+    display: none;
+}
+.address-payment-list-popup .popup{
+    width: 64%;
+    margin-left: -32%;
+    height: auto;
+    top: 50%;
+    min-height: 260px;
+}
+.address-payment-list-popup .header{
+    font-family: 'BrandonGrotesque-Bold';
+    color: #000;
+    background-color: #f7f7f7;
+    padding-left: 20px;
+    letter-spacing: 1px;
+    padding-top: 12px;
+    padding-right: 20px;
+}
+.address-payment-list-popup .button{
+    padding-left: 20px;
+    float: left;
+}
+.address-payment-list-popup .button #cancel{
+    float: left;
+    margin-left: 20px;
+}
+.payment-popup-sub-container{
+    width: 33%;
+    float: left;
+    padding-bottom: 20px;
+}
 @media (max-width: 1366px) {
     .privacy-terms-heading {
         font-size: 45px;
