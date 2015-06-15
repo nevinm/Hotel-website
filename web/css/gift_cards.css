@@ -6,6 +6,19 @@
 
 .giftcard-amount {
     width: 75%;
+    text-align: center;
+    font-family: 'BrandonGrotesque-Regular';
+    letter-spacing: 1px;
+    color: #394543;
+    margin-top: 7px;
+}
+
+.giftcard-amount span:nth-child(1) {
+    font-size: 24px;
+}
+
+.giftcard-amount span:nth-child(2) {
+    font-size: 16px;
 }
 
 .giftcard-select-amount > div:last-of-type {
@@ -20,7 +33,11 @@
     width: 21.25%;
     margin: 30px 5% 30px 0;
     border-radius: 3px;
-    padding: 10px 20px;
+    padding: 15px 20px;
+}
+
+#custom-amount {
+    position: relative;
 }
 
 .giftcard-custom-amount input::-webkit-outer-spin-button,
@@ -47,7 +64,8 @@
 }
 
 .giftcard-selected {
-    background-color: #A9D77B;
+    background-color: #CBE5B0;
+    border: 1px solid rgb(137, 171, 134);
     -webkit-box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.75);
@@ -118,6 +136,7 @@
 }
 
 .recipient-form {
+    position: relative;
     width: 49%;
     float: left;
 }
@@ -158,29 +177,57 @@
 .giftcard-select-amount {
     padding: 50px 0;
 }
-.logo-banner{
+
+.logo-banner {
     left: 50%;
     position: absolute;
     margin-left: -110px;
     width: 220px;
-    top:65%;
-    margin-top: -77.5px; 
+    top: 65%;
+    margin-top: -77.5px;
     text-align: center;
 }
-.gift-card-details-container,.payment-mount-container{
+.gift-card-details-container {
+    width: 100%;
+    float: left;
+}
+.payment-amount-container{
+    padding:30px 30%;
     width: 100%;
     float:left;
+    font-family: 'BrandonGrotesque-bold';
+    margin-top: 50px;
+    
+}
+.payment-amount-container .row{
+    padding-bottom: 20px;
+    color: #5a5a5a;
+    font-size: 16px;
+    padding-left: 10px;
+}
+.payment-amount-container .row span:nth-child(2){
+    padding-left: 20%;
+}
+.payment-amount-container .row:first-child{
+    color: #9B9B9B;
+    font-size: 14px;
 }
 .logo-banner img{
     width: 40px;
     height: 60px;
 }
 .logo-banner hr{
+    width: 50%;
+}
+.logo-banner hr,.payment-amount-container hr,hr{
     height: 1px;
     border: 0;
     background-color: #9b9b9b;
-    width: 50%;
+    width: 100%;
     display: block;
+}
+.payment-amount-container hr{
+    background-color: #9B9B9B;
 }
 .details-main-header {
     font-family: 'BrandonGrotesque-bold';
@@ -189,45 +236,53 @@
     letter-spacing: 1px;
     padding: 20px 0;
 }
+
 .details-sub-header {
-  font-family: 'BrandonGrotesque-bold';
-  color: #5a5a5a;
-  padding: 20px 0;
-  letter-spacing: 1px;
-  font-size: 18px;
+    font-family: 'BrandonGrotesque-bold';
+    color: #5a5a5a;
+    padding: 20px 0;
+    letter-spacing: 1px;
+    font-size: 18px;
 }
+
 .details {
-  padding-left: 30px;
-  width: 40%;
-  letter-spacing: 1px;
+    padding-left: 30px;
+    width: 40%;
+    letter-spacing: 1px;
+    float: left;
 }
+
 .details-label {
-  font-family: 'ProximaNova-semibold';
-  color: #1a1a1a;
-  font-size: 14px;
-  text-align: left;
+    font-family: 'ProximaNova-semibold';
+    color: #1a1a1a;
+    font-size: 14px;
+    text-align: left;
 }
-.row{
+
+.row {
     width: 100%;
     float: left;
     padding: 10px 0;
 }
-.row span{
+
+.row span {
     width: 50%;
     float: left;
 }
+
 .details-content {
-  font-family: 'ProximaNova-semibold';
-  color: #5a5a5a;
-  font-size: 14px;
+    font-family: 'ProximaNova-semibold';
+    color: #5a5a5a;
+    font-size: 14px;
 }
-.details-foot{
-   font-family: 'BrandonGrotesque-bold';
-   color: #9b9b9b;
-   font-size: 12px; 
-   padding-top: 20px;
-   float: left;
-   width: 100%;
+
+.details-foot {
+    font-family: 'BrandonGrotesque-bold';
+    color: #9b9b9b;
+    font-size: 12px;
+    padding-top: 20px;
+    float: left;
+    width: 100%;
 }
 
 .giftcard-select-amount p,
@@ -260,10 +315,23 @@ input.popup-input {
     float: left;
 }
 
-.giftcard-form-container .form-message {
+.giftcard-form-container .form-message,.payment-container-guest {
     width: 100%;
     float: left;
     margin-top: 30px;
+    position: relative;
+}
+
+#recipient-message-error {
+    top: 0;
+    height: 15px;
+}
+
+#recipient-name-error,
+#recipient-email-error,
+#recipient-message-error,
+#giftcard-custom-amount-error{
+    background-color: #F9FAF7
 }
 
 .giftcard-flow-header {
@@ -287,9 +355,7 @@ input.popup-input {
     font-size: 12px;
     color: #6B6B6B;
     letter-spacing: 0.5px;
-    font-family: "BrandonGrotesque-Regular";
 }
-
 .proceed-checkout-container {
     text-align: center;
     padding: 40px 0;
@@ -297,6 +363,148 @@ input.popup-input {
     display: inline-block;
 }
 
+
+/*payment-method-guest*/
+.section1,.section2,.section3{
+    width: 100%;
+    float: left;
+}
+.section1 .forminput-wrapper{
+    width:48%;
+}
+.section1 .forminput-wrapper:first-child{
+    margin-right: 4%;
+}
+.forminput-wrapper{
+    float: left;
+}
+.section2 .forminput-wrapper:first-child{
+    margin-bottom: 10px;
+    width: 100%;
+}
+.your-info-container{
+    width: 40%;
+    float: left;
+    padding-left: 30px;
+}
+.payment-info-container{
+    width: 45%;
+  float: left;
+  padding-left: 10%;
+}
+.pay-by-credit-container .forminput-wrapper:first-child{
+    float: left;
+    width: 100%;
+    padding-bottom: 20px;
+}
+.pay-by-credit-container .forminput-wrapper:nth-child(2) {
+  float: left;
+  width: 68%;
+}
+.pay-by-credit-container .forminput-wrapper:nth-child(3) {
+  width: 28%;
+  margin-left: 4%;
+}
+.pay-by-credit-container .forminput-wrapper:nth-child(4) {
+  padding-top: 20px;
+  width: 30%;
+}
+.pay-by-credit-container .div {
+  width: 4%;
+  float: left;
+  padding-top: 49px;
+  font-size: 18px;
+  color: #b0b0b0;
+  text-align: center;
+}
+.pay-by-credit-container .forminput-wrapper:nth-child(6) {
+  padding-top: 43px;
+  width: 28%;
+  margin-right: 4%;
+}
+.pay-by-credit-container .forminput-wrapper:nth-child(7) {
+  padding-top: 20px;
+  width: 34%;
+}
+.pay-by-credit-container .forminput-wrapper {
+  float: left;
+  position: relative;
+}
+.pay-by-credit-container select {
+  font-size: 12px !important;
+  color: #b0b0b0;
+}
+.pay-by-credit-container .forminput-wrapper .styled-select {
+  width: 100%;
+}
+.styled-select select {
+  background: transparent !important;
+  width: 268px !important;
+  padding: 5px !important;
+  font-size: 16px !important;
+  line-height: 1;
+  border: 0 !important;
+  border-radius: 0 !important;
+  height: 34px;
+  -webkit-appearance: none !important;
+}
+.styled-select {
+  width: 180px;
+  height: 35px;
+  overflow: hidden;
+  background: url(../images/selector_arrow.png) no-repeat 157px 6px #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.pay-by-credit-container .forminput-wrapper:nth-child(4) .styled-select, 
+.pay-by-credit-container .forminput-wrapper:nth-child(6) .styled-select {
+  background-position: 97% 50%;
+}
+.content-heading {
+  font-family: 'BrandonGrotesque-Bold';
+  color: #6b6b6b;
+  width: 100%;
+  float: left;
+  padding-bottom: 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+.accepted-cards-wrapper {
+  padding-bottom: 30px;
+}
+.payment-method{
+    width: 60%;
+    float: left;
+    margin-top: 20px;
+    padding-left: 10%;
+}
+input[type=radio],.saved-card-list img{
+    float: left;
+    margin-right:20px; 
+}
+.saved-card-list label{
+    width: 80%;
+}
+.saved-card-list label span{
+    padding: 0;
+  float: left;
+  line-height: 12px;
+  width: 73%;
+}
+.saved-card-list {
+  width: 100%;
+  float: left;
+  padding: 10px 0;
+}
+.saved-cards{
+    margin: 20px 0;
+    max-height: 100px;
+    overflow-y: auto;
+}
+.button-container{
+    text-align: center;
+    padding:20px 0; 
+}
 
 @media (max-width: 1366px) {
     .privacy-terms-heading {
