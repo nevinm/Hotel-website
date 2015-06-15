@@ -505,6 +505,9 @@ input[type=radio],.saved-card-list img{
     text-align: center;
     padding:20px 0; 
 }
+#pay-form .button-container{
+    float: left;
+}
 
 @media (max-width: 1366px) {
     .privacy-terms-heading {
