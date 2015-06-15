@@ -1,9 +1,9 @@
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
-from api.models import *
+from meisterdish_server.models import *
 import json as simplejson
 import logging 
 import settings
-from decorators import *
+from api.views.decorators import *
 from libraries import validate_zipcode, validate_phone, check_delivery_area, validate_email
 import stripe
 from datetime import datetime, timedelta
@@ -30,6 +30,8 @@ def add_address(request, data, user):
         
         is_primary = False
         if "is_primary" in data and data["is_primary"]:
+            is_primary = True
+        elif not Address.objects.filter(user=user, is_primary=True).exists():
             is_primary = True
         
         if not validate_zipcode(zip):
@@ -67,7 +69,7 @@ def add_address(request, data, user):
                 primary.is_primary=False
                 primary.save()
         return json_response({"status":1, "message":"Added Address", "id":add.id})
-    except KeyError as e:
+    except Exception as e:
         log.error("Add address failed : "+e.message)
         return custom_error("Failed to add address. ")
     except Exception as e:
@@ -79,7 +81,6 @@ def update_address(request, data, user, address_id):
     try:
         try:
             add = Address.objects.get(id=address_id, user=user)
-            add.user = user
         except Exception as e:
             log.error("Updated address "+e.message)
             return custom_error("You are not authorized to modify this address.")
@@ -107,6 +108,8 @@ def update_address(request, data, user, address_id):
             add.phone = phone
             
         if "is_primary" in data and data["is_primary"]:
+            add.is_primary = True
+        elif not Address.objects.exclude(id=add.id).filter(user=user, is_primary=True).exists():
             add.is_primary = True
         else:
             add.is_primary = False
@@ -137,6 +140,11 @@ def remove_address(request, data, user):
         if add.user.id != user.id:
             return custom_error("You are not auhorized to delete this address")
         add.delete()
+
+        adds = Address.objects.filter(user=user, is_primary=False)
+        if adds.count() > 0:
+            adds[0].is_primary = True
+            adds[0].save()
         return json_response({"status":1, "message":"Successfully Deleted Address.", "id":address_id})
     except Exception as e:
         log.error("Failed to delete Address : "+e.message)
@@ -146,23 +154,12 @@ def remove_address(request, data, user):
 def get_categories(request, data):
     try:
         cats = Category.objects.filter(is_hidden=False, is_deleted=False).order_by("name")
-        cat_list = []
-        for cat in cats:
-            cat_list.append({
-                             "id":cat.id,
-                             "name":cat.name.title()
-                             })
-        
-        types = MealType.objects.filter(is_hidden=False, is_deleted=False)
+        cat_list = [{"id":cat.id, "name":cat.name.title()} for cat in cats]
         
         #Meal Types / Filters
-        type_list = []
-        for type in types:
-            type_list.append({
-                             "id":type.id,
-                             "name":type.name.title()
-                             })
-    
+        types = MealType.objects.filter(is_hidden=False, is_deleted=False)
+        type_list = [{"id":type.id, "name":type.name.title()} for type in types]
+        
         return json_response({"status":1, "categories":cat_list, "meal_types":type_list})
     except Exception as e:
         log.error("get categories +filters: " + e.message)
@@ -328,7 +325,7 @@ def save_credit_card(request, data, user):
             return json_response({"status":1, "message":"Successfully saved credit card details.", "id":c_card.id})
         else:
             return custom_error("Failed to save card details.")
-    except Exception as e:
+    except KeyError as e:
         log.error("Save CC: user"+str(user.id) + " : "+ e.message)
         return custom_error("Failed to save credit card details.")
 

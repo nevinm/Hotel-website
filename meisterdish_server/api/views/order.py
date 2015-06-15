@@ -1,27 +1,22 @@
-from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
-from django.contrib.sessions.backends.db import SessionStore
-from api.models import *
+from meisterdish_server.models import *
 import json as simplejson
 import logging 
 import settings
-from decorators import *
+from api.views.decorators import *
 from datetime import datetime
 from django.core.paginator import Paginator
-from libraries import mail, check_delivery_area, validate_phone, validate_email
+from libraries import mail, check_delivery_area, validate_phone, validate_email, save_payment_data
 from django.db.models import Q
-import string, random
-from urllib import unquote
 from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
 import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 log = logging.getLogger('order')
 
-#Admin and User
 @check_input('POST')
-def get_orders(request, data, user=None):
+def get_orders(request, data, user):
     try:
-    	limit = data.get('perPage', settings.PER_PAGE)
+        limit = data.get('perPage', settings.PER_PAGE)
         page = data.get("nextPage",1)
                     
         order_list = []
@@ -94,14 +89,9 @@ def get_orders(request, data, user=None):
             
             order_list.append({
                 "id":order.id,
-                #"total_amount": order.total_amount,
-                #"total_tax" : order.total_tax,
-                #"tip" : order.tip,
                 "grand_total" : order.grand_total,
                 "user_first_name" : order.cart.user.first_name,
                 "user_last_name" : order.cart.user.last_name,
-                #"user_id" : order.cart.user.id,
-                #"user_image" : settings.DEFAULT_USER_IMAGE if not order.cart.user.profile_image else order.cart.user.profile_image.thumb.url,
                 "status":dict(settings.ORDER_STATUS)[order.status],
                 "status_id" : order.status,
                 "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
@@ -141,10 +131,10 @@ def get_orders(request, data, user=None):
                               "current_page":page,
                               "per_page" : limit,
                               })
-    except KeyError as e:
-    	log.error("Failed to list orders." + e.message)
-    	return custom_error("Failed to get orders list.")
-
+    except Exception as e:
+        log.error("Failed to list orders." + e.message)
+        return custom_error("Failed to get orders list.")
+        
 @check_input('POST')
 def create_order(request, data, user):
     try:
@@ -197,7 +187,6 @@ def create_order(request, data, user):
             total_tax += item.meal.tax
 
         order = Order()
-        #order.order_num = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
         order.cart = item.cart
         
         if del_type.lower() == "delivery":
@@ -325,34 +314,6 @@ def make_payment(order, user):
         log.error("Failed to make payment." + e.message)
         return False
 
-def save_payment_data(data):
-    try:
-        payment =Payment()
-        payment.response = simplejson.dumps(data)
-        payment.transaction_id = data["id"]
-        payment.transaction_date = datetime.fromtimestamp(data["created"])
-        payment.amount = data["amount"]
-
-        if data["status"].lower() == "succeeded":
-            payment.verified = True
-        payment.save()
-        return payment
-    except Exception as e:
-        log.error("Failed to save payment data " + e.message)
-        return False
-
-#Admin only
-@check_input('POST', True)
-def delete_order(request, data, user, order_id):
-    try:
-    	order = Order.objects.get(pk=order_id, is_deleted=False)
-        order.is_deleted = True
-        order.save()
-        return json_response({"status":1, "message":"The order has been deleted", "id":order_id+"."})
-    except Exception as e:
-    	log.error("Delete order." + e.message)
-    	return custom_error("Failed to delete the order.")
-
 @check_input('POST')
 def get_order_details(request, data, user, order_id):
     try:
@@ -423,47 +384,6 @@ def get_order_details(request, data, user, order_id):
         log.error("get order details." + e.message)
         return custom_error("Failed to list order details.")
 
-#Admin only
-@check_input('POST', True)
-def update_order(request, data, user, order_id):
-    try:
-        order = Order.objects.get(pk=order_id, is_deleted=False, cart__completed=True)
-        if "produced_meals" in data and len(data["produced_meals"]):
-            """ TODO
-            if user.role.id != settings.ROLE_KITCHEN:
-                return custom_error("Only the kitchen staff is authorized to do this operation.")
-            """
-            for order_meal in data["meals"]:
-                cart_item = order.cart.cartitem_set.filter(meals__pk=order_meal["id"])
-                cart_item.produced = True
-                cart_item.save()
-
-        if "status" in data:
-            status = int(data['status'])
-            if status < 0 or status > 4:
-                log.error("Invalid order status: " + str(status))
-            order.status = status
-            order.save()
-        
-            if status >=1:
-                order.cart.completed=True
-                order.cart.save()
-            order.session_key = request.META.get('HTTP_SESSION_KEY', None)
-            
-            if int(status) == 2: #Confirmed
-                sent = send_order_confirmation_notification(order)
-                if not sent:
-                    log.error("Failed to send order confirmation notification")
-            elif int(status) == 4: #Delivered
-                sent = send_order_complete_notification(order)
-                if not sent:
-                    log.error("Failed to send order complete notification")
-
-        return json_response({"status":1, "message":"The order has been updated", "id":str(order_id)+"."})
-    except Exception as e:
-        log.error("Update order status : " + e.message)
-        return custom_error("Failed to update the order.")
-
 def get_cart_total(cart):
     try:
         amount = 0.0
@@ -475,96 +395,3 @@ def get_cart_total(cart):
     except Exception as e:
         log.error("Error getting cart total: " + e.message)
     return (amount, tax)
-
-def send_order_confirmation_notification(order):
-    try:
-        meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
-        user = order.cart.user
-        dic = {
-               "order_num" : order.order_num,
-               "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
-               "transaction_id" : order.payment.transaction_id if order.payment else "Not Available",
-               "date": order.updated.strftime("%B %d, %Y"),
-               "time" : order.updated.strftime("%I %M %p"),
-               "grand_total":order.grand_total,
-               "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
-               "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
-               "status":order.status,
-               "delivery_type":order.delivery_type,
-               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id)
-               }
-        
-        msg = render_to_string('order_confirmation_email_template.html', dic)
-        sub = 'Your order at Meisterdish is confirmed '
-        to_email = order.delivery_address.email if order.delivery_address else order.email
-
-        mail([to_email], sub, msg )
-
-        if user.need_sms_notification:
-            if not send_sms_notification(dic):
-                return False
-        return True
-
-    except KeyError as e:
-        log.error("Send confirmation mail : " + e.message)
-        return False
-
-def send_order_complete_notification(order):
-    try:
-        meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
-        user = order.cart.user
-        dic = {
-               "order_num" : order.order_num,
-               "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
-               "transaction_id" : order.payment.transaction_id if order.payment else "",
-               "date": order.updated.strftime("%B %d, %Y"),
-               "time" : order.updated.strftime("%I %M %p"),
-               "grand_total":order.grand_total,
-               "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
-               "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
-               "status":order.status,
-               "delivery_type":order.delivery_type,
-               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id),
-               }
-        
-        msg = render_to_string('order_complete_email_template.html', dic)
-        sub = 'Your order at Meisterdish is complete'
-        to_email = order.delivery_address.email if order.delivery_address else order.email
-        
-        mail([to_email], sub, msg )
-
-        if user.need_sms_notification:
-            if not send_sms_notification(dic):
-                return False
-        return True
-    except KeyError as e:
-        log.error("Send order completion mail : " + e.message)
-        return False
-
-def send_sms_notification(dic):
-    try:
-        if not dic["mobile"]:
-            log.error("No mobile number available to send SMS.")
-            return False
-        if dic["status"] == 2: #Confirmed
-            txt = render_to_string('order_confirmation_sms_template.html', dic)
-        else: #Complete
-            txt = render_to_string('order_complete_sms_template.html', dic)
-        
-        client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-
-        country_code = "+1" if settings.Live else "+91"
-        number = country_code + str(dic["mobile"]).strip()
-
-        message = client.messages.create(body=txt,
-                to= number,
-                from_=settings.TWILIO_NUMBER)
-        if message:
-            log.info("Sent SMS to " + number)
-            return True
-        else:
-            log.error("Failed to send SMS to " + number)
-            return False
-    except KeyError as e:
-        log.error("Failed to send order SMS to : " + number + " : "+e.message)
-        return False

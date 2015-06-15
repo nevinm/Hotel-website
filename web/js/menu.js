@@ -180,7 +180,7 @@ function getmealList(search_name, category, mealtype, perPage, nextPage, isInfin
     if (isInfinteScrolling) {
         $(".menu-loading-gif").show();
     }
-    var url = baseURL + "cms/get_meals/";
+    var url = baseURL + "get_meals/";
     header = {
         "session-key": localStorage['session_key']
     }

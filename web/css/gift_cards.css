@@ -6,6 +6,19 @@
 
 .giftcard-amount {
     width: 75%;
+    text-align: center;
+    font-family: 'BrandonGrotesque-Regular';
+    letter-spacing: 1px;
+    color: #394543;
+    margin-top: 7px;
+}
+
+.giftcard-amount span:nth-child(1) {
+    font-size: 24px;
+}
+
+.giftcard-amount span:nth-child(2) {
+    font-size: 16px;
 }
 
 .giftcard-select-amount > div:last-of-type {
@@ -20,7 +33,11 @@
     width: 21.25%;
     margin: 30px 5% 30px 0;
     border-radius: 3px;
-    padding: 10px 20px;
+    padding: 15px 20px;
+}
+
+#custom-amount {
+    position: relative;
 }
 
 .giftcard-custom-amount input::-webkit-outer-spin-button,
@@ -47,7 +64,8 @@
 }
 
 .giftcard-selected {
-    background-color: #A9D77B;
+    background-color: #CBE5B0;
+    border: 1px solid rgb(137, 171, 134);
     -webkit-box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.75);
@@ -118,6 +136,7 @@
 }
 
 .recipient-form {
+    position: relative;
     width: 49%;
     float: left;
 }
@@ -158,18 +177,19 @@
 .giftcard-select-amount {
     padding: 50px 0;
 }
-.logo-banner{
+
+.logo-banner {
     left: 50%;
     position: absolute;
     margin-left: -110px;
     width: 220px;
-    top:65%;
-    margin-top: -77.5px; 
+    top: 65%;
+    margin-top: -77.5px;
     text-align: center;
 }
-.gift-card-details-container{
+.gift-card-details-container {
     width: 100%;
-    float:left;
+    float: left;
 }
 .payment-amount-container{
     padding:30px 30%;
@@ -214,45 +234,52 @@
     letter-spacing: 1px;
     padding: 20px 0;
 }
+
 .details-sub-header {
-  font-family: 'BrandonGrotesque-bold';
-  color: #5a5a5a;
-  padding: 20px 0;
-  letter-spacing: 1px;
-  font-size: 18px;
+    font-family: 'BrandonGrotesque-bold';
+    color: #5a5a5a;
+    padding: 20px 0;
+    letter-spacing: 1px;
+    font-size: 18px;
 }
+
 .details {
-  padding-left: 30px;
-  width: 40%;
-  letter-spacing: 1px;
+    padding-left: 30px;
+    width: 40%;
+    letter-spacing: 1px;
 }
+
 .details-label {
-  font-family: 'ProximaNova-semibold';
-  color: #1a1a1a;
-  font-size: 14px;
-  text-align: left;
+    font-family: 'ProximaNova-semibold';
+    color: #1a1a1a;
+    font-size: 14px;
+    text-align: left;
 }
-.row{
+
+.row {
     width: 100%;
     float: left;
     padding: 10px 0;
 }
-.row span{
+
+.row span {
     width: 50%;
     float: left;
 }
+
 .details-content {
-  font-family: 'ProximaNova-semibold';
-  color: #5a5a5a;
-  font-size: 14px;
+    font-family: 'ProximaNova-semibold';
+    color: #5a5a5a;
+    font-size: 14px;
 }
-.details-foot{
-   font-family: 'BrandonGrotesque-bold';
-   color: #9b9b9b;
-   font-size: 12px; 
-   padding-top: 20px;
-   float: left;
-   width: 100%;
+
+.details-foot {
+    font-family: 'BrandonGrotesque-bold';
+    color: #9b9b9b;
+    font-size: 12px;
+    padding-top: 20px;
+    float: left;
+    width: 100%;
 }
 
 .giftcard-select-amount p,
@@ -289,6 +316,19 @@ input.popup-input {
     width: 100%;
     float: left;
     margin-top: 30px;
+    position: relative;
+}
+
+#recipient-message-error {
+    top: 0;
+    height: 15px;
+}
+
+#recipient-name-error,
+#recipient-email-error,
+#recipient-message-error,
+#giftcard-custom-amount-error{
+    background-color: #F9FAF7
 }
 
 .giftcard-flow-header {
@@ -314,6 +354,15 @@ input.popup-input {
     letter-spacing: 0.5px;
     font-family: "BrandonGrotesque-Regular";
 }
+.proceed-checkout-container {
+    text-align: center;
+    padding: 40px 0;
+    width: 100%;
+    display: inline-block;
+}
+
+
+/*payment-method-guest*/
 .section1,.section2,.section3{
     width: 100%;
     float: left;
@@ -421,6 +470,8 @@ input.popup-input {
 .accepted-cards-wrapper {
   padding-bottom: 30px;
 }
+
+
 @media (max-width: 1366px) {
     .privacy-terms-heading {
         font-size: 45px;

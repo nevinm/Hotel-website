@@ -72,7 +72,7 @@ var getOrdersCallback = {
 
 function getOrders(nextPage, userName, orderNum, status,total_amount,phone_num,date) {
     $('#order-list tbody').empty();
-    var url = baseURL + "get_orders/",
+    var url = baseURL + "cms/get_orders/",
         header = {
             "session-key": localStorage["session_key"]
         },
@@ -103,7 +103,7 @@ var getOrderDetailsCallback = {
 }
 
 function getOrderDetails(currentOrderId) {
-    var url = baseURL + "get_order_details/" + currentOrderId + "/",
+    var url = baseURL + "cms/get_order_details/" + currentOrderId + "/",
         header = {
             "session-key": localStorage["session_key"]
         },

@@ -25,6 +25,14 @@ ROLE_GUEST = 3
 ROLE_KITCHEN = 4
 ROLE_DELIVERY = 5
 
+ROLE_DIC = {
+    ROLE_ADMIN : "Admin",
+    ROLE_USER : "User",
+    ROLE_GUEST : "Guest",
+    ROLE_KITCHEN : "Kitchen Staff",
+    ROLE_DELIVERY : "Delivery Staff",
+}
+
 ALLOWED_HOSTS = []
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -60,6 +68,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 STATIC_URL = BASE_URL+'static/'
 
 STATIC_ROOT = BASE_DIR + '/static/'
+
+EXPORT_PATH = os.path.join(MEDIA_ROOT, 'export')
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
@@ -134,7 +144,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'corsheaders',
+    "meisterdish_server",
     'api',
+    "cms",
 )
 
 LOGGING = {
@@ -176,7 +188,7 @@ LOGGING = {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },
-        'cms_api': {
+        'cms': {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },
