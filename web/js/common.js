@@ -286,6 +286,9 @@ $("form").each(function() {
                 required: true,
                 minlength: 6
             },
+            message:{
+                required: true
+            },
             password: {
                 required: true,
                 minlength: 6,
@@ -375,10 +378,12 @@ $("form").each(function() {
             tips_details: {
                 required: true,
                 minlength: 2
+            },
+            giftcardcustomamount:{
+                required: true,
+                minlength: 2,
+                minAmount: 25
             }
-            // image_upload :{
-            //     required:true
-            // }
         },
         messages: {
             firstname: {
@@ -395,7 +400,7 @@ $("form").each(function() {
             },
             phonenumber: "Provide valid number",
             fullname: {
-                required: "Please enter your first name.",
+                required: "Please enter your full name.",
                 letters: "Name should contain only alphabets.",
                 minlength: "Name should contain atleast 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
@@ -419,9 +424,16 @@ $("form").each(function() {
                 minlength: "Password should be of minimum 6 characters.",
                 equalTo: "Password doesn't match."
             },
+            message:{
+                required: "Please enter a message",
+            },
             confirmEmail: {
                 equalTo: "Email doesn't match.",
                 required: "Please provide email."
+            },
+            giftcardcustomamount:{
+                required: "Please enter an amount.",
+                minAmount:"Enter a min amount of 25"
             },
             nameOnCard: "Enter valid name.",
             expiryMonth: "Enter exp month.",
@@ -435,6 +447,7 @@ $("form").each(function() {
             mealprice: "Enter a valid meal price.",
             mealtax: "Enter a valid meal tax.",
             mealname: "Enter a valid meal name.",
+            message: "Enter a message.",
             chef_name: "Enter a valid chef name.",
             mealdescription: "Meal description is not valid.",
             cvv: "provide a valid cvv.",
@@ -452,6 +465,9 @@ if ($.validator) {
     $.validator.addMethod('youtube_url', function(value) {
         return value.match(/^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/);
     });
+    $.validator.addMethod('minAmount', function (value, el, param) {
+    return value >= param;
+});
 }
 
 //CartItemCount
