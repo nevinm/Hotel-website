@@ -54,6 +54,15 @@ $(document).ready(function() {
     });
 
     //New Gift Card pages.
+    if (localStorage["session_key"]) {
+        $('.payment-method').show();
+        $('.payment-container-guest').hide();
+    }
+    else{
+         $('.payment-method').hide();
+         $('.payment-container-guest').show();
+    }
+
     $(".giftcard-selector").on("click", function() {
         $(".giftcard-selector").removeClass("giftcard-selected");
         $(this).addClass("giftcard-selected");
