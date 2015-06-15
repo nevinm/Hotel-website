@@ -137,10 +137,14 @@
                         <span class="details-foot">EDIT GIFT CARD</span>
                     </div>
                 </div>
-                <div class="payment-container">
+                <div class="payment-container-guest">
                      <div class="your-info-container">
+                         <div class="details-sub-header">YOUR INFO</div>
+                         <span class="content-heading have-account">
+                            Do you have an account? 
+                            <a href="login.html" class="green">Log In here</a></span>
                          <form id="address">
-                            <div class="row">
+                            <div class="section1">
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">First Name</label>
                                     <input type="text" name="firstname" class="popup-input">
@@ -150,13 +154,13 @@
                                     <input type="text" name="lastname" class="popup-input">
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="section2">
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">Email</label>
                                     <input type="email" name="email" class="popup-input" id="guest-email">
                                 </div>
                             </div>
-                             <div class="row">
+                             <div class="section3">
                                  <div class="forminput-wrapper">
                                     <label class="body-text-small">Zip</label>
                                     <input type="text" name="zip" class="popup-input">
@@ -164,9 +168,70 @@
                              </div>
                          </form>
                      </div>
-                     <div class="payment-info-container"></div>
+                     <div class="payment-info-container">
+                            <div class="details-sub-header">PAYMENT INFORMATION</div>
+                            <div class="accepted-cards-wrapper">
+                                <label class="body-text-small">Accepted cards</label>
+                                <div class="accepted-cards-list">
+                                    <img class='accepted-cards' src="../images/master.png">
+                                    <img class='accepted-cards' src="../images/visa.png">
+                                    <img class='accepted-cards' src="../images/amex.png">
+                                    <img class='accepted-cards' src="../images/discover.png">
+                                    <img class='accepted-cards' src="../images/diners.png">
+                                    <img class='accepted-cards' src="../images/jcb.png">
+                                </div>
+                            </div>
+                            <div class="pay-by-credit-container">
+                                <form id="pay-form" action="" method="POST" autocomplete='off'>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Card Holder Name</label>
+                                        <input type="text" name="nameOnCard" class="popup-input" id="name-on-card">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Credit card number</label>
+                                        <input type="text" autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">CVV</label>
+                                        <input type="password" size="4" data-stripe="cvc" class="popup-input" id="cvv-number">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Expiry Date</label>
+                                    <div class="styled-select">
+                                        <select name="expiryMonth" id="ExpMonth" data-stripe="exp-month">
+                                            <option value=""></option>
+                                            <option value="01">JAN</option>
+                                            <option value="02">FEB</option>
+                                            <option value="03">MAR</option>
+                                            <option value="04">APR</option>
+                                            <option value="05">MAY</option>
+                                            <option value="06">JUN</option>
+                                            <option value="07">JUL</option>
+                                            <option value="08">AUG</option>
+                                            <option value="09">SEP</option>
+                                            <option value="10">OCT</option>
+                                            <option value="11">NOV</option>
+                                            <option value="12">DEC</option>
+                                        </select>
+                                    </div>
+                                    </div>
+                                    <span class="div">/</span>
+                                    <div class="forminput-wrapper">
+                                        <div class="styled-select">
+                                            <select id="ExpYear" data-stripe="exp-year">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Billing zip</label>
+                                        <input type="text" name="zip" class="popup-input" id="billing-zip">
+                                    </div>
+                                </form>
+                            </div>
+                     </div>
                 </div>       
-                <div class="payment-mount-container">
+                <div class="payment-amount-container">
                     <div class="row">
                         <span>SUBTOTAL</span>
                         <span>$150.00</span>

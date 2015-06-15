@@ -1,3 +1,5 @@
+
+
 //Old giftcard page
 
 $("#redeem-card").on('click', function() {
@@ -34,7 +36,7 @@ function redeemGiftCard(code) {
 }
 
 //New Gift Card pages.
-
+populateYear();
 $(".giftcard-selector").on("click", function() {
     $(".giftcard-selector").removeClass("giftcard-selected");
     $(this).addClass("giftcard-selected");
@@ -43,3 +45,11 @@ $(".giftcard-selector").on("click", function() {
     $(this).find(":checkbox").attr("checked","checked");
     console.log($(this));
 });
+ //populate year
+    function populateYear() {
+        var currentYear = new Date().getFullYear();
+        for (var i = 1; i <= 20; i++) {
+            $('#ExpYear').append("<option value='" + currentYear + "'>" + currentYear + "</option>");
+            currentYear = currentYear + 1;
+        }
+    }
