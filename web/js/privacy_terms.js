@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    CartItemCount();
+    
     $("#privacy-policy").on("click", function() {
         $(".terms-inner-details").hide();
         $(".privacy-inner-details").show();
