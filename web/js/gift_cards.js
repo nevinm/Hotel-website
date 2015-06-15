@@ -177,8 +177,13 @@ var savedCardDetailsCallback = {
         cardDetails = JSON.parse(data);
         if (cardDetails.status == 1) {
             if (cardDetails.cards.length != 0) {
+                 $('.payment-method').show();
+                 $('.payment-info-container').hide();
                 populateCardDetails(cardDetails.cards);
-            } else {}
+            } else {
+                $('.payment-method').hide();
+                $('.payment-info-container').show();
+            }
         } else {
             showPopup(cardDetails);
         }
