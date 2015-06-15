@@ -44,6 +44,7 @@ function getGiftCardData() {
     }
     localStorage['giftcardDetails'] = JSON.stringify(giftcardDetails);
 }
+var cardDetails;
 
 function fetchLocalGiftCardData() {
     return JSON.parse(localStorage['giftcardDetails']);
@@ -92,7 +93,6 @@ function saveCreditCardGiftCard(giftCardOrderParams) {
     var saveCreditCardGiftCardInstance = new AjaxHttpSender();
     saveCreditCardGiftCardInstance.sendPost(url, header, data, saveCreditCardGiftCardCallback);
 }
-
 
 $(document).ready(function() {
     CartItemCount();
@@ -148,6 +148,18 @@ $(document).ready(function() {
             window.location.href = 'giftcard_payment.html';
         } else {}
     });
+    $('#change-payment').on("click",function(){
+        $('.address-payment-list-popup').show();
+        populateCardDetailsInPopup();
+    })
+    $(document).on('click', '#cancel', function() {
+        $('.address-payment-list-popup').hide();
+    });
+    $(document).on('click', '#save-payment', function() {
+        var selectedId = $('input[type=radio][name=change-card]:checked').attr('id');
+        showSelectedPaymentMethod(selectedId);
+        $('.address-payment-list-popup').hide();
+    });
 });
 //populate year
 function populateYear() {
@@ -200,17 +212,45 @@ function populateCardDetails(cards, selectedId) {
             }
         });
 
-    } else {
-        $.each(cards, function(key, value) {
-            last_num = cards[key].number.slice(-4);
-            $('.saved-cards').append("<div class='saved-card-list'>" +
-                "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
-                "' class='radio-button-payment'>" +
-                "<label for='" + value.id + "'>" +
-                "<img class='paypal' src='" + value.logo + "'>" +
-                "<span class='body-text-small'>" + value.type + " " + "ending in" + " " + last_num + "</span>" +
-                "<span class='body-text-small'>" + "Expires on" + " " +
-                value.expire_month + "/" + value.expire_year + "</span>" + "</label>" + "</div>");
-        });
+    } 
+    else {
+        last_num = cards[0].number.slice(-4);
+        $('.saved-cards').append("<div class='saved-card-list'>" +
+        "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + cards[0].id +
+        "' class='radio-button-payment'>" +
+        "<label for='" + cards[0].id + "'>" +
+        "<img class='paypal' src='" + cards[0].logo + "'>" +
+        "<span class='body-text-small'>" + cards[0].type + " " + "ending in" + " " + last_num + "</span>" +
+        "<span class='body-text-small'>" + "Expires on" + " " +
+        cards[0].expire_month + "/" + cards[0].expire_year + "</span>" + "</label>" + "</div>");
     }
+}
+
+//change payment method
+function populateCardDetailsInPopup() {
+    var cards = cardDetails.cards;
+    $('.address-payment-list-popup .button').remove();
+    $('.address-payment-list-popup .popup-container').empty();
+
+    $.each(cards, function(key, value) {
+        $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>" +
+            "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' id='" + value.id + "'>" +
+            "<label>" + "<img class='paypal' src='" + value.logo + "'>" +
+            "<span class='body-text-small'>" + value.type + " " +
+            "ending in" + " " + last_num + "</span>" +
+            "<span class='body-text-small'>" + "Expires on" +
+            " " + value.expire_month + "/" + value.expire_year + "</span>" + "</label>" + "</div>")
+    });
+    $('.address-payment-list-popup .popup-container').append("<div class='button'>" +
+        "<a href='#' class='btn btn-medium-primary medium-green pullLeft' id='save-payment'>" + "SELECT" + "</a>" +
+        "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
+    $('#save-payment').addClass('button-disabled');
+    $('.address-payment-list-popup').show();
+    $('input[type=radio][name=change-card]').on("focus", function() {
+        $('#save-payment').removeClass('button-disabled');
+    })
+}
+function showSelectedPaymentMethod(selectedId) {
+    $('.saved-cards').empty();
+    populateCardDetails(cardDetails.cards, selectedId);
 }
