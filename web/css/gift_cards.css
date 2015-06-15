@@ -541,6 +541,10 @@ input[type=radio],.saved-card-list img,.payment-popup-sub-container img{
     float: left;
     padding-bottom: 20px;
 }
+#pay-form .button-container{
+    float: left;
+}
+
 @media (max-width: 1366px) {
     .privacy-terms-heading {
         font-size: 45px;
