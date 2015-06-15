@@ -55,8 +55,10 @@ $(document).ready(function() {
 
     //New Gift Card pages.
     if (localStorage["session_key"]) {
+        savedCardDetails();
         $('.payment-method').show();
         $('.payment-container-guest').hide();
+
     }
     else{
          $('.payment-method').hide();
@@ -98,5 +100,62 @@ function populateYear() {
     for (var i = 1; i <= 20; i++) {
         $('#ExpYear').append("<option value='" + currentYear + "'>" + currentYear + "</option>");
         currentYear = currentYear + 1;
+    }
+}
+
+//Get saved cards
+var savedCardDetailsCallback = {
+    success: function(data, textStatus) {
+        var last_num;
+        cardDetails = JSON.parse(data);
+        if (cardDetails.status == 1) {
+            if (cardDetails.cards.length != 0) {
+                populateCardDetails(cardDetails.cards);
+            } else {}
+        } else {
+            showPopup(cardDetails);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function savedCardDetails() {
+    var url = baseURL + "get_saved_cards/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {}
+    data = JSON.stringify(params);
+    var savedCardDetailsInstance = new AjaxHttpSender();
+    savedCardDetailsInstance.sendPost(url, header, data, savedCardDetailsCallback);
+}
+function populateCardDetails(cards, selectedId) {
+    if (selectedId) {
+        $.each(cards, function(key, value) {
+            last_num = cards[key].number.slice(-4);
+            if (selectedId == value.id) {
+                $('.saved-cards').append("<div class='saved-card-list'>" +
+                    "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
+                    "' class='radio-button-payment'>" +
+                    "<label for='" + value.id + "'>" +
+                    "<img class='paypal' src='" + value.logo + "'>" +
+                    "<span class='body-text-small'>" + value.type + " " + "ending in" + " " + last_num + "</span>" +
+                    "<span class='body-text-small'>" + "Expires on" + " " +
+                    value.expire_month + "/" + value.expire_year + "</span>" + "</label>" + "</div>");
+            }
+        });
+
+    } else {
+        $.each(cards, function(key, value) {
+            last_num = cards[key].number.slice(-4);
+            $('.saved-cards').append("<div class='saved-card-list'>" +
+                "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
+                "' class='radio-button-payment'>" +
+                "<label for='" + value.id + "'>" +
+                "<img class='paypal' src='" + value.logo + "'>" +
+                "<span class='body-text-small'>" + value.type + " " + "ending in" + " " + last_num + "</span>" +
+                "<span class='body-text-small'>" + "Expires on" + " " +
+                value.expire_month + "/" + value.expire_year + "</span>" + "</label>" + "</div>");
+        });
     }
 }
