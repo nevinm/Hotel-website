@@ -1,6 +1,6 @@
 function stripeIntegration() {
     $('#pay-form').submit(function(event) {
-        if ($('form').valid()) {
+        if ($('#pay-form').valid()) {
             event.preventDefault();
             var $form = $(this);
 
@@ -34,6 +34,8 @@ function stripeResponseHandler(status, response) {
             saveCreditCardDetails(token);
         } else if (currentPage == "checkout") {
             cardNotSavedCreateOrder(token);
+        } else if(currentPage == "giftcard_payment"){
+            fetchGiftCardData(token);
         }
     }
 };
