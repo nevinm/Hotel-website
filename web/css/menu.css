@@ -38,6 +38,21 @@
 /*==============================*\
             &MENU
 \*==============================*/
+.menu-offer{
+    height: 40px;
+    text-align: center;
+    background-color: #6b6b6b;
+    font-family: 'BrandonGrotesque-bold';
+    color: #ababab;
+    font-size: 12px;
+    padding-top: 13px;
+    letter-spacing: .7px;
+}
+#share-now{
+    padding-left: 30px;
+    color: #fbfbfb;
+    cursor: pointer;
+}
 #header{
     position: relative !important;
     border-bottom: 1px solid #ededed;

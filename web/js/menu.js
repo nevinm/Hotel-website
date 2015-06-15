@@ -3,7 +3,7 @@ $(document).ready(function() {
         nextPage = 1,
         mealTypeFilter = [],
         endOfList = false,
-        ipadWidth = 767;
+        ipadWidth = 767;    
     
     $(document).on("click", '.subMenu .menu-categories-list', function() {
         $(document).find(".subMenu ul li").removeClass("activeOption");
@@ -85,7 +85,9 @@ $(document).ready(function() {
     });
 
     //share with friends
-
+    $('#share-now').on('click',function(){
+        $('.share-popup-wrapper').show();
+    })
     $('#done-share').on('click',function(){
         $('.share-popup-wrapper').hide();
     })
