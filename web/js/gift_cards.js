@@ -96,7 +96,10 @@ function saveCreditCardGiftCard(giftCardOrderParams) {
 
 $(document).ready(function() {
     CartItemCount();
-    stripeIntegration();
+    currentPage = getCurrentPage("/", ".html", window.location.href);
+    if (currentPage == "giftcard_payment") {
+        stripeIntegration();
+    }
 
     if (localStorage.getItem("giftcardDetails") !== null && $(".giftcard-payment").length) {
         var giftcardDetails = fetchLocalGiftCardData();
@@ -148,7 +151,7 @@ $(document).ready(function() {
             window.location.href = 'giftcard_payment.html';
         } else {}
     });
-    $('#change-payment').on("click",function(){
+    $('#change-payment').on("click", function() {
         $('.address-payment-list-popup').show();
         populateCardDetailsInPopup();
     })
@@ -201,6 +204,7 @@ function savedCardDetails() {
     var savedCardDetailsInstance = new AjaxHttpSender();
     savedCardDetailsInstance.sendPost(url, header, data, savedCardDetailsCallback);
 }
+
 function populateCardDetails(cards, selectedId) {
     if (selectedId) {
         $.each(cards, function(key, value) {
@@ -217,17 +221,16 @@ function populateCardDetails(cards, selectedId) {
             }
         });
 
-    } 
-    else {
+    } else {
         last_num = cards[0].number.slice(-4);
         $('.saved-cards').append("<div class='saved-card-list'>" +
-        "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + cards[0].id +
-        "' class='radio-button-payment'>" +
-        "<label for='" + cards[0].id + "'>" +
-        "<img class='paypal' src='" + cards[0].logo + "'>" +
-        "<span class='body-text-small'>" + cards[0].type + " " + "ending in" + " " + last_num + "</span>" +
-        "<span class='body-text-small'>" + "Expires on" + " " +
-        cards[0].expire_month + "/" + cards[0].expire_year + "</span>" + "</label>" + "</div>");
+            "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + cards[0].id +
+            "' class='radio-button-payment'>" +
+            "<label for='" + cards[0].id + "'>" +
+            "<img class='paypal' src='" + cards[0].logo + "'>" +
+            "<span class='body-text-small'>" + cards[0].type + " " + "ending in" + " " + last_num + "</span>" +
+            "<span class='body-text-small'>" + "Expires on" + " " +
+            cards[0].expire_month + "/" + cards[0].expire_year + "</span>" + "</label>" + "</div>");
     }
 }
 
@@ -255,6 +258,7 @@ function populateCardDetailsInPopup() {
         $('#save-payment').removeClass('button-disabled');
     })
 }
+
 function showSelectedPaymentMethod(selectedId) {
     $('.saved-cards').empty();
     populateCardDetails(cardDetails.cards, selectedId);
