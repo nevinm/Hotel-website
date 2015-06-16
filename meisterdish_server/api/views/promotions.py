@@ -4,9 +4,12 @@ from django.core.paginator import Paginator
 from meisterdish_server.models import GiftCard, PromoCode
 from datetime import datetime
 import settings , logging
-from libraries import save_payment_data
+from libraries import save_payment_data, mail
 import string, random
 from libraries import get_request_user, create_guest_user, validate_email
+from django.template.loader import render_to_string
+import stripe
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 log = logging.getLogger('api')
 
@@ -143,7 +146,7 @@ def gift_card_order(request, data, user=None):
             return custom_error("Failed to create GiftCard. Please contact customer support.")
 
         if send_gift_card(gc):
-            return json_response({"status":1, "messge":"The Gift Card coupon has been sent to " + gc.to_email, "id":gc.id})
+            return json_response({"status":1, "messge":"The Gift Card coupon has been sent to " + gc.email, "id":gc.id})
         else:
             log.error("Gift card created, but failed to send.")
             return custom_error("There was an error sending Gift Card. Please contact customer support.")
@@ -160,6 +163,7 @@ def send_gift_card(gc):
         "first_name" : gc.user.first_name.title(),
         "last_name" : gc.user.last_name.title(),
         "amount" : str(gc.amount),
+        "url" : settings.SITE_URL,
     }
 
     msg = render_to_string('gift_card_email.html', dic)

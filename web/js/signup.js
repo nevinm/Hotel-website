@@ -3,7 +3,7 @@ var signupCallback = {
     success: function(data, textStatus) {
         userDetails = JSON.parse(data);
         if (userDetails.status == -1) {
-            showPopup(userDetails);
+            show    Popup(userDetails);
         } else {
             $('.signup-formcontainer')[0].reset();
             showPopup(userDetails);
@@ -31,7 +31,7 @@ function signingup() {
             "email": email,
             "fb_id": fbId,
             "image_url": localStorage['fb-image'],
-            "zipcode" : zip
+            "zipcode": zip
         },
         data = JSON.stringify(userInfo);
 
@@ -39,15 +39,18 @@ function signingup() {
     signupInstance.sendPost(url, header, data, signupCallback);
 }
 
-$(document).ready(function() {
+function signupInit() {
     redirectIfLoggedIn();
     CartItemCount();
+}
+
+$(document).ready(function() {
+    signupInit();
 
     $('#signup-button').on('click', function(e) {
         e.preventDefault();
         if ($('form').valid()) {
             signingup();
         }
-
     });
 });
