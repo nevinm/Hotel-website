@@ -51,7 +51,10 @@
   width: 100%;
 }
 .fb-signupButton img{
-    height: 53px;
+    height: 45px;
+    min-width: 130px;
+    width: 100%;
+    padding: 0 35px;
 }
 span.forgot-password{
   margin: 10px 0px;
