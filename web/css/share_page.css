@@ -1,0 +1,121 @@
+.share-banner{
+	overflow: hidden;
+	margin-top: 100px;
+	height: 350px;
+	position: relative;
+}
+.logo-banner {
+	position: absolute;
+	top: 50%;
+	text-align: center;
+	left: 50%;
+	height: 285px;
+	background-color: rgb(255, 255, 255);
+	width: 44%;
+	margin-left: -22%;
+	margin-top: -142.5px;
+	padding: 0 20px;
+}
+.meisterdish-logo{
+	height: 60px;
+	width: 40px;
+	margin-top: 20px;
+}
+.logo-banner .h0{
+	font-size: 26px;
+	line-height: 40px;
+	font-family: 'BrandonGrotesque-bold';
+	color: #394543;
+}
+.logo-banner hr{
+	height: 1px;
+	width: 20%;
+	border: 0;
+	background-color: #9b9b9b;
+	margin-bottom: 20px;
+}
+.logo-banner .body-text-small,.share-label{
+	font-size: 16px;
+	font-family: 'BrandonGrotesque-Regular';
+	color: #6b6b6b;
+}
+.copy-share-link {
+	border: 1px solid #d0d0d0;
+	border-radius: 2px;
+	padding: 10px 10px;
+	margin-top: 20px;
+}
+.copy-share-link span:first-child{
+	font-family: 'BrandonGrotesque-Medium';
+	color: #394543;
+	font-size: 24px;
+}
+.copy-share-link span:nth-child(2){
+	font-family: 'BrandonGrotesque-Regular';
+	color: #9b9b9b;
+	font-size: 16px;
+	float: right;
+	padding-top: 7px;
+	padding-right: 20px;
+	cursor: pointer;
+}
+span.or{
+    width: 100%;
+    position: relative;
+    padding: 0;
+    float: left;
+    margin-top: 30px;
+  }
+ span.or p {
+  position: absolute;
+  top: -12px;
+  width: 90px;
+  left: 50%;
+  margin-left: -45px;
+  text-align: center;
+  background-color: #fff;
+  padding: 0;
+  font-family: 'BrandonGrotesque-bold';
+  font-size: 24px;
+  color: #394543;
+}
+ span.or hr {
+  display: block;
+  color: #d0d0d0;
+  width: 35%;
+  background: #d0d0d0;
+  height: 1px;
+  border: 0;
+}
+.share-label{
+	font-size: 20px;
+	text-align: center;
+	padding: 20px 0;
+	float: left;
+  	width: 100%;
+}
+.share-button-container {
+  float: left;
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+}
+img.share-button {
+  height: auto;
+  width: 22%;
+  padding: 0 15px;
+  cursor: pointer;
+}
+.share-page-container span.body-text-small {
+  width: 100%;
+  float: left;
+  text-align: center;
+  font-family: 'BrandonGrotesque-Regular';
+  font-size: 14px;
+}
+.share-page-container span a{
+	text-decoration: underline;
+}
+.share-page-container span:last-child{
+	margin-bottom: 30px;
+}

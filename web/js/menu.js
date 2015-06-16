@@ -86,7 +86,12 @@ $(document).ready(function() {
 
     //share with friends
     $('#share-now').on('click',function(){
-        $('.share-popup-wrapper').show();
+        if ($(window).width() <= 767 && $(window).width() >= 320) {
+            $('.share-popup-wrapper').show();
+        }else{
+            window.location.href = "share_page.html";
+        }
+
     })
     $('#done-share').on('click',function(){
         $('.share-popup-wrapper').hide();
@@ -278,11 +283,16 @@ function facebookShare(site_url){
      return false;
 }
 function twitterShare(site_url){
-    var subjText = "meisterDish :-) :-)";
+    site_url = "http://meisterdish.com/invite/ABCD1234?o=twtpic.twitter.com/OaPBIVjyo2";
+    var subjText = "Start cooking today with $20 off your first order!"+site_url;
         popitup('http://twitter.com/share?url='+site_url+'&text='+subjText);
 }
 function emailShare(site_url){
-    var subjText = "Just visit "+site_url;
-    var subject = "MeisterDish !";
+    site_url = "http://meisterdish.com/invite/ABCD1234?o=email";
+    var subjText = "Cooking at home shouldn’t be such a hassle. Meisterdish makes cooking fit the New York lifestyle. With fresh, cleaned and portioned ingredients delivered on demand, along with step-by-step instructions - all you have to do is cook. Cooking has never been so fast, fresh and tasty. "
+    +'\n\n'+" Sign up for free using this link and you’ll receive $20 off your first order:"
+    +'\n\n'+"       "+site_url
+    +'\n\n'+"Enjoy your meal!";
+    var subject = "Start cooking with Meisterdish";
     $("#email-share a").attr('href', "mailto:?subject="+subject+"&body="+encodeURIComponent(subjText));
 }
