@@ -1,4 +1,4 @@
-    var isLoaded = false;
+var isLoaded = false;
 
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
@@ -16,7 +16,7 @@ function statusChangeCallback(response) {
             'into this app.';
     } else {
         fbLogin();
-            // The person is not logged into Facebook, so we're not sure if
+        // The person is not logged into Facebook, so we're not sure if
         // they are logged into this app or not.
     }
 }
@@ -39,7 +39,7 @@ window.fbAsyncInit = function() {
         oauth: true,
         status: true, // check login status
         xfbml: true, // parse social plugins on this page
-        version: 'v2.2' // use version 2.2
+        version: 'v2.3' // use version 2.2
     });
     isLoaded = true;
 
@@ -71,7 +71,7 @@ var loginFBCallback = {
             var user_name = userDetails.user.first_name;
             localStorage['username'] = user_name;
             if (localStorage.getItem("session_key") === null) {
-                localStorage['session_key']=userDetails.session_key;
+                localStorage['session_key'] = userDetails.session_key;
             }
             localStorage['loggedIn'] = true;
             checkLoggedIn();
@@ -129,11 +129,17 @@ function testAPI() {
 function fbLogin() {
     FB.login(function(response) {
         if (response.authResponse) {
+            var url = window.location.href;
+            currentPage = getCurrentPage("/", ".html", url);
+            if (currentPage == "menu" || currentPage == "share_page") {
+                facebookShare(homeUrl, response.authResponse.accessToken);
+            }
+            localStorage['fb-access_token'] = response.authResponse.accessToken;
             testAPI();
         } else {
             console.log('User cancelled login or did not fully authorize.');
         }
     }, {
-        scope: 'publish_stream,email'
+        scope: 'publish_stream,email,publish_actions'
     });
 }
