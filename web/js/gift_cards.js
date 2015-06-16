@@ -116,11 +116,9 @@ $(document).ready(function() {
     //New Gift Card pages.
     if (localStorage["session_key"]) {
         savedCardDetails();
-        $('.payment-method').show();
-        $('.payment-container-guest').hide();
     } else {
         $('.payment-method').hide();
-        $('.payment-container-guest').show();
+        $('.payment-container-guest,.your-info-container,.payment-info-container').show();
     }
 
     $(".giftcard-selector").on("click", function() {
@@ -184,8 +182,11 @@ var savedCardDetailsCallback = {
                  $('.payment-info-container').hide();
                 populateCardDetails(cardDetails.cards);
             } else {
-                $('.payment-method').hide();
+                $('.your-info-container').hide();
+                $('.gift-card-details-container,.payment-container-guest').addClass('halfWidth');
+                $('.payment-info-container,.details').addClass('fullWidth');                
                 $('.payment-info-container').show();
+                $('.payment-info-container').css('padding-top','45px');
             }
         } else {
             showPopup(cardDetails);
