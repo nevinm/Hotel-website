@@ -30,6 +30,7 @@ def apply_promocode(request, data, user):
         
         cart.promo_code = code_obj
         cart.save()
+        return json_response({"status":1, "message":"Promocode "+ code + " has been applied."})
     except Exception as e:
         log.error("Failed to apply promo code." + e.message)
         return custom_error("Failed to get apply promo code.")

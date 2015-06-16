@@ -6,6 +6,7 @@ import logging
 log = logging.getLogger('model')
 import sys, traceback
 from django.db.models import Sum
+import string, random
 
 months = ((1, 'January'),
           (2, 'February'),
@@ -151,12 +152,15 @@ class User(models.Model):
     need_sms_notification = models.BooleanField(default=True)
     deleted = models.BooleanField(db_index=True, default=False)
     
+    referral_code = models.CharField(max_length=10)
+
     created = models.DateTimeField()
     stripe_customer_id = models.CharField(max_length=50, null=True, default=None, blank=True)
     
     def save(self, *args, **kwargs):
         if not self.id:
             self.created = datetime.datetime.now()
+            seld.referral_code = code = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
         super(User, self).save(*args, **kwargs)
         
     def __unicode__(self):
