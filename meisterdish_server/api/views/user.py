@@ -4,9 +4,10 @@ import json as simplejson
 import logging 
 import settings
 from api.views.decorators import *
-from libraries import validate_zipcode, validate_phone, check_delivery_area, validate_email
+from libraries import validate_zipcode, validate_phone, check_delivery_area, validate_email, mail
 import stripe
 from datetime import datetime, timedelta
+from django.template.loader import render_to_string
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 log = logging.getLogger('api_user')
@@ -447,3 +448,23 @@ def get_user_reviews(request, data, user):
     except Exception as e:
         log.error("List user reviews: user "+str(user.id) + " : "+ e.message)
         return custom_error("Failed to list user reviews.")
+
+@check_input('POST')
+def share_via_email(request, data, user):
+    try:
+        email = data["email"].strip()
+        if not validate_email(email):
+            return custom_error("The email is invalid.")
+
+        sub = "Start cooking with Meisterdish"
+        dic = {
+            "link" : settings.BASE_URL + 'share/'+user.referral_code+'/',
+            "amount" : Configuration.objects.get(key="REFERRAL_BONUS").value,
+        }
+        msg = render_to_string('referral_email.html', dic)
+        mail([email], sub, msg)
+
+        return json_response({"status":1, "message":"Email has been sent to "+email})
+    except Exception as e:
+        log.error("Share via email "+str(user.id) + " : "+ e.message)
+        return custom_error("An error has occurred while sending e-mail. Please try again later.")        
