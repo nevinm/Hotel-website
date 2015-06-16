@@ -25,7 +25,7 @@ function stripeResponseHandler(status, response) {
         var error = {};
         error.message = (response.error.message);
         showPopup(error);
-
+        return;
     } else {
         // response contains id and card, which contains additional card details
         var token = response.id,
