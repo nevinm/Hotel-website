@@ -37,7 +37,7 @@ def check_input(method):
                                 return custom_error('You are not authorized.')
                             else:
                                 try:
-                                    query = Q(pk=session['user']['id']) & Q(role__pk=settings.ROLE_USER) | Q(role__pk=settings.ROLE_GUEST)
+                                    query = Q(pk=session['user']['id']) & (Q(role__pk=settings.ROLE_USER) | Q(role__pk=settings.ROLE_GUEST))
                                     user = User.objects.get(query)
                                 except Exception as e:
                                     log.error("No user in session !!" + str(session['user']['id']))
