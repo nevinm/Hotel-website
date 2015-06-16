@@ -160,7 +160,7 @@ class User(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.created = datetime.datetime.now()
-            seld.referral_code = code = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
+            self.referral_code = code = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
         super(User, self).save(*args, **kwargs)
         
     def __unicode__(self):
