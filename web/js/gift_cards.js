@@ -75,6 +75,7 @@ var saveCreditCardGiftCardCallback = {
         var response = JSON.parse(data);
         if (response.status == 1) {
             $("#pay-form")[0].reset();
+            showPopup(response);
         } else {
             showPopup(response);
         }
