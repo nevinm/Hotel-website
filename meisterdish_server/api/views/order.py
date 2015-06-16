@@ -167,13 +167,15 @@ def create_order(request, data, user):
             if 'delivery_address' in data:
                 del_address = Address.objects.get(user=user, pk=data['delivery_address'])
             else:
-                log.info("Delivery order but no address. Checking Primary address.")
+                log.info("Delivery order but no address given. Checking Primary address.")
                 try:
                     del_address = user.user_address.get(is_primary=True)
                 except:
                     log.error("Delivery order but no address. No Primary address. Aborting.")
                     return custom_error("Please choose a valid delivery address.")
-            
+            if not check_delivery_area(del_address.zip):
+                return custom_error("Delivery is not available at the selected location ("+str(del_address.zip)+")")
+                
         items = CartItem.objects.filter(cart__user=user, cart__completed=False)
         if not items.exists():
             return custom_error("There are no items in your cart.")
