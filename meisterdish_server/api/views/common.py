@@ -413,6 +413,7 @@ def get_profile(request, data, user):
                      "first_name" : user.first_name.title(),
                      "last_name" : user.last_name.title(),
                      "stripe_id":user.stripe_customer_id if user.stripe_customer_id else "",
+                     "referral_code" : settings.SITE_URL + 'share/'+user.referral_code+'/',
                      }
         return json_response(user_data)
     except KeyError as e:

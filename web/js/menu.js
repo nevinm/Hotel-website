@@ -3,8 +3,8 @@ $(document).ready(function() {
         nextPage = 1,
         mealTypeFilter = [],
         endOfList = false,
-        ipadWidth = 767;    
-    
+        ipadWidth = 767;
+
     $(document).on("click", '.subMenu .menu-categories-list', function() {
         $(document).find(".subMenu ul li").removeClass("activeOption");
         $(this).addClass("activeOption");
@@ -92,20 +92,20 @@ $(document).ready(function() {
             window.location.href = "share_page.html";
         }
 
-    })
-    $('#done-share').on('click',function(){
+    });
+    $('#done-share').on('click', function() {
         $('.share-popup-wrapper').hide();
     })
 
-    $('#facebook-share').on('click',function(){
-        facebookShare(homeUrl);
+    $('#facebook-share').on('click', function() {
+        checkLoginState();
     })
-    
-    $('#twitter-share').on('click',function(){
+
+    $('#twitter-share').on('click', function() {
         twitterShare(homeUrl);
     })
-    
-    $('#email-share').on('click',function(){
+
+    $('#email-share').on('click', function() {
         emailShare(homeUrl);
     })
 
@@ -278,9 +278,17 @@ function popitup(url) {
     var windowFeatures = 'channelmode=0,directories=0,fullscreen=0,location=0,menubar=0,resizable=0,scrollbars=0,status=0,width=700,height=500,top=' + top + ',left=' + left;
     window.open(url, '', windowFeatures);
 }
-function facebookShare(site_url){
-    window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(homeUrl),'facebook-share-dialog','width=626,height=436');
-     return false;
+
+function facebookShare(site_url,accessToken) {
+    var imgURL = "http://farm4.staticflickr.com/3332/3451193407_b7f047f4b4_o.jpg"; //change with your external photo url
+    FB.api('me/photos', 'post', {
+        message: 'Whatssappp!!!!',
+        status: 'success',
+        access_token: accessToken,
+        url: imgURL
+    }, function(response) {
+        console.log(response)
+    });
 }
 function twitterShare(site_url){
     site_url = "http://meisterdish.com/invite/ABCD1234?o=twtpic.twitter.com/OaPBIVjyo2";
@@ -295,4 +303,5 @@ function emailShare(site_url){
     +'\n\n'+"Enjoy your meal!";
     var subject = "Start cooking with Meisterdish";
     $("#email-share a").attr('href', "mailto:?subject="+subject+"&body="+encodeURIComponent(subjText));
+
 }
