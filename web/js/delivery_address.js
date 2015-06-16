@@ -104,7 +104,7 @@ function getNewAddressFromForm() {
         city_id: $addressPopup.find(".city-selector").val(),
         building: $addressPopup.find("input[name*='building']").val(),
         is_primary: $addressPopup.find("input[type*='checkbox']").is(":checked") == true ? 1 : 0,
-        email: JSON.parse(localStorage['user_profile']).email
+        email: $addressPopup.find("input[name*='email']").val()
     }
     return newAddress;
 }
