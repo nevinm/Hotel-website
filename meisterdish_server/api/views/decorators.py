@@ -4,6 +4,7 @@ from functools import wraps
 import logging, settings
 from libraries import json_request, json_response, custom_error
 from meisterdish_server.models import User
+from django.db.models import Q
 log = logging.getLogger('api')
 
 def check_input(method):
@@ -36,7 +37,8 @@ def check_input(method):
                                 return custom_error('You are not authorized.')
                             else:
                                 try:
-                                    user = User.objects.get(pk=session['user']['id'], role__pk=settings.ROLE_USER)
+                                    query = Q(pk=session['user']['id']) & Q(role__pk=settings.ROLE_USER) | Q(role__pk=settings.ROLE_GUEST)
+                                    user = User.objects.get(query)
                                 except Exception as e:
                                     log.error("No user in session !!" + str(session['user']['id']))
                                     return custom_error("This user is no more available. Please login again.")
