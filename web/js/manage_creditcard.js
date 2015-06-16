@@ -9,7 +9,7 @@ $(document).ready(function() {
             var $this = $(this);    
              if($this.is(":checked")){
                 delete_id = $this.attr("id");   
-                deleteCreditCard(delete_id)
+                deleteCreditCard(delete_id);
             }
         });
     })
@@ -70,7 +70,6 @@ var deleteCreditCardCallback = {
     success: function(data, textStatus,delete_id) {
         var cardDetails = JSON.parse(data);
         if(cardDetails.status == 1){
-            showPopup(cardDetails);
             $("#"+delete_id).parent().remove();
             if ($('.card-list-container').is(':empty')){
                 $('#manage-payment-method-container .message').show();

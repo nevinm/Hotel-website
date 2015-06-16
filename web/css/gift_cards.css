@@ -388,6 +388,7 @@ input.popup-input {
     width: 40%;
     float: left;
     padding-left: 30px;
+    display: none;
 }
 .payment-info-container{
     width: 45%;

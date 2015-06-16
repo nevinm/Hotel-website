@@ -444,7 +444,12 @@ label {
 .show {
     display: block !important;
 }
-
+.halfWidth{
+    width: 50% !important;
+}
+.fullWidth{
+    width: 80%!important;
+}
 .arrow-down {
     width: 0;
     height: 0;

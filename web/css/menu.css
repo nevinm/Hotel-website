@@ -41,17 +41,17 @@
 .menu-offer{
     height: 40px;
     text-align: center;
-    background-color: #6b6b6b;
+    background-color: #58825A;
     font-family: 'BrandonGrotesque-bold';
-    color: #ababab;
-    font-size: 12px;
-    padding-top: 13px;
-    letter-spacing: .7px;
+    font-size: 14px;
+    color: #fbfbfb;
+    padding-top: 10px;
+    letter-spacing: 1px;
 }
 #share-now{
-    padding-left: 30px;
-    color: #fbfbfb;
+    padding-left: 30px;  
     cursor: pointer;
+    text-decoration: underline;
 }
 #header{
     position: relative !important;
@@ -535,6 +535,10 @@
     }
     .menu-header h1{
         display: none;
+    }
+    .menu-offer{
+        height: 50px;
+        font-size: 10px;
     }
 }
 
