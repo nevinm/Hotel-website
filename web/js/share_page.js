@@ -9,7 +9,7 @@
 // 	});
 // })
 $('#facebook-share').on('click',function(){
-    facebookShare(homeUrl);
+    checkLoginState();
 })
 
 $('#twitter-share').on('click',function(){
@@ -27,9 +27,16 @@ function popitup(url) {
     var windowFeatures = 'channelmode=0,directories=0,fullscreen=0,location=0,menubar=0,resizable=0,scrollbars=0,status=0,width=700,height=500,top=' + top + ',left=' + left;
     window.open(url, '', windowFeatures);
 }
-function facebookShare(site_url){
-    window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(homeUrl),'facebook-share-dialog','width=626,height=436');
-     return false;
+function facebookShare(site_url,accessToken) {
+    var imgURL = "http://farm4.staticflickr.com/3332/3451193407_b7f047f4b4_o.jpg"; //change with your external photo url
+    FB.api('me/photos', 'post', {
+        message: 'Whatssappp!!!!',
+        status: 'success',
+        access_token: accessToken,
+        url: imgURL
+    }, function(response) {
+        console.log(response)
+    });
 }
 function twitterShare(site_url){
     site_url = "http://meisterdish.com/invite/ABCD1234?o=twtpic.twitter.com/OaPBIVjyo2";
