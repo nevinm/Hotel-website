@@ -108,8 +108,10 @@ def signup(request, data):
         email = data['email'].strip().lower()
         first_name = data['first_name'].strip()
         last_name = data['last_name'].strip()
-        zipcode = data.get("zipcode", False)
+        zipcode = data["zipcode"].strip()
         
+        referral_code = data.get("referral_code", False)
+
         fb = False
         fb_id = ""
         profile_image = None
@@ -138,10 +140,25 @@ def signup(request, data):
             user.role = Role.objects.get(pk=2)
             user.fb_user_id = fb_id
             user.profile_image = profile_image
-            if zipcode:
-                user.zipcode = zipcode
+            user.zipcode = zipcode
             user.save()
-            
+
+            if referral_code:
+                try:
+                    referrer = User.objects.get(referral_code=referral_code)
+                    bonus = float(Configuration.objects.get(key='REFERRAL_BONUS').value)
+                    user.credits = bonus
+                    user.save()               
+                    referrer.credits += bonus
+                    referrer.save()
+
+                    referral = Referral()
+                    referral.referrer = referrer
+                    referral.referree = user
+                    referral.save()
+                except Exception as e:
+                    log.error("Signup - The referrer code " + referral_code + "is invalid : "+e.message)
+
             user_dic = {"id":user.id,
                                   "email":user.email,
                                   "first_name":user.first_name,
@@ -222,6 +239,7 @@ def send_user_verification_mail(user, change_email=False, email=""):
 @check_input('GET')
 def verify_user(request, data, token):
     login_url = settings.SITE_URL + "views/login.html"
+    fail_url = settings.SITE_URL + "views/signup_fail.html"
     try:
         token = token.strip()
         
@@ -232,6 +250,11 @@ def verify_user(request, data, token):
         user.save()
         
         log.info("Verified user "+user.email)
+
+        if not check_delivery_area(user.zipcode):
+            log.error("User's zip code not available.")
+            return HttpResponseRedirect(fail_url)        
+
         return HttpResponseRedirect(login_url+"?account_verify=true")
     
     except KeyError as field:
@@ -582,3 +605,14 @@ def upload_picture(request, data, user):
     except Exception as e:
         log.error("Failed to upload profile picture : " + e.message)
         return custom_error("Failed to upload profile picture. Please try again later.")
+
+@check_input('GET')
+def referral_return(request, data, token):
+    if not len(token):
+        log.error("Invalid referral token")
+        return HttpResponseRedirect(settings.SITE_URL)
+    if User.objects.filter(referral_code=token).exists():
+        return HttpResponseRedirect(settings.SITE_URL + 'views/signup.html?ref='+token)
+    else:
+        log.error("Invalid referral token")
+        return HttpResponseRedirect(settings.SITE_URL)

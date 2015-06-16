@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from api.views import verify_user, verify_email
+from api.views import verify_user, verify_email, referral_return
 
 urlpatterns = patterns('',
     # Examples:
@@ -12,4 +12,5 @@ urlpatterns = patterns('',
     url(r'^api/', include('api.urls')),
     url(r'^verify_user/(?P<token>[A-Za-z\d]+)/$', verify_user, name='verify_user'),
     url(r'^verify_email/(?P<token>[A-Za-z\d]+)/$', verify_email, name='verify_email'),
+    url(r'^share/(?P<token>[_A-Za-z\d]+)/$', referral_return, name='referral_return'),
 )
