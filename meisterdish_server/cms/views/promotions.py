@@ -96,6 +96,9 @@ def list_gift_cards(request, data, user):
             gc_list.append({
                 "id" : gc.id,
                 "name":gc.name.title(),
+                "email" : gc.email,
+                "message":gc.message,
+                "user" : gc.user.first_name.title() + " " + gc.user.first_name.title(),
                 "code":gc.code,
                 "amount":gc.amount
                 })
