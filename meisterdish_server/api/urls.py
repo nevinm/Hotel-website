@@ -57,4 +57,5 @@ urlpatterns = patterns('',
     url(r'^apply_promocode/$', promotions.apply_promocode, name='apply_promocode'),
     url(r'^gift_card_order/$', promotions.gift_card_order, name='gift_card_order'),
     
+    url(r'^share_email/$', views.share_via_email, name='share_via_email'),
 )

@@ -3,7 +3,7 @@ var signupCallback = {
     success: function(data, textStatus) {
         userDetails = JSON.parse(data);
         if (userDetails.status == -1) {
-            show    Popup(userDetails);
+            showPopup(userDetails);
         } else {
             $('.signup-formcontainer')[0].reset();
             showPopup(userDetails);

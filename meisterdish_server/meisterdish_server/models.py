@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
-from settings import PAYMENT_METHODS, ORDER_STATUS, SHIPPING_CHARGE
+from settings import PAYMENT_METHODS, ORDER_STATUS, SHIPPING_CHARGE, ROLE_USER
 import logging
 log = logging.getLogger('model')
 import sys, traceback
@@ -160,7 +160,8 @@ class User(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.created = datetime.datetime.now()
-            self.referral_code = code = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
+            if self.role.pk == ROLE_USER:
+                self.referral_code = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
         super(User, self).save(*args, **kwargs)
         
     def __unicode__(self):
@@ -439,3 +440,17 @@ class DeliveryArea(models.Model):
     
     def __unicode__(self):
         return self.zip    
+
+class Referral(models.Model):
+    referrer = models.ForeignKey(User)
+    referree = models.ForeignKey(User, related_name="referree")
+
+    def __str__(self):
+        return self.referrer.first_name + " --> " + self.referree.first_name
+
+class Configuration(models.Model):
+    key = models.CharField(max_length=100)
+    value = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.key + " = " + self.value

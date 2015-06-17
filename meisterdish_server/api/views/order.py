@@ -167,13 +167,15 @@ def create_order(request, data, user):
             if 'delivery_address' in data:
                 del_address = Address.objects.get(user=user, pk=data['delivery_address'])
             else:
-                log.info("Delivery order but no address. Checking Primary address.")
+                log.info("Delivery order but no address given. Checking Primary address.")
                 try:
                     del_address = user.user_address.get(is_primary=True)
                 except:
                     log.error("Delivery order but no address. No Primary address. Aborting.")
                     return custom_error("Please choose a valid delivery address.")
-            
+            if not check_delivery_area(del_address.zip):
+                return custom_error("Delivery is not available at the selected location ("+str(del_address.zip)+")")
+
         items = CartItem.objects.filter(cart__user=user, cart__completed=False)
         if not items.exists():
             return custom_error("There are no items in your cart.")
@@ -204,12 +206,21 @@ def create_order(request, data, user):
         order.tip = tip
 
         order.total_amount = total_price + total_tax + tip + settings.SHIPPING_CHARGE
+        
         """
         TODO
 
+        if not order.objects.filter(cart__user=user, cart__user__role__pk=settings.ROLE_USER).exists():
+            #First Order
+            referral_bonus = float(Configuration.objects.get(key=REFERRAL_BONUS).value)
+            if Referral.objects.filter(referree=user).exists() and user.credits >= referral_bonus:
+                # He is a referred user and have balance credit
+                user.credits -= referral_bonus
+                order.total_amount -= referral_bonus
+        
         if user.credits > 0:
             log.info("User has credits : "+str(user.credits))
-            if credits > order.total_amount:
+            if user.credits > order.total_amount:
                 user.credits = credits - order.total_amount
                 order.credits = order.total_amount
                 order.total_amount = 0
@@ -225,9 +236,8 @@ def create_order(request, data, user):
             else:
                 order.total_amount -= order.cart.promo_code.amount
                 order.discount += order.cart.promo_code.amount
-
-        gc_amount = 0
-        if order.cart.gift_cards.count():
+        elif order.cart.gift_cards.count():
+            gc_amount = 0
             gc_amount = cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
         """
         #Payment
