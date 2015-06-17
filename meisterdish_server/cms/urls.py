@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^export_users/$', general.export_users, name='export_users'),
     
     url(r'^get_meals/$', meals.get_meals, name='get_meals'),
-    url(r'^get_meal_details/(?P<meal_id>[0-9]+)/$', views.get_meal_details, name='get_meal_details'),
+    url(r'^get_meal_details/(?P<meal_id>[0-9]+)/$', meals.get_meal_details, name='get_meal_details'),
     url(r'^create_meal/$', meals.create_meal, name='create_meal'),
     url(r'^delete_meal/(?P<meal_id>[0-9]+)/$', meals.delete_meal, name='delete_meal'),
     #url(r'^export_meals/$', meals.export_meals, name='export_meals'),
