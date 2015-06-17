@@ -71,10 +71,6 @@ def get_orders(request, data, user):
         order_list = []
         orders = Order.objects.filter(is_deleted=False).exclude(status=0)
         
-        #If user, list only his orders
-        if user.role.pk == settings.ROLE_USER:
-            orders = orders.filter(cart__user=user)
-
         total_count = orders.count()
 
         q = Q()
@@ -110,6 +106,7 @@ def get_orders(request, data, user):
             q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
 
         orders = orders.filter(q)
+
         # End filter
         orders = orders.order_by("-id")
 
