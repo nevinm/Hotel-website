@@ -579,6 +579,7 @@ def get_address_list(request, data, user):
                                  "state_id":add.city.state.id,
                                  "zip":add.zip,
                                  "phone":add.phone,
+                                 "email":add.email,
                                  })
         try:
             del_address = Cart.objects.get(user=user, completed=False).delivery_address
