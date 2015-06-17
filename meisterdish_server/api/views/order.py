@@ -31,7 +31,7 @@ def get_orders(request, data, user):
         q = Q()
         #Filter
         if "num" in data and str(data['num']).strip() != "":
-            q &= Q(order_num__istartswith=data['num'])
+            q &= Q(order_num=data['num'])
         
         if "user_id" in data and str(data['user_id']).strip() != "":
             q &= Q(cart__user__pk=data['user_id'])
@@ -39,20 +39,26 @@ def get_orders(request, data, user):
         if "search" in data and str(data['search']).strip() != "":
             qs = Q()
             for term in str(data['search']).strip().split():
-                qs |= Q(cart__user__first_name__icontains=term) | Q(cart__user__last_name__icontains=term)
+                qs |= Q(cart__user__first_name__istartswith=term) | Q(cart__user__last_name__istartswith=term)
             q &= qs
 
         if "status" in data and str(data['status']).strip() != "":
              q |= Q(status=int(data['status']))
 
         if "phone" in data and str(data["phone"]).strip() != "":
-            q &= Q(billing_address__phone=str(data['phone']).strip())
+            try:
+                q &= Q(delivery_address__phone__startswith=str(int(data['phone'])).strip())
+            except:
+                return custom_error("Please enter valid phone number")
 
         if "amount" in data and str(data["amount"]).strip() != "":
-            q &= Q(grand_total=float(data['amount']))
+            try:
+                q &= Q(grand_total=float(data['amount']))
+            except:
+                return custom_error("Please search with a valid order amount")
 
         if "date" in data and str(data["date"]).strip() != "":
-            date_obj = datetime.strptime(data['date'], "%Y-%m-%d")# %H:%M:%S")
+            date_obj = datetime.strptime(data['date'], "%m/%d/%Y")# %H:%M:%S")
             q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
 
         orders = orders.filter(q)
