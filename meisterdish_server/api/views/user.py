@@ -94,11 +94,14 @@ def update_address(request, data, user, address_id):
             city_id = data["city_id"]
             zip = data["zip"].strip()
             phone = data["phone"].strip()
+            email = data["email"].strip()
             
             if not validate_zipcode(zip):
                 return custom_error("Please provide a valid zip code.")
             elif not validate_phone(phone):
                 return custom_error("Please provide a valid phone number.")
+            elif not validate_email(email):
+                return custom_error("Please provide a valid email.")
 
             add.first_name = fname
             add.last_name = lname
@@ -107,6 +110,7 @@ def update_address(request, data, user, address_id):
             add.city = City.objects.get(id=city_id)
             add.zip = zip
             add.phone = phone
+            add.email = email
             
         if "is_primary" in data and data["is_primary"]:
             add.is_primary = True
@@ -125,7 +129,7 @@ def update_address(request, data, user, address_id):
                 primary.is_primary=False
                 primary.save()
                 
-        return json_response({"status":1, "message":"Updated Address", "id":add.id})
+        return json_response({"status":1, "message":"Updated Address", "id":add.id, "email":email})
     except KeyError as e:
         log.error("Add address failed : "+e.message)
         return custom_error("Failed to update address. ")
