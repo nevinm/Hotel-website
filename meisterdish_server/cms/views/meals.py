@@ -260,18 +260,11 @@ def delete_meal(request, data, user, meal_id):
         return json_response({"status":-1, "message":"Failed to delete meal. Does that exist?"})
 
 @check_input('POST')
-def get_meal_details(request, data, meal_id):
+def get_meal_details(request, data, user, meal_id):
     try:
         session_key = request.META.get('HTTP_SESSION_KEY', None)
         session = SessionStore(session_key=session_key)
-        if session and 'user' in session :
-            try:
-                user = User.objects.get(pk=session['user']['id'])
-            except Exception as e:
-                user = None
-        else:
-            user=None
-
+        
         meal = Meal.objects.get(pk=meal_id, is_deleted=False)
         rating_list = []
         rating_sum = 0.0
