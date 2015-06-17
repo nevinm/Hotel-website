@@ -671,4 +671,30 @@ form#edit-recipient-details input.popup-input{
         border: none;
         overflow-x: hidden;
     }
+    header#header{
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+    .giftcard-banner{
+        height: 290px;
+        margin-top: 0px;
+    }
+    .giftcard-banner img{
+        height: 300px;
+        margin-top: 0px;
+    }
+    .h0{
+        font-size: 24px;
+    }
+    .logo-banner hr{
+        display: none;
+    }
+    .logo-banner img{
+        height: auto;
+    }
+    .details-sub-header{
+        text-align: center;
+    }
+    .gift-card-details-container{
+        width: 100% !important;
+    }
 }
