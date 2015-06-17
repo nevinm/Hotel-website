@@ -20,27 +20,22 @@ def get_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(is_deleted=False).exclude(status=0)
+        orders = Order.objects.filter(is_deleted=False, cart__user=user).exclude(status=0)
         
-        #If user, list only his orders
-        if user.role.pk == settings.ROLE_USER:
-            orders = orders.filter(cart__user=user)
-
         total_count = orders.count()
 
         q = Q()
         #Filter
         if "num" in data and str(data['num']).strip() != "":
-            q &= Q(order_num=data['num'])
+            q &= Q(order_num=str(data['num']))
         
         if "user_id" in data and str(data['user_id']).strip() != "":
             q &= Q(cart__user__pk=data['user_id'])
 
         if "search" in data and str(data['search']).strip() != "":
-            qs = Q()
+            
             for term in str(data['search']).strip().split():
-                qs |= Q(cart__user__first_name__istartswith=term) | Q(cart__user__last_name__istartswith=term)
-            q &= qs
+                q &= Q(cart__user__first_name__istartswith=term) | Q(cart__user__last_name__istartswith=term)
 
         if "status" in data and str(data['status']).strip() != "":
              q |= Q(status=int(data['status']))
