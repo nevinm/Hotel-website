@@ -131,10 +131,10 @@ def update_address(request, data, user, address_id):
                 
         return json_response({"status":1, "message":"Updated Address", "id":add.id})
     except KeyError as e:
-        log.error("Add address failed : "+e.message)
+        log.error("update address failed : "+e.message)
         return custom_error("Failed to update address. ")
     except Exception as e:
-        log.error("Add address failed: "+e.message)
+        log.error("update address failed: "+e.message)
         return custom_error("Failed to update address : "+e.message)
 
 @check_input('POST')
