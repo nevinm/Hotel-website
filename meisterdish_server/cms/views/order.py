@@ -88,7 +88,7 @@ def get_orders(request, data, user):
         if "search" in data and str(data['search']).strip() != "":
             qs = Q()
             for term in str(data['search']).strip().split():
-                qs |= Q(cart__user__first_name__istartswith=term) | Q(cart__user__last_name__istartswith=term)
+                qs &= Q(cart__user__first_name__istartswith=term) | Q(cart__user__last_name__istartswith=term)
             q &= qs
 
         if "status" in data and str(data['status']).strip() != "":
