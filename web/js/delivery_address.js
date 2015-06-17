@@ -157,6 +157,8 @@ function populateAddressToForm(id) {
             $addressPopup.find("input[name*='zip']").val(value.zip);
             $addressPopup.find("input[name*='street']").val(value.street);
             $addressPopup.find("input[name*='building']").val(value.building);
+            debugger;
+            $addressPopup.find("input[name*='email']").val(value.email);
             if (value.is_primary == 1) {
                 $addressPopup.find("input[type*='checkbox']").prop("checked", true);
             } else {
