@@ -25,7 +25,6 @@ $(document).ready(function() {
     });
     
     $(document).on('click', "#add-new-promo", function() {
-        debugger;
         $("#update").text("add");
         $('form.popup-container')[0].reset();
         $(".popup-wrapper").show();
@@ -94,8 +93,8 @@ function populatePromoCodes(promoCodes) {
                 "<td class='card-code'>" + value.code + "</td>" +
                 "<td class='card-name' data-date='"+value.expiry_date_format+"'>" + value.expiry_date + "</td>" +
                 "<td class='card-amount' data-amount='" + value.amount + "'>" + dollarConvert(value.amount) + "</td>" +
-                "<td class='no-popup'><button type='button' class='promocard-edit' data-id='" + value.id + "'>Edit</button></td>" +
-                "<td class='no-popup'><button type='button' class='promocard-delete' data-id='" + value.id + "'>Delete</button></td></tr>");
+                "<td class='no-popup'><button type='button' class='promocard-edit btn btn-small-primary medium-green' data-id='" + value.id + "'>Edit</button></td>" +
+                "<td class='no-popup'><button type='button' class='promocard-delete btn btn-small-primary medium-green' data-id='" + value.id + "'>Delete</button></td></tr>");
         });
 
         $(".pagination").pagination({
