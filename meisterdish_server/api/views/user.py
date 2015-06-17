@@ -94,7 +94,7 @@ def update_address(request, data, user, address_id):
             city_id = data["city_id"]
             zip = data["zip"].strip()
             phone = data["phone"].strip()
-            email = data.["email"]
+            email = data["email"].strip()
             
             if not validate_zipcode(zip):
                 return custom_error("Please provide a valid zip code.")
