@@ -531,6 +531,7 @@ input#searchBy-name {
     height: auto;
     max-width: 150px;
     /*display: none;*/
+    margin-left: 40px;
 }
 
 .create-meal-container {
@@ -764,8 +765,9 @@ input#meal-price {
     float: left;
 }
 .section-5 .forminput-wrapper{
-  width: 240px;
-  margin-bottom: 20px;
+    width: 240px;
+    margin-bottom: 20px;
+    margin-right: 20px;
 }
 .add-list-button,
 .add-preparation-button,
@@ -1037,4 +1039,8 @@ input#add-gift-card,input#add-new-promo{
 }
 input#add-gift-card{
     display: none;
+}
+.no-popup .btn-small-primary{
+    height: 25px;
+    line-height: 10px;
 }

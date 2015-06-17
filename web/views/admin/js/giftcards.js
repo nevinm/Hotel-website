@@ -93,8 +93,8 @@ function populateGiftCardsList(giftcardList) {
                 "<td class='card-code'>" + value.code + "</td>" +
                 "<td class='card-name'>" + value.name + "</td>" +
                 "<td class='card-amount' data-amount='" + value.amount + "'>" + dollarConvert(value.amount) + "</td>" +
-                "<td class='no-popup'><button type='button' class='giftcard-edit' data-id='" + value.id + "'>Edit</button></td>" +
-                "<td class='no-popup'><button type='button' class='giftcard-delete' data-id='" + value.id + "'>Delete</button></td></tr>");
+                "<td class='no-popup'><button type='button' class='giftcard-edit btn btn-small-primary medium-green' data-id='" + value.id + "'>Edit</button></td>" +
+                "<td class='no-popup'><button type='button' class='giftcard-delete btn btn-small-primary medium-green' data-id='" + value.id + "'>Delete</button></td></tr>");
 
             currentStatus = value.status_id;
             $(".order-status:last").val(currentStatus);
