@@ -817,7 +817,7 @@ span.icon-menu {
 #card-number-error,#name-on-card-error,#cvv-number-error,#ExpMonth-error,#ExpYear-error,
 #new-address-error,#tips-video-url-error,#tips-and-tricks-error,#guest-email-error,#zip-code-error,
 #guest-phone-error,#giftcard-custom-amount-error,#recipient-email-error,#recipient-name-error,
-#recipient-message-error
+#recipient-message-error,#fullname-error, #giftcardcustomamount-error, #message-error
 {
 	color: #ff7878;
 	background: white;

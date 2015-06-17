@@ -245,6 +245,9 @@ table#userlist {
     border-right: solid 2px #777;
     padding: 5px 5px;
     color: white;
+    border: 1px hidden;
+    border-radius: 2px;
+    min-width: 60px;
 }
 
 .status.down {
@@ -254,6 +257,9 @@ table#userlist {
     border-bottom: solid 2px #eaeaea;
     border-right: solid 2px #eaeaea;
     background-color: green;
+    border: 1px hidden;
+    border-radius: 2px;
+    min-width: 60px;
 }
 
 #userlist .cross {
@@ -505,7 +511,7 @@ input#searchBy-name {
     letter-spacing: 2px;
 }
 .search-filters input[type=date] {
-    font-size: 10px;
+    font-size: 9px;
     color: #9B9B9B;
     outline: none;
 }

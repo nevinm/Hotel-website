@@ -55,6 +55,7 @@ function populateGiftcardDetails(giftcardDetails) {
     $(".recepient-email").text(giftcardDetails.recipientEmail);
     $(".recepient-message").text(giftcardDetails.recipientMessage);
     $(".recepient-amount").text("$" + giftcardDetails.giftcardAmount);
+    $(".recepient-amount").attr("data-amount", giftcardDetails.giftcardAmount);
 }
 
 function fetchGiftCardData(token) {
@@ -75,6 +76,7 @@ var saveCreditCardGiftCardCallback = {
         var response = JSON.parse(data);
         if (response.status == 1) {
             $("#pay-form")[0].reset();
+            showPopup(response);
         } else {
             showPopup(response);
         }
@@ -93,6 +95,34 @@ function saveCreditCardGiftCard(giftCardOrderParams) {
     var saveCreditCardGiftCardInstance = new AjaxHttpSender();
     saveCreditCardGiftCardInstance.sendPost(url, header, data, saveCreditCardGiftCardCallback);
 }
+
+function populateEditCardDetails() {
+    $("#recipient-name").val($(".recepient-name").text());
+    $("#recipient-email").val($(".recepient-email").text());
+    $("#recipient-message").val($(".recepient-message").text());
+    $("#recipient-amount").val($($(".recepient-amount")[0]).data("amount"));
+}
+
+function updateRecipientGiftCard() {
+    var recipientName = $("#recipient-name").val(),
+        recipientEmail = $("#recipient-email").val(),
+        recipientMessage = $("#recipient-message").val(),
+        recipientAmount = $("#recipient-amount").val();
+    giftcardDetails = {};
+    giftcardDetails = {
+        "giftcardAmount": recipientAmount,
+        "recipientName": recipientName,
+        "recipientEmail": recipientEmail,
+        "recipientMessage": recipientMessage
+    }
+    localStorage['giftcardDetails'] = JSON.stringify(giftcardDetails);
+    if (localStorage.getItem("giftcardDetails") !== null && $(".giftcard-payment").length) {
+        var giftcardDetails = fetchLocalGiftCardData();
+        populateGiftcardDetails(giftcardDetails);
+    }
+    $(".giftcard-popup-wrapper").hide();
+}
+
 
 $(document).ready(function() {
     CartItemCount();
@@ -139,6 +169,19 @@ $(document).ready(function() {
         e.preventDefault();
     });
 
+    $("#edit-giftcard").on("click", function() {
+        $(".giftcard-popup-wrapper").show();
+        populateEditCardDetails();
+    });
+    $("#cancel").on("click", function() {
+        $(".giftcard-popup-wrapper").hide();
+    });
+
+    $("#edit-recipient-details").on("submit", function(e) {
+        e.preventDefault();
+        updateRecipientGiftCard();
+    });
+
     $(".proceed-checkout").on("click", function() {
         $("#recipient-form").submit();
         if (!$(".giftcard-selected").length) {
@@ -178,15 +221,15 @@ var savedCardDetailsCallback = {
         cardDetails = JSON.parse(data);
         if (cardDetails.status == 1) {
             if (cardDetails.cards.length != 0) {
-                 $('.payment-method').show();
-                 $('.payment-info-container').hide();
+                $('.payment-method').show();
+                $('.payment-info-container').hide();
                 populateCardDetails(cardDetails.cards);
             } else {
                 $('.your-info-container').hide();
                 $('.gift-card-details-container,.payment-container-guest').addClass('halfWidth');
-                $('.payment-info-container,.details').addClass('fullWidth');                
+                $('.payment-info-container,.details').addClass('fullWidth');
                 $('.payment-info-container').show();
-                $('.payment-info-container').css('padding-top','45px');
+                $('.payment-info-container').css('padding-top', '45px');
             }
         } else {
             showPopup(cardDetails);
