@@ -147,7 +147,7 @@ def gift_card_order(request, data, user=None):
             return custom_error("Failed to create GiftCard. Please contact customer support.")
 
         if send_gift_card(gc):
-            return json_response({"status":1, "messge":"The Gift Card coupon has been sent to " + gc.email, "id":gc.id})
+            return json_response({"status":1, "message":"The Gift Card coupon has been sent to " + gc.email, "id":gc.id})
         else:
             log.error("Gift card created, but failed to send.")
             return custom_error("There was an error sending Gift Card. Please contact customer support.")
