@@ -192,7 +192,7 @@ def create_order(request, data, user):
 
         order = Order()
         order.cart = item.cart
-        
+        order.delivery_type = "pickup" if del_type.lower() == "pickup" #else delivery
         if del_type.lower() == "delivery":
             order.delivery_address = del_address
             #order.billing_address = bil_address
