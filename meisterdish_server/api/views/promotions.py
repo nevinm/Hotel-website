@@ -17,6 +17,10 @@ log = logging.getLogger('api')
 @check_input('POST')
 def apply_promocode(request, data, user):
     try:
+        #First order and referral bonus available        
+        if not Order.objects.filter(cart__user=user).exists() and Referral.objects.filter(referree=user).exists() and user.credits > 0:
+            return custom_error("Sorry, you can not apply further promotional codes to this order")
+
         cart = Cart.objects.get(completed=False, user=user)
         if cart.promo_code:
             return custom_error("You cannot apply more than one promo code for a single transaction.")
@@ -38,6 +42,10 @@ def apply_promocode(request, data, user):
 @check_input('POST')
 def redeem_gift_card(request, data, user):
     try:
+        #First order and referral bonus available        
+        if not Order.objects.filter(cart__user=user).exists() and Referral.objects.filter(referree=user).exists() and user.credits > 0:
+            return custom_error("Sorry, you can not apply further promotional codes to this order")
+            
         code = data["code"].strip()
         try:
             gift_card = GiftCard.objects.get(user=user, code=code)
@@ -147,7 +155,7 @@ def gift_card_order(request, data, user=None):
             return custom_error("Failed to create GiftCard. Please contact customer support.")
 
         if send_gift_card(gc):
-            return json_response({"status":1, "messge":"The Gift Card coupon has been sent to " + gc.email, "id":gc.id})
+            return json_response({"status":1, "message":"The Gift Card coupon has been sent to " + gc.email, "id":gc.id})
         else:
             log.error("Gift card created, but failed to send.")
             return custom_error("There was an error sending Gift Card. Please contact customer support.")

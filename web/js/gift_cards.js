@@ -295,7 +295,7 @@ function populateCardDetailsInPopup() {
     });
     $('.address-payment-list-popup .popup-container').append("<div class='button'>" +
         "<a href='#' class='btn btn-medium-primary medium-green pullLeft' id='save-payment'>" + "SELECT" + "</a>" +
-        "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
+        "<a href='#!' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
     $('#save-payment').addClass('button-disabled');
     $('.address-payment-list-popup').show();
     $('input[type=radio][name=change-card]').on("focus", function() {

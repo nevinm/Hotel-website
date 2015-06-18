@@ -35,7 +35,7 @@ function facebookShare(site_url, accessToken) {
         Start cooking today
         for $20 off your first order!
         Fresh ingredients washed and prepped by us,
-        cooked to perfection by you ',
+        cooked to perfection by you. http://www.meisterdish.com/ ',
         status: 'success',
         access_token: accessToken,
         url: imgURL
