@@ -98,7 +98,7 @@ def get_orders(request, data, user):
                 "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                 "order_num" : order.order_num,
                 "meals":meals,
-                "delivery_type":order.del_type.title(),
+                "delivery_type":order.delivery_type.title(),
                 "delivery_address" : {
                      "id":order.delivery_address.id ,
                      "first_name":order.delivery_address.first_name,
