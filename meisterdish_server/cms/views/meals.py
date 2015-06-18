@@ -343,6 +343,7 @@ def get_meal_details(request, data, user, meal_id):
             "images" : image_list,
             "ratings" : rating_list,
             "avg_rating" : rating_sum/rating_count if int(rating_count) != 0 else 0,
+            "ratings_count" : rating_count,
             "main_image" : {"url":settings.DEFAULT_MEAL_IMAGE, "id":""} if not meal.main_image else {
                 "id":meal.main_image.id,
                 "url":meal.main_image.image.url,
