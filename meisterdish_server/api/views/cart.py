@@ -187,6 +187,7 @@ def get_cart_items_count(request, data, user):
 @check_input('POST')
 def save_delivery_time(request, data, user):
     try:
+        field = ""
         cart = Cart.objects.get(user=user, completed=False)
         if "delivery_time" in data:
             del_time = data['delivery_time'].strip()

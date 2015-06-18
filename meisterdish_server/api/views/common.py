@@ -478,7 +478,7 @@ def edit_profile(request, data, user):
         log.info("user : " + user.email + " : updated profile")
         return json_response({"status":1, "message":"Profile updated successfully."})
     except Exception as e:
-        log.error("user id : " + str(user_id) + " : profile update failed : "+e.message)
+        log.error("user id : " + str(user.id) + " : profile update failed : "+e.message)
         return custom_error("Failed to update profile.")
 
 @check_input('POST')
