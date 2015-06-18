@@ -33,21 +33,17 @@ def check_input(method):
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
                         session = SessionStore(session_key=session_key)
                         if session and 'user' in session :
-                            if "user_id" in req and int(req['user_id'] != session['user']["id"]):
-                                log.error('API : USER in session and request does not match. : '+req["user_id"])
-                                return custom_error('You are not authorized.')
-                            else:
-                                try:
-                                    query = Q(pk=session['user']['id']) & (Q(role__pk=settings.ROLE_USER) | Q(role__pk=settings.ROLE_GUEST))
-                                    user = User.objects.get(query)
-                                except Exception as e:
-                                    log.error("No user in session !!" + str(session['user']['id']))
-                                    return custom_error("This user is no more available. Please login again.")
-                                return func(request, req, user, *args, **kwargs)
+                            try:
+                                query = Q(pk=session['user']['id']) & (Q(role__pk=settings.ROLE_USER) | Q(role__pk=settings.ROLE_GUEST))
+                                user = User.objects.get(query)
+                            except Exception as e:
+                                log.error("No user in session !!" + str(session['user']['id']))
+                                return custom_error("This user is no more available. Please login again.", -2)
+                            return func(request, req, user, *args, **kwargs)
                         else:
                             message = 'The session is invalid. Please login again.'
                             log.error('API : '+func.__name__+', Invalid session:Rejected')
-                            return json_response({'status' : '-1', 'message' : message})
+                            return custom_error(message, -2)
                     else:
                         return func(request, req, *args, **kwargs)   
                 else:
