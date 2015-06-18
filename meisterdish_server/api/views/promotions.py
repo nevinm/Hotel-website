@@ -174,6 +174,7 @@ def send_gift_card(gc):
             "last_name" : gc.user.last_name.title(),
             "amount" : str(gc.amount),
             "url" : settings.SITE_URL,
+            "email":gc.email,
         }
 
         msg = render_to_string('gift_card_email.html', dic)

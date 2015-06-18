@@ -106,7 +106,7 @@ def get_orders(request, data, user):
             q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
 
         orders = orders.filter(q)
-        
+
         # End filter
         orders = orders.order_by("-id")
 
@@ -158,7 +158,7 @@ def get_orders(request, data, user):
                      "city":order.delivery_address.city.name,
                      "state":order.delivery_address.city.state.name,
                      "zip":order.delivery_address.zip,
-                     "phone":order.delivery_address.phone,
+                     "phone":order.delivery_address.phone,  
                     } if order.delivery_address else "",
                 "billing_address" : {
                      "id":order.billing_address.id,
@@ -250,6 +250,7 @@ def send_order_confirmation_notification(order):
     try:
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
         user = order.cart.user
+        to_email = order.delivery_address.email if order.delivery_address else order.email
         dic = {
                "order_num" : order.order_num,
                "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
@@ -261,13 +262,14 @@ def send_order_confirmation_notification(order):
                "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
                "status":order.status,
                "delivery_type":order.delivery_type,
-               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id)
+               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id),
+               "to_email":to_email,
+               "site_url":settings.SITE_URL,
                }
         
         msg = render_to_string('order_confirmation_email_template.html', dic)
         sub = 'Your order at Meisterdish is confirmed '
-        to_email = order.delivery_address.email if order.delivery_address else order.email
-
+        
         mail([to_email], sub, msg )
 
         if user.need_sms_notification:
@@ -283,6 +285,8 @@ def send_order_complete_notification(order):
     try:
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
         user = order.cart.user
+        to_email = order.delivery_address.email if order.delivery_address else order.email
+
         dic = {
                "order_num" : order.order_num,
                "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
@@ -295,11 +299,12 @@ def send_order_complete_notification(order):
                "status":order.status,
                "delivery_type":order.delivery_type,
                "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id),
+               "to_email":to_email,
+               "site_url":settings.SITE_URL,
                }
         
         msg = render_to_string('order_complete_email_template.html', dic)
         sub = 'Your order at Meisterdish is complete'
-        to_email = order.delivery_address.email if order.delivery_address else order.email
         
         mail([to_email], sub, msg )
 
