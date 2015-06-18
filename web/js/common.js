@@ -149,6 +149,7 @@ function logingOut() {
     localStorage.removeItem('cartItems');
     localStorage.removeItem('fb-id');
     localStorage.removeItem('user_profile');
+    localStorage.removeItem('delivery_addressess');
     localStorage.removeItem('fb-image');
     localStorage['loggedIn'] = false;
     localStorage['admin_loggedIn'] = false;
