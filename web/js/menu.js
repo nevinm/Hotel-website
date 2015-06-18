@@ -5,6 +5,12 @@ $(document).ready(function() {
         endOfList = false,
         ipadWidth = 767;
 
+     if (localStorage['loggedIn'] == 'true') {
+        $('.menu-offer').show();
+     }else{
+        $('.menu-offer').hide();
+     }
+
     $(document).on("click", '.subMenu .menu-categories-list', function() {
         $(document).find(".subMenu ul li").removeClass("activeOption");
         $(this).addClass("activeOption");

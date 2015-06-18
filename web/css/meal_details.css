@@ -350,7 +350,7 @@ iframe{
     margin: 0 1%;
 }
 .meal-tab-container ul li a{
-    padding: 21px 6px;
+    padding: 21px 18px;
     display: inline-block;
 }
 .meal-tab-container ul li:hover{
@@ -401,6 +401,7 @@ iframe{
     }
     .meal-tab-container ul li a{
         font-size: 12px;
+        padding: 21px 8px;
     }
 }
 
