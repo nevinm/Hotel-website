@@ -13,6 +13,7 @@ log = logging.getLogger('cart')
 def get_cart_items(request, data, user):
     try:
       cart_list = []
+      items_count = 0
       for cart_item in CartItem.objects.filter(cart__user=user, cart__completed=False):
             cart_list.append(
             {
@@ -25,15 +26,16 @@ def get_cart_items(request, data, user):
               "price": cart_item.meal.price,
               "tax": cart_item.meal.tax,
               "quantity":cart_item.quantity,
-            }
-      )
+            })
+            items_count += cart_item.quantity
+
 
       if not len(cart_list):
           return custom_error("There are not items in cart.")
       else:
           return json_response({"status":1, 
                               "aaData":cart_list,
-                              "total_count":len(cart_list),
+                              "total_count":items_count,
                               "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                               "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
                               })
@@ -125,6 +127,7 @@ def update_cart(request, data, user):
         cart_item.save()
 
         cart_list = []
+        items_count = 0
         for cart_item in CartItem.objects.filter(cart__user=user, cart__completed=False):
               cart_list.append(
               {
@@ -137,12 +140,12 @@ def update_cart(request, data, user):
                 "price": cart_item.meal.price,
                 "tax": cart_item.meal.tax,
                 "quantity":cart_item.quantity,
-              }
-        )
+              })
+              items_count += cart_item.quantity
         return json_response({"status":1, 
                               "aaData":cart_list,
                               "messge" : "The cart has been updated",
-                              "total_count":len(cart_list),
+                              "total_count":items_count,
                               "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                               "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id
                               }) 

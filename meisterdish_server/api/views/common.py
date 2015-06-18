@@ -220,6 +220,7 @@ def send_user_verification_mail(user, change_email=False, email=""):
                "first_name" : user.first_name.title(),
                "last_name" : user.last_name.title(),
                "username" : user.email,
+               "site_url":settings.SITE_URL,
                }
         if change_email:
             msg = render_to_string('verify_email_email_template.html', dic)
@@ -317,11 +318,12 @@ def forgot_password(request, data):
         user.save()
         
         dic = {
-               "email" : email,
+               "to_email" : email,
                "link" : link,
                "first_name" : user.first_name.title(),
                "last_name" : user.last_name.title(),
                "username" : user.email,
+               "site_url":settings.SITE_URL,
                }
         msg = render_to_string('forgot_password_email_template.html', dic)
 
