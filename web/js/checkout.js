@@ -615,11 +615,11 @@ function populateAddressListPopup() {
     $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .button').remove();
     $('#save-delivery-address').addClass('button-disabled');
-    var checkLocal = JSON.parse(localStorage['delivery_addressess']).address_list.length;
-    if (checkLocal!=0 && checkLocal!=undefined) {
+    if(localStorage['delivery_addressess']!=undefined && localStorage['delivery_addressess']!=null){
+        var checkLocal = JSON.parse(localStorage['delivery_addressess']).address_list.length;
         addressList = JSON.parse(localStorage['delivery_addressess']);
         appendAddresscontent(addressList);
-        $('.address-payment-list-popup').show();
+        $('.address-payment-list-popup').show();  
     } else {
         getAddress("populateAddressToPopUp");
         $('.address-payment-list-popup').show();
