@@ -22,12 +22,9 @@ def check_input(method, role=False): # Allow all users by default
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
                         session = SessionStore(session_key=session_key)
                         if session and 'user' in session :
-                            if "user_id" in req and int(req['user_id'] != session['user']["id"]):
-                                log.error('API : USER in session and request does not match. : '+req["user_id"])
-                                return custom_error('You are not authorized.')
-                            elif role and session["user"]["role"] != role:
+                            if role and session["user"]["role"] != role:
                                 log.error('API : User requesting role('+str(role)+') only features.'+session["user"]["email"] +str(session["user"]["role"]))
-                                return custom_error('You are not authorized.')
+                                return custom_error('You are not authorized.', -2)
                             else:
                                 try:
                                     if not role:
@@ -41,7 +38,7 @@ def check_input(method, role=False): # Allow all users by default
                         else:
                             message = 'The session is invalid. Please login again.'
                             log.error('API : '+func.__name__+', Invalid session:Rejected')
-                            return json_response({'status' : '-1', 'message' : message})
+                            return custom_error(message, -2)
                     else:
                         return func(request, req, *args, **kwargs)   
                 else:

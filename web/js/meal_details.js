@@ -152,7 +152,7 @@ function mealDetailsTab(mealDetails) {
     if (mealDetails.in_cart == 1) {
         $(".add-meal").addClass("button-disabled");
     }
-  
+    $(".rating-count").text("("+mealDetails.ratings_count+")")
     $(".meal-ingredients").text(mealDetails.sub);
 
     $($("#meal-rating").find(".rating-star").get().reverse()).each(function(key, value) {

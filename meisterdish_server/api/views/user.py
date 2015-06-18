@@ -25,9 +25,8 @@ def add_address(request, data, user):
         
         email = data.get("email", False)
 
-        if "checkout" in data and data["checkout"] == 1:
-            if not check_delivery_area(zip):
-                return custom_error("Delivery is not available at this location. Please choose a different Zip code.")
+        if not check_delivery_area(zip):
+            return custom_error("Delivery is not available at this location. Please choose a different Zip code.")
         
         is_primary = False
         if "is_primary" in data and data["is_primary"]:
