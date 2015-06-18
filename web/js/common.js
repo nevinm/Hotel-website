@@ -487,6 +487,7 @@ if ($.validator) {
 //CartItemCount
 var CartItemCountCallback = {
     success: function(data, textStatus) {
+        var numOfItems = JSON.parse(data);
         if (numOfItems.status == 1) {
             $('span.count').text(numOfItems.count);
         } else {
