@@ -67,6 +67,16 @@ def login(request, data):
             if session_key :
                 session = SessionStore(session_key=session_key)
                 log.info("Logging in to guest session")
+                try:
+                    guest_user = User.objects.get(pk=session["user"]["id"], role__pk=settings.ROLE_GUEST)
+                    cart = Cart.objects.get(user=guest_user, completed=False)
+                    cart.user = user
+                    cart.save()
+                    guest_user.delete()
+                    log.info("User Logged in to guest session. cart updated")
+                except:
+                    log.error("No guest session found with guest user/no cart in guest session")
+
             else:
                 session = SessionStore()
             
