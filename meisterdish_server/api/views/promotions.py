@@ -1,7 +1,7 @@
 from django.db.models import Q
 from api.views.decorators import *
 from django.core.paginator import Paginator
-from meisterdish_server.models import GiftCard, PromoCode
+from meisterdish_server.models import GiftCard, PromoCode, CreditCardDetails
 from datetime import datetime
 import settings , logging
 from libraries import save_payment_data, mail
@@ -160,24 +160,27 @@ def gift_card_order(request, data, user=None):
         else:
             log.error("Gift card created, but failed to send.")
             return custom_error("There was an error sending Gift Card. Please contact customer support.")
-    except IOError as e:
+    except Exception as e:
         log.error("Buy gift card error : " + e.message)
-        return custom_error("An error has occurred. Please try again later.")
+        return custom_error(e.message)
 
 def send_gift_card(gc):
-    # TODO
-    dic = {
-        "code" : gc.code,
-        "name" : gc.name,
-        "message":gc.message,
-        "first_name" : gc.user.first_name.title(),
-        "last_name" : gc.user.last_name.title(),
-        "amount" : str(gc.amount),
-        "url" : settings.SITE_URL,
-    }
+    try:
+        dic = {
+            "code" : gc.code,
+            "name" : gc.name,
+            "message":gc.message,
+            "first_name" : gc.user.first_name.title(),
+            "last_name" : gc.user.last_name.title(),
+            "amount" : str(gc.amount),
+            "url" : settings.SITE_URL,
+        }
 
-    msg = render_to_string('gift_card_email.html', dic)
-    sub = 'Your Gift Card for Meisterdish'    
-        
-    mail([gc.email], sub, msg )
-    return True
+        msg = render_to_string('gift_card_email.html', dic)
+        sub = 'Your Gift Card for Meisterdish'    
+            
+        mail([gc.email], sub, msg )
+        return True
+    except Exception as e:
+        log.error("Failed to send gift card mail : "+e.message)
+        return False
