@@ -473,7 +473,7 @@ function populateCardDetails(cards, selectedId) {
             last_num = cards[key].number.slice(-4);
             if (selectedId == value.id) {
                 $('.saved-cards').append("<div class='saved-card-list'>" +
-                    "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
+                    "<input type='radio' class='checkbox-green added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
                     "' class='radio-button-payment'>" +
                     "<label for='" + value.id + "'>" +
                     "<img class='paypal' src='" + value.logo + "'>" +
@@ -487,7 +487,7 @@ function populateCardDetails(cards, selectedId) {
         $.each(cards, function(key, value) {
             last_num = cards[key].number.slice(-4);
             $('.saved-cards').append("<div class='saved-card-list'>" +
-                "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
+                "<input type='radio' class='checkbox-green added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
                 "' class='radio-button-payment'>" +
                 "<label for='" + value.id + "'>" +
                 "<img class='paypal' src='" + value.logo + "'>" +
@@ -622,7 +622,7 @@ function populateAddressListPopup() {
 
 function appendAddresscontent(addressList) {
     $.each(addressList.address_list, function(key, value) {
-        $('.address-payment-list-popup .popup-container').append("<div class='address-container'>" + "<input type='radio' name='address' id='" + value.id + "' class='radio-button'>" +
+        $('.address-payment-list-popup .popup-container').append("<div class='address-container'>" + "<input type='radio' name='address' id='" + value.id + "' class='checkbox-green radio-button'>" +
             "<label class='list-address' for='" + value.id + "'>" +
             "<span>" + value.first_name + " " + value.last_name + "</span>" +
             "<span>" + value.building + "," + value.street + "</span>" +
@@ -901,7 +901,7 @@ function populateCreditCardDetails() {
 
     $.each(cards, function(key, value) {
         $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>" +
-            "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' data-id='"+value.id+"' id='" + value.id+1 + "'>" +
+            "<input type='radio' class='checkbox-green added-card pullLeft' name='change-card' class='radio-button-payment' data-id='"+value.id+"' id='" + value.id+1 + "'>" +
             "<label for='"+value.id+1+"'>" + "<img class='paypal' src='" + value.logo + "'>" +
             "<span class='body-text-small'>" + value.type + " " +
             "ending in" + " " + last_num + "</span>" +
