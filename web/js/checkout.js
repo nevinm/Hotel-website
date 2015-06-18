@@ -955,9 +955,16 @@ function validateOrder() {
         showPopup(data);
         return false;
     }
-    if ($("#delivery-radio:checked").is(":checked")) {
+    if ($("#delivery-radio").is(":checked")) {
         if (!$(".address-added").length) {
             data.message = "Add an address then proceed";
+            showPopup(data);
+            return false;
+        }
+    }
+    if ($("#pickup-radio").is(":checked")) {
+        if (!$("#guest-address-info").valid()) {
+            data.message = "Check your phonenumber and email";
             showPopup(data);
             return false;
         }
