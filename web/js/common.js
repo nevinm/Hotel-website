@@ -16,7 +16,7 @@ function checkLoggedIn() {
         $(".account-header h2").text(localStorage['username'] + "'S ACCOUNT");
         $('.delivery-info-container').show();
         $('.delivery-info-guest-container').hide();
-        $('.delivery-info .checkout-header span').text('DELIEVRY INFO');
+        $('.delivery-info .checkout-header span').text('DELIVERY INFO');
     } else {
         $userentry.show();
         $("#logout").hide();

@@ -66,7 +66,7 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '#save-payment', function() {
-        var selectedId = $('input[type=radio][name=change-card]:checked').attr('id');
+        var selectedId = $('input[type=radio][name=change-card]:checked').attr('data-id');
         showSelectedPaymentMethod(selectedId);
         $('.address-payment-list-popup').hide();
     });
@@ -613,7 +613,7 @@ function populateAddressListPopup() {
         getAddress("populateAddressToPopUp");
         $('.address-payment-list-popup').show();
     }
-    $('input[type=radio][name=address]').on("focus", function() {
+    $('input[type=radio][name=address]').on("click", function() {
         $('#save-delivery-address').removeClass('button-disabled');
     })
 
@@ -788,7 +788,7 @@ function createOrderParams() {
         $weekTimecontent = $(".week-content .time-content").find(".checkout-time-button-active"),
         saveParam = 0,
         payment_type = 0,
-        savedCardId = $('.saved-cards .added-card').attr('id'),
+        savedCardId = $('.saved-cards .added-card:checked').attr("id"),
         selected_day, selected_time, deliveryTime,
         card_number = $('#card-number').val(),
         cvv = $('#cvv-number').val(),
@@ -901,8 +901,8 @@ function populateCreditCardDetails() {
 
     $.each(cards, function(key, value) {
         $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>" +
-            "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' id='" + value.id + "'>" +
-            "<label>" + "<img class='paypal' src='" + value.logo + "'>" +
+            "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' data-id='"+value.id+"' id='" + value.id+1 + "'>" +
+            "<label for='"+value.id+1+"'>" + "<img class='paypal' src='" + value.logo + "'>" +
             "<span class='body-text-small'>" + value.type + " " +
             "ending in" + " " + last_num + "</span>" +
             "<span class='body-text-small'>" + "Expires on" +
@@ -913,7 +913,7 @@ function populateCreditCardDetails() {
         "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
     $('#save-payment').addClass('button-disabled');
     $('.address-payment-list-popup').show();
-    $('input[type=radio][name=change-card]').on("focus", function() {
+    $('input[type=radio][name=change-card]').on("click", function() {
         $('#save-payment').removeClass('button-disabled');
     })
 }
