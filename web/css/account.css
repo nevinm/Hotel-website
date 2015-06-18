@@ -1327,9 +1327,6 @@ input.radio-button-payment {
 	padding-left: 20px;
 	padding-bottom: 30px;
 }
-.payment-popup-sub-container label{
-	width: 80%;
-}
 #guest-address-info .button{
 	float: left;
 	padding: 20px 0;
@@ -1489,6 +1486,21 @@ img.accepted-cards
 }
 .address-payment-list-popup .popup .button{
 	position: initial;
+}
+.saved-card-list input[type=radio]:checked + label:before {
+	font-size: 45px;
+	line-height: 16px;
+}
+.address-container input[type=radio]:checked + label:before {
+	font-size: 44px;
+  line-height: 12px;
+}
+.saved-card-list label{
+	width: 90%;
+}
+.payment-popup-sub-container input[type=radio]:checked + label:before {
+	font-size: 42px;
+	line-height: 16px;
 }
 /*==================================*\
 			&TABLET

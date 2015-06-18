@@ -59,11 +59,12 @@ function populateCardDetails(cards){
 	 	last_num = cards[key].number.slice(-4);
 		$('.card-list-container').append("<div class='saved-card-list'>" +
 			"<input type='radio' class=' payment-checked' name='saved-card' id='" + value.id +"'>" +
-			"<img class='paypal' src='" + value.logo + "'>" +
+			"<label for='"+value.id+"'>"+
+            "<img class='paypal' src='" + value.logo + "'>" +
 			"<div class='card-details-small'>" +
 			"<div class='body-text-small'>" + value.type + " " + "ending in" + " " + last_num + "</div>" +
 			"<div class='body-text-small'>" + "Expires on" + " " +
-			value.expire_month + "/" + value.expire_year + "</div>" + "</div>" + "</div>");
+			value.expire_month + "/" + value.expire_year + "</div>" + "</div>"+"</label>" + "</div>");
 		});
 }
 var deleteCreditCardCallback = {
