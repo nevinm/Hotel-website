@@ -258,6 +258,8 @@ else:
 DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
 DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
 DEFAULT_CHEF_IMAGE  = STATIC_URL + "default/chef_default.png"
+DEFAULT_INGREDIENTS_IMAGE  = STATIC_URL + "default/ingredients_default.png"
+DEFAULT_PRE_REQ_IMAGE  = STATIC_URL + "default/pre_requisites_default.png"
 
 ORDER_DELIVERY_WINDOW = 3 #Hours
 SHIPPING_CHARGE = 2 # in $
