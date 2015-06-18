@@ -327,14 +327,14 @@ def get_meal_details(request, data, user, meal_id):
             "saved_time" : meal.saved_time,
 
             "pre_requisites" : "" if not meal.pre_requisites or meal.pre_requisites == "" else simplejson.loads(meal.pre_requisites),
-            "pre_requisites_image" : settings.DEFAULT_MEAL_IMAGE if meal.pre_requisites_image is None else {
+            "pre_requisites_image" : settings.DEFAULT_PRE_REQ_IMAGE if meal.pre_requisites_image is None else {
                     "id":meal.pre_requisites_image.id,
                     "url":meal.pre_requisites_image.image.url,
                     },
 
             "nutrients" : "" if not meal.nutrients or meal.nutrients == ""  else simplejson.loads(meal.nutrients),
             "ingredients" : "" if not meal.ingredients or meal.ingredients == "" else simplejson.loads(meal.ingredients),
-            "ingredients_image" : settings.DEFAULT_MEAL_IMAGE if meal.ingredients_image is None else {
+            "ingredients_image" : settings.DEFAULT_INGREDIENTS_IMAGE if meal.ingredients_image is None else {
                                                         "id" : meal.ingredients_image.id,
                                                         "url" : meal.ingredients_image.image.url
                                                         },
