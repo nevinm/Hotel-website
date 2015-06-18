@@ -77,8 +77,9 @@ def gift_card_order(request, data, user=None):
             return custom_error("The minimum gift card amount should be $25.")
 
         user = get_request_user(request)
-        if not user:
-            (user, session_key) = create_guest_user(request)
+        if not user or user.ROLE.id == settings.ROLE_GUEST:
+            guest_details  = data['guest_details']
+            (user, session_key) = create_guest_user(request, guest_details)
         else:
             session_key = None
 
@@ -159,7 +160,7 @@ def gift_card_order(request, data, user=None):
         else:
             log.error("Gift card created, but failed to send.")
             return custom_error("There was an error sending Gift Card. Please contact customer support.")
-    except Exception as e:
+    except IOError as e:
         log.error("Buy gift card error : " + e.message)
         return custom_error("An error has occurred. Please try again later.")
 

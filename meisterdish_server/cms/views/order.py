@@ -106,7 +106,7 @@ def get_orders(request, data, user):
             q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
 
         orders = orders.filter(q)
-
+        
         # End filter
         orders = orders.order_by("-id")
 
@@ -148,6 +148,7 @@ def get_orders(request, data, user):
                 "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                 "order_num" : order.order_num,
                 "meals":meals,
+                "delivery_type":order.delivery_type.title(),
                 "delivery_address" : {
                      "id":order.delivery_address.id ,
                      "first_name":order.delivery_address.first_name,

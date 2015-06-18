@@ -224,14 +224,10 @@ EMAIL_HOST_USER = 'afmpmail2@gmail.com'
 EMAIL_HOST_PASSWORD = 'afmp@123mail2'
 DEFAULT_FROM_EMAIL = 'Meisterdish Test<meisterdishtest@gmail.com>'
 
-
-SESSION_EXPIRY = 5 * 60 # 5 mins
-
 PAYMENT_METHODS = (
                    ('CC', 'Credit Card'),
                    ('PP', 'PayPal'),
                    )
-PER_PAGE = 10
 
 ORDER_STATUS =  (
     (0, "Incomplete"),
@@ -261,8 +257,12 @@ else:
 
 DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
 DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
+DEFAULT_CHEF_IMAGE  = STATIC_URL + "default/chef_default.png"
+
 ORDER_DELIVERY_WINDOW = 3 #Hours
 SHIPPING_CHARGE = 2 # in $
+PER_PAGE = 10
+SESSION_EXPIRY = 5 * 60 # 5 mins
 
 CACHES = {
     'default': {
