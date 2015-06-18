@@ -298,7 +298,7 @@ function populateCartItems(data) {
             "<div class='quantity-container'>" + "<span class='operator-minus' data-min='1'>" + '-' + "</span>" +
             "<input type='text' disabled='disabled' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
-            "<span class='price-container' data-tax='" + value.tax + "'>" + dollarConvert(value.price) + "</span>" +
+            "<span class='price-container' data-tax='" + value.tax + "' data-price='"+value.price+"'>" + dollarConvert(value.price+value.tax) + "</span>" +
             "<img src='../images/hamburger-menu-close.png' id='remove-cart-item'>" + "</div>");
     });
     updateReciept();
@@ -310,7 +310,7 @@ function updateReciept() {
         totalDeliveryCost = 2;
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
-        price = parseInt($(value).find('.price-container').text().slice(1));
+        price = parseInt($(value).find('.price-container').attr("data-price"));
         tax = parseInt($(value).find('.price-container').attr("data-tax"));
 
         totalItemCost += (price * quantity);

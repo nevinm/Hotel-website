@@ -47,7 +47,7 @@
                "</div>" +
                "<div class='accordion-subcontent'>" +
                "<div class='order-head'>SHIPPING INFORMATION</div>" +
-               "<div class='order-content'>" +
+               "<div class='order-content delivery-address'>" +
                "<span>" + deliveryAddress.first_name + " " + deliveryAddress.last_name + "</span>" +
                "<span>" + deliveryAddress.building + " " + deliveryAddress.street + "</span>" +
                "<span>" + deliveryAddress.city + "</span>" +
@@ -60,6 +60,9 @@
 
             if(value.status== "IN PROGRESS"){
                 $("h4.status:last").addClass("green");
+            }
+            if($.isEmptyObject(deliveryAddress)){
+              $(".delivery-address:last").text("PICKUP");
             }
            $.each(meals, function(key, meal) {
                $("#accordion .order-content:last").append("<span>" + meal.name + " x " + meal.quantity + "</span>");
