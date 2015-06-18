@@ -114,7 +114,6 @@ $(document).ready(function() {
     var removeUsersCallback = {
         success: function(data, textStatus) {
             var usersData = JSON.parse(data);
-            debugger;
             if (usersData.status == 1) {
                 currentPage = $('.pagination').pagination('getCurrentPage');
                 getUserlist(currentPage);

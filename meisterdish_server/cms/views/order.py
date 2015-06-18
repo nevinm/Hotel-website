@@ -76,31 +76,37 @@ def get_orders(request, data, user):
         q = Q()
         #Filter
         if "num" in data and str(data['num']).strip() != "":
-            q &= Q(order_num__istartswith=data['num'])
+            q &= Q(order_num=str(data['num']))
         
         if "user_id" in data and str(data['user_id']).strip() != "":
             q &= Q(cart__user__pk=data['user_id'])
 
         if "search" in data and str(data['search']).strip() != "":
-            qs = Q()
+            
             for term in str(data['search']).strip().split():
-                qs |= Q(cart__user__first_name__icontains=term) | Q(cart__user__last_name__icontains=term)
-            q &= qs
+                q &= Q(cart__user__first_name__istartswith=term) | Q(cart__user__last_name__istartswith=term)
 
         if "status" in data and str(data['status']).strip() != "":
              q |= Q(status=int(data['status']))
 
         if "phone" in data and str(data["phone"]).strip() != "":
-            q &= Q(billing_address__phone=str(data['phone']).strip())
+            try:
+                q &= Q(delivery_address__phone__startswith=str(int(data['phone'])).strip())
+            except:
+                return custom_error("Please enter valid phone number")
 
         if "amount" in data and str(data["amount"]).strip() != "":
-            q &= Q(grand_total=float(data['amount']))
+            try:
+                q &= Q(grand_total=float(data['amount']))
+            except:
+                return custom_error("Please search with a valid order amount")
 
         if "date" in data and str(data["date"]).strip() != "":
-            date_obj = datetime.strptime(data['date'], "%Y-%m-%d")# %H:%M:%S")
+            date_obj = datetime.strptime(data['date'], "%m/%d/%Y")# %H:%M:%S")
             q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
 
         orders = orders.filter(q)
+
         # End filter
         orders = orders.order_by("-id")
 
@@ -148,11 +154,22 @@ def get_orders(request, data, user):
                      "last_name":order.delivery_address.last_name,
                      "street":order.delivery_address.street,
                      "building":order.delivery_address.building,
-                     "city":order.delivery_address.city.name if order.delivery_address.city else "",
-                     "state":order.delivery_address.city.state.name if order.delivery_address.city else "",
+                     "city":order.delivery_address.city.name,
+                     "state":order.delivery_address.city.state.name,
                      "zip":order.delivery_address.zip,
                      "phone":order.delivery_address.phone,
                     } if order.delivery_address else "",
+                "billing_address" : {
+                     "id":order.billing_address.id,
+                     "first_name":order.billing_address.first_name,
+                     "last_name":order.billing_address.last_name,
+                     "street":order.billing_address.street,
+                     "building":order.billing_address.building,
+                     "city":order.billing_address.city.name,
+                     "state":order.billing_address.city.state.name,
+                     "zip":order.billing_address.zip,
+                     "phone":order.billing_address.phone,
+                    } if order.billing_address else "",
                 })
 
         #End format response

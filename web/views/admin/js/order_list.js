@@ -31,6 +31,7 @@ $(document).ready(function() {
             orderId = $(this).data().id;
         updateOrders(status, orderId);
     });
+    $( "#date" ).datepicker();
 });
 
 //Update orders API process
@@ -143,7 +144,7 @@ function populateOrderList(data) {
         $('#order-list tbody').append("<tr data-id='" + value.id + "'>" +
             "<td>" + value.order_num + "</td>" +
             "<td>" + value.user_first_name + " " + value.user_last_name + "</td>" +
-            "<td>" + value.billing_address.phone + "</td>" +
+            "<td>" + value.delivery_address.phone + "</td>" +
             "<td>" + value.delivery_time + "</td>" +
             "<td>" + dollarConvert(value.grand_total) + "</td>" +
             "<td class='no-popup'><select data-id='" + value.id + "'class='order-status' name='status'>" +
