@@ -359,6 +359,8 @@ def share_via_email(request, data, user):
         dic = {
             "link" : settings.BASE_URL + 'share/'+user.referral_code+'/',
             "amount" : Configuration.objects.get(key="REFERRAL_BONUS").value,
+            "to_email" : email,
+            "site_url":settings.SITE_URL,
         }
         msg = render_to_string('referral_email.html', dic)
         mail([email], sub, msg)
