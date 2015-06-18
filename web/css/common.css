@@ -557,6 +557,13 @@ input[type='radio']:checked:before {
     text-align: center;
 }
 
+/*@-moz-document url-prefix() {
+ .checkbox-green+label:before {
+    font-size: 29px;
+    line-height: 18px;
+    }
+}*/
+
 /*==============================*\
             &HEADER
 \*==============================*/

@@ -101,7 +101,8 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '#save-delivery-address', function() {
-        var selectedId = $('input[type=radio][name=address]:checked').attr('id');
+        var selectedId = $('input[type=radio][name=address]:checked').attr('data-id');
+        debugger;
         changeDeliveryAddress(selectedId);
         saveDeliveryTime("", selectedId);
     });
@@ -128,6 +129,8 @@ $(document).ready(function() {
         e.preventDefault();
     });
     $('#pickup-radio').on("click", function() {
+        $('.address-info-guest').show();
+        $('.address-info').hide();
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").attr("disabled", "disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").addClass("button-disabled");
         $('.pickup-content').show();
@@ -135,6 +138,14 @@ $(document).ready(function() {
         $(".city-selector-container").hide();
     })
     $('#delivery-radio').on("click", function() {
+        if ($('.address-info').is(':empty')) {
+             $('.address-info-guest').show();
+            $('.address-info').hide();
+        }else{
+            debugger;
+            $('.address-info').show();
+            $('.address-info-guest').hide();
+        }
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeAttr("disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeClass("button-disabled");
         $('.pickup-content').hide();
@@ -622,8 +633,8 @@ function populateAddressListPopup() {
 
 function appendAddresscontent(addressList) {
     $.each(addressList.address_list, function(key, value) {
-        $('.address-payment-list-popup .popup-container').append("<div class='address-container'>" + "<input type='radio' name='address' id='" + value.id + "' class='checkbox-green radio-button'>" +
-            "<label class='list-address' for='" + value.id + "'>" +
+        $('.address-payment-list-popup .popup-container').append("<div class='address-container'>" + "<input type='radio' name='address' id='"+value.id+1+"' data-id='" + value.id + "' class='checkbox-green radio-button'>" +
+            "<label class='list-address' for='"+value.id+1+"'>" +
             "<span>" + value.first_name + " " + value.last_name + "</span>" +
             "<span>" + value.building + "," + value.street + "</span>" +
             "<span>" + value.city + "," + value.state + " " + value.zip + "</span>" +
@@ -655,7 +666,7 @@ function setPrimaryAdd(selectedId) {
 }
 
 function changeDeliveryAddress(selectedId) {
-    var selectedAddress = $('.address-payment-list-popup .popup-container').find('#' + selectedId).parent().find('label'),
+    var selectedAddress = $('.address-payment-list-popup .popup-container').find("[data-id='"+selectedId+"']").parent().find('label'),
         htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
     $('.address-info .contents').html(htmlContent);
