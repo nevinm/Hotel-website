@@ -1,129 +1,3 @@
-//Old giftcard page
-//Redeem Gift Card API.
-var redeemGiftCardCallback = {
-    success: function(data, textStatus) {
-        userDetails = JSON.parse(data);
-        showPopup(userDetails);
-        if (userDetails.status == 1) {
-            $(".card-code").val("");
-        } else {
-            showPopup(userDetails);
-        }
-    },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-}
-
-function redeemGiftCard(code) {
-    var url = baseURL + 'redeem_gift_card/',
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        userInfo = {
-            "code": code
-        },
-        data = JSON.stringify(userInfo);
-
-    var redeemGiftCardInstance = new AjaxHttpSender();
-    redeemGiftCardInstance.sendPost(url, header, data, redeemGiftCardCallback);
-}
-
-//New Gift Card pages.
-function getGiftCardData() {
-    var $giftCardSelected = $(".giftcard-selected");
-    var giftcardAmount = $giftCardSelected.length ? $($giftCardSelected).find(".giftcard-amount").data("amount") :
-        $("#giftcard-custom-amount").val(),
-        recipientName = $("#recipient-name").val(),
-        recipientEmail = $("#recipient-email").val(),
-        recipientMessage = $("#recipient-message").val(),
-        giftcardDetails = {};
-    giftcardDetails = {
-        "giftcardAmount": giftcardAmount,
-        "recipientName": recipientName,
-        "recipientEmail": recipientEmail,
-        "recipientMessage": recipientMessage
-    }
-    localStorage['giftcardDetails'] = JSON.stringify(giftcardDetails);
-}
-var cardDetails;
-
-function fetchLocalGiftCardData() {
-    return JSON.parse(localStorage['giftcardDetails']);
-}
-
-function populateGiftcardDetails(giftcardDetails) {
-    $(".recepient-name").text(giftcardDetails.recipientName);
-    $(".recepient-email").text(giftcardDetails.recipientEmail);
-    $(".recepient-message").text(giftcardDetails.recipientMessage);
-    $(".recepient-amount").text("$" + giftcardDetails.giftcardAmount);
-    $(".recepient-amount").attr("data-amount", giftcardDetails.giftcardAmount);
-}
-
-function fetchGiftCardData(token) {
-    var localGiftCardRecipient = fetchLocalGiftCardData(),
-        giftCardOrderParams = {
-            "name": localGiftCardRecipient.recipientName,
-            "email": localGiftCardRecipient.recipientEmail,
-            "message": localGiftCardRecipient.recipientMessage,
-            "amount": localGiftCardRecipient.giftcardAmount,
-            "stripeToken": token
-        }
-    saveCreditCardGiftCard(giftCardOrderParams);
-}
-
-//save credit card details call back
-var saveCreditCardGiftCardCallback = {
-    success: function(data, textStatus) {
-        var response = JSON.parse(data);
-        if (response.status == 1) {
-            $("#pay-form")[0].reset();
-            showPopup(response);
-        } else {
-            showPopup(response);
-        }
-    },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-}
-
-//save credit card items
-function saveCreditCardGiftCard(giftCardOrderParams) {
-    var url = baseURL + "gift_card_order/",
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        params = giftCardOrderParams;
-    data = JSON.stringify(params);
-    var saveCreditCardGiftCardInstance = new AjaxHttpSender();
-    saveCreditCardGiftCardInstance.sendPost(url, header, data, saveCreditCardGiftCardCallback);
-}
-
-function populateEditCardDetails() {
-    $("#recipient-name").val($(".recepient-name").text());
-    $("#recipient-email").val($(".recepient-email").text());
-    $("#recipient-message").val($(".recepient-message").text());
-    $("#recipient-amount").val($($(".recepient-amount")[0]).data("amount"));
-}
-
-function updateRecipientGiftCard() {
-    var recipientName = $("#recipient-name").val(),
-        recipientEmail = $("#recipient-email").val(),
-        recipientMessage = $("#recipient-message").val(),
-        recipientAmount = $("#recipient-amount").val();
-    giftcardDetails = {};
-    giftcardDetails = {
-        "giftcardAmount": recipientAmount,
-        "recipientName": recipientName,
-        "recipientEmail": recipientEmail,
-        "recipientMessage": recipientMessage
-    }
-    localStorage['giftcardDetails'] = JSON.stringify(giftcardDetails);
-    if (localStorage.getItem("giftcardDetails") !== null && $(".giftcard-payment").length) {
-        var giftcardDetails = fetchLocalGiftCardData();
-        populateGiftcardDetails(giftcardDetails);
-    }
-    $(".giftcard-popup-wrapper").hide();
-}
-
-
 $(document).ready(function() {
     CartItemCount();
     currentPage = getCurrentPage("/", ".html", window.location.href);
@@ -204,7 +78,163 @@ $(document).ready(function() {
         showSelectedPaymentMethod(selectedId);
         $('.address-payment-list-popup').hide();
     });
+
+    $("#place-order").on("click", function() {
+        if (validateGiftOrder()) {
+            placeGiftOrder();
+        };
+    });
 });
+
+function placeGiftOrder() {
+    //Saved card is present.
+    if (!$('.saved-cards').is(':empty')) {
+        var cardId = $('.saved-cards .added-card:checked').attr("id");
+        fetchGiftCardData('', cardId);
+    } else {
+        if ($("#pay-form").valid()) {
+            $("#pay-form").submit();
+        }
+    }
+}
+
+function validateGiftOrder() {
+    var data = {};
+    if ($(".saved-card-list").length && !$(".payment-checked:checked").length) {
+        data.message = "Add a method of payment and then proceed";
+        showPopup(data);
+        return false;
+    }
+    return true;
+}
+//Old giftcard page
+//Redeem Gift Card API.
+
+var redeemGiftCardCallback = {
+    success: function(data, textStatus) {
+        userDetails = JSON.parse(data);
+        showPopup(userDetails);
+        if (userDetails.status == 1) {
+            $(".card-code").val("");
+        } else {
+            showPopup(userDetails);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function redeemGiftCard(code) {
+    var url = baseURL + 'redeem_gift_card/',
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userInfo = {
+            "code": code
+        },
+        data = JSON.stringify(userInfo);
+
+    var redeemGiftCardInstance = new AjaxHttpSender();
+    redeemGiftCardInstance.sendPost(url, header, data, redeemGiftCardCallback);
+}
+
+//New Gift Card pages.
+function getGiftCardData() {
+    var $giftCardSelected = $(".giftcard-selected");
+    var giftcardAmount = $giftCardSelected.length ? $($giftCardSelected).find(".giftcard-amount").data("amount") :
+        $("#giftcard-custom-amount").val(),
+        recipientName = $("#recipient-name").val(),
+        recipientEmail = $("#recipient-email").val(),
+        recipientMessage = $("#recipient-message").val(),
+        giftcardDetails = {};
+    giftcardDetails = {
+        "giftcardAmount": giftcardAmount,
+        "recipientName": recipientName,
+        "recipientEmail": recipientEmail,
+        "recipientMessage": recipientMessage
+    }
+    localStorage['giftcardDetails'] = JSON.stringify(giftcardDetails);
+}
+var cardDetails;
+
+function fetchLocalGiftCardData() {
+    return JSON.parse(localStorage['giftcardDetails']);
+}
+
+function populateGiftcardDetails(giftcardDetails) {
+    $(".recepient-name").text(giftcardDetails.recipientName);
+    $(".recepient-email").text(giftcardDetails.recipientEmail);
+    $(".recepient-message").text(giftcardDetails.recipientMessage);
+    $(".recepient-amount").text("$" + giftcardDetails.giftcardAmount);
+    $(".recepient-amount").attr("data-amount", giftcardDetails.giftcardAmount);
+}
+
+function fetchGiftCardData(token, cardId) {
+    var localGiftCardRecipient = fetchLocalGiftCardData(),
+        giftCardOrderParams = {
+            "name": localGiftCardRecipient.recipientName,
+            "email": localGiftCardRecipient.recipientEmail,
+            "message": localGiftCardRecipient.recipientMessage,
+            "amount": localGiftCardRecipient.giftcardAmount,
+            "stripeToken": token,
+            "card_id": cardId
+        }
+    saveCreditCardGiftCard(giftCardOrderParams);
+}
+
+//save credit card details call back
+var saveCreditCardGiftCardCallback = {
+    success: function(data, textStatus) {
+        var response = JSON.parse(data);
+        if (response.status == 1) {
+            $("#pay-form")[0].reset();
+            $("#close").addClass("redirectApproved");
+            showPopup(response);
+        } else {
+            showPopup(response);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+//save credit card items
+function saveCreditCardGiftCard(giftCardOrderParams) {
+    var url = baseURL + "gift_card_order/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = giftCardOrderParams;
+    data = JSON.stringify(params);
+    var saveCreditCardGiftCardInstance = new AjaxHttpSender();
+    saveCreditCardGiftCardInstance.sendPost(url, header, data, saveCreditCardGiftCardCallback);
+}
+
+function populateEditCardDetails() {
+    $("#recipient-name").val($(".recepient-name").text());
+    $("#recipient-email").val($(".recepient-email").text());
+    $("#recipient-message").val($(".recepient-message").text());
+    $("#recipient-amount").val($($(".recepient-amount")[0]).data("amount"));
+}
+
+function updateRecipientGiftCard() {
+    var recipientName = $("#recipient-name").val(),
+        recipientEmail = $("#recipient-email").val(),
+        recipientMessage = $("#recipient-message").val(),
+        recipientAmount = $("#recipient-amount").val();
+    giftcardDetails = {};
+    giftcardDetails = {
+        "giftcardAmount": recipientAmount,
+        "recipientName": recipientName,
+        "recipientEmail": recipientEmail,
+        "recipientMessage": recipientMessage
+    }
+    localStorage['giftcardDetails'] = JSON.stringify(giftcardDetails);
+    if (localStorage.getItem("giftcardDetails") !== null && $(".giftcard-payment").length) {
+        var giftcardDetails = fetchLocalGiftCardData();
+        populateGiftcardDetails(giftcardDetails);
+    }
+    $(".giftcard-popup-wrapper").hide();
+}
+
 //populate year
 function populateYear() {
     var currentYear = new Date().getFullYear();

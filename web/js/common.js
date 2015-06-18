@@ -2,8 +2,9 @@
 //var baseURL = 'http://10.1.4.32:8083/api/',
 var baseURL = 'http://meisterdish.qburst.com/backend/api/',
     homeUrl = "http://meisterdish.qburst.com",
-//    homeUrl = "http://10.7.2.51:86",
+    //    homeUrl = "http://10.7.2.51:86",
     userDetails, currentPage = $("title").text(),
+    currentPageTitle,
     clicked = 0;
 //If already logged in
 var $userentry = $('.login-signup');
@@ -41,6 +42,10 @@ function getCurrentDateTime(days) {
     var currentdate = new Date();
     currentdate.setDate(currentdate.getDate() + days);
     return datetime = ('0' + (currentdate.getMonth() + 1)).slice(-2) + "-" + ('0' + currentdate.getDate()).slice(-2) + "-" + currentdate.getFullYear();
+}
+
+function getCurrentPageTitle() {
+    return $("title").text();
 }
 
 function getCurrentDateMonth(days) {
@@ -172,6 +177,11 @@ $(document).on('click', '#close', function() {
             window.location.href = 'menu.html';
         }
     }
+    if (getCurrentPageTitle() == 'Meisterdish - Gift Cards Payment') {
+        if ($(".redirectApproved").length) {
+            window.location.href = 'gift_cards_select.html';
+        }
+    }
 });
 
 //show Error popup
@@ -286,7 +296,7 @@ $("form").each(function() {
                 required: true,
                 minlength: 6
             },
-            message:{
+            message: {
                 required: true
             },
             password: {
@@ -379,7 +389,7 @@ $("form").each(function() {
                 required: true,
                 minlength: 2
             },
-            giftcardcustomamount:{
+            giftcardcustomamount: {
                 required: true,
                 minlength: 2,
                 minAmount: 25
@@ -424,16 +434,16 @@ $("form").each(function() {
                 minlength: "Password should be of minimum 6 characters.",
                 equalTo: "Password doesn't match."
             },
-            message:{
+            message: {
                 required: "Please enter a message",
             },
             confirmEmail: {
                 equalTo: "Email doesn't match.",
                 required: "Please provide email."
             },
-            giftcardcustomamount:{
+            giftcardcustomamount: {
                 required: "Please enter an amount.",
-                minAmount:"Enter a min amount of 25"
+                minAmount: "Enter a min amount of 25"
             },
             nameOnCard: "Enter valid name.",
             expiryMonth: "Enter exp month.",
@@ -465,9 +475,9 @@ if ($.validator) {
     $.validator.addMethod('youtube_url', function(value) {
         return value.match(/^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/);
     });
-    $.validator.addMethod('minAmount', function (value, el, param) {
-    return value >= param;
-});
+    $.validator.addMethod('minAmount', function(value, el, param) {
+        return value >= param;
+    });
 }
 
 //CartItemCount
