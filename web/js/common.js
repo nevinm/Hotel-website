@@ -320,10 +320,11 @@ $("form").each(function() {
                 equalTo: "#new-password"
             },
             zip: {
-                required: true,
-                number: true,
-                minlength: 4,
-                maxlength: 6
+                // required: true,
+                // number: true,
+                // minlength: 4,
+                // maxlength: 6,
+                zipcode:true
             },
             state: {
                 required: true
@@ -466,14 +467,17 @@ if ($.validator) {
         return value.match(/^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/);
     });
     $.validator.addMethod('minAmount', function (value, el, param) {
-    return value >= param;
-});
+        return value >= param;
+    });
+    $.validator.addMethod('zipcode', function(value) {
+        return value.match(/\d{5}-\d{4}$|^\d{5}$/);
+    });
+
 }
 
 //CartItemCount
 var CartItemCountCallback = {
     success: function(data, textStatus) {
-        var numOfItems = JSON.parse(data);
         if (numOfItems.status == 1) {
             $('span.count').text(numOfItems.count);
         } else {
