@@ -66,7 +66,7 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '#save-payment', function() {
-        var selectedId = $('input[type=radio][name=change-card]:checked').attr('id');
+        var selectedId = $('input[type=radio][name=change-card]:checked').attr('data-id');
         showSelectedPaymentMethod(selectedId);
         $('.address-payment-list-popup').hide();
     });
@@ -101,7 +101,8 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '#save-delivery-address', function() {
-        var selectedId = $('input[type=radio][name=address]:checked').attr('id');
+        var selectedId = $('input[type=radio][name=address]:checked').attr('data-id');
+        debugger;
         changeDeliveryAddress(selectedId);
         saveDeliveryTime("", selectedId);
     });
@@ -128,6 +129,8 @@ $(document).ready(function() {
         e.preventDefault();
     });
     $('#pickup-radio').on("click", function() {
+        $('.address-info-guest').show();
+        $('.address-info').hide();
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").attr("disabled", "disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").addClass("button-disabled");
         $('.pickup-content').show();
@@ -135,6 +138,14 @@ $(document).ready(function() {
         $(".city-selector-container").hide();
     })
     $('#delivery-radio').on("click", function() {
+        if ($('.address-info').is(':empty')) {
+             $('.address-info-guest').show();
+            $('.address-info').hide();
+        }else{
+            debugger;
+            $('.address-info').show();
+            $('.address-info-guest').hide();
+        }
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeAttr("disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeClass("button-disabled");
         $('.pickup-content').hide();
@@ -287,7 +298,7 @@ function populateCartItems(data) {
             "<div class='quantity-container'>" + "<span class='operator-minus' data-min='1'>" + '-' + "</span>" +
             "<input type='text' disabled='disabled' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
-            "<span class='price-container' data-tax='" + value.tax + "'>" + dollarConvert(value.price) + "</span>" +
+            "<span class='price-container' data-tax='" + value.tax + "' data-price='"+value.price+"'>" + dollarConvert(value.price+value.tax) + "</span>" +
             "<img src='../images/hamburger-menu-close.png' id='remove-cart-item'>" + "</div>");
     });
     updateReciept();
@@ -299,7 +310,7 @@ function updateReciept() {
         totalDeliveryCost = 2;
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
-        price = parseInt($(value).find('.price-container').text().slice(1));
+        price = parseInt($(value).find('.price-container').attr("data-price"));
         tax = parseInt($(value).find('.price-container').attr("data-tax"));
 
         totalItemCost += (price * quantity);
@@ -473,7 +484,7 @@ function populateCardDetails(cards, selectedId) {
             last_num = cards[key].number.slice(-4);
             if (selectedId == value.id) {
                 $('.saved-cards').append("<div class='saved-card-list'>" +
-                    "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
+                    "<input type='radio' class='checkbox-green added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
                     "' class='radio-button-payment'>" +
                     "<label for='" + value.id + "'>" +
                     "<img class='paypal' src='" + value.logo + "'>" +
@@ -487,7 +498,7 @@ function populateCardDetails(cards, selectedId) {
         $.each(cards, function(key, value) {
             last_num = cards[key].number.slice(-4);
             $('.saved-cards').append("<div class='saved-card-list'>" +
-                "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
+                "<input type='radio' class='checkbox-green added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
                 "' class='radio-button-payment'>" +
                 "<label for='" + value.id + "'>" +
                 "<img class='paypal' src='" + value.logo + "'>" +
@@ -613,7 +624,7 @@ function populateAddressListPopup() {
         getAddress("populateAddressToPopUp");
         $('.address-payment-list-popup').show();
     }
-    $('input[type=radio][name=address]').on("focus", function() {
+    $('input[type=radio][name=address]').on("click", function() {
         $('#save-delivery-address').removeClass('button-disabled');
     })
 
@@ -622,8 +633,8 @@ function populateAddressListPopup() {
 
 function appendAddresscontent(addressList) {
     $.each(addressList.address_list, function(key, value) {
-        $('.address-payment-list-popup .popup-container').append("<div class='address-container'>" + "<input type='radio' name='address' id='" + value.id + "' class='radio-button'>" +
-            "<label class='list-address' for='" + value.id + "'>" +
+        $('.address-payment-list-popup .popup-container').append("<div class='address-container'>" + "<input type='radio' name='address' id='"+value.id+1+"' data-id='" + value.id + "' class='checkbox-green radio-button'>" +
+            "<label class='list-address' for='"+value.id+1+"'>" +
             "<span>" + value.first_name + " " + value.last_name + "</span>" +
             "<span>" + value.building + "," + value.street + "</span>" +
             "<span>" + value.city + "," + value.state + " " + value.zip + "</span>" +
@@ -655,7 +666,7 @@ function setPrimaryAdd(selectedId) {
 }
 
 function changeDeliveryAddress(selectedId) {
-    var selectedAddress = $('.address-payment-list-popup .popup-container').find('#' + selectedId).parent().find('label'),
+    var selectedAddress = $('.address-payment-list-popup .popup-container').find("[data-id='"+selectedId+"']").parent().find('label'),
         htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
     $('.address-info .contents').html(htmlContent);
@@ -788,7 +799,7 @@ function createOrderParams() {
         $weekTimecontent = $(".week-content .time-content").find(".checkout-time-button-active"),
         saveParam = 0,
         payment_type = 0,
-        savedCardId = $('.saved-cards .added-card').attr('id'),
+        savedCardId = $('.saved-cards .added-card:checked').attr("id"),
         selected_day, selected_time, deliveryTime,
         card_number = $('#card-number').val(),
         cvv = $('#cvv-number').val(),
@@ -901,8 +912,8 @@ function populateCreditCardDetails() {
 
     $.each(cards, function(key, value) {
         $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>" +
-            "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' id='" + value.id + "'>" +
-            "<label>" + "<img class='paypal' src='" + value.logo + "'>" +
+            "<input type='radio' class='checkbox-green added-card pullLeft' name='change-card' class='radio-button-payment' data-id='"+value.id+"' id='" + value.id+1 + "'>" +
+            "<label for='"+value.id+1+"'>" + "<img class='paypal' src='" + value.logo + "'>" +
             "<span class='body-text-small'>" + value.type + " " +
             "ending in" + " " + last_num + "</span>" +
             "<span class='body-text-small'>" + "Expires on" +
@@ -913,7 +924,7 @@ function populateCreditCardDetails() {
         "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
     $('#save-payment').addClass('button-disabled');
     $('.address-payment-list-popup').show();
-    $('input[type=radio][name=change-card]').on("focus", function() {
+    $('input[type=radio][name=change-card]').on("click", function() {
         $('#save-payment').removeClass('button-disabled');
     })
 }

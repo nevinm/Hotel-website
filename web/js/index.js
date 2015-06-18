@@ -66,9 +66,9 @@ function destroyFullPageJS() {
 var locationCheckCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
-        if (userDetails.status == 1) {
+        if (userDetails.status) {
             showPopup(userDetails);
-        } else {}
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }

@@ -65,6 +65,7 @@ function autoPopulateAdressess(userDetails) {
             '<span class="address-street">' + value.street + ', ' + value.building + '</span>' +
             '<span class="address-city">' + value.city + ', ' + value.state + '</span>' +
             '<span class="address-mobile">' + value.phone + '</span>' +
+            '<span class="address-zip">' + value.zip + '</span>' +
             '<span class="green primary-address add-primary" data-id="' + value.id + '">PRIMARY ADDRESS</span>' +
             '<span class="non-primary-address add-primary" data-id="' + value.id + '">MAKE THIS YOUR PRIMARY ADDRESS</span>' +
             '</div></li>');
@@ -176,6 +177,8 @@ function editAddress(currentId, primaryAdd, selector) {
         userData = {};
     if (primaryAdd) {
         userData.is_primary = primaryAdd;
+    }else{
+        userData.is_primary =0;
     }
     // else{
     if (selector != "justId") {
