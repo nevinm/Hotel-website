@@ -1864,6 +1864,9 @@ img.accepted-cards
 		box-shadow:none;
 		border:none;
 	}
+	.pickup-content {
+		float: none;padding-bottom: 45px;
+	}
 }
   	@media (max-width:400px){
   		.address-content{
