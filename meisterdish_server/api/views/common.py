@@ -53,7 +53,7 @@ def login(request, data):
         if valid:
             if not user.is_active:
                 return json_response({"status":-1, "message":"The user is not active. Please activate the account using the link from verification email."})
-            log.info(user.email + "logged in")
+            log.info(user.email + " logged in")
             
                 
             user_dic = {"id":user.id,
@@ -78,6 +78,7 @@ def login(request, data):
                     log.error("No guest session found with guest user/no cart in guest session")
 
             else:
+                log.info("New session")
                 session = SessionStore()
             
             session["user"] = user_dic
