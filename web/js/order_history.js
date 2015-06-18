@@ -35,15 +35,15 @@
            deliveryAddress = value.delivery_address;
            meals = value.meals;
            $("#accordion ul").append("<li><div class='accordion-header'>" +
-               "<h4 style='float: left;padding-right: 116px;'>"+value.order_num+"</h4>" +
-               "<h4 class='status'>"+value.status+"</h4></div><div class='accordion-content body-text-small'>" +
+               "<h4 style='float: left;padding-right: 116px;'>" + value.order_num + "</h4>" +
+               "<h4 class='status'>" + value.status + "</h4></div><div class='accordion-content body-text-small'>" +
                "<div class='row'><div class='accordion-subcontent'>" +
                "<div class='order-head'>ORDER TOTAL</div>" +
                "<div class='order-content'>" + dollarConvert(value.grand_total) + "</div>" +
                "</div>" +
                "<div class='accordion-subcontent'>" +
                "<div class='order-head'>ORDER DATE</div>" +
-               "<div class='order-content'>"+value.delivery_time.substring(0,10)+"</div>" +
+               "<div class='order-content'>" + value.delivery_time.substring(0, 10) + "</div>" +
                "</div>" +
                "<div class='accordion-subcontent'>" +
                "<div class='order-head'>SHIPPING INFORMATION</div>" +
@@ -58,34 +58,34 @@
                "</div></div></div>" +
                "</li>");
 
-            if(value.status== "IN PROGRESS"){
-                $("h4.status:last").addClass("green");
-            }
-            if($.isEmptyObject(deliveryAddress)){
-              $(".delivery-address:last").text("PICKUP");
-            }
+           if (value.status == "IN PROGRESS") {
+               $("h4.status:last").addClass("green");
+           }
+           if (value.delivery_type == 'Pickup') {
+               $(".delivery-address:last").text("PICKUP");
+           }
            $.each(meals, function(key, meal) {
                $("#accordion .order-content:last").append("<span>" + meal.name + " x " + meal.quantity + "</span>");
            });
        });
-    $($(".accordion-header")[0]).trigger('click');
+       $($(".accordion-header")[0]).trigger('click');
    }
 
-function checkFromPaypal(){
-    currentUrl = window.location.href;
-    if(currentUrl.indexOf("message")!=-1){
-      var data={};
-      data.message = getParameterFromUrl("message");
-      showPopup(data);
-    }
-    else{}
-        getOrders();
-        CartItemCount();
-}
-function isOrder(){
-  if($('#accordion ul').is(':empty')){
-    $('#accordion .message').show();
-  }else{
-    $('#accordion .message').hide();
-  }
-}
+   function checkFromPaypal() {
+       currentUrl = window.location.href;
+       if (currentUrl.indexOf("message") != -1) {
+           var data = {};
+           data.message = getParameterFromUrl("message");
+           showPopup(data);
+       } else {}
+       getOrders();
+       CartItemCount();
+   }
+
+   function isOrder() {
+       if ($('#accordion ul').is(':empty')) {
+           $('#accordion .message').show();
+       } else {
+           $('#accordion .message').hide();
+       }
+   }
