@@ -58,7 +58,7 @@ function populateCardDetails(cards){
 	 $.each(cards, function(key, value) {
 	 	last_num = cards[key].number.slice(-4);
 		$('.card-list-container').append("<div class='saved-card-list'>" +
-			"<input type='radio' class=' payment-checked' name='saved-card' id='" + value.id +"'>" +
+			"<input type='radio' class='checkbox-green payment-checked' name='saved-card' id='" + value.id +"'>" +
 			"<label for='"+value.id+"'>"+
             "<img class='paypal' src='" + value.logo + "'>" +
 			"<div class='card-details-small'>" +

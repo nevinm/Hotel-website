@@ -1422,7 +1422,7 @@ form#guest-address-info #address-line-2-error{
 	line-height: 10px;
 }
 #manage-payment-method-container .paypal{
-	padding-left: 20px;
+	margin-left: 20px;
 }
 .addNewPaymentMethod{
 	font-family: 'BrandonGrotesque-bold';
@@ -1863,6 +1863,9 @@ img.accepted-cards
 		-webkit-box-shadow:none;
 		box-shadow:none;
 		border:none;
+	}
+	.pickup-content {
+		float: none;padding-bottom: 45px;
 	}
 }
   	@media (max-width:400px){

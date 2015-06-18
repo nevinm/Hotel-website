@@ -522,21 +522,21 @@ input[type='radio']:checked:before {
  background-color: #A9D77B;;
 }*/
 
-input[type=radio]{
+.checkbox-green{
   display:none;
 }
 
-input[type=radio] + label{
+.checkbox-green + label{
     cursor:pointer;
 }
 
-input[type=radio] + label{ 
+.checkbox-green + label{ 
     display: inline-block;
     cursor: pointer;
     position: relative;
     padding-left: 25px;
 }
-input[type=radio] + label:before{
+.checkbox-green + label:before{
     content: "";
     display: inline-block;
     width: 16px;
@@ -549,7 +549,7 @@ input[type=radio] + label:before{
     border-radius: 50%;
     border: 1px solid #9b9b9b;
 }
-input[type=radio]:checked + label:before {
+.checkbox-green:checked + label:before {
     content: "\2022";
     color: #A9D77B;
     font-size: 40px;
