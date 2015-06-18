@@ -616,7 +616,7 @@ function populateAddressListPopup() {
     $('.address-payment-list-popup .button').remove();
     $('#save-delivery-address').addClass('button-disabled');
     var checkLocal = JSON.parse(localStorage['delivery_addressess']).address_list.length;
-    if (checkLocal) {
+    if (checkLocal!=0 && checkLocal!=undefined) {
         addressList = JSON.parse(localStorage['delivery_addressess']);
         appendAddresscontent(addressList);
         $('.address-payment-list-popup').show();
