@@ -127,7 +127,7 @@ def update_cart(request, data, user):
         cart_item.save()
 
         cart_list = []
-        items _count = 0
+        items_count = 0
         for cart_item in CartItem.objects.filter(cart__user=user, cart__completed=False):
               cart_list.append(
               {
