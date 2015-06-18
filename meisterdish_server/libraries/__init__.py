@@ -91,11 +91,16 @@ def get_request_user(request):
       user = None
   return user
 
-def create_guest_user(request):
+def create_guest_user(request, details=None):
   try:
     user = User()
     user.role = Role.objects.get(pk=settings.ROLE_GUEST)
     user.is_active = True
+    if details:
+        user.first_name = details["guest_first_name"].strip()
+        user.last_name = details["guest_last_name"].strip()
+        user.email = details["guest_email"].strip()
+        user.zip = details["guest_zip"].strip()
     user.save()
 
     if user.id:

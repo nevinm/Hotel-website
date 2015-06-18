@@ -557,12 +557,15 @@ input[type='radio']:checked:before {
     text-align: center;
 }
 
-/*@-moz-document url-prefix() {
- .checkbox-green+label:before {
-    font-size: 29px;
-    line-height: 18px;
+@-moz-document url-prefix() {
+ .checkbox-green:checked+label:before {
+    font-size: 29px !important;
+    line-height: 19px !important;
     }
-}*/
+    .select-delivery-method .checkbox-green:checked+label:before {
+        line-height: 11px !important;
+    }
+}
 
 /*==============================*\
             &HEADER
