@@ -11,9 +11,9 @@ $(document).ready(function() {
     })
 
     $(document).on('click', '.add-review', function(){
-        var currentMealReview = $(this).parents().eq(2),
+        var currentMealReview = $(this).parents().eq(1),
         reviewValue = $(currentMealReview).find(".user-reviews").val(),
-        starRating = $(".meal-star-rating").data("rating"),
+        starRating = $(currentMealReview).find('.meal-star-rating').data("rating"),
         orderId = $(this).data("orderId");
         mealId = $(this).data("mealId");
         addReviews(reviewValue, starRating , orderId, mealId);
@@ -93,7 +93,7 @@ function populateReviews(userDetails) {
             "</div><div class='meal-review-textarea meal-review-cell'>" +
             "<textarea maxlength='250' class='user-reviews' placeholder='Leave a reivew (Optional) '>"+value.review+"</textarea>" +
             "</div><div class='meal-review-submit meal-review-cell'>" +
-            "<a href='#' class='btn btn-medium-primary medium-green add-review' id='add-review' dddata-meal-id='"+value.meal_id+"'"+
+            "<a href='#' class='btn btn-medium-primary medium-green add-review' id='add-review' data-meal-id='"+value.meal_id+"'"+
             "data-order-id='"+value.order_id+"' >Submit</a></div></div>");
 
         var reviewMeal = $(".meal-review-container").find(".meal-reviews:last"),

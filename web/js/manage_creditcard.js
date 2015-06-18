@@ -14,7 +14,7 @@ $(document).ready(function() {
         });
     })
     $(document).on('click', 'img.paypal,.card-details-small', function() {
-        var card_id = $(this).parent().find('input[type=radio]').attr('id');
+        var card_id = $(this).closest('.saved-card-list').find('input[type=radio]').attr('id');
         window.location = "add_creditcard.html"+"?cardId="+card_id;
     });
 });
