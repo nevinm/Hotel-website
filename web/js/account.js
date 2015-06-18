@@ -55,10 +55,15 @@ $(document).ready(function() {
     var editContactCallback = {
         success: function(data, textStatus) {
             userDetails = JSON.parse(data);
-            showPopup(userDetails);
-            newName = $("#change-contact").find("input[name=firstname]").val();
-            $('#navbar-username a').text(newName);
-            localStorage['username'] = newName;
+            if (userDetails.status ==1) {
+                showPopup(userDetails);
+                newName = $("#change-contact").find("input[name=firstname]").val();
+                $('#navbar-username a').text(newName);
+                localStorage['username'] = newName;  
+            }else{
+                showPopup(userDetails);
+            }
+  
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
@@ -77,14 +82,19 @@ $(document).ready(function() {
             last_name = $changeContactForm.find("input[name=lastname]").val(),
             mobile_number = $changeContactForm.find("input[name=phonenumber]").val(),
             remember = 1,
+            isSendSms = 0;
+            if($('input[name=notification]').prop('checked')){
+                isSendSms=1;
+            }
             header = {
                 "session-key": localStorage["session_key"]
-            },
+            }
             userData = {
                 "first_name": first_name,
                 "last_name": last_name,
-                "mobile": mobile_number
-            },
+                "mobile": mobile_number,
+                "sms_notification" : isSendSms
+            };
             data = JSON.stringify(userData);
         var changeContactInstance = new AjaxHttpSender();
         changeContactInstance.sendPost(url, header, data, editContactCallback);
