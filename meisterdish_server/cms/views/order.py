@@ -5,7 +5,7 @@ import settings
 from cms.views.decorators import *
 from datetime import datetime
 from django.core.paginator import Paginator
-from libraries import mail, check_delivery_area, validate_phone, validate_email, create_address_text_from_model, export_csv
+from libraries import mail, mail_order_confirmation, check_delivery_area, validate_phone, validate_email, create_address_text_from_model, export_csv
 from django.db.models import Q
 from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
@@ -284,7 +284,7 @@ def send_order_confirmation_notification(order):
                "delivery_hr": str(order.delivery_time.hour) + "-" + str(order.delivery_time.hour +1)+"PM",
                "referral_code":order.cart.user.referral_code,
                "referral_bonus":Configuration.objects.get(key="REFERRAL_BONUS").value,
-               "cart_items":order.cart.cartitems.all(),
+               "cart_items":order.cart.cartitem_set.all(),
                }
                if order.deliy_type == "pickup":
                   dic["delivery_name"] = order.delivery_address.first_name.title() + " "+order.delivery_address.last_name.title()
@@ -294,7 +294,7 @@ def send_order_confirmation_notification(order):
         msg = render_to_string('order_confirmation_email_template.html', dic)
         sub = 'Your order at Meisterdish is confirmed '
         
-        mail([to_email], sub, msg )
+        mail_order_confirmation([to_email], sub, msg, order)
 
         if user.need_sms_notification:
             if not send_sms_notification(dic):
