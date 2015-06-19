@@ -10,7 +10,7 @@ from libraries import get_request_user, create_guest_user, validate_zipcode
 log = logging.getLogger('cart')
 
 @check_input('POST')
-def get_cart_items(request, data, user = None):
+def get_cart_items(request, data, user):
     try:
       cart_list = []
       items_count = 0
@@ -177,7 +177,7 @@ def delete_cart(request, data, user):
         return custom_error("Failed to clear cart. Please try again later.")
 
 @check_input('POST')
-def get_cart_items_count(request, data, user):
+def get_cart_items_count(request, data, user  = None):
     try:
       count = 0
       items = CartItem.objects.filter(cart__user=user, cart__completed=False)
