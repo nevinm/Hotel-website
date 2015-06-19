@@ -1199,6 +1199,9 @@ span.icon-menu {
         border: none;
         overflow-x: hidden;
     }
+    div.delivery-main-wrapper{
+        overflow-x: visible !important;
+    }
     header#header {
         opacity: 1;
         background-color: #fff;
