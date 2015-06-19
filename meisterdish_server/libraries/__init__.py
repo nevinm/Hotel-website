@@ -35,7 +35,7 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
               }):
     msg = EmailMessage(subject, message, sender, to_list, headers=headers)
     msg.content_subtype = "html"
-    
+    log.info(settings.STATIC_ROOT)
     share_images = {
       "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
       "share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
