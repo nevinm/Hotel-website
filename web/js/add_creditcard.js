@@ -102,7 +102,9 @@ function populateCardDetails(cardDetails) {
     $('#card-number-error').hide();
     $('#card-number').removeClass('error');
     $('#card-number').addClass('button-disabled');
-    // $('#cvv-number').prop('readonly',true);
+    $('#cvv-number').addClass('button-disabled');
+    $('#cvv-number').val('****');
+    $('#cvv-number').prop('readonly', true);
     $('#ExpMonth  option[value="' + exp_month + '"]').prop('selected', true);
     $('#ExpYear option[value="' + exp_year + '"]').prop('selected', true);
 }
