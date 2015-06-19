@@ -142,7 +142,7 @@ def get_orders(request, data, user):
             order_list.append({
                 "id":order.id,
                 "grand_total" : order.grand_total,
-                "user_first_name" : order.cart.user.first_name  if order.cart.user.first_name.strip() == '' and order.cart.user.last_name.strip() == '' else 'Guest('+order.email+')',
+                "user_first_name" : order.cart.user.first_name  if order.cart.user.first_name.strip() == '' and order.cart.user.last_name.strip() == '' else 'Guest('+ str(order.email)+')',
                 "user_last_name" : order.cart.user.last_name,
                 "status":dict(settings.ORDER_STATUS)[order.status],
                 "status_id" : order.status,
