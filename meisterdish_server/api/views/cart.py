@@ -10,7 +10,7 @@ from libraries import get_request_user, create_guest_user, validate_zipcode
 log = logging.getLogger('cart')
 
 @check_input('POST')
-def get_cart_items(request, data, user):
+def get_cart_items(request, data, user = None):
     try:
       cart_list = []
       items_count = 0
