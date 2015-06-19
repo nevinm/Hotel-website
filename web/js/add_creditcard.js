@@ -21,6 +21,9 @@ function checkIfEdit() {
         savedCardDetails(card_id);      
         $("#update-credit-card").addClass('show');
         $("#add-credit-card").hide();
+        $("#pay-form").validate({
+            ignore: ".ignore"
+        });
         return card_id;
     }else{
         $("#update-credit-card").hide();
@@ -98,6 +101,7 @@ function populateCardDetails(cardDetails) {
     $('#card-number').prop('readonly', true);
     $('#card-number-error').hide();
     $('#card-number').removeClass('error');
+    $('#card-number').addClass('button-disabled');
     // $('#cvv-number').prop('readonly',true);
     $('#ExpMonth  option[value="' + exp_month + '"]').prop('selected', true);
     $('#ExpYear option[value="' + exp_year + '"]').prop('selected', true);

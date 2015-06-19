@@ -1165,6 +1165,9 @@ textarea#driver-description {
 #name-on-card-error{
 	bottom: 53px;
 }
+#add-payment-method-container #name-on-card-error{
+	bottom: 36px;
+}
 ::-webkit-input-placeholder { 
 	color:#b0b0b0;
 	font-size: 10px; 
