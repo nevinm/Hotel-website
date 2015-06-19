@@ -59,6 +59,7 @@
 }
 .mobile-logout{
 	display: none;
+	cursor: pointer;
 }
 .admin-button{
 	display: none;
@@ -106,13 +107,16 @@ ul.accordion-content li {
 .accordion-header h4{
 	font-family: 'BrandonGrotesque-bold';
 	font-weight: normal;
-	min-width: 400px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	width: 200px;
+	max-width:210px; 
 }
 .accordion-header h4:nth-child(2){
 	font-family: 'BrandonGrotesque-Light';
 	font-weight: normal;
+	padding-left: 10px;
+	text-transform: uppercase;
 }
 .accordion-content{
 	display: none;
@@ -1904,6 +1908,25 @@ img.accepted-cards
   		}
   		.order-list-items input{
   			width: 24px;
+  		}
+  		.accepted-cards{
+  			width: 30px;
+  		}
+  		.paypal{
+  			width: 35px;
+  		}
+  		.payment-method-container .contents{
+  			padding: 20px 12px;
+  		}
+	}
+	@media (max-width:500px){
+		.accordion-header h4{
+  			width: 100%;
+  			padding-right: 0px !important;
+  			float: none !important;
+  		}
+  		.accordion-header h4:nth-child(2){
+  			padding-left: 0px;
   		}
 	}
 	@media (max-width: 1177px){
