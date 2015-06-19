@@ -106,6 +106,18 @@
         font-size: 45px;
     }
 }
+@media (min-width: 768px)and (max-width: 1024px) {
+    #privacy-wrapper:after{
+        height: 0px;
+    }
+    .privacy-terms-container .button-container a:first-of-type {
+        margin-right: 0px;
+    }
+    .privacy-terms-container .button-container a {
+        max-width: 400px;
+        width: 100%;
+    }
+}
 
 @media (min-width: 320px)and (max-width: 767px) {
     #privacy-wrapper {
@@ -113,5 +125,15 @@
         background-image: none;
         border: none;
         overflow-x: hidden;
+    }
+    .privacy-terms-container .button-container a {
+        max-width: 400px;
+        width: 100%;
+    }
+    .privacy-terms-container .button-container a:first-of-type {
+        margin-right: 0px;
+    }
+    #privacy-wrapper:after{
+        height: 0px;
     }
 }
