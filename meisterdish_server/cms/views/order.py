@@ -265,7 +265,7 @@ def send_order_confirmation_notification(order):
                "total_amount":order.total_amount,
                "discount" : order.discount,
                "tax" : order.total_tax,
-               "shipping" : settings.
+               "shipping" : settings.SHIPPING_CHARGE,
                "grand_total":order.grand_total,
                "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
                "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
