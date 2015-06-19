@@ -59,7 +59,7 @@ def update_order(request, data, user, order_id):
                     log.error("Failed to send order complete notification")
 
         return json_response({"status":1, "message":"The order has been updated", "id":str(order_id)+"."})
-    except Exception as e:
+    except IOError as e:
         log.error("Update order status : " + e.message)
         return custom_error("Failed to update the order.")
 
