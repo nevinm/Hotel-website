@@ -1880,6 +1880,9 @@ img.accepted-cards
 	.pickup-content {
 		float: none;padding-bottom: 45px;
 	}
+	.address-payment-list-popup .header{
+		letter-spacing: .2px;
+	}
 }
   	@media (max-width:400px){
   		.address-content{
@@ -1921,6 +1924,7 @@ img.accepted-cards
   		.payment-method-container .contents{
   			padding: 20px 12px;
   		}
+
 	}
 	@media (max-width:500px){
 		.accordion-header h4{
@@ -1930,6 +1934,21 @@ img.accepted-cards
   		}
   		.accordion-header h4:nth-child(2){
   			padding-left: 0px;
+  		}
+  		.address-payment-list-popup .header{
+			font-size: 14px;
+			letter-spacing: 0.2px;
+  		}
+  		.address-payment-list-popup .popup{
+  			width: 90%;
+  			margin-left: -45%;
+  		}
+  		.address-payment-list-popup .button{
+  			padding-left: 0;
+  		}
+  		#save-payment,#save-delivery-address,#cancel{
+			line-height: 35px;
+			min-width: 90px;
   		}
 	}
 	@media (max-width: 1177px){
