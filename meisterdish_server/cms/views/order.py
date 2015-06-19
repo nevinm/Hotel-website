@@ -255,7 +255,7 @@ def send_order_confirmation_notification(order):
     try:
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
         user = order.cart.user
-        to_email = order.delivery_address.email if order.delivery_address else order.email
+        to_email = order.order.email
         day = order.delivery_time.day
         if 4 <= day <= 20 or 24 <= day <= 30:
             suffix = "th"
