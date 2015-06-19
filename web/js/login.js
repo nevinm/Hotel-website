@@ -1,6 +1,8 @@
 function loggingIn() {
     var url = baseURL + "login/",
-        header = {};
+        header = {
+            "session-key": localStorage["session_key"]
+        };
     var username = $("#username").val(),
         password = $("#password").val(),
         remember = 1,
@@ -24,9 +26,7 @@ var loginCallback = {
             $("#login-form")[0].reset();
             var user_name = userDetails.user.first_name;
             localStorage['username'] = user_name;
-            if (localStorage.getItem("session_key") === null) {
-                localStorage['session_key'] = userDetails.session_key;
-            }
+            localStorage['session_key'] = userDetails.session_key;
             localStorage['loggedIn'] = true;
             checkLoggedIn();
             checkReferredPage();
@@ -47,9 +47,8 @@ function checkReferredPage() {
         window.location.href = 'checkout.html'
     } else if (referredPage == "giftcard_payment") {
         window.location.href = 'giftcard_payment.html'
-    }
-    else{
-     window.location.href='menu.html' 
+    } else {
+        window.location.href = 'menu.html'
     }
 }
 

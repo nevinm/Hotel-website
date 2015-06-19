@@ -3,7 +3,6 @@
 //      path: 'jquery.clipboard.swf',
 //      copy: function() {
 //          alert("Text copied.");
-//          debugger;
 //          return $("div#some-content").text();
 //      }    
 //  });
