@@ -256,16 +256,23 @@ def send_order_confirmation_notification(order):
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
         user = order.cart.user
         to_email = order.delivery_address.email if order.delivery_address else order.email
+        day = order.delivery_time.day
+        if 4 <= day <= 20 or 24 <= day <= 30:
+            suffix = "th"
+        else:
+            suffix = ["st", "nd", "rd"][day % 10 - 1]
         dic = {
                "order_num" : order.order_num,
                "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
                "transaction_id" : order.payment.transaction_id if order.payment else "Not Available",
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
+               "delivery_time" : order.delivery_time.strftime("%A, %B %d"+suffix+", %Y"),
                "total_amount":order.total_amount,
                "discount" : order.discount,
                "tax" : order.total_tax,
                "shipping" : settings.SHIPPING_CHARGE,
+               "tip":order.tip,
                "grand_total":order.grand_total,
                "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
                "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
@@ -274,7 +281,15 @@ def send_order_confirmation_notification(order):
                "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id),
                "to_email":to_email,
                "site_url":settings.SITE_URL,
+               "delivery_hr": str(order.delivery_time.hour) + "-" + str(order.delivery_time.hour +1)+"PM",
+               "referral_code":order.cart.user.referral_code,
+               "referral_bonus":Configuration.objects.get(key="REFERRAL_BONUS").value,
+               "cart_items":order.cart.cartitems.all(),
                }
+               if order.deliy_type == "pickup":
+                  dic["delivery_name"] = order.delivery_address.first_name.title() + " "+order.delivery_address.last_name.title()
+                  dic["delivery_add1"] = order.delivery_address.building + ", "+order.delivery_address.street
+                  dic["delivery_add2"] = order.delivery_address.city.name + " "+ order.delivery_address.city.state.name + order.delivery_address.zip
         
         msg = render_to_string('order_confirmation_email_template.html', dic)
         sub = 'Your order at Meisterdish is confirmed '
