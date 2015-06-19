@@ -634,8 +634,9 @@ function populateAddressListPopup() {
 }
 
 function appendAddresscontent(addressList) {
+    $('.address-payment-list-popup .popup-container').append("<div class='delivery-adress-wrapper'>"+"</div>");
     $.each(addressList.address_list, function(key, value) {
-        $('.address-payment-list-popup .popup-container').append("<div class='address-container'>" + "<input type='radio' name='address' id='"+value.id+1+"' data-id='" + value.id + "' class='checkbox-green radio-button'>" +
+        $('.address-payment-list-popup .popup-container .delivery-adress-wrapper').append("<div class='address-container'>" + "<input type='radio' name='address' id='"+value.id+1+"' data-id='" + value.id + "' class='checkbox-green radio-button'>" +
             "<label class='list-address' for='"+value.id+1+"'>" +
             "<span>" + value.first_name + " " + value.last_name + "</span>" +
             "<span>" + value.building + "," + value.street + "</span>" +
