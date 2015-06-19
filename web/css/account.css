@@ -980,12 +980,12 @@ form.addaddress-popup {
 .change-address-payment{
 	font-family: 'BrandonGrotesque-Regular';
 	font-size: 12px;
- 	padding-top: 20px; 
+ 	margin-top: 20px; 
 	float: left;
 	position: absolute;
 	bottom: 0;
 	left: 30px;
-	padding-bottom: 20px;
+	margin-bottom: 20px;
 	color: #9B9B9B;
 }
 .payment-method-container{
@@ -1553,6 +1553,9 @@ img.accepted-cards
 	}
 }
 @media (min-width: 768px)and (max-width:1024px){
+	.payment-popup-sub-container{
+		width: 100%;
+	}
 	.sub-content1 {
 		float: left;
 		margin-right: 3%;
@@ -1599,6 +1602,9 @@ img.accepted-cards
 			&MOBILE
 \*==================================*/
 @media (min-width: 320px)and (max-width:767px){
+	.payment-popup-sub-container{
+		width: 100%;
+	}
 	span.icon-menu{
 		display: none;
 	}
@@ -1857,7 +1863,7 @@ img.accepted-cards
 		display: none;
 	}
 	.accepted-cards{
-		width: 40px;
+		width: 14%;
 	}
 	.meal-reviews .meal-image{
 		width: 100%;
@@ -1908,9 +1914,6 @@ img.accepted-cards
   		}
   		.order-list-items input{
   			width: 24px;
-  		}
-  		.accepted-cards{
-  			width: 30px;
   		}
   		.paypal{
   			width: 35px;
