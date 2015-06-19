@@ -14,6 +14,7 @@ $(document).ready(function() {
         $('.address-info-guest').show();
         $('.address-info').hide();
         $('.payment-method-guest-container').show();
+        $('.payment-info .checkout-header span').css('padding-left','35px');
         $(".emtpy-cart-message").text("There are no items in cart.");
         $(".emtpy-cart-message").show();
     }
@@ -459,6 +460,7 @@ var savedCardDetailsCallback = {
                 $('.payment-method-guest-container').hide();
             } else {
                 $('.payment-method-guest-container').show();
+                $('.payment-info .checkout-header span').css('padding-left','35px');
             }
         } else {
             showPopup(cardDetails);

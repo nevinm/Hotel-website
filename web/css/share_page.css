@@ -3,6 +3,9 @@
 	margin-top: 100px;
 	height: 350px;
 	position: relative;
+	background-image: url(../images/share_banner.jpg);
+	background-size: cover;
+	background-position: 50%;
 }
 .logo-banner {
 	position: absolute;

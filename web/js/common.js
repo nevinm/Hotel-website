@@ -210,7 +210,7 @@ function showErrorPopup(data) {
 }
 $(document).ready(function() {
     //Logout process
-    $("#logout").on('click', function() {
+    $("#logout,.mobile-logout").on('click', function() {
         logingOut();
     });
 
