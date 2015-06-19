@@ -30,6 +30,10 @@ $(document).ready(function() {
             }
     });
 
+    $('#resetpassword-button').on('submit',function(e){
+        e.preventDefault();
+    });
+
     function resetingPassword (password,token) {
         var url = baseURL+'reset_password/';
         header = {};
