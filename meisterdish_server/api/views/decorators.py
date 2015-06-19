@@ -19,7 +19,6 @@ def check_input(method):
                                              'forgot_password', 
                                              'logout', 
                                              'reset_password', 
-                                             'get_cart_items_count',
                                              'verify_user', 
                                              'verify_email',
                                              'get_meals',
@@ -29,6 +28,7 @@ def check_input(method):
                                              "check_delivery",
                                              "gift_card_order",
                                              "referral_return",
+                                             "get_cart_items_count",
                                              ]:
 
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
@@ -37,10 +37,10 @@ def check_input(method):
                             try:
                                 query = Q(pk=session['user']['id']) & (Q(role__pk=settings.ROLE_USER) | Q(role__pk=settings.ROLE_GUEST))
                                 user = User.objects.get(query)
+                                return func(request, req, user, *args, **kwargs)
                             except Exception as e:
                                 log.error("No user in session !!" + str(session['user']['id']))
                                 return custom_error("This user is no more available. Please login again.", -2)
-                            return func(request, req, user, *args, **kwargs)
                         else:
                             message = 'The session is invalid. Please login again.'
                             log.error('API : '+func.__name__+', Invalid session:Rejected')
