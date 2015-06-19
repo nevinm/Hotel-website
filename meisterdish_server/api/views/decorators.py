@@ -19,6 +19,7 @@ def check_input(method):
                                              'forgot_password', 
                                              'logout', 
                                              'reset_password', 
+                                             'get_cart_items_count',
                                              'verify_user', 
                                              'verify_email',
                                              'get_meals',
