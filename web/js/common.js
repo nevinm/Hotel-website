@@ -170,7 +170,18 @@ function showPopup(data) {
     var message = data.message;
     $('.popup-container .content span').text(message);
     $('.popup-wrapper').show();
+    if (data.status == -2) {
+        $("#close").addClass("session-expire-close");
+    }
 }
+
+//SHOW POPUP
+function showSessionExpire(data) {
+    var message = data.message;
+    $('.popup-container .content span').text(message);
+    $('.sessionexpire-wrapper').show();
+}
+
 $(document).on('click', '#close', function() {
     $('.popup-wrapper').hide();
     if (currentPage == "Meisterdish - Signup" || currentPage == "Meisterdish - Login") {
@@ -182,6 +193,9 @@ $(document).on('click', '#close', function() {
         if ($(".redirectApproved").length) {
             window.location.href = 'gift_cards_select.html';
         }
+    }
+    if ($(this).hasClass("session-expire-close")) {
+        logingOut();
     }
 });
 
@@ -335,7 +349,7 @@ $("form").each(function() {
                 // number: true,
                 // minlength: 4,
                 // maxlength: 6,
-                zipcode:true
+                zipcode: true
             },
             state: {
                 required: true
@@ -477,7 +491,7 @@ if ($.validator) {
     $.validator.addMethod('youtube_url', function(value) {
         return value.match(/^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/);
     });
-    $.validator.addMethod('minAmount', function (value, el, param) {
+    $.validator.addMethod('minAmount', function(value, el, param) {
         return value >= param;
     });
     $.validator.addMethod('zipcode', function(value) {
