@@ -301,6 +301,7 @@ def send_order_confirmation_notification(order):
             log.error("Failed to send order confirmation mail to "+to_email)
 
         if user.need_sms_notification:
+            log.info("Herejhgjh")
             if not send_sms_notification(dic):
                 return False
         return True
