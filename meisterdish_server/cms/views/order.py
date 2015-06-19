@@ -286,10 +286,10 @@ def send_order_confirmation_notification(order):
                "referral_bonus":Configuration.objects.get(key="REFERRAL_BONUS").value,
                "cart_items":order.cart.cartitem_set.all(),
                }
-               if order.deliy_type == "pickup":
-                  dic["delivery_name"] = order.delivery_address.first_name.title() + " "+order.delivery_address.last_name.title()
-                  dic["delivery_add1"] = order.delivery_address.building + ", "+order.delivery_address.street
-                  dic["delivery_add2"] = order.delivery_address.city.name + " "+ order.delivery_address.city.state.name + order.delivery_address.zip
+        if order.deliy_type == "pickup":
+            dic["delivery_name"] = order.delivery_address.first_name.title() + " "+order.delivery_address.last_name.title()
+            dic["delivery_add1"] = order.delivery_address.building + ", "+order.delivery_address.street
+            dic["delivery_add2"] = order.delivery_address.city.name + " "+ order.delivery_address.city.state.name + order.delivery_address.zip
         
         msg = render_to_string('order_confirmation_email_template.html', dic)
         sub = 'Your order at Meisterdish is confirmed '
