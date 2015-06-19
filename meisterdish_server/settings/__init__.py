@@ -264,7 +264,7 @@ DEFAULT_PRE_REQ_IMAGE  = STATIC_URL + "default/pre_requisites_default.png"
 ORDER_DELIVERY_WINDOW = 3 #Hours
 SHIPPING_CHARGE = 2 # in $
 PER_PAGE = 10
-SESSION_EXPIRY = 1 * 60 # 5 mins
+SESSION_EXPIRY = 5 * 60 # 5 mins
 
 CACHES = {
     'default': {
