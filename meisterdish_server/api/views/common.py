@@ -73,6 +73,9 @@ def login(request, data):
                     cart.user = user
                     cart.save()
                     guest_user.delete()
+                    session.delete()
+                    session = SessionStore()
+                    session.create()
                     log.info("User Logged in to guest session. cart updated")
                 except:
                     log.error("No guest session found with guest user/no cart in guest session")
@@ -80,6 +83,7 @@ def login(request, data):
             else:
                 log.info("New session")
                 session = SessionStore()
+                session.create()
             
             session["user"] = user_dic
             if str(remember) == "1":
@@ -188,6 +192,7 @@ def signup(request, data):
                     return custom_error("Invalid session.")
             else:
                 session = SessionStore()
+                session.create()
                 
             session["user"] = user_dic
             session.set_expiry = settings.SESSION_EXPIRY
