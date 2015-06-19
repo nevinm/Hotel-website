@@ -159,7 +159,9 @@ function logingOut() {
     $(".logout").addClass('hide');
     if (currentPage == "Meisterdish - Admin") {
         window.location.href = '../../index.html';
-    } else {
+    } 
+    if(currentPage == "Meisterdish Home Page"){}
+    else {
         window.location.href = '../index.html';
     }
 }
