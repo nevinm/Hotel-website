@@ -162,7 +162,6 @@ function tabRendering() {
         }
     });
 	$('.ui-tabs-anchor').keydown(function (event) {
-		// debugger;
 		// return false;
 	});
 

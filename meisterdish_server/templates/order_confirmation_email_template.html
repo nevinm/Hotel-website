@@ -1,34 +1,239 @@
-<html>
-    <body>
-        <p>Hi {{first_name}},</p>
-        <p>Your {%if delivery_type == "pickup"%} pickup order {% else %} delivery {%endif%} ({{order_num}}) from Meisterdish is confirmed.</p>
-        <p>Check your meal's All You Need page to get ready to cook.</p>
-{% if False %}
-        <p>Your order:</p><br />
-        <div>
-            {% for meal in meals%}
-                <div style="width:100%;">
-                    <div style="float:left;">
-                        <img src="{{meal.main_image.image.url}}" height="100px;" width="100px;" />
-                    </div>
-                    <div style="float:left;">
-                        {{meal.name}}
-                    </div>
-                    <div style="float:left;">
-                        $ {{meal.grand_total}}
-                    </div>
-                </div>
-            {% endfor %}
-        
-        </div>
-        
-        <p>The meals will be delivered to you shortly.</p> 
-        <p>You can give the review for meals using <a href="{{review_link}}">this link.</p>
-{%endif%}
-        <br />
-        --
-        <br />
-        Meisterdish
-        <br />
-    </body> 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Meisterdish - Email Template</title>
+</head>
+
+<body style="margin: 0; font-family: sans-serif; padding: 0;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="800" style="border-collapse: collapse;margin-top:30px;box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);margin-bottom: 30px;">
+        <tr>
+            <td>
+                <table align="center" width="100%" style='background-color: whitesmoke;'>
+                    <tr>
+                        <td align="center" style="padding: 30px 0 0 0;">
+                            <img src="cid:meisterdish_logo" width="262px" height="30" style="display: block; padding-bottom : 20px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="padding-top: 15px;">
+                            <h3>Thanks, {{first_name|title}}! We've confirmed your order.</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="padding: 10px 0 5px 0;" ;>
+                            <h4 style='margin: 0'>ORDER NO:{{order_num|upper}}</h4>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style='box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);'>
+                    <tr>
+                        <td>
+                            <table align="center" border="0" bordercolor="#9B9B9B" cellpadding="0" cellspacing="0" width="55%" style="border-collapse: collapse;margin-top:30px;float:left">
+                                <tr>
+                                    <td>
+                                        <table style='padding-left: 40px;'>
+                                            <tr>
+                                                <td>
+                                                <h4>
+                                                    {% if delivery_type == "pickup" %}
+                                                        DELIVER ADDRESS
+                                                    {% else %}
+                                                        PICKUP ADDRESS
+                                                    {% endif %}
+                                                </h4>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span style='color:#6B6B6B;'>
+                                                     {% if delivery_type == "pickup" %}
+                                                        Meisterdish
+                                                    {% else %}
+                                                        {{delivery_name}}
+                                                    {% endif %}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span style='color:#6B6B6B;'>
+                                                    {% if delivery_type == "pickup" %}
+                                                        218 EAST 81st 
+                                                    {% else %}
+                                                        {{delivery_add1}}
+                                                    {% endif %},
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span style='color:#6B6B6B;'>
+                                                    {% if delivery_type == "pickup" %}
+                                                        ST 10028
+                                                    {% else %}
+                                                        {{delivery_add2}}
+                                                    {% endif %}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table style='padding-left: 40px;'>
+                                            <tr>
+                                                <td>
+                                                    <h4>{{delivery_time}}.</h4></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span style='color: #6B6B6B;'>Deliver between {{delivery_hr}}.</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table align="center" border="1" bordercolor='#9B9B9B' cellpadding="0" cellspacing="0" width="35%" style="border-collapse: collapse;margin-top:30px;float:left;border: solid 1px #9B9B9B;">
+                                <tr>
+                                    <td>
+                                        <table width="100%" style='color: #6B6B6B'>
+                                            <tr>
+                                                <th style='font-weight: normal;padding-top: 20px;'>
+                                                    <span>Subtotal</span>
+                                                </th>
+                                                <th style='font-weight: normal;padding-top: 20px;'>
+                                                    </span>${{total_amount}}</span>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th style='font-weight: normal;'>
+                                                    </span>Discounts</span>
+                                                </th>
+                                                <th style='font-weight: normal;'>
+                                                    </span>-${{dicount}}</span>
+                                                </th>
+                                            </tr>
+                                            {% if delivery_type != "pickup" %}
+                                            <tr>
+                                                <th style='font-weight: normal;'>
+                                                    <span>Delivery</span>
+                                                </th>
+                                                <th style='font-weight: normal;'>
+                                                    <span>${{shipping}}</span>
+                                                </th>
+                                            </tr>
+                                            {% endif %}
+                                            <tr>
+                                                <th style='font-weight: normal;'>
+                                                    <span>Tax</span>
+                                                </th>
+                                                <th style='font-weight: normal;'>
+                                                    <span>${{tax}}</span>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th style='font-weight: normal;'>
+                                                    <span>Tip</span>
+                                                </th>
+                                                <th style='font-weight: normal;'>
+                                                    <span>${{tip}}}</span>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th style='font-weight: normal;color: #000'>
+                                                    <h4>Total</h4>
+                                                </th>
+                                                <th style='font-weight: normal;color: #000'>
+                                                    <h4>${{grand_total}}</h4>
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" style="padding: 10px 0;">
+                            <table width="55%" style='padding-left: 40px;border-collapse: separate;border-spacing: 0px 20px;'>
+                                {% for ci in cartitems%}
+                                    <tr>
+                                        <td>
+                                            <img style='width: 100px;float: left;margin-right: 17px;border-radius: 3px;border: 1px solid #D8CFCF;' src="cid:img_{{ci.meal.id}}">
+                                            <table style='float: left;width: 70%;font-weight=normal;'>
+                                                <tr>
+                                                    <td style='float: left;'>
+                                                        <span>{{ci.meal.name|title}}</span>
+                                                    </td>
+                                                    <th style='color:#9B9B9B;float: left;padding: 10px 10px 0 0;'>
+                                                        <span style='font-weight: normal;'>${{ci.meal.price}}</span>
+                                                    </th>
+                                                    <th style='color:#9B9B9B;float: left;padding: 10px 10px 0 0;'>
+                                                        <span style='font-weight: normal;'>Quantity: {{ci.quantity}}}</span>
+                                                    </th>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td>
+                                        <img style='width: 100px;float: left;margin-right: 17px;border-radius: 3px;border: 1px solid #D8CFCF;' src="../../web/images/meal_main.png">
+                                        <table style='float: left;width: 70%;font-weight=normal;'>
+                                            <tr>
+                                                <td style='float: left;'>
+                                                    <span>
+                                                 Lancaster Farm Beef Burger with Salad.
+                                          </span>
+                                                </td>
+                                                <th style='color:#9B9B9B;float: left;padding: 10px 10px 0 0;'>
+                                                    <span style='font-weight: normal;'>$10.95</span>
+                                                </th>
+                                                <th style='color:#9B9B9B;float: left;padding: 10px 10px 0 0;'>
+                                                    <span style='font-weight: normal;'>Quantity: 1</span>
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="border-collapse: collapse;width:100%;margin: 0 auto;  box-shadow: 1px 3px 13px #B2B2B2;margin-top:20px;">
+                    <tbody>
+                        <tr style="padding:20px 0;float:left;width:100%;">
+                            <td style="font-size:24px;text-align: center;width: 100%;float: left;"><span>SHARE FOR ${{referral_bonus}} FREE CREDIT</span></td>
+                        </tr>
+                        <tr style="padding:20px 0;float:left;width:100%;">
+                            <td style="font-size:16px;text-align: center;width: 100%;float: left;">meisterdish.com/share/{{referral_code}}</td>
+                        </tr>
+                        <tr style="padding:20px 0;height:45px; float:left;">
+                            <td style="width:33.33%;text-align:center">
+                                <img src="cid:share_fb" style="padding:0 20px;height: 45px;padding-left:0px;">
+                                <img src="cid:share_tw" style="padding:0 20px;height: 45px;">
+                                <img src="cid:share_em" style="padding:0 20px;height: 45px;padding-right:0px;">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
 </html>

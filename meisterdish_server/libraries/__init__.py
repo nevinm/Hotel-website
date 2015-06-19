@@ -28,6 +28,30 @@ def mail(to_list, subject, message, sender="Meisterdish Test<meisterdishtest@gma
           msg.attach(msgImage)
     return msg.send()
 
+def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdish Test<meisterdishtest@gmail.com>", headers = {
+              'Reply-To': "Meisterdish Test<meisterdishtest@gmail.com>",
+              'From':"Meisterdish Test<meisterdishtest@gmail.com>",
+              }):
+    msg = EmailMessage(subject, message, sender, to_list, headers=headers)
+    msg.content_subtype = "html"
+    
+    share_images = {
+      "share_fb" : os.path.join(STATIC_ROOT, "default", "share_fb.png"),
+      "share_tw" : os.path.join(STATIC_ROOT, "default", "share_tw.png"),
+      "share_em" : os.path.join(STATIC_ROOT, "default", "share_em.png"),
+    }
+
+    for ci in order.cart.cartitem_set.all():
+      share_images[ci.meal.id] = ci.meal.main_image.image.path
+
+      for cid, img in share_images:
+          fp = open(img, 'rb')
+          msgImage = MIMEImage(fp.read())
+          fp.close()
+          msgImage.add_header('Content-ID', '<'+cid+'>')
+          msg.attach(msgImage)
+    return msg.send()
+
 def manage_image_upload(request):
     try:
         from django.core.files.uploadedfile import UploadedFile

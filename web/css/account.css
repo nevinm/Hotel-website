@@ -1444,9 +1444,11 @@ img.accepted-cards
  {
 	height: auto;
 	margin-right: 5px;
+	max-width: 45px;
+	width: 13%;
 }
 .accepted-cards-wrapper,.accepted-cards-list{
-	width: 100%;
+	width: 95%;
 	float: left;
 	padding-bottom: 10px;
 }
@@ -1597,6 +1599,12 @@ img.accepted-cards
 	#manage-payment-method-container{
 		width: 75%;
 	}
+/*	.accepted-cards-list{
+		width: 94%;
+	}
+	.accepted-cards{
+		width: 13%;
+	}*/
 }
 /*==================================*\
 			&MOBILE
@@ -1783,7 +1791,10 @@ img.accepted-cards
 		height: 36px;
 	}
 	#guest-address-info .section3 .forminput-wrapper{
-		width: 30.2%;
+		width: 30%;
+	}
+	.section3 .forminput-wrapper:first-child{
+		margin-right: 4%;
 	}
 	.forminput-wrapper .styled-select{
 		height: 36px;

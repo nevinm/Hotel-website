@@ -103,7 +103,6 @@ $(document).ready(function() {
 
     $(document).on('click', '#save-delivery-address', function() {
         var selectedId = $('input[type=radio][name=address]:checked').attr('data-id');
-        debugger;
         changeDeliveryAddress(selectedId);
         saveDeliveryTime("", selectedId);
     });
@@ -132,6 +131,8 @@ $(document).ready(function() {
     $('#pickup-radio').on("click", function() {
         $('.address-info-guest').show();
         $('.address-info').hide();
+        $("#guest-address-info").validate().resetForm();
+        $("#guest-address-info input").removeClass('error');
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").attr("disabled", "disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").addClass("button-disabled");
         $('.pickup-content').show();
@@ -143,7 +144,6 @@ $(document).ready(function() {
              $('.address-info-guest').show();
             $('.address-info').hide();
         }else{
-            debugger;
             $('.address-info').show();
             $('.address-info-guest').hide();
         }
