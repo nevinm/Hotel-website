@@ -309,7 +309,7 @@ def send_order_complete_notification(order):
     try:
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
         user = order.cart.user
-        to_email = order.delivery_address.email if order.delivery_address else order.email
+        to_email = order.email
 
         dic = {
                "order_num" : order.order_num,
