@@ -327,6 +327,10 @@ textarea:focus,
 button:focus {
     outline: none;
 }
+.login-signup .btn-small-secondary:hover{
+    color: #fff;
+    background-color:#A9D77B;
+}
 /*==============================*\
             &common
 \*==============================*/

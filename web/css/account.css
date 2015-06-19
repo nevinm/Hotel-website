@@ -1883,6 +1883,12 @@ img.accepted-cards
 	.address-payment-list-popup .header{
 		letter-spacing: .2px;
 	}
+	.delivery-adress-wrapper {
+		height: 300px;
+		overflow-y: auto;
+		max-height: 240px;
+		min-height: 120px;
+	}
 }
   	@media (max-width:400px){
   		.address-content{

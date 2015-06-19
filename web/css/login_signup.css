@@ -158,10 +158,6 @@ form.signup-formcontainer {
 .signup-formcontainer .marginRight{
   margin-right: 4%;
 }
-.login-signup .btn-small-secondary:hover{
-  color: #fff;
-  background-color:#A9D77B;
-}
 /*==================================*\
       &RESET PASSWORD
 \*==================================*/
