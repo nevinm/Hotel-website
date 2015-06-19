@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from libraries import mail, check_delivery_area, validate_phone, validate_email, create_address_text_from_model, export_csv
 from django.db.models import Q
 from django.template.loader import render_to_string
+from twilio.rest import TwilioRestClient
 
 log = logging.getLogger('cms')
 
@@ -149,6 +150,8 @@ def get_orders(request, data, user):
                 "order_num" : order.order_num,
                 "meals":meals,
                 "delivery_type":order.delivery_type.title(),
+                "phone": order.phone,
+                "email":order.email,
                 "delivery_address" : {
                      "id":order.delivery_address.id ,
                      "first_name":order.delivery_address.first_name,
@@ -215,7 +218,7 @@ def get_order_details(request, data, user, order_id):
             "tip" : order.tip,
             "delivery_charge":settings.SHIPPING_CHARGE,
             "grand_total" : order.grand_total,
-            "user_first_name" : order.cart.user.first_name,
+            "user_first_name" : order.cart.user.first_name if order.cart.user.first_name.strip() == '' and order.cart.user.last_name.strip() == '' else 'Guest('+order.email+')',
             "user_last_name" : order.cart.user.last_name,
             "user_id" : order.cart.user.id,
             "user_image" : settings.DEFAULT_USER_IMAGE if not order.cart.user.profile_image else order.cart.user.profile_image.thumb.url,
@@ -223,7 +226,8 @@ def get_order_details(request, data, user, order_id):
             "status":dict(settings.ORDER_STATUS)[order.status],
             "status_id" : order.status,
             "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
-            
+            "email" : order.email,
+            "phone": order.phone,
             "delivery_type" : order.get_delivery_type_display(),
             "payment_date" : order.payment.created.strftime("%m-%d-%Y %H:%M:%S") if order.payment else "Not Available",
             "transaction_id":order.payment.transaction_id if order.payment else "Not Available",
@@ -239,6 +243,7 @@ def get_order_details(request, data, user, order_id):
                      "state":order.delivery_address.city.state.name if order.delivery_address.city else "",
                      "zip":order.delivery_address.zip,
                      "phone":order.delivery_address.phone,
+                     "email":order.delivery_address.email,
                     } if order.delivery_address else "",
         }
         return json_response({"status":1, "order":order_details})
@@ -257,6 +262,10 @@ def send_order_confirmation_notification(order):
                "transaction_id" : order.payment.transaction_id if order.payment else "Not Available",
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
+               "total_amount":order.total_amount,
+               "discount" : order.discount,
+               "tax" : order.total_tax,
+               "shipping" : settings.
                "grand_total":order.grand_total,
                "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
                "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
