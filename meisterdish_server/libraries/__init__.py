@@ -12,7 +12,7 @@ import json as simplejson
 from datetime import datetime
 log = logging.getLogger('libraries')
 import os
- 
+
 def mail(to_list, subject, message, sender="Meisterdish Test<meisterdishtest@gmail.com>", headers = {
               'Reply-To': "Meisterdish Test<meisterdishtest@gmail.com>",
               'From':"Meisterdish Test<meisterdishtest@gmail.com>",
@@ -37,9 +37,9 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
     msg.content_subtype = "html"
     
     share_images = {
-      "share_fb" : os.path.join(STATIC_ROOT, "default", "share_fb.png"),
-      "share_tw" : os.path.join(STATIC_ROOT, "default", "share_tw.png"),
-      "share_em" : os.path.join(STATIC_ROOT, "default", "share_em.png"),
+      "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
+      "share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
+      "share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
     }
 
     for ci in order.cart.cartitem_set.all():
