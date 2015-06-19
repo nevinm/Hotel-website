@@ -11,6 +11,7 @@ from urllib2 import Request, urlopen
 import json as simplejson
 from datetime import datetime
 log = logging.getLogger('libraries')
+import os
  
 def mail(to_list, subject, message, sender="Meisterdish Test<meisterdishtest@gmail.com>", headers = {
               'Reply-To': "Meisterdish Test<meisterdishtest@gmail.com>",
