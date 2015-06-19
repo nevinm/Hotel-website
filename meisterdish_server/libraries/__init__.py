@@ -35,7 +35,7 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
               }):
     msg = EmailMessage(subject, message, sender, to_list, headers=headers)
     msg.content_subtype = "html"
-    log.info(settings.STATIC_ROOT)
+    
     share_images = {
       "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
       "share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
@@ -43,7 +43,7 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
     }
 
     for ci in order.cart.cartitem_set.all():
-      share_images[ci.meal.id] = ci.meal.main_image.image.path
+      share_images[str(ci.meal.id)] = ci.meal.main_image.image.path
 
       for cid, img in share_images.items():
           fp = open(img, 'rb')
