@@ -99,6 +99,8 @@ def get_orders(request, data, user):
                 "order_num" : order.order_num,
                 "meals":meals,
                 "delivery_type":order.delivery_type.title(),
+                "phone:":order.phone,
+
                 "delivery_address" : {
                      "id":order.delivery_address.id ,
                      "first_name":order.delivery_address.first_name,
