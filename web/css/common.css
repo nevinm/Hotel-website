@@ -753,7 +753,7 @@ span.icon-menu {
 /*==============================*\
             &POPUP
 \*==============================*/
-.popup-wrapper{
+.popup-wrapper, .sessionexpire-wrapper{
 	display: none;
 }
 .bk-overlay{
