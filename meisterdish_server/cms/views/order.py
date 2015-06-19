@@ -294,7 +294,10 @@ def send_order_confirmation_notification(order):
         msg = render_to_string('order_confirmation_email_template.html', dic)
         sub = 'Your order at Meisterdish is confirmed '
         
-        mail_order_confirmation([to_email], sub, msg, order)
+        if mail_order_confirmation([to_email], sub, msg, order):
+            log.info("Send order confirmation mail to "+to_email)
+        else:
+            log.error("Failed to send order confirmation mail to "+to_email)
 
         if user.need_sms_notification:
             if not send_sms_notification(dic):
