@@ -28,6 +28,7 @@ def check_input(method):
                                              "check_delivery",
                                              "gift_card_order",
                                              "referral_return",
+                                             "get_cart_items_count",
                                              ]:
 
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
@@ -36,7 +37,6 @@ def check_input(method):
                             try:
                                 query = Q(pk=session['user']['id']) & (Q(role__pk=settings.ROLE_USER) | Q(role__pk=settings.ROLE_GUEST))
                                 user = User.objects.get(query)
-                                log.info(user)
                                 return func(request, req, user, *args, **kwargs)
                             except Exception as e:
                                 log.error("No user in session !!" + str(session['user']['id']))
