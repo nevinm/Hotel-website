@@ -417,7 +417,7 @@ class GiftCard(models.Model):
     email = models.CharField(max_length=100)
     message = models.TextField(max_length=1000)
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
-
+    order_num = models.TextField(max_length=15, default='')
     payment = models.ForeignKey(Payment)
     created = models.DateTimeField(null=True)
     
