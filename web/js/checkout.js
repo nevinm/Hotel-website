@@ -601,7 +601,7 @@ function populateAddresstoInfoContainer(data) {
                 $('.address-info').append("<div class='contents address-added' data-id='" + value.id + "'>" +
                     "<span class='content-heading'>" + "DELIVERY ADDRESS" + "</span>" +
                     "<span>" + value.first_name + " " + value.last_name + "</span>" +
-                    "<span>" + value.building + "," + value.street + "</span>" +
+                    "<span>" + value.street + "," + value.building + "</span>" +
                     "<span>" + value.city + "," + value.state + " " + value.zip + "</span>" +
                     "<span>" + value.phone + "</span>" +
                     "<span class='change-address-payment' id='change-address'>" + "CHANGE ADDRESS" + "</span>" + "</div>");
@@ -639,7 +639,7 @@ function appendAddresscontent(addressList) {
         $('.address-payment-list-popup .popup-container .delivery-adress-wrapper').append("<div class='address-container'>" + "<input type='radio' name='address' id='"+value.id+1+"' data-id='" + value.id + "' class='checkbox-green radio-button'>" +
             "<label class='list-address' for='"+value.id+1+"'>" +
             "<span>" + value.first_name + " " + value.last_name + "</span>" +
-            "<span>" + value.building + "," + value.street + "</span>" +
+            "<span>" + value.street + "," + value.building + "</span>" +
             "<span>" + value.city + "," + value.state + " " + value.zip + "</span>" +
             "<span>" + value.phone + "</span>" + "</label>" + "</div>");
     });
