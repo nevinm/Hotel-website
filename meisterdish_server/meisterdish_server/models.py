@@ -372,8 +372,8 @@ class Order(models.Model):
 
     delivery_type = models.CharField(choices=delivery_types, max_length=8, default="delivery")
 
-    delivery_address = models.ForeignKey(Address, related_name="delivery_address", null=True)
-    billing_address = models.ForeignKey(Address, related_name="billing_address", null=True)
+    delivery_address = models.ForeignKey(Address, related_name="delivery_address", null=True, blank=True)
+    billing_address = models.ForeignKey(Address, related_name="billing_address", null=True, blank=True)
     
     email = models.CharField(db_index=True, max_length=50, null=True)
     phone = models.CharField(db_index=True, max_length=15, null=True)
