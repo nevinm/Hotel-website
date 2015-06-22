@@ -487,7 +487,7 @@ def edit_profile(request, data, user):
             return custom_error("The Profile image does not exist. Please try again.")
         
         sms = False
-        if "sms_notification" in data and data['sms_notification']=='1':
+        if "sms_notification" in data and str(data['sms_notification'])=='1':
             sms = True
         
         user.need_sms_notification = sms
