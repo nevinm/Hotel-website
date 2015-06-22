@@ -83,7 +83,7 @@ def get_orders(request, data, user):
             q &= Q(cart__user__pk=data['user_id'])
 
         if "search" in data and str(data['search']).strip() != "":
-            q &= Q(cart__user__fullname__istartswith=str(data['search']).strip())
+            q &= Q(cart__user__full_name__istartswith=str(data['search']).strip())
 
         if "status" in data and str(data['status']).strip() != "":
              q |= Q(status=int(data['status']))
