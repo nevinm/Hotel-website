@@ -131,7 +131,10 @@ def gift_card_order(request, data, user=None):
             amount=int(amount * 100), #Cents
             currency="usd",
             customer=customer.id,
-            source = card.id
+            source = card.id,
+            description = "Gift Card order at meisterdish.com",
+            #receipt_number = user.email,
+            #receipt_email = user.email
         )
 
         log.info(response)

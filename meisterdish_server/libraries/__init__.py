@@ -33,25 +33,31 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
               'Reply-To': "Meisterdish Test<meisterdishtest@gmail.com>",
               'From':"Meisterdish Test<meisterdishtest@gmail.com>",
               }):
-    msg = EmailMessage(subject, message, sender, to_list, headers=headers)
-    msg.content_subtype = "html"
-    
-    share_images = {
-      "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
-      "share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
-      "share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
-    }
+    try:
+        msg = EmailMessage(subject, message, sender, to_list, headers=headers)
+        msg.content_subtype = "html"
+        
+        share_images = {
+          "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
+          "share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
+          "share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
+          "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo.png"),
+        }
 
-    for ci in order.cart.cartitem_set.all():
-      share_images[str(ci.meal.id)] = ci.meal.main_image.image.path
+        log.info(order.cart.cartitem_set.all())
+        for ci in order.cart.cartitem_set.all():
+            share_images["img_"+str(ci.meal.id)] = ci.meal.main_image.image.path
 
-      for cid, img in share_images.items():
-          fp = open(img, 'rb')
-          msgImage = MIMEImage(fp.read())
-          fp.close()
-          msgImage.add_header('Content-ID', '<'+cid+'>')
-          msg.attach(msgImage)
-    return msg.send()
+        for cid, img in share_images.items():
+            fp = open(img, 'rb')
+            msgImage = MIMEImage(fp.read())
+            fp.close()
+            msgImage.add_header('Content-ID', '<'+cid+'>')
+            msg.attach(msgImage)
+        return msg.send()
+    except Exception as e:
+        log.error(e.message)
+        return False
 
 def manage_image_upload(request):
     try:

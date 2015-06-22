@@ -487,7 +487,7 @@ def edit_profile(request, data, user):
             return custom_error("The Profile image does not exist. Please try again.")
         
         sms = False
-        if "sms_notification" in data and data['sms_notification']=='1':
+        if "sms_notification" in data and str(data['sms_notification'])=='1':
             sms = True
         
         user.need_sms_notification = sms
@@ -580,7 +580,7 @@ def get_address_list(request, data, user):
         delivery_address = 0
 
         for add in addresses:
-            if "checkout" in data and data["checkout"] == 1 and not check_delivery_area(add.zip):
+            if not check_delivery_area(add.zip):
                 continue
             if add.is_primary:
                 delivery_address = add.id
