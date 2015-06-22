@@ -39,7 +39,7 @@ def check_input(method):
                                 user = User.objects.get(query)
                                 return func(request, req, user, *args, **kwargs)
                             except Exception as e:
-                                log.error("No user in session !!" + str(session['user']['id']))
+                                log.error("No user in session !!" + str(session['user']['id'])+e.message)
                                 return custom_error("This user is no more available. Please login again.", -2)
                         else:
                             message = 'The session is invalid. Please login again.'
