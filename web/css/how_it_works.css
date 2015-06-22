@@ -426,7 +426,7 @@ img.image-small{
     }
     .logo-mobile-container h3{
 		text-align: center;
-		margin-top: 10px;
+		margin-top: 24px;
 		color: #6b6b6b;
 		display: block;
     }
@@ -471,7 +471,7 @@ img.image-small{
 		left: 0%;
 	}
 	.backNav-mobile{
-		margin-top: 10px;
+		margin-top: 26px;
 		padding-left: 20px;
 		float: left;
 	}
