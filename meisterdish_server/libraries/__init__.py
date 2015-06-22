@@ -45,14 +45,14 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
     }
 
     for ci in order.cart.cartitem_set.all():
-      share_images[str(ci.meal.id)] = ci.meal.main_image.image.path
+        share_images[str(ci.meal.id)] = ci.meal.main_image.image.path
 
-      for cid, img in share_images.items():
-          fp = open(img, 'rb')
-          msgImage = MIMEImage(fp.read())
-          fp.close()
-          msgImage.add_header('Content-ID', '<'+cid+'>')
-          msg.attach(msgImage)
+    for cid, img in share_images.items():
+        fp = open(img, 'rb')
+        msgImage = MIMEImage(fp.read())
+        fp.close()
+        msgImage.add_header('Content-ID', '<'+cid+'>')
+        msg.attach(msgImage)
     return msg.send()
 
 def manage_image_upload(request):
