@@ -439,7 +439,7 @@ table#userlist {
     margin-top: 28px;
 }
 
-.order-list-empty{
+.order-list-empty,.meal-list-empty{
     display: none;
     margin-top: 50px;
     width: 100%;

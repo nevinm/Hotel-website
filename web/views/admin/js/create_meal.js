@@ -49,12 +49,20 @@ $(document).ready(function() {
         var video_URL = $('#tips-video-url').val(),
             tips_heading = $('#tips-and-tricks').val(),
             valid_url, valid_title;
+            debugger;
         valid_url = ytVidId(video_URL);
         valid_title = emptyvalidation(tips_heading);
         if (valid_url && valid_title) {
             addMainTipsTricks(video_URL, tips_heading);
+            $("#tips-video-url,#tips-and-tricks").removeClass('error');
         } else {
             $("#tips-video-url,#tips-and-tricks").addClass('error');
+            if(valid_url){
+                $("#tips-video-url").removeClass('error');
+            }
+            if(valid_title){
+                $("#tips-and-tricks").removeClass('error');
+            }
         }
     });
 
@@ -470,10 +478,10 @@ function populateMealDetails(mealDetails) {
 
 function ytVidId(url) {
     var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-    return (url.match(p)) ? RegExp.$1 : false;
+    return (url.match(p)) ? true : false;
 }
 
 function emptyvalidation(value) {
     var p = /^[\s\t\r\n]*\S+/ig;
-    return (value.match(p)) ? RegExp.$1 : false;
+    return (value.match(p)) ? true : false;
 }
