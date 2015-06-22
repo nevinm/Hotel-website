@@ -327,10 +327,7 @@ def make_payment(order, user):
         log.info(response)
         payment = save_payment_data(response)
         return payment
-    except APIConnectionError as e:
-        log.error("Error connecting with Stripe.")
-        return False
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to make payment." + e.message)
         return False
 
