@@ -292,6 +292,9 @@ def send_order_confirmation_notification(order):
         msg = render_to_string('order_confirmation_email_template.html', dic)
         sub = 'Your order at Meisterdish is confirmed '
         
+        if not to_email or to_email.strip() == "":
+            log.error("No email address to send order confirmation email")
+            return custom_error("Order has been updated, but failed to send email.")
         if mail_order_confirmation([to_email], sub, msg, order):
             log.info("Send order confirmation mail to "+to_email)
         else:

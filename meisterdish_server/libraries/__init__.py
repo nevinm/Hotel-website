@@ -57,6 +57,7 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
         return msg.send()
     except Exception as e:
         log.error(e.message)
+        return False
 
 def manage_image_upload(request):
     try:
