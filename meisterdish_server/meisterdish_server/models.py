@@ -159,8 +159,8 @@ class User(models.Model):
     stripe_customer_id = models.CharField(max_length=50, null=True, default=None, blank=True)
     
     def save(self, *args, **kwargs):
-        if self.fullname !=  self.first_name +' '+self.last_name:
-            self.fullname = self.first_name +' '+self.last_name
+        if self.full_name !=  self.first_name +' '+self.last_name:
+            self.full_name = self.first_name +' '+self.last_name
         if not self.id:
             self.created = datetime.datetime.now()
             if self.role.pk == ROLE_USER:
@@ -372,8 +372,8 @@ class Order(models.Model):
 
     delivery_type = models.CharField(choices=delivery_types, max_length=8, default="delivery")
 
-    delivery_address = models.ForeignKey(Address, related_name="delivery_address", null=True)
-    billing_address = models.ForeignKey(Address, related_name="billing_address", null=True)
+    delivery_address = models.ForeignKey(Address, related_name="delivery_address", null=True, blank=True)
+    billing_address = models.ForeignKey(Address, related_name="billing_address", null=True, blank=True)
     
     email = models.CharField(db_index=True, max_length=50, null=True)
     phone = models.CharField(db_index=True, max_length=15, null=True)
@@ -417,7 +417,7 @@ class GiftCard(models.Model):
     email = models.CharField(max_length=100)
     message = models.TextField(max_length=1000)
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
-
+    order_num = models.TextField(max_length=15, default='')
     payment = models.ForeignKey(Payment)
     created = models.DateTimeField(null=True)
     

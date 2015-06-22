@@ -83,7 +83,7 @@ def get_orders(request, data, user):
             q &= Q(cart__user__pk=data['user_id'])
 
         if "search" in data and str(data['search']).strip() != "":
-            q &= Q(cart__user__fullname__istartswith=str(data['search']).strip())
+            q &= Q(cart__user__full_name__istartswith=str(data['search']).strip())
 
         if "status" in data and str(data['status']).strip() != "":
              q |= Q(status=int(data['status']))
@@ -251,7 +251,6 @@ def get_order_details(request, data, user, order_id):
 
 def send_order_confirmation_notification(order):
     try:
-        log.info("Here")
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
         user = order.cart.user
         to_email = order.email
@@ -262,17 +261,17 @@ def send_order_confirmation_notification(order):
             suffix = ["st", "nd", "rd"][day % 10 - 1]
         dic = {
                "order_num" : order.order_num,
-               "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
+               "mobile" : order.phone,
                "transaction_id" : order.payment.transaction_id if order.payment else "Not Available",
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
                "delivery_time" : order.delivery_time.strftime("%A, %B %d"+suffix+", %Y"),
-               "total_amount":order.total_amount,
-               "discount" : order.discount,
-               "tax" : order.total_tax,
-               "shipping" : settings.SHIPPING_CHARGE,
-               "tip":order.tip,
-               "grand_total":order.grand_total,
+               "total_amount":round(order.total_amount,2),
+               "discount" : round(order.discount,2),
+               "tax" : round(order.total_tax,2),
+               "shipping" : round(settings.SHIPPING_CHARGE,2),
+               "tip":round(order.tip,2),
+               "grand_total":round(order.grand_total,2),
                "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
                "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
                "status":order.status,
@@ -285,7 +284,7 @@ def send_order_confirmation_notification(order):
                "referral_bonus":Configuration.objects.get(key="REFERRAL_BONUS").value,
                "cart_items":order.cart.cartitem_set.all(),
                }
-        if order.delivery_type == "pickup":
+        if order.delivery_type != "pickup":
             dic["delivery_name"] = order.delivery_address.first_name.title() + " "+order.delivery_address.last_name.title()
             dic["delivery_add1"] = order.delivery_address.building + ", "+order.delivery_address.street
             dic["delivery_add2"] = order.delivery_address.city.name + " "+ order.delivery_address.city.state.name + order.delivery_address.zip
@@ -293,13 +292,15 @@ def send_order_confirmation_notification(order):
         msg = render_to_string('order_confirmation_email_template.html', dic)
         sub = 'Your order at Meisterdish is confirmed '
         
+        if not to_email or to_email.strip() == "":
+            log.error("No email address to send order confirmation email")
+            return custom_error("Order has been updated, but failed to send email.")
         if mail_order_confirmation([to_email], sub, msg, order):
             log.info("Send order confirmation mail to "+to_email)
         else:
             log.error("Failed to send order confirmation mail to "+to_email)
 
         if user.need_sms_notification:
-            log.info("Herejhgjh")
             if not send_sms_notification(dic):
                 return False
         return True
@@ -316,7 +317,7 @@ def send_order_complete_notification(order):
 
         dic = {
                "order_num" : order.order_num,
-               "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
+               "mobile" : order.phone,
                "transaction_id" : order.payment.transaction_id if order.payment else "",
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),

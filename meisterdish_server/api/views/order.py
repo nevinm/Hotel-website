@@ -252,7 +252,8 @@ def create_order(request, data, user):
         
         if not order.card_id:
             order.token = data["stripeToken"].strip()
-
+        order.status = 0
+        order.save()
         payment = make_payment(order, user)
             
         if not payment:
@@ -317,7 +318,10 @@ def make_payment(order, user):
             amount=int(order.total_amount * 100), #Cents
             currency="usd",
             customer=customer.id,
-            source = card.id
+            source = card.id,
+            description = "Meal order at meisterdish.com",
+            receipt_number = order.order_num,
+            receipt_email = order.email
         )
 
         log.info(response)
