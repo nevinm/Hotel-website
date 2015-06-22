@@ -92,7 +92,7 @@ def get_orders(request, data, user):
 
         if "phone" in data and str(data["phone"]).strip() != "":
             try:
-                q &= Q(delivery_address__phone__startswith=str(int(data['phone'])).strip())
+                q &= Q(phone__startswith=str(int(data['phone'])).strip())
             except:
                 return custom_error("Please enter valid phone number")
 
