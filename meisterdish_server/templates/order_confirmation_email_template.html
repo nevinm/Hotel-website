@@ -169,7 +169,7 @@
                                 {% for ci in cart_items%}
                                     <tr>
                                         <td>
-                                            <img style='width: 100px;float: left;margin-right: 17px;border-radius: 3px;border: 1px solid #D8CFCF;' src="cid:img_{{ci.meal.id}}">
+                                            <img style='width: 100px;float: left;margin-right: 17px;border-radius: 3px;border: 1px solid #D8CFCF;' src="cid:img_{{ci.meal.id|slugify}}">
                                             <table style='float: left;width: 70%;font-weight=normal;'>
                                                 <tr>
                                                     <td style='float: left;'>
@@ -186,28 +186,6 @@
                                         </td>
                                     </tr>
                                 {% endfor %}
-                                <!--
-                                <tr>
-                                    <td>
-                                        <img style='width: 100px;float: left;margin-right: 17px;border-radius: 3px;border: 1px solid #D8CFCF;' src="../../web/images/meal_main.png">
-                                        <table style='float: left;width: 70%;font-weight=normal;'>
-                                            <tr>
-                                                <td style='float: left;'>
-                                                    <span>
-                                                 Lancaster Farm Beef Burger with Salad.
-                                          </span>
-                                                </td>
-                                                <th style='color:#9B9B9B;float: left;padding: 10px 10px 0 0;'>
-                                                    <span style='font-weight: normal;'>$10.95</span>
-                                                </th>
-                                                <th style='color:#9B9B9B;float: left;padding: 10px 10px 0 0;'>
-                                                    <span style='font-weight: normal;'>Quantity: 1</span>
-                                                </th>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                -->
                             </table>
                         </td>
                     </tr>
