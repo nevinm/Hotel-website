@@ -305,7 +305,7 @@ def send_order_confirmation_notification(order):
                 return False
         return True
 
-    except KeyError as e:
+    except Exception as e:
         log.error("Send confirmation mail : " + e.message)
         return False
 
@@ -340,7 +340,7 @@ def send_order_complete_notification(order):
             if not send_sms_notification(dic):
                 return False
         return True
-    except KeyError as e:
+    except Exception as e:
         log.error("Send order completion mail : " + e.message)
         return False
 
@@ -369,7 +369,7 @@ def send_sms_notification(dic):
             log.error("Failed to send SMS to " + number)
             return False
 
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to send order SMS to : " + number + " : "+e.message)
         return False
 

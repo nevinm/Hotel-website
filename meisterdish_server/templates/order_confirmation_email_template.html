@@ -55,7 +55,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <span style='color:#6B6B6B;'>
+                                                    <span style='color:#6B6B6B;font-weight:bold;'>
                                                      {% if delivery_type == "pickup" %}
                                                         Meisterdish
                                                     {% else %}
@@ -66,7 +66,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <span style='color:#6B6B6B;'>
+                                                    <span style='color:#6B6B6B;font-weight:bold;'>
                                                     {% if delivery_type == "pickup" %}
                                                         218 EAST 81st 
                                                     {% else %}
@@ -77,7 +77,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <span style='color:#6B6B6B;'>
+                                                    <span style='color:#6B6B6B;font-weight:bold;'>
                                                     {% if delivery_type == "pickup" %}
                                                         ST 10028
                                                     {% else %}
@@ -97,64 +97,64 @@
                                                     <h4>{{delivery_time}}.</h4></td>
                                             </tr>
                                             <tr>
-                                                <td><span style='color: #6B6B6B;'>Deliver between {{delivery_hr}}.</span></td>
+                                                <td><span style='color: #6B6B6B;font-weight:bold'>Deliver between {{delivery_hr}}.</span></td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
                             </table>
-                            <table align="center" border="1" bordercolor='#9B9B9B' cellpadding="0" cellspacing="0" width="35%" style="border-collapse: collapse;margin-top:30px;float:left;border: solid 1px #9B9B9B;">
+                            <table align="left" border="1" bordercolor='#9B9B9B' cellpadding="0" cellspacing="0" width="35%" style="border-collapse: collapse;margin-top:30px;float:left;border: solid 1px #9B9B9B;text-align:left">
                                 <tr>
                                     <td>
                                         <table width="100%" style='color: #6B6B6B'>
                                             <tr>
-                                                <th style='font-weight: normal;padding-top: 20px;'>
-                                                    <span>Subtotal</span>
+                                                <th style='font-weight: normal;padding-top: 20px;padding-left:30px'>
+                                                    <span style='font-weight:bold'>Subtotal</span>
                                                 </th>
-                                                <th style='font-weight: normal;padding-top: 20px;'>
-                                                    </span>${{total_amount}}</span>
+                                                <th style='font-weight: normal;padding-top: 20px;padding-left:10px'>
+                                                    </span style='font-weight:bold'>${{total_amount}}</span>
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <th style='font-weight: normal;'>
-                                                    </span>Discounts</span>
+                                                <th style='font-weight: normal;padding-left:30px'>
+                                                    </span style='font-weight:bold'>Discounts</span>
                                                 </th>
-                                                <th style='font-weight: normal;'>
-                                                    </span>-${{discount}}</span>
+                                                <th style='font-weight: normal;padding-left:10px'>
+                                                    </span style='font-weight:bold'>-${{discount}}</span>
                                                 </th>
                                             </tr>
                                             {% if delivery_type != "pickup" %}
                                             <tr>
-                                                <th style='font-weight: normal;'>
-                                                    <span>Delivery</span>
+                                                <th style='font-weight: normal;padding-left:30px'>
+                                                    <span style='font-weight:bold'>Delivery</span>
                                                 </th>
-                                                <th style='font-weight: normal;'>
-                                                    <span>${{shipping}}</span>
+                                                <th style='font-weight: normal;padding-left:10px'>
+                                                    <span style='font-weight:bold'>${{shipping}}</span>
                                                 </th>
                                             </tr>
                                             {% endif %}
                                             <tr>
-                                                <th style='font-weight: normal;'>
-                                                    <span>Tax</span>
+                                                <th style='font-weight: normal;padding-left:30px'>
+                                                    <span style='font-weight:bold'>Tax</span>
                                                 </th>
-                                                <th style='font-weight: normal;'>
-                                                    <span>${{tax}}</span>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th style='font-weight: normal;'>
-                                                    <span>Tip</span>
-                                                </th>
-                                                <th style='font-weight: normal;'>
-                                                    <span>${{tip}}</span>
+                                                <th style='font-weight: normal;padding-left:10px'>
+                                                    <span style='font-weight:bold'>${{tax}}</span>
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <th style='font-weight: normal;color: #000'>
-                                                    <h4>Total</h4>
+                                                <th style='font-weight: normal;padding-left:30px'>
+                                                    <span style='font-weight:bold'>Tip</span>
                                                 </th>
-                                                <th style='font-weight: normal;color: #000'>
-                                                    <h4>${{grand_total}}</h4>
+                                                <th style='font-weight: normal;padding-left:10px'>
+                                                    <span style='font-weight:bold'>${{tip}}</span>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th style='font-weight: normal;color: #000;padding-left:30px'>
+                                                    <h2>Total</h2>
+                                                </th>
+                                                <th style='font-weight: normal;color: #000;padding-left:10px'>
+                                                    <h2>${{grand_total}}</h2>
                                                 </th>
                                             </tr>
                                         </table>
@@ -172,8 +172,8 @@
                                             <img style='width: 100px;float: left;margin-right: 17px;border-radius: 3px;border: 1px solid #D8CFCF;' src="cid:img_{{ci.meal.id|slugify}}">
                                             <table style='float: left;width: 70%;font-weight=normal;'>
                                                 <tr>
-                                                    <td style='float: left;'>
-                                                        <span>{{ci.meal.name|title}}</span>
+                                                    <td style='float: left;width:100%'>
+                                                        <span style='font-weight:bold'>{{ci.meal.name|title}}</span>
                                                     </td>
                                                     <th style='color:#9B9B9B;float: left;padding: 10px 10px 0 0;'>
                                                         <span style='font-weight: normal;'>${{ci.meal.price}}</span>
