@@ -34,8 +34,6 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
               'From':"Meisterdish Test<meisterdishtest@gmail.com>",
               }):
     try:
-        log.info("mail sending")
-        log.info(to_list)
         msg = EmailMessage(subject, message, sender, to_list, headers=headers)
         msg.content_subtype = "html"
         
@@ -48,6 +46,8 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
         for ci in order.cart.cartitem_set.all():
             share_images[str(ci.meal.id)] = ci.meal.main_image.image.path
 
+        log.info(share_images)
+        
         for cid, img in share_images.items():
             fp = open(img, 'rb')
             msgImage = MIMEImage(fp.read())
