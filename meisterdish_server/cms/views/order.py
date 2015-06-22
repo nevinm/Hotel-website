@@ -261,7 +261,7 @@ def send_order_confirmation_notification(order):
             suffix = ["st", "nd", "rd"][day % 10 - 1]
         dic = {
                "order_num" : order.order_num,
-               "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
+               "mobile" : order.phone,
                "transaction_id" : order.payment.transaction_id if order.payment else "Not Available",
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
@@ -301,7 +301,6 @@ def send_order_confirmation_notification(order):
             log.error("Failed to send order confirmation mail to "+to_email)
 
         if user.need_sms_notification:
-            log.info("Herejhgjh")
             if not send_sms_notification(dic):
                 return False
         return True
@@ -318,7 +317,7 @@ def send_order_complete_notification(order):
 
         dic = {
                "order_num" : order.order_num,
-               "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
+               "mobile" : order.phone,
                "transaction_id" : order.payment.transaction_id if order.payment else "",
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
