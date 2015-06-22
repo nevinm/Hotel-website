@@ -4,6 +4,7 @@ function profileAutoPopulate() {
         $("#change-contact input[name='firstname']").val(userDetails.first_name);
         $("#change-contact input[name='lastname']").val(userDetails.last_name);
         $("#change-contact input[name='phonenumber']").val(userDetails.mobile);
+        $('input[name=notification]').prop('checked',userDetails.sms_notification);
     }
     if (currentPage == 'Meisterdish - Account') {
         $(".small-profile-pic").attr('src', userDetails.profile_image_thumb);
