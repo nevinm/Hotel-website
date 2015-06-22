@@ -159,8 +159,8 @@ class User(models.Model):
     stripe_customer_id = models.CharField(max_length=50, null=True, default=None, blank=True)
     
     def save(self, *args, **kwargs):
-        if self.fullname !=  self.first_name +' '+self.last_name:
-            self.fullname = self.first_name +' '+self.last_name
+        if self.full_name !=  self.first_name +' '+self.last_name:
+            self.full_name = self.first_name +' '+self.last_name
         if not self.id:
             self.created = datetime.datetime.now()
             if self.role.pk == ROLE_USER:
