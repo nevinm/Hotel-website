@@ -33,6 +33,8 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
               'Reply-To': "Meisterdish Test<meisterdishtest@gmail.com>",
               'From':"Meisterdish Test<meisterdishtest@gmail.com>",
               }):
+    log.info("mail sending")
+    log.info(to_list)
     msg = EmailMessage(subject, message, sender, to_list, headers=headers)
     msg.content_subtype = "html"
     

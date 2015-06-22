@@ -251,7 +251,6 @@ def get_order_details(request, data, user, order_id):
 
 def send_order_confirmation_notification(order):
     try:
-        log.info("Here")
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
         user = order.cart.user
         to_email = order.email
