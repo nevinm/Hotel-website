@@ -199,9 +199,11 @@ def create_order(request, data, user):
             order.delivery_address = del_address
             #order.billing_address = bil_address
             order.driver_instructions = driver_instructions
-        else:
-            order.email = email
-            order.phone = phone
+            email = order.delivery_address.email
+            phone = order.delivery_address.phone
+        
+        order.email = email
+        order.phone = phone
 
         order.delivery_time = delivery_time
         
