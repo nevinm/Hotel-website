@@ -1375,3 +1375,10 @@ span.icon-menu {
         height: 225px;
     }
 }
+
+/*==============================*\
+        &BETA - RELEASE
+\*==============================*/
+.menu-offer{
+    display: none !important;
+}
