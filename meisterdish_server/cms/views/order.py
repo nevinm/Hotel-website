@@ -362,6 +362,7 @@ def send_sms_notification(dic):
         message = client.messages.create(body=txt,
                 to= number,
                 from_=settings.TWILIO_NUMBER)
+        log.info(message)
         if message:
             log.info("Sent SMS to " + number)
             return True
