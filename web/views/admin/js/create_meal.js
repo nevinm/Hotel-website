@@ -49,7 +49,6 @@ $(document).ready(function() {
         var video_URL = $('#tips-video-url').val(),
             tips_heading = $('#tips-and-tricks').val(),
             valid_url, valid_title;
-            debugger;
         valid_url = ytVidId(video_URL);
         valid_title = emptyvalidation(tips_heading);
         if (valid_url && valid_title) {
