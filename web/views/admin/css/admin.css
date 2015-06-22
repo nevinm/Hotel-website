@@ -1040,7 +1040,7 @@ input#add-gift-card,input#add-new-promo{
 input#add-gift-card{
     display: none;
 }
-.no-popup .btn-small-primary{
+.no-popup .btn-small-primary,td .btn-small-primary{
     height: 25px;
     line-height: 10px;
 }

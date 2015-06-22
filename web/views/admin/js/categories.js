@@ -128,7 +128,7 @@ function populateCategories(categoriesData) {
         $("#categories tbody").append("<tr>" +
             "<td class='category' data-name='" + value.name + "'>" + value.name + "</td>" +
             "<td class='delete'><a data-id='" + value.id + "'class='cross'></a></td>" +
-            "<td class=''><button class='update' type='button' data-name='" + value.name + "' data-id='" + value.id + "'>Update</button></td>" +
+            "<td class=''><button class='update btn btn-small-primary medium-green' type='button' data-name='" + value.name + "' data-id='" + value.id + "'>Update</button></td>" +
             "</tr>");
     })
     $(".pagination").pagination({
