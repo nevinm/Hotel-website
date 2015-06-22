@@ -211,7 +211,7 @@ def create_order(request, data, user):
         order.total_tax = total_tax
         order.tip = tip
 
-        order.total_amount = total_price + total_tax + tip + settings.SHIPPING_CHARGE
+        order.total_payable = total_price + total_tax + tip + settings.SHIPPING_CHARGE
         
         """
         TODO
@@ -315,22 +315,19 @@ def make_payment(order, user):
 
 
         response = stripe.Charge.create(
-            amount=int(order.total_amount * 100), #Cents
+            amount=int(order.total_payable * 100), #Cents
             currency="usd",
             customer=customer.id,
             source = card.id,
             description = "Meal order at meisterdish.com",
-            receipt_number = order.order_num,
-            receipt_email = order.email
+            #receipt_number = order.order_num,
+            #receipt_email = order.email
         )
 
         log.info(response)
         payment = save_payment_data(response)
         return payment
-    except APIConnectionError as e:
-        log.error("Error connecting with Stripe.")
-        return False
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to make payment." + e.message)
         return False
 

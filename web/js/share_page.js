@@ -7,6 +7,11 @@
 //      }    
 //  });
 // })
+$(document).ready(function() {
+    $('#copy-to-clipboard').on("click",function(){
+        $('#clipboard-text').css('background-color','#A9D77B');
+    })
+});
 $('#facebook-share').on('click', function() {
     checkLoginState();
 })
@@ -16,7 +21,7 @@ $('#twitter-share').on('click', function() {
 })
 
 $('#email-share').on('click', function() {
-    emailShare(homeUrl);
+    shareViaEmail();
 })
 
 //share functions
@@ -30,11 +35,11 @@ function popitup(url) {
 function facebookShare(site_url, accessToken) {
     var imgURL = "http://imgur.com/byNMcg1"; //change with your external photo url
     FB.api('me/photos', 'post', {
-        message: 'Ready to cook meals, delivered on demand. 
-        Start cooking today
-        for $20 off your first order!
-        Fresh ingredients washed and prepped by us,
-        cooked to perfection by you. http://www.meisterdish.com/ ',
+        message: 'Ready to cook meals, delivered on demand.'+ 
+        'Start cooking today'+
+        'for $20 off your first order!'+
+        'Fresh ingredients washed and prepped by us,'+
+        'cooked to perfection by you. http://www.meisterdish.com/',
         status: 'success',
         access_token: accessToken,
         url: imgURL
@@ -49,9 +54,41 @@ function twitterShare(site_url) {
     popitup('http://twitter.com/share?url=' + site_url + '&text=' + subjText);
 }
 
-function emailShare(site_url) {
-    site_url = "http://meisterdish.com/invite/ABCD1234?o=email";
-    var subjText = "Cooking at home shouldn’t be such a hassle. Meisterdish makes cooking fit the New York lifestyle. With fresh, cleaned and portioned ingredients delivered on demand, along with step-by-step instructions - all you have to do is cook. Cooking has never been so fast, fresh and tasty. " + '\n\n' + " Sign up for free using this link and you’ll receive $20 off your first order:" + '\n\n' + "       " + site_url + '\n\n' + "Enjoy your meal!";
-    var subject = "Start cooking with Meisterdish";
-    $("a#email-share").attr('href', "mailto:?subject=" + subject + "&body=" + encodeURIComponent(subjText));
+//copy to clipboard
+var clientTarget = new ZeroClipboard( $("#copy-to-clipboard"), {
+    moviePath: "zeroclipboard/ZeroClipboard.swf",
+    debug: false
+} );
+
+clientTarget.on( "load", function(clientTarget)
+{
+    clientTarget.on( "complete", function(clientTarget, args) {
+        clientTarget.setText( args.text );
+    });
+});
+
+var shareViaEmailCallback = {
+    success: function(data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            showPopup(userDetails);
+        } else {
+            showPopup(userDetails);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function shareViaEmail() {
+    var url = baseURL + "share_email/",
+        email = JSON.parse(localStorage['user_profile']).email,
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+            "email":email
+        },
+        data = JSON.stringify(userData);
+    var shareViaEmailInstance = new AjaxHttpSender();
+    shareViaEmailInstance.sendPost(url, header, data, shareViaEmailCallback);
 }
