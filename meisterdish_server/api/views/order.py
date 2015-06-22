@@ -320,8 +320,8 @@ def make_payment(order, user):
             customer=customer.id,
             source = card.id,
             description = "Meal order at meisterdish.com",
-            receipt_number = order.order_num,
-            receipt_email = order.email
+            #receipt_number = order.order_num,
+            #receipt_email = order.email
         )
 
         log.info(response)

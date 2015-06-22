@@ -133,8 +133,8 @@ def gift_card_order(request, data, user=None):
             customer=customer.id,
             source = card.id,
             description = "Gift Card order at meisterdish.com",
-            receipt_number = user.email,
-            receipt_email = user.email
+            #receipt_number = user.email,
+            #receipt_email = user.email
         )
 
         log.info(response)
