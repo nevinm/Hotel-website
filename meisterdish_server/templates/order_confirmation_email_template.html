@@ -46,9 +46,9 @@
                                                 <td>
                                                 <h4>
                                                     {% if delivery_type == "pickup" %}
-                                                        DELIVER ADDRESS
-                                                    {% else %}
                                                         PICKUP ADDRESS
+                                                    {% else %}
+                                                        DELIVER ADDRESS
                                                     {% endif %}
                                                 </h4>
                                                 </td>
@@ -146,7 +146,7 @@
                                                     <span>Tip</span>
                                                 </th>
                                                 <th style='font-weight: normal;'>
-                                                    <span>${{tip}}}</span>
+                                                    <span>${{tip}}</span>
                                                 </th>
                                             </tr>
                                             <tr>
@@ -166,7 +166,7 @@
                     <tr>
                         <td align="left" style="padding: 10px 0;">
                             <table width="55%" style='padding-left: 40px;border-collapse: separate;border-spacing: 0px 20px;'>
-                                {% for ci in cartitems%}
+                                {% for ci in cart_items%}
                                     <tr>
                                         <td>
                                             <img style='width: 100px;float: left;margin-right: 17px;border-radius: 3px;border: 1px solid #D8CFCF;' src="cid:img_{{ci.meal.id}}">
@@ -186,6 +186,7 @@
                                         </td>
                                     </tr>
                                 {% endfor %}
+                                <!--
                                 <tr>
                                     <td>
                                         <img style='width: 100px;float: left;margin-right: 17px;border-radius: 3px;border: 1px solid #D8CFCF;' src="../../web/images/meal_main.png">
@@ -206,6 +207,7 @@
                                         </table>
                                     </td>
                                 </tr>
+                                -->
                             </table>
                         </td>
                     </tr>

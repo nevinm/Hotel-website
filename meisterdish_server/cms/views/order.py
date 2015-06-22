@@ -268,7 +268,7 @@ def send_order_confirmation_notification(order):
                "time" : order.updated.strftime("%I %M %p"),
                "delivery_time" : order.delivery_time.strftime("%A, %B %d"+suffix+", %Y"),
                "total_amount":order.total_amount,
-               "discount" : order.discount,
+               "discount" : int(order.discount),
                "tax" : order.total_tax,
                "shipping" : settings.SHIPPING_CHARGE,
                "tip":order.tip,
