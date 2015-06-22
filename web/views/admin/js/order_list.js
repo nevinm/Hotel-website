@@ -173,7 +173,7 @@ function populateOrderList(data) {
             "<option value='3'>Dispatched</option>" +
             "<option value='4'>Complete</option>" +
             "</select></td>" +
-            "<td class='no-popup'><button type='button' class='meal-delete' data-id='" + value.id + "'>Delete</button></td></tr>");
+            "<td class='no-popup'><button type='button' class='meal-delete btn btn-small-primary medium-green' data-id='" + value.id + "'>Delete</button></td></tr>");
 
         currentStatus = value.status_id;
         $(".order-status:last").val(currentStatus);

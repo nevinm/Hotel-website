@@ -55,13 +55,17 @@ $(document).ready(function() {
         if (valid_url && valid_title) {
             addMainTipsTricks(video_URL, tips_heading);
             $("#tips-video-url,#tips-and-tricks").removeClass('error');
+            $("#tips-video-url-label-error,#tips-and-tricks-label-error").hide();
         } else {
             $("#tips-video-url,#tips-and-tricks").addClass('error');
+            $("#tips-video-url-label-error,#tips-and-tricks-label-error").show();
             if(valid_url){
                 $("#tips-video-url").removeClass('error');
+                $("#tips-video-url-label-error").hide();
             }
             if(valid_title){
                 $("#tips-and-tricks").removeClass('error');
+                $("#tips-and-tricks-label-error").hide();
             }
         }
     });
