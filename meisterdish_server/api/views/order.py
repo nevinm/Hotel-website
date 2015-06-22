@@ -211,7 +211,7 @@ def create_order(request, data, user):
         order.total_tax = total_tax
         order.tip = tip
 
-        order.total_amount = total_price + total_tax + tip + settings.SHIPPING_CHARGE
+        order.total_payable = total_price + total_tax + tip + settings.SHIPPING_CHARGE
         
         """
         TODO
@@ -315,7 +315,7 @@ def make_payment(order, user):
 
 
         response = stripe.Charge.create(
-            amount=int(order.total_amount * 100), #Cents
+            amount=int(order.total_payable * 100), #Cents
             currency="usd",
             customer=customer.id,
             source = card.id,
