@@ -43,11 +43,12 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
           "share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
         }
 
+        log.info(order.cart.cartitem_set.all())
         for ci in order.cart.cartitem_set.all():
             share_images[str(ci.meal.id)] = ci.meal.main_image.image.path
 
         log.info(share_images)
-        
+
         for cid, img in share_images.items():
             fp = open(img, 'rb')
             msgImage = MIMEImage(fp.read())
