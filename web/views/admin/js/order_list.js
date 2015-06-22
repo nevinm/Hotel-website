@@ -17,13 +17,8 @@ $(document).ready(function() {
     });
 
     $("#search-orders").on('click', function() {
-        userName = $("#user-name").val();
-        orderNum = $("#order-num").val();
-        total = $("#total-amount").val();
-        phone_num = $("#phone-num").val();
-        date = $("#date").val();
-        status = $("#order-status-filter option:selected").val();
-        getOrders(1, userName, orderNum, status,total,phone_num,date);
+        searchParams = returnSearchParams();
+        getOrders(1, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date);
     });
 
     $(document).on('change', ".order-status", function() {
@@ -31,8 +26,27 @@ $(document).ready(function() {
             orderId = $(this).data().id;
         updateOrders(status, orderId);
     });
-    $( "#date" ).datepicker();
+    $("#date").datepicker();
 });
+
+function returnSearchParams() {
+    var userName = $("#user-name").val(),
+        orderNum = $("#order-num").val(),
+        total = $("#total-amount").val(),
+        phone_num = $("#phone-num").val(),
+        date = $("#date").val(),
+        status = $("#order-status-filter option:selected").val(),
+        searchParams = {};
+    searchParams = {
+        "userName": userName,
+        "orderNum": orderNum,
+        "total": total,
+        "phone_num": phone_num,
+        "date": date,
+        "status": status
+    }
+    return searchParams;
+}
 
 //Update orders API process
 var updateOrdersCallback = {
@@ -65,13 +79,17 @@ var getOrdersCallback = {
                 populateOrderList(data);
             } else {
                 $(".order-list-empty").show();
+                $(".pagination").pagination({
+                    pages: 0,
+                    cssStyle: 'light-theme',
+                });
             }
         } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getOrders(nextPage, userName, orderNum, status,total_amount,phone_num,date) {
+function getOrders(nextPage, userName, orderNum, status, total_amount, phone_num, date) {
     $('#order-list tbody').empty();
     var url = baseURL + "cms/get_orders/",
         header = {
@@ -82,9 +100,9 @@ function getOrders(nextPage, userName, orderNum, status,total_amount,phone_num,d
             "search": userName,
             "num": orderNum,
             "status": status,
-            "phone" : phone_num,
-            "date" : date,
-            "amount":total_amount
+            "phone": phone_num,
+            "date": date,
+            "amount": total_amount
         }
     data = JSON.stringify(params);
     var getOrdersInstance = new AjaxHttpSender();
@@ -119,8 +137,9 @@ var deleteOrderCallback = {
     success: function(data, textStatus) {
         var deleteOrder = JSON.parse(data);
         if (deleteOrder.status == 1) {
+            var searchParams = returnSearchParams();
             currentPage = $('.pagination').pagination('getCurrentPage');
-            getOrders(currentPage);
+            getOrders(currentPage, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date);
         } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -161,12 +180,11 @@ function populateOrderList(data) {
     });
 
     $(".pagination").pagination({
-        items: fullMealList.total_count,
-        itemsOnPage: fullMealList.per_page,
+        pages: fullMealList.num_pages,
         currentPage: fullMealList.current_page,
         cssStyle: 'light-theme',
         onPageClick: function(pageNumber, event) {
-            getOrders(pageNumber);
+            getOrders(pageNumber, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date);
         }
     });
 }

@@ -1,13 +1,7 @@
 $(document).ready(function() {
     $('#searchinMeal').on("click", function() {
-        var search_name = $('#searchBy-name').val(),
-            category = $('#category option:selected').attr('value'),mealtype=[];
-            // mealtype = $('#meal-type option:selected').attr('value');
-        $('#meal-type option:selected').each(function() {
-            mealtype.push($(this).attr('value'));
-        });
-        $("#meal-list tr td").detach();
-        getmealList(search_name, category, mealtype);
+        var searchParams = returnMealSearchParams();
+        getmealList(searchParams.search_name, searchParams.category, searchParams.mealtype);
     });
 
     $(document).on('click', '.meal-edit', function() {
@@ -22,15 +16,32 @@ $(document).ready(function() {
             deleteMeal(currentMealId);
         } else {}
     });
-    getmealList('','','',0);
+    getmealList('', '', '', 0);
     getFilterContent();
 });
+
+function returnMealSearchParams() {
+    var search_name = $('#searchBy-name').val(),
+        category = $('#category option:selected').attr('value'),
+        mealtype = [];
+    $('#meal-type option:selected').each(function() {
+        mealtype.push($(this).attr('value'));
+    });
+    $("#meal-list tr td").detach();
+    return searchParams = {
+        "search_name": search_name,
+        "category": category,
+        "mealtype": mealtype
+    }
+}
 
 //Delete Meals
 var deleteMealCallback = {
     success: function(data, textStatus) {
         var deleteMealResponse = JSON.parse(data);
-        getmealList();
+        var searchParams = returnMealSearchParams();
+        currentPage = $('.pagination').pagination('getCurrentPage');
+        getmealList(searchParams.search_name, searchParams.category, searchParams.mealtype, currentPage);
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -51,15 +62,24 @@ function deleteMeal(currentMealId) {
 var getmealListCallback = {
     success: function(data, textStatus) {
         var mealLIst = JSON.parse(data);
-        populateMealList(mealLIst);
+        if (mealLIst.aaData.length > 0) {
+            $(".meal-list-empty").hide();
+            populateMealList(mealLIst);
+        } else {
+            $(".meal-list-empty").show();
+            $(".pagination").pagination({
+                pages: 0,
+                cssStyle: 'light-theme',
+            });
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getmealList(search_name, category, mealtype,pageNumber) {
+function getmealList(search_name, category, mealtype, pageNumber) {
         var url = baseURL + "cms/get_meals/";
-        if(mealtype==""){
-            mealtype.length=0;
+        if (mealtype == "") {
+            mealtype.length = 0;
         }
         header = {
             "session-key": localStorage['session_key']
@@ -123,12 +143,12 @@ function populateMealList(data) {
             "<td><button type='button' class='meal-edit' data-id='" + value.id + "'>Edit</button></td>" + "</tr>");
     });
     $(".pagination").pagination({
-        items: fullMealList.total_count,
-        itemsOnPage: fullMealList.per_page,
+        pages: fullMealList.num_pages,
         currentPage: fullMealList.current_page,
         cssStyle: 'light-theme',
         onPageClick: function(pageNumber, event) {
-            getmealList('','','',pageNumber);
+            var searchParams = returnMealSearchParams();
+            getmealList(searchParams.search_name, searchParams.category, searchParams.mealtype, pageNumber);
         }
     });
 }

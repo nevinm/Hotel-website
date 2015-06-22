@@ -5,7 +5,7 @@ import settings
 from cms.views.decorators import *
 from datetime import datetime
 from django.core.paginator import Paginator
-from libraries import mail, check_delivery_area, validate_phone, validate_email, create_address_text_from_model, export_csv
+from libraries import mail, mail_order_confirmation, check_delivery_area, validate_phone, validate_email, create_address_text_from_model, export_csv
 from django.db.models import Q
 from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
@@ -59,7 +59,7 @@ def update_order(request, data, user, order_id):
                     log.error("Failed to send order complete notification")
 
         return json_response({"status":1, "message":"The order has been updated", "id":str(order_id)+"."})
-    except Exception as e:
+    except IOError as e:
         log.error("Update order status : " + e.message)
         return custom_error("Failed to update the order.")
 
@@ -253,19 +253,27 @@ def get_order_details(request, data, user, order_id):
 
 def send_order_confirmation_notification(order):
     try:
+        log.info("Here")
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
         user = order.cart.user
-        to_email = order.delivery_address.email if order.delivery_address else order.email
+        to_email = order.email
+        day = order.delivery_time.day
+        if 4 <= day <= 20 or 24 <= day <= 30:
+            suffix = "th"
+        else:
+            suffix = ["st", "nd", "rd"][day % 10 - 1]
         dic = {
                "order_num" : order.order_num,
                "mobile" : order.delivery_address.phone if order.delivery_address else order.phone,
                "transaction_id" : order.payment.transaction_id if order.payment else "Not Available",
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
+               "delivery_time" : order.delivery_time.strftime("%A, %B %d"+suffix+", %Y"),
                "total_amount":order.total_amount,
                "discount" : order.discount,
                "tax" : order.total_tax,
                "shipping" : settings.SHIPPING_CHARGE,
+               "tip":order.tip,
                "grand_total":order.grand_total,
                "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
                "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
@@ -274,14 +282,26 @@ def send_order_confirmation_notification(order):
                "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id),
                "to_email":to_email,
                "site_url":settings.SITE_URL,
+               "delivery_hr": str(order.delivery_time.hour) + "-" + str(order.delivery_time.hour +1)+"PM",
+               "referral_code":order.cart.user.referral_code,
+               "referral_bonus":Configuration.objects.get(key="REFERRAL_BONUS").value,
+               "cart_items":order.cart.cartitem_set.all(),
                }
+        if order.delivery_type == "pickup":
+            dic["delivery_name"] = order.delivery_address.first_name.title() + " "+order.delivery_address.last_name.title()
+            dic["delivery_add1"] = order.delivery_address.building + ", "+order.delivery_address.street
+            dic["delivery_add2"] = order.delivery_address.city.name + " "+ order.delivery_address.city.state.name + order.delivery_address.zip
         
         msg = render_to_string('order_confirmation_email_template.html', dic)
         sub = 'Your order at Meisterdish is confirmed '
         
-        mail([to_email], sub, msg )
+        if mail_order_confirmation([to_email], sub, msg, order):
+            log.info("Send order confirmation mail to "+to_email)
+        else:
+            log.error("Failed to send order confirmation mail to "+to_email)
 
         if user.need_sms_notification:
+            log.info("Herejhgjh")
             if not send_sms_notification(dic):
                 return False
         return True
@@ -294,7 +314,7 @@ def send_order_complete_notification(order):
     try:
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
         user = order.cart.user
-        to_email = order.delivery_address.email if order.delivery_address else order.email
+        to_email = order.email
 
         dic = {
                "order_num" : order.order_num,
