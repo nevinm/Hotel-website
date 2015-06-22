@@ -136,6 +136,7 @@ class User(models.Model):
     role = models.ForeignKey(Role)
     first_name = models.CharField(db_index=True, max_length=25, default="")
     last_name = models.CharField(db_index=True, max_length=25, default="")
+    full_name = models.CharField(db_index=True, max_length=55, default="")
     zipcode = models.CharField(db_index=True, max_length=6, null=True, blank=True)
     email = models.EmailField(db_index=True, max_length=30, unique=True, null=True)
     mobile = models.CharField(max_length=15, null=True)
@@ -158,10 +159,13 @@ class User(models.Model):
     stripe_customer_id = models.CharField(max_length=50, null=True, default=None, blank=True)
     
     def save(self, *args, **kwargs):
+        if self.fullname !=  self.first_name +' '+self.last_name:
+            self.fullname = self.first_name +' '+self.last_name
         if not self.id:
             self.created = datetime.datetime.now()
             if self.role.pk == ROLE_USER:
                 self.referral_code = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
+
         super(User, self).save(*args, **kwargs)
         
     def __unicode__(self):
