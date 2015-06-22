@@ -158,9 +158,9 @@ function logingOut() {
     $('#menu').removeClass('menuPadding');
     $(".logout").addClass('hide');
     if (currentPage == "Meisterdish - Admin") {
-        window.location.href = '../../index.html';
+        window.location.href = 'index.html';
     } 
-    if(currentPage == "Meisterdish Home Page"){}
+    else if(currentPage == "Meisterdish Home Page"){}
     else {
         window.location.href = '../index.html';
     }
