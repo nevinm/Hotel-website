@@ -8,9 +8,17 @@
 //  });
 // })
 $(document).ready(function() {
-    $('#copy-to-clipboard').on("click",function(){
-        $('#clipboard-text').css('background-color','#A9D77B');
+    $('#copy-to-clipboard').on("click", function() {
+        $('#clipboard-text').css('background-color', '#A9D77B');
     })
+
+    twttr.widgets.createShareButton(
+        'https://dev.twitter.com/',
+        document.getElementById('button-container'), {
+            text: 'Twitter - Share'
+        }
+    );
+
 });
 $('#facebook-share').on('click', function() {
     checkLoginState();
@@ -35,11 +43,11 @@ function popitup(url) {
 function facebookShare(site_url, accessToken) {
     var imgURL = "http://imgur.com/byNMcg1"; //change with your external photo url
     FB.api('me/photos', 'post', {
-        message: 'Ready to cook meals, delivered on demand.'+ 
-        'Start cooking today'+
-        'for $20 off your first order!'+
-        'Fresh ingredients washed and prepped by us,'+
-        'cooked to perfection by you. http://www.meisterdish.com/',
+        message: 'Ready to cook meals, delivered on demand.' +
+            'Start cooking today' +
+            'for $20 off your first order!' +
+            'Fresh ingredients washed and prepped by us,' +
+            'cooked to perfection by you. http://www.meisterdish.com/',
         status: 'success',
         access_token: accessToken,
         url: imgURL
@@ -55,15 +63,14 @@ function twitterShare(site_url) {
 }
 
 //copy to clipboard
-var clientTarget = new ZeroClipboard( $("#copy-to-clipboard"), {
+var clientTarget = new ZeroClipboard($("#copy-to-clipboard"), {
     moviePath: "zeroclipboard/ZeroClipboard.swf",
     debug: false
-} );
+});
 
-clientTarget.on( "load", function(clientTarget)
-{
-    clientTarget.on( "complete", function(clientTarget, args) {
-        clientTarget.setText( args.text );
+clientTarget.on("load", function(clientTarget) {
+    clientTarget.on("complete", function(clientTarget, args) {
+        clientTarget.setText(args.text);
     });
 });
 
@@ -86,7 +93,7 @@ function shareViaEmail() {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "email":email
+            "email": email
         },
         data = JSON.stringify(userData);
     var shareViaEmailInstance = new AjaxHttpSender();
