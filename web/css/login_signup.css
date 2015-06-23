@@ -158,6 +158,9 @@ form.signup-formcontainer {
 .signup-formcontainer .marginRight{
   margin-right: 4%;
 }
+.referral-message-container{
+  display: none;
+}
 /*==================================*\
       &RESET PASSWORD
 \*==================================*/
