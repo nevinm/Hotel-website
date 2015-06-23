@@ -153,6 +153,9 @@ $(document).ready(function() {
         $("#add-guest-address").show();
         $(".city-selector-container").show();
     })
+    $('#is-gift-card').on('click',function(){
+        $('.isPromocode-wrapper').fadeIn();
+    })
 });
 
 

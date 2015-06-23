@@ -1172,7 +1172,7 @@ textarea#driver-description {
 #add-payment-method-container #name-on-card-error{
 	bottom: 36px;
 }
-::-webkit-input-placeholder { 
+textarea::-webkit-input-placeholder { 
 	color:#b0b0b0;
 	font-size: 10px; 
 	text-align: center;
@@ -1413,7 +1413,7 @@ form#guest-address-info #address-line-2-error{
 	width: 100%;
 	float: left;
 }
-#pickup-radio,#delivery-radio{
+#pickup-radio,#delivery-radio,#is-gift-card{
 	cursor: pointer;
 }
 #manage-payment-method-container .saved-card-list{
@@ -1510,6 +1510,21 @@ img.accepted-cards
 .payment-popup-sub-container input[type=radio]:checked + label:before {
 	font-size: 42px;
 	line-height: 16px;
+}
+.isPromocode-wrapper{
+	display: none;
+}
+.isPromocode-wrapper .popup-input{
+	height: 35px;
+	width: 57%;
+	float: left;
+	 margin-right: 3%;
+}
+.isPromocode-wrapper .btn{
+	width: 40%;
+	float: left;
+	margin-bottom: 20px;
+	min-width: 55px;
 }
 /*==================================*\
 			&TABLET
