@@ -20,7 +20,8 @@ function signingup() {
         first_name = $('#signup-firstname').val(),
         last_name = $('#signup-lastname').val(),
         email = $('#signup-email').val(),
-        zip = $("#zip-code").val();
+        zip = $("#zip-code").val(),
+        invitecode = $("#invite-code").val();
     if (localStorage["fb-id"]) {
         fbId = JSON.parse(localStorage["fb-id"]);
     }
@@ -31,7 +32,8 @@ function signingup() {
             "email": email,
             "fb_id": fbId,
             "image_url": localStorage['fb-image'],
-            "zipcode": zip
+            "zipcode": zip,
+            "referral_code" : invitecode
         },
         data = JSON.stringify(userInfo);
 
@@ -39,9 +41,24 @@ function signingup() {
     signupInstance.sendPost(url, header, data, signupCallback);
 }
 
+function referralUIIntegrate() {
+    $(".email-wrapper").append("<div class='signup-input invitecode-container'>" +
+        "<label class='body-text-small' >Invite Code</label>" +
+        "<input class='arrange' type='text' id='invite-code' name='invitecode'></input>" +
+        "</div>");
+    $(".password-container").removeClass("fifty-percent-first");
+    $(".zipcode-container").removeClass("fifty-percent-second");
+    $(".zipcode-container").addClass("fifty-percent-first");
+    $(".invitecode-container").addClass("fifty-percent-second");
+}
+
 function signupInit() {
     redirectIfLoggedIn();
     CartItemCount();
+    referralCode = getParameterFromUrl('ref');
+    if (referralCode.length) {
+        referralUIIntegrate();
+    }else{}
 }
 
 $(document).ready(function() {
