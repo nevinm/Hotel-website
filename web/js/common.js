@@ -411,6 +411,9 @@ $("form").each(function() {
                 required: true,
                 minlength: 2,
                 minAmount: 25
+            },
+            invitecode:{
+                required: true
             }
         },
         messages: {
@@ -480,8 +483,9 @@ $("form").each(function() {
             mealdescription: "Meal description is not valid.",
             cvv: "provide a valid cvv.",
             url: "Enter valid url.",
-            tips_details: "Enter valid title."
-                // image_upload:"Please select an image."
+            tips_details: "Enter valid title.",
+            invitecode: "Enter Invitecode"
+            // image_upload:"Please select an image."
         }
     });
 });

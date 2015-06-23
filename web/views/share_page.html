@@ -7,6 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@nytimes">
+    <meta name="twitter:creator" content="@Nevin">
+    <meta name="twitter:title" content="Ready to cook meals, delivered on demand. Start cooking today for $20 off on your first order!">
+    <meta name="twitter:description" content="Fresh ingredients washed and prepped by us, cooked to perfection by you.
+">
+    <meta name="twitter:image" content="http://imgur.com/byNMcg1">
     <title>Meisterdish - share_page</title>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/fontello.css">
@@ -27,6 +34,24 @@
 
     ga('create', 'UA-63283790-1', 'auto');
     ga('send', 'pageview');
+    </script>
+    <script>
+    window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+            t._e.push(f);
+        };
+
+        return t;
+    }(document, "script", "twitter-wjs"));
     </script>
 </head>
 
@@ -124,11 +149,10 @@
                     <p>OR</p>
                 </span>
                 <div class="share-label">Share using one of these links:</div>
-                <div class="share-button-container">
+                <div class="share-button-container" id='button-container'>
                     <img src="../images/Share on facebook.png" id="facebook-share" class="share-button">
                     <img src="../images/Share on Twitter.png" id="twitter-share" class="share-button">
                     <a id="email-share"><img src="../images/Share via Email.png" class="share-button"></a>
-                    
                 </div>
                 <span class="body-text-small">Sharing with your self or others in the same household is not permitted.</span>
                 <span class="body-text-small">For more information, please refer to the <a href="privacy_terms.html">terms of use</a></span>
@@ -162,14 +186,14 @@
             <div class="header"></div>
             <div class="popup-container">
                 <div class="content">
-                <span>SOMTHING WENT WRONG</span>
+                    <span>SOMTHING WENT WRONG</span>
                 </div>
                 <div class="button">
                     <a href="#!" class="btn btn-small-secondary" id="close">CLOSE</a>
                 </div>
             </div>
         </div>
-    </div>  
+    </div>
     <script type="text/javascript" src='../js/jquery.min.js'></script>
     <script type="text/javascript" src='../js/jquery.validate.min.js'></script>
     <script type="text/javascript" src='../js/ajax_reusable.js'></script>
@@ -180,4 +204,3 @@
 </body>
 
 </html>
-

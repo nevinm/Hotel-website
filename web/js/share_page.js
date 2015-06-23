@@ -9,8 +9,15 @@ $(document).ready(function() {
             $('#copied-text').css('color','#6b6b6b');
             $("#copied-text").fadeIn();
         }
-
     })
+
+    twttr.widgets.createShareButton(
+        'https://dev.twitter.com/',
+        document.getElementById('button-container'), {
+            text: 'Twitter - Share'
+        }
+    );
+
 });
 $('#facebook-share').on('click', function() {
     checkLoginState();
@@ -35,11 +42,11 @@ function popitup(url) {
 function facebookShare(site_url, accessToken) {
     var imgURL = "http://imgur.com/byNMcg1"; //change with your external photo url
     FB.api('me/photos', 'post', {
-        message: 'Ready to cook meals, delivered on demand.'+ 
-        'Start cooking today'+
-        'for $20 off your first order!'+
-        'Fresh ingredients washed and prepped by us,'+
-        'cooked to perfection by you. http://www.meisterdish.com/',
+        message: 'Ready to cook meals, delivered on demand.' +
+            'Start cooking today' +
+            'for $20 off your first order!' +
+            'Fresh ingredients washed and prepped by us,' +
+            'cooked to perfection by you. http://www.meisterdish.com/',
         status: 'success',
         access_token: accessToken,
         url: imgURL
@@ -49,21 +56,20 @@ function facebookShare(site_url, accessToken) {
 }
 
 function twitterShare(site_url) {
-    site_url = "http://meisterdish.com/invite/ABCD1234?o=twtpic.twitter.com/OaPBIVjyo2";
+    site_url = "http://meisterdish.qburst.com/views/share_page.html";
     var subjText = "Start cooking today with $20 off your first order!" + site_url;
     popitup('http://twitter.com/share?url=' + site_url + '&text=' + subjText);
 }
 
 //copy to clipboard
-var clientTarget = new ZeroClipboard( $("#copy-to-clipboard"), {
+var clientTarget = new ZeroClipboard($("#copy-to-clipboard"), {
     moviePath: "zeroclipboard/ZeroClipboard.swf",
     debug: false
-} );
+});
 
-clientTarget.on( "load", function(clientTarget)
-{
-    clientTarget.on( "complete", function(clientTarget, args) {
-        clientTarget.setText( args.text );
+clientTarget.on("load", function(clientTarget) {
+    clientTarget.on("complete", function(clientTarget, args) {
+        clientTarget.setText(args.text);
     });
 });
 
@@ -86,7 +92,7 @@ function shareViaEmail() {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "email":email
+            "email": email
         },
         data = JSON.stringify(userData);
     var shareViaEmailInstance = new AjaxHttpSender();
