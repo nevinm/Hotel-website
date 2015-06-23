@@ -189,8 +189,8 @@ def create_order(request, data, user):
                 return custom_error("Sorry, The meal "+ item.meal.name.title() + " has gone out of stock.")
             
             quantity += item.quantity
-            total_price += item.meal.price
-            total_tax += item.meal.tax
+            total_price += item.meal.price * item.quantity
+            total_tax += item.quantity * item.meal.price * item.meal.tax / 100
 
         order = Order()
         order.cart = item.cart
@@ -404,10 +404,9 @@ def get_order_details(request, data, user, order_id):
 def get_cart_total(cart):
     try:
         amount = 0.0
-        tax = 0.0
         for ci in CartItem.objects.filter(cart=cart, cart__completed=False):
             amount += ci.meal.price * ci.quantity
-            tax += ci.meal.tax * ci.quantity
+            tax += ci.meal.price * ci.quantity * ci.meal.tax / 100
         
     except Exception as e:
         log.error("Error getting cart total: " + e.message)
