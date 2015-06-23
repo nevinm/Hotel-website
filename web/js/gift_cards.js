@@ -313,9 +313,9 @@ function populateCardDetailsInPopup() {
     var cards = cardDetails.cards;
     $('.address-payment-list-popup .button').remove();
     $('.address-payment-list-popup .popup-container').empty();
-
+    $('.address-payment-list-popup .popup-container').append("<div class='popup-sub-wrapper'>"+"</div>");
     $.each(cards, function(key, value) {
-        $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>" +
+        $('.address-payment-list-popup .popup-container .popup-sub-wrapper').append("<div class='payment-popup-sub-container'>" +
             "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' id='" + value.id + "'>" +
             "<label>" + "<img class='paypal' src='" + value.logo + "'>" +
             "<span class='body-text-small'>" + value.type + " " +
