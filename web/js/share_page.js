@@ -9,7 +9,16 @@
 // })
 $(document).ready(function() {
     $('#copy-to-clipboard').on("click",function(){
-        $('#clipboard-text').css('background-color','#A9D77B');
+        if (navigator.mimeTypes ["application/x-shockwave-flash"].enabledPlugin == undefined){
+            $('#copied-text').text('This feature is not available in your browser.Please install flash player.');
+            $('#copied-text').css('color','#ff7878');
+            $("#copied-text").fadeIn();
+        }else{    
+            $('#clipboard-text').css('color','#A9D77B');
+            $('#copied-text').css('color','#6b6b6b');
+            $("#copied-text").fadeIn();
+        }
+
     })
 });
 $('#facebook-share').on('click', function() {
