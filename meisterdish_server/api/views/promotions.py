@@ -1,7 +1,7 @@
 from django.db.models import Q
 from api.views.decorators import *
 from django.core.paginator import Paginator
-from meisterdish_server.models import GiftCard, PromoCode, CreditCardDetails
+from meisterdish_server.models import GiftCard, PromoCode, CreditCardDetails, Order, Cart
 from datetime import datetime
 import settings , logging
 from libraries import save_payment_data, mail
@@ -173,6 +173,7 @@ def apply_promocode(request, data, user):
 
         code = data["code"].strip()
         code_obj = PromoCode.objects.get(code=code, deleted=False)
+
         if code_obj.expiry_date < datetime.now():
             return custom_error("The Promo Code ("+ code +") has expired.")
 
