@@ -1,3 +1,12 @@
+// $(document).ready(function() {
+//  $(".button").clipboard({
+//      path: 'jquery.clipboard.swf',
+//      copy: function() {
+//          alert("Text copied.");
+//          return $("div#some-content").text();
+//      }    
+//  });
+// })
 $(document).ready(function() {
     $('#copy-to-clipboard').on("click",function(){
         if (navigator.mimeTypes ["application/x-shockwave-flash"].enabledPlugin == undefined){
