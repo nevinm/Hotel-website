@@ -65,7 +65,7 @@ function facebookShare(site_url, accessToken) {
 }
 
 function twitterShare(site_url) {
-    site_url = "http://meisterdish.com/invite/ABCD1234?o=twtpic.twitter.com/OaPBIVjyo2";
+    site_url = "http://meisterdish.qburst.com/views/share_page.html";
     var subjText = "Start cooking today with $20 off your first order!" + site_url;
     popitup('http://twitter.com/share?url=' + site_url + '&text=' + subjText);
 }
