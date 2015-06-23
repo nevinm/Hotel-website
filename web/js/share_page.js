@@ -1,3 +1,12 @@
+// $(document).ready(function() {
+//  $(".button").clipboard({
+//      path: 'jquery.clipboard.swf',
+//      copy: function() {
+//          alert("Text copied.");
+//          return $("div#some-content").text();
+//      }    
+//  });
+// })
 $(document).ready(function() {
     $('#copy-to-clipboard').on("click",function(){
         if (navigator.mimeTypes ["application/x-shockwave-flash"].enabledPlugin == undefined){
@@ -57,8 +66,8 @@ function facebookShare(site_url, accessToken) {
 
 function twitterShare(site_url) {
     site_url = "http://meisterdish.qburst.com/views/share_page.html";
-    var subjText = "Start cooking today with $20 off your first order!+ site_url";
-    popitup('http://twitter.com/share?text=' + subjText);
+    var subjText = "Start cooking today with $20 off your first order!" + site_url;
+    popitup('http://twitter.com/share?url=' + site_url + '&text=' + subjText);
 }
 
 //copy to clipboard
