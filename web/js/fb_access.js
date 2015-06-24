@@ -131,7 +131,7 @@ function fbLogin() {
         if (response.authResponse) {
             var url = window.location.href;
             currentPage = getCurrentPage("/", ".html", url);
-            if (currentPage == "menu" || currentPage == "share_page") {
+            if (currentPage == "share_page") {
                 facebookShare(homeUrl, response.authResponse.accessToken);
             }
             localStorage['fb-access_token'] = response.authResponse.accessToken;
