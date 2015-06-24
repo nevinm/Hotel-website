@@ -193,7 +193,7 @@ def apply_promocode(request, data, user):
             "discount":discount,
             "code":code
         })
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to apply promo code." + e.message)
         return custom_error("Failed to apply promo code.")
 
@@ -213,7 +213,7 @@ def redeem_gift_card(request, data, user):
         except Exception as e:
             return custom_error("Invalid gift card code entered.")
         else:
-            credits = gift_card.credits
+            credits = gift_card.amount
             user.credits = user.credits + credits
             #user.gift_cards.remove(gift_card)
             user.save()
@@ -229,6 +229,6 @@ def redeem_gift_card(request, data, user):
             "discount":discount,
             "code":code
         })
-    except KeyError as e:
+    except Exception as e:
         log.error("Redeem gift card error : " + e.message)
         return custom_error("Failed to redeem gift card ")
