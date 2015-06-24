@@ -341,6 +341,9 @@ $("form").each(function() {
                 minlength: 6,
                 maxlength: 20
             },
+            date: {
+                required:true
+            },
             email: {
                 required: true,
                 email: true
@@ -365,6 +368,9 @@ $("form").each(function() {
                 required: true,
                 minlength: 6,
                 equalTo: "#new-password"
+            },
+            promocode:{
+                required: true
             },
             zip: {
                 // required: true,
@@ -427,6 +433,10 @@ $("form").each(function() {
                 required: true,
                 minlength: 2
             },
+            amount: {
+                required: true,
+                minAmount: 2
+            },
             giftcardcustomamount: {
                 required: true,
                 minlength: 2,
@@ -486,6 +496,10 @@ $("form").each(function() {
                 required: "Please enter an amount.",
                 minAmount: "Enter a min amount of 25"
             },
+            amount: {
+                required: "Please enter an amount.",
+                minAmount: "Enter a valid amount"
+            },
             nameOnCard: "Enter valid name.",
             expiryMonth: "Enter exp month.",
             expiryYear: "Enter exp year.",
@@ -504,7 +518,9 @@ $("form").each(function() {
             cvv: "provide a valid cvv.",
             url: "Enter valid url.",
             tips_details: "Enter valid title.",
-            invitecode: "Enter Invitecode"
+            invitecode: "Enter Invitecode",
+            date: "Please enter date",
+            promocode: "Please enter promocode."
                 // image_upload:"Please select an image."
         }
     });
