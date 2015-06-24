@@ -79,7 +79,14 @@ $(document).ready(function() {
         $('.address-payment-list-popup').hide();
     });
 
-    $("#place-order").on("click", function() {
+    //To prevent refresh
+    $('#address').on("submit",function(e){
+        e.preventDefault();
+        return false;
+    })
+    
+    $("#place-order").on("click", function(e) {
+        e.preventDefault();
         if (validateGiftOrder()) {
             placeGiftOrder();
         };
@@ -88,12 +95,17 @@ $(document).ready(function() {
 
 function placeGiftOrder() {
     //Saved card is present.
+    if(localStorage['loggedIn'] == 'false'){
+        if($('#address').valid()){
+            $('#address').submit();
+        }
+    }
     if (!$('.saved-cards').is(':empty')) {
         var cardId = $('.saved-cards .added-card:checked').attr("id");
         fetchGiftCardData('', cardId);
     } else {
-        if ($("#pay-form").valid()) {
-            $("#pay-form").submit();
+        if($("#pay-form").valid()) {
+            $("#pay-form").submit();    
         }
     }
 }
@@ -177,7 +189,20 @@ function fetchGiftCardData(token, cardId) {
             "amount": localGiftCardRecipient.giftcardAmount,
             "stripeToken": token,
             "card_id": cardId
-        }
+        };
+         if(localStorage['loggedIn'] == 'false'){
+          var first_name = $('input[name="firstname"]').val(),
+            last_name = $('input[name="lastname"]').val(),
+            email = $('input[name="email"]').val(),
+            zip = $('input[name="zip"]').val()
+            guestParams = {
+                "guest_first_name":first_name, 
+                "guest_last_name":last_name, 
+                "guest_email":email, 
+                "guest_zip":zip
+            }
+            $.extend(giftCardOrderParams,guestParams);
+         }
     saveCreditCardGiftCard(giftCardOrderParams);
 }
 

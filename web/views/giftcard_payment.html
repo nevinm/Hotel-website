@@ -203,11 +203,11 @@
                                 </div>
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">Credit card number</label>
-                                    <input type="text" autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number">
+                                    <input type="text" autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number" name="cardnumber">
                                 </div>
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">CVV</label>
-                                    <input type="password" size="4" data-stripe="cvc" class="popup-input" id="cvv-number">
+                                    <input type="password" size="4" data-stripe="cvc" class="popup-input" id="cvv-number" name="cvv">
                                 </div>
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">Expiry Date</label>
@@ -232,7 +232,7 @@
                                 <span class="div">/</span>
                                 <div class="forminput-wrapper">
                                     <div class="styled-select">
-                                        <select id="ExpYear" data-stripe="exp-year">
+                                        <select name="expiryYear" id="ExpYear" data-stripe="exp-year">
                                             <option value=""></option>
                                         </select>
                                     </div>
