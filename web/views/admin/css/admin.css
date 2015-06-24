@@ -1044,3 +1044,11 @@ input#add-gift-card{
     height: 25px;
     line-height: 10px;
 }
+
+
+#new-amount-error, 
+#new-date-error,
+#new-code-error{
+    position: absolute;
+    top: 0;
+}

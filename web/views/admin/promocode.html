@@ -87,19 +87,19 @@
                     <div class="bk-overlay"></div>
                     <div class="popup popup-giftcard">
                         <div class="header"></div>
-                        <form class="popup-container">
+                        <form class="popup-container" id='promocode-form'>
                             <div class="content">
                                 <div class="popup-input-wrapper">
                                     <label class="body-text-small">Promo Code:</label>
-                                    <input type="text" class="popup-input" id="new-code">
+                                    <input type="text" name='promocode' class="popup-input" id="new-code">
                                 </div>
                                 <div class="popup-input-wrapper">
                                     <label class="body-text-small">Date:</label>
-                                    <input type="date" class="popup-input" id="new-date">
+                                    <input type="date" name='date' class="popup-input" id="new-date">
                                 </div>
                                 <div class="popup-input-wrapper">
                                     <label class="body-text-small">Amount:</label>
-                                    <input type="number" class="popup-input" id="new-amount">
+                                    <input type="number" name='amount' class="popup-input" min="1" id="new-amount">
                                 </div>
                             </div>
                             <div class="button">

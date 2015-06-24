@@ -14,7 +14,7 @@ $(document).ready(function() {
         giftcardParams = {};
         $this = $(this);
         var code = $this.parents().eq(1).find('.card-code').text(),
-            date =  $this.parents().eq(1).find('.card-name').data().date,
+            date = $this.parents().eq(1).find('.card-name').data().date,
             amount = $this.parents().eq(1).find('.card-amount').data("amount");
         $("#new-code").val(code);
         $("#new-date").val(date);
@@ -23,7 +23,7 @@ $(document).ready(function() {
         $("#update").text("update");
         $(".popup-wrapper").show();
     });
-    
+
     $(document).on('click', "#add-new-promo", function() {
         $("#update").text("add");
         $('form.popup-container')[0].reset();
@@ -31,28 +31,30 @@ $(document).ready(function() {
     })
 
     $("#update").on('click', function() {
-        if($("#update").text() == "add"){    
-            var newCode = $("#new-code").val(),
-                newDate = $("#new-date").val(),
-                newAmount = $("#new-amount").val(),
-                promoaddDetails = {
-                    "code": newCode,
-                    "name": newDate,
-                    "amount": newAmount
-                }
-            managePromoCodes(promoaddDetails);
-        }else{
-           var newCode = $("#new-code").val(),
-                newDate = $("#new-date").val(),
-                newAmount = $("#new-amount").val(),
-                giftcardId = $(this).data('id');
+        if ($("#promocode-form").valid()) {
+            if ($("#update").text() == "add") {
+                var newCode = $("#new-code").val(),
+                    newDate = $("#new-date").val(),
+                    newAmount = $("#new-amount").val(),
+                    promoaddDetails = {
+                        "code": newCode,
+                        "name": newDate,
+                        "amount": newAmount
+                    }
+                managePromoCodes(promoaddDetails);
+            } else {
+                var newCode = $("#new-code").val(),
+                    newDate = $("#new-date").val(),
+                    newAmount = $("#new-amount").val(),
+                    giftcardId = $(this).data('id');
                 giftcardDetails = {
                     "editId": giftcardId,
                     "code": newCode,
                     "name": newDate,
                     "amount": newAmount
                 }
-            managePromoCodes(giftcardDetails); 
+                managePromoCodes(giftcardDetails);
+            }
         }
     });
 });
@@ -91,7 +93,7 @@ function populatePromoCodes(promoCodes) {
         $.each(promoCodes.aaData, function(key, value) {
             $('#promocodes-list tbody').append("<tr data-id='" + value.id + "'>" +
                 "<td class='card-code'>" + value.code + "</td>" +
-                "<td class='card-name' data-date='"+value.expiry_date_format+"'>" + value.expiry_date + "</td>" +
+                "<td class='card-name' data-date='" + value.expiry_date_format + "'>" + value.expiry_date + "</td>" +
                 "<td class='card-amount' data-amount='" + value.amount + "'>" + dollarConvert(value.amount) + "</td>" +
                 "<td class='no-popup'><button type='button' class='promocard-edit btn btn-small-primary medium-green' data-id='" + value.id + "'>Edit</button></td>" +
                 "<td class='no-popup'><button type='button' class='promocard-delete btn btn-small-primary medium-green' data-id='" + value.id + "'>Delete</button></td></tr>");
