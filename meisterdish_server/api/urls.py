@@ -24,7 +24,6 @@ urlpatterns = patterns('',
     url(r'^get_states/$', views.get_states, name='get_states'),
     url(r'^get_cities/$', views.get_cities, name='get_cities'),
  
-    url(r'^redeem_gift_card/$', promotions.redeem_gift_card, name='redeem_gift_card'),
     url(r'^upload_picture/$', views.upload_picture, name='upload_picture'),
     
     url(r'^get_categories/$', views.get_categories, name='get_categories'),
