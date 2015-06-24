@@ -206,7 +206,7 @@ def redeem_gift_card(request, data, user):
             
         code = data["code"].strip()
         try:
-            gift_card = GiftCard.objects.get(user=user, code=code)
+            gift_card = GiftCard.objects.get(code=code)
             if gift_card.used:
                 return custom_error("This code is already applied.")
 
