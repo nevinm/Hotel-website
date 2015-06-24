@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     $("#search-orders").on('click', function() {
         searchParams = returnSearchParams();
-        getOrders(1, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date);
+        getOrders(1, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date, searchParams.delivery_type);
     });
 
     $(document).on('change', ".order-status", function() {
@@ -35,6 +35,7 @@ function returnSearchParams() {
         total = $("#total-amount").val(),
         phone_num = $("#phone-num").val(),
         date = $("#date").val(),
+        deliveryType = $("#delivery-type").val();
         status = $("#order-status-filter option:selected").val(),
         searchParams = {};
     searchParams = {
@@ -43,7 +44,8 @@ function returnSearchParams() {
         "total": total,
         "phone_num": phone_num,
         "date": date,
-        "status": status
+        "status": status,
+        "delivery_type" : deliveryType
     }
     return searchParams;
 }
@@ -89,7 +91,7 @@ var getOrdersCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getOrders(nextPage, userName, orderNum, status, total_amount, phone_num, date) {
+function getOrders(nextPage, userName, orderNum, status, total_amount, phone_num, date,delivery_type) {
     $('#order-list tbody').empty();
     var url = baseURL + "cms/get_orders/",
         header = {
@@ -102,7 +104,8 @@ function getOrders(nextPage, userName, orderNum, status, total_amount, phone_num
             "status": status,
             "phone": phone_num,
             "date": date,
-            "amount": total_amount
+            "amount": total_amount,
+            "delivery_type": delivery_type
         }
     data = JSON.stringify(params);
     var getOrdersInstance = new AjaxHttpSender();
@@ -139,7 +142,7 @@ var deleteOrderCallback = {
         if (deleteOrder.status == 1) {
             var searchParams = returnSearchParams();
             currentPage = $('.pagination').pagination('getCurrentPage');
-            getOrders(currentPage, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date);
+            getOrders(currentPage, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date,searchParams.delivery_type);
         } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -165,6 +168,7 @@ function populateOrderList(data) {
             "<td>" + value.user_first_name + " " + value.user_last_name + "</td>" +
             "<td>" + value.phone + "</td>" +
             "<td>" + value.delivery_time + "</td>" +
+            "<td>" + value.delivery_type + "</td>" +
             "<td>" + dollarConvert(value.grand_total) + "</td>" +
             "<td class='no-popup'><select data-id='" + value.id + "'class='order-status' name='status'>" +
             "<option value='0'>Incomplete</option>" +
@@ -185,7 +189,7 @@ function populateOrderList(data) {
         cssStyle: 'light-theme',
         onPageClick: function(pageNumber, event) {
             searchParams = returnSearchParams();
-            getOrders(pageNumber, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date);
+            getOrders(pageNumber, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date,searchParams.delivery_type);
         }
     });
 }
