@@ -156,6 +156,8 @@ def get_cart_total(cart):
         elif cart.gift_cards.all().count():
             for gc in cart.gift_cards.all():
                 discount += gc.amount
+        if discount > total_price + total_tax:
+            discount = total_price + total_tax:
         return (total_price, total_tax, discount)
     except IOError as e:
         log.error("Cart total method :"+e.message)
