@@ -10,6 +10,7 @@ $(document).ready(function() {
             $("#copied-text").fadeIn();
         }
     });
+    
     $('#email-share').on("click",function(){
         if(localStorage['user_profile']){
             var email = JSON.parse(localStorage['user_profile']).email;
@@ -69,9 +70,9 @@ function facebookShare(site_url, accessToken) {
 }
 
 function twitterShare(site_url) {
-    site_url = "http://meisterdish.qburst.com/views/share_page.html";
+    site_url = homeUrl+ "/views/share_page.html";
     var subjText = "Start cooking today with $20 off your first order!" + site_url;
-    popitup('http://twitter.com/share?url=' + site_url + '&text=' + subjText);
+    popitup('http://twitter.com/share?url=' + site_url );
 }
 
 //copy to clipboard

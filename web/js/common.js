@@ -2,12 +2,34 @@
 //var baseURL = 'http://10.1.4.32:8083/api/',
 var baseURL = 'http://meisterdish.qburst.com/backend/api/',
     homeUrl = "http://meisterdish.qburst.com",
-    //    homeUrl = "http://10.7.2.51:86",
     userDetails, currentPage = $("title").text(),
     currentPageTitle,
     clicked = 0;
 //If already logged in
 var $userentry = $('.login-signup');
+
+var sessionCheckCallback = {
+    success: function(data, textStatus) {
+        sessionDetails = JSON.parse(data);
+        if (sessionDetails.status == 1) {} else {
+            localStorage['session-expired'] = JSON.stringify("true");
+            window.location.href = homeUrl;
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function sessionCheck() {
+    var url = baseURL + 'session_check/',
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userInfo = {},
+        data = JSON.stringify(userInfo);
+
+    var sessionCheckInstance = new AjaxHttpSender();
+    sessionCheckInstance.sendPost(url, header, data, sessionCheckCallback);
+}
 
 function checkLoggedIn() {
     if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
@@ -159,9 +181,7 @@ function logingOut() {
     $(".logout").addClass('hide');
     if (currentPage == "Meisterdish - Admin") {
         window.location.href = 'index.html';
-    } 
-    else if(currentPage == "Meisterdish Home Page"){}
-    else {
+    } else if (currentPage == "Meisterdish Home Page") {} else {
         window.location.href = '../index.html';
     }
 }
@@ -412,7 +432,7 @@ $("form").each(function() {
                 minlength: 2,
                 minAmount: 25
             },
-            invitecode:{
+            invitecode: {
                 required: true
             }
         },
@@ -485,7 +505,7 @@ $("form").each(function() {
             url: "Enter valid url.",
             tips_details: "Enter valid title.",
             invitecode: "Enter Invitecode"
-            // image_upload:"Please select an image."
+                // image_upload:"Please select an image."
         }
     });
 });
