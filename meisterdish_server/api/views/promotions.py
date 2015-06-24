@@ -148,8 +148,8 @@ def get_cart_total(cart):
         total_tax = 0
         discount = 0
         for ci in cart_items:
-            total_price += item.meal.price * item.quantity
-            total_tax += item.quantity * item.meal.price * item.meal.tax / 100
+            total_price += ci.meal.price * ci.quantity
+            total_tax += ci.quantity * ci.meal.price * ci.meal.tax / 100
 
         if cart.promo_code:
             discount = cart.promo_code.amount
