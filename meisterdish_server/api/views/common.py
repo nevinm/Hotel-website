@@ -638,3 +638,4 @@ def referral_return(request, data, token):
 
 @check_input('POST')
 def validate_session(request, data):
+    pass
