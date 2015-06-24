@@ -184,7 +184,7 @@ def apply_promocode(request, data, user):
             code_type = "Promocode "
         except PromoCode.DoesNotExist:
             try:
-                gift_card = GiftCard.objects.get(code=code, deleted=False)
+                gift_card = GiftCard.objects.get(code=code)
                 if gift_card.used:
                     return custom_error("This code is already redeemed.")
                 elif gift_card in cart.gift_cards.all():
