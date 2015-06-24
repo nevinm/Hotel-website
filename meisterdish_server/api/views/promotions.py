@@ -190,7 +190,8 @@ def apply_promocode(request, data, user):
         return json_response({"status":1, "message":"Promocode "+ code + " has been applied.", 
             "amount":total_price,
             "tax":total_tax,
-            "discount":discount
+            "discount":discount,
+            "code":code
         })
     except KeyError as e:
         log.error("Failed to apply promo code." + e.message)
@@ -225,7 +226,8 @@ def redeem_gift_card(request, data, user):
         return json_response({"status":1, "message":"Giftcard code "+ code + " has been applied.", 
             "amount":total_price,
             "tax":total_tax,
-            "discount":discount
+            "discount":discount,
+            "code":code
         })
     except KeyError as e:
         log.error("Redeem gift card error : " + e.message)
