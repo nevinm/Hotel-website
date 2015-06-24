@@ -4,7 +4,7 @@ $(document).ready(function() {
     $(document).on('click', ".promocard-delete", function() {
         giftcardParams = {};
         cardId = $(this).data().id;
-        if (confirm('Are you sure you want to delete this order?')) {
+        if (confirm('Are you sure you want to delete?')) {
             giftcardParams.deleteId = cardId;
             managePromoCodes(giftcardParams);
         } else {}
@@ -55,6 +55,7 @@ $(document).ready(function() {
             managePromoCodes(giftcardDetails); 
         }
     });
+    $('#new-date').datepicker();
 });
 
 //List gift cards
