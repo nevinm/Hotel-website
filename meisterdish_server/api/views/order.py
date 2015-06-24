@@ -213,7 +213,7 @@ def create_order(request, data, user):
 
         order.total_payable = total_price + total_tax
         
-        referral_bonus = float(Configuration.objects.get(key=REFERRAL_BONUS).value)
+        referral_bonus = float(Configuration.objects.get(key="REFERRAL_BONUS").value)
         referred = Referral.objects.filter(referree=user).exists() and user.credits >= referral_bonus
         if not order.objects.filter(cart__user=user, cart__user__role__pk=settings.ROLE_USER).exists() and referred:
             #First Order
