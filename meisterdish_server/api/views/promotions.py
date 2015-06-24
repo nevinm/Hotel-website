@@ -30,8 +30,7 @@ def gift_card_order(request, data, user=None):
 
         user = get_request_user(request)
         if not user or user.role.id == settings.ROLE_GUEST:
-            guest_details  = data['guest_details']
-            (user, session_key) = create_guest_user(request, guest_details)
+            (user, session_key) = create_guest_user(request, data)
         else:
             session_key = None
 
