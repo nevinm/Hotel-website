@@ -205,11 +205,14 @@ def redeem_gift_card(request, data, user):
             return custom_error("Sorry, you can not apply further promotional codes to this order")
             
         code = data["code"].strip()
+
         try:
+            cart = Cart.objects.get(user=user, completed=False)
             gift_card = GiftCard.objects.get(code=code)
             if gift_card.used:
                 return custom_error("This code is already applied.")
-
+        except Cart.DoesNotExist:
+            return custom_error("Please add some meals to cart before applying gift card.")
         except Exception as e:
             return custom_error("Invalid gift card code entered.")
         else:
