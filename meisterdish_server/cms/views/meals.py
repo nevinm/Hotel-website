@@ -354,8 +354,6 @@ def get_meal_details(request, data, user, meal_id):
         log.error("get_meal details : " + e.message)
         return custom_error("Failed to get the meal details.")
 
-"""
-@check_input('POST', settings.ROLE_ADMIN)
-def export_meals(request, data, user):
-    pass
-"""
+@check_input('GET')
+def import_meals(request, data):
+    return HttpResponse("Not Done Via Web Interface")

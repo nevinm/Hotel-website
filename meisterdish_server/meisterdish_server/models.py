@@ -419,6 +419,7 @@ class GiftCard(models.Model):
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     order_num = models.TextField(max_length=15, default='')
     payment = models.ForeignKey(Payment)
+    used = models.BooleanField(default=False)
     created = models.DateTimeField(null=True)
     
     def __unicode__(self):

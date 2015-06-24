@@ -275,39 +275,3 @@ function addToCart(meal_id) {
     var addToCartInstance = new AjaxHttpSender();
     addToCartInstance.sendPost(url, header, data, addToCartCallback, meal_id);
 }
-
-
-//share functions
-function popitup(url) {
-    var left = Number((screen.width / 2) - (700 / 2));
-    var top = Number((screen.height / 2) - (500 / 2));
-    var windowFeatures = 'channelmode=0,directories=0,fullscreen=0,location=0,menubar=0,resizable=0,scrollbars=0,status=0,width=700,height=500,top=' + top + ',left=' + left;
-    window.open(url, '', windowFeatures);
-}
-
-function facebookShare(site_url,accessToken) {
-    var imgURL = "http://farm4.staticflickr.com/3332/3451193407_b7f047f4b4_o.jpg"; //change with your external photo url
-    FB.api('me/photos', 'post', {
-        message: 'Whatssappp!!!!',
-        status: 'success',
-        access_token: accessToken,
-        url: imgURL
-    }, function(response) {
-        console.log(response)
-    });
-}
-function twitterShare(site_url){
-    site_url = "http://meisterdish.com/invite/ABCD1234?o=twtpic.twitter.com/OaPBIVjyo2";
-    var subjText = "Start cooking today with $20 off your first order!"+site_url;
-        popitup('http://twitter.com/share?url='+site_url+'&text='+subjText);
-}
-function emailShare(site_url){
-    site_url = "http://meisterdish.com/invite/ABCD1234?o=email";
-    var subjText = "Cooking at home shouldn’t be such a hassle. Meisterdish makes cooking fit the New York lifestyle. With fresh, cleaned and portioned ingredients delivered on demand, along with step-by-step instructions - all you have to do is cook. Cooking has never been so fast, fresh and tasty. "
-    +'\n\n'+" Sign up for free using this link and you’ll receive $20 off your first order:"
-    +'\n\n'+"       "+site_url
-    +'\n\n'+"Enjoy your meal!";
-    var subject = "Start cooking with Meisterdish";
-    $("#email-share a").attr('href', "mailto:?subject="+subject+"&body="+encodeURIComponent(subjText));
-
-}
