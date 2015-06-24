@@ -158,7 +158,7 @@ def get_cart_total(cart):
         return (total_price, total_tax, discount)
     except IOError as e:
         log.error("Cart total method :"+e.message)
-        return False
+        return (0, 0, 0)
 
 @check_input('POST')
 def apply_promocode(request, data, user):
@@ -191,7 +191,7 @@ def apply_promocode(request, data, user):
         })
     except Exception as e:
         log.error("Failed to apply promo code." + e.message)
-        return custom_error("Failed to get apply promo code.")
+        return custom_error("Failed to apply promo code.")
 
 @check_input('POST')
 def redeem_gift_card(request, data, user):
