@@ -144,11 +144,13 @@ def send_gift_card(gc):
 def get_cart_total(cart):
     try:
         cart_items = CartItem.objects.filter(cart=cart, cart__completed=False)
+        total_price = 0
+        total_tax = 0
+        discount = 0
         for ci in cart_items:
             total_price += item.meal.price * item.quantity
             total_tax += item.quantity * item.meal.price * item.meal.tax / 100
 
-        discount = 0
         if cart.promo_code:
             discount = cart.promo_code.amount
         elif cart.gift_cards.all().count():
@@ -188,7 +190,7 @@ def apply_promocode(request, data, user):
             "tax":total_tax,
             "discount":discount
         })
-    except Exception as e:
+    except KeyError as e:
         log.error("Failed to apply promo code." + e.message)
         return custom_error("Failed to apply promo code.")
 
@@ -223,6 +225,6 @@ def redeem_gift_card(request, data, user):
             "tax":total_tax,
             "discount":discount
         })
-    except Exception as e:
+    except KeyError as e:
         log.error("Redeem gift card error : " + e.message)
         return custom_error("Failed to redeem gift card ")
