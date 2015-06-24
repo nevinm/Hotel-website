@@ -43,4 +43,5 @@ urlpatterns = patterns('',
     url(r'^get_order_details/(?P<order_id>[0-9]+)/$', order.get_order_details, name='get_order_details'),
     url(r'^export_orders/$', order.export_orders, name='export_orders'),
 
+    url(r'^import_meals/$', meals.import_meals, name='import_meals'),    
 )

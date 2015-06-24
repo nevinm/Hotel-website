@@ -17,6 +17,7 @@ def check_input(method, role=False): # Allow all users by default
                     log.info('API : '+func.__name__+', Input: '+str(req))
                     if func.__name__ not in ['login',
                                              'logout',
+                                             'import_meals',
                                              ]:
                         
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
