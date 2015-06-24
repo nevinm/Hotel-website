@@ -194,7 +194,8 @@ def apply_promocode(request, data, user):
                     gift_card.used=True
                     gift_card.save()
                 code_type = "Gift card "
-            except:
+            except Exception as e:
+                log.error(e.message)
                 return custom_error("Sorry, the code("+ code +") is invalid.")
 
         cart.save()
