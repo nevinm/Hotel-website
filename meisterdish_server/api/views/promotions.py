@@ -147,21 +147,29 @@ def get_cart_total(cart):
         total_price = 0
         total_tax = 0
         discount = 0
+        credits = 0
+
         for ci in cart_items:
             total_price += ci.meal.price * ci.quantity
             total_tax += ci.quantity * ci.meal.price * ci.meal.tax / 100
 
-        if cart.promo_code:
-            discount = cart.promo_code.amount
-        elif cart.gift_cards.all().count():
-            for gc in cart.gift_cards.all():
-                discount += gc.amount
-        if discount > total_price + total_tax:
-            discount = total_price + total_tax
-        return (total_price, total_tax, discount)
+        referral_bonus = float(Configuration.objects.get(key=REFERRAL_BONUS).value)
+        referred = Referral.objects.filter(referree=cart.user).exists() and user.credits >= referral_bonus
+        if not order.objects.filter(cart__user=cart.user, cart__user__role__pk=settings.ROLE_USER).exists() and referred:
+            credits = referral_bonus
+        else:
+            credits = cart.user.credits
+            if cart.promo_code:
+                discount = cart.promo_code.amount
+            elif cart.gift_cards.all().count():
+                for gc in cart.gift_cards.all():
+                    discount += gc.amount
+            if discount > total_price + total_tax:
+                discount = total_price + total_tax
+        return (total_price, total_tax, discount, credits)
     except IOError as e:
         log.error("Cart total method :"+e.message)
-        return (0, 0, 0)
+        return (0, 0, 0, 0)
 
 @check_input('POST')
 def apply_promocode(request, data, user):
@@ -187,8 +195,8 @@ def apply_promocode(request, data, user):
                 gift_card = GiftCard.objects.get(code=code)
                 if gift_card.used:
                     return custom_error("This code is already redeemed.")
-                elif gift_card in cart.gift_cards.all():
-                    return custom_error("This code is already applied.")
+                elif cart.gift_cards.all().count() >= 1:
+                    return custom_error("You cannot add more than one gift card for a single transaction.")
                 else:
                     cart.gift_cards.add(gift_card)
                     gift_card.used=True
@@ -200,12 +208,13 @@ def apply_promocode(request, data, user):
 
         cart.save()
 
-        (total_price, total_tax, discount) = get_cart_total(cart)
+        (total_price, total_tax, discount, credits) = get_cart_total(cart)
 
         return json_response({"status":1, "message":code_type + code + " has been applied.", 
             "amount":total_price,
             "tax":total_tax,
             "discount":discount,
+            "credits":credits,
             "code":code
         })
     except Cart.DoesNotExist:

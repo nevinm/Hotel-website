@@ -211,41 +211,47 @@ def create_order(request, data, user):
         order.total_tax = total_tax
         order.tip = tip
 
-        order.total_payable = total_price + total_tax + tip + settings.SHIPPING_CHARGE
+        order.total_payable = total_price + total_tax
         
-        """
-        TODO
-
-        if not order.objects.filter(cart__user=user, cart__user__role__pk=settings.ROLE_USER).exists():
+        referral_bonus = float(Configuration.objects.get(key=REFERRAL_BONUS).value)
+        referred = Referral.objects.filter(referree=user).exists() and user.credits >= referral_bonus
+        if not order.objects.filter(cart__user=user, cart__user__role__pk=settings.ROLE_USER).exists() and referred:
             #First Order
-            referral_bonus = float(Configuration.objects.get(key=REFERRAL_BONUS).value)
-            if Referral.objects.filter(referree=user).exists() and user.credits >= referral_bonus:
-                # He is a referred user and have balance credit
-                user.credits -= referral_bonus
-                order.total_amount -= referral_bonus
-        
-        if user.credits > 0:
-            log.info("User has credits : "+str(user.credits))
-            if user.credits > order.total_amount:
-                user.credits = credits - order.total_amount
-                order.credits = order.total_amount
-                order.total_amount = 0
-            else:
-                order.total_amount = order.total_amount - user.credits
-                order.credits = user.credits
-                user.credits = 0
+            user.credits -= referral_bonus
+            order.total_payable -= referral_bonus
+        else:
+            if user.credits > 0:
+                log.info("User has credits : "+str(user.credits))
+                if user.credits > order.total_payable:
+                    user.credits = credits - order.total_payable
+                    order.credits = order.total_payable
+                    order.total_payable = 0
+                else:
+                    order.total_payable = order.total_payable - user.credits
+                    order.credits = user.credits
+                    user.credits = 0
 
-        if order.cart.promo_code:
-            if order.cart.promo_code.amount > order.total_amount:
-                order.total_amount = 0
-                order.discount = order.total_amount
-            else:
-                order.total_amount -= order.cart.promo_code.amount
-                order.discount += order.cart.promo_code.amount
-        elif order.cart.gift_cards.count():
-            gc_amount = 0
-            gc_amount = cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
-        """
+            if order.cart.promo_code:
+                if order.cart.promo_code.amount > order.total_payable:
+                    order.total_payable = 0
+                    order.discount = order.total_payable
+                else:
+                    order.total_payable -= order.cart.promo_code.amount
+                    order.discount = order.cart.promo_code.amount
+            elif order.cart.gift_cards.count():
+                gc_amount = 0
+                gc_amount = cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
+                if gc_amount > order.total_payable:
+                    order.discount = order.total_payable
+                    order.total_payable = 0
+                else:
+                    order.discount = gc_amount
+                    order.total_payable -=  gc_amount
+
+        order.total_payable += tip + settings.SHIPPING_CHARGE
+        log.info("___Order___")
+        log.info("Payable : " + str(order.total_payable))
+
         #Payment
         order.save_card = bool(data.get("save_card", 0))
         order.card_id = data.get("card_id", False)
@@ -263,6 +269,7 @@ def create_order(request, data, user):
             order.payment = payment
             order.status = 1
             order.save()
+            user.save()
 
             if not order.cart.completed:
                 order.cart.completed=True
