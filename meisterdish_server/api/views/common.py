@@ -635,3 +635,6 @@ def referral_return(request, data, token):
     else:
         log.error("Invalid referral token")
         return HttpResponseRedirect(settings.SITE_URL)
+
+@check_input('POST')
+def validate_session(request, data):
