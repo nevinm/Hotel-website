@@ -18,27 +18,40 @@ $(document).ready(function() {
             $('#copied-text').css('color','#6b6b6b');
             $("#copied-text").fadeIn();
         }
+    });
+    $('#email-share').on("click",function(){
+        if(localStorage['user_profile']){
+            var email = JSON.parse(localStorage['user_profile']).email;
+            $('input[name="email"]').val(email);
+        }else{
+            $('input[name="email"]').val("");
+        }
+        $('.email-pupup-wrapper').show();
+    });
+    
+    $('#send').on('click',function(e){
+        e.preventDefault();
+        var email = $('input[name="email"]').val();
+        if($('form#email-form').valid()){
+            shareViaEmail(email);
+            $('.email-pupup-wrapper').hide();    
+        }
+    });
+    
+    $('#cancel').on('click', function() {
+        $('.email-pupup-wrapper').hide();
+    });
+    
+    $('#facebook-share').on('click', function() {
+        checkLoginState();
     })
 
-    twttr.widgets.createShareButton(
-        'https://dev.twitter.com/',
-        document.getElementById('button-container'), {
-            text: 'Twitter - Share'
-        }
-    );
-
+    $('#twitter-share').on('click', function() {
+        twitterShare(homeUrl);
+    })
+    
+    getProfile();
 });
-$('#facebook-share').on('click', function() {
-    checkLoginState();
-})
-
-$('#twitter-share').on('click', function() {
-    twitterShare(homeUrl);
-})
-
-$('#email-share').on('click', function() {
-    shareViaEmail();
-})
 
 //share functions
 function popitup(url) {
@@ -94,9 +107,8 @@ var shareViaEmailCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function shareViaEmail() {
+function shareViaEmail(email) {
     var url = baseURL + "share_email/",
-        email = JSON.parse(localStorage['user_profile']).email,
         header = {
             "session-key": localStorage["session_key"]
         },
@@ -106,4 +118,29 @@ function shareViaEmail() {
         data = JSON.stringify(userData);
     var shareViaEmailInstance = new AjaxHttpSender();
     shareViaEmailInstance.sendPost(url, header, data, shareViaEmailCallback);
+}
+//Get profile API process
+var getProfileCallback = {
+    success: function(data, textStatus, profileId) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            $('#clipboard-text').text(userDetails.referral_code);
+        } else {
+            $('#clipboard-text').text(userDetails.message);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function getProfile(profileId) {
+    var url = baseURL + "get_profile/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+            "get": 1
+        };
+    data = JSON.stringify(userData);
+    var getProfileInstance = new AjaxHttpSender();
+    getProfileInstance.sendPost(url, header, data, getProfileCallback, profileId);
 }
