@@ -163,7 +163,7 @@ $(document).ready(function() {
         $(".city-selector-container").show();
     })
     $('#is-gift-card').on('click',function(){
-        $('.isPromocode-wrapper').fadeIn();
+        $('.isPromocode-wrapper').toggle();
     })
 });
 
@@ -928,9 +928,9 @@ function populateCreditCardDetails() {
     $('.address-payment-list-popup .button').remove();
     $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .popup .header').text("SELECT YOUR PAYMENT METHOD");
-
+    $('.address-payment-list-popup .popup-container').append("<div class='popup-sub-wrapper'>"+"</div>");
     $.each(cards, function(key, value) {
-        $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>" +
+        $('.address-payment-list-popup .popup-container .popup-sub-wrapper').append("<div class='payment-popup-sub-container'>" +
             "<input type='radio' class='checkbox-green added-card pullLeft' name='change-card' class='radio-button-payment' data-id='"+value.id+"' id='" + value.id+1 + "'>" +
             "<label for='"+value.id+1+"'>" + "<img class='paypal' src='" + value.logo + "'>" +
             "<span class='body-text-small'>" + value.type + " " +

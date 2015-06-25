@@ -9,7 +9,10 @@ $(document).ready(function() {
         var giftcardDetails = fetchLocalGiftCardData();
         populateGiftcardDetails(giftcardDetails);
     }
-
+    if (localStorage['loggedIn'] == 'false')
+    {
+        $('.backToAccount').hide();
+    }
     populateYear();
     //Old giftcard page
     $("#redeem-card").on('click', function() {
