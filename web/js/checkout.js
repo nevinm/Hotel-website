@@ -377,20 +377,6 @@ var clearCartCallback = {
     success: function(data, textStatus) {
         CartItemCount();
         getCartItems();
-        var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
-            adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null,
-            loggedIn = (userLoggedin || adminLoggedin);
-        dataAfterOrdering = {};
-        dataAfterOrdering.message = "Your orders are successfully placed.";
-        $(".ok-container").show();
-        $(".close-container").hide();
-        if (loggedIn) {
-            $(".ok-container a").attr("href", "orderhistory.html");
-            showPopup(dataAfterOrdering);
-        } else {
-            $(".ok-container a").attr("href", "../index.html");
-            showPopup(dataAfterOrdering);
-        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -797,7 +783,21 @@ var placeOrderCallback = {
     success: function(data, textStatus) {
         var response = JSON.parse(data);
         if (response.status == 1) {
-            clearCart();
+            // clearCart();
+            var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
+                adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null,
+            loggedIn = (userLoggedin || adminLoggedin);
+            dataAfterOrdering = {};
+            dataAfterOrdering.message = "Your orders are successfully placed.";
+            $(".ok-container").show();
+            $(".close-container").hide();
+            if (loggedIn) {
+                $(".ok-container a").attr("href", "orderhistory.html");
+                showPopup(dataAfterOrdering);
+            } else {
+                $(".ok-container a").attr("href", "../index.html");
+                showPopup(dataAfterOrdering);
+            }
         } else {
             showPopup(response);
         }
