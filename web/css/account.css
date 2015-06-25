@@ -1523,8 +1523,15 @@ img.accepted-cards
 .isPromocode-wrapper .btn{
 	width: 40%;
 	float: left;
-	margin-bottom: 20px;
 	min-width: 55px;
+}
+.promo-validation-message {
+	font-family:'ProximaNova-Regular';
+	font-size: 12px;
+	color: #ff7878;
+	word-break:break-word;
+	line-height: 15px;
+	letter-spacing: .6px;
 }
 /*==================================*\
 			&TABLET

@@ -118,6 +118,15 @@ $(document).ready(function() {
         populateCreditCardDetails();
     })
 
+    $('#apply-promo-gift').on("click",function(){
+        var code = $('#promo-gift-input').val();
+        if(code == ""){
+            $('.promo-validation-message').text("* "+"Please enter Giftcard/Promocode");
+        }else{
+            checkPromoCode(code);
+        }
+    })
+
     $("#place-order").on("click", function(e) {
         e.preventDefault();
         if (validateOrder()) {
@@ -308,7 +317,7 @@ function populateCartItems(data) {
     updateReciept();
 }
 
-function updateReciept() {
+function updateReciept(discount) {
     var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
         totalDriverTip = parseInt($('.driver-tip option:selected').text().substring(1)),
         totalDeliveryCost = 2;
@@ -321,6 +330,9 @@ function updateReciept() {
         totalTaxCost += (tax * quantity);
     });
     totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost;
+    if(discount){
+        totalCost = totalCost - discount;
+    }
 
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
@@ -976,4 +988,34 @@ function validateOrder() {
         }
     }
     return true;
+}
+
+//checkpromo code
+var checkPromoCodeCallback = {
+    success: function(data, textStatus) {
+        var userData = JSON.parse(data);
+        if(userData.status == 1){
+            $('.promo-validation-message').css('color','#8EC657');
+            $('.promo-validation-message').text("* "+userData.message);
+            updateReciept(userData.discount);
+        } 
+        if (userData.status == -1) {
+            $('.promo-validation-message').css('color','#ff7878');
+            $('.promo-validation-message').text("* "+userData.message);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function checkPromoCode(code){
+    var url = baseURL + "apply_promocode/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {
+            "code": code
+        };
+    data = JSON.stringify(params);
+    var checkPromoCodeInstance = new AjaxHttpSender();
+    checkPromoCodeInstance.sendPost(url, header, data, checkPromoCodeCallback);
 }

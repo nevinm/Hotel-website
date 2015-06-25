@@ -57,6 +57,7 @@ $(document).ready(function() {
             }
         }
     });
+    $( "#new-date" ).datepicker({minDate: new Date()});
     $('#new-date').datepicker();
 });
 
@@ -101,12 +102,11 @@ function populatePromoCodes(promoCodes) {
         });
 
         $(".pagination").pagination({
-            items: data.total_count,
-            itemsOnPage: data.per_page,
-            currentPage: data.current_page,
+            pages: promoCodes.num_pages,
+            currentPage: promoCodes.current_page,
             cssStyle: 'light-theme',
             onPageClick: function(pageNumber, event) {
-                getOrders(pageNumber);
+                listPromoCode(pageNumber);
             }
         });
     }

@@ -101,12 +101,11 @@ function populateGiftCardsList(giftcardList) {
         });
 
         $(".pagination").pagination({
-            items: data.total_count,
-            itemsOnPage: data.per_page,
-            currentPage: data.current_page,
+            pages: giftcardList.num_pages,
+            currentPage: giftcardList.current_page,
             cssStyle: 'light-theme',
             onPageClick: function(pageNumber, event) {
-                getOrders(pageNumber);
+                listGiftCards(pageNumber);
             }
         });
     }
