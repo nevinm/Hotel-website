@@ -249,7 +249,6 @@ def remove_promocode(request, data, user):
             "tax":total_tax,
             "discount":discount,
             "credits":credits,
-            "code":code
         })
     except Cart.DoesNotExist:
             return custom_error("There are no meals added to this transaction.")
