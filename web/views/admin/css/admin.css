@@ -416,7 +416,7 @@ table#userlist {
     text-transform: uppercase;
     font-size: 12px;
     margin-top: 10px;
-    width: 130px;
+    width: 12.5%;
 }
 .order-list-container .search-filters label{
      margin-top: 5px;
@@ -1051,4 +1051,11 @@ input#add-gift-card{
 #new-code-error{
     position: absolute;
     top: 0;
+}
+
+#total-amount{
+    width: 100px;
+}
+.filter-container .search-filters:nth-child(6){
+    width: 11%;
 }
