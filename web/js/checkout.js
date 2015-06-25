@@ -318,10 +318,12 @@ function populateCartItems(data) {
 }
 
 function updateReciept(GiftcardDetails) {
-    var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
+    var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0, 
+        totalDiscount =0,totalCredits = 0,
         totalDriverTip = parseInt($('.driver-tip option:selected').text().substring(1)),
         totalDeliveryCost = 2;
     $(".order-list-items").each(function(key, value) {
+        debugger;
         quantity = parseInt($(value).find('.quantity').val());
         price = parseInt($(value).find('.price-container').attr("data-price"));
         tax = parseInt($(value).find('.price-container').attr("data-tax"));
@@ -329,11 +331,13 @@ function updateReciept(GiftcardDetails) {
         totalItemCost += (price * quantity);
         totalTaxCost += (tax * quantity);
     });
-    totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost;
     if(GiftcardDetails){
-        totalCost = totalCost - GiftcardDetails.discount + 
-                    GiftcardDetails.tax - GiftcardDetails.credits;
+        totalItemCost = GiftcardDetails.amount;
+        totalTaxCost = GiftcardDetails.tax;
+        totalDiscount = GiftcardDetails.discount;
+        totalCredits = GiftcardDetails.credits;
     }
+    totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost -totalDiscount-totalCredits;
 
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
