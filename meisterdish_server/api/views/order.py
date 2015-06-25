@@ -211,11 +211,11 @@ def create_order(request, data, user):
         order.total_tax = total_tax
         order.tip = tip
 
-        order.total_payable = total_price + total_tax
+        order.total_payable = total_price + total_tax + tip + settings.SHIPPING_CHARGE
         
         referral_bonus = float(Configuration.objects.get(key="REFERRAL_BONUS").value)
         referred = Referral.objects.filter(referree=user).exists() and user.credits >= referral_bonus
-        if not order.objects.filter(cart__user=user, cart__user__role__pk=settings.ROLE_USER).exists() and referred:
+        if not Order.objects.filter(cart__user=user).exists() and referred:
             #First Order
             user.credits -= referral_bonus
             order.total_payable -= referral_bonus
@@ -240,7 +240,7 @@ def create_order(request, data, user):
                     order.discount = order.cart.promo_code.amount
             elif order.cart.gift_cards.count():
                 gc_amount = 0
-                gc_amount = cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
+                gc_amount = order.cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
                 if gc_amount > order.total_payable:
                     order.discount = order.total_payable
                     order.total_payable = 0
@@ -248,7 +248,6 @@ def create_order(request, data, user):
                     order.discount = gc_amount
                     order.total_payable -=  gc_amount
 
-        order.total_payable += tip + settings.SHIPPING_CHARGE
         log.info("___Order___")
         log.info("Payable : " + str(order.total_payable))
 

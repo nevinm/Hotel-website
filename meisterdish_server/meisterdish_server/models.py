@@ -138,7 +138,7 @@ class User(models.Model):
     last_name = models.CharField(db_index=True, max_length=25, default="")
     full_name = models.CharField(db_index=True, max_length=55, default="")
     zipcode = models.CharField(db_index=True, max_length=6, null=True, blank=True)
-    email = models.EmailField(db_index=True, max_length=30, unique=True, null=True)
+    email = models.EmailField(db_index=True, max_length=30, null=True)
     mobile = models.CharField(max_length=15, null=True)
     profile_image = models.ForeignKey(Image, null=True)
     
