@@ -57,6 +57,21 @@ $(document).ready(function() {
             }
         }
     });
+    
+     $(document).on('click', ".status", function() {
+        var id , status;
+        id = $(this).attr('data-id');
+        if($(this).hasClass('down')){
+            status = 0;
+            $(this).removeClass('down');
+            $(this).text('Inactive');
+        }else{
+            status= 1;
+            $(this).addClass('down');
+            $(this).text('Active');
+        }
+        updatePromocodeStatus(id, status);
+    })
     $( "#new-date" ).datepicker({minDate: new Date()});
     $('#new-date').datepicker();
 });
@@ -99,6 +114,12 @@ function populatePromoCodes(promoCodes) {
                 "<td class='card-amount' data-amount='" + value.amount + "'>" + dollarConvert(value.amount) + "</td>" +
                 "<td class='no-popup'><button type='button' class='promocard-edit btn btn-small-primary medium-green' data-id='" + value.id + "'>Edit</button></td>" +
                 "<td class='no-popup'><button type='button' class='promocard-delete btn btn-small-primary medium-green' data-id='" + value.id + "'>Delete</button></td></tr>");
+
+                if (value.status) {
+                    $("tbody tr:last").append("<td><button data-id='" + value.id + "' class='status down'>Active</button></td>");
+                } else {
+                    $("tbody tr:last").append("<td><button data-id='" + value.id + "' class='status'>Inactive</button></td>")
+                }
         });
 
         $(".pagination").pagination({
@@ -152,3 +173,29 @@ function giftcardEmptyCheck(key, value) {
         giftcardParams[key] = value;
     } else {}
 }
+
+// Activate User 
+    var PromocodeStatusCallback = {
+        success: function(data, textStatus) {
+            var updatePromocodeStatus = JSON.parse(data);
+            if(updatePromocodeStatus.status == 1){
+
+            }else{}
+        },
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    }
+
+    function updatePromocodeStatus(id, status) {
+        var url = baseURL + 'cms/change_promocode_status/';
+        header = {
+                "session-key": localStorage['session_key']
+            },
+            params = {
+                "id": id,
+                'status': status
+            },
+            data = JSON.stringify(params);
+
+        var PromocodeStatusInstance = new AjaxHttpSender();
+        PromocodeStatusInstance.sendPost(url, header, data, PromocodeStatusCallback);
+    }
