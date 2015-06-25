@@ -228,7 +228,31 @@ def apply_promocode(request, data, user):
 @check_input('POST')
 def remove_promocode(request, data, user):
     try:
-        pass
+        cart = Cart.objects.get(completed=False, user=user)
+        if cart.promo_code:
+            cart.promo_code = None
+            code_type = "Promocode"
+        elif cart.gift_cards.all().count() != 0:
+            gc = cart.gift_cards.all()[0]
+            gc.used = False
+            gc.save()
+            cart.gift_cards = []
+            code_type = "Gift card"
+        else:
+            return custom_error("There are no coupons applied to this transaction.")
+        cart.save()
+
+        (total_price, total_tax, discount, credits) = get_cart_total(cart)
+
+        return json_response({"status":1, "message":"Removed "+code_type, 
+            "amount":total_price,
+            "tax":total_tax,
+            "discount":discount,
+            "credits":credits,
+            "code":code
+        })
+    except Cart.DoesNotExist:
+            return custom_error("There are no meals added to this transaction.")
     except Exception as e:
         log.error("remove promocode." + e.message)
         return custom_error("An error has occurred. Please try again.")
