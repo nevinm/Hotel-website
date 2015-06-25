@@ -164,10 +164,10 @@ def get_cart_total(cart):
             elif cart.gift_cards.all().count():
                 for gc in cart.gift_cards.all():
                     discount += gc.amount
-            if discount > total_price + total_tax:
+            if discount > total_price + total_tax :
                 discount = total_price + total_tax
         return (total_price, total_tax, discount, credits)
-    except IOError as e:
+    except Exception as e:
         log.error("Cart total method :"+e.message)
         return (0, 0, 0, 0)
 
@@ -190,6 +190,7 @@ def apply_promocode(request, data, user):
                 return custom_error("Sorry, the promo code ("+ code +") has expired.")
             cart.promo_code = code_obj
             code_type = "Promocode "
+            amt = code_obj.amount
         except PromoCode.DoesNotExist:
             try:
                 gift_card = GiftCard.objects.get(code=code)
@@ -201,7 +202,8 @@ def apply_promocode(request, data, user):
                     cart.gift_cards.add(gift_card)
                     gift_card.used=True
                     gift_card.save()
-                code_type = "Gift card "
+                    code_type = "Gift card "
+                    amt = gift_card.amount
             except Exception as e:
                 log.error(e.message)
                 return custom_error("Sorry, the code("+ code +") is invalid.")
@@ -210,7 +212,7 @@ def apply_promocode(request, data, user):
 
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
 
-        return json_response({"status":1, "message":code_type + code + " has been applied.", 
+        return json_response({"status":1, "message":code_type + code + " has been applied. You will get a discount of "+str(amt), 
             "amount":total_price,
             "tax":total_tax,
             "discount":discount,

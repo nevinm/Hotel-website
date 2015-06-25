@@ -211,7 +211,7 @@ def create_order(request, data, user):
         order.total_tax = total_tax
         order.tip = tip
 
-        order.total_payable = total_price + total_tax
+        order.total_payable = total_price + total_tax + tip + settings.SHIPPING_CHARGE
         
         referral_bonus = float(Configuration.objects.get(key="REFERRAL_BONUS").value)
         referred = Referral.objects.filter(referree=user).exists() and user.credits >= referral_bonus
@@ -248,7 +248,6 @@ def create_order(request, data, user):
                     order.discount = gc_amount
                     order.total_payable -=  gc_amount
 
-        order.total_payable += tip + settings.SHIPPING_CHARGE
         log.info("___Order___")
         log.info("Payable : " + str(order.total_payable))
 
