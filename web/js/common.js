@@ -8,28 +8,58 @@ var baseURL = 'http://meisterdish.qburst.com/backend/api/',
 //If already logged in
 var $userentry = $('.login-signup');
 
-var sessionCheckCallback = {
-    success: function(data, textStatus) {
-        sessionDetails = JSON.parse(data);
-        if (sessionDetails.status == 1) {} else {
-            localStorage['session-expired'] = JSON.stringify("true");
-            window.location.href = homeUrl;
-        }
-    },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-}
+$(document).ready(function() {
+    //Logout process
+    $("#logout,.mobile-logout").on('click', function() {
+        logingOut();
+    });
 
-function sessionCheck() {
-    var url = baseURL + 'session_check/',
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        userInfo = {},
-        data = JSON.stringify(userInfo);
+    // &NAVMENU - RESPONSIVE
+    $('.icon-menu').on("click", function() {
+        clicked = 1;
+        $('.navMenu').show();
+        $('#header').animate({
+                marginLeft: "80%"
 
-    var sessionCheckInstance = new AjaxHttpSender();
-    sessionCheckInstance.sendPost(url, header, data, sessionCheckCallback);
-}
+            })
+            // $("#page-container").css("position","fixed")
+        $('#page-container').animate({
+            marginLeft: "80%"
+        })
+        setTimeout(function() {
+            $('#page-container').hide();
+        })
+        $('.navMenu').animate({
+            marginLeft: "0"
+        });
+        setTimeout(function() {
+            $('.icon-menu').addClass('icon-cancel').removeClass('icon-menu');
+        }, 100)
+    });
+    $(document).on('click', '.icon-cancel', function() {
+        clicked = 0;
+        $('.navMenu').animate({
+            marginLeft: "-80%"
+        });
+        // $("#page-container").css("position","relative");
+        $('#page-container').animate({
+            marginLeft: "0px"
+        })
+        setTimeout(function() {
+            $('#page-container').show();
+        }, 700)
+
+        $('#header').animate({
+            marginLeft: "0px"
+        })
+        setTimeout(function() {
+            $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
+        }, 600)
+    })
+
+    verifyAccount();
+});
+
 
 function checkLoggedIn() {
     if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
@@ -166,6 +196,7 @@ function verifyAccount() {
 }
 
 function logingOut() {
+    eraseCookie("SessionExpireTime");
     localStorage.removeItem('username');
     localStorage.removeItem('session_key');
     localStorage.removeItem('cartItems');
@@ -230,57 +261,7 @@ function showErrorPopup(data) {
         $('.error-popup-wrapper').hide();
     })
 }
-$(document).ready(function() {
-    //Logout process
-    $("#logout,.mobile-logout").on('click', function() {
-        logingOut();
-    });
 
-    // &NAVMENU - RESPONSIVE
-    $('.icon-menu').on("click", function() {
-        clicked = 1;
-        $('.navMenu').show();
-        $('#header').animate({
-                marginLeft: "80%"
-
-            })
-            // $("#page-container").css("position","fixed")
-        $('#page-container').animate({
-            marginLeft: "80%"
-        })
-        setTimeout(function() {
-            $('#page-container').hide();
-        })
-        $('.navMenu').animate({
-            marginLeft: "0"
-        });
-        setTimeout(function() {
-            $('.icon-menu').addClass('icon-cancel').removeClass('icon-menu');
-        }, 100)
-    });
-    $(document).on('click', '.icon-cancel', function() {
-        clicked = 0;
-        $('.navMenu').animate({
-            marginLeft: "-80%"
-        });
-        // $("#page-container").css("position","relative");
-        $('#page-container').animate({
-            marginLeft: "0px"
-        })
-        setTimeout(function() {
-            $('#page-container').show();
-        }, 700)
-
-        $('#header').animate({
-            marginLeft: "0px"
-        })
-        setTimeout(function() {
-            $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
-        }, 600)
-    })
-
-    verifyAccount();
-});
 
 //JQuery Validation   
 $("form").each(function() {
@@ -342,7 +323,7 @@ $("form").each(function() {
                 maxlength: 20
             },
             date: {
-                required:true
+                required: true
             },
             email: {
                 required: true,
@@ -369,7 +350,7 @@ $("form").each(function() {
                 minlength: 6,
                 equalTo: "#new-password"
             },
-            promocode:{
+            promocode: {
                 required: true
             },
             zip: {
@@ -596,3 +577,4 @@ function mobileResponsive() {
         $('#header').css("margin-left", "0px");
     }
 }
+

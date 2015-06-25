@@ -33,6 +33,7 @@ urlpatterns = patterns('',
     
     url(r'^manage_promocode/$', promotions.manage_promocode, name='manage_promocode'), 
     url(r'^list_promocodes/$', promotions.list_promocodes, name='list_promocodes'), 
+    url(r'^change_promocode_status/$', promotions.change_promocode_status, name='change_promocode_status'), 
 
     url(r'^get_delivery_areas/$', delivery.get_delivery_areas, name='get_delivery_areas'),
     url(r'^manage_delivery_area/$', delivery.manage_delivery_area, name='manage_delivery_area'),

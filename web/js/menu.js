@@ -256,6 +256,7 @@ var addToCartCallback = {
             showPopup(meal_details);
             if (meal_details.session_key && (meal_details.session_key).length) {
                 localStorage['session_key'] = meal_details.session_key;
+                createCookie("SessionExpireTime", "true", 1);
             }
             CartItemCount();
         }
