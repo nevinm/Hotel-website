@@ -240,7 +240,7 @@ def create_order(request, data, user):
                     order.discount = order.cart.promo_code.amount
             elif order.cart.gift_cards.count():
                 gc_amount = 0
-                gc_amount = cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
+                gc_amount = order.cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
                 if gc_amount > order.total_payable:
                     order.discount = order.total_payable
                     order.total_payable = 0
@@ -277,7 +277,7 @@ def create_order(request, data, user):
         
             return json_response({"status":1, "message":"The Order has been placed successully."})
         
-    except IOError as e:
+    except Exception as e:
         log.error("Failed to create order." + e.message)
         return custom_error(e.message + "is missing.")
 
