@@ -55,6 +55,7 @@ urlpatterns = patterns('',
     url(r'^check_delivery/$', views.check_delivery, name='check_delivery'),
     url(r'^apply_promocode/$', promotions.apply_promocode, name='apply_promocode'),
     url(r'^gift_card_order/$', promotions.gift_card_order, name='gift_card_order'),
+    url(r'^remove_promocode/$', promotions.remove_promocode, name='remove_promocode'),
     
     url(r'^share_email/$', views.share_via_email, name='share_via_email'),
     url(r'^validate_session/$', views.validate_session, name='validate_session'),

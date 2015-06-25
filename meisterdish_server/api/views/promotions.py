@@ -1,7 +1,7 @@
 from django.db.models import Q
 from api.views.decorators import *
 from django.core.paginator import Paginator
-from meisterdish_server.models import GiftCard, PromoCode, CreditCardDetails, Order, Cart, CartItem
+from meisterdish_server.models import GiftCard, PromoCode, CreditCardDetails, Order, Cart, CartItem, Configuration
 from datetime import datetime
 import settings , logging
 from libraries import save_payment_data, mail
@@ -224,3 +224,11 @@ def apply_promocode(request, data, user):
     except Exception as e:
         log.error("Failed to apply promo code/gift card." + e.message)
         return custom_error("Failed to apply promo code / gift card.")
+
+@check_input('POST')
+def remove_promocode(request, data, user):
+    try:
+        pass
+    except Exception as e:
+        log.error("remove promocode." + e.message)
+        return custom_error("An error has occurred. Please try again.")

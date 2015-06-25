@@ -400,7 +400,7 @@ class Order(models.Model):
             self.cart.save()
 
         if not self.grand_total or self.grand_total == 0:            
-            promo_amt = 0 if not self.cart.promo_code else self.card.promo_code.amount
+            promo_amt = 0 if not self.cart.promo_code else self.cart.promo_code.amount
             gift_card_amt = 0
             self.discount = gift_card_amt + promo_amt
 
