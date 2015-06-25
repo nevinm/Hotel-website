@@ -222,3 +222,18 @@ def list_promocodes(request, data, user):
     except Exception as e:
         log.error("Failed to list promo codes." + e.message)
         return custom_error("Failed to get promo codes.")
+
+@check_input('POST', True)
+def change_promocode_status(request, data, user):
+    try:
+        status = bool(data["status"])
+        code_id = data["id"]
+
+        code_obj = PromoCode.objects.get(pk=code_id)
+        code_obj.status = status
+        code_obj.save()
+        msg = ("A" if status else "Dea") + "ctivated"
+        return json_response({"status":1, "message": msg+ " promo code "+code_obj.code, "new_status":int(status)})
+    except Exception as e:
+        log.error("Failed change promo code status." + e.message)
+        return custom_error("An error has occurred.")
