@@ -277,7 +277,7 @@ def create_order(request, data, user):
         
             return json_response({"status":1, "message":"The Order has been placed successully."})
         
-    except Exception as e:
+    except IOError as e:
         log.error("Failed to create order." + e.message)
         return custom_error(e.message + "is missing.")
 
