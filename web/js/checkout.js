@@ -317,7 +317,7 @@ function populateCartItems(data) {
     updateReciept();
 }
 
-function updateReciept(discount) {
+function updateReciept(GiftcardDetails) {
     var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
         totalDriverTip = parseInt($('.driver-tip option:selected').text().substring(1)),
         totalDeliveryCost = 2;
@@ -330,8 +330,9 @@ function updateReciept(discount) {
         totalTaxCost += (tax * quantity);
     });
     totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost;
-    if(discount){
-        totalCost = totalCost - discount;
+    if(GiftcardDetails){
+        totalCost = totalCost - GiftcardDetails.discount + 
+                    GiftcardDetails.tax - GiftcardDetails.credits;
     }
 
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
@@ -997,7 +998,7 @@ var checkPromoCodeCallback = {
         if(userData.status == 1){
             $('.promo-validation-message').css('color','#8EC657');
             $('.promo-validation-message').text("* "+userData.message);
-            updateReciept(userData.discount);
+            updateReciept(userData);
         } 
         if (userData.status == -1) {
             $('.promo-validation-message').css('color','#ff7878');
