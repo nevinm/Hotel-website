@@ -24,7 +24,6 @@ urlpatterns = patterns('',
     url(r'^get_states/$', views.get_states, name='get_states'),
     url(r'^get_cities/$', views.get_cities, name='get_cities'),
  
-    url(r'^redeem_gift_card/$', promotions.redeem_gift_card, name='redeem_gift_card'),
     url(r'^upload_picture/$', views.upload_picture, name='upload_picture'),
     
     url(r'^get_categories/$', views.get_categories, name='get_categories'),
@@ -58,4 +57,5 @@ urlpatterns = patterns('',
     url(r'^gift_card_order/$', promotions.gift_card_order, name='gift_card_order'),
     
     url(r'^share_email/$', views.share_via_email, name='share_via_email'),
+    url(r'^validate_session/$', views.validate_session, name='validate_session'),
 )

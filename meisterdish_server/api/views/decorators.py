@@ -29,6 +29,7 @@ def check_input(method):
                                              "gift_card_order",
                                              "referral_return",
                                              "get_cart_items_count",
+                                             "validate_session",
                                              ]:
 
                         session_key = request.META.get('HTTP_SESSION_KEY', None)

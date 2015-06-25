@@ -1,7 +1,7 @@
 from django.db.models import Q
 from api.views.decorators import *
 from django.core.paginator import Paginator
-from meisterdish_server.models import GiftCard, PromoCode, CreditCardDetails, Order, Cart
+from meisterdish_server.models import GiftCard, PromoCode, CreditCardDetails, Order, Cart, CartItem
 from datetime import datetime
 import settings , logging
 from libraries import save_payment_data, mail
@@ -30,8 +30,7 @@ def gift_card_order(request, data, user=None):
 
         user = get_request_user(request)
         if not user or user.role.id == settings.ROLE_GUEST:
-            guest_details  = data['guest_details']
-            (user, session_key) = create_guest_user(request, guest_details)
+            (user, session_key) = create_guest_user(request, data)
         else:
             session_key = None
 
@@ -145,20 +144,32 @@ def send_gift_card(gc):
 def get_cart_total(cart):
     try:
         cart_items = CartItem.objects.filter(cart=cart, cart__completed=False)
-        for ci in cart_items:
-            total_price += item.meal.price * item.quantity
-            total_tax += item.quantity * item.meal.price * item.meal.tax / 100
-
+        total_price = 0
+        total_tax = 0
         discount = 0
-        if cart.promo_code:
-            discount = cart.promo_code.amount
-        elif cart.gift_cards.all().count():
-            for gc in cart.gift_cards.all():
-                discount += gc.amount
-        return (total_price, total_tax, discount)
+        credits = 0
+
+        for ci in cart_items:
+            total_price += ci.meal.price * ci.quantity
+            total_tax += ci.quantity * ci.meal.price * ci.meal.tax / 100
+
+        referral_bonus = float(Configuration.objects.get(key="REFERRAL_BONUS").value)
+        referred = Referral.objects.filter(referree=cart.user).exists() and user.credits >= referral_bonus
+        if not order.objects.filter(cart__user=cart.user, cart__user__role__pk=settings.ROLE_USER).exists() and referred:
+            credits = referral_bonus
+        else:
+            credits = cart.user.credits
+            if cart.promo_code:
+                discount = cart.promo_code.amount
+            elif cart.gift_cards.all().count():
+                for gc in cart.gift_cards.all():
+                    discount += gc.amount
+            if discount > total_price + total_tax:
+                discount = total_price + total_tax
+        return (total_price, total_tax, discount, credits)
     except IOError as e:
         log.error("Cart total method :"+e.message)
-        return False
+        return (0, 0, 0, 0)
 
 @check_input('POST')
 def apply_promocode(request, data, user):
@@ -172,58 +183,42 @@ def apply_promocode(request, data, user):
             return custom_error("You cannot apply more than one promo code for a single transaction.")
 
         code = data["code"].strip()
-        code_obj = PromoCode.objects.get(code=code, deleted=False)
 
-        if code_obj.expiry_date < datetime.now():
-            return custom_error("The Promo Code ("+ code +") has expired.")
+        try:
+            code_obj = PromoCode.objects.get(code=code, deleted=False)
+            if code_obj.expiry_date < datetime.now():
+                return custom_error("Sorry, the promo code ("+ code +") has expired.")
+            cart.promo_code = code_obj
+            code_type = "Promocode "
+        except PromoCode.DoesNotExist:
+            try:
+                gift_card = GiftCard.objects.get(code=code)
+                if gift_card.used:
+                    return custom_error("This code is already redeemed.")
+                elif cart.gift_cards.all().count() >= 1:
+                    return custom_error("You cannot add more than one gift card for a single transaction.")
+                else:
+                    cart.gift_cards.add(gift_card)
+                    gift_card.used=True
+                    gift_card.save()
+                code_type = "Gift card "
+            except Exception as e:
+                log.error(e.message)
+                return custom_error("Sorry, the code("+ code +") is invalid.")
 
-        #Promo code Type check TODO
-        
-        cart.promo_code = code_obj
         cart.save()
 
-        (total_price, total_tax, discount) = get_cart_total(cart)
+        (total_price, total_tax, discount, credits) = get_cart_total(cart)
 
-        return json_response({"status":1, "message":"Promocode "+ code + " has been applied.", 
+        return json_response({"status":1, "message":code_type + code + " has been applied.", 
             "amount":total_price,
             "tax":total_tax,
-            "discount":discount
+            "discount":discount,
+            "credits":credits,
+            "code":code
         })
+    except Cart.DoesNotExist:
+            return custom_error("Please add some meals to cart before applying code.")
     except Exception as e:
-        log.error("Failed to apply promo code." + e.message)
-        return custom_error("Failed to get apply promo code.")
-
-@check_input('POST')
-def redeem_gift_card(request, data, user):
-    try:
-        #First order and referral bonus available        
-        if not Order.objects.filter(cart__user=user).exists() and Referral.objects.filter(referree=user).exists() and user.credits > 0:
-            return custom_error("Sorry, you can not apply further promotional codes to this order")
-            
-        code = data["code"].strip()
-        try:
-            gift_card = GiftCard.objects.get(user=user, code=code)
-            if gift_card.used:
-                return custom_error("This code is already applied.")
-
-        except Exception as e:
-            return custom_error("Invalid gift card code entered.")
-        else:
-            credits = gift_card.credits
-            user.credits = user.credits + credits
-            #user.gift_cards.remove(gift_card)
-            user.save()
-            
-            gift_card.used=True
-            gift_card.save()
-        
-        (total_price, total_tax, discount) = get_cart_total(cart)
-
-        return json_response({"status":1, "message":"Giftcard code "+ code + " has been applied.", 
-            "amount":total_price,
-            "tax":total_tax,
-            "discount":discount
-        })
-    except Exception as e:
-        log.error("Redeem gift card error : " + e.message)
-        return custom_error("Failed to redeem gift card ")
+        log.error("Failed to apply promo code/gift card." + e.message)
+        return custom_error("Failed to apply promo code / gift card.")
