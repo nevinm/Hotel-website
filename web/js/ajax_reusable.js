@@ -27,11 +27,9 @@ AjaxHttpSender.prototype.sendPost = function(url, header, data, callback, flag) 
         data: data,
         beforeSend: function() {
         currentPage = getCurrentPage("/", ".", window.location.href);
-        // if(currentPage !='menu' && currentPage !="How_it_works"){
             if(readCookie("SessionExpireTime")){
                 createCookie("SessionExpireTime", "true", 1);
             }else{}
-        // }
             onStartAjaxRequest();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
