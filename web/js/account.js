@@ -1,10 +1,12 @@
 function profileAutoPopulate() {
-    var userDetails = JSON.parse(localStorage['user_profile']);
+    var userDetails = JSON.parse(localStorage['user_profile']),
+        currentPage = $("title").text();
+
     if (currentPage == 'Meisterdish - Change Contact') {
         $("#change-contact input[name='firstname']").val(userDetails.first_name);
         $("#change-contact input[name='lastname']").val(userDetails.last_name);
         $("#change-contact input[name='phonenumber']").val(userDetails.mobile);
-        $('input[name=notification]').prop('checked',userDetails.sms_notification);
+        $('input[name=notification]').prop('checked', userDetails.sms_notification);
     }
     if (currentPage == 'Meisterdish - Account') {
         $(".small-profile-pic").attr('src', userDetails.profile_image_thumb);
@@ -56,15 +58,15 @@ $(document).ready(function() {
     var editContactCallback = {
         success: function(data, textStatus) {
             userDetails = JSON.parse(data);
-            if (userDetails.status ==1) {
+            if (userDetails.status == 1) {
                 showPopup(userDetails);
                 newName = $("#change-contact").find("input[name=firstname]").val();
                 $('#navbar-username a').text(newName);
-                localStorage['username'] = newName;  
-            }else{
+                localStorage['username'] = newName;
+            } else {
                 showPopup(userDetails);
             }
-  
+
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
@@ -84,19 +86,19 @@ $(document).ready(function() {
             mobile_number = $changeContactForm.find("input[name=phonenumber]").val(),
             remember = 1,
             isSendSms = 0;
-            if($('input[name=notification]').prop('checked')){
-                isSendSms=1;
-            }
-            header = {
-                "session-key": localStorage["session_key"]
-            }
-            userData = {
-                "first_name": first_name,
-                "last_name": last_name,
-                "mobile": mobile_number,
-                "sms_notification" : isSendSms
-            };
-            data = JSON.stringify(userData);
+        if ($('input[name=notification]').prop('checked')) {
+            isSendSms = 1;
+        }
+        header = {
+            "session-key": localStorage["session_key"]
+        }
+        userData = {
+            "first_name": first_name,
+            "last_name": last_name,
+            "mobile": mobile_number,
+            "sms_notification": isSendSms
+        };
+        data = JSON.stringify(userData);
         var changeContactInstance = new AjaxHttpSender();
         changeContactInstance.sendPost(url, header, data, editContactCallback);
     }

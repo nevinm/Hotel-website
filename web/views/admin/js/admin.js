@@ -9,7 +9,7 @@ var adminCallback = {
                 localStorage['admin_loggedIn']=true;
                 localStorage['loggedIn']=false;
                 localStorage['admin_loggedIn']=true;
-                createCookie("SessionExpireTime", "true", 1);
+                createCookie("SessionExpireTime", "true", sessionExpiryTime);
                 window.location.href = 'orderlist.html'
             }
             else{

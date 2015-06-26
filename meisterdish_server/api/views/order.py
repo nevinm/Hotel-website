@@ -10,6 +10,7 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
 import stripe
+import sys
 stripe.api_key = settings.STRIPE_SECRET_KEY
 log = logging.getLogger('order')
 
@@ -84,7 +85,7 @@ def get_orders(request, data, user):
                   "available": 1 if cart_item.meal.available else 0,
                   "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
                   "price": cart_item.meal.price,
-                  "tax": cart_item.meal.tax,
+                  "tax": cart_item.meal.price * cart_item.meal.tax/100,
                   "quantity":cart_item.quantity,
                 })
             
@@ -334,7 +335,8 @@ def make_payment(order, user):
         payment = save_payment_data(response)
         return payment
     except Exception as e:
-        log.error("Failed to make payment." + e.message)
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        log.error("Failed to make payment." + e.message + str(exc_tb.tb_lineno))
         return False
 
 @check_input('POST')
@@ -355,7 +357,7 @@ def get_order_details(request, data, user, order_id):
               "available": 1 if cart_item.meal.available else 0,
               "category": cart_item.meal.category.name.title(),
               "price": cart_item.meal.price,
-              "tax": cart_item.meal.tax,
+              "tax": (cart_item.meal.price * cart_item.meal.tax/100),
               "quantity":cart_item.quantity,
             })
         order_details = {

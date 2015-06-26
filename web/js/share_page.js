@@ -54,7 +54,7 @@ function popitup(url) {
 }
 
 function facebookShare(site_url, accessToken) {
-    var imgURL = "http://imgur.com/byNMcg1"; //change with your external photo url
+    var imgURL = homeUrl + "/images/fb_sharing.png"; //change with your external photo url
     FB.api('me/photos', 'post', {
         message: 'Ready to cook meals, delivered on demand.' +
             'Start cooking today' +
@@ -70,7 +70,7 @@ function facebookShare(site_url, accessToken) {
 }
 
 function twitterShare(site_url) {
-    site_url = homeUrl+ "/views/share_page.html";
+    site_url = homeUrl+ "/views/share-page.html";
     var subjText = "Start cooking today with $20 off your first order!" + site_url;
     popitup('http://twitter.com/share?url=' + site_url );
 }

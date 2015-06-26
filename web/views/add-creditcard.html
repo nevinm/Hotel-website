@@ -7,14 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Meisterdish - Change Contact</title>
+    <title>Meisterdish - Add a credit card</title>
     <script type="text/javascript" src='../js/redirect.js'></script>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/fontello.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/account.css">
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script type="text/javascript" src='../js/validate_session.js'></script>
     
+    <script type="text/javascript">
+    // This identifies your website in the createToken call below
+    Stripe.setPublishableKey('pk_test_O2igwUk6spl3vmvoYlMVAHr0');
+    </script>
     <script>
     (function(i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
@@ -44,7 +49,7 @@
                             <img src="../images/back_arrowMobile.png">
                         </a>
                     </span>
-                    <span><a href="account.html">BACK TO ACCOUNT</a></span>
+                    <span><a href="manage_creditcard.html">BACK TO CARD DETAILS</a></span>
                 </div>
                 <div class="cart pullRight">
                     <a href="checkout.html">
@@ -67,7 +72,7 @@
                             <a href="menu.html">MENU</a>
                         </li>
                         <li>
-                            <a href="How_it_works.html">HOW IT WORKS</a>
+                            <a href="how-it-works.html">HOW IT WORKS</a>
                         </li>
                         <li class="login-signup">
                             <a href="login.html">LOG IN</a>
@@ -106,7 +111,7 @@
                         <a href="menu.html">MENU</a>
                     </li>
                     <li>
-                        <a href="How_it_works.html">HOW IT WORKS</a>
+                        <a href="how-it-works.html">HOW IT WORKS</a>
                     </li>
                     <li class="bold login-signup">
                         <a href="login.html">LOG IN</a>
@@ -124,7 +129,7 @@
             <div class="accountNav">
                 <div class="backNav">
                     <a href="account.html"><img src="../images/back_arrow.png"></a>
-                    <span><a href="account.html">BACK TO ACCOUNT</a></span>
+                    <span><a href="manage_creditcard.html">BACK TO CARD DETAILS</a></span>
                 </div>
                 <div class="logout body-text-bold">
                     <a id='logout'>LOG OUT</a>
@@ -134,30 +139,61 @@
                 </div>
             </div>
             <div class="account-wrapper">
-                <div class="account-container" id="changecontact-container">
+                <div class="account-container" id="add-payment-method-container">
                     <div class="account-header">
-                        <h3 style="color:#000;font-size:20px">CHANGE YOUR CONTACT INFO</h3>
+                        <h3 style="color:#000;font-size:20px">ADD A CREDIT CARD</h3>
                     </div>
-                    <form class="form" id='change-contact'>
-                        <div class="first-name">
-                            <label class="body-text-small">First Name</label>
-                            <input class="arrange" type="text" name="firstname"></input>
+                    <div class="card-list-container">
+                        <div class="pay-by-credit-container">
+                            <span class="content-heading">ADD A CREDIT CARD</span>
+                            <form id="pay-form" autocomplete='off'>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Credit card number</label>
+                                    <input type="text" name='cardnumber' autocomplete="off" size="20" data-stripe="number" class="popup-input ignore" id="card-number">
+                                </div>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">CVV</label>
+                                    <input type="password" name='cvv' size="4" autocomplete="off" data-stripe="cvc" class="popup-input" id="cvv-number">
+                                </div>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Expiry Date</label>
+                                    <div class="styled-select">
+                                        <select name="expiryMonth" id="ExpMonth" data-stripe="exp-month">
+                                            <option value=""></option>
+                                            <option value="1">JAN</option>
+                                            <option value="2">FEB</option>
+                                            <option value="3">MAR</option>
+                                            <option value="4">APR</option>
+                                            <option value="5">MAY</option>
+                                            <option value="6">JUN</option>
+                                            <option value="7">JUL</option>
+                                            <option value="8">AUG</option>
+                                            <option value="9">SEP</option>
+                                            <option value="10">OCT</option>
+                                            <option value="11">NOV</option>
+                                            <option value="12">DEC</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <span class="div">/</span>
+                                <div class="forminput-wrapper">
+                                    <div class="styled-select">
+                                        <select id="ExpYear" name='expiryYear' data-stripe="exp-year">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Name</label>
+                                    <input type="text" name="nameOnCard" class="popup-input" id="name-on-card">
+                                </div>
+                                <div class="button-container">
+                                    <a href="#" onclick="$(this).closest('form').submit()" class="btn btn-small-extended medium-green" id="add-credit-card">ADD</a>
+                                    <input type='submit' class="btn btn-small-extended medium-green" id='update-credit-card' value="UPDATE">
+                                </div>
+                            </form>
                         </div>
-                        <div class="last-name">
-                            <label class="body-text-small">Last Name</label>
-                            <input class="arrange" type="text" name="lastname"></input>
-                        </div>
-                        <div class="phone-num">
-                            <label class="body-text-small">Phone Number</label>
-                            <input class="arrange" type="text" name="phonenumber"></input>
-                        </div>
-                        <div class="notify">
-                            <input type="checkbox" name="notification"><span class="body-text-small">Allow SMS Notifications?</span></input>
-                        </div>
-                        <div class="update-button">
-                            <input type="submit" class="btn btn-large-primary medium-green" id="updateButton" value="UPDATE">
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
             <div class="popup-wrapper">
@@ -180,7 +216,8 @@
     <script type="text/javascript" src='../js/jquery.validate.min.js'></script>
     <script type="text/javascript" src='../js/ajax_reusable.js'></script>
     <script type="text/javascript" src='../js/common.js'></script>
-    <script type="text/javascript" src='../js/account.js'></script>
+    <script type="text/javascript" src='../js/stripe_integration.js'></script>
+    <script type="text/javascript" src='../js/add_creditcard.js'></script>
 </body>
 
 </html>

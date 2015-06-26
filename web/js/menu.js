@@ -32,7 +32,7 @@ $(document).ready(function() {
 
     $(document).on("click", '.thumbnail', function() {
         mealId = this.dataset.id;
-        window.location.href = 'meal_details.html?mealId=' + mealId;
+        window.location.href = 'meal-details.html?mealId=' + mealId;
     });
     //Categories
     $(document).on('click', '.menu-categories-list', function() {
@@ -95,7 +95,7 @@ $(document).ready(function() {
         if ($(window).width() <= 767 && $(window).width() >= 320) {
             $('.share-popup-wrapper').show();
         }else{
-            window.location.href = "share_page.html";
+            window.location.href = "share-page.html";
         }
 
     });
@@ -256,7 +256,7 @@ var addToCartCallback = {
             showPopup(meal_details);
             if (meal_details.session_key && (meal_details.session_key).length) {
                 localStorage['session_key'] = meal_details.session_key;
-                createCookie("SessionExpireTime", "true", 1);
+                createCookie("SessionExpireTime", "true", sessionExpiryTime);
             }
             CartItemCount();
         }
