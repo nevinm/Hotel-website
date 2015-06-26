@@ -28,6 +28,7 @@ var loginCallback = {
             localStorage['username'] = user_name;
             localStorage['session_key'] = userDetails.session_key;
             localStorage['loggedIn'] = true;
+            localStorage['adminLoggedIn'] = false;
             createCookie("SessionExpireTime", "true", 1);
             checkLoggedIn();
             checkReferredPage();

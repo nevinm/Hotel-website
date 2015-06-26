@@ -8,6 +8,8 @@ var adminCallback = {
                 localStorage['session_key']=adminDetails.session_key;
                 localStorage['admin_loggedIn']=true;
                 localStorage['loggedIn']=false;
+                localStorage['admin_loggedIn']=true;
+                createCookie("SessionExpireTime", "true", 1);
                 window.location.href = 'orderlist.html'
             }
             else{
