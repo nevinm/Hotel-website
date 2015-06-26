@@ -42,7 +42,7 @@ def get_cart_items(request, data, user):
                 "message":"Discount of $ "+str(cart.promo_code.amount) + " has been applied to your cart."
               }
           elif cart.gift_cards.all().count():
-              gc = cart.gift_cards.all([0])
+              gc = cart.gift_cards.all()[0]
               coupon = {
                 "code" : gc.code,
                 "amount":gc.amount,
