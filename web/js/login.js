@@ -46,14 +46,12 @@ function checkReferredPage() {
     referredPage = getCurrentPage("/", ".html", referrer);
     if (referredPage == "index") {
         window.location.href = '../index.html'
-        return;
     } 
-    // else if (referredPage == "giftcard_payment") {
-    //     window.location.href = 'giftcard_payment.html'
-    // } else {
-    //     window.location.href = 'menu.html'
-    // }
-    window.location.href = referredPage + ".html";
+    else if (referredPage == "giftcard_payment") {
+        window.location.href = 'giftcard_payment.html'
+    } else {
+        window.location.href = 'menu.html'
+    }
 }
 
 $(document).ready(function() {
