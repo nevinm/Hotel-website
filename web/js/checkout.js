@@ -59,11 +59,13 @@ $(document).ready(function() {
             newVal = oldVal + 1,
             meal_id = $(this).parents(':eq(1)').attr('data-id'),
             qty = newVal;
-        if (oldVal < $(this).data("max")) {
+        if (newVal <= $(this).data("max")) {
             $(this).parent().find('.quantity').val(newVal);
         }
-        updateCartItems(meal_id, qty);
-        updateReciept();
+        if(qty <= 10){
+            updateCartItems(meal_id, qty);
+            updateReciept();    
+        }
     });
 
     $(document).on('click', '#save-payment', function() {
@@ -119,12 +121,23 @@ $(document).ready(function() {
     })
 
     $('#apply-promo-gift').on("click",function(){
-        var code = $('#promo-gift-input').val();
-        if(code == ""){
-            $('.promo-validation-message').text("* "+"Please enter Giftcard/Promocode");
-        }else{
-            checkPromoCode(code);
+        var button_value =  $('#apply-promo-gift').val(),
+            code = $('#promo-gift-input').val(),
+            code_length = code.length;
+        if(button_value == "APPLY"){
+            if(code == "" || code_length > 8){
+                $('.promo-validation-message').text("* "+"Please enter Giftcard/Promocode");
+            }
+            else if(localStorage['loggedIn'] != 'true'){
+                $('.promo-validation-message').text("Session is Invalid.Please login and try");
+            }
+            else{
+                checkPromoCode(code);
+            }
         }
+        if(button_value == "DELETE"){
+            removePromocode();
+        }   
     })
 
     $("#place-order").on("click", function(e) {
@@ -323,10 +336,9 @@ function updateReciept(GiftcardDetails) {
         totalDriverTip = parseInt($('.driver-tip option:selected').text().substring(1)),
         totalDeliveryCost = 2;
     $(".order-list-items").each(function(key, value) {
-        debugger;
         quantity = parseInt($(value).find('.quantity').val());
         price = parseInt($(value).find('.price-container').attr("data-price"));
-        tax = parseInt($(value).find('.price-container').attr("data-tax"));
+        tax = parseFloat($(value).find('.price-container').attr("data-tax"));
 
         totalItemCost += (price * quantity);
         totalTaxCost += (tax * quantity);
@@ -338,7 +350,7 @@ function updateReciept(GiftcardDetails) {
         totalCredits = GiftcardDetails.credits;
     }
     totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost -totalDiscount-totalCredits;
-
+    $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount).toFixed(2));
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
     $(".total-cost").text("$" + (totalCost).toFixed(2));
@@ -1000,6 +1012,8 @@ var checkPromoCodeCallback = {
     success: function(data, textStatus) {
         var userData = JSON.parse(data);
         if(userData.status == 1){
+            $('#apply-promo-gift').removeClass('btn-small-primary medium-green').addClass('btn-small-secondary');
+            $('#apply-promo-gift').val('DELETE');
             $('.promo-validation-message').css('color','#8EC657');
             $('.promo-validation-message').text("* "+userData.message);
             updateReciept(userData);
@@ -1023,4 +1037,31 @@ function checkPromoCode(code){
     data = JSON.stringify(params);
     var checkPromoCodeInstance = new AjaxHttpSender();
     checkPromoCodeInstance.sendPost(url, header, data, checkPromoCodeCallback);
+}
+
+//Remove cart items call back
+var removePromocodeCallback = {
+    success: function(data, textStatus) {
+        removeData = JSON.parse(data);
+        if (removeData.status == 1) {
+            $('#apply-promo-gift').removeClass('btn-small-secondary').addClass('btn-small-primary medium-green');
+            $('#apply-promo-gift').val('APPLY');
+            $('.promo-validation-message').css('color','#8EC657');
+            $('.promo-validation-message').text('* '+removeData.message);
+            updateReciept(removeData);
+        } else {}
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+//Remove cart items
+function removePromocode() {
+    var url = baseURL + "remove_promocode/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {};
+    data = JSON.stringify(params);
+    var removePromocodeInstance = new AjaxHttpSender();
+    removePromocodeInstance.sendPost(url, header, data, removePromocodeCallback);
 }

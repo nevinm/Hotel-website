@@ -1120,12 +1120,15 @@ form#pay-form,form#credit-card-form {
 .receipt-container .checkout-header{
 	padding-left: 5%;
 }
-.items-container .inner-content span:nth-child(2){
+.items-container .inner-content span:nth-child(2),
+.discount-amount{
 	font-weight: bold;
 	float: right;
+	color:#4A4A4A;
 }
 .items-container,.driver-tip-container,
-.gift-card-container,.total-container,.instruction-container{
+.gift-card-container,.total-container,
+.instruction-container,.discount-container{
 	padding: 2% 5%;
 	overflow: hidden;
 }
@@ -1537,6 +1540,8 @@ img.accepted-cards
 }
 .isPromocode-wrapper{
 	display: none;
+	width: 100%;
+	word-break:break-all;
 }
 .isPromocode-wrapper .popup-input{
 	height: 35px;
