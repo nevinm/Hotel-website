@@ -130,7 +130,7 @@ def create_guest_user(request, details=None):
     if details:
         user.first_name = details["guest_first_name"].strip()
         user.last_name = details["guest_last_name"].strip()
-        user.email = details["guest_email"].strip()
+        user.email = 'guest_'+details["guest_email"].strip()
         user.zip = details["guest_zip"].strip()
     user.save()
 

@@ -69,7 +69,7 @@ def get_meals(request, data, user):
                               "meal_types":meal_types,
                               "preparation_time":meal.preparation_time,
                               "price":meal.price,
-                              "tax":meal.tax,
+                              "tax":meal.price * meal.tax/100,
                               "ingredients":ingredients,
                               "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, cart__completed=False, meal__pk=meal.id).exists() else 0,
                               
@@ -306,7 +306,7 @@ def get_meal_details(request, data, user, meal_id):
             "sub":meal.sub,
             "description" : meal.description,
             "price":meal.price,
-            "tax":meal.tax,
+            "tax":meal.price* meal.tax/100,
             "available" : 1 if meal.available else 0,
             "filters" : [type.id for type in meal.types.all()],
             "cat_id" : 'Not Available' if not meal.category else {
