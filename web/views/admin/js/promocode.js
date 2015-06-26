@@ -108,7 +108,7 @@ function populatePromoCodes(promoCodes) {
         $("#promocodes-list-empty").show();
     } else {
         $.each(promoCodes.aaData, function(key, value) {
-            $('#promocodes-list tbody').append("<tr data-id='" + value.id + "'>" +
+            $('#promocodes-list tbody').append("<tr class='row' data-id='" + value.id + "'>" +
                 "<td class='card-code'>" + value.code + "</td>" +
                 "<td class='card-name' data-date='" + value.expiry_date_format + "'>" + value.expiry_date + "</td>" +
                 "<td class='card-amount' data-amount='" + value.amount + "'>" + dollarConvert(value.amount) + "</td>" +
@@ -116,9 +116,9 @@ function populatePromoCodes(promoCodes) {
                 "<td class='no-popup'><button type='button' class='promocard-delete btn btn-small-primary medium-green' data-id='" + value.id + "'>Delete</button></td></tr>");
 
                 if (value.status) {
-                    $("tbody tr:last").append("<td><button data-id='" + value.id + "' class='status down'>Active</button></td>");
+                    $("tbody .row:last").append("<td><button data-id='" + value.id + "' class='status down'>Active</button></td>");
                 } else {
-                    $("tbody tr:last").append("<td><button data-id='" + value.id + "' class='status'>Inactive</button></td>")
+                    $("tbody .row:last").append("<td><button data-id='" + value.id + "' class='status'>Inactive</button></td>");
                 }
         });
 
