@@ -1,7 +1,7 @@
 $(document).ready(function() {
     CartItemCount();
     currentPage = getCurrentPage("/", ".html", window.location.href);
-    if (currentPage == "giftcard_payment") {
+    if (currentPage == "giftcard-payment") {
         stripeIntegration();
     }
 
@@ -66,7 +66,7 @@ $(document).ready(function() {
         }
         if (($(".giftcard-selected").length || $("#custom-amount").valid()) && $("#recipient-form").valid()) {
             getGiftCardData();
-            window.location.href = 'giftcard_payment.html';
+            window.location.href = 'giftcard-payment.html';
         } else {}
     });
     $('#change-payment').on("click", function() {

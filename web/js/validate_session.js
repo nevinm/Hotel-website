@@ -17,13 +17,13 @@ function sessionCheckLogout() {
         localStorage.removeItem('fb-id');
         localStorage['loggedIn'] = false;
         localStorage['admin_loggedIn'] = false;
-        if (currentPage == "login" || currentPage == "How_it_works" ||
-            currentPage == "checkout" || currentPage == "forgot_password" ||
-            currentPage == "gift_cards_select" || currentPage == "giftcard_payment"     ||
-            currentPage == "signup_fail" || currentPage == "meal_details" ||
-            currentPage == "privacy_terms" || currentPage == "signup" ||
-            currentPage == "menu" || currentPage == "reset_password" ||
-            currentPage == "reset_passwordsuccess") {
+        if (currentPage == "login" || currentPage == "how-it-works" ||
+            currentPage == "checkout" || currentPage == "forgot-password" ||
+            currentPage == "gift-cards-select" || currentPage == "giftcard-payment"     ||
+            currentPage == "signup-fail" || currentPage == "meal-details" ||
+            currentPage == "privacy-terms" || currentPage == "signup" ||
+            currentPage == "menu" || currentPage == "reset-password" ||
+            currentPage == "reset-passwordsuccess") {
             location.reload();
         } else {
             window.location.href = 'login.html';
