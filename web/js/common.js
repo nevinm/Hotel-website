@@ -245,7 +245,7 @@ $(document).on('click', '#close', function() {
     }
     if (getCurrentPageTitle() == 'Meisterdish - Gift Cards Payment') {
         if ($(".redirectApproved").length) {
-            window.location.href = 'gift_cards_select.html';
+            window.location.href = 'gift-cards-select.html';
         }
     }
     if ($(this).hasClass("session-expire-close")) {

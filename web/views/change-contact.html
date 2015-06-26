@@ -7,13 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-     <title>Meisterdish - Forgot Password</title>
-
+    <title>Meisterdish - Change Contact</title>
+    <script type="text/javascript" src='../js/redirect.js'></script>
     <link rel="stylesheet" type="text/css" href="../css/reset.css">
     <link rel="stylesheet" type="text/css" href="../css/fontello.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/login_signup.css">
+    <link rel="stylesheet" type="text/css" href="../css/account.css">
     <script type="text/javascript" src='../js/validate_session.js'></script>
     
     <script>
@@ -39,6 +38,14 @@
         <header id="header">
             <div class="contentArea">
                 <a href="../index.html"><img class="pullLeft logo" src="../images/logo.png" alt="MeisterDish"></a>
+                <div class="backNav-mobile">
+                    <span>
+                        <a href="account.html">
+                            <img src="../images/back_arrowMobile.png">
+                        </a>
+                    </span>
+                    <span><a href="account.html">BACK TO ACCOUNT</a></span>
+                </div>
                 <div class="cart pullRight">
                     <a href="checkout.html">
                         <span class="count"></span>
@@ -52,7 +59,7 @@
                     </a>
                 </div>
                 <div class="navMenu" style="display:none">
-                   <ul>
+                    <ul>
                         <li>
                             <a href="../index.html">HOME</a>
                         </li>
@@ -60,7 +67,7 @@
                             <a href="menu.html">MENU</a>
                         </li>
                         <li>
-                            <a href="How_it_works.html">HOW IT WORKS</a>
+                            <a href="how-it-works.html">HOW IT WORKS</a>
                         </li>
                         <li class="login-signup">
                             <a href="login.html">LOG IN</a>
@@ -76,13 +83,13 @@
                         <div class="footerContent">
                             <ul>
                                 <li>
-                                <a href="">CONTACT</a>
+                                    <a href="">CONTACT</a>
                                 </li>
                                 <li>
-                                <a href="privacy_terms.html">PRIVACY & TERMS</a>
+                                    <a href="privacy_terms.html">PRIVACY & TERMS</a>
                                 </li>
-                                <li >
-                                <a href="">HELP</a>
+                                <li>
+                                    <a href="">HELP</a>
                                 </li>
                             </ul>
                             <ul class="footer-links">
@@ -99,7 +106,7 @@
                         <a href="menu.html">MENU</a>
                     </li>
                     <li>
-                        <a href="How_it_works.html">HOW IT WORKS</a>
+                        <a href="how-it-works.html">HOW IT WORKS</a>
                     </li>
                     <li class="bold login-signup">
                         <a href="login.html">LOG IN</a>
@@ -111,26 +118,47 @@
                         <a href='account.html'></a>
                     </li>
                 </ul>
-            </div>   
-        </header>
-<div id="page-container" class='container-adjust'>
-    <div class="forgot-wrapper">
-        <div class="forgotpassword-container ">
-            <div class="header-small">
-                <h4>FORGOT PASSWORD</h4>
             </div>
-            <div class="content">
-                <span class="heading">TYPE THE EMAIL YOU USED TO CREATE YOUR ACCOUNT.</span>
-                <span class="caption pullLeft">We will send you a link to reset your password.</span>
-                <form id="forgotpassword-form">
-                    <div class="reset-input">
-                        <label class="body-text-small" >Email</label>
-                        <input class="arrange" type="email" name="email" id="forgotpassword-email"></input>
+        </header>
+        <div id="page-container">
+            <div class="accountNav">
+                <div class="backNav">
+                    <a href="account.html"><img src="../images/back_arrow.png"></a>
+                    <span><a href="account.html">BACK TO ACCOUNT</a></span>
+                </div>
+                <div class="logout body-text-bold">
+                    <a id='logout'>LOG OUT</a>
+                </div>
+                <div class="admin-button body-text-bold">
+                    <a href='admin/categories.html' id="admin-redirect">Admin Page</a>
+                </div>
+            </div>
+            <div class="account-wrapper">
+                <div class="account-container" id="changecontact-container">
+                    <div class="account-header">
+                        <h3 style="color:#000;font-size:20px">CHANGE YOUR CONTACT INFO</h3>
                     </div>
-                    <div class="forgot-button">
-                        <input class="btn btn-large-primary medium-green" id="forgotpassword-button" type="submit" value="SUBMIT">
-                    </div>
-                </form>
+                    <form class="form" id='change-contact'>
+                        <div class="first-name">
+                            <label class="body-text-small">First Name</label>
+                            <input class="arrange" type="text" name="firstname"></input>
+                        </div>
+                        <div class="last-name">
+                            <label class="body-text-small">Last Name</label>
+                            <input class="arrange" type="text" name="lastname"></input>
+                        </div>
+                        <div class="phone-num">
+                            <label class="body-text-small">Phone Number</label>
+                            <input class="arrange" type="text" name="phonenumber"></input>
+                        </div>
+                        <div class="notify">
+                            <input type="checkbox" name="notification"><span class="body-text-small">Allow SMS Notifications?</span></input>
+                        </div>
+                        <div class="update-button">
+                            <input type="submit" class="btn btn-large-primary medium-green" id="updateButton" value="UPDATE">
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="popup-wrapper">
                 <div class="bk-overlay"></div>
@@ -138,21 +166,21 @@
                     <div class="header"></div>
                     <div class="popup-container">
                         <div class="content">
-                        <span>SOMTHING WENT WRONG</span>
+                            <span>SOMTHING WENT WRONG</span>
                         </div>
                         <div class="button">
                             <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
                         </div>
                     </div>
                 </div>
-            </div>           
+            </div>
+        </div>
     </div>
-</div>
-	<script type="text/javascript" src='../js/jquery.min.js'></script>
-	<script type="text/javascript" src='../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../js/jquery.min.js'></script>
     <script type="text/javascript" src='../js/jquery.validate.min.js'></script>
+    <script type="text/javascript" src='../js/ajax_reusable.js'></script>
     <script type="text/javascript" src='../js/common.js'></script>
-    <script type="text/javascript" src='../js/forgot_password.js'></script>
+    <script type="text/javascript" src='../js/account.js'></script>
 </body>
 
 </html>
