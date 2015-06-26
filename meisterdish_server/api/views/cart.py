@@ -29,6 +29,25 @@ def get_cart_items(request, data, user):
             })
             items_count += cart_item.quantity
 
+      coupon = None
+      if items_count > 0:
+          cart = cart_item.cart
+          if cart.promo_code:
+              if cart.promo_code.expiry_date <= datetime.now():
+                  cart.promo_code = None
+                  cart.save()
+              coupon = {
+                "code" : cart.promo_code.code,
+                "amount":cart.promo_code.amount,
+                "message":"Discount of $ "+str(cart.promo_code.amount) + " has been applied to your cart."
+              }
+          elif cart.gift_cards.all().count():
+              gc = cart.gift_cards.all([0])
+              coupon = {
+                "code" : gc.code,
+                "amount":gc.amount,
+                "message":"Discount of $ "+str(gc.amount) + " has been applied to your cart."
+              }
 
       if not len(cart_list):
           return custom_error("There are not items in cart.")
@@ -38,6 +57,7 @@ def get_cart_items(request, data, user):
                               "total_count":items_count,
                               "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                               "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
+                              "coupon" : coupon,
                               })
     except Exception as e:
     	log.error("Failed to list cart items." + e.message)
