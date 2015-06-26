@@ -85,7 +85,7 @@ def get_orders(request, data, user):
                   "available": 1 if cart_item.meal.available else 0,
                   "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
                   "price": cart_item.meal.price,
-                  "tax": cart_item.meal.tax,
+                  "tax": cart_item.meal.price * cart_item.meal.tax/100,
                   "quantity":cart_item.quantity,
                 })
             
@@ -357,7 +357,7 @@ def get_order_details(request, data, user, order_id):
               "available": 1 if cart_item.meal.available else 0,
               "category": cart_item.meal.category.name.title(),
               "price": cart_item.meal.price,
-              "tax": cart_item.meal.tax,
+              "tax": (cart_item.meal.price * cart_item.meal.tax/100),
               "quantity":cart_item.quantity,
             })
         order_details = {
