@@ -29,7 +29,7 @@ var loginCallback = {
             localStorage['session_key'] = userDetails.session_key;
             localStorage['loggedIn'] = true;
             localStorage['adminLoggedIn'] = false;
-            createCookie("SessionExpireTime", "true", 1);
+            createCookie("SessionExpireTime", "true", sessionExpiryTime);
             checkLoggedIn();
             checkReferredPage();
         }

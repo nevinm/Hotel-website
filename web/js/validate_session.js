@@ -1,3 +1,4 @@
+var sessionExpiryTime = 5;
 function getCurrentPage(firstChar, secondChar, url) {
     currentPage = url.substring(url.lastIndexOf(firstChar) + 1, url.lastIndexOf(secondChar));
     return currentPage;
@@ -18,7 +19,7 @@ function sessionCheckLogout() {
         localStorage['admin_loggedIn'] = false;
         if (currentPage == "login" || currentPage == "How_it_works" ||
             currentPage == "checkout" || currentPage == "forgot_password" ||
-            currentPage == "gift_cards_select" || currentPage == "giftcard_payment" ||
+            currentPage == "gift_cards_select" || currentPage == "giftcard_payment"     ||
             currentPage == "signup_fail" || currentPage == "meal_details" ||
             currentPage == "privacy_terms" || currentPage == "signup" ||
             currentPage == "menu" || currentPage == "reset_password" ||
