@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Meisterdish - Add a credit card</title>
+    <script type="text/javascript" src='../js/redirect.js'></script>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/fontello.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/account.css">
+    <script type="text/javascript" src='../js/validate_session.js'></script>
+    
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-63283790-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+</head>
+
+<body>
+    <div id="account-mainWrapper">
+        <header id="header">
+            <div class="contentArea">
+                <a href="../index.html"><img class="pullLeft logo" src="../images/logo.png" alt="MeisterDish"></a>
+                <div class="backNav-mobile">
+                    <span>
+                        <a href="account.html">
+                            <img src="../images/back_arrowMobile.png">
+                        </a>
+                    </span>
+                    <span><a href="account.html">BACK TO ACCOUNT</a></span>
+                </div>
+                <div class="cart pullRight">
+                    <a href="checkout.html">
+                        <span class="count"></span>
+                        <img src="../images/cart_icon.png">
+                    </a>
+                </div>
+                <span class="icon-menu pullRight"></span>
+                <div class="logo-mobile-container">
+                    <a href="index.html">
+                        <img class="pullLeft logo-mobile" src="../images/logo.png" alt="MeisterDish">
+                    </a>
+                </div>
+                <div class="navMenu" style="display:none">
+                    <ul>
+                        <li>
+                            <a href="../index.html">HOME</a>
+                        </li>
+                        <li>
+                            <a href="menu.html">MENU</a>
+                        </li>
+                        <li>
+                            <a href="How_it_works.html">HOW IT WORKS</a>
+                        </li>
+                        <li class="login-signup">
+                            <a href="login.html">LOG IN</a>
+                        </li>
+                        <li class='login-signup'>
+                            <a href="signup.html">SIGN UP</a>
+                        </li>
+                        <li id="navbar-username" class="bold green">
+                            <a href='account.html'></a>
+                        </li>
+                    </ul>
+                    <footer id="footer-navMenu">
+                        <div class="footerContent">
+                            <ul>
+                                <li>
+                                    <a href="">CONTACT</a>
+                                </li>
+                                <li>
+                                    <a href="privacy_terms.html">PRIVACY & TERMS</a>
+                                </li>
+                                <li>
+                                    <a href="">HELP</a>
+                                </li>
+                            </ul>
+                            <ul class="footer-links">
+                                <li class="socialMedia" id="facebook"></li>
+                                <li class="socialMedia" id="twitter"></li>
+                                <li class="socialMedia" id="instagram"></li>
+                                <li class="socialMedia" id="pinterest"></li>
+                            </ul>
+                        </div>
+                    </footer>
+                </div>
+                <ul id="menu" class="pullRight">
+                    <li>
+                        <a href="menu.html">MENU</a>
+                    </li>
+                    <li>
+                        <a href="How_it_works.html">HOW IT WORKS</a>
+                    </li>
+                    <li class="bold login-signup">
+                        <a href="login.html">LOG IN</a>
+                    </li>
+                    <li class='login-signup'>
+                        <a href="signup.html" class="btn btn-small-secondary">SIGN UP</a>
+                    </li>
+                    <li id="navbar-username" class="bold green">
+                        <a href='account.html'></a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <div id="page-container">
+            <div class="accountNav">
+                <div class="backNav">
+                    <a href="account.html"><img src="../images/back_arrow.png"></a>
+                    <span><a href="account.html">BACK TO ACCOUNT</a></span>
+                </div>
+                <div class="logout body-text-bold">
+                    <a id='logout'>LOG OUT</a>
+                </div>
+                <div class="admin-button body-text-bold">
+                    <a href='admin/categories.html' id="admin-redirect">Admin Page</a>
+                </div>
+            </div>
+            <div class="account-wrapper">
+                <div class="account-container" id="manage-payment-method-container">
+                    <div class="account-header">
+                        <h3 style="color:#000;font-size:20px">MANAGE YOUR CREDIT CARD</h3>
+                    </div>
+                    <div class="card-list-container"></div>
+                    <div class="message">
+                        <span>There is no saved cards.</span>
+                    </div>
+                    <div class="button-container">
+                        <a href="add_creditcard.html" class="addNewPaymentMethod">ADD A CREDIT CARD</a>
+                        <a href="#" class="btn btn-small-extended medium-green" id="update-payment">UPDATE</a>
+                        <a href="add_creditcard.html" class="btn btn-small-secondary medium-green" id="add-new-paymentmethod">ADD CREDIT CARD</a>
+                        <a href="#" class="btn btn-small-secondary button-disabled" id="delete-card">delete</a>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-wrapper">
+                <div class="bk-overlay"></div>
+                <div class="popup">
+                    <div class="header"></div>
+                    <div class="popup-container">
+                        <div class="content">
+                            <span>SOMTHING WENT WRONG</span>
+                        </div>
+                        <div class="button">
+                            <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src='../js/jquery.min.js'></script>
+    <script type="text/javascript" src='../js/jquery.validate.min.js'></script>
+    <script type="text/javascript" src='../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../js/common.js'></script>
+    <script type="text/javascript" src='../js/manage_creditcard.js'></script>
+</body>
+
+</html>
