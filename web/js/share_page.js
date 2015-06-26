@@ -70,7 +70,7 @@ function facebookShare(site_url, accessToken) {
 }
 
 function twitterShare(site_url) {
-    site_url = homeUrl+ "/views/share_page.html";
+    site_url = homeUrl+ "/views/share-page.html";
     var subjText = "Start cooking today with $20 off your first order!" + site_url;
     popitup('http://twitter.com/share?url=' + site_url );
 }
