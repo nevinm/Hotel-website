@@ -1,5 +1,10 @@
 $(document).ready(function() {
-    getOrders();
+    
+    //auto refresh
+    setInterval(function(){
+        getOrders();
+    },1000);
+    
     $(document).on('click', "#order-list td:not(.no-popup)", function() {
         currentOrderId = $(this).parent().data().id;
         getOrderDetails(currentOrderId);
