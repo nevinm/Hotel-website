@@ -125,8 +125,12 @@ $(document).ready(function() {
             code = $('#promo-gift-input').val(),
             code_length = code.length;
         if(button_value == "APPLY"){
-            if(code == "" || code_length > 8){
+            $('.promo-validation-message').css('color','#ff7878');
+            if(code == ""){
                 $('.promo-validation-message').text("* "+"Please enter Giftcard/Promocode");
+            }
+            else if(code_length > 8){
+                $('.promo-validation-message').text("* "+"Please enter valid Giftcard/Promocode");
             }
             else if(localStorage['loggedIn'] != 'true'){
                 $('.promo-validation-message').text("Session is Invalid.Please login and try");
@@ -176,7 +180,7 @@ $(document).ready(function() {
         $(".city-selector-container").show();
     })
     $('#is-gift-card').on('click',function(){
-        $('.isPromocode-wrapper').toggle();
+        $('.isPromocode-wrapper').slideToggle();
     })
 });
 
@@ -265,6 +269,9 @@ var getCartItemsCallback = {
             $(".emtpy-cart-message").hide();
             populateCartItems(cartItems);
             populateDate(cartItems);
+            if(cartItems.coupon!=null){
+                populateCoupon(cartItems.coupon);
+            }
         } else {
             $('.order-list-items').remove();
             $(".emtpy-cart-message").empty();
@@ -330,7 +337,7 @@ function populateCartItems(data) {
     updateReciept();
 }
 
-function updateReciept(GiftcardDetails) {
+function updateReciept(GiftcardDetails,flag) {
     var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0, 
         totalDiscount =0,totalCredits = 0,
         totalDriverTip = parseInt($('.driver-tip option:selected').text().substring(1)),
@@ -343,11 +350,14 @@ function updateReciept(GiftcardDetails) {
         totalItemCost += (price * quantity);
         totalTaxCost += (tax * quantity);
     });
-    if(GiftcardDetails){
+    if(GiftcardDetails && !flag){
         totalItemCost = GiftcardDetails.amount;
         totalTaxCost = GiftcardDetails.tax;
         totalDiscount = GiftcardDetails.discount;
         totalCredits = GiftcardDetails.credits;
+    }
+    if(flag == "coupon-applied"){
+        totalDiscount = GiftcardDetails.discount;
     }
     totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost -totalDiscount-totalCredits;
     $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount).toFixed(2));
@@ -1016,6 +1026,7 @@ var checkPromoCodeCallback = {
             $('#apply-promo-gift').val('DELETE');
             $('.promo-validation-message').css('color','#8EC657');
             $('.promo-validation-message').text("* "+userData.message);
+            $(".discount-container .discount-amount").css('color','#8EC657');
             updateReciept(userData);
         } 
         if (userData.status == -1) {
@@ -1047,6 +1058,7 @@ var removePromocodeCallback = {
             $('#apply-promo-gift').removeClass('btn-small-secondary').addClass('btn-small-primary medium-green');
             $('#apply-promo-gift').val('APPLY');
             $('.promo-validation-message').css('color','#8EC657');
+            $('.discount-container .discount-amount').css('color','#4A4A4A');
             $('.promo-validation-message').text('* '+removeData.message);
             updateReciept(removeData);
         } else {}
@@ -1064,4 +1076,21 @@ function removePromocode() {
     data = JSON.stringify(params);
     var removePromocodeInstance = new AjaxHttpSender();
     removePromocodeInstance.sendPost(url, header, data, removePromocodeCallback);
+}
+
+function populateCoupon(couponDetails){
+    var code = couponDetails.code,
+        discount = couponDetails.amount,
+        message = couponDetails.message,
+        flag = "coupon-applied";
+    var discObj ={};
+        discObj.discount = discount;
+        $('.isPromocode-wrapper').slideDown();
+        $('#promo-gift-input').val(code);
+        $('.promo-validation-message').css('color','#8EC657');
+        $('.promo-validation-message').text(message);
+        $('#apply-promo-gift').removeClass('btn-small-primary medium-green').addClass('btn-small-secondary');
+        $('#apply-promo-gift').val('DELETE');
+        $(".discount-container .discount-amount").css('color','#8EC657');
+        updateReciept(discObj,flag);
 }
