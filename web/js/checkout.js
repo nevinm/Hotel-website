@@ -323,7 +323,6 @@ function updateReciept(GiftcardDetails) {
         totalDriverTip = parseInt($('.driver-tip option:selected').text().substring(1)),
         totalDeliveryCost = 2;
     $(".order-list-items").each(function(key, value) {
-        debugger;
         quantity = parseInt($(value).find('.quantity').val());
         price = parseInt($(value).find('.price-container').attr("data-price"));
         tax = parseInt($(value).find('.price-container').attr("data-tax"));

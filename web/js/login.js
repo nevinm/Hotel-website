@@ -28,7 +28,8 @@ var loginCallback = {
             localStorage['username'] = user_name;
             localStorage['session_key'] = userDetails.session_key;
             localStorage['loggedIn'] = true;
-            createCookie("SessionExpireTime", "true", 1);
+            localStorage['adminLoggedIn'] = false;
+            createCookie("SessionExpireTime", "true", sessionExpiryTime);
             checkLoggedIn();
             checkReferredPage();
         }
@@ -44,16 +45,13 @@ function loginInit() {
 function checkReferredPage() {
     var referrer = document.referrer;
     referredPage = getCurrentPage("/", ".html", referrer);
-    if (referredPage == "index") {
-        window.location.href = '../index.html'
-        return;
-    } 
-    // else if (referredPage == "giftcard_payment") {
-    //     window.location.href = 'giftcard_payment.html'
-    // } else {
-    //     window.location.href = 'menu.html'
-    // }
-    window.location.href = referredPage + ".html";
+    if (referredPage == "checkout") {
+        window.location.href = 'checkout.html';
+    } else if (referredPage == "giftcard_payment") {
+        window.location.href = 'giftcard_payment.html';
+    } else {
+        window.location.href = 'menu.html';
+    }
 }
 
 $(document).ready(function() {

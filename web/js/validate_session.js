@@ -1,3 +1,4 @@
+var sessionExpiryTime = 5;
 function getCurrentPage(firstChar, secondChar, url) {
     currentPage = url.substring(url.lastIndexOf(firstChar) + 1, url.lastIndexOf(secondChar));
     return currentPage;
@@ -16,11 +17,24 @@ function sessionCheckLogout() {
         localStorage.removeItem('fb-id');
         localStorage['loggedIn'] = false;
         localStorage['admin_loggedIn'] = false;
-        if (currentPage == "login") {
+        if (currentPage == "login" || currentPage == "How_it_works" ||
+            currentPage == "checkout" || currentPage == "forgot_password" ||
+            currentPage == "gift_cards_select" || currentPage == "giftcard_payment"     ||
+            currentPage == "signup_fail" || currentPage == "meal_details" ||
+            currentPage == "privacy_terms" || currentPage == "signup" ||
+            currentPage == "menu" || currentPage == "reset_password" ||
+            currentPage == "reset_passwordsuccess") {
             location.reload();
         } else {
             window.location.href = 'login.html';
         }
+    }
+    if (!readCookie("SessionExpireTime") && JSON.parse(localStorage.getItem("admin_loggedIn"))) {
+        localStorage.removeItem('username');
+        localStorage.removeItem('session_key');
+        localStorage['loggedIn'] = false;
+        localStorage['admin_loggedIn'] = false;
+        window.location.href = 'index.html';
     }
 }
 
