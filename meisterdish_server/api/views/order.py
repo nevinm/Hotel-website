@@ -10,6 +10,7 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
 import stripe
+import sys
 stripe.api_key = settings.STRIPE_SECRET_KEY
 log = logging.getLogger('order')
 
@@ -334,7 +335,8 @@ def make_payment(order, user):
         payment = save_payment_data(response)
         return payment
     except Exception as e:
-        log.error("Failed to make payment." + e.message)
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        log.error("Failed to make payment." + e.message + str(exc_tb.tb_lineno))
         return False
 
 @check_input('POST')
