@@ -45,13 +45,12 @@ function loginInit() {
 function checkReferredPage() {
     var referrer = document.referrer;
     referredPage = getCurrentPage("/", ".html", referrer);
-    if (referredPage == "index") {
-        window.location.href = '../index.html'
-    } 
-    else if (referredPage == "giftcard_payment") {
-        window.location.href = 'giftcard_payment.html'
+    if (referredPage == "checkout") {
+        window.location.href = 'checkout.html';
+    } else if (referredPage == "giftcard_payment") {
+        window.location.href = 'giftcard_payment.html';
     } else {
-        window.location.href = 'menu.html'
+        window.location.href = 'menu.html';
     }
 }
 

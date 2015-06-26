@@ -210,6 +210,7 @@ function logingOut() {
     $userentry.show();
     $('#menu').removeClass('menuPadding');
     $(".logout").addClass('hide');
+    currentPage = $("title").text();
     if (currentPage == "Meisterdish - Admin") {
         window.location.href = 'index.html';
     } else if (currentPage == "Meisterdish Home Page") {} else {
