@@ -13,7 +13,7 @@ $(document).ready(function() {
                 showPopup(userDetails);
             }
             else{
-            window.location.href='reset_passwordsuccess.html';
+            window.location.href='reset-passwordsuccess.html';
             }
         },
         failure:function(XMLHttpRequest, textStatus, errorThrown){}

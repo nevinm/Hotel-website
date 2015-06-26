@@ -6,7 +6,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.meal-edit', function() {
         mealId = $(this).data().id;
-        window.location.href = 'create_meal.html?mealId=' + mealId;
+        window.location.href = 'create-meal.html?mealId=' + mealId;
     });
 
     $(document).on('click', '.meal-delete', function() {
