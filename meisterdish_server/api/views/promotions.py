@@ -79,7 +79,7 @@ def gift_card_order(request, data, user=None):
 
 
         response = stripe.Charge.create(
-            amount=int(amount * 100), #Cents
+            amount=int(amount) * 100, #Cents
             currency="usd",
             customer=customer.id,
             source = card.id,
@@ -115,7 +115,7 @@ def gift_card_order(request, data, user=None):
         else:
             log.error("Gift card created, but failed to send.")
             return custom_error("There was an error sending Gift Card. Please contact customer support.")
-    except KeyError as e:
+    except Exception as e:
         log.error("Buy gift card error : " + e.message)
         return custom_error(e.message)
 
