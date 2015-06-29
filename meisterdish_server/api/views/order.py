@@ -252,7 +252,7 @@ def create_order(request, data, user):
         log.info("___Order___")
         log.info("Payable : " + str(order.total_payable))
 
-        if float(order.total_payable) >= 0.0:
+        if float(order.total_payable) > 0.0:
             #Payment
             order.save_card = bool(data.get("save_card", 0))
             order.card_id = data.get("card_id", False)
