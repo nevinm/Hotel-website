@@ -198,28 +198,3 @@ $(document).on("click", ".edit-address", function() {
     $("#addpopup-data").hide();
     $("#savepopup-data").show();
 })
-
-    }
-//Get profile API process
-var getProfileCallback = {
-    success: function(data, textStatus, profileId) {
-        var userDetails = JSON.parse(data);
-        if (userDetails.status == 1) {
-            localStorage['user_profile'] = data;
-        } else {}
-    },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-}
-
-function getProfile() {
-    var url = baseURL + "get_profile/",
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        userData = {
-            "get": 1
-        };
-    data = JSON.stringify(userData);
-    var getProfileInstance = new AjaxHttpSender();
-    getProfileInstance.sendPost(url, header, data, getProfileCallback, profileId);
-}
