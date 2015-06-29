@@ -339,7 +339,7 @@ function populateCartItems(data) {
             "<div class='quantity-container'>" + "<span class='operator-minus' data-min='1'>" + '-' + "</span>" +
             "<input type='text' disabled='disabled' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
-            "<span class='price-container' data-tax='" + value.tax + "' data-price='"+value.price+"'>" + dollarConvert(value.price+value.tax) + "</span>" +
+            "<span class='price-container' data-tax='" + value.tax + "' data-price='"+value.price+"'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</span>" +
             "<img src='../images/hamburger-menu-close.png' id='remove-cart-item'>" + "</div>");
     });
     updateReciept();
