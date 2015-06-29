@@ -59,11 +59,13 @@ $(document).ready(function() {
             newVal = oldVal + 1,
             meal_id = $(this).parents(':eq(1)').attr('data-id'),
             qty = newVal;
-        if (oldVal < $(this).data("max")) {
+        if (newVal <= $(this).data("max")) {
             $(this).parent().find('.quantity').val(newVal);
         }
-        updateCartItems(meal_id, qty);
-        updateReciept();
+        if(qty <= 10){
+            updateCartItems(meal_id, qty);
+            updateReciept();    
+        }
     });
 
     $(document).on('click', '#save-payment', function() {
@@ -119,12 +121,27 @@ $(document).ready(function() {
     })
 
     $('#apply-promo-gift').on("click",function(){
-        var code = $('#promo-gift-input').val();
-        if(code == ""){
-            $('.promo-validation-message').text("* "+"Please enter Giftcard/Promocode");
-        }else{
-            checkPromoCode(code);
+        var button_value =  $('#apply-promo-gift').val(),
+            code = $('#promo-gift-input').val(),
+            code_length = code.length;
+        if(button_value == "APPLY"){
+            $('.promo-validation-message').css('color','#ff7878');
+            if(code == ""){
+                $('.promo-validation-message').text("* "+"Please enter Giftcard/Promocode");
+            }
+            else if(code_length > 8){
+                $('.promo-validation-message').text("* "+"Please enter valid Giftcard/Promocode");
+            }
+            else if(localStorage['loggedIn'] != 'true'){
+                $('.promo-validation-message').text("Session is Invalid.Please login and try");
+            }
+            else{
+                checkPromoCode(code);
+            }
         }
+        if(button_value == "DELETE"){
+            removePromocode();
+        }   
     })
 
     $("#place-order").on("click", function(e) {
@@ -163,7 +180,7 @@ $(document).ready(function() {
         $(".city-selector-container").show();
     })
     $('#is-gift-card').on('click',function(){
-        $('.isPromocode-wrapper').toggle();
+        $('.isPromocode-wrapper').slideToggle();
     })
 });
 
@@ -252,6 +269,9 @@ var getCartItemsCallback = {
             $(".emtpy-cart-message").hide();
             populateCartItems(cartItems);
             populateDate(cartItems);
+            if(cartItems.coupon!=null){
+                populateCoupon(cartItems.coupon);
+            }
         } else {
             $('.order-list-items').remove();
             $(".emtpy-cart-message").empty();
@@ -317,7 +337,7 @@ function populateCartItems(data) {
     updateReciept();
 }
 
-function updateReciept(GiftcardDetails) {
+function updateReciept(GiftcardDetails,flag) {
     var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0, 
         totalDiscount =0,totalCredits = 0,
         totalDriverTip = parseInt($('.driver-tip option:selected').text().substring(1)),
@@ -325,19 +345,22 @@ function updateReciept(GiftcardDetails) {
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
         price = parseInt($(value).find('.price-container').attr("data-price"));
-        tax = parseInt($(value).find('.price-container').attr("data-tax"));
+        tax = parseFloat($(value).find('.price-container').attr("data-tax"));
 
         totalItemCost += (price * quantity);
         totalTaxCost += (tax * quantity);
     });
-    if(GiftcardDetails){
+    if(GiftcardDetails && !flag){
         totalItemCost = GiftcardDetails.amount;
         totalTaxCost = GiftcardDetails.tax;
         totalDiscount = GiftcardDetails.discount;
         totalCredits = GiftcardDetails.credits;
     }
+    if(flag == "coupon-applied"){
+        totalDiscount = GiftcardDetails.discount;
+    }
     totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost -totalDiscount-totalCredits;
-
+    $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount).toFixed(2));
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
     $(".total-cost").text("$" + (totalCost).toFixed(2));
@@ -999,8 +1022,11 @@ var checkPromoCodeCallback = {
     success: function(data, textStatus) {
         var userData = JSON.parse(data);
         if(userData.status == 1){
+            $('#apply-promo-gift').removeClass('btn-small-primary medium-green').addClass('btn-small-secondary');
+            $('#apply-promo-gift').val('DELETE');
             $('.promo-validation-message').css('color','#8EC657');
             $('.promo-validation-message').text("* "+userData.message);
+            $(".discount-container .discount-amount").css('color','#8EC657');
             updateReciept(userData);
         } 
         if (userData.status == -1) {
@@ -1022,4 +1048,49 @@ function checkPromoCode(code){
     data = JSON.stringify(params);
     var checkPromoCodeInstance = new AjaxHttpSender();
     checkPromoCodeInstance.sendPost(url, header, data, checkPromoCodeCallback);
+}
+
+//Remove cart items call back
+var removePromocodeCallback = {
+    success: function(data, textStatus) {
+        removeData = JSON.parse(data);
+        if (removeData.status == 1) {
+            $('#apply-promo-gift').removeClass('btn-small-secondary').addClass('btn-small-primary medium-green');
+            $('#apply-promo-gift').val('APPLY');
+            $('.promo-validation-message').css('color','#8EC657');
+            $('.discount-container .discount-amount').css('color','#4A4A4A');
+            $('.promo-validation-message').text('* '+removeData.message);
+            updateReciept(removeData);
+        } else {}
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+//Remove cart items
+function removePromocode() {
+    var url = baseURL + "remove_promocode/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {};
+    data = JSON.stringify(params);
+    var removePromocodeInstance = new AjaxHttpSender();
+    removePromocodeInstance.sendPost(url, header, data, removePromocodeCallback);
+}
+
+function populateCoupon(couponDetails){
+    var code = couponDetails.code,
+        discount = couponDetails.amount,
+        message = couponDetails.message,
+        flag = "coupon-applied";
+    var discObj ={};
+        discObj.discount = discount;
+        $('.isPromocode-wrapper').slideDown();
+        $('#promo-gift-input').val(code);
+        $('.promo-validation-message').css('color','#8EC657');
+        $('.promo-validation-message').text(message);
+        $('#apply-promo-gift').removeClass('btn-small-primary medium-green').addClass('btn-small-secondary');
+        $('#apply-promo-gift').val('DELETE');
+        $(".discount-container .discount-amount").css('color','#8EC657');
+        updateReciept(discObj,flag);
 }

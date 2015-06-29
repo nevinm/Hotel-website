@@ -50,10 +50,18 @@ $(document).ready(function() {
             manageGiftcards(giftcardDetails);
         }
     });
+
     $(document).on('click', "#add-gift-card", function() {  
         $('#update').text("add");
         $('form.popup-container')[0].reset();
         $(".popup-wrapper").show();
+    });
+
+    //search in gift card
+    $('#search-coupon-code').on("click",function(){
+        var name = $('#gift-card-name').val(),
+            code = $('#coupon-code').val();
+        listGiftCards("",name,code);
     }); 
 });
 
@@ -70,13 +78,15 @@ var listGiftCardsCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function listGiftCards(currentPage) {
+function listGiftCards(currentPage,name,code) {
     var url = baseURL + "cms/list_gift_cards/";
     header = {
         "session-key": localStorage['session_key']
     }
     params = {
-        "nextPage": currentPage
+        "nextPage": currentPage,
+        "name" : name,
+        "code" : code
     }
     data = JSON.stringify(params);
     var listGiftCardsInstance = new AjaxHttpSender();

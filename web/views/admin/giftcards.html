@@ -64,8 +64,19 @@
                     <div class="admin-header">
                         <h2>GIFTCARDS LIST</h2>
                     </div>
-                    <div class="meal-list-container">
+                    <div class="meal-list-container gift-card-container">
                         <input type="button" class="btn btn-small-primary medium-green" value="Add" id="add-gift-card">
+                        <div class="filter-container">
+                            <div class='search-filter-input'>
+                                <label class="body-text-small" for="gift-card-name">Gift card name</label>
+                                <input type="text" id="gift-card-name" />
+                            </div>
+                            <div class='search-filter-input'>
+                                <label class="body-text-small" for="coupon-code">Gift card Code</label>
+                                <input type="text" id="coupon-code" />
+                            </div>
+                            <input type="button" class="btn btn-small-primary medium-green" id="search-coupon-code" value="SEARCH">
+                        </div>
                         <table id="giftcards-list" class="display" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
