@@ -280,7 +280,8 @@ def create_order(request, data, user):
         if not order.cart.completed:
             order.cart.completed=True
             order.cart.save()
-        if not send_order_complete_notification(order):
+
+        if not send_order_placed_notification(order):
             log.error("Failed to send order notification")
         return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way."})
         
@@ -346,7 +347,7 @@ def make_payment(order, user):
         log.error("Failed to make payment." + e.message + str(exc_tb.tb_lineno))
         return False
 
-def send_order_complete_notification(order):
+def send_order_placed_notification(order):
     try:
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
         user = order.cart.user
@@ -373,7 +374,6 @@ def send_order_complete_notification(order):
                "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
                "status":order.status,
                "delivery_type":order.delivery_type,
-               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id),
                "to_email":to_email,
                "site_url":settings.SITE_URL,
                "delivery_hr": str(order.delivery_time.hour) + "-" + str(order.delivery_time.hour +1)+"PM",
@@ -402,7 +402,7 @@ def send_order_complete_notification(order):
                 return False
         return True
 
-    except KeyError as e:
+    except Exception as e:
         log.error("Send confirmation mail : " + e.message)
         return False
 
