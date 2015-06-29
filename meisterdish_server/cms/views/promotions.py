@@ -73,10 +73,10 @@ def list_gift_cards(request, data, user):
         
         #Filter
         if "code" in data and str(data['code']).strip() != "":
-            gcs.filter(code__istartswith=data['code'])
+            gcs = gcs.filter(code__istartswith=data['code'])
         
         if "name" in data and str(data['name']).strip() != "":
-            gcs.filter(name__istartswith=data['name'])
+            gcs = gcs.filter(name__istartswith=data['name'])
 
         # End filter
         gcs = gcs.order_by("-id")
@@ -183,7 +183,7 @@ def list_promocodes(request, data, user):
         
         #Filter
         if "code" in data and str(data['code']).strip() != "":
-            promos.filter(code__istartswith=data['code'])
+            promos = promos.filter(code__istartswith=data['code'])
         
         # End filter
 

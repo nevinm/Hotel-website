@@ -13,9 +13,9 @@ from datetime import datetime
 log = logging.getLogger('libraries')
 import os
 
-def mail(to_list, subject, message, sender="Meisterdish Test<meisterdishtest@gmail.com>", headers = {
-              'Reply-To': "Meisterdish Test<meisterdishtest@gmail.com>",
-              'From':"Meisterdish Test<meisterdishtest@gmail.com>",
+def mail(to_list, subject, message, sender="Meisterdish<meisterdishtest@gmail.com>", headers = {
+              'Reply-To': "Meisterdish<meisterdishtest@gmail.com>",
+              'From':"Meisterdish<meisterdishtest@gmail.com>",
               }, design=True):
     
     msg = EmailMessage(subject, message, sender, to_list, headers=headers)
@@ -29,9 +29,9 @@ def mail(to_list, subject, message, sender="Meisterdish Test<meisterdishtest@gma
           msg.attach(msgImage)
     return msg.send()
 
-def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdish Test<meisterdishtest@gmail.com>", headers = {
-              'Reply-To': "Meisterdish Test<meisterdishtest@gmail.com>",
-              'From':"Meisterdish Test<meisterdishtest@gmail.com>",
+def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdish<meisterdishtest@gmail.com>", headers = {
+              'Reply-To': "Meisterdish<meisterdishtest@gmail.com>",
+              'From':"Meisterdish<meisterdishtest@gmail.com>",
               }):
     try:
         msg = EmailMessage(subject, message, sender, to_list, headers=headers)
