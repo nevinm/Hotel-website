@@ -275,7 +275,7 @@ def create_order(request, data, user):
                 order.cart.completed=True
                 order.cart.save()
         
-            return json_response({"status":1, "message":"The Order has been placed successully."})
+            return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way."})
         
     except Exception as e:
         log.error("Failed to create order." + e.message)
