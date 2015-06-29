@@ -252,32 +252,37 @@ def create_order(request, data, user):
         log.info("___Order___")
         log.info("Payable : " + str(order.total_payable))
 
-        #Payment
-        order.save_card = bool(data.get("save_card", 0))
-        order.card_id = data.get("card_id", False)
-        
-        if not order.card_id:
-            order.token = data["stripeToken"].strip()
-        order.status = 0
-        order.save()
-        payment = make_payment(order, user)
+        if float(order.total_payable) >= 0.0:
+            #Payment
+            order.save_card = bool(data.get("save_card", 0))
+            order.card_id = data.get("card_id", False)
             
-        if not payment:
-            return custom_error("An error has occurred while paying with Credit Card. Please try agian.")
-        else:
-            log.info("Order payment success.Payment id :"+str(payment.id))        
-            if type(payment) != type(True):
-                order.payment = payment
-            order.status = 1
+            if not order.card_id:
+                order.token = data["stripeToken"].strip()
+            order.status = 0
             order.save()
-            user.save()
+            payment = make_payment(order, user)
+            
+            if not payment:
+                return custom_error("An error has occurred while paying with Credit Card. Please try agian.")
+        else: #amount = 0
+            payment = None
+        if payment:
+            log.info("Order payment success.Payment id :"+str(payment.id))
+        else:
+            log.info("Order success - Amount = 0..")
 
-            if not order.cart.completed:
-                order.cart.completed=True
-                order.cart.save()
-            if not send_order_complete_notification(order):
-                log.error("Failed to send order notification")
-            return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way."})
+        order.payment = payment
+        order.status = 1
+        order.save()
+        user.save()
+
+        if not order.cart.completed:
+            order.cart.completed=True
+            order.cart.save()
+        if not send_order_complete_notification(order):
+            log.error("Failed to send order notification")
+        return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way."})
         
     except Exception as e:
         log.error("Failed to create order." + e.message)
@@ -285,8 +290,6 @@ def create_order(request, data, user):
 
 def make_payment(order, user):
     try:
-        if float(order.total_payable) == 0.0:
-            return True
         if user.stripe_customer_id and str(user.stripe_customer_id).strip() != "":
             customer = stripe.Customer.retrieve(user.stripe_customer_id)
             if order.card_id:
