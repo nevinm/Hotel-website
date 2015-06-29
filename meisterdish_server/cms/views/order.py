@@ -133,7 +133,7 @@ def get_orders(request, data, user):
                   "available": 1 if cart_item.meal.available else 0,
                   "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
                   "price": cart_item.meal.price,
-                  "tax": cart_item.meal.tax,
+                  "tax": cart_item.meal.price * cart_item.meal.tax/100,
                   "quantity":cart_item.quantity,
                 })
 
@@ -206,7 +206,7 @@ def get_order_details(request, data, user, order_id):
               "available": 1 if cart_item.meal.available else 0,
               "category": cart_item.meal.category.name.title(),
               "price": cart_item.meal.price,
-              "tax": cart_item.meal.tax,
+              "tax": cart_item.meal.price * cart_item.meal.tax /100,
               "quantity":cart_item.quantity,
             })
         order_details = {
@@ -266,12 +266,12 @@ def send_order_confirmation_notification(order):
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
                "delivery_time" : order.delivery_time.strftime("%A, %B %d"+suffix+", %Y"),
-               "total_amount":round(order.total_amount,2),
-               "discount" : round(order.discount,2),
-               "tax" : round(order.total_tax,2),
-               "shipping" : round(settings.SHIPPING_CHARGE,2),
-               "tip":round(order.tip,2),
-               "grand_total":round(order.grand_total,2),
+               "total_amount":order.total_amount,
+               "discount" : order.discount,
+               "tax" : order.total_tax,
+               "shipping" : settings.SHIPPING_CHARGE,
+               "tip":order.tip,
+               "grand_total":order.grand_total,
                "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
                "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
                "status":order.status,

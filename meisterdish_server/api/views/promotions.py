@@ -185,7 +185,7 @@ def apply_promocode(request, data, user):
         code = data["code"].strip()
 
         try:
-            code_obj = PromoCode.objects.get(code=code, deleted=False)
+            code_obj = PromoCode.objects.get(code__iexact=code, deleted=False)
             if code_obj.expiry_date < datetime.now():
                 return custom_error("Sorry, the promo code ("+ code +") has expired.")
             cart.promo_code = code_obj
@@ -193,7 +193,7 @@ def apply_promocode(request, data, user):
             amt = code_obj.amount
         except PromoCode.DoesNotExist:
             try:
-                gift_card = GiftCard.objects.get(code=code)
+                gift_card = GiftCard.objects.get(code__iexact=code)
                 if gift_card.used:
                     return custom_error("This code is already redeemed.")
                 elif cart.gift_cards.all().count() >= 1:
