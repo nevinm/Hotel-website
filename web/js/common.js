@@ -421,6 +421,7 @@ $("form").each(function() {
             },
             giftcardcustomamount: {
                 required: true,
+                decimal:true,
                 minlength: 2,
                 minAmount: 25
             },
@@ -476,7 +477,8 @@ $("form").each(function() {
             },
             giftcardcustomamount: {
                 required: "Please enter an amount.",
-                minAmount: "Enter a min amount of 25"
+                minAmount: "Enter a min amount of 25",
+                decimal: "Please enter a whole number."
             },
             amount: {
                 required: "Please enter an amount.",
@@ -520,6 +522,9 @@ if ($.validator) {
     });
     $.validator.addMethod('zipcode', function(value) {
         return value.match(/\d{5}-\d{4}$|^\d{5}$/);
+    });
+    $.validator.addMethod('decimal', function(value, element) {
+        return this.optional(element) || /^[0-9,]+$/.test(value);
     });
 }
 
@@ -578,4 +583,3 @@ function mobileResponsive() {
         $('#header').css("margin-left", "0px");
     }
 }
-
