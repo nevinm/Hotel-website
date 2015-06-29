@@ -2,7 +2,8 @@ var billingAddressId, cardDetails,
     payPalEmail = "nazz007online-facilitator@gmail.com",
     returnUrl = baseURL + "paypal_success/",
     cancelReturnUrl = homeUrl + "/views/checkout.html",
-    notifyUrl = baseURL + "paypal_ipn/";
+    notifyUrl = baseURL + "paypal_ipn/",
+    totalDiscount = 0;
 
 $(document).ready(function() {
     if (localStorage["session_key"]) {
@@ -367,7 +368,7 @@ function updateQuantity(){
 
 function updateReciept(GiftcardDetails, flag) {
     var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
-        totalDiscount = 0,
+        // totalDiscount = 0,
         totalCredits = 0,
         totalDriverTip = parseInt($('.driver-tip option:selected').text().substring(1)),
         totalDeliveryCost = 2;
