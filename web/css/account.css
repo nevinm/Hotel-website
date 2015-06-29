@@ -1528,8 +1528,8 @@ img.accepted-cards
 	line-height: 15px;
 }
 .address-container input[type=radio]:checked + label:before {
-	font-size: 44px;
-  line-height: 12px;
+	font-size: 38px;
+	line-height: 10px;
 }
 .saved-card-list label{
 	width: 100%;
