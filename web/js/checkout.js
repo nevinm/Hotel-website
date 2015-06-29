@@ -609,7 +609,10 @@ function popuplateAddressList(data) {
                 var userProfile = JSON.parse(localStorage['user_profile']);
                 $(".address-info-guest").find("#guest-email").val(userProfile.email);
                 $(".address-info-guest").find("#guest-phone").val(userProfile.mobile);
-            } else {}
+                $(".address-info-guest").find("#guest-email").val(userProfile.email);
+            } else {
+                getProfileplace();
+            }
             $('.address-info').hide();
             $('.address-info-guest').show();
             haveAccountCheck();
@@ -813,16 +816,16 @@ var placeOrderCallback = {
             var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
                 adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null,
             loggedIn = (userLoggedin || adminLoggedin);
-            dataAfterOrdering = {};
-            dataAfterOrdering.message = "Your orders are successfully placed.";
+            // dataAfterOrdering = {};
+            // dataAfterOrdering.message = "Your orders are successfully placed.";
             $(".ok-container").show();
             $(".close-container").hide();
             if (loggedIn) {
                 $(".ok-container a").attr("href", "orderhistory.html");
-                showPopup(dataAfterOrdering);
+                showPopup(response);
             } else {
                 $(".ok-container a").attr("href", "../index.html");
-                showPopup(dataAfterOrdering);
+                showPopup(response);
             }
         } else {
             showPopup(response);
@@ -1093,4 +1096,29 @@ function populateCoupon(couponDetails){
         $('#apply-promo-gift').val('DELETE');
         $(".discount-container .discount-amount").css('color','#8EC657');
         updateReciept(discObj,flag);
+}
+
+//Get profile API process
+var getProfileCallback = {
+    success: function(data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            localStorage['user_profile'] = data;
+            $(".address-info-guest").find("#guest-email").val(userDetails.email);
+        } else {}
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function getProfile() {
+    var url = baseURL + "get_profile/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+            "get": 1
+        };
+    data = JSON.stringify(userData);
+    var getProfileInstance = new AjaxHttpSender();
+    getProfileInstance.sendPost(url, header, data, getProfileCallback);
 }
