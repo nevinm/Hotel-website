@@ -609,7 +609,10 @@ function popuplateAddressList(data) {
                 var userProfile = JSON.parse(localStorage['user_profile']);
                 $(".address-info-guest").find("#guest-email").val(userProfile.email);
                 $(".address-info-guest").find("#guest-phone").val(userProfile.mobile);
-            } else {}
+                $(".address-info-guest").find("#guest-email").val(userProfile.email);
+            } else {
+                getProfile();
+            }
             $('.address-info').hide();
             $('.address-info-guest').show();
             haveAccountCheck();
@@ -1093,4 +1096,29 @@ function populateCoupon(couponDetails){
         $('#apply-promo-gift').val('DELETE');
         $(".discount-container .discount-amount").css('color','#8EC657');
         updateReciept(discObj,flag);
+}
+
+//Get profile API process
+var getProfileCallback = {
+    success: function(data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            localStorage['user_profile'] = data;
+            $(".address-info-guest").find("#guest-email").val(userDetails.email);
+        } else {}
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function getProfile() {
+    var url = baseURL + "get_profile/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+            "get": 1
+        };
+    data = JSON.stringify(userData);
+    var getProfileInstance = new AjaxHttpSender();
+    getProfileInstance.sendPost(url, header, data, getProfileCallback);
 }
