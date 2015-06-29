@@ -277,3 +277,5 @@ EMAIL_IMAGES = {
     "tw" : os.path.join(STATIC_ROOT, "default", "social_icon_tw.png"),
     "in" : os.path.join(STATIC_ROOT, "default", "social_icon_in.png"),
 }
+
+PRINTNODE_API_URL = "https://api.printnode.com"
