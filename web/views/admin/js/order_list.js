@@ -194,7 +194,7 @@ function populateOrderList(data) {
         cssStyle: 'light-theme',
         onPageClick: function(pageNumber, event) {
             searchParams = returnSearchParams();
-            getOrders(pageNumber, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date,searchParams.delivery_type);
+            getOrders(pageNumber, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date);
         }
     });
 }
