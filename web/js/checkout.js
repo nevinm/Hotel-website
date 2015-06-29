@@ -344,7 +344,7 @@ function updateReciept(GiftcardDetails,flag) {
         totalDeliveryCost = 2;
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
-        price = parseInt($(value).find('.price-container').attr("data-price"));
+        price = parseFloat($(value).find('.price-container').attr("data-price"));
         tax = parseFloat($(value).find('.price-container').attr("data-tax"));
 
         totalItemCost += (price * quantity);
