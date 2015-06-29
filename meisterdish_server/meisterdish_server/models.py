@@ -398,10 +398,11 @@ class Order(models.Model):
 
         if not self.id:
             self.created = datetime.datetime.now()
-
-            promo_amt = 0 if not self.cart.promo_code else self.cart.promo_code.amount
+            
+            self.discount = 0 if not self.cart.promo_code else self.cart.promo_code.amount
             gc_amt = self.cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
-            self.discount = gc_amt + promo_amt
+            gc_amt = 0 if not gc_amt else gc_amt
+            self.discount += gc_amt
 
             self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE - self.discount
 
