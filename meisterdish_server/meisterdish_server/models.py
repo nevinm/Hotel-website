@@ -405,7 +405,7 @@ class Order(models.Model):
             gc_amt = 0 if not gc_amt else gc_amt
             self.discount += gc_amt
 
-            self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE - self.discount
+            self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE - self.discount - self.credits
 
         super(Order, self).save(*args, **kwargs)
         self.order_num = '0' * (6-len(str(self.id))) + str(self.id)

@@ -224,7 +224,7 @@ def create_order(request, data, user):
             if user.credits > 0:
                 log.info("User has credits : "+str(user.credits))
                 if user.credits > order.total_payable:
-                    user.credits = credits - order.total_payable
+                    user.credits = user.credits - order.total_payable
                     order.credits = order.total_payable
                     order.total_payable = 0
                 else:
@@ -284,7 +284,7 @@ def create_order(request, data, user):
             log.error("Failed to send order notification")
         return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way."})
         
-    except Exception as e:
+    except KeyError as e:
         log.error("Failed to create order." + e.message)
         return custom_error(e.message + "is missing.")
 
@@ -402,7 +402,7 @@ def send_order_complete_notification(order):
                 return False
         return True
 
-    except Exception as e:
+    except KeyError as e:
         log.error("Send confirmation mail : " + e.message)
         return False
 
