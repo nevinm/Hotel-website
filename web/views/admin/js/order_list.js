@@ -174,7 +174,7 @@ function populateOrderList(data) {
             "<td>" + value.phone + "</td>" +
             "<td>" + value.delivery_time + "</td>" +
             "<td>" + value.delivery_type + "</td>" +
-            "<td>" + dollarConvert(value.grand_total) + "</td>" +
+            "<td>" + dollarConvert(parseFloat(value.grand_total).toFixed(2)) + "</td>" +
             "<td class='no-popup'><select data-id='" + value.id + "'class='order-status' name='status'>" +
             "<option value='0'>Incomplete</option>" +
             "<option value='1'>Order placed</option>" +
@@ -208,7 +208,7 @@ function populateOrderDetails(orderDetails) {
     $orderPopup.find(".order-name").text(orderDetails.order.user_first_name + " " + orderDetails.order.user_last_name);
     $orderPopup.find(".order-total").text(dollarConvert(orderDetails.order.grand_total));
     $orderPopup.find(".order-date").text(orderDetails.order.delivery_time);
-    $orderPopup.find(".order-payment_type").text(orderDetails.order.payment_type);
+    $orderPopup.find(".order-payment_type").text(orderDetails.order.delivery_type);
     $orderPopup.find(".order-payment_date").text(orderDetails.order.payment_date);
     $orderPopup.find(".order-transaction_id").text(orderDetails.order.transaction_id);
     $orderAddress.find('.building').text(orderDetails.order.delivery_address.building);
@@ -222,6 +222,6 @@ function populateOrderDetails(orderDetails) {
             "<img src='" + value.image + "'>" + "<span class='body-text-small'>" + value.name + "</span>" +
             "<div class='quantity-container'>" +
             "<input type='text' disabled='disabled' class='quantity' value='" + value.quantity + "'></div>" +
-            "<span class='price-container' data-tax='" + value.tax + "'>" + dollarConvert(value.price) + "</span></div>");
+            "<span class='price-container' data-tax='" + value.tax + "'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</span></div>");
     });
 }

@@ -453,8 +453,8 @@ function populateMealDetails(mealDetails) {
     $("#meal-image").attr("src", mealDetails.main_image.url);
     $("#meal-image").attr("data-id", mealDetails.main_image.id);
     $("#meal-sub-name").val(mealDetails.sub);
-    $("#meal-price").val(mealDetails.price);
-    $("#meal-tax").val(mealDetails.tax);
+    $("#meal-price").val(parseFloat(mealDetails.price).toFixed(2));
+    $("#meal-tax").val(parseFloat(mealDetails.tax_percentage));
     $("#chef-name").val(mealDetails.chef_name);
     $("#chef-comments").val(mealDetails.chef_comments);
     $("#create-meal-available").val(mealDetails.available);

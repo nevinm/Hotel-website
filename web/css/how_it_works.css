@@ -267,6 +267,15 @@ img.image-small{
 .tab-header-drop-down #plantation,.tab-header-drop-down #common-thread-farm{
 	display: none;
 }
+#zip-code-error{
+	background: none;
+}
+.forminput-wrapper{
+	position: relative;
+}
+input#check-delivery-area{
+	margin-bottom: 0px;
+}
 @media (min-width: 768px)and (max-width: 1024px) {
 	.contentWrapper .h0{
 		font-size: 40px;
