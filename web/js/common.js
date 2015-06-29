@@ -2,12 +2,64 @@
 //var baseURL = 'http://10.1.4.32:8083/api/',
 var baseURL = 'http://meisterdish.qburst.com/backend/api/',
     homeUrl = "http://meisterdish.qburst.com",
-    //    homeUrl = "http://10.7.2.51:86",
     userDetails, currentPage = $("title").text(),
     currentPageTitle,
     clicked = 0;
 //If already logged in
 var $userentry = $('.login-signup');
+
+$(document).ready(function() {
+    //Logout process
+    $("#logout,.mobile-logout").on('click', function() {
+        logingOut();
+    });
+
+    // &NAVMENU - RESPONSIVE
+    $('.icon-menu').on("click", function() {
+        clicked = 1;
+        $('.navMenu').show();
+        $('#header').animate({
+                marginLeft: "80%"
+
+            })
+            // $("#page-container").css("position","fixed")
+        $('#page-container').animate({
+            marginLeft: "80%"
+        })
+        setTimeout(function() {
+            $('#page-container').hide();
+        })
+        $('.navMenu').animate({
+            marginLeft: "0"
+        });
+        setTimeout(function() {
+            $('.icon-menu').addClass('icon-cancel').removeClass('icon-menu');
+        }, 100)
+    });
+    $(document).on('click', '.icon-cancel', function() {
+        clicked = 0;
+        $('.navMenu').animate({
+            marginLeft: "-80%"
+        });
+        // $("#page-container").css("position","relative");
+        $('#page-container').animate({
+            marginLeft: "0px"
+        })
+        setTimeout(function() {
+            $('#page-container').show();
+        }, 700)
+
+        $('#header').animate({
+            marginLeft: "0px"
+        })
+        setTimeout(function() {
+            $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
+        }, 600)
+    })
+
+    verifyAccount();
+});
+
 
 function checkLoggedIn() {
     if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
@@ -144,6 +196,7 @@ function verifyAccount() {
 }
 
 function logingOut() {
+    eraseCookie("SessionExpireTime");
     localStorage.removeItem('username');
     localStorage.removeItem('session_key');
     localStorage.removeItem('cartItems');
@@ -157,11 +210,10 @@ function logingOut() {
     $userentry.show();
     $('#menu').removeClass('menuPadding');
     $(".logout").addClass('hide');
+    currentPage = $("title").text();
     if (currentPage == "Meisterdish - Admin") {
         window.location.href = 'index.html';
-    } 
-    else if(currentPage == "Meisterdish Home Page"){}
-    else {
+    } else if (currentPage == "Meisterdish Home Page") {} else {
         window.location.href = '../index.html';
     }
 }
@@ -193,7 +245,7 @@ $(document).on('click', '#close', function() {
     }
     if (getCurrentPageTitle() == 'Meisterdish - Gift Cards Payment') {
         if ($(".redirectApproved").length) {
-            window.location.href = 'gift_cards_select.html';
+            window.location.href = 'gift-cards-select.html';
         }
     }
     if ($(this).hasClass("session-expire-close")) {
@@ -210,57 +262,7 @@ function showErrorPopup(data) {
         $('.error-popup-wrapper').hide();
     })
 }
-$(document).ready(function() {
-    //Logout process
-    $("#logout,.mobile-logout").on('click', function() {
-        logingOut();
-    });
 
-    // &NAVMENU - RESPONSIVE
-    $('.icon-menu').on("click", function() {
-        clicked = 1;
-        $('.navMenu').show();
-        $('#header').animate({
-                marginLeft: "80%"
-
-            })
-            // $("#page-container").css("position","fixed")
-        $('#page-container').animate({
-            marginLeft: "80%"
-        })
-        setTimeout(function() {
-            $('#page-container').hide();
-        })
-        $('.navMenu').animate({
-            marginLeft: "0"
-        });
-        setTimeout(function() {
-            $('.icon-menu').addClass('icon-cancel').removeClass('icon-menu');
-        }, 100)
-    });
-    $(document).on('click', '.icon-cancel', function() {
-        clicked = 0;
-        $('.navMenu').animate({
-            marginLeft: "-80%"
-        });
-        // $("#page-container").css("position","relative");
-        $('#page-container').animate({
-            marginLeft: "0px"
-        })
-        setTimeout(function() {
-            $('#page-container').show();
-        }, 700)
-
-        $('#header').animate({
-            marginLeft: "0px"
-        })
-        setTimeout(function() {
-            $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
-        }, 600)
-    })
-
-    verifyAccount();
-});
 
 //JQuery Validation   
 $("form").each(function() {
@@ -321,6 +323,9 @@ $("form").each(function() {
                 minlength: 6,
                 maxlength: 20
             },
+            date: {
+                required: true
+            },
             email: {
                 required: true,
                 email: true
@@ -345,6 +350,9 @@ $("form").each(function() {
                 required: true,
                 minlength: 6,
                 equalTo: "#new-password"
+            },
+            promocode: {
+                required: true
             },
             zip: {
                 // required: true,
@@ -407,10 +415,17 @@ $("form").each(function() {
                 required: true,
                 minlength: 2
             },
+            amount: {
+                required: true,
+                minAmount: 2
+            },
             giftcardcustomamount: {
                 required: true,
                 minlength: 2,
                 minAmount: 25
+            },
+            invitecode: {
+                required: true
             }
         },
         messages: {
@@ -463,6 +478,10 @@ $("form").each(function() {
                 required: "Please enter an amount.",
                 minAmount: "Enter a min amount of 25"
             },
+            amount: {
+                required: "Please enter an amount.",
+                minAmount: "Enter a valid amount"
+            },
             nameOnCard: "Enter valid name.",
             expiryMonth: "Enter exp month.",
             expiryYear: "Enter exp year.",
@@ -480,7 +499,10 @@ $("form").each(function() {
             mealdescription: "Meal description is not valid.",
             cvv: "provide a valid cvv.",
             url: "Enter valid url.",
-            tips_details: "Enter valid title."
+            tips_details: "Enter valid title.",
+            invitecode: "Enter Invitecode",
+            date: "Please enter date",
+            promocode: "Please enter promocode."
                 // image_upload:"Please select an image."
         }
     });
@@ -556,3 +578,4 @@ function mobileResponsive() {
         $('#header').css("margin-left", "0px");
     }
 }
+

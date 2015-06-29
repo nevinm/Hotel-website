@@ -1,5 +1,5 @@
 /*==============================*\
-			&LOGIN
+		        	&LOGIN
 \*==============================*/
 
 #login-container{
@@ -143,20 +143,23 @@ form.signup-formcontainer {
 .login-button .btn-large-primary{
   width: 100%;
 }
-.email-wrapper .signup-input:nth-child(2){
-  margin-top: 10px;
-  width: 48%;
-  margin-right: 4%;
-}
-.email-wrapper .signup-input:nth-child(3){
-  margin-top: 10px;
-  width: 48%;
-}
 .email-wrapper .signup-input{
     width: 100%;
 }
+.email-wrapper .fifty-percent-first{
+  margin-top: 10px;
+  width: 48%;
+  margin-right: 4%;
+}
+.email-wrapper .fifty-percent-second{
+  margin-top: 10px;
+  width: 48%;
+}
 .signup-formcontainer .marginRight{
   margin-right: 4%;
+}
+.referral-message-container{
+  display: none;
 }
 /*==================================*\
       &RESET PASSWORD
@@ -246,20 +249,14 @@ hr{
   .header-small h4{
     font-family: "BrandonGrotesque-Bold";
   }
- /* .login-wrapper,.forgot-wrapper{
-    width: 90%;
-  }*/
   .facebook-signup, .facebook-login{
     text-align: center;
-    /*padding: 0;
-    padding-top: 30px;*/
   }
   span.or{
     width: 100%;
     position: relative;
     padding: 0;
     float: left;
-    /*margin-top: 30px;*/
   }
   span.or p{
     position: absolute;

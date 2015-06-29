@@ -748,11 +748,16 @@ form.addaddress-popup {
 			&CHECHOUT PAGE
 \*==================================*/
 .checkout-wrapper {
-  width: 90%;
-  margin: 0 auto;
-  margin-top: 70px;
-  display: table;
-  max-width: 1100px;
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 70px;
+	display: table;
+	max-width: 1100px;
+}
+
+.checkout-wrapper .body-text-small{
+	color: #666666;
+	font-size: 13px;
 }
 .box-border{
 	border: 1px solid #C7C7C7;
@@ -811,8 +816,9 @@ form.addaddress-popup {
   padding-left: 20px;
   background-color: #eeefeb;
   border-bottom: 1px solid #d0d0d0;
-  color:dimgrey;
+  color:#4A4A4A;
   font-size: 16px;
+  letter-spacing: 1px;
 }
 .checkout-header span{
 	padding-left: 2%;
@@ -864,6 +870,7 @@ form.addaddress-popup {
 	float: left;
 	padding-bottom: 10px;
 	font-size: 14px;
+	letter-spacing: 1px;
 }
 .order-list-container{
 	width: 64%;
@@ -955,8 +962,8 @@ form.addaddress-popup {
 .address-info{
   width: 100%;
   font-family: 'ProximaNova-Regular';
-  color: #b0b0b0;
-  font-size: 12px;
+  color: #666666;
+  font-size: 13px;
   float: left;
   min-height: 278px;
   position: relative;
@@ -1011,7 +1018,7 @@ form.addaddress-popup {
 	float: left;
 	line-height: 12px;
 	padding-left: 10px;
-	width: 73%;
+	width: 82%;
 }
 #guest-address-info{
 	width: 100%;
@@ -1113,12 +1120,15 @@ form#pay-form,form#credit-card-form {
 .receipt-container .checkout-header{
 	padding-left: 5%;
 }
-.items-container .inner-content span:nth-child(2){
+.items-container .inner-content span:nth-child(2),
+.discount-amount{
 	font-weight: bold;
 	float: right;
+	color:#4A4A4A;
 }
 .items-container,.driver-tip-container,
-.gift-card-container,.total-container,.instruction-container{
+.gift-card-container,.total-container,
+.instruction-container,.discount-container{
 	padding: 2% 5%;
 	overflow: hidden;
 }
@@ -1150,6 +1160,8 @@ form#pay-form,form#credit-card-form {
 }
 .total-container{
 	font-family: 'BrandonGrotesque-Bold';
+	color: #4A4A4A;
+	letter-spacing: 1px;
 }
 .total-container span:nth-child(2){
 	float: right;
@@ -1172,9 +1184,9 @@ textarea#driver-description {
 #add-payment-method-container #name-on-card-error{
 	bottom: 36px;
 }
-::-webkit-input-placeholder { 
+textarea::-webkit-input-placeholder { 
 	color:#b0b0b0;
-	font-size: 10px; 
+	font-size: 13px; 
 	text-align: center;
 }
 .left-wrapper {
@@ -1240,6 +1252,10 @@ input.radio-button-payment {
 	float: left;
 	padding-top: 5px;
 }
+.saved-card-list .checkbox-green + label:before,
+.payment-popup-sub-container .checkbox-green + label:before{
+	top: 5px;
+}
 #save-credit-card{
 	display: none;
 }
@@ -1250,12 +1266,21 @@ input.radio-button-payment {
 .address-payment-list-popup{
 	display: none;
 }
+.address-payment-list-popup{
+	width: 100%;
+	float: left;
+}
 .address-payment-list-popup .popup{
-	width: 64%;
-	margin-left: -32%;
+	width: 100%;
+	/*margin-left: -32%;*/
 	height: auto;
-	top: 50%;
-	min-height: 260px;
+	top: 35%;
+	min-height: 200px;
+	max-width: 720px;
+	-ms-transform: translate(-50%,-40%);
+    -moz-transform:translate(-50%,-40%);
+    -webkit-transform: translate(-50%,-40%);
+    transform: translate(-50%,-40%);
 }
 .address-payment-list-popup .header{
 	font-family: 'BrandonGrotesque-Bold';
@@ -1291,6 +1316,7 @@ input.radio-button-payment {
 .address-payment-list-popup .button{
 	padding-left: 20px;
 	float: left;
+	position: initial;
 }
 .address-payment-list-popup .button #cancel{
 	float: left;
@@ -1329,10 +1355,11 @@ input.radio-button-payment {
 	/*display: none !important;*/
 }
 .payment-popup-sub-container{
-	width: 33.3%;
+	width: 50%;
 	float: left;
 	padding-left: 20px;
 	padding-bottom: 30px;
+	padding-top: 10px;
 }
 #guest-address-info .button{
 	float: left;
@@ -1413,7 +1440,7 @@ form#guest-address-info #address-line-2-error{
 	width: 100%;
 	float: left;
 }
-#pickup-radio,#delivery-radio{
+#pickup-radio,#delivery-radio,#is-gift-card{
 	cursor: pointer;
 }
 #manage-payment-method-container .saved-card-list{
@@ -1445,7 +1472,7 @@ img.accepted-cards
 	height: auto;
 	margin-right: 5px;
 	max-width: 45px;
-	width: 13%;
+	width: 10%;
 }
 .accepted-cards-wrapper,.accepted-cards-list{
 	width: 95%;
@@ -1493,23 +1520,50 @@ img.accepted-cards
 	display: none;
 	width: 20%;
 }
-.address-payment-list-popup .popup .button{
+/*.address-payment-list-popup .popup .button{
 	position: initial;
-}
+}*/
 .saved-card-list input[type=radio]:checked + label:before {
-	font-size: 45px;
-	line-height: 16px;
+	font-size: 32px;
+	line-height: 15px;
 }
 .address-container input[type=radio]:checked + label:before {
 	font-size: 44px;
   line-height: 12px;
 }
 .saved-card-list label{
-	width: 90%;
+	width: 100%;
 }
 .payment-popup-sub-container input[type=radio]:checked + label:before {
-	font-size: 42px;
-	line-height: 16px;
+	font-size: 34px;
+	line-height: 15px;
+}
+.isPromocode-wrapper{
+	display: none;
+	width: 100%;
+	word-break:break-all;
+}
+.isPromocode-wrapper .popup-input{
+	height: 35px;
+	width: 57%;
+	float: left;
+	 margin-right: 3%;
+}
+.isPromocode-wrapper .btn{
+	width: 40%;
+	float: left;
+	min-width: 55px;
+}
+.promo-validation-message {
+	font-family:'ProximaNova-Regular';
+	font-size: 12px;
+	color: #ff7878;
+	word-break:break-word;
+	line-height: 15px;
+	letter-spacing: .6px;
+}
+.address-payment-list-popup .bk-overlay{
+	z-index: 999999;
 }
 /*==================================*\
 			&TABLET
@@ -1556,7 +1610,7 @@ img.accepted-cards
 }
 @media (min-width: 768px)and (max-width:1024px){
 	.payment-popup-sub-container{
-		width: 100%;
+		/*width: 100%;*/
 	}
 	.sub-content1 {
 		float: left;
@@ -1599,12 +1653,20 @@ img.accepted-cards
 	#manage-payment-method-container{
 		width: 75%;
 	}
+	.address-payment-list-popup .popup{
+		width: 80%;
+	}
 /*	.accepted-cards-list{
 		width: 94%;
 	}
 	.accepted-cards{
 		width: 13%;
 	}*/
+}
+@media (max-width:870px){
+	.payment-popup-sub-container{
+		width: 100%;
+	}
 }
 /*==================================*\
 			&MOBILE
@@ -1900,6 +1962,14 @@ img.accepted-cards
 		max-height: 240px;
 		min-height: 120px;
 	}
+	.address-payment-list-popup .popup{
+		width: 80%;
+	}
+	.popup-sub-wrapper{
+		height: auto;
+		max-height: 200px;
+		overflow-y: auto;	 
+	}
 }
   	@media (max-width:400px){
   		.address-content{
@@ -1958,7 +2028,7 @@ img.accepted-cards
   		}
   		.address-payment-list-popup .popup{
   			width: 90%;
-  			margin-left: -45%;
+  			margin-left: 0%;
   		}
   		.address-payment-list-popup .button{
   			padding-left: 0;

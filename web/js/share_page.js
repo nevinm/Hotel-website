@@ -1,23 +1,49 @@
-// $(document).ready(function() {
-//  $(".button").clipboard({
-//      path: 'jquery.clipboard.swf',
-//      copy: function() {
-//          alert("Text copied.");
-//          return $("div#some-content").text();
-//      }    
-//  });
-// })
-$('#facebook-share').on('click', function() {
-    checkLoginState();
-})
+$(document).ready(function() {
+    $('#copy-to-clipboard').on("click",function(){
+        if (navigator.mimeTypes ["application/x-shockwave-flash"].enabledPlugin == undefined){
+            $('#copied-text').text('This feature is not available in your browser.Please install flash player.');
+            $('#copied-text').css('color','#ff7878');
+            $("#copied-text").fadeIn();
+        }else{    
+            $('#clipboard-text').css('color','#A9D77B');
+            $('#copied-text').css('color','#6b6b6b');
+            $("#copied-text").fadeIn();
+        }
+    });
+    
+    $('#email-share').on("click",function(){
+        if(localStorage['user_profile']){
+            var email = JSON.parse(localStorage['user_profile']).email;
+            $('input[name="email"]').val(email);
+        }else{
+            $('input[name="email"]').val("");
+        }
+        $('.email-pupup-wrapper').show();
+    });
+    
+    $('#send').on('click',function(e){
+        e.preventDefault();
+        var email = $('input[name="email"]').val();
+        if($('form#email-form').valid()){
+            shareViaEmail(email);
+            $('.email-pupup-wrapper').hide();    
+        }
+    });
+    
+    $('#cancel').on('click', function() {
+        $('.email-pupup-wrapper').hide();
+    });
+    
+    $('#facebook-share').on('click', function() {
+        checkLoginState();
+    })
 
-$('#twitter-share').on('click', function() {
-    twitterShare(homeUrl);
-})
-
-$('#email-share').on('click', function() {
-    emailShare(homeUrl);
-})
+    $('#twitter-share').on('click', function() {
+        twitterShare(homeUrl);
+    })
+    
+    getProfile();
+});
 
 //share functions
 function popitup(url) {
@@ -28,13 +54,13 @@ function popitup(url) {
 }
 
 function facebookShare(site_url, accessToken) {
-    var imgURL = "http://imgur.com/byNMcg1"; //change with your external photo url
+    var imgURL = homeUrl + "/images/fb_sharing.png"; //change with your external photo url
     FB.api('me/photos', 'post', {
-        message: 'Ready to cook meals, delivered on demand.'+ 
-        'Start cooking today'+
-        'for $20 off your first order!'+
-        'Fresh ingredients washed and prepped by us,'+
-        'cooked to perfection by you. http://www.meisterdish.com/',
+        message: 'Ready to cook meals, delivered on demand.' +
+            'Start cooking today' +
+            'for $20 off your first order!' +
+            'Fresh ingredients washed and prepped by us,' +
+            'cooked to perfection by you. http://www.meisterdish.com/',
         status: 'success',
         access_token: accessToken,
         url: imgURL
@@ -44,27 +70,69 @@ function facebookShare(site_url, accessToken) {
 }
 
 function twitterShare(site_url) {
-    site_url = "http://meisterdish.com/invite/ABCD1234?o=twtpic.twitter.com/OaPBIVjyo2";
+    site_url = homeUrl+ "/views/share-page.html";
     var subjText = "Start cooking today with $20 off your first order!" + site_url;
-    popitup('http://twitter.com/share?url=' + site_url + '&text=' + subjText);
-}
-
-function emailShare(site_url) {
-    site_url = "http://meisterdish.com/invite/ABCD1234?o=email";
-    var subjText = "Cooking at home shouldn’t be such a hassle. Meisterdish makes cooking fit the New York lifestyle. With fresh, cleaned and portioned ingredients delivered on demand, along with step-by-step instructions - all you have to do is cook. Cooking has never been so fast, fresh and tasty. " + '\n\n' + " Sign up for free using this link and you’ll receive $20 off your first order:" + '\n\n' + "       " + site_url + '\n\n' + "Enjoy your meal!";
-    var subject = "Start cooking with Meisterdish";
-    $("a#email-share").attr('href', "mailto:?subject=" + subject + "&body=" + encodeURIComponent(subjText));
+    popitup('http://twitter.com/share?url=' + site_url );
 }
 
 //copy to clipboard
-var clientTarget = new ZeroClipboard( $("#copy-to-clipboard"), {
+var clientTarget = new ZeroClipboard($("#copy-to-clipboard"), {
     moviePath: "zeroclipboard/ZeroClipboard.swf",
     debug: false
-} );
+});
 
-clientTarget.on( "load", function(clientTarget)
-{
-    clientTarget.on( "complete", function(clientTarget, args) {
-        clientTarget.setText( args.text );
+clientTarget.on("load", function(clientTarget) {
+    clientTarget.on("complete", function(clientTarget, args) {
+        clientTarget.setText(args.text);
     });
 });
+
+var shareViaEmailCallback = {
+    success: function(data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            showPopup(userDetails);
+        } else {
+            showPopup(userDetails);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function shareViaEmail(email) {
+    var url = baseURL + "share_email/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+            "email": email
+        },
+        data = JSON.stringify(userData);
+    var shareViaEmailInstance = new AjaxHttpSender();
+    shareViaEmailInstance.sendPost(url, header, data, shareViaEmailCallback);
+}
+//Get profile API process
+var getProfileCallback = {
+    success: function(data, textStatus, profileId) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            $('#clipboard-text').text(userDetails.referral_code);
+        } else {
+            $('#clipboard-text').text(userDetails.message);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function getProfile(profileId) {
+    var url = baseURL + "get_profile/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+            "get": 1
+        };
+    data = JSON.stringify(userData);
+    var getProfileInstance = new AjaxHttpSender();
+    getProfileInstance.sendPost(url, header, data, getProfileCallback, profileId);
+}

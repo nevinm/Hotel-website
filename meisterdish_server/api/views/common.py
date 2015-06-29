@@ -635,3 +635,19 @@ def referral_return(request, data, token):
     else:
         log.error("Invalid referral token")
         return HttpResponseRedirect(settings.SITE_URL)
+
+@check_input('POST')
+def validate_session(request, data):
+    try:
+        session_key = request.META.get('HTTP_SESSION_KEY', None)
+        if session_key :
+            session = SessionStore(session_key=session_key)
+            if session and 'user' in session :
+                query = Q(pk=session['user']['id']) & (Q(role__pk=settings.ROLE_USER) | Q(role__pk=settings.ROLE_GUEST))
+                user = User.objects.get(query)
+                return json_response({"status":1, "role":user.role.name.title()})
+    except Exception as e:
+        log.error("Validate session error : "+e.message)
+        return custom_error("Invalid session")
+    else:
+        return custom_error("Invalid session")

@@ -4,12 +4,23 @@ $(document).ready(function() {
     destroyFullPageJS();
     CartItemCount();
 
-    $(".check-delivery").on('click', function(){
+    $(".check-delivery").on('click', function() {
         var zipcode = $("#zip-code").val();
         locationCheck(zipcode);
     });
+
+    $("body").on("load",isSessionExpired);
 });
 var mobileRendered;
+
+function isSessionExpired() {
+    if (localStorage.getItem("session-expired") === null) {} else {
+        var data = {};
+        data.message = "Your session has expired, please login.";
+        showPopup(data);
+        localStorage.removeItem('session-expired');
+    }
+}
 
 function renderFullPageJS() {
     $('#fullpage').fullpage({

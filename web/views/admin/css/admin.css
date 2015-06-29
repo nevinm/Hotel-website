@@ -416,7 +416,7 @@ table#userlist {
     text-transform: uppercase;
     font-size: 12px;
     margin-top: 10px;
-    width: 130px;
+    width: 12.5%;
 }
 .order-list-container .search-filters label{
      margin-top: 5px;
@@ -977,7 +977,7 @@ table#tips-and-tricks-table {
     padding-left: 20px;
 }
 .popup-input-wrapper{
-    padding-left: 65px;
+    margin-left: 95px;
     margin-bottom: 10px;
     position: relative;
 }
@@ -1043,4 +1043,29 @@ input#add-gift-card{
 .no-popup .btn-small-primary,td .btn-small-primary{
     height: 25px;
     line-height: 10px;
+}
+
+
+#new-amount-error, 
+#new-date-error,
+#new-code-error{
+    position: absolute;
+    top: 0;
+}
+
+#total-amount{
+    width: 100px;
+}
+.filter-container .search-filters:nth-child(6){
+    width: 11%;
+}
+.search-filter-input{
+    width: 20%;
+    float: left;
+}
+.search-filter-input  input{
+    padding: 3px 3px;
+}
+#search-coupon-code{
+    margin-top: 17px;
 }

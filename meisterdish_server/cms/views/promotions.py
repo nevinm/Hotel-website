@@ -122,7 +122,7 @@ def manage_promocode(request, data, user):
         if "edit_id" in data and str(data["edit_id"]).strip() != "":
             code = data['code'].strip()
             amount = float(str(data['amount']).strip())
-            expiry_date = datetime.strptime(str(data['expiry_date']).strip()+" 23:59:59","%Y-%m-%d %H:%M:%S")
+            expiry_date = datetime.strptime(str(data['expiry_date']).strip()+" 23:59:59","%m/%d/%Y %H:%M:%S")
 
             if code == "":
                 return custom_error("Please enter valid promo code.")
@@ -146,7 +146,7 @@ def manage_promocode(request, data, user):
         else:
             code = data['code'].strip()
             amount = float(str(data['amount']).strip())
-            expiry_date = datetime.strptime(str(data['expiry_date']).strip()+" 23:59:59","%Y-%m-%d %H:%M:%S")
+            expiry_date = datetime.strptime(str(data['expiry_date']).strip()+" 23:59:59","%m/%d/%Y %H:%M:%S")
 
             if code == "":
                 return custom_error("Please enter valid promo code.")
@@ -206,7 +206,8 @@ def list_promocodes(request, data, user):
                 "code":promo.code,
                 "amount":promo.amount,
                 "expiry_date":promo.expiry_date.strftime("%m/%d/%Y %H:%M:%S"),
-                "expiry_date_format":promo.expiry_date.strftime("%Y-%m-%d")
+                "expiry_date_format":promo.expiry_date.strftime("%m/%d/%Y"),
+                "status":int(promo.active),
                 })
         #End format response
         return json_response({"status":1, 
@@ -221,3 +222,18 @@ def list_promocodes(request, data, user):
     except Exception as e:
         log.error("Failed to list promo codes." + e.message)
         return custom_error("Failed to get promo codes.")
+
+@check_input('POST', True)
+def change_promocode_status(request, data, user):
+    try:
+        status = bool(data["status"])
+        code_id = data["id"]
+
+        code_obj = PromoCode.objects.get(pk=code_id)
+        code_obj.active = status
+        code_obj.save()
+        msg = ("A" if status else "Dea") + "ctivated"
+        return json_response({"status":1, "message": msg+ " promo code "+code_obj.code, "new_status":int(status)})
+    except Exception as e:
+        log.error("Failed change promo code status." + e.message)
+        return custom_error("An error has occurred.")

@@ -45,7 +45,7 @@ var saveCreditCardDetailsCallback = {
         var response = JSON.parse(data);
         if (response.status == 1) {
             $("#pay-form")[0].reset();
-            window.location.href = 'manage_creditcard.html';
+            window.location.href = 'manage-creditcard.html';
         } else {
             showPopup(response);
         }
@@ -114,7 +114,7 @@ var updateCardDetailsCallback = {
     success: function(data, textStatus) {
         var cardDetails = JSON.parse(data);
         if(cardDetails.status == 1){
-            window.location.href="manage_creditcard.html";
+            window.location.href="manage-creditcard.html";
         }else{
             showPopup(cardDetails);
         }

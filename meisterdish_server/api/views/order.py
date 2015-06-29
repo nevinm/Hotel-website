@@ -10,6 +10,7 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
 import stripe
+import sys
 stripe.api_key = settings.STRIPE_SECRET_KEY
 log = logging.getLogger('order')
 
@@ -84,7 +85,7 @@ def get_orders(request, data, user):
                   "available": 1 if cart_item.meal.available else 0,
                   "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
                   "price": cart_item.meal.price,
-                  "tax": cart_item.meal.tax,
+                  "tax": cart_item.meal.price * cart_item.meal.tax/100,
                   "quantity":cart_item.quantity,
                 })
             
@@ -189,8 +190,8 @@ def create_order(request, data, user):
                 return custom_error("Sorry, The meal "+ item.meal.name.title() + " has gone out of stock.")
             
             quantity += item.quantity
-            total_price += item.meal.price
-            total_tax += item.meal.tax
+            total_price += item.meal.price * item.quantity
+            total_tax += item.quantity * item.meal.price * item.meal.tax / 100
 
         order = Order()
         order.cart = item.cart
@@ -211,41 +212,46 @@ def create_order(request, data, user):
         order.total_tax = total_tax
         order.tip = tip
 
-        order.total_amount = total_price + total_tax + tip + settings.SHIPPING_CHARGE
+        order.total_payable = total_price + total_tax + tip + settings.SHIPPING_CHARGE
         
-        """
-        TODO
-
-        if not order.objects.filter(cart__user=user, cart__user__role__pk=settings.ROLE_USER).exists():
+        referral_bonus = float(Configuration.objects.get(key="REFERRAL_BONUS").value)
+        referred = Referral.objects.filter(referree=user).exists() and user.credits >= referral_bonus
+        if not Order.objects.filter(cart__user=user).exists() and referred:
             #First Order
-            referral_bonus = float(Configuration.objects.get(key=REFERRAL_BONUS).value)
-            if Referral.objects.filter(referree=user).exists() and user.credits >= referral_bonus:
-                # He is a referred user and have balance credit
-                user.credits -= referral_bonus
-                order.total_amount -= referral_bonus
-        
-        if user.credits > 0:
-            log.info("User has credits : "+str(user.credits))
-            if user.credits > order.total_amount:
-                user.credits = credits - order.total_amount
-                order.credits = order.total_amount
-                order.total_amount = 0
-            else:
-                order.total_amount = order.total_amount - user.credits
-                order.credits = user.credits
-                user.credits = 0
+            user.credits -= referral_bonus
+            order.total_payable -= referral_bonus
+        else:
+            if user.credits > 0:
+                log.info("User has credits : "+str(user.credits))
+                if user.credits > order.total_payable:
+                    user.credits = credits - order.total_payable
+                    order.credits = order.total_payable
+                    order.total_payable = 0
+                else:
+                    order.total_payable = order.total_payable - user.credits
+                    order.credits = user.credits
+                    user.credits = 0
 
-        if order.cart.promo_code:
-            if order.cart.promo_code.amount > order.total_amount:
-                order.total_amount = 0
-                order.discount = order.total_amount
-            else:
-                order.total_amount -= order.cart.promo_code.amount
-                order.discount += order.cart.promo_code.amount
-        elif order.cart.gift_cards.count():
-            gc_amount = 0
-            gc_amount = cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
-        """
+            if order.cart.promo_code:
+                if order.cart.promo_code.amount > order.total_payable:
+                    order.total_payable = 0
+                    order.discount = order.total_payable
+                else:
+                    order.total_payable -= order.cart.promo_code.amount
+                    order.discount = order.cart.promo_code.amount
+            elif order.cart.gift_cards.count():
+                gc_amount = 0
+                gc_amount = order.cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
+                if gc_amount > order.total_payable:
+                    order.discount = order.total_payable
+                    order.total_payable = 0
+                else:
+                    order.discount = gc_amount
+                    order.total_payable -=  gc_amount
+
+        log.info("___Order___")
+        log.info("Payable : " + str(order.total_payable))
+
         #Payment
         order.save_card = bool(data.get("save_card", 0))
         order.card_id = data.get("card_id", False)
@@ -263,6 +269,7 @@ def create_order(request, data, user):
             order.payment = payment
             order.status = 1
             order.save()
+            user.save()
 
             if not order.cart.completed:
                 order.cart.completed=True
@@ -270,7 +277,7 @@ def create_order(request, data, user):
         
             return json_response({"status":1, "message":"The Order has been placed successully."})
         
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to create order." + e.message)
         return custom_error(e.message + "is missing.")
 
@@ -315,7 +322,7 @@ def make_payment(order, user):
 
 
         response = stripe.Charge.create(
-            amount=int(order.total_amount * 100), #Cents
+            amount=int(order.total_payable * 100), #Cents
             currency="usd",
             customer=customer.id,
             source = card.id,
@@ -328,7 +335,8 @@ def make_payment(order, user):
         payment = save_payment_data(response)
         return payment
     except Exception as e:
-        log.error("Failed to make payment." + e.message)
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        log.error("Failed to make payment." + e.message + str(exc_tb.tb_lineno))
         return False
 
 @check_input('POST')
@@ -349,7 +357,7 @@ def get_order_details(request, data, user, order_id):
               "available": 1 if cart_item.meal.available else 0,
               "category": cart_item.meal.category.name.title(),
               "price": cart_item.meal.price,
-              "tax": cart_item.meal.tax,
+              "tax": (cart_item.meal.price * cart_item.meal.tax/100),
               "quantity":cart_item.quantity,
             })
         order_details = {
@@ -404,10 +412,9 @@ def get_order_details(request, data, user, order_id):
 def get_cart_total(cart):
     try:
         amount = 0.0
-        tax = 0.0
         for ci in CartItem.objects.filter(cart=cart, cart__completed=False):
             amount += ci.meal.price * ci.quantity
-            tax += ci.meal.tax * ci.quantity
+            tax += ci.meal.price * ci.quantity * ci.meal.tax / 100
         
     except Exception as e:
         log.error("Error getting cart total: " + e.message)

@@ -28,6 +28,8 @@ var loginCallback = {
             localStorage['username'] = user_name;
             localStorage['session_key'] = userDetails.session_key;
             localStorage['loggedIn'] = true;
+            localStorage['adminLoggedIn'] = false;
+            createCookie("SessionExpireTime", "true", sessionExpiryTime);
             checkLoggedIn();
             checkReferredPage();
         }
@@ -44,11 +46,11 @@ function checkReferredPage() {
     var referrer = document.referrer;
     referredPage = getCurrentPage("/", ".html", referrer);
     if (referredPage == "checkout") {
-        window.location.href = 'checkout.html'
+        window.location.href = 'checkout.html';
     } else if (referredPage == "giftcard_payment") {
-        window.location.href = 'giftcard_payment.html'
+        window.location.href = 'giftcard-payment.html';
     } else {
-        window.location.href = 'menu.html'
+        window.location.href = 'menu.html';
     }
 }
 

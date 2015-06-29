@@ -13,6 +13,8 @@
     <link rel="stylesheet" type="text/css" href="../css/fontello.css">
     <link rel="stylesheet" type="text/css" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/login_signup.css">
+    <script type="text/javascript" src='../js/validate_session.js'></script>
+    
     <script>
     (function(i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
@@ -56,7 +58,10 @@
                             <a href="menu.html">MENU</a>
                         </li>
                         <li>
-                            <a href="How_it_works.html">HOW IT WORKS</a>
+                            <a href="how-it-works.html">HOW IT WORKS</a>
+                        </li>
+                        <li>
+                            <a href="gift-cards-select.html">GIFTS</a>
                         </li>
                         <li class="login-signup">
                             <a href="login.html">LOG IN</a>
@@ -75,7 +80,7 @@
                                 <a href="">CONTACT</a>
                                 </li>
                                 <li>
-                                <a href="privacy_terms.html">PRIVACY & TERMS</a>
+                                <a href="privacy-terms.html">PRIVACY & TERMS</a>
                                 </li>
                                 <li >
                                 <a href="">HELP</a>
@@ -95,7 +100,10 @@
                         <a href="menu.html">MENU</a>
                     </li>
                     <li>
-                        <a href="How_it_works.html">HOW IT WORKS</a>
+                        <a href="how-it-works.html">HOW IT WORKS</a>
+                    </li>
+                    <li>
+                        <a href="gift-cards-select.html">GIFTS</a>
                     </li>
                     <li class="bold login-signup">
                         <a href="login.html">LOG IN</a>
@@ -114,6 +122,11 @@
                 <div class="signup-container">
                     <div class="header-small">
                         <h4>SIGN UP</h4>
+                    </div>
+                    <div class='referral-message-container'>
+                        <p class='header'>Welcome!</p>
+                        <span class='message'>You've been invited to start cooking with $20 off your first order.
+                        Sign up for free below to claim your credit.</span>
                     </div>
                     <div class="fb-signupButton">
                         <a onclick="checkLoginState();"><img src="../images/fb_signup.png" border="0" alt=""></a>
@@ -139,11 +152,11 @@
                                 <label class="body-text-small" >Email</label>
                                 <input class="arrange" type="email" id="signup-email" name="email"></input>
                             </div>
-                            <div class="signup-input">
+                            <div class="signup-input password-container fifty-percent-first">
                                 <label class="body-text-small" >Password</label>
                                 <input class="arrange" type="password" id="signup-password" name="password"></input>
                             </div>
-                            <div class="signup-input">
+                            <div class="signup-input zipcode-container fifty-percent-second">
                                 <label class="body-text-small" >ZIP code</label>
                                 <input class="arrange" type="text" id="zip-code" name="zip"></input>
                             </div>

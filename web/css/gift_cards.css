@@ -1,5 +1,17 @@
 /*Checbox Select Giftcard*/
-
+.backNav{
+    font-family: 'BrandonGrotesque-Regular';
+    letter-spacing: 1px;
+    font-size: 24px;
+    position: relative;
+    padding-top: 10px;
+}
+.backNav a{
+    position: absolute;
+}
+.backNav span{
+    padding-left: 30px;
+}
 .giftcard-selector-checkbox {
     width: 25%;
 }
@@ -35,11 +47,16 @@
     border-radius: 3px;
     padding: 15px 20px;
 }
-
+.giftcard-container .styled-select{
+    background: url(../images/selector_arrow.png) no-repeat 157px 6px #fff;
+}
 #custom-amount {
     position: relative;
 }
-
+#custom-amount .body-text-small{
+    float: left;
+    padding-top: 10px;
+}
 .giftcard-custom-amount input::-webkit-outer-spin-button,
 #edit-recipient-details input::-webkit-outer-spin-button,
 .giftcard-custom-amount input::-webkit-inner-spin-button,
@@ -60,9 +77,11 @@
 
 .giftcard-custom-amount input {
     height: 35px;
-    width: 140px;
+    width: 170px;
     padding: 0px 17px;
     border: 1px solid #ddd;
+    -moz-appearance:textfield;
+    -webkit-appearance: none;
 }
 
 .giftcard-selected {
@@ -429,11 +448,13 @@ input.popup-input {
 .pay-by-credit-container .forminput-wrapper:nth-child(2) {
     float: left;
     width: 68%;
+    padding-top: 20px;
 }
 
 .pay-by-credit-container .forminput-wrapper:nth-child(3) {
     width: 28%;
     margin-left: 4%;
+    padding-top: 20px;
 }
 
 .pay-by-credit-container .forminput-wrapper:nth-child(4) {
@@ -606,7 +627,7 @@ input[type=radio],
     float: left;
 }
 
-.giftcard-popup-wrapper {
+.giftcard-popup-wrapper,.mobile-hr {
     display: none;
 }
 
@@ -657,6 +678,9 @@ form#edit-recipient-details input.popup-input{
     width: 100%;
     float: left;
 }
+.fullWidth-hr{
+    margin-bottom: 30px;
+}
 
 @media (max-width: 1366px) {
     .privacy-terms-heading {
@@ -670,6 +694,10 @@ form#edit-recipient-details input.popup-input{
         background-image: none;
         border: none;
         overflow-x: hidden;
+    }
+
+    .details-main-header{
+        font-size: 16px;
     }
     header#header{
         background-color: rgba(255, 255, 255, 0.5);
@@ -691,10 +719,147 @@ form#edit-recipient-details input.popup-input{
     .logo-banner img{
         height: auto;
     }
-    .details-sub-header{
+    .details-sub-header,.row,.have-account,
+    .giftcard-custom-amount{
         text-align: center;
     }
-    .gift-card-details-container{
+    .gift-card-details-container,
+    .payment-info-container,.details,.payment-method,
+    .your-info-container,.your-info-container .forminput-wrapper{
         width: 100% !important;
+        padding: 0;
+    }
+    .payment-info-container,.your-info-container{
+        margin-bottom: 35px;
+    }
+    .payment-container-guest,.details-foot,.payment-popup-sub-container{
+        width: 100% !important;
+    }
+
+    .giftcard-container{
+        padding: 0 40px;
+    }
+    .accepted-cards-wrapper{
+        padding-top: 25px;
+    }
+    .mobile-hr{
+        border:0;
+        height: 1px;
+        background-color: #9B9B9B;
+        display: block;
+    }
+    .details-sub-header{
+        padding-bottom: 5px;
+        font-size: 12px;
+    }
+    .logo-banner hr,hr,
+    .payment-amount-container .row:first-child{
+        display: none;
+    }
+    .payment-amount-container,.your-info-container .forminput-wrapper,
+    .giftcard-form-container .forminput-wrapper{
+        padding: 0;
+        margin-bottom: 10px !important;
+        margin-top: 0px;
+    }
+    .details-label,.saved-card-list,
+    .have-account,.forminput-wrapper .body-text-small{
+        font-size: 10px;
+    }
+    .have-account{
+        margin-top: 20px;
+    }
+    .saved-card-list img,
+    .payment-popup-sub-container img {
+        margin-right: 0;
+    }
+    .saved-card-list .body-text-small,.payment-popup-sub-container .body-text-small{
+        padding-left: 10px;
+        font-size: 10px;
+    }
+    .btn-large-primary{
+        font-size: 12px;
+    }
+    .payment-amount-container .row span:nth-child(2){
+        padding-left: 0px;
+    }
+    .your-info-container .section3 .forminput-wrapper{
+        width: 50% !important;
+    }
+    img.accepted-cards{
+        width: 10%;
+    }
+    .giftcard-selector{
+        width: 46%;
+        margin: 0;
+        margin-top: 20px;
+        padding: 5px 5px;
+    }
+    img.checkbox-image{
+        height: 30px;
+    }
+    .giftcard-selector:nth-child(2),
+    .giftcard-selector:nth-child(4){
+        margin-right: 2% !important;
+    }
+    .giftcard-selector:nth-child(3),
+    .giftcard-selector:nth-child(5){
+        margin-left: 2% !important;
+    }
+    .giftcard-custom-amount,
+    .giftcard-custom-amount span.body-text-small,
+    .giftcard-form-container .forminput-wrapper,
+    .giftcard-message,.giftcard-form-container{
+        width: 100%;
+        float: left;
+        margin: 0;
+    }
+    .giftcard-message-inner{
+        position: initial;
+        padding:0;
+        text-align: center;
+        margin-top: 20px;
+    }
+    .giftcard-flow-recipient{
+        padding-bottom: 0px;
+        border-bottom: none;
+    }
+    .giftcard-select-amount p, .giftcard-flow-header p{
+        font-size: 16px;
+    }
+    .giftcard-amount span:nth-child(1){
+        font-size: 14px;
+    }
+    .giftcard-amount span:nth-child(2),.body-text-small,.details-content{
+        font-size: 10px !important;
+    }
+    .giftcard-custom-amount input{
+        font-size: 12px;
+    }
+    .proceed-checkout-container{
+        padding-top: 20px;
+    }
+    .details-content{
+        text-align: left;
+    }
+    .popup-sub-wrapper {
+        height: 200px;
+        overflow-y: auto;
+        max-height: 102px;
+    }
+    .popup .button .btn{
+        height: 35px;
+        min-width: 100px;
+        line-height: 35px;
+    }
+    .address-payment-list-popup .header{
+        letter-spacing: .3px;
+        font-size: 14px;
+    }
+}
+@media (max-width: 400px) {
+    .address-payment-list-popup .popup{
+        width: 90%;
+        margin-left: -45%;
     }
 }

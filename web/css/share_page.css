@@ -45,21 +45,22 @@
 .copy-share-link {
 	border: 1px solid #d0d0d0;
 	border-radius: 2px;
-	padding: 10px 10px;
+	height: 48px;
 	margin-top: 20px;
+	padding-top: 8px;
 }
 .copy-share-link span:first-child{
 	font-family: 'BrandonGrotesque-Medium';
 	color: #394543;
-	font-size: 24px;
+	font-size: 20px;
 }
 .copy-share-link span:nth-child(2){
 	font-family: 'BrandonGrotesque-Regular';
 	color: #9b9b9b;
 	font-size: 16px;
 	float: right;
-	padding-top: 7px;
-	padding-right: 20px;
+	padding-top: 5px;
+	padding-right: 6px;
 	cursor: pointer;
 }
 span.or{
@@ -121,4 +122,38 @@ img.share-button {
 }
 .share-page-container span:last-child{
 	margin-bottom: 30px;
+}
+#copied-text{
+	display: none;
+	color: #ff7878;
+	font-size: 14px;
+}
+.email-pupup-wrapper{
+	display: none;
+}
+.email-pupup-wrapper .popup{
+	height: 200px;
+	margin-top: -100px;
+}
+.email-pupup-wrapper .popup .header{
+	font-family: 'BrandonGrotesque-bold';
+	letter-spacing: .3px;
+	font-size: 20px;
+	padding-top: 7px;
+}
+input.popup-input {
+  height: 35px;
+  border-radius: 3px;
+  border: 1px solid #9b9b9b;
+  width: 100%;
+  padding-left: 10px;
+}
+.email-pupup-wrapper .forminput-wrapper {
+  width: 100%;
+  float: left;
+  padding: 0px 50px;
+  position: relative;
+}
+#email-error{
+	padding-left: 59px;
 }

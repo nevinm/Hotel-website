@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/account.css">
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript" src='../js/validate_session.js'></script>
     <script type="text/javascript">
     // This identifies your website in the createToken call below
     Stripe.setPublishableKey('pk_test_O2igwUk6spl3vmvoYlMVAHr0');
@@ -69,7 +70,10 @@
                             <a href="menu.html">MENU</a>
                         </li>
                         <li>
-                            <a href="How_it_works.html">HOW IT WORKS</a>
+                            <a href="how-it-works.html">HOW IT WORKS</a>
+                        </li>
+                        <li>
+                            <a href="gift-cards-select.html">GIFTS</a>
                         </li>
                         <li class="login-signup">
                             <a href="login.html">LOG IN</a>
@@ -88,7 +92,7 @@
                                     <a href="">CONTACT</a>
                                 </li>
                                 <li>
-                                    <a href="privacy_terms.html">PRIVACY & TERMS</a>
+                                    <a href="privacy-terms.html">PRIVACY & TERMS</a>
                                 </li>
                                 <li>
                                     <a href="">HELP</a>
@@ -108,7 +112,10 @@
                         <a href="menu.html">MENU</a>
                     </li>
                     <li>
-                        <a href="How_it_works.html">HOW IT WORKS</a>
+                        <a href="how-it-works.html">HOW IT WORKS</a>
+                    </li>
+                    <li>
+                        <a href="gift-cards-select.html">GIFTS</a>
                     </li>
                     <li class="bold login-signup">
                         <a href="login.html">LOG IN</a>
@@ -237,11 +244,11 @@
                                             </div>
                                             <div class="forminput-wrapper">
                                                 <label class="body-text-small">Credit card number</label>
-                                                <input type="text" autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number">
+                                                <input type="text" autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number" name="cardnumber">
                                             </div>
                                             <div class="forminput-wrapper">
                                                 <label class="body-text-small">CVV</label>
-                                                <input type="password" size="4" data-stripe="cvc" class="popup-input" id="cvv-number">
+                                                <input type="password" size="4" data-stripe="cvc" class="popup-input" id="cvv-number" name="cvv">
                                             </div>
                                             <div class="forminput-wrapper">
                                                 <label class="body-text-small">Expiry Date</label>
@@ -266,7 +273,7 @@
                                             <span class="div">/</span>
                                             <div class="forminput-wrapper">
                                                 <div class="styled-select">
-                                                    <select id="ExpYear" data-stripe="exp-year">
+                                                    <select id="ExpYear" data-stripe="exp-year" name="expiryYear">
                                                         <option value=""></option>
                                                     </select>
                                                 </div>
@@ -382,8 +389,17 @@
                                 </div>
                             </div>
                             <div class="gift-card-container">
-                                <span class="content-heading">GIFT CARD?</span>
+                                <span class="content-heading" id="is-gift-card">GIFT CARD?</span>
+                                <div class="isPromocode-wrapper">
+                                    <input type="text" id="promo-gift-input" class="popup-input"placeholder="Enter code">
+                                    <input type="button" class="btn btn-small-primary medium-green" id="apply-promo-gift" value="APPLY">
+                                    <div class="promo-validation-message"></div>
+                                </div>
                                 <hr>
+                            </div>
+                            <div class="discount-container body-text-small">
+                                <span>Discount</span>
+                                <span class="discount-amount">-$0.00</span>
                             </div>
                             <div class="total-container">
                                 <span>TOTAL</span>

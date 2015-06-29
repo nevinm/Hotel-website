@@ -14,7 +14,8 @@
     <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
     <link rel="stylesheet" type="text/css" href="../../css/common.css">
     <link rel="stylesheet" type="text/css" href="../../css/jquery-ui.min.css">
-    <link rel="stylesheet" type="text/css" href="css/admin.css">
+    <link rel="stylesheet" type="text/css" href="css/admin.css">\
+    <script type="text/javascript" src='../../js/validate_session.js'></script>
 </head>
 
 <body>
@@ -25,7 +26,7 @@
                 </a>
                 <ul id="menu" class="pullRight">
                     <li>
-                        <a href="manage_delivery_areas.html">DELIVERY AREA</a>
+                        <a href="manage-delivery-areas.html">DELIVERY AREA</a>
                     </li>
                     <li class="bold">
                         <a href="#">ORDERS</a>
@@ -75,6 +76,10 @@
                                 <input type="text" id="date" placeholder="mm/dd/yyyy"/>
                             </div>
                             <div class="search-filters">
+                                <label for="user-name">Delivery Type</label>
+                                <input type="text" id="delivery-type" />
+                            </div>
+                            <div class="search-filters">
                                 <label for="user-name">Total amount</label>
                                 <input type="text" id="total-amount" />
                             </div>
@@ -98,6 +103,7 @@
                                     <th>Username</th>
                                     <th>Phone Number</th>
                                     <th>Date & Time</th>
+                                    <th>Delivery type</th>
                                     <th>Total Amount</th>
                                     <th>Status</th>
                                     <th>Delete</th>

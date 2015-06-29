@@ -30,11 +30,11 @@ function stripeResponseHandler(status, response) {
         // response contains id and card, which contains additional card details
         var token = response.id,
             currentPage = getCurrentPage("/", ".html", window.location.href);
-        if (currentPage == "add_creditcard") {
+        if (currentPage == "add-creditcard") {
             saveCreditCardDetails(token);
         } else if (currentPage == "checkout") {
             cardNotSavedCreateOrder(token);
-        } else if(currentPage == "giftcard_payment"){
+        } else if(currentPage == "giftcard-payment"){
             fetchGiftCardData(token);
         }
     }

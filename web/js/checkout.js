@@ -59,11 +59,13 @@ $(document).ready(function() {
             newVal = oldVal + 1,
             meal_id = $(this).parents(':eq(1)').attr('data-id'),
             qty = newVal;
-        if (oldVal < $(this).data("max")) {
+        if (newVal <= $(this).data("max")) {
             $(this).parent().find('.quantity').val(newVal);
         }
-        updateCartItems(meal_id, qty);
-        updateReciept();
+        if(qty <= 10){
+            updateCartItems(meal_id, qty);
+            updateReciept();    
+        }
     });
 
     $(document).on('click', '#save-payment', function() {
@@ -118,6 +120,30 @@ $(document).ready(function() {
         populateCreditCardDetails();
     })
 
+    $('#apply-promo-gift').on("click",function(){
+        var button_value =  $('#apply-promo-gift').val(),
+            code = $('#promo-gift-input').val(),
+            code_length = code.length;
+        if(button_value == "APPLY"){
+            $('.promo-validation-message').css('color','#ff7878');
+            if(code == ""){
+                $('.promo-validation-message').text("* "+"Please enter Giftcard/Promocode");
+            }
+            else if(code_length > 8){
+                $('.promo-validation-message').text("* "+"Please enter valid Giftcard/Promocode");
+            }
+            else if(localStorage['loggedIn'] != 'true'){
+                $('.promo-validation-message').text("Session is Invalid.Please login and try");
+            }
+            else{
+                checkPromoCode(code);
+            }
+        }
+        if(button_value == "DELETE"){
+            removePromocode();
+        }   
+    })
+
     $("#place-order").on("click", function(e) {
         e.preventDefault();
         if (validateOrder()) {
@@ -152,6 +178,9 @@ $(document).ready(function() {
         $('.pickup-content').hide();
         $("#add-guest-address").show();
         $(".city-selector-container").show();
+    })
+    $('#is-gift-card').on('click',function(){
+        $('.isPromocode-wrapper').slideToggle();
     })
 });
 
@@ -240,6 +269,9 @@ var getCartItemsCallback = {
             $(".emtpy-cart-message").hide();
             populateCartItems(cartItems);
             populateDate(cartItems);
+            if(cartItems.coupon!=null){
+                populateCoupon(cartItems.coupon);
+            }
         } else {
             $('.order-list-items').remove();
             $(".emtpy-cart-message").empty();
@@ -305,20 +337,30 @@ function populateCartItems(data) {
     updateReciept();
 }
 
-function updateReciept() {
-    var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
+function updateReciept(GiftcardDetails,flag) {
+    var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0, 
+        totalDiscount =0,totalCredits = 0,
         totalDriverTip = parseInt($('.driver-tip option:selected').text().substring(1)),
         totalDeliveryCost = 2;
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
         price = parseInt($(value).find('.price-container').attr("data-price"));
-        tax = parseInt($(value).find('.price-container').attr("data-tax"));
+        tax = parseFloat($(value).find('.price-container').attr("data-tax"));
 
         totalItemCost += (price * quantity);
         totalTaxCost += (tax * quantity);
     });
-    totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost;
-
+    if(GiftcardDetails && !flag){
+        totalItemCost = GiftcardDetails.amount;
+        totalTaxCost = GiftcardDetails.tax;
+        totalDiscount = GiftcardDetails.discount;
+        totalCredits = GiftcardDetails.credits;
+    }
+    if(flag == "coupon-applied"){
+        totalDiscount = GiftcardDetails.discount;
+    }
+    totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost -totalDiscount-totalCredits;
+    $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount).toFixed(2));
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
     $(".total-cost").text("$" + (totalCost).toFixed(2));
@@ -361,20 +403,6 @@ var clearCartCallback = {
     success: function(data, textStatus) {
         CartItemCount();
         getCartItems();
-        var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
-            adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null,
-            loggedIn = (userLoggedin || adminLoggedin);
-        dataAfterOrdering = {};
-        dataAfterOrdering.message = "Your orders are successfully placed.";
-        $(".ok-container").show();
-        $(".close-container").hide();
-        if (loggedIn) {
-            $(".ok-container a").attr("href", "orderhistory.html");
-            showPopup(dataAfterOrdering);
-        } else {
-            $(".ok-container a").attr("href", "../index.html");
-            showPopup(dataAfterOrdering);
-        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -601,7 +629,7 @@ function populateAddresstoInfoContainer(data) {
                 $('.address-info').append("<div class='contents address-added' data-id='" + value.id + "'>" +
                     "<span class='content-heading'>" + "DELIVERY ADDRESS" + "</span>" +
                     "<span>" + value.first_name + " " + value.last_name + "</span>" +
-                    "<span>" + value.building + "," + value.street + "</span>" +
+                    "<span>" + value.street + "," + value.building + "</span>" +
                     "<span>" + value.city + "," + value.state + " " + value.zip + "</span>" +
                     "<span>" + value.phone + "</span>" +
                     "<span class='change-address-payment' id='change-address'>" + "CHANGE ADDRESS" + "</span>" + "</div>");
@@ -639,7 +667,7 @@ function appendAddresscontent(addressList) {
         $('.address-payment-list-popup .popup-container .delivery-adress-wrapper').append("<div class='address-container'>" + "<input type='radio' name='address' id='"+value.id+1+"' data-id='" + value.id + "' class='checkbox-green radio-button'>" +
             "<label class='list-address' for='"+value.id+1+"'>" +
             "<span>" + value.first_name + " " + value.last_name + "</span>" +
-            "<span>" + value.building + "," + value.street + "</span>" +
+            "<span>" + value.street + "," + value.building + "</span>" +
             "<span>" + value.city + "," + value.state + " " + value.zip + "</span>" +
             "<span>" + value.phone + "</span>" + "</label>" + "</div>");
     });
@@ -781,7 +809,21 @@ var placeOrderCallback = {
     success: function(data, textStatus) {
         var response = JSON.parse(data);
         if (response.status == 1) {
-            clearCart();
+            // clearCart();
+            var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
+                adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null,
+            loggedIn = (userLoggedin || adminLoggedin);
+            dataAfterOrdering = {};
+            dataAfterOrdering.message = "Your orders are successfully placed.";
+            $(".ok-container").show();
+            $(".close-container").hide();
+            if (loggedIn) {
+                $(".ok-container a").attr("href", "orderhistory.html");
+                showPopup(dataAfterOrdering);
+            } else {
+                $(".ok-container a").attr("href", "../index.html");
+                showPopup(dataAfterOrdering);
+            }
         } else {
             showPopup(response);
         }
@@ -912,9 +954,9 @@ function populateCreditCardDetails() {
     $('.address-payment-list-popup .button').remove();
     $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .popup .header').text("SELECT YOUR PAYMENT METHOD");
-
+    $('.address-payment-list-popup .popup-container').append("<div class='popup-sub-wrapper'>"+"</div>");
     $.each(cards, function(key, value) {
-        $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>" +
+        $('.address-payment-list-popup .popup-container .popup-sub-wrapper').append("<div class='payment-popup-sub-container'>" +
             "<input type='radio' class='checkbox-green added-card pullLeft' name='change-card' class='radio-button-payment' data-id='"+value.id+"' id='" + value.id+1 + "'>" +
             "<label for='"+value.id+1+"'>" + "<img class='paypal' src='" + value.logo + "'>" +
             "<span class='body-text-small'>" + value.type + " " +
@@ -973,4 +1015,82 @@ function validateOrder() {
         }
     }
     return true;
+}
+
+//checkpromo code
+var checkPromoCodeCallback = {
+    success: function(data, textStatus) {
+        var userData = JSON.parse(data);
+        if(userData.status == 1){
+            $('#apply-promo-gift').removeClass('btn-small-primary medium-green').addClass('btn-small-secondary');
+            $('#apply-promo-gift').val('DELETE');
+            $('.promo-validation-message').css('color','#8EC657');
+            $('.promo-validation-message').text("* "+userData.message);
+            $(".discount-container .discount-amount").css('color','#8EC657');
+            updateReciept(userData);
+        } 
+        if (userData.status == -1) {
+            $('.promo-validation-message').css('color','#ff7878');
+            $('.promo-validation-message').text("* "+userData.message);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function checkPromoCode(code){
+    var url = baseURL + "apply_promocode/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {
+            "code": code
+        };
+    data = JSON.stringify(params);
+    var checkPromoCodeInstance = new AjaxHttpSender();
+    checkPromoCodeInstance.sendPost(url, header, data, checkPromoCodeCallback);
+}
+
+//Remove cart items call back
+var removePromocodeCallback = {
+    success: function(data, textStatus) {
+        removeData = JSON.parse(data);
+        if (removeData.status == 1) {
+            $('#apply-promo-gift').removeClass('btn-small-secondary').addClass('btn-small-primary medium-green');
+            $('#apply-promo-gift').val('APPLY');
+            $('.promo-validation-message').css('color','#8EC657');
+            $('.discount-container .discount-amount').css('color','#4A4A4A');
+            $('.promo-validation-message').text('* '+removeData.message);
+            updateReciept(removeData);
+        } else {}
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+//Remove cart items
+function removePromocode() {
+    var url = baseURL + "remove_promocode/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {};
+    data = JSON.stringify(params);
+    var removePromocodeInstance = new AjaxHttpSender();
+    removePromocodeInstance.sendPost(url, header, data, removePromocodeCallback);
+}
+
+function populateCoupon(couponDetails){
+    var code = couponDetails.code,
+        discount = couponDetails.amount,
+        message = couponDetails.message,
+        flag = "coupon-applied";
+    var discObj ={};
+        discObj.discount = discount;
+        $('.isPromocode-wrapper').slideDown();
+        $('#promo-gift-input').val(code);
+        $('.promo-validation-message').css('color','#8EC657');
+        $('.promo-validation-message').text(message);
+        $('#apply-promo-gift').removeClass('btn-small-primary medium-green').addClass('btn-small-secondary');
+        $('#apply-promo-gift').val('DELETE');
+        $(".discount-container .discount-amount").css('color','#8EC657');
+        updateReciept(discObj,flag);
 }

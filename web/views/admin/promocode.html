@@ -13,7 +13,9 @@
     <link rel="stylesheet" type="text/css" href="../../css/fontello.css">
     <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
     <link rel="stylesheet" type="text/css" href="../../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../../css/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="css/admin.css">
+    <script type="text/javascript" src='../../js/validate_session.js'></script>
 </head>
 
 <body>
@@ -24,7 +26,7 @@
                 </a>
                 <ul id="menu" class="pullRight">
                     <li>
-                        <a href="manage_delivery_areas.html">DELIVERY AREA</a>
+                        <a href="manage-delivery-areas.html">DELIVERY AREA</a>
                     </li>
                     <li>
                         <a href="orderlist.html">ORDERS</a>
@@ -67,6 +69,7 @@
                                     <th>Amount</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
+                                    <th>Activation Status</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -75,25 +78,26 @@
                     </div>
                     <div class="admin-nav">
                         <div class='pagination'></div>
+                        <div class='add-status'></div>
                     </div>
                 </div>
                 <div class="popup-wrapper">
                     <div class="bk-overlay"></div>
                     <div class="popup popup-giftcard">
                         <div class="header"></div>
-                        <form class="popup-container">
+                        <form class="popup-container" id='promocode-form'>
                             <div class="content">
                                 <div class="popup-input-wrapper">
                                     <label class="body-text-small">Promo Code:</label>
-                                    <input type="text" class="popup-input" id="new-code">
+                                    <input type="text" name='promocode' class="popup-input" id="new-code">
                                 </div>
                                 <div class="popup-input-wrapper">
                                     <label class="body-text-small">Date:</label>
-                                    <input type="date" class="popup-input" id="new-date">
+                                   <input type="text" name='date' class="popup-input" id="new-date" placeholder="mm/dd/yyyy">
                                 </div>
                                 <div class="popup-input-wrapper">
                                     <label class="body-text-small">Amount:</label>
-                                    <input type="number" class="popup-input" id="new-amount">
+                                    <input type="number" name='amount' class="popup-input" min="1" id="new-amount">
                                 </div>
                             </div>
                             <div class="button">
@@ -125,6 +129,7 @@
     <script type="text/javascript" src='../../js/jquery.min.js'></script>
     <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
     <script type="text/javascript" src='../../js/jquery.validate.min.js'></script>
+    <script type="text/javascript" src='../../js/jquery-ui.min.js'></script>
     <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
     <script type="text/javascript" src='../../js/common.js'></script>
     <script type="text/javascript" src='js/admin.js'></script>

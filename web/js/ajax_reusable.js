@@ -26,18 +26,17 @@ AjaxHttpSender.prototype.sendPost = function(url, header, data, callback, flag) 
         headers: header,
         data: data,
         beforeSend: function() {
+        currentPage = getCurrentPage("/", ".", window.location.href);
+            if(readCookie("SessionExpireTime")){
+                createCookie("SessionExpireTime", "true", sessionExpiryTime);
+            }else{}
             onStartAjaxRequest();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             callback.failure(XMLHttpRequest, textStatus, errorThrown);
         },
         success: function(data, textStatus) {
-            var responseData = JSON.parse(data);
-            if (responseData.status == -2) {
-                showPopup(responseData);
-            } else {
-                callback.success(data, textStatus, flag);
-            }
+            callback.success(data, textStatus, flag);
         },
         complete: function(XMLHttpRequest, textStatus) {
             onEndAjaxRequest();
@@ -51,4 +50,9 @@ function onStartAjaxRequest() {
 
 function onEndAjaxRequest() {
     // e.g. hide spinner
+}
+
+function getCurrentPage(firstChar, secondChar, url) {
+    currentPage = url.substring(url.lastIndexOf(firstChar) + 1, url.lastIndexOf(secondChar));
+    return currentPage;
 }

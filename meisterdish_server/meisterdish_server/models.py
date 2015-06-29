@@ -138,7 +138,7 @@ class User(models.Model):
     last_name = models.CharField(db_index=True, max_length=25, default="")
     full_name = models.CharField(db_index=True, max_length=55, default="")
     zipcode = models.CharField(db_index=True, max_length=6, null=True, blank=True)
-    email = models.EmailField(db_index=True, max_length=30, unique=True, null=True)
+    email = models.EmailField(db_index=True, max_length=30, null=True)
     mobile = models.CharField(max_length=15, null=True)
     profile_image = models.ForeignKey(Image, null=True)
     
@@ -237,8 +237,8 @@ class Tips(models.Model):
     video_url = models.CharField(max_length=1024, null=True, blank=True)
 
 class Meal(models.Model):
-    name = models.CharField(db_index=True, max_length=50)
-    sub = models.CharField(db_index=True, max_length=50, default="")
+    name = models.CharField(db_index=True, max_length=100)
+    sub = models.CharField(db_index=True, max_length=100, default="")
     description = models.TextField(db_index=True, max_length=1024)
 
     main_image = models.ForeignKey(Image, null=True, blank=True, related_name="main_image")
@@ -400,7 +400,7 @@ class Order(models.Model):
             self.cart.save()
 
         if not self.grand_total or self.grand_total == 0:            
-            promo_amt = 0 if not self.cart.promo_code else self.card.promo_code.amount
+            promo_amt = 0 if not self.cart.promo_code else self.cart.promo_code.amount
             gift_card_amt = 0
             self.discount = gift_card_amt + promo_amt
 
@@ -419,6 +419,7 @@ class GiftCard(models.Model):
     amount = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     order_num = models.TextField(max_length=15, default='')
     payment = models.ForeignKey(Payment)
+    used = models.BooleanField(default=False)
     created = models.DateTimeField(null=True)
     
     def __unicode__(self):

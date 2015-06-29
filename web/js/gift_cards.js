@@ -1,7 +1,7 @@
 $(document).ready(function() {
     CartItemCount();
     currentPage = getCurrentPage("/", ".html", window.location.href);
-    if (currentPage == "giftcard_payment") {
+    if (currentPage == "giftcard-payment") {
         stripeIntegration();
     }
 
@@ -9,7 +9,10 @@ $(document).ready(function() {
         var giftcardDetails = fetchLocalGiftCardData();
         populateGiftcardDetails(giftcardDetails);
     }
-
+    if (localStorage['loggedIn'] == 'false')
+    {
+        $('.backToAccount').hide();
+    }
     populateYear();
     //Old giftcard page
     $("#redeem-card").on('click', function() {
@@ -63,7 +66,7 @@ $(document).ready(function() {
         }
         if (($(".giftcard-selected").length || $("#custom-amount").valid()) && $("#recipient-form").valid()) {
             getGiftCardData();
-            window.location.href = 'giftcard_payment.html';
+            window.location.href = 'giftcard-payment.html';
         } else {}
     });
     $('#change-payment').on("click", function() {
@@ -79,7 +82,14 @@ $(document).ready(function() {
         $('.address-payment-list-popup').hide();
     });
 
-    $("#place-order").on("click", function() {
+    //To prevent refresh
+    $('#address').on("submit",function(e){
+        e.preventDefault();
+        return false;
+    })
+    
+    $("#place-order").on("click", function(e) {
+        e.preventDefault();
         if (validateGiftOrder()) {
             placeGiftOrder();
         };
@@ -88,12 +98,17 @@ $(document).ready(function() {
 
 function placeGiftOrder() {
     //Saved card is present.
+    if(localStorage['loggedIn'] == 'false'){
+        if($('#address').valid()){
+            $('#address').submit();
+        }
+    }
     if (!$('.saved-cards').is(':empty')) {
         var cardId = $('.saved-cards .added-card:checked').attr("id");
         fetchGiftCardData('', cardId);
     } else {
-        if ($("#pay-form").valid()) {
-            $("#pay-form").submit();
+        if($("#pay-form").valid()) {
+            $("#pay-form").submit();    
         }
     }
 }
@@ -177,7 +192,20 @@ function fetchGiftCardData(token, cardId) {
             "amount": localGiftCardRecipient.giftcardAmount,
             "stripeToken": token,
             "card_id": cardId
-        }
+        };
+         if(localStorage['loggedIn'] == 'false'){
+          var first_name = $('input[name="firstname"]').val(),
+            last_name = $('input[name="lastname"]').val(),
+            email = $('input[name="email"]').val(),
+            zip = $('input[name="zip"]').val()
+            guestParams = {
+                "guest_first_name":first_name, 
+                "guest_last_name":last_name, 
+                "guest_email":email, 
+                "guest_zip":zip
+            }
+            $.extend(giftCardOrderParams,guestParams);
+         }
     saveCreditCardGiftCard(giftCardOrderParams);
 }
 
@@ -313,9 +341,9 @@ function populateCardDetailsInPopup() {
     var cards = cardDetails.cards;
     $('.address-payment-list-popup .button').remove();
     $('.address-payment-list-popup .popup-container').empty();
-
+    $('.address-payment-list-popup .popup-container').append("<div class='popup-sub-wrapper'>"+"</div>");
     $.each(cards, function(key, value) {
-        $('.address-payment-list-popup .popup-container').append("<div class='payment-popup-sub-container'>" +
+        $('.address-payment-list-popup .popup-container .popup-sub-wrapper').append("<div class='payment-popup-sub-container'>" +
             "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' id='" + value.id + "'>" +
             "<label>" + "<img class='paypal' src='" + value.logo + "'>" +
             "<span class='body-text-small'>" + value.type + " " +

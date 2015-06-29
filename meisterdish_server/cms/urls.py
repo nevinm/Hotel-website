@@ -33,6 +33,7 @@ urlpatterns = patterns('',
     
     url(r'^manage_promocode/$', promotions.manage_promocode, name='manage_promocode'), 
     url(r'^list_promocodes/$', promotions.list_promocodes, name='list_promocodes'), 
+    url(r'^change_promocode_status/$', promotions.change_promocode_status, name='change_promocode_status'), 
 
     url(r'^get_delivery_areas/$', delivery.get_delivery_areas, name='get_delivery_areas'),
     url(r'^manage_delivery_area/$', delivery.manage_delivery_area, name='manage_delivery_area'),
@@ -43,4 +44,5 @@ urlpatterns = patterns('',
     url(r'^get_order_details/(?P<order_id>[0-9]+)/$', order.get_order_details, name='get_order_details'),
     url(r'^export_orders/$', order.export_orders, name='export_orders'),
 
+    url(r'^import_meals/$', meals.import_meals, name='import_meals'),    
 )
