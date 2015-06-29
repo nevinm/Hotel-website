@@ -108,8 +108,8 @@ def get_orders(request, data, user):
                      "last_name":order.delivery_address.last_name,
                      "street":order.delivery_address.street,
                      "building":order.delivery_address.building,
-                     "city":order.delivery_address.city.name,
-                     "state":order.delivery_address.city.state.name,
+                     "city":order.delivery_address.city.title(),
+                     "state":order.delivery_address.state.name,
                      "zip":order.delivery_address.zip,
                      "phone":order.delivery_address.phone,
                     } if order.delivery_address else "",
@@ -119,8 +119,8 @@ def get_orders(request, data, user):
                      "last_name":order.billing_address.last_name,
                      "street":order.billing_address.street,
                      "building":order.billing_address.building,
-                     "city":order.billing_address.city.name,
-                     "state":order.billing_address.city.state.name,
+                     "city":order.billing_address.city.title(),
+                     "state":order.billing_address.state.name,
                      "zip":order.billing_address.zip,
                      "phone":order.billing_address.phone,
                     } if order.billing_address else "",
@@ -266,7 +266,8 @@ def create_order(request, data, user):
             return custom_error("An error has occurred while paying with Credit Card. Please try agian.")
         else:
             log.info("Order payment success.Payment id :"+str(payment.id))        
-            order.payment = payment
+            if type(payment) != type(True):
+                order.payment = payment
             order.status = 1
             order.save()
             user.save()
@@ -284,6 +285,8 @@ def create_order(request, data, user):
 
 def make_payment(order, user):
     try:
+        if float(order.total_payable) == 0.0:
+            return True
         if user.stripe_customer_id and str(user.stripe_customer_id).strip() != "":
             customer = stripe.Customer.retrieve(user.stripe_customer_id)
             if order.card_id:
@@ -378,7 +381,7 @@ def send_order_complete_notification(order):
         if order.delivery_type != "pickup":
             dic["delivery_name"] = order.delivery_address.first_name.title() + " "+order.delivery_address.last_name.title()
             dic["delivery_add1"] = order.delivery_address.building + ", "+order.delivery_address.street
-            dic["delivery_add2"] = order.delivery_address.city.name + " "+ order.delivery_address.city.state.name + order.delivery_address.zip
+            dic["delivery_add2"] = order.delivery_address.city.title() + " "+ order.delivery_address.state.name + order.delivery_address.zip
         
         msg = render_to_string('order_placed_email_template.html', dic)
         sub = 'Your order at Meisterdish is received'
@@ -448,8 +451,8 @@ def get_order_details(request, data, user, order_id):
                      "last_name":order.delivery_address.last_name,
                      "street":order.delivery_address.street,
                      "building":order.delivery_address.building,
-                     "city":order.delivery_address.city.name,
-                     "state":order.delivery_address.city.state.name,
+                     "city":order.delivery_address.city.title(),
+                     "state":order.delivery_address.state.name,
                      "zip":order.delivery_address.zip,
                      "phone":order.delivery_address.phone,
                     },
@@ -459,8 +462,8 @@ def get_order_details(request, data, user, order_id):
                      "last_name":order.billing_address.last_name,
                      "street":order.billing_address.street,
                      "building":order.billing_address.building,
-                     "city":order.billing_address.city.name,
-                     "state":order.billing_address.city.state.name,
+                     "city":order.billing_address.city.title(),
+                     "state":order.billing_address.state.name,
                      "zip":order.billing_address.zip,
                      "phone":order.billing_address.phone,
                     }
