@@ -23,8 +23,8 @@ def get_cart_items(request, data, user):
               "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
               "available": 1 if cart_item.meal.available else 0,
               "category": cart_item.meal.category.name.title() if cart_item.meal.category else "Not Available",
-              "price": "{0:.2f}".format(cart_item.meal.price),
-              "tax": "{0:.2f}".format(cart_item.meal.price * cart_item.meal.tax/100),
+              "price": cart_item.meal.price,
+              "tax": cart_item.meal.price * cart_item.meal.tax/100,
               "quantity":cart_item.quantity,
             })
             items_count += cart_item.quantity
@@ -157,8 +157,8 @@ def update_cart(request, data, user):
                 "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
                 "available": 1 if cart_item.meal.available else 0,
                 "category": cart_item.meal.category.name.title(),
-                "price": "{0:.2f}".format(cart_item.meal.price),
-                "tax": "{0:.2f}".format(cart_item.meal.price * cart_item.meal.tax/100),
+                "price": cart_item.meal.price,
+                "tax": cart_item.meal.price * cart_item.meal.tax/100,
                 "quantity":cart_item.quantity,
               })
               items_count += cart_item.quantity

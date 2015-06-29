@@ -213,10 +213,10 @@ def apply_promocode(request, data, user):
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
 
         return json_response({"status":1, "message":code_type + code + " has been applied. You will get a discount of "+str(amt), 
-            "amount":"{0:.2f}".format(total_price),
-            "tax":"{0:.2f}".format(total_tax),
-            "discount":"{0:.2f}".format(discount),
-            "credits":"{0:.2f}".format(credits),
+            "amount":total_price,
+            "tax":total_tax,
+            "discount":discount,
+            "credits":credits,
             "code":code
         })
     except Cart.DoesNotExist:
@@ -245,10 +245,10 @@ def remove_promocode(request, data, user):
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
 
         return json_response({"status":1, "message":"Removed "+code_type, 
-            "amount":"{0:.2f}".format(total_price),
-            "tax":"{0:.2f}".format(total_tax),
-            "discount":"{0:.2f}".format(discount),
-            "credits":"{0:.2f}".format(credits),
+            "amount":total_price,
+            "tax":total_tax,
+            "discount":discount,
+            "credits":credits,
         })
     except Cart.DoesNotExist:
             return custom_error("There are no meals added to this transaction.")
