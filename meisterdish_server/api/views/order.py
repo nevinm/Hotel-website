@@ -221,17 +221,6 @@ def create_order(request, data, user):
             user.credits -= referral_bonus
             order.total_payable -= referral_bonus
         else:
-            if user.credits > 0:
-                log.info("User has credits : "+str(user.credits))
-                if user.credits > order.total_payable:
-                    user.credits = user.credits - order.total_payable
-                    order.credits = order.total_payable
-                    order.total_payable = 0
-                else:
-                    order.total_payable = order.total_payable - user.credits
-                    order.credits = user.credits
-                    user.credits = 0
-
             if order.cart.promo_code:
                 if order.cart.promo_code.amount > order.total_payable:
                     order.total_payable = 0
@@ -248,6 +237,16 @@ def create_order(request, data, user):
                 else:
                     order.discount = gc_amount
                     order.total_payable -=  gc_amount
+            if user.credits > 0:
+                log.info("User has credits : "+str(user.credits))
+                if user.credits > order.total_payable:
+                    user.credits = user.credits - order.total_payable
+                    order.credits = order.total_payable
+                    order.total_payable = 0
+                else:
+                    order.total_payable = order.total_payable - user.credits
+                    order.credits = user.credits
+                    user.credits = 0
 
         log.info("___Order___")
         log.info("Payable : " + str(order.total_payable))
