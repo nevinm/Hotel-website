@@ -237,9 +237,9 @@ def check_delivery(request, data, user=None):
     try:
         zip = data["zip"].strip()
         if DeliveryArea.objects.filter(zip=zip).exists():
-           return json_response({"status":1, "message":"Delivery is available for this location."})
-        return custom_error("Delivery is not available for this location.")
+           return json_response({"status":1, "message":"Great! We're delivering in your area. Please go ahead and check our menu."})
+        return custom_error("Sorry, we are currently not delivering in your area. We are coming soon. Please leave your email that we can inform you once we are near.")
     except Exception as e:
         log.error("Check delivery by ZIP error : " + e.message)
-        return custom_error("An error has occurred. Please try again later.")
+        return custom_error("Sorry, we are currently not delivering in your area. We are coming soon. Please leave your email that we can inform you once we are near.")
 
