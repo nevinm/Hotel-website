@@ -66,9 +66,10 @@ $(document).ready(function() {
             $(this).parent().find('.quantity').val(newVal);
         }
         if (qty <= 10) {
-            $(this).parents().eq(1).find(".price-container").text(((price + tax) * qty).toFixed(2));
+            $(this).parents().eq(1).find(".price-container").text(dollarConvert(((price + tax) * qty).toFixed(2)));
             updateCartItems(meal_id, qty);
             updateReciept();
+            $(".item-count").text("("+updateQuantity()+")");
         }
     });
 
@@ -91,9 +92,10 @@ $(document).ready(function() {
             $(this).parent().find('.quantity').val(newVal);
         }
         if (qty >= 1) {
-            $(this).parents().eq(1).find(".price-container").text(((price + tax) * qty).toFixed(2));
+            $(this).parents().eq(1).find(".price-container").text(dollarConvert(((price + tax) * qty).toFixed(2)));
             updateCartItems(meal_id, qty);
             updateReciept();
+            $(".item-count").text("("+updateQuantity()+")");
         }
     });
 
@@ -352,6 +354,15 @@ function populateCartItems(data) {
             "<img src='../images/hamburger-menu-close.png' id='remove-cart-item'>" + "</div>");
     });
     updateReciept();
+}
+
+function updateQuantity(){
+    var parentElement = $(".order-list-items").find(".quantity"),
+    totalQuantity=0;
+    $(parentElement).each(function(index, elem){
+        totalQuantity += parseInt($(elem).val());
+    });
+    return totalQuantity;
 }
 
 function updateReciept(GiftcardDetails, flag) {
