@@ -115,7 +115,7 @@ def gift_card_order(request, data, user=None):
         else:
             log.error("Gift card created, but failed to send.")
             return custom_error("There was an error sending Gift Card. Please contact customer support.")
-    except Exception as e:
+    except KeyError as e:
         log.error("Buy gift card error : " + e.message)
         return custom_error(e.message)
 
