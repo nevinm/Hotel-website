@@ -100,7 +100,7 @@ def list_gift_cards(request, data, user):
                 "message":gc.message,
                 "user" : gc.user.first_name.title() + " " + gc.user.first_name.title(),
                 "code":gc.code,
-                "amount":gc.amount
+                "amount":"{0:.2f}".format(gc.amount)
                 })
         #End format response
         return json_response({"status":1, 
@@ -204,7 +204,7 @@ def list_promocodes(request, data, user):
             promo_list.append({
                 "id" : promo.id,
                 "code":promo.code,
-                "amount":promo.amount,
+                "amount":"{0:.2f}".format(promo.amount),
                 "expiry_date":promo.expiry_date.strftime("%m/%d/%Y %H:%M:%S"),
                 "expiry_date_format":promo.expiry_date.strftime("%m/%d/%Y"),
                 "status":int(promo.active),

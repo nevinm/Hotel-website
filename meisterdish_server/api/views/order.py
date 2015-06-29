@@ -357,12 +357,12 @@ def send_order_complete_notification(order):
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
                "delivery_time" : order.delivery_time.strftime("%A, %B %d"+suffix+", %Y"),
-               "total_amount":round(order.total_amount,2),
-               "discount" : round(order.discount,2),
-               "tax" : round(order.total_tax,2),
-               "shipping" : round(settings.SHIPPING_CHARGE,2),
-               "tip":round(order.tip,2),
-               "grand_total":round(order.grand_total,2),
+               "total_amount":"{0:.2f}".format(order.total_amount),
+               "discount" : "{0:.2f}".format(order.discount),
+               "tax" : "{0:.2f}".format(order.total_tax),
+               "shipping" : "{0:.2f}".format(settings.SHIPPING_CHARGE),
+               "tip":"{0:.2f}".format(order.tip),
+               "grand_total":"{0:.2f}".format(order.grand_total),
                "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
                "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
                "status":order.status,
@@ -384,12 +384,12 @@ def send_order_complete_notification(order):
         sub = 'Your order at Meisterdish is received'
         
         if not to_email or to_email.strip() == "":
-            log.error("No email address to send order confirmation email")
+            log.error("No email address to send order placed email")
             return custom_error("Order has been updated, but failed to send email.")
         if mail_order_confirmation([to_email], sub, msg, order):
-            log.info("Send order confirmation mail to "+to_email)
+            log.info("Send order placed mail to "+to_email)
         else:
-            log.error("Failed to send order confirmation mail to "+to_email)
+            log.error("Failed to send order placed mail to "+to_email)
 
         if user.need_sms_notification:
             if not send_sms_notification(dic):

@@ -390,21 +390,20 @@ class Order(models.Model):
     updated = models.DateTimeField(null=True)
     
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = datetime.datetime.now()
-
         self.updated = datetime.datetime.now()
 
         if self.status >= 1:
             self.cart.completed = True
             self.cart.save()
 
-        if not self.grand_total or self.grand_total == 0:            
-            promo_amt = 0 if not self.cart.promo_code else self.cart.promo_code.amount
-            gift_card_amt = 0
-            self.discount = gift_card_amt + promo_amt
+        if not self.id:
+            self.created = datetime.datetime.now()
 
-            self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE
+            promo_amt = 0 if not self.cart.promo_code else self.cart.promo_code.amount
+            gc_amt = self.cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
+            self.discount = gc_amt + promo_amt
+
+            self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE - self.discount
 
         super(Order, self).save(*args, **kwargs)
         self.order_num = '0' * (6-len(str(self.id))) + str(self.id)
