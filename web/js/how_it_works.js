@@ -119,9 +119,12 @@ $(document).ready(function() {
 	})
 
 	//check delivery area
-	$('#check-delivery-area').on('click',function(){
+	$('#check-delivery-area').on('click',function(e){
+		e.preventDefault();
 		var zip = $('#zip-code').val();
-		locationCheck(zip);
+		if($('form.button-container').valid()){
+			locationCheck(zip);
+		}
 	})
 //Resize function 
 	$(window).resize(function() {

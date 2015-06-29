@@ -390,6 +390,14 @@ iframe{
 #reviews .right-arrow{
     display: none;
 }
+.review-message {
+  text-align: center;
+  font-family: 'BrandonGrotesque-bold';
+  font-size: 16px;
+  color: #A9D77B;
+  padding-top: 20px;
+  display: none;
+}
 /*==============================*\
         Media Query
 \*==============================*/
