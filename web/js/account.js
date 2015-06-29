@@ -1,7 +1,8 @@
-function profileAutoPopulate() {
-    var userDetails = JSON.parse(localStorage['user_profile']),
-        currentPage = $("title").text();
+var userDetails;
 
+function profileAutoPopulate() {
+    var currentPage = $("title").text();
+    userDetails= JSON.parse(localStorage['user_profile']);
     if (currentPage == 'Meisterdish - Change Contact') {
         $("#change-contact input[name='firstname']").val(userDetails.first_name);
         $("#change-contact input[name='lastname']").val(userDetails.last_name);
@@ -178,6 +179,7 @@ function changeEmail() {
 
 $('#add-address').on("click", function() {
     $(".addaddress-popup")[0].reset();
+    $("#guest-email").val(userDetails.email);
     $(".addresspopup-wrapper").show();
     $("#savepopup-data").hide();
     $("#addpopup-data").show();
