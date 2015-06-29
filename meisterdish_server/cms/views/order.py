@@ -132,14 +132,14 @@ def get_orders(request, data, user):
                   "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
                   "available": 1 if cart_item.meal.available else 0,
                   "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
-                  "price": cart_item.meal.price,
-                  "tax": cart_item.meal.tax,
+                  "price": "{0:.2f}".format(cart_item.meal.price),
+                  "tax": "{0:.2f}".format(cart_item.meal.price * cart_item.meal.tax/100),
                   "quantity":cart_item.quantity,
                 })
 
             order_list.append({
                 "id":order.id,
-                "grand_total" : order.grand_total,
+                "grand_total" : "{0:.2f}".format(order.grand_total),
                 "user_first_name" : order.cart.user.first_name  if order.cart.user.role.pk == settings.ROLE_USER else 'Guest('+ str(order.email)+')',
                 "user_last_name" : order.cart.user.last_name,
                 "status":dict(settings.ORDER_STATUS)[order.status],
@@ -205,8 +205,8 @@ def get_order_details(request, data, user, order_id):
               "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
               "available": 1 if cart_item.meal.available else 0,
               "category": cart_item.meal.category.name.title(),
-              "price": cart_item.meal.price,
-              "tax": cart_item.meal.tax,
+              "price": "{0:.2f}".format(cart_item.meal.price),
+              "tax": "{0:.2f}".format(cart_item.meal.price * cart_item.meal.tax /100),
               "quantity":cart_item.quantity,
             })
         order_details = {
