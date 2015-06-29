@@ -172,6 +172,14 @@ $(document).ready(function() {
         $('.pickup-content').show();
         $("#add-guest-address").hide();
         $(".city-selector-container").hide();
+        if (!(localStorage.getItem('user_profile') === null)) {
+            var userProfile = JSON.parse(localStorage['user_profile']);
+            $(".address-info-guest").find("#guest-email").val(userProfile.email);
+            $(".address-info-guest").find("#guest-phone").val(userProfile.mobile);
+        }else{
+            getProfile();
+        }
+        
     })
     $('#delivery-radio').on("click", function() {
         if ($('.address-info').is(':empty')) {
@@ -619,7 +627,6 @@ function popuplateAddressList(data) {
                 var userProfile = JSON.parse(localStorage['user_profile']);
                 $(".address-info-guest").find("#guest-email").val(userProfile.email);
                 $(".address-info-guest").find("#guest-phone").val(userProfile.mobile);
-                $(".address-info-guest").find("#guest-email").val(userProfile.email);
             } else {
                 getProfile();
             }
@@ -1115,6 +1122,7 @@ var getProfileCallback = {
         if (userDetails.status == 1) {
             localStorage['user_profile'] = data;
             $(".address-info-guest").find("#guest-email").val(userDetails.email);
+            $(".address-info-guest").find("#guest-phone").val(userDetails.mobile);
         } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}

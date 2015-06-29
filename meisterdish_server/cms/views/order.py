@@ -226,7 +226,7 @@ def get_order_details(request, data, user, order_id):
             "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
             "email" : order.email,
             "phone": order.phone,
-            "delivery_type" : order.get_delivery_type_display(),
+            "delivery_type" : order.delivery_type.title(),
             "payment_date" : order.payment.created.strftime("%m-%d-%Y %H:%M:%S") if order.payment else "Not Available",
             "transaction_id":order.payment.transaction_id if order.payment else "Not Available",
             "order_num" : order.order_num,

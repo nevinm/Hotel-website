@@ -79,7 +79,7 @@ def gift_card_order(request, data, user=None):
 
 
         response = stripe.Charge.create(
-            amount=int(amount * 100), #Cents
+            amount=int(amount) * 100, #Cents
             currency="usd",
             customer=customer.id,
             source = card.id,
