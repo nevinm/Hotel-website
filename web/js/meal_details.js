@@ -8,6 +8,18 @@ $(document).ready(function() {
         var mealId = $(this).attr("data-id");
         addToCart(mealId);
     });
+    $("#meal-tabs").tabs({
+        activate: function(event,ui){
+            if((ui.newTab.context.id)=="ui-id-7"){
+                if (!$('#reviews .container').find('.list-review').length > 0) {
+                    $('.review-message').fadeIn();
+                }
+            }
+            else{
+                $('.review-message').fadeOut();
+            }
+        }
+    });
 });
 
 
