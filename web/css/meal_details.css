@@ -202,7 +202,7 @@
   padding: 0 20px;
 }
 .list-container ul{
-    padding-left: 40px;
+    padding-left: 15px;
     padding-bottom: 20px;
     font-size: 14px;
     word-break: break-all;
@@ -213,10 +213,11 @@
 }
 .list-container ul li{
     list-style-type: disc;
-    font-size: 12px;
+    font-size: 14px;
     font-family: 'ProximaNova-regular';
     padding: 5px 0;
     color: #9B9B9B;
+    padding-left: 10px;
 } 
 .list-header,span.mob-view-header{
     font-family: 'BrandonGrotesque-Regular';
@@ -282,6 +283,7 @@ span.sub-header {
   font-family: 'BrandonGrotesque-Regular';
   padding: 10px 0;
   font-size: 16px;
+  letter-spacing: 2px;
 }
 .table-container,.text-container {
   width: 50%;
