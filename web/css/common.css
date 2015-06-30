@@ -713,6 +713,7 @@ span.icon-menu {
     display: inline-block;
     font-family: 'ProximaNova-regular';
     font-size: 11px;
+    cursor: pointer;
 }
 
 #footer ul li a {

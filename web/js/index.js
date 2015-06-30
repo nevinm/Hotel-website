@@ -86,7 +86,8 @@ var locationCheckCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
-            $('#close').hide();
+            $('#close').remove();
+            $('#see-menu').remove();
             $('.popup .header').append('<img src="images/cross_black.png" id="close">');
             $('.popup .button').append("<a href='views/menu.html' class='btn btn-large-secondary' id='see-menu'>"+"SEE MENU"+"</a>");
             showPopup(userDetails);

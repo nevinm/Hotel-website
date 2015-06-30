@@ -1,7 +1,7 @@
 //var baseURL = 'http://10.7.2.51:86/backend/api/',
 //var baseURL = 'http://10.1.4.32:8083/api/',
-var baseURL = 'http://meisterdish.qburst.com/backend/api/',
-    homeUrl = "http://meisterdish.qburst.com",
+var baseURL = 'http://meisterdish.com/backend/api/',
+    homeUrl = 'http://meisterdish.com',
     userDetails, currentPage = $("title").text(),
     currentPageTitle,
     clicked = 0;
@@ -13,7 +13,21 @@ $(document).ready(function() {
     $("#logout,.mobile-logout").on('click', function() {
         logingOut();
     });
-
+    $('.socialMedia').on("click",function(){
+        var clicked_id = $(this).attr('id');
+        if(clicked_id == 'facebook'){
+            window.location.href = 'http://www.facebook.com/meisterdish','_blank';
+        }
+        if(clicked_id == 'twitter'){
+            window.location.href = 'https://twitter.com/meisterdish','_blank';
+        }
+        if(clicked_id == 'instagram'){
+            window.location.href = 'http://instagram.com/meisterdish','_blank';
+        }
+        if(clicked_id == 'pinterest'){
+            window.location.href = 'http://pinterest.com/meisterdish','_blank';
+        }
+    });
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
         clicked = 1;
@@ -55,7 +69,7 @@ $(document).ready(function() {
         setTimeout(function() {
             $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
         }, 600)
-    })
+    });
 
     verifyAccount();
 });
