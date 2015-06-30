@@ -126,6 +126,9 @@ $(document).ready(function() {
 			locationCheck(zip);
 		}
 	});
+	$('#submit-email').on("click",function(){
+        var email = $('input[type=email]').val();
+    });
 	$('.delivery-area-check-popup img#cancel').on("click",function(){
         $('.delivery-area-check-popup').fadeOut();
     });
