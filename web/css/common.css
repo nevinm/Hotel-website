@@ -769,7 +769,7 @@ span.icon-menu {
 	top:0;
 	left: 0;
 	opacity: 0.3;
-	z-index: 9999;
+	z-index: 999999;
 }
 .popup{
 	position: fixed;
