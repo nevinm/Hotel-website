@@ -71,7 +71,7 @@ def add_address(request, data, user):
                 primary.is_primary=False
                 primary.save()
         return json_response({"status":1, "message":"Added Address", "id":add.id})
-    except Exception as e:
+    except KeyError as e:
         log.error("Add address failed: "+e.message)
         return custom_error("Failed to add address : "+e.message)
 
