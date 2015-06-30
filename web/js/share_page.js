@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    CartItemCount();
     $('#copy-to-clipboard').on("click",function(){
         if (navigator.mimeTypes ["application/x-shockwave-flash"].enabledPlugin == undefined){
             $('#copied-text').text('This feature is not available in your browser.Please install flash player.');

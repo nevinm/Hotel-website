@@ -9,36 +9,36 @@ $(document).ready(function() {
 	
 	$(".how-it-works-tab").tabs({
 		activate: function(event,ui){
-			if((ui.newTab.context.id)=="ui-id-5")
+			if((ui.newTab.context.id)=="ui-id-4")
 				$(".next-tab").hide();
 			else
 				$(".next-tab").show();
 		}
 	});
 	
-	$('#what-you-get .left-arrow').on("click",function(){
-		$('#you-cook,#what-you-get').animate({
-			left: '+=100%'
-		},"slow","easeOutQuart");
-	})
+	// $('#what-you-get .left-arrow').on("click",function(){
+	// 	$('#you-cook,#what-you-get').animate({
+	// 		left: '+=100%'
+	// 	},"slow","easeOutQuart");
+	// })
 	
-	$('#our-suppliers .left-arrow').on("click",function(){
-		$('#we-source,#our-suppliers').animate({
-			left: '+=100%'
-		},"slow","easeOutQuart");
-	})
+	// $('#our-suppliers .left-arrow').on("click",function(){
+	// 	$('#we-source,#our-suppliers').animate({
+	// 		left: '+=100%'
+	// 	},"slow","easeOutQuart");
+	// })
 	
-	$('#you-cook .right-arrow').on("click",function(){
-		$('#you-cook,#what-you-get').animate({
-			left: '-=100%'
-		},"slow","easeOutQuart");
-	})
+	// $('#you-cook .right-arrow').on("click",function(){
+	// 	$('#you-cook,#what-you-get').animate({
+	// 		left: '-=100%'
+	// 	},"slow","easeOutQuart");
+	// })
 	
-	$('#we-source .right-arrow').on("click",function(){
-		$('#we-source,#our-suppliers').animate({
-			left: '-=100%'
-		},"slow","easeOutQuart");
-	})
+	// $('#we-source .right-arrow').on("click",function(){
+	// 	$('#we-source,#our-suppliers').animate({
+	// 		left: '-=100%'
+	// 	},"slow","easeOutQuart");
+	// })
 	
 	$('.sub-tab-container  ul li').on("click", function() {
 	    $('.sub-tab-container ul li a').removeClass('subactiveli');
@@ -126,31 +126,31 @@ $(document).ready(function() {
 			locationCheck(zip);
 		}
 	})
-//Resize function 
-	$(window).resize(function() {
-		$('.next-sub-tab').hide();
-		$('.prev-sub-tab').hide();
-		$('#our-suppliers,#what-you-get').show();
-		$('.tab-header-drop-down').hide();
-		$('.backNav-mobile').hide();
-		if ($(window).width() <= 767 && $(window).width() >= 320) {
-			$('.backNav-mobile').show();
-			$('.next-sub-tab').show();
-			$('.prev-sub-tab').show();
-			if($('#our-suppliers').css('display')=='block' || 
-				$('#what-you-get').css('display')=='block'){
-				$('.icon-menu').hide();
-				$('.logo-mobile-container h3').hide();
-			}
-		}
-		if ($(window).width() <= 1024 && $(window).width() >= 768) {
-			$('.next-sub-tab').hide();
-			$('.prev-sub-tab').hide();
-			$('#our-suppliers,#what-you-get').show();
-			$('.tab-header-drop-down').hide();
-			$('.backNav-mobile').hide();
-		}
-	})
+// //Resize function 
+// 	$(window).resize(function() {
+// 		$('.next-sub-tab').hide();
+// 		$('.prev-sub-tab').hide();
+// 		// $('#our-suppliers,#what-you-get').show();
+// 		$('.tab-header-drop-down').hide();
+// 		$('.backNav-mobile').hide();
+// 		if ($(window).width() <= 767 && $(window).width() >= 320) {
+// 			$('.backNav-mobile').show();
+// 			$('.next-sub-tab').show();
+// 			$('.prev-sub-tab').show();
+// 			// if($('#our-suppliers').css('display')=='block' || 
+// 			// 	$('#what-you-get').css('display')=='block'){
+// 			// 	$('.icon-menu').hide();
+// 			// 	$('.logo-mobile-container h3').hide();
+// 			// }
+// 		}
+// 		if ($(window).width() <= 1024 && $(window).width() >= 768) {
+// 			$('.next-sub-tab').hide();
+// 			$('.prev-sub-tab').hide();
+// 			// $('#our-suppliers,#what-you-get').show();
+// 			$('.tab-header-drop-down').hide();
+// 			$('.backNav-mobile').hide();
+// 		}
+// 	})
 
 
 function tabRendering() {

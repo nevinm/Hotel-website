@@ -5,6 +5,7 @@ var billingAddressId, cardDetails,
     notifyUrl = baseURL + "paypal_ipn/";
 
 $(document).ready(function() {
+    CartItemCount();
     if (localStorage["session_key"]) {
         getCartItems();
         savedCardDetails();
