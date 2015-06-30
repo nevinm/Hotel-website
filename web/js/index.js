@@ -13,6 +13,7 @@ $(document).ready(function() {
     
     $('#submit-email').on("click",function(){
         var email = $('input[type=email]').val();
+        $('.delivery-area-check-popup').hide();
     });
     $('.delivery-area-check-popup img#cancel').on("click",function(){
         $('.delivery-area-check-popup').fadeOut();
@@ -85,6 +86,9 @@ var locationCheckCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
+            $('#close').hide();
+            $('.popup .header').append('<img src="images/cross_black.png" id="close">');
+            $('.popup .button').append("<a href='views/menu.html' class='btn btn-large-secondary' id='see-menu'>"+"SEE MENU"+"</a>");
             showPopup(userDetails);
         }else{
             showLocationCheckPopup(userDetails);

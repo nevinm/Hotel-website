@@ -795,7 +795,7 @@ span.icon-menu {
     background-color: #f7f7f7;
 }
 
-.popup .header,.delivery-address-error-popup .header{
+.popup .header,.delivery-address-error-popup .header,.popup-zip-fail .header{
 	border-bottom: 1px solid #D0D0D0;
 	height: 46px;
 	padding-left: 35px;
