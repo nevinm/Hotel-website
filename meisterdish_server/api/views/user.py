@@ -51,7 +51,7 @@ def add_address(request, data, user):
         add.street = street
         add.building = building
         add.city = city_id.strip().title()
-        add.state = State.objects.get(state_id)
+        add.state = State.objects.get(pk=state_id)
         add.zip = zip
         add.phone = phone
         if email:
@@ -132,7 +132,7 @@ def update_address(request, data, user, address_id):
                 primary.save()
                 
         return json_response({"status":1, "message":"Updated Address", "id":add.id})
-    except KeyError as e:
+    except Exception as e:
         log.error("update address failed : "+e.message)
         return custom_error("Failed to update address. ")
     except Exception as e:
