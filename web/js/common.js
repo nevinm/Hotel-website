@@ -16,16 +16,16 @@ $(document).ready(function() {
     $('.socialMedia').on("click",function(){
         var clicked_id = $(this).attr('id');
         if(clicked_id == 'facebook'){
-            window.location.href = 'http://www.facebook.com/meisterdish','_blank';
+            window.open('http://www.facebook.com/meisterdish','_blank'); 
         }
         if(clicked_id == 'twitter'){
-            window.location.href = 'https://twitter.com/meisterdish','_blank';
+            window.open('https://twitter.com/meisterdish','_blank');
         }
         if(clicked_id == 'instagram'){
-            window.location.href = 'http://instagram.com/meisterdish','_blank';
+            window.open('http://instagram.com/meisterdish','_blank');
         }
         if(clicked_id == 'pinterest'){
-            window.location.href = 'http://pinterest.com/meisterdish','_blank';
+            window.open('http://pinterest.com/meisterdish','_blank');
         }
     });
     // &NAVMENU - RESPONSIVE
