@@ -427,6 +427,11 @@ $("form").each(function() {
             },
             invitecode: {
                 required: true
+            },
+            delivery_tip: {
+                required: true,
+                minAmount: 0,
+                maxAmount: 10
             }
         },
         messages: {
@@ -484,6 +489,11 @@ $("form").each(function() {
                 required: "Please enter an amount.",
                 minAmount: "Enter a valid amount"
             },
+            delivery_tip:{
+                required: "Please enter a valid amount",
+                minAmount: "Enter amount between 1 and 10",
+                maxAmount: "Enter amount between 1 and 10"
+            },
             nameOnCard: "Enter valid name.",
             expiryMonth: "Enter exp month.",
             expiryYear: "Enter exp year.",
@@ -519,6 +529,9 @@ if ($.validator) {
     });
     $.validator.addMethod('minAmount', function(value, el, param) {
         return value >= param;
+    });
+    $.validator.addMethod('maxAmount', function(value, el, param) {
+        return value <= param;
     });
     $.validator.addMethod('zipcode', function(value) {
         return value.match(/\d{5}-\d{4}$|^\d{5}$/);

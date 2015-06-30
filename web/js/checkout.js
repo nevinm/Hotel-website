@@ -2,7 +2,8 @@ var billingAddressId, cardDetails,
     payPalEmail = "nazz007online-facilitator@gmail.com",
     returnUrl = baseURL + "paypal_success/",
     cancelReturnUrl = homeUrl + "/views/checkout.html",
-    notifyUrl = baseURL + "paypal_ipn/";
+    notifyUrl = baseURL + "paypal_ipn/",
+    totalDiscount = 0;
 
 $(document).ready(function() {
     if (localStorage["session_key"]) {
@@ -29,9 +30,18 @@ $(document).ready(function() {
         removeCartItems(meal_id);
     });
 
-    $('.driver-tip').on('change', function() {
-        selectedTip = $(this).find('option:selected').text();
-        $('.driver-tip-display').text(selectedTip + ".00");
+    $('.driver-tip').on('keyup input', function() {
+        selectedTip = this.value;
+        if (this.value.length > 2) {
+            selectedTip = this.value = this.value.slice(0, 2);
+        }
+        if (selectedTip >= 1) {
+            $('.driver-tip-display').text("$" + selectedTip + ".00");
+        } else if (selectedTip < 1 && selectedTip > 0) {
+            $('.driver-tip-display').text("$00." + selectedTip);
+        } else if (selectedTip == 0 || isNaN(selectedTip)) {
+            $('.driver-tip-display').text("$00.00");
+        }
         updateReciept();
     });
 
@@ -69,7 +79,7 @@ $(document).ready(function() {
             $(this).parents().eq(1).find(".price-container").text(dollarConvert(((price + tax) * qty).toFixed(2)));
             updateCartItems(meal_id, qty);
             updateReciept();
-            $(".item-count").text("("+updateQuantity()+")");
+            $(".item-count").text("(" + updateQuantity() + ")");
         }
     });
 
@@ -95,7 +105,7 @@ $(document).ready(function() {
             $(this).parents().eq(1).find(".price-container").text(dollarConvert(((price + tax) * qty).toFixed(2)));
             updateCartItems(meal_id, qty);
             updateReciept();
-            $(".item-count").text("("+updateQuantity()+")");
+            $(".item-count").text("(" + updateQuantity() + ")");
         }
     });
 
@@ -178,10 +188,10 @@ $(document).ready(function() {
             var userProfile = JSON.parse(localStorage['user_profile']);
             $(".address-info-guest").find("#guest-email").val(userProfile.email);
             $(".address-info-guest").find("#guest-phone").val(userProfile.mobile);
-        }else{
+        } else {
             getProfile();
         }
-        
+
     })
     $('#delivery-radio').on("click", function() {
         if ($('.address-info').is(':empty')) {
@@ -349,17 +359,17 @@ function populateCartItems(data) {
             "<div class='quantity-container'>" + "<span class='operator-minus' data-min='1'>" + '-' + "</span>" +
             "<input type='text' disabled='disabled' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
-            "<span class='price-container' data-tax='" + value.tax + "' data-price='" + value.price + "'>" + 
-            dollarConvert(parseFloat((value.tax + value.price)*value.quantity).toFixed(2)) + "</span>" +
+            "<span class='price-container' data-tax='" + value.tax + "' data-price='" + value.price + "'>" +
+            dollarConvert(parseFloat((value.tax + value.price) * value.quantity).toFixed(2)) + "</span>" +
             "<img src='../images/hamburger-menu-close.png' id='remove-cart-item'>" + "</div>");
     });
     updateReciept();
 }
 
-function updateQuantity(){
+function updateQuantity() {
     var parentElement = $(".order-list-items").find(".quantity"),
-    totalQuantity=0;
-    $(parentElement).each(function(index, elem){
+        totalQuantity = 0;
+    $(parentElement).each(function(index, elem) {
         totalQuantity += parseInt($(elem).val());
     });
     return totalQuantity;
@@ -367,9 +377,8 @@ function updateQuantity(){
 
 function updateReciept(GiftcardDetails, flag) {
     var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
-        totalDiscount = 0,
         totalCredits = 0,
-        totalDriverTip = parseInt($('.driver-tip option:selected').text().substring(1)),
+        totalDriverTip = parseFloat($('.driver-tip').val()),
         totalDeliveryCost = 2;
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
@@ -387,6 +396,9 @@ function updateReciept(GiftcardDetails, flag) {
     }
     if (flag == "coupon-applied") {
         totalDiscount = GiftcardDetails.discount;
+    }
+    if (isNaN(totalDriverTip)) {
+        totalDriverTip = 0;
     }
     totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost - totalDiscount - totalCredits;
     $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount).toFixed(2));

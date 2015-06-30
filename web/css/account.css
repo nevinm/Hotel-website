@@ -1565,6 +1565,19 @@ img.accepted-cards
 .address-payment-list-popup .bk-overlay{
 	z-index: 999999;
 }
+.styled-select input::-webkit-inner-spin-button,
+.styled-select input::-webkit-outer-spin-button
+ {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    margin: 0 !important;
+}
+.driver-tip{
+	font-family: 'ProximaNova-regular';
+	color: #9B9B9B;
+}
+
 /*==================================*\
 			&TABLET
 \*==================================*/
