@@ -67,13 +67,13 @@ var loginFBCallback = {
         if (userDetails.status == -1) {
             showPopup(userDetails);
         } else {
-            showPopup(userDetails);
             var user_name = userDetails.user.first_name;
             localStorage['username'] = user_name;
             if (localStorage.getItem("session_key") === null) {
                 localStorage['session_key'] = userDetails.session_key;
             }
             localStorage['loggedIn'] = true;
+            createCookie("SessionExpireTime", "true", sessionExpiryTime);
             checkLoggedIn();
             window.location.href = '../index.html';
         }
