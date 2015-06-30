@@ -108,8 +108,8 @@ def get_orders(request, data, user):
                      "last_name":order.delivery_address.last_name,
                      "street":order.delivery_address.street,
                      "building":order.delivery_address.building,
-                     "city":order.delivery_address.city.name,
-                     "state":order.delivery_address.city.state.name,
+                     "city":order.delivery_address.city.title(),
+                     "state":order.delivery_address.state.name,
                      "zip":order.delivery_address.zip,
                      "phone":order.delivery_address.phone,
                     } if order.delivery_address else "",
@@ -119,8 +119,8 @@ def get_orders(request, data, user):
                      "last_name":order.billing_address.last_name,
                      "street":order.billing_address.street,
                      "building":order.billing_address.building,
-                     "city":order.billing_address.city.name,
-                     "state":order.billing_address.city.state.name,
+                     "city":order.billing_address.city.title(),
+                     "state":order.billing_address.state.name,
                      "zip":order.billing_address.zip,
                      "phone":order.billing_address.phone,
                     } if order.billing_address else "",
@@ -221,17 +221,6 @@ def create_order(request, data, user):
             user.credits -= referral_bonus
             order.total_payable -= referral_bonus
         else:
-            if user.credits > 0:
-                log.info("User has credits : "+str(user.credits))
-                if user.credits > order.total_payable:
-                    user.credits = credits - order.total_payable
-                    order.credits = order.total_payable
-                    order.total_payable = 0
-                else:
-                    order.total_payable = order.total_payable - user.credits
-                    order.credits = user.credits
-                    user.credits = 0
-
             if order.cart.promo_code:
                 if order.cart.promo_code.amount > order.total_payable:
                     order.total_payable = 0
@@ -248,37 +237,54 @@ def create_order(request, data, user):
                 else:
                     order.discount = gc_amount
                     order.total_payable -=  gc_amount
+            if user.credits > 0:
+                log.info("User has credits : "+str(user.credits))
+                if user.credits > order.total_payable:
+                    user.credits = user.credits - order.total_payable
+                    order.credits = order.total_payable
+                    order.total_payable = 0
+                else:
+                    order.total_payable = order.total_payable - user.credits
+                    order.credits = user.credits
+                    user.credits = 0
 
         log.info("___Order___")
         log.info("Payable : " + str(order.total_payable))
 
-        #Payment
-        order.save_card = bool(data.get("save_card", 0))
-        order.card_id = data.get("card_id", False)
-        
-        if not order.card_id:
-            order.token = data["stripeToken"].strip()
-        order.status = 0
-        order.save()
-        payment = make_payment(order, user)
+        if float(order.total_payable) > 0.0:
+            #Payment
+            order.save_card = bool(data.get("save_card", 0))
+            order.card_id = data.get("card_id", False)
             
-        if not payment:
-            return custom_error("An error has occurred while paying with Credit Card. Please try agian.")
-        else:
-            log.info("Order payment success.Payment id :"+str(payment.id))        
-            order.payment = payment
-            order.status = 1
+            if not order.card_id:
+                order.token = data["stripeToken"].strip()
+            order.status = 0
             order.save()
-            user.save()
+            payment = make_payment(order, user)
+            
+            if not payment:
+                return custom_error("An error has occurred while paying with Credit Card. Please try agian.")
+        else: #amount = 0
+            payment = None
+        if payment:
+            log.info("Order payment success.Payment id :"+str(payment.id))
+        else:
+            log.info("Order success - Amount = 0..")
 
-            if not order.cart.completed:
-                order.cart.completed=True
-                order.cart.save()
-            if not send_order_complete_notification(order):
-                log.error("Failed to send order notification")
-            return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way."})
+        order.payment = payment
+        order.status = 1
+        order.save()
+        user.save()
+
+        if not order.cart.completed:
+            order.cart.completed=True
+            order.cart.save()
+
+        if not send_order_placed_notification(order):
+            log.error("Failed to send order notification")
+        return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way."})
         
-    except Exception as e:
+    except KeyError as e:
         log.error("Failed to create order." + e.message)
         return custom_error(e.message + "is missing.")
 
@@ -340,7 +346,7 @@ def make_payment(order, user):
         log.error("Failed to make payment." + e.message + str(exc_tb.tb_lineno))
         return False
 
-def send_order_complete_notification(order):
+def send_order_placed_notification(order):
     try:
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
         user = order.cart.user
@@ -367,7 +373,6 @@ def send_order_complete_notification(order):
                "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
                "status":order.status,
                "delivery_type":order.delivery_type,
-               "review_link":settings.SITE_URL + 'views/reviews.html?sess=' + order.session_key + '&oi=' + str(order.id),
                "to_email":to_email,
                "site_url":settings.SITE_URL,
                "delivery_hr": str(order.delivery_time.hour) + "-" + str(order.delivery_time.hour +1)+"PM",
@@ -378,7 +383,7 @@ def send_order_complete_notification(order):
         if order.delivery_type != "pickup":
             dic["delivery_name"] = order.delivery_address.first_name.title() + " "+order.delivery_address.last_name.title()
             dic["delivery_add1"] = order.delivery_address.building + ", "+order.delivery_address.street
-            dic["delivery_add2"] = order.delivery_address.city.name + " "+ order.delivery_address.city.state.name + order.delivery_address.zip
+            dic["delivery_add2"] = order.delivery_address.city.title() + " "+ order.delivery_address.state.name + order.delivery_address.zip
         
         msg = render_to_string('order_placed_email_template.html', dic)
         sub = 'Your order at Meisterdish is received'
@@ -448,8 +453,8 @@ def get_order_details(request, data, user, order_id):
                      "last_name":order.delivery_address.last_name,
                      "street":order.delivery_address.street,
                      "building":order.delivery_address.building,
-                     "city":order.delivery_address.city.name,
-                     "state":order.delivery_address.city.state.name,
+                     "city":order.delivery_address.city.title(),
+                     "state":order.delivery_address.state.name,
                      "zip":order.delivery_address.zip,
                      "phone":order.delivery_address.phone,
                     },
@@ -459,8 +464,8 @@ def get_order_details(request, data, user, order_id):
                      "last_name":order.billing_address.last_name,
                      "street":order.billing_address.street,
                      "building":order.billing_address.building,
-                     "city":order.billing_address.city.name,
-                     "state":order.billing_address.city.state.name,
+                     "city":order.billing_address.city.title(),
+                     "state":order.billing_address.state.name,
                      "zip":order.billing_address.zip,
                      "phone":order.billing_address.phone,
                     }

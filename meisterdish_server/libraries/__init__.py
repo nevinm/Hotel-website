@@ -215,7 +215,7 @@ def create_address_text_from_model(address):
         return ""
     text = address.first_name.title() + " " + address.last_name.title() + "\n"
     text += address.street + ", " + address.building + "\n"
-    text += address.city.name + ", "+address.city.state.name + "\n"
+    text += address.city.title() + ", "+address.state.name + "\n"
     text += str(address.zip) + ", Ph: +1 "+str(address.phone)
     return text
 
