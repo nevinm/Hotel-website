@@ -125,7 +125,10 @@ $(document).ready(function() {
 		if($('form.button-container').valid()){
 			locationCheck(zip);
 		}
-	})
+	});
+	$('.delivery-area-check-popup img#cancel').on("click",function(){
+        $('.delivery-area-check-popup').fadeOut();
+    });
 // //Resize function 
 // 	$(window).resize(function() {
 // 		$('.next-sub-tab').hide();
@@ -211,7 +214,7 @@ var locationCheckCallback = {
         if (userDetails.status == 1) {
             showPopup(userDetails);
         } else {
-        	showPopup(userDetails);
+        	showLocationCheckPopup(userDetails);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -228,4 +231,10 @@ function locationCheck(zipcode) {
     data = JSON.stringify(userData);
     var locationCheckInstance = new AjaxHttpSender();
     locationCheckInstance.sendPost(url, header, data, locationCheckCallback);
+}
+
+function showLocationCheckPopup(userDetails){
+    var message = userDetails.message;
+    $('.delivery-area-check-popup .deliver-message span').text(message);
+    $('.delivery-area-check-popup').show();
 }

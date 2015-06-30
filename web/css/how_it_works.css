@@ -278,6 +278,26 @@ img.image-small{
 input#check-delivery-area{
 	margin-bottom: 0px;
 }
+.delivery-area-check-popup img#cancel {
+  float: right;
+  padding: 14px 17px 0px 0px;
+  cursor: pointer;
+}
+.delivery-area-check-popup{
+	display: none;
+}
+.delivery-area-check-popup .popup{
+	height: auto;
+}
+.delivery-area-check-popup .popup .button{
+	position: initial;
+}
+.delivery-area-check-popup .username-wrapper {
+  padding-bottom: 20px;
+  width: 100%;
+  float: left;
+}
+
 @media (min-width: 768px)and (max-width: 1024px) {
 	.contentWrapper .h0{
 		font-size: 40px;

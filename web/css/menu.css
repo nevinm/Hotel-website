@@ -355,6 +355,7 @@ span.per-serving-text {
   color: #6b6b6b;
   font-size: 12px;
   vertical-align: middle;
+  letter-spacing: 1px;
 }
 
 .menu-pagination {
