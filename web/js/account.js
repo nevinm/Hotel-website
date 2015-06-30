@@ -1,5 +1,4 @@
 var userDetails;
-
 function profileAutoPopulate() {
     var currentPage = $("title").text();
     userDetails= JSON.parse(localStorage['user_profile']);
@@ -8,6 +7,9 @@ function profileAutoPopulate() {
         $("#change-contact input[name='lastname']").val(userDetails.last_name);
         $("#change-contact input[name='phonenumber']").val(userDetails.mobile);
         $('input[name=notification]').prop('checked', userDetails.sms_notification);
+    }
+    if(currentPage == 'Meisterdish -Change Email'){
+        $('.current-email-container span').text(userDetails.email);
     }
     if (currentPage == 'Meisterdish - Account') {
         $(".small-profile-pic").attr('src', userDetails.profile_image_thumb);

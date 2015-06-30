@@ -250,6 +250,20 @@
 }
 .menuItemDetails{
 	vertical-align: middle;
+    word-break: break-word;
+    font-family: 'BrandonGrotesque-Regular';
+    color: #6B6B6B;
+    font-size: 14px;
+    width: 100%;
+    float: left;
+    padding-bottom: 10px;
+}
+hr.mealList-hr {
+  height: 1px;
+  border: 0;
+  width: 100%;
+  background-color: #cdcdcd;
+  float: left;
 }
 .itemCost{
 	color: #B3B3B3;
@@ -323,6 +337,8 @@
     font-family: 'BrandonGrotesque-Medium';
     text-transform: uppercase;
     letter-spacing: 1.5px;
+    margin-bottom: 0px;
+    line-height: 20px;
 }
 
 .menuItemDetails {
@@ -330,10 +346,17 @@
 }
 
 .itemCost {
-    color: #B3B3B3;
+    color: #6B6B6B;
     margin-bottom: 7px;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: normal;
+}
+span.per-serving-text {
+  font-family: 'BrandonGrotesque-Regular';
+  color: #6b6b6b;
+  font-size: 12px;
+  vertical-align: middle;
+  letter-spacing: 1px;
 }
 
 .menu-pagination {

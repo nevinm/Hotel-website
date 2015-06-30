@@ -178,7 +178,8 @@ class Address(models.Model):
     is_primary = models.BooleanField(db_index=True, default=False)
     street = models.CharField(max_length=50)
     building = models.CharField(max_length=50)
-    city = models.ForeignKey(City)
+    state =models.ForeignKey(State) 
+    city = models.CharField(max_length=50)
     zip = models.CharField(max_length=10)
     phone = models.CharField(max_length=15)
     email = models.CharField(max_length=50, null=True, blank=True)
@@ -404,7 +405,8 @@ class Order(models.Model):
             gc_amt = 0 if not gc_amt else gc_amt
             self.discount += gc_amt
 
-            self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE - self.discount
+            self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE - self.discount - self.credits
+            self.grand_total = 0 if self.grand_total < 0 else self.grand_total
 
         super(Order, self).save(*args, **kwargs)
         self.order_num = '0' * (6-len(str(self.id))) + str(self.id)

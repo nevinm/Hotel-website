@@ -20,6 +20,7 @@ def add_address(request, data, user):
         street = data["street"].strip()
         building = data["building"].strip()
         city_id = data["city_id"]
+        state_id = data["state_id"]
         zip = data["zip"].strip()
         phone = data["phone"].strip()
         
@@ -49,7 +50,8 @@ def add_address(request, data, user):
         add.last_name = lname
         add.street = street
         add.building = building
-        add.city = City.objects.get(id=city_id)
+        add.city = city_id.strip().title()
+        add.state = State.objects.get(state_id)
         add.zip = zip
         add.phone = phone
         if email:
@@ -87,7 +89,10 @@ def update_address(request, data, user, address_id):
             lname = data["last_name"].strip()
             street = data["street"].strip()
             building = data["building"].strip()
-            city_id = data["city_id"]
+            
+            city_id = data["city_id"].strip().title()
+            state_id = data["state_id"]
+
             zip = data["zip"].strip()
             phone = data["phone"].strip()
             email = data["email"].strip()
@@ -103,7 +108,8 @@ def update_address(request, data, user, address_id):
             add.last_name = lname
             add.street = street
             add.building = building
-            add.city = City.objects.get(id=city_id)
+            add.city = city_id
+            add.state = State.objects.get(id=state_id)
             add.zip = zip
             add.phone = phone
             add.email = email

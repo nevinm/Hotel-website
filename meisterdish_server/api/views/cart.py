@@ -76,10 +76,10 @@ def add_to_cart(request, data):
             return custom_error("An error has occured. Please try again later.")
 
         meal_id = data['meal_id']
-        quantity = data.get('quantity', 1)
+        quantity = int(data.get('quantity', 2))
 
-        if int(quantity) < 1:
-           return custom_error("Invalid quantity.")
+        if quantity %2 == 1 or quantity < 2:
+            return custom_error("Invalid quantity.")
 
         try:
           meal = Meal.objects.get(pk=meal_id, available=True, is_deleted=False)
@@ -118,9 +118,9 @@ def add_to_cart(request, data):
 def update_cart(request, data, user):
     try:
         meal_id = data['meal_id']
-        qty = data['quantity']
+        qty = int(data['quantity'])
         
-        if int(qty) < 1:
+        if qty %2 == 1 or qty < 2:
             return custom_error("Please provide a valid quantity for each meal.")
 
         try:
@@ -179,7 +179,7 @@ def remove_from_cart(request, data, user):
     try:
         meal_id = data['meal_id']
         meal = Meal.objects.get(pk=meal_id)
-        CartItem.objects.get(cart__user=user, cart__completed=False, meal__pk=meal_id).delete()
+        CartItem.objects.filter(cart__user=user, cart__completed=False, meal__pk=meal_id).delete()
         return json_response({"status":1, "message": meal.name.title() + " has been successfully removed from cart."})
     except Exception as e:
         log.error("Remove from cart : "+e.message)
