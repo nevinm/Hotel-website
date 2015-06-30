@@ -769,7 +769,7 @@ span.icon-menu {
 	top:0;
 	left: 0;
 	opacity: 0.3;
-	z-index: 9999;
+	z-index: 999999;
 }
 .popup{
 	position: fixed;
@@ -795,7 +795,7 @@ span.icon-menu {
     background-color: #f7f7f7;
 }
 
-.popup .header,.delivery-address-error-popup .header{
+.popup .header,.delivery-address-error-popup .header,.popup-zip-fail .header{
 	border-bottom: 1px solid #D0D0D0;
 	height: 46px;
 	padding-left: 35px;
@@ -844,7 +844,7 @@ span.icon-menu {
 #guest-phone-error,#giftcard-custom-amount-error,#recipient-email-error,#recipient-name-error,
 #recipient-message-error,#fullname-error, #giftcardcustomamount-error, #message-error,
 #tips-video-url-label-error,#tips-and-tricks-label-error, #invite-code-error,#email-error, 
-#new-amount-error, #new-code-error, #new-date-error
+#new-amount-error, #new-code-error, #new-date-error, #city-selector-error
 {
 	color: #ff7878;
 	background: white;
@@ -1244,7 +1244,7 @@ span.icon-menu {
 		background-position: 3px 3px;
 		background-size: 32px 20px;
 		background-repeat: no-repeat;
-        margin: 22px 0 0 25px;
+        margin: 25px 0 0 25px;
 
     }
     .logo-mobile{
