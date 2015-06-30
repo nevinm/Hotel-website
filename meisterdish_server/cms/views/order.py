@@ -59,7 +59,7 @@ def update_order(request, data, user, order_id):
                     log.error("Failed to send order complete notification")
 
         return json_response({"status":1, "message":"The order has been updated", "id":str(order_id)+"."})
-    except IOError as e:
+    except KeyError as e:
         log.error("Update order status : " + e.message)
         return custom_error("Failed to update the order.")
 
@@ -305,7 +305,7 @@ def send_order_confirmation_notification(order):
                 return False
         return True
 
-    except Exception as e:
+    except KeyError as e:
         log.error("Send confirmation mail : " + e.message)
         return False
 
@@ -340,7 +340,7 @@ def send_order_complete_notification(order):
             if not send_sms_notification(dic):
                 return False
         return True
-    except Exception as e:
+    except KeyError as e:
         log.error("Send order completion mail : " + e.message)
         return False
 

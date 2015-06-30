@@ -213,14 +213,13 @@ LOGGING = {
     }
 }
 
-
-EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
-MAIL_USE_TLS=True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'afmpmail2@gmail.com'
-EMAIL_HOST_PASSWORD = 'afmp@123mail2'
-DEFAULT_FROM_EMAIL = 'Meisterdish Test<meisterdishtest@gmail.com>'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'contact@meisterdish.com'
+EMAIL_HOST_PASSWORD = 'mgmaileisterdish'
+DEFAULT_FROM_EMAIL = 'Meisterdish<contact@meisterdish.com>'
+SERVER_EMAIL = 'contact@meisterdish.com'
 
 PAYMENT_METHODS = (
                    ('CC', 'Credit Card'),

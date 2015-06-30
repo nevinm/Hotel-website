@@ -375,3 +375,15 @@ def share_via_email(request, data, user):
     except Exception as e:
         log.error("Share via email "+str(user.id) + " : "+ e.message)
         return custom_error("An error has occurred while sending e-mail. Please try again later.")        
+
+
+@check_input('POST')
+def save_email(request, data, user):
+    try:
+        email = data["email"].strip()
+        zip = str(data["zipcode"]).strip()
+
+        return json_response({"status":1, "message":"Your email has been recorded. You will be notified when delivery becomes available at your location."})
+    except Exception as e:
+        log.error("Save email :"+ e.message)
+        return custom_error("An error has occurred. Please try again later.")        
