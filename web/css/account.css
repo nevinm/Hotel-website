@@ -2046,7 +2046,7 @@ img.accepted-cards
   		.address-payment-list-popup .button{
   			padding-left: 0;
   		}
-  		#save-payment,#save-delivery-address,#cancel{
+  		#save-payment,#save-delivery-address{
 			line-height: 35px;
 			min-width: 90px;
   		}

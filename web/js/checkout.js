@@ -6,6 +6,7 @@ var billingAddressId, cardDetails,
     totalDiscount = 0;
 
 $(document).ready(function() {
+    CartItemCount();
     if (localStorage["session_key"]) {
         getCartItems();
         savedCardDetails();

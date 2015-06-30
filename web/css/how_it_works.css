@@ -20,7 +20,7 @@
 }
 .tab-container  ul li {
 	display: inline-block;
-	width: 19%;
+	width: 24%;
 	text-align: center;
 }
 .tab-container  ul li a{
@@ -264,7 +264,9 @@ img.image-small{
 .left-arrow-mobile , .right-arrow-mobile,
 .logo-mobile-container h3,  .box-contentWrapper hr,
 .backNav-mobile,.tab-header-drop-down,
-.tab-header-drop-down #plantation,.tab-header-drop-down #common-thread-farm{
+.tab-header-drop-down #plantation,
+.tab-header-drop-down #common-thread-farm,#what-you-get,
+#our-suppliers,#btn-what-you-get,#btn-our-suppliers,#we-inspire,.right-arrow{
 	display: none;
 }
 #zip-code-error{
@@ -276,6 +278,26 @@ img.image-small{
 input#check-delivery-area{
 	margin-bottom: 0px;
 }
+.delivery-area-check-popup img#cancel {
+  float: right;
+  padding: 14px 17px 0px 0px;
+  cursor: pointer;
+}
+.delivery-area-check-popup{
+	display: none;
+}
+.delivery-area-check-popup .popup{
+	height: auto;
+}
+.delivery-area-check-popup .popup .button{
+	position: initial;
+}
+.delivery-area-check-popup .username-wrapper {
+  padding-bottom: 20px;
+  width: 100%;
+  float: left;
+}
+
 @media (min-width: 768px)and (max-width: 1024px) {
 	.contentWrapper .h0{
 		font-size: 40px;
@@ -542,7 +564,9 @@ input#check-delivery-area{
     #what-you-get .sub-tab-container{
     	top: 310px;
     }
-    .prev-sub-tab{
+    .prev-sub-tab,#what-you-get,
+	#our-suppliers,#btn-what-you-get,#btn-our-suppliers,
+	#we-inspire,.right-arrow{
     	display: none;
     }
 

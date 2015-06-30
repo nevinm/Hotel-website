@@ -165,6 +165,26 @@ input#zip-code[type="text"]{
 .deliver-message{
 	padding: 18px 0;
 }
+.delivery-area-check-popup img#cancel {
+  float: right;
+  padding: 14px 17px 0px 0px;
+  cursor: pointer;
+}
+.delivery-area-check-popup{
+	display: none;
+}
+.delivery-area-check-popup .popup{
+	height: auto;
+}
+.delivery-area-check-popup .popup .button{
+	position: initial;
+}
+.delivery-area-check-popup .username-wrapper {
+  padding-bottom: 20px;
+  width: 100%;
+  float: left;
+}
+
 /*==============================*\
 			&Media-query
 \*==============================*/

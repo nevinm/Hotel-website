@@ -10,6 +10,13 @@ $(document).ready(function() {
     });
 
     $("body").on("load",isSessionExpired);
+    
+    $('#submit-email').on("click",function(){
+        var email = $('input[type=email]').val();
+    });
+    $('.delivery-area-check-popup img#cancel').on("click",function(){
+        $('.delivery-area-check-popup').fadeOut();
+    });
 });
 var mobileRendered;
 
@@ -77,8 +84,10 @@ function destroyFullPageJS() {
 var locationCheckCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
-        if (userDetails.status) {
+        if (userDetails.status == 1) {
             showPopup(userDetails);
+        }else{
+            showLocationCheckPopup(userDetails);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -95,4 +104,10 @@ function locationCheck(zipcode) {
     data = JSON.stringify(userData);
     var locationCheckInstance = new AjaxHttpSender();
     locationCheckInstance.sendPost(url, header, data, locationCheckCallback);
+}
+
+function showLocationCheckPopup(userDetails){
+    var message = userDetails.message;
+    $('.delivery-area-check-popup .deliver-message span').text(message);
+    $('.delivery-area-check-popup').show();
 }

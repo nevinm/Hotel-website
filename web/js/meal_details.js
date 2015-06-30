@@ -152,7 +152,7 @@ function populateMealDetails(mealDetails) {
 function mealDetailsTab(mealDetails) {
     $(".add-meal").attr("data-id", mealDetails.id);
     $(".meal-name").text(mealDetails.name);
-    $(".price").text(dollarConvert(mealDetails.price + mealDetails.tax));
+    $(".price").text(dollarConvert((mealDetails.price + mealDetails.tax).toFixed(2)));
     $(".thumbnail").attr('src', mealDetails.main_image.url);
     $(".thumbnail").attr('data-id', mealDetails.main_image.id);
     $(".chef-img").attr("src", mealDetails.chef_image.url);
