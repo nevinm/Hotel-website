@@ -128,9 +128,11 @@ $(document).ready(function() {
 	});
 	$('#submit-email').on("click",function(){
         var email = $('input[type=email]').val();
+        $('.delivery-area-check-popup').hide();
     });
-	$('.delivery-area-check-popup img#cancel').on("click",function(){
-        $('.delivery-area-check-popup').fadeOut();
+
+    $(document).on('click', '.delivery-area-check-popup img#cancel', function() {
+    	 $('.delivery-area-check-popup').fadeOut();
     });
 // //Resize function 
 // 	$(window).resize(function() {
@@ -215,6 +217,9 @@ var locationCheckCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
+            $('#close').hide();
+            $('.popup .header').append('<img src="../images/cross_black.png" id="close">');
+            $('.popup .button').append("<a href='menu.html' class='btn btn-large-secondary' id='see-menu'>"+"SEE MENU"+"</a>");
             showPopup(userDetails);
         } else {
         	showLocationCheckPopup(userDetails);
@@ -240,4 +245,5 @@ function showLocationCheckPopup(userDetails){
     var message = userDetails.message;
     $('.delivery-area-check-popup .deliver-message span').text(message);
     $('.delivery-area-check-popup').show();
+
 }

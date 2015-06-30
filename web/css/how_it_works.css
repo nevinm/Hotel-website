@@ -278,7 +278,7 @@ img.image-small{
 input#check-delivery-area{
 	margin-bottom: 0px;
 }
-.delivery-area-check-popup img#cancel {
+img#cancel,img#close {
   float: right;
   padding: 14px 17px 0px 0px;
   cursor: pointer;
@@ -286,10 +286,21 @@ input#check-delivery-area{
 .delivery-area-check-popup{
 	display: none;
 }
-.delivery-area-check-popup .popup{
+.delivery-area-check-popup .popup-zip-fail{
 	height: auto;
+	position: fixed;
+	width: 400px;
+	background-color: #fff;
+	top: 40%;
+	left: 50%;
+	z-index: 999999;
+	border-radius: 4px;
+	-ms-transform: translate(-50%,-40%);
+	-moz-transform: translate(-50%,-40%);
+	-webkit-transform: translate(-50%,-40%);
+	transform: translate(-50%,-40%);
 }
-.delivery-area-check-popup .popup .button{
+.delivery-area-check-popup .popup-zip-fail .button{
 	position: initial;
 }
 .delivery-area-check-popup .username-wrapper {
