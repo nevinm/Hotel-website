@@ -104,7 +104,21 @@
     border-top: 1px solid #ededed;
     display: none;
 }
-
+.removeItemButton {
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  border: 1px solid;
+  line-height: 25px;
+  float: right;
+  padding: 0 0px;
+  margin: 0;
+  margin-bottom: .5em;
+  min-width: 30px;
+  cursor: pointer;
+  font-family: 'BrandonGrotesque-bold';
+  display: none;
+}
 .subMenu ul li.menu-categories-list {
     float: left;
     border-left: 1px solid #F3F3F3;

@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     "meisterdish_server",
     'api',
     "cms",
+    "mailchimp",
 )
 
 LOGGING = {
@@ -215,7 +216,7 @@ LOGGING = {
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465
+EMAIL_PORT = 587
 EMAIL_HOST_USER = 'contact@meisterdish.com'
 EMAIL_HOST_PASSWORD = 'mgmaileisterdish'
 DEFAULT_FROM_EMAIL = 'Meisterdish<contact@meisterdish.com>'
@@ -278,3 +279,6 @@ EMAIL_IMAGES = {
 }
 
 PRINTNODE_API_URL = "https://api.printnode.com"
+
+MAILCHIMP_API_KEY = "744d970910cbd78785543d90d4138a16-us11"
+MAILCHIMP_LIST_ID = 'e7a064df21'

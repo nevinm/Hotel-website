@@ -105,7 +105,7 @@ def add_to_cart(request, data):
            cart_item.quantity = quantity
         cart_item.save()
         
-        response = {"status":1, "message":meal.name.title() + " has been added to the cart."}
+        response = {"status":1, "message":meal.name.title() + " has been added to the cart.", "quantity":cart_item.quantity}
         if session_key:
           response["session_key"] = session_key
         return json_response(response)

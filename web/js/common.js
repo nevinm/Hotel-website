@@ -1,4 +1,4 @@
-// var baseURL = 'http://10.7.2.51:86/backend/api/',
+ //var baseURL = 'http://10.7.2.51:86/backend/api/',
 //var baseURL = 'http://10.1.4.32:8083/api/',
 var baseURL = 'http://meisterdish.com/backend/api/',
     homeUrl = "http://meisterdish.com",
@@ -459,7 +459,7 @@ $("form").each(function() {
                 minlength: "Name should contain atleast 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
-            phonenumber: "Provide valid number",
+            phonenumber: "Provide valid phone number",
             fullname: {
                 required: "Please enter your full name.",
                 letters: "Name should contain only alphabets.",
