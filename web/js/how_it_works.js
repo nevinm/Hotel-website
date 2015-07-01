@@ -128,7 +128,7 @@ $(document).ready(function() {
 	});
 	$('#submit-email').on("click",function(){
         var email = $('input[type=email]').val();
-        $('.delivery-area-check-popup').hide();
+        saveEmail(email,zipcode);
     });
 
     $(document).on('click', '.delivery-area-check-popup img#cancel', function() {
@@ -247,4 +247,31 @@ function showLocationCheckPopup(userDetails){
     $('.delivery-area-check-popup .deliver-message span').text(message);
     $('.delivery-area-check-popup').show();
 
+}
+
+//Get reviews API process
+var saveEmailCallback = {
+    success: function(data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            $('.delivery-area-check-popup').hide();
+        } else {
+        	showLocationCheckPopup(userDetails);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function saveEmail(email,zipcode){
+	var url = baseURL + "save_email/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+        	'email' : email,
+            'zipcode': zipcode
+        };
+    data = JSON.stringify(userData);
+    var saveEmailInstance = new AjaxHttpSender();
+    saveEmailInstance.sendPost(url, header, data, saveEmailCallback);
 }
