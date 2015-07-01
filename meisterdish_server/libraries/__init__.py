@@ -44,9 +44,8 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
           "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo.png"),
         }
 
-        log.info(order.cart.cartitem_set.all())
         for ci in order.cart.cartitem_set.all():
-            share_images["img_"+str(ci.meal.id)] = ci.meal.main_image.image.path if ci.meal.main_image else settings.DEFAULT_MEAL_IMAGE
+            share_images["img_"+str(ci.meal.id)] = ci.meal.main_image.image.path if ci.meal.main_image else os.path.join(settings.STATIC_ROOT,"default", "meal_default.jpg")
 
         for cid, img in share_images.items():
             fp = open(img, 'rb')
@@ -55,7 +54,7 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
             msgImage.add_header('Content-ID', '<'+cid+'>')
             msg.attach(msgImage)
         return msg.send()
-    except Exception as e:
+    except KeyError as e:
         log.error(e.message)
         return False
 

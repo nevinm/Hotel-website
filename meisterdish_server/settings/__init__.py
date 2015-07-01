@@ -215,7 +215,7 @@ LOGGING = {
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465
+EMAIL_PORT = 587
 EMAIL_HOST_USER = 'contact@meisterdish.com'
 EMAIL_HOST_PASSWORD = 'mgmaileisterdish'
 DEFAULT_FROM_EMAIL = 'Meisterdish<contact@meisterdish.com>'
