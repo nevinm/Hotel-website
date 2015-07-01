@@ -124,14 +124,17 @@ function showLocationCheckPopup(userDetails){
     $('.delivery-area-check-popup').show();
 }
 
-//Get reviews API process
 var saveEmailCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
             $('.delivery-area-check-popup').hide();
             showPopup(userDetails);
-        } else {
+        } if(userDetails.status == -1) {
+            showPopup(userDetails);
+        }
+        if(userDetails.status == -2){
+            $('.delivery-area-check-popup').hide();
             showPopup(userDetails);
         }
     },

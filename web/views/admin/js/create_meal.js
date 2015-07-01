@@ -58,11 +58,11 @@ $(document).ready(function() {
         } else {
             $("#tips-video-url,#tips-and-tricks").addClass('error');
             $("#tips-video-url-label-error,#tips-and-tricks-label-error").show();
-            if(valid_url){
+            if (valid_url) {
                 $("#tips-video-url").removeClass('error');
                 $("#tips-video-url-label-error").hide();
             }
-            if(valid_title){
+            if (valid_title) {
                 $("#tips-and-tricks").removeClass('error');
                 $("#tips-and-tricks-label-error").hide();
             }
@@ -160,9 +160,9 @@ function extractNutrients() {
             totalSubNutrientData = [];
 
         nutrientMainDetails = extractNutrientInnerDetails(nutrientMain);
-        $(mainNutrient).find(".nutrient-sub").map(function() {
+        $(mainNutrient).find(".nutrient-sub").each(function() {
             var subNutrient = $(this),
-                nutrientSubDetails = extractNutrientInnerDetails(nutrientSub);
+                nutrientSubDetails = extractNutrientInnerDetails(nutrientSub, subNutrient);
             totalSubNutrientData.push(nutrientSubDetails);
         });
         oneNutrientTotal = {
@@ -176,10 +176,16 @@ function extractNutrients() {
     return totalNutrientData;
 }
 
-function extractNutrientInnerDetails(parentElement) {
-    var nutrientsValue = $(parentElement).find(".nutrients-value").text(),
-        servingValue = $(parentElement).find(".serving-value").text(),
-        dailyValue = $(parentElement).find(".daily-value").text();
+function extractNutrientInnerDetails(parentElement, childElement) {
+    var elementNeeded;
+    if (childElement) {
+        elementNeeded = childElement;
+    } else {
+        elementNeeded = parentElement;
+    }
+    var nutrientsValue = $(elementNeeded).find(".nutrients-value").text(),
+        servingValue = $(elementNeeded).find(".serving-value").text(),
+        dailyValue = $(elementNeeded).find(".daily-value").text();
 
     return {
         "nutrientsName": nutrientsValue,
