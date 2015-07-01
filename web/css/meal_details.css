@@ -408,11 +408,12 @@ iframe{
 }
 .review-message {
   text-align: center;
-  font-family: 'BrandonGrotesque-bold';
-  font-size: 16px;
-  color: #A9D77B;
+  font-family: 'BrandonGrotesque-Regular';
+  font-size: 18px;
+  color: #6B6B6B;
   padding-top: 20px;
   display: none;
+  text-transform: uppercase;
 }
 .icons-container1,.icons-container2,
 span.upper-content,span.lower-content,
