@@ -356,12 +356,13 @@ def send_sms_notification(dic):
         
         client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
 
-        country_code = "+1" if settings.Live else "+91"
+        country_code = "+1" if settings.Live else "+1"
         number = country_code + str(dic["mobile"]).strip()
 
         message = client.messages.create(body=txt,
                 to= number,
                 from_=settings.TWILIO_NUMBER)
+        log.info(message)
         if message:
             log.info("Sent SMS to " + number)
             return True

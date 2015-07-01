@@ -163,10 +163,10 @@
                     <div class='slide-description'>
                         <p class="h0">DELIVERY AREAS</p>
                         <div class='body-text-small'>FIND OUT IF WE DELIVER IN YOUR AREA BY ENTERING YOUR ZIP CODE BELOW.</div>
-                        <div class='zip-code-container'>
-                            <input type='text' id='zip-code' placeholder="ENTER PIN">
-                            <a href="#" class="btn btn-large-primary medium-green check-delivery">CHECK</a>
-                        </div>
+                        <form class='zip-code-container'>
+                            <input type='text' name="zip" id='zip-code' placeholder="ENTER PIN">
+                            <input type="submit" class="btn btn-large-primary medium-green check-delivery" value="CHECK">
+                        </form>
                     </div>
                 </div>
                 <div class='slide-description-mobile' id="section3-description">
@@ -226,20 +226,23 @@
                 <div class="content deliver-message">
                     <span></span>
                 </div>
-                <div class="username-wrapper">
-                    <label class="body-text-small" for="username">Drop your email here
-                </label>
-                    <input class="arrange" value="" type="email" name="email" id="username" maxlength="50">
-                </div>
-                <div class="button">
-                    <a class="btn btn-small-secondary" id="submit-email">submit</a>
-                </div>
+                <form id="validate-email">
+                    <div class="username-wrapper">
+                        <label class="body-text-small" for="username">Drop your email here
+                    </label>
+                        <input class="arrange" value="" type="email" name="email" id="username" maxlength="50">
+                    </div>
+                    <div class="button">
+                        <input type="submit" class="btn btn-small-secondary" id="submit-email" value="submit">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
     </div>
     <script type="text/javascript" src='js/jquery.min.js'></script>
     <script type="text/javascript" src='js/jquery.fullPage.min.js'></script>
+    <script type="text/javascript" src='js/jquery.validate.min.js'></script>
     <script type="text/javascript" src='js/ajax_reusable.js'></script>
     <script type="text/javascript" src='js/common.js'></script>
     <script type="text/javascript" src='js/index.js'></script>

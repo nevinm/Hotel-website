@@ -13,7 +13,21 @@ $(document).ready(function() {
     $("#logout,.mobile-logout").on('click', function() {
         logingOut();
     });
-
+    $('.socialMedia').on("click",function(){
+        var clicked_id = $(this).attr('id');
+        if(clicked_id == 'facebook'){
+            window.open('http://www.facebook.com/meisterdish','_blank'); 
+        }
+        if(clicked_id == 'twitter'){
+            window.open('https://twitter.com/meisterdish','_blank');
+        }
+        if(clicked_id == 'instagram'){
+            window.open('http://instagram.com/meisterdish','_blank');
+        }
+        if(clicked_id == 'pinterest'){
+            window.open('http://pinterest.com/meisterdish','_blank');
+        }
+    });
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
         clicked = 1;
@@ -55,7 +69,7 @@ $(document).ready(function() {
         setTimeout(function() {
             $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
         }, 600)
-    })
+    });
 
     verifyAccount();
 });

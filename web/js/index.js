@@ -4,16 +4,23 @@ $(document).ready(function() {
     destroyFullPageJS();
     CartItemCount();
 
-    $(".check-delivery").on('click', function() {
+    $(".check-delivery").on('click', function(e) {
+        e.preventDefault();
         var zipcode = $("#zip-code").val();
-        locationCheck(zipcode);
+        if($("form.zip-code-container").valid()){    
+            locationCheck(zipcode);
+        }
     });
 
     $("body").on("load",isSessionExpired);
     
-    $('#submit-email').on("click",function(){
-        var email = $('input[type=email]').val();
-        $('.delivery-area-check-popup').hide();
+    $('#submit-email').on("click",function(e){
+        e.preventDefault();
+        var email = $('input[type=email]').val(),
+            zipcode = $('#zip-code').val();
+        if($('form#validate-email').valid()){
+            saveEmail(email,zipcode);
+        }
     });
     $('.delivery-area-check-popup img#cancel').on("click",function(){
         $('.delivery-area-check-popup').fadeOut();
@@ -86,7 +93,8 @@ var locationCheckCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
-            $('#close').hide();
+            $('#close').remove();
+            $('#see-menu').remove();
             $('.popup .header').append('<img src="images/cross_black.png" id="close">');
             $('.popup .button').append("<a href='views/menu.html' class='btn btn-large-secondary' id='see-menu'>"+"SEE MENU"+"</a>");
             showPopup(userDetails);
@@ -114,4 +122,32 @@ function showLocationCheckPopup(userDetails){
     var message = userDetails.message;
     $('.delivery-area-check-popup .deliver-message span').text(message);
     $('.delivery-area-check-popup').show();
+}
+
+//Get reviews API process
+var saveEmailCallback = {
+    success: function(data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            $('.delivery-area-check-popup').hide();
+            showPopup(userDetails);
+        } else {
+            showPopup(userDetails);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function saveEmail(email,zipcode){
+    var url = baseURL + "save_email/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+            'email' : email,
+            'zipcode': zipcode
+        };
+    data = JSON.stringify(userData);
+    var saveEmailInstance = new AjaxHttpSender();
+    saveEmailInstance.sendPost(url, header, data, saveEmailCallback);
 }

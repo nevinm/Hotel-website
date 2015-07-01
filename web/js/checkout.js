@@ -67,7 +67,7 @@ $(document).ready(function() {
     //update cart items
     $(document).on('click', '.operator-plus', function() {
         var oldVal = parseInt($(this).parent().find('.quantity').val()),
-            newVal = oldVal + 1,
+            newVal = oldVal + 2,
             meal_id = $(this).parents(':eq(1)').attr('data-id'),
             qty = newVal,
             $priceSpanElement = $(this).parents().eq(1).find(".price-container"),
@@ -92,7 +92,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.operator-minus', function() {
         var oldVal = parseInt($(this).parent().find('.quantity').val()),
-            newVal = oldVal - 1,
+            newVal = oldVal - 2,
             meal_id = $(this).parents(':eq(1)').attr('data-id'),
             qty = newVal,
             $priceSpanElement = $(this).parents().eq(1).find(".price-container"),
@@ -357,7 +357,7 @@ function populateCartItems(data) {
     $.each(data.aaData, function(key, value) {
         $('.order-list-container').append("<div class='order-list-items' data-id='" + value.id + "'>" +
             "<img src='" + value.image + "'>" + "<span class='body-text-small'>" + value.name + "</span>" +
-            "<div class='quantity-container'>" + "<span class='operator-minus' data-min='1'>" + '-' + "</span>" +
+            "<div class='quantity-container'>" + "<span class='operator-minus' data-min='2'>" + '-' + "</span>" +
             "<input type='text' disabled='disabled' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
             "<span class='price-container' data-tax='" + value.tax + "' data-price='" + value.price + "'>" +
