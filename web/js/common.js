@@ -459,7 +459,7 @@ $("form").each(function() {
                 minlength: "Name should contain atleast 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
-            phonenumber: "Provide valid number",
+            phonenumber: "Provide valid phone number",
             fullname: {
                 required: "Please enter your full name.",
                 letters: "Name should contain only alphabets.",
