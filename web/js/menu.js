@@ -21,8 +21,11 @@ $(document).ready(function() {
     //Add to cart
     $(document).on("click", '.addItemButton', function(e) {
         e.preventDefault();
+        // var listItems = $(this).closest('.listItems');
+        // listItems.find('.removeItemButton').fadeIn();
         var x = {},
-            meal_id = $(this).attr('data-id');
+            meal_id = $(this).attr('data-id'),
+            quantity = 0;
         if (localStorage['loggedIn'] == 'true') {
             addToCart(meal_id);
         } else if (localStorage['loggedIn'] == 'false' || localStorage.getItem('loggedIn') === null) {
@@ -224,6 +227,7 @@ function populateMealList(mealList, isInfinteScrolling) {
             "</section><section class='listItemDetails'>" +
             "<h3 class='pullLeft itemCost'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</h3>" +
             "<span class='per-serving-text'>"+"PER SERVING"+"</span>"+
+            "<div class='removeItemButton'>"+"-"+"</div>"+
             "<span><a class='btn btn-small-primary medium-green addItemButton' " +
             "data-id='" + value.id + "'>ADD</a></span>" +
             "</section></div>");
