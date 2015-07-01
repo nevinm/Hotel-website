@@ -59,4 +59,7 @@ urlpatterns = patterns('',
     
     url(r'^share_email/$', views.share_via_email, name='share_via_email'),
     url(r'^validate_session/$', views.validate_session, name='validate_session'),
+
+    url(r'^save_email/$', views.save_email, name='save_email'),
+    
 )

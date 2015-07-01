@@ -845,7 +845,7 @@ span.icon-menu {
 #guest-phone-error,#giftcard-custom-amount-error,#recipient-email-error,#recipient-name-error,
 #recipient-message-error,#fullname-error, #giftcardcustomamount-error, #message-error,
 #tips-video-url-label-error,#tips-and-tricks-label-error, #invite-code-error,#email-error, 
-#new-amount-error, #new-code-error, #new-date-error
+#new-amount-error, #new-code-error, #new-date-error, #city-selector-error
 {
 	color: #ff7878;
 	background: white;
@@ -1381,11 +1381,4 @@ span.icon-menu {
         margin-left: -37.5%;
         height: 225px;
     }
-}
-
-/*==============================*\
-        &BETA - RELEASE
-\*==============================*/
-.menu-offer{
-    display: none !important;
 }

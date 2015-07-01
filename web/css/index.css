@@ -195,6 +195,16 @@ img#cancel,img#close {
   width: 100%;
   float: left;
 }
+label#zip-code-error {
+  background-color: none;
+  background: none;
+  bottom: 51px;
+}
+label#username-error {
+  bottom: 137px;
+  left: 5px;
+  width: 60%;
+}
 
 /*==============================*\
 			&Media-query

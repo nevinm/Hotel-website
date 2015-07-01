@@ -51,7 +51,7 @@ def add_address(request, data, user):
         add.street = street
         add.building = building
         add.city = city_id.strip().title()
-        add.state = State.objects.get(state_id)
+        add.state = State.objects.get(pk=state_id)
         add.zip = zip
         add.phone = phone
         if email:
@@ -71,7 +71,7 @@ def add_address(request, data, user):
                 primary.is_primary=False
                 primary.save()
         return json_response({"status":1, "message":"Added Address", "id":add.id})
-    except Exception as e:
+    except KeyError as e:
         log.error("Add address failed: "+e.message)
         return custom_error("Failed to add address : "+e.message)
 
@@ -132,7 +132,7 @@ def update_address(request, data, user, address_id):
                 primary.save()
                 
         return json_response({"status":1, "message":"Updated Address", "id":add.id})
-    except KeyError as e:
+    except Exception as e:
         log.error("update address failed : "+e.message)
         return custom_error("Failed to update address. ")
     except Exception as e:
@@ -375,3 +375,15 @@ def share_via_email(request, data, user):
     except Exception as e:
         log.error("Share via email "+str(user.id) + " : "+ e.message)
         return custom_error("An error has occurred while sending e-mail. Please try again later.")        
+
+
+@check_input('POST')
+def save_email(request, data, user):
+    try:
+        email = data["email"].strip()
+        zip = str(data["zipcode"]).strip()
+
+        return json_response({"status":1, "message":"Your email has been recorded. You will be notified when delivery becomes available at your location."})
+    except Exception as e:
+        log.error("Save email :"+ e.message)
+        return custom_error("An error has occurred. Please try again later.")        

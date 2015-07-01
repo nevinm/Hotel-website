@@ -308,7 +308,11 @@ img#cancel,img#close {
   width: 100%;
   float: left;
 }
-
+label#username-error {
+  bottom: 137px;
+  left: 5px;
+  width: 60%;
+}
 @media (min-width: 768px)and (max-width: 1024px) {
 	.contentWrapper .h0{
 		font-size: 40px;

@@ -127,8 +127,11 @@ $(document).ready(function() {
 		}
 	});
 	$('#submit-email').on("click",function(){
-        var email = $('input[type=email]').val();
-        saveEmail(email,zipcode);
+        var email = $('input[type=email]').val(),
+        	zipcode = $('#zip-code').val();
+        if($('form#validate-email').valid()){
+        	saveEmail(email,zipcode);
+        }
     });
 
     $(document).on('click', '.delivery-area-check-popup img#cancel', function() {
@@ -249,14 +252,14 @@ function showLocationCheckPopup(userDetails){
 
 }
 
-//Get reviews API process
 var saveEmailCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
             $('.delivery-area-check-popup').hide();
+            showPopup(userDetails);
         } else {
-        	showLocationCheckPopup(userDetails);
+        	showPopup(userDetails);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}

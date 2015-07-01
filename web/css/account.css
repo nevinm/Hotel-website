@@ -628,22 +628,22 @@ form.addaddress-popup {
 .section3 .forminput-wrapper:first-child{
 	width:  134px;
 	float: left;
-	margin-right: 16px;
+	margin-right: 4%;
 	position: relative;
 }
 .section3{
 	margin-bottom: 12px;
 }
 .section4 .forminput-wrapper:nth-child(2){
-	width: 174px;
+	width: 48%;
 	float: left;
 	position: relative;
 	
 }
 .section4 .forminput-wrapper:first-child{
-	width: 140px;
+	width: 48%;
 	float: left;
-	margin-right: 16px;
+	margin-right: 4%;
 	position: relative;
 }
 .addresspopup .button {
@@ -667,7 +667,7 @@ form.addaddress-popup {
   -webkit-appearance: none !important;
 }
 .styled-select {
-	width: 180px;
+	width: 100%;
 	height: 30px;
 	overflow: hidden;
 	background: url(../images/selector_arrow.png) no-repeat 157px 6px #f7f7f7;
@@ -1051,11 +1051,11 @@ form.addaddress-popup {
 }
 #guest-address-info .section3 .forminput-wrapper{
 	float: left;
-	width: 30.6%;
+	width: 48%;
 	position: relative;
 }
 #guest-address-info .section3 .forminput-wrapper:nth-child(2){
-	margin-right: 4%;
+	/*margin-right: 4%;*/
 }
 #guest-address-info .section3 .forminput-wrapper .styled-select{
 	width: 100%;
@@ -1382,6 +1382,7 @@ input.radio-button-payment {
 #guest-address-info .button{
 	float: left;
 	padding: 20px 0;
+	width: 100%;
 }
 .ok-container{
 	display: none;
@@ -1882,12 +1883,6 @@ img.accepted-cards
 	}
 	input.popup-input{
 		height: 36px;
-	}
-	#guest-address-info .section3 .forminput-wrapper{
-		width: 30%;
-	}
-	.section3 .forminput-wrapper:first-child{
-		margin-right: 4%;
 	}
 	.forminput-wrapper .styled-select{
 		height: 36px;

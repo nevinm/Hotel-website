@@ -181,7 +181,9 @@ function changeEmail() {
 
 $('#add-address').on("click", function() {
     $(".addaddress-popup")[0].reset();
-    $("#guest-email").val(userDetails.email);
+    if(userDetails){
+        $("#guest-email").val(userDetails.email);
+    }
     $(".addresspopup-wrapper").show();
     $("#savepopup-data").hide();
     $("#addpopup-data").show();
