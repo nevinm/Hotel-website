@@ -67,7 +67,7 @@ $(document).ready(function() {
     //update cart items
     $(document).on('click', '.operator-plus', function() {
         var oldVal = parseInt($(this).parent().find('.quantity').val()),
-            newVal = oldVal + 1,
+            newVal = oldVal + 2,
             meal_id = $(this).parents(':eq(1)').attr('data-id'),
             qty = newVal,
             $priceSpanElement = $(this).parents().eq(1).find(".price-container"),
@@ -92,7 +92,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.operator-minus', function() {
         var oldVal = parseInt($(this).parent().find('.quantity').val()),
-            newVal = oldVal - 1,
+            newVal = oldVal - 2,
             meal_id = $(this).parents(':eq(1)').attr('data-id'),
             qty = newVal,
             $priceSpanElement = $(this).parents().eq(1).find(".price-container"),
@@ -357,7 +357,7 @@ function populateCartItems(data) {
     $.each(data.aaData, function(key, value) {
         $('.order-list-container').append("<div class='order-list-items' data-id='" + value.id + "'>" +
             "<img src='" + value.image + "'>" + "<span class='body-text-small'>" + value.name + "</span>" +
-            "<div class='quantity-container'>" + "<span class='operator-minus' data-min='1'>" + '-' + "</span>" +
+            "<div class='quantity-container'>" + "<span class='operator-minus' data-min='2'>" + '-' + "</span>" +
             "<input type='text' disabled='disabled' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
             "<span class='price-container' data-tax='" + value.tax + "' data-price='" + value.price + "'>" +
@@ -639,6 +639,7 @@ function getAddress(flag) {
     getAddressInstance.sendPost(url, header, data, getAddressCallback, flag);
 }
 
+//From API
 function popuplateAddressList(data) {
     userDetails = JSON.parse(data);
     if (userDetails.status == 1) {
@@ -785,7 +786,8 @@ function addAddress() {
 function getNewAddress() {
     var $addressContainer = $('#guest-address-info'),
         state_id = $addressContainer.find(".state-selector").val(),
-        city_name = $("#city-selector").val();
+        city_name = $("#city-selector").val(),
+        state_name = $addressContainer.find(".state-selector option:selected").text();
     var newAddress = {
         first_name: $addressContainer.find("input[name*='firstname']").val(),
         last_name: $addressContainer.find("input[name*='lastname']").val(),
@@ -794,9 +796,11 @@ function getNewAddress() {
         street: $addressContainer.find("input[name*='street']").val(),
         email: $("#guest-email").val(),
         city_id: city_name,
+        city: city_name,
         building: $addressContainer.find("input[name*='building']").val(),
         is_primary: $addressContainer.find("input[type*='checkbox']").val() == "on" ? 1 : 0,
         state_id: state_id,
+        state: state_name
     }
     return newAddress;
 }

@@ -1382,6 +1382,7 @@ input.radio-button-payment {
 #guest-address-info .button{
 	float: left;
 	padding: 20px 0;
+	width: 100%;
 }
 .ok-container{
 	display: none;
@@ -1546,8 +1547,8 @@ img.accepted-cards
 	line-height: 15px;
 }
 .address-container input[type=radio]:checked + label:before {
-	font-size: 44px;
-  line-height: 12px;
+	font-size: 38px;
+	line-height: 10px;
 }
 .saved-card-list label{
 	width: 100%;
