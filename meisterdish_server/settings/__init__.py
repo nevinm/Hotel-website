@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     "meisterdish_server",
     'api',
     "cms",
+    "mailchimp",
 )
 
 LOGGING = {
@@ -278,3 +279,6 @@ EMAIL_IMAGES = {
 }
 
 PRINTNODE_API_URL = "https://api.printnode.com"
+
+MAILCHIMP_API_KEY = "744d970910cbd78785543d90d4138a16-us11"
+MAILCHIMP_LIST_ID = 'e7a064df21'
