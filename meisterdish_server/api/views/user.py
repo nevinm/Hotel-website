@@ -378,7 +378,7 @@ def share_via_email(request, data, user):
 
 
 @check_input('POST')
-def save_email(request, data, user):
+def save_email(request, data):
     try:
         email = data["email"].strip()
         zip = str(data["zipcode"]).strip()

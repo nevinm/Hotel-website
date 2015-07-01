@@ -17,7 +17,7 @@ def get_meals(request, data):
         page = data.get("nextPage",1)
                     
         meal_list = []
-        meals = Meal.objects.filter(is_deleted=False)
+        meals = Meal.objects.filter(is_deleted=False, available=True)
         total_count = meals.count()
          
         if "search" in data and data['search'].strip() != '':
@@ -97,7 +97,7 @@ def get_meal_details(request, data, meal_id):
         else:
             user=None
 
-        meal = Meal.objects.get(pk=meal_id, is_deleted=False)
+        meal = Meal.objects.get(pk=meal_id, is_deleted=False, available=True)
         rating_list = []
         rating_sum = 0.0
         rating_count = 0
