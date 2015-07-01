@@ -1382,6 +1382,7 @@ input.radio-button-payment {
 #guest-address-info .button{
 	float: left;
 	padding: 20px 0;
+	width: 100%;
 }
 .ok-container{
 	display: none;
