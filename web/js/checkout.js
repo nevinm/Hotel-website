@@ -639,6 +639,7 @@ function getAddress(flag) {
     getAddressInstance.sendPost(url, header, data, getAddressCallback, flag);
 }
 
+//From API
 function popuplateAddressList(data) {
     userDetails = JSON.parse(data);
     if (userDetails.status == 1) {
@@ -785,7 +786,8 @@ function addAddress() {
 function getNewAddress() {
     var $addressContainer = $('#guest-address-info'),
         state_id = $addressContainer.find(".state-selector").val(),
-        city_name = $("#city-selector").val();
+        city_name = $("#city-selector").val(),
+        state_name = $addressContainer.find(".state-selector option:selected").text();
     var newAddress = {
         first_name: $addressContainer.find("input[name*='firstname']").val(),
         last_name: $addressContainer.find("input[name*='lastname']").val(),
@@ -794,9 +796,11 @@ function getNewAddress() {
         street: $addressContainer.find("input[name*='street']").val(),
         email: $("#guest-email").val(),
         city_id: city_name,
+        city: city_name,
         building: $addressContainer.find("input[name*='building']").val(),
         is_primary: $addressContainer.find("input[type*='checkbox']").val() == "on" ? 1 : 0,
         state_id: state_id,
+        state: state_name
     }
     return newAddress;
 }
