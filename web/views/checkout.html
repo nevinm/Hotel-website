@@ -72,9 +72,9 @@
                         <li>
                             <a href="how-it-works.html">HOW IT WORKS</a>
                         </li>
-                        <!-- <li>
+                        <li>
                             <a href="gift-cards-select.html">GIFTS</a>
-                        </li> -->
+                        </li>
                         <li class="login-signup">
                             <a href="login.html">LOG IN</a>
                         </li>
@@ -114,9 +114,9 @@
                     <li>
                         <a href="how-it-works.html">HOW IT WORKS</a>
                     </li>
-                    <!-- <li>
+                    <li>
                         <a href="gift-cards-select.html">GIFTS</a>
-                    </li> -->
+                    </li>
                     <li class="bold login-signup">
                         <a href="login.html">LOG IN</a>
                     </li>
@@ -165,17 +165,23 @@
                                             </div>
                                         </div>
                                         <div class="section3">
-                                            <div class="forminput-wrapper">
-                                                <label class="body-text-small">Zip</label>
-                                                <input type="text" name="zip" class="popup-input">
-                                            </div>
-                                            <div class="forminput-wrapper city-selector-container">
-                                                <label class="body-text-small">City</label>
+                                            <div class="forminput-wrapper state-selector-container">
+                                                <label class="body-text-small">State</label>
                                                 <div class="styled-select">
-                                                    <select class="city-selector" name="city">
+                                                    <select class="state-selector" name="state">
                                                         <option value=""></option>
                                                     </select>
                                                 </div>
+                                            </div>
+                                            <div class="forminput-wrapper state-selector-container">
+                                                <label class="body-text-small">City</label>
+                                                <input type="text" id='city-selector' name="city" class="popup-input">
+                                            </div>
+                                        </div>
+                                        <div class="section4">
+                                            <div class="forminput-wrapper">
+                                                <label class="body-text-small">Zip</label>
+                                                <input type="text" name="zip" class="popup-input">
                                             </div>
                                             <div class="forminput-wrapper">
                                                 <label class="body-text-small">Phone</label>
@@ -376,19 +382,7 @@
                                 <span class="content-heading">DRIVER TIP</span>
                                 <div class="inner-content body-text-small">
                                     <div class="styled-select">
-                                        <select class='driver-tip' name="driver-tip">
-                                            <option data-amount='0' value="">$0</option>
-                                            <option data-amount='1' value="">$1</option>
-                                            <option data-amount='2' value="">$2</option>
-                                            <option data-amount='3' value="">$3</option>
-                                            <option data-amount='4' value="">$4</option>
-                                            <option data-amount='5' selected value="">$5</option>
-                                            <option data-amount='6' value="">$6</option>
-                                            <option data-amount='7' value="">$7</option>
-                                            <option data-amount='8' value="">$8</option>
-                                            <option data-amount='9' value="">$9</option>
-                                            <option data-amount='10' value="">$10</option>
-                                        </select>
+                                        <input class="driver-tip popup-input" type='number' max='10' min='0' value="5" />
                                     </div>
                                     <span class='driver-tip-display'>$5.00</span>
                                 </div>
@@ -396,14 +390,14 @@
                             <div class="gift-card-container">
                                 <span class="content-heading" id="is-gift-card">GIFT CARD?</span>
                                 <div class="isPromocode-wrapper">
-                                    <input type="text" id="promo-gift-input" class="popup-input"placeholder="Enter code">
+                                    <input type="text" id="promo-gift-input" class="popup-input" placeholder="Enter code">
                                     <input type="button" class="btn btn-small-primary medium-green" id="apply-promo-gift" value="APPLY">
                                     <div class="promo-validation-message"></div>
                                 </div>
                                 <hr>
                             </div>
                             <div class="discount-container body-text-small">
-                                <span>Discount</span>
+                                <span>Credit</span>
                                 <span class="discount-amount">-$0.00</span>
                             </div>
                             <div class="total-container">

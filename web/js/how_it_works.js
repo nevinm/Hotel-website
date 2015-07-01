@@ -9,36 +9,36 @@ $(document).ready(function() {
 	
 	$(".how-it-works-tab").tabs({
 		activate: function(event,ui){
-			if((ui.newTab.context.id)=="ui-id-5")
+			if((ui.newTab.context.id)=="ui-id-4")
 				$(".next-tab").hide();
 			else
 				$(".next-tab").show();
 		}
 	});
 	
-	$('#what-you-get .left-arrow').on("click",function(){
-		$('#you-cook,#what-you-get').animate({
-			left: '+=100%'
-		},"slow","easeOutQuart");
-	})
+	// $('#what-you-get .left-arrow').on("click",function(){
+	// 	$('#you-cook,#what-you-get').animate({
+	// 		left: '+=100%'
+	// 	},"slow","easeOutQuart");
+	// })
 	
-	$('#our-suppliers .left-arrow').on("click",function(){
-		$('#we-source,#our-suppliers').animate({
-			left: '+=100%'
-		},"slow","easeOutQuart");
-	})
+	// $('#our-suppliers .left-arrow').on("click",function(){
+	// 	$('#we-source,#our-suppliers').animate({
+	// 		left: '+=100%'
+	// 	},"slow","easeOutQuart");
+	// })
 	
-	$('#you-cook .right-arrow').on("click",function(){
-		$('#you-cook,#what-you-get').animate({
-			left: '-=100%'
-		},"slow","easeOutQuart");
-	})
+	// $('#you-cook .right-arrow').on("click",function(){
+	// 	$('#you-cook,#what-you-get').animate({
+	// 		left: '-=100%'
+	// 	},"slow","easeOutQuart");
+	// })
 	
-	$('#we-source .right-arrow').on("click",function(){
-		$('#we-source,#our-suppliers').animate({
-			left: '-=100%'
-		},"slow","easeOutQuart");
-	})
+	// $('#we-source .right-arrow').on("click",function(){
+	// 	$('#we-source,#our-suppliers').animate({
+	// 		left: '-=100%'
+	// 	},"slow","easeOutQuart");
+	// })
 	
 	$('.sub-tab-container  ul li').on("click", function() {
 	    $('.sub-tab-container ul li a').removeClass('subactiveli');
@@ -125,32 +125,43 @@ $(document).ready(function() {
 		if($('form.button-container').valid()){
 			locationCheck(zip);
 		}
-	})
-//Resize function 
-	$(window).resize(function() {
-		$('.next-sub-tab').hide();
-		$('.prev-sub-tab').hide();
-		$('#our-suppliers,#what-you-get').show();
-		$('.tab-header-drop-down').hide();
-		$('.backNav-mobile').hide();
-		if ($(window).width() <= 767 && $(window).width() >= 320) {
-			$('.backNav-mobile').show();
-			$('.next-sub-tab').show();
-			$('.prev-sub-tab').show();
-			if($('#our-suppliers').css('display')=='block' || 
-				$('#what-you-get').css('display')=='block'){
-				$('.icon-menu').hide();
-				$('.logo-mobile-container h3').hide();
-			}
-		}
-		if ($(window).width() <= 1024 && $(window).width() >= 768) {
-			$('.next-sub-tab').hide();
-			$('.prev-sub-tab').hide();
-			$('#our-suppliers,#what-you-get').show();
-			$('.tab-header-drop-down').hide();
-			$('.backNav-mobile').hide();
-		}
-	})
+	});
+	$('#submit-email').on("click",function(){
+        var email = $('input[type=email]').val(),
+        	zipcode = $('#zip-code').val();
+        if($('form#validate-email').valid()){
+        	saveEmail(email,zipcode);
+        }
+    });
+
+    $(document).on('click', '.delivery-area-check-popup img#cancel', function() {
+    	 $('.delivery-area-check-popup').fadeOut();
+    });
+// //Resize function 
+// 	$(window).resize(function() {
+// 		$('.next-sub-tab').hide();
+// 		$('.prev-sub-tab').hide();
+// 		// $('#our-suppliers,#what-you-get').show();
+// 		$('.tab-header-drop-down').hide();
+// 		$('.backNav-mobile').hide();
+// 		if ($(window).width() <= 767 && $(window).width() >= 320) {
+// 			$('.backNav-mobile').show();
+// 			$('.next-sub-tab').show();
+// 			$('.prev-sub-tab').show();
+// 			// if($('#our-suppliers').css('display')=='block' || 
+// 			// 	$('#what-you-get').css('display')=='block'){
+// 			// 	$('.icon-menu').hide();
+// 			// 	$('.logo-mobile-container h3').hide();
+// 			// }
+// 		}
+// 		if ($(window).width() <= 1024 && $(window).width() >= 768) {
+// 			$('.next-sub-tab').hide();
+// 			$('.prev-sub-tab').hide();
+// 			// $('#our-suppliers,#what-you-get').show();
+// 			$('.tab-header-drop-down').hide();
+// 			$('.backNav-mobile').hide();
+// 		}
+// 	})
 
 
 function tabRendering() {
@@ -209,9 +220,13 @@ var locationCheckCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
+            $('#close').remove();
+            $('#see-menu').remove();
+            $('.popup .header').append('<img src="../images/cross_black.png" id="close">');
+            $('.popup .button').append("<a href='menu.html' class='btn btn-large-secondary' id='see-menu'>"+"SEE MENU"+"</a>");
             showPopup(userDetails);
         } else {
-        	showPopup(userDetails);
+        	showLocationCheckPopup(userDetails);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -228,4 +243,39 @@ function locationCheck(zipcode) {
     data = JSON.stringify(userData);
     var locationCheckInstance = new AjaxHttpSender();
     locationCheckInstance.sendPost(url, header, data, locationCheckCallback);
+}
+
+function showLocationCheckPopup(userDetails){
+    var message = userDetails.message;
+    $('.delivery-area-check-popup .deliver-message span').text(message);
+    $('.delivery-area-check-popup').show();
+
+}
+
+//Get reviews API process
+var saveEmailCallback = {
+    success: function(data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            $('.delivery-area-check-popup').hide();
+            showPopup(userDetails);
+        } else {
+        	showPopup(userDetails);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function saveEmail(email,zipcode){
+	var url = baseURL + "save_email/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {
+        	'email' : email,
+            'zipcode': zipcode
+        };
+    data = JSON.stringify(userData);
+    var saveEmailInstance = new AjaxHttpSender();
+    saveEmailInstance.sendPost(url, header, data, saveEmailCallback);
 }

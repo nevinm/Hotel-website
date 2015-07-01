@@ -165,6 +165,47 @@ input#zip-code[type="text"]{
 .deliver-message{
 	padding: 18px 0;
 }
+img#cancel,img#close {
+  float: right;
+  padding: 14px 17px 0px 0px;
+  cursor: pointer;
+}
+.delivery-area-check-popup{
+	display: none;
+}
+.delivery-area-check-popup .popup-zip-fail{
+	height: auto;
+	position: fixed;
+	width: 400px;
+	background-color: #fff;
+	top: 40%;
+	left: 50%;
+	z-index: 999999;
+	border-radius: 4px;
+	-ms-transform: translate(-50%,-40%);
+	-moz-transform: translate(-50%,-40%);
+	-webkit-transform: translate(-50%,-40%);
+	transform: translate(-50%,-40%);
+}
+.delivery-area-check-popup .popup-zip-fail .button{
+	position: initial;
+}
+.delivery-area-check-popup .username-wrapper {
+  padding-bottom: 20px;
+  width: 100%;
+  float: left;
+}
+label#zip-code-error {
+  background-color: none;
+  background: none;
+  bottom: 51px;
+}
+label#username-error {
+  bottom: 137px;
+  left: 5px;
+  width: 60%;
+}
+
 /*==============================*\
 			&Media-query
 \*==============================*/

@@ -42,10 +42,14 @@
 }
 
 .meal-price-rating .price {
-    font-family: 'BrandonGrotesque-Thin';
+    font-family: 'BrandonGrotesque-Light';
     text-align: right;
     width: 100%;
-    font-size: 20px;
+    font-size: 45px;
+    color: #6B6B6B;
+    letter-spacing: 1px;
+    line-height: 50px;
+    margin-top: 10px;
 }
 
 .rating .mark {
@@ -59,17 +63,27 @@
 .meal-price-rating>* {
     float: right;
 }
-.meal-price-rating .add-meal {
+/*.meal-price-rating .add-meal {
     margin-top: 35px;
+}*/
+span.per-serving-text {
+    font-family: 'BrandonGrotesque-Regular';
+    color: #6b6b6b;
+    font-size: 12px;
+    width: 100%;
+    text-align: right;
+    letter-spacing: 1px;
 }
-
+.add-meal {
+  margin-top: 20px;
+  min-width: 150px;
+}
 .meal-details-main {
     width: 80%;
 }
 
 .meal-price-rating {
     width: 20%;
-    margin-top: 30px;
 }
 
 .meal-name {
@@ -180,8 +194,8 @@
 .details-description span {
     font-family: 'ProximaNova-regular';
     font-size: 14px;
-    letter-spacing: 1px;
-    color: #9B9B9B;
+    color: #6B6B6B;
+    letter-spacing: .5px;
 }
 
 .mobile-tab,
@@ -367,7 +381,7 @@ iframe{
     background-color: #fff;
     margin: 0;
     margin-bottom: 20px;
-    min-height: 460px;
+    min-height: 400px;
 }
 #details,#preparation,#allYouNeed,#tips-and-tricks,#review,#ingredients,#nutrients{
     width: 100%;
@@ -394,11 +408,49 @@ iframe{
 }
 .review-message {
   text-align: center;
-  font-family: 'BrandonGrotesque-bold';
-  font-size: 16px;
-  color: #A9D77B;
+  font-family: 'BrandonGrotesque-Regular';
+  font-size: 18px;
+  color: #6B6B6B;
   padding-top: 20px;
   display: none;
+  text-transform: uppercase;
+}
+.icons-container1,.icons-container2,
+span.upper-content,span.lower-content,
+.details-description,.meal-full-details{
+    width: 100%;
+    float: left;
+}
+span.upper-content {
+  font-family: 'BrandonGrotesque-Regular';
+  color: #A9D77B;
+  font-size: 24px;
+  min-height: 40px;
+}
+.icons-container1{
+    padding-bottom: 30px;
+}
+span.lower-content{
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #6B6B6B;
+}
+.icons-container1 .details-content{
+    width: 30%;
+    float: left;
+}
+.icons-container2 .details-content{
+    width: 25%;
+    float: left;
+}
+.meal-details-hr{
+    width: 50%;
+    float: left;
+    height: 1px;
+    border:0;
+    background-color: #A9D77B;
+    margin: 20px 0;
 }
 /*==============================*\
         Media Query

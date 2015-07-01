@@ -2,9 +2,11 @@ var billingAddressId, cardDetails,
     payPalEmail = "nazz007online-facilitator@gmail.com",
     returnUrl = baseURL + "paypal_success/",
     cancelReturnUrl = homeUrl + "/views/checkout.html",
-    notifyUrl = baseURL + "paypal_ipn/";
+    notifyUrl = baseURL + "paypal_ipn/",
+    totalDiscount = 0;
 
 $(document).ready(function() {
+    CartItemCount();
     if (localStorage["session_key"]) {
         getCartItems();
         savedCardDetails();
@@ -29,9 +31,18 @@ $(document).ready(function() {
         removeCartItems(meal_id);
     });
 
-    $('.driver-tip').on('change', function() {
-        selectedTip = $(this).find('option:selected').text();
-        $('.driver-tip-display').text(selectedTip + ".00");
+    $('.driver-tip').on('keyup input', function() {
+        selectedTip = this.value;
+        if (this.value.length > 2) {
+            selectedTip = this.value = this.value.slice(0, 2);
+        }
+        if (selectedTip >= 1) {
+            $('.driver-tip-display').text("$" + selectedTip + ".00");
+        } else if (selectedTip < 1 && selectedTip > 0) {
+            $('.driver-tip-display').text("$00." + selectedTip);
+        } else if (selectedTip == 0 || isNaN(selectedTip)) {
+            $('.driver-tip-display').text("$00.00");
+        }
         updateReciept();
     });
 
@@ -56,7 +67,7 @@ $(document).ready(function() {
     //update cart items
     $(document).on('click', '.operator-plus', function() {
         var oldVal = parseInt($(this).parent().find('.quantity').val()),
-            newVal = oldVal + 1,
+            newVal = oldVal + 2,
             meal_id = $(this).parents(':eq(1)').attr('data-id'),
             qty = newVal,
             $priceSpanElement = $(this).parents().eq(1).find(".price-container"),
@@ -69,7 +80,7 @@ $(document).ready(function() {
             $(this).parents().eq(1).find(".price-container").text(dollarConvert(((price + tax) * qty).toFixed(2)));
             updateCartItems(meal_id, qty);
             updateReciept();
-            $(".item-count").text("("+updateQuantity()+")");
+            $(".item-count").text("(" + updateQuantity() + ")");
         }
     });
 
@@ -81,7 +92,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.operator-minus', function() {
         var oldVal = parseInt($(this).parent().find('.quantity').val()),
-            newVal = oldVal - 1,
+            newVal = oldVal - 2,
             meal_id = $(this).parents(':eq(1)').attr('data-id'),
             qty = newVal,
             $priceSpanElement = $(this).parents().eq(1).find(".price-container"),
@@ -95,7 +106,7 @@ $(document).ready(function() {
             $(this).parents().eq(1).find(".price-container").text(dollarConvert(((price + tax) * qty).toFixed(2)));
             updateCartItems(meal_id, qty);
             updateReciept();
-            $(".item-count").text("("+updateQuantity()+")");
+            $(".item-count").text("(" + updateQuantity() + ")");
         }
     });
 
@@ -173,15 +184,15 @@ $(document).ready(function() {
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").addClass("button-disabled");
         $('.pickup-content').show();
         $("#add-guest-address").hide();
-        $(".city-selector-container").hide();
+        $(".state-selector-container").hide();
         if (!(localStorage.getItem('user_profile') === null)) {
             var userProfile = JSON.parse(localStorage['user_profile']);
             $(".address-info-guest").find("#guest-email").val(userProfile.email);
             $(".address-info-guest").find("#guest-phone").val(userProfile.mobile);
-        }else{
+        } else {
             getProfile();
         }
-        
+
     })
     $('#delivery-radio').on("click", function() {
         if ($('.address-info').is(':empty')) {
@@ -195,7 +206,7 @@ $(document).ready(function() {
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeClass("button-disabled");
         $('.pickup-content').hide();
         $("#add-guest-address").show();
-        $(".city-selector-container").show();
+        $(".state-selector-container").show();
     })
     $('#is-gift-card').on('click', function() {
         $('.isPromocode-wrapper').slideToggle();
@@ -346,20 +357,20 @@ function populateCartItems(data) {
     $.each(data.aaData, function(key, value) {
         $('.order-list-container').append("<div class='order-list-items' data-id='" + value.id + "'>" +
             "<img src='" + value.image + "'>" + "<span class='body-text-small'>" + value.name + "</span>" +
-            "<div class='quantity-container'>" + "<span class='operator-minus' data-min='1'>" + '-' + "</span>" +
+            "<div class='quantity-container'>" + "<span class='operator-minus' data-min='2'>" + '-' + "</span>" +
             "<input type='text' disabled='disabled' class='quantity' value='" + value.quantity + "'>" +
             "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
-            "<span class='price-container' data-tax='" + value.tax + "' data-price='" + value.price + "'>" + 
-            dollarConvert(parseFloat((value.tax + value.price)*value.quantity).toFixed(2)) + "</span>" +
+            "<span class='price-container' data-tax='" + value.tax + "' data-price='" + value.price + "'>" +
+            dollarConvert(parseFloat((value.tax + value.price) * value.quantity).toFixed(2)) + "</span>" +
             "<img src='../images/hamburger-menu-close.png' id='remove-cart-item'>" + "</div>");
     });
     updateReciept();
 }
 
-function updateQuantity(){
+function updateQuantity() {
     var parentElement = $(".order-list-items").find(".quantity"),
-    totalQuantity=0;
-    $(parentElement).each(function(index, elem){
+        totalQuantity = 0;
+    $(parentElement).each(function(index, elem) {
         totalQuantity += parseInt($(elem).val());
     });
     return totalQuantity;
@@ -367,9 +378,8 @@ function updateQuantity(){
 
 function updateReciept(GiftcardDetails, flag) {
     var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
-        totalDiscount = 0,
         totalCredits = 0,
-        totalDriverTip = parseInt($('.driver-tip option:selected').text().substring(1)),
+        totalDriverTip = parseFloat($('.driver-tip').val()),
         totalDeliveryCost = 2;
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
@@ -387,6 +397,9 @@ function updateReciept(GiftcardDetails, flag) {
     }
     if (flag == "coupon-applied") {
         totalDiscount = GiftcardDetails.discount;
+    }
+    if (isNaN(totalDriverTip)) {
+        totalDriverTip = 0;
     }
     totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost - totalDiscount - totalCredits;
     $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount).toFixed(2));
@@ -626,6 +639,7 @@ function getAddress(flag) {
     getAddressInstance.sendPost(url, header, data, getAddressCallback, flag);
 }
 
+//From API
 function popuplateAddressList(data) {
     userDetails = JSON.parse(data);
     if (userDetails.status == 1) {
@@ -644,7 +658,7 @@ function popuplateAddressList(data) {
             $('.address-info').hide();
             $('.address-info-guest').show();
             haveAccountCheck();
-            getCities();
+            getStates();
         }
     } else {
         showErrorPopup(userDetails);
@@ -687,9 +701,7 @@ function populateAddressListPopup() {
     }
     $('input[type=radio][name=address]').on("click", function() {
         $('#save-delivery-address').removeClass('button-disabled');
-    })
-
-
+    });
 }
 
 function appendAddresscontent(addressList) {
@@ -760,6 +772,7 @@ function addAddress() {
             "zip": newAddress.zip,
             "email": newAddress.email,
             "city_id": newAddress.city_id,
+            "state_id": newAddress.state_id,
             "street": newAddress.street,
             "building": newAddress.building,
             "is_primary": newAddress.is_primary,
@@ -772,8 +785,9 @@ function addAddress() {
 
 function getNewAddress() {
     var $addressContainer = $('#guest-address-info'),
-        cityId = $addressContainer.find(".city-selector").val(),
-        city_name = $(".city-selector").find("#" + cityId).text();
+        state_id = $addressContainer.find(".state-selector").val(),
+        city_name = $("#city-selector").val(),
+        state_name = $addressContainer.find(".state-selector option:selected").text();
     var newAddress = {
         first_name: $addressContainer.find("input[name*='firstname']").val(),
         last_name: $addressContainer.find("input[name*='lastname']").val(),
@@ -781,46 +795,46 @@ function getNewAddress() {
         zip: $addressContainer.find("input[name*='zip']").val(),
         street: $addressContainer.find("input[name*='street']").val(),
         email: $("#guest-email").val(),
-        city_id: cityId,
+        city_id: city_name,
+        city: city_name,
         building: $addressContainer.find("input[name*='building']").val(),
         is_primary: $addressContainer.find("input[type*='checkbox']").val() == "on" ? 1 : 0,
-        state: "Alabama",
-        city: city_name
+        state_id: state_id,
+        state: state_name
     }
     return newAddress;
 }
 
-// Get City API
-var getCitiesCallback = {
-    success: function(data, textStatus, cityId) {
-        var cityList = JSON.parse(data);
-        if (cityList.status == 1) {
-            $('.city-selector').empty();
-            $.each(cityList.city_list, function(index, value) {
-                $('.city-selector').append($('<option/>', {
+// Get states API
+var getStatesCallback = {
+    success: function(data, textStatus) {
+        var stateList = JSON.parse(data);
+        localStorage['delivery-states'] = data;
+        if (stateList.status == 1) {
+            $.each(stateList.state_list, function(index, value) {
+                $('.state-selector').append($('<option/>', {
                     value: value.id,
                     text: value.name,
-                    id: value.id
                 }));
             });
         } else {
-            showErrorPopup(cityList);
+            showErrorPopup(userDetails);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getCities(cityId) {
-    var url = baseURL + "get_cities/",
+function getStates() {
+    var url = baseURL + "get_states/",
         header = {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "state_id": 52
+            "search": ""
         };
     data = JSON.stringify(userData);
-    var getCitiesInstance = new AjaxHttpSender();
-    getCitiesInstance.sendPost(url, header, data, getCitiesCallback, cityId);
+    var getStatesInstance = new AjaxHttpSender();
+    getStatesInstance.sendPost(url, header, data, getStatesCallback);
 }
 
 function populateAddedAddress(delivery_address) {

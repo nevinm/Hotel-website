@@ -1,7 +1,7 @@
-//var baseURL = 'http://10.7.2.51:86/backend/api/',
+// var baseURL = 'http://10.7.2.51:86/backend/api/',
 //var baseURL = 'http://10.1.4.32:8083/api/',
-var baseURL = 'http://meisterdish.qburst.com/backend/api/',
-    homeUrl = "http://meisterdish.qburst.com",
+var baseURL = 'http://meisterdish.com/backend/api/',
+    homeUrl = "http://meisterdish.com",
     userDetails, currentPage = $("title").text(),
     currentPageTitle,
     clicked = 0;
@@ -13,7 +13,21 @@ $(document).ready(function() {
     $("#logout,.mobile-logout").on('click', function() {
         logingOut();
     });
-
+    $('.socialMedia').on("click",function(){
+        var clicked_id = $(this).attr('id');
+        if(clicked_id == 'facebook'){
+            window.open('http://www.facebook.com/meisterdish','_blank'); 
+        }
+        if(clicked_id == 'twitter'){
+            window.open('https://twitter.com/meisterdish','_blank');
+        }
+        if(clicked_id == 'instagram'){
+            window.open('http://instagram.com/meisterdish','_blank');
+        }
+        if(clicked_id == 'pinterest'){
+            window.open('http://pinterest.com/meisterdish','_blank');
+        }
+    });
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
         clicked = 1;
@@ -55,7 +69,7 @@ $(document).ready(function() {
         setTimeout(function() {
             $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
         }, 600)
-    })
+    });
 
     verifyAccount();
 });
@@ -369,12 +383,10 @@ $("form").each(function() {
             },
             street: {
                 required: true,
-                letters: true,
                 minlength: 4
             },
             building: {
                 required: true,
-                letters: true,
                 minlength: 2
             },
             available: {
@@ -427,6 +439,11 @@ $("form").each(function() {
             },
             invitecode: {
                 required: true
+            },
+            delivery_tip: {
+                required: true,
+                minAmount: 0,
+                maxAmount: 10
             }
         },
         messages: {
@@ -484,6 +501,11 @@ $("form").each(function() {
                 required: "Please enter an amount.",
                 minAmount: "Enter a valid amount"
             },
+            delivery_tip:{
+                required: "Please enter a valid amount",
+                minAmount: "Enter amount between 1 and 10",
+                maxAmount: "Enter amount between 1 and 10"
+            },
             nameOnCard: "Enter valid name.",
             expiryMonth: "Enter exp month.",
             expiryYear: "Enter exp year.",
@@ -519,6 +541,9 @@ if ($.validator) {
     });
     $.validator.addMethod('minAmount', function(value, el, param) {
         return value >= param;
+    });
+    $.validator.addMethod('maxAmount', function(value, el, param) {
+        return value <= param;
     });
     $.validator.addMethod('zipcode', function(value) {
         return value.match(/\d{5}-\d{4}$|^\d{5}$/);

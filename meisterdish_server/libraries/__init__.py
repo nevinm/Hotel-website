@@ -13,9 +13,9 @@ from datetime import datetime
 log = logging.getLogger('libraries')
 import os
 
-def mail(to_list, subject, message, sender="Meisterdish<meisterdishtest@gmail.com>", headers = {
-              'Reply-To': "Meisterdish<meisterdishtest@gmail.com>",
-              'From':"Meisterdish<meisterdishtest@gmail.com>",
+def mail(to_list, subject, message, sender="Meisterdish<contact@meisterdish.com>", headers = {
+              'Reply-To': "Meisterdish<contact@meisterdish.com>",
+              'From':"Meisterdish<contact@meisterdish.com>",
               }, design=True):
     
     msg = EmailMessage(subject, message, sender, to_list, headers=headers)
@@ -29,9 +29,9 @@ def mail(to_list, subject, message, sender="Meisterdish<meisterdishtest@gmail.co
           msg.attach(msgImage)
     return msg.send()
 
-def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdish<meisterdishtest@gmail.com>", headers = {
-              'Reply-To': "Meisterdish<meisterdishtest@gmail.com>",
-              'From':"Meisterdish<meisterdishtest@gmail.com>",
+def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdish<contact@meisterdish.com>", headers = {
+              'Reply-To': "Meisterdish<contact@meisterdish.com>",
+              'From':"Meisterdish<contact@meisterdish.com>",
               }):
     try:
         msg = EmailMessage(subject, message, sender, to_list, headers=headers)
@@ -46,7 +46,7 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
 
         log.info(order.cart.cartitem_set.all())
         for ci in order.cart.cartitem_set.all():
-            share_images["img_"+str(ci.meal.id)] = ci.meal.main_image.image.path
+            share_images["img_"+str(ci.meal.id)] = ci.meal.main_image.image.path if ci.meal.main_image else settings.DEFAULT_MEAL_IMAGE
 
         for cid, img in share_images.items():
             fp = open(img, 'rb')
@@ -215,7 +215,7 @@ def create_address_text_from_model(address):
         return ""
     text = address.first_name.title() + " " + address.last_name.title() + "\n"
     text += address.street + ", " + address.building + "\n"
-    text += address.city.name + ", "+address.city.state.name + "\n"
+    text += address.city.title() + ", "+address.state.name + "\n"
     text += str(address.zip) + ", Ph: +1 "+str(address.phone)
     return text
 

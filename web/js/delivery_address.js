@@ -103,6 +103,7 @@ function getNewAddressFromForm() {
         zip: $addressPopup.find("input[name*='zip']").val(),
         street: $addressPopup.find("input[name*='street']").val(),
         city_id: $addressPopup.find(".city-selector").val(),
+        state_id: $addressPopup.find(".state-selector").val(),
         building: $addressPopup.find("input[name*='building']").val(),
         is_primary: $addressPopup.find("input[type*='checkbox']").is(":checked") == true ? 1 : 0,
         email: $addressPopup.find("input[name*='email']").val()
@@ -125,7 +126,8 @@ function addAddress() {
             "street": newAddress.street,
             "building": newAddress.building,
             "is_primary": newAddress.is_primary,
-            "email": newAddress.email
+            "email": newAddress.email,
+            "state_id": newAddress.state_id,
         };
     data = JSON.stringify(userData);
     var addAddressInstance = new AjaxHttpSender();
@@ -164,7 +166,6 @@ function populateAddressToForm(id) {
             } else {
                 $addressPopup.find("input[type*='checkbox']").prop("checked", false);
             }
-            getCities(value.state_id, value.city_id);
         }
     });
 }
@@ -180,7 +181,6 @@ function editAddress(currentId, primaryAdd, selector) {
     }else{
         userData.is_primary =0;
     }
-    // else{
     if (selector != "justId") {
         var newAddress = getNewAddressFromForm();
         userData.first_name = newAddress.first_name;
@@ -191,8 +191,8 @@ function editAddress(currentId, primaryAdd, selector) {
         userData.street = newAddress.street;
         userData.building = newAddress.building;
         userData.email = newAddress.email;
+        userData.state_id = newAddress.state_id;
     }
-    // }
     data = JSON.stringify(userData);
     var editAddressInstance = new AjaxHttpSender();
     editAddressInstance.sendPost(url, header, data, editAddressCallback);
@@ -223,46 +223,11 @@ function getStates() {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "search": "a"
+            "search": ""
         };
     data = JSON.stringify(userData);
     var getStatesInstance = new AjaxHttpSender();
     getStatesInstance.sendPost(url, header, data, getStatesCallback);
-}
-
-// Get City API
-var getCitiesCallback = {
-    success: function(data, textStatus, cityId) {
-        var cityList = JSON.parse(data);
-        if (cityList.status == 1) {
-            $('.city-selector').empty();
-            $.each(cityList.city_list, function(index, value) {
-                $('.city-selector').append($('<option/>', {
-                    value: value.id,
-                    text: value.name,
-                }));
-            });
-            if (cityId) {
-                $('.city-selector').val(cityId);
-            }
-        } else {
-            showErrorPopup(cityList);
-        }
-    },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-}
-
-function getCities(stateId, cityId) {
-    var url = baseURL + "get_cities/",
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        userData = {
-            "state_id": stateId
-        };
-    data = JSON.stringify(userData);
-    var getCitiesInstance = new AjaxHttpSender();
-    getCitiesInstance.sendPost(url, header, data, getCitiesCallback, cityId);
 }
 
 //check is there any addresses exist 
@@ -279,7 +244,6 @@ function isAddress() {
 $(document).ready(function() {
     $(document).on('change', '.state-selector', function() {
         var stateSelectedId = $(this).val();
-        getCities(stateSelectedId);
     });
 
     $("#savepopup-data").on('click', function(e) {
