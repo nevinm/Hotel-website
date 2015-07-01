@@ -1,5 +1,7 @@
-var baseURL = 'http://meisterdish.com/backend/api/',
-    homeUrl = 'http://meisterdish.com',
+// var baseURL = 'http://10.7.2.51:86/backend/api/',
+//var baseURL = 'http://10.1.4.32:8083/api/',
+var baseURL = 'http://meisterdish.qburst.com/backend/api/',
+    homeUrl = "http://meisterdish.qburst.com",
     userDetails, currentPage = $("title").text(),
     currentPageTitle,
     clicked = 0;
@@ -381,12 +383,10 @@ $("form").each(function() {
             },
             street: {
                 required: true,
-                letters: true,
                 minlength: 4
             },
             building: {
                 required: true,
-                letters: true,
                 minlength: 2
             },
             available: {
