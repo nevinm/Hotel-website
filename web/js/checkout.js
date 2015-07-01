@@ -184,7 +184,7 @@ $(document).ready(function() {
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").addClass("button-disabled");
         $('.pickup-content').show();
         $("#add-guest-address").hide();
-        $(".city-selector-container").hide();
+        $(".state-selector-container").hide();
         if (!(localStorage.getItem('user_profile') === null)) {
             var userProfile = JSON.parse(localStorage['user_profile']);
             $(".address-info-guest").find("#guest-email").val(userProfile.email);
@@ -206,7 +206,7 @@ $(document).ready(function() {
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeClass("button-disabled");
         $('.pickup-content').hide();
         $("#add-guest-address").show();
-        $(".city-selector-container").show();
+        $(".state-selector-container").show();
     })
     $('#is-gift-card').on('click', function() {
         $('.isPromocode-wrapper').slideToggle();
@@ -657,7 +657,7 @@ function popuplateAddressList(data) {
             $('.address-info').hide();
             $('.address-info-guest').show();
             haveAccountCheck();
-            getCities();
+            getStates();
         }
     } else {
         showErrorPopup(userDetails);
@@ -700,9 +700,7 @@ function populateAddressListPopup() {
     }
     $('input[type=radio][name=address]').on("click", function() {
         $('#save-delivery-address').removeClass('button-disabled');
-    })
-
-
+    });
 }
 
 function appendAddresscontent(addressList) {
@@ -773,6 +771,7 @@ function addAddress() {
             "zip": newAddress.zip,
             "email": newAddress.email,
             "city_id": newAddress.city_id,
+            "state_id": newAddress.state_id,
             "street": newAddress.street,
             "building": newAddress.building,
             "is_primary": newAddress.is_primary,
@@ -785,8 +784,8 @@ function addAddress() {
 
 function getNewAddress() {
     var $addressContainer = $('#guest-address-info'),
-        cityId = $addressContainer.find(".city-selector").val(),
-        city_name = $(".city-selector").find("#" + cityId).text();
+        state_id = $addressContainer.find(".state-selector").val(),
+        city_name = $("#city-selector").val();
     var newAddress = {
         first_name: $addressContainer.find("input[name*='firstname']").val(),
         last_name: $addressContainer.find("input[name*='lastname']").val(),
@@ -794,46 +793,44 @@ function getNewAddress() {
         zip: $addressContainer.find("input[name*='zip']").val(),
         street: $addressContainer.find("input[name*='street']").val(),
         email: $("#guest-email").val(),
-        city_id: cityId,
+        city_id: city_name,
         building: $addressContainer.find("input[name*='building']").val(),
         is_primary: $addressContainer.find("input[type*='checkbox']").val() == "on" ? 1 : 0,
-        state: "Alabama",
-        city: city_name
+        state_id: state_id,
     }
     return newAddress;
 }
 
-// Get City API
-var getCitiesCallback = {
-    success: function(data, textStatus, cityId) {
-        var cityList = JSON.parse(data);
-        if (cityList.status == 1) {
-            $('.city-selector').empty();
-            $.each(cityList.city_list, function(index, value) {
-                $('.city-selector').append($('<option/>', {
+// Get states API
+var getStatesCallback = {
+    success: function(data, textStatus) {
+        var stateList = JSON.parse(data);
+        localStorage['delivery-states'] = data;
+        if (stateList.status == 1) {
+            $.each(stateList.state_list, function(index, value) {
+                $('.state-selector').append($('<option/>', {
                     value: value.id,
                     text: value.name,
-                    id: value.id
                 }));
             });
         } else {
-            showErrorPopup(cityList);
+            showErrorPopup(userDetails);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getCities(cityId) {
-    var url = baseURL + "get_cities/",
+function getStates() {
+    var url = baseURL + "get_states/",
         header = {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "state_id": 52
+            "search": ""
         };
     data = JSON.stringify(userData);
-    var getCitiesInstance = new AjaxHttpSender();
-    getCitiesInstance.sendPost(url, header, data, getCitiesCallback, cityId);
+    var getStatesInstance = new AjaxHttpSender();
+    getStatesInstance.sendPost(url, header, data, getStatesCallback);
 }
 
 function populateAddedAddress(delivery_address) {
