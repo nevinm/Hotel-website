@@ -81,12 +81,14 @@ class ImportMeals:
                         return False
                 print "Checking Row :" + str(counter)
                 for key, field in row.items():
-                    if key in lists:    
+                    
+                    if key in lists:
                         try:
                             field = '"'+field.replace('\xe2\x80\x9d', "'").replace('\xe2\x80\x9c', "'").replace("\n", "") + '"'
                             field = json.loads(field)
-                        except:
+                        except Exception as e:
                             print "No valid json data in " + key + ".. Skipping row"
+                            #print field
                             continue
                     row[key] = field
                 data.append(row)
@@ -111,7 +113,8 @@ class ImportMeals:
                 meal.tax = 0 if tax == "" else float(tax)
 
                 #meal.main_image = Image.objects.#main_img
-                meal.available = bool(row[keys["available"]])
+                meal.available = bool(int(row[keys["available"]]))
+
                 meal.category = Category.objects.get_or_create(name=row[keys["cat"]].strip())[0]
                 
                 if type(row[keys["types"]]) == type([]) and len(row[keys["types"]]):
@@ -133,8 +136,9 @@ class ImportMeals:
                 #tips
                 meal.nutrients = json.dumps(row[keys["nutrients"]])
                 meal.save()
-            except KeyError as e:
+            except Exception as e:
                 print "Error in inserting row "+str(count) + " : " +e.message
+                print row
                 continue
             else:
                 print "Row "+str(count) + " Inserted"
