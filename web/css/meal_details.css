@@ -421,6 +421,12 @@ span.upper-content,span.lower-content,
     width: 100%;
     float: left;
 }
+span.upper-content {
+  font-family: 'BrandonGrotesque-Regular';
+  color: #A9D77B;
+  font-size: 24px;
+  min-height: 40px;
+}
 .icons-container1{
     padding-bottom: 30px;
 }
