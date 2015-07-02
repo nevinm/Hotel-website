@@ -117,7 +117,7 @@ def create_meal(request, data, user):
         
         meal.price = price
         meal.tax = tax
-        meal.available = bool(available)
+        meal.available = True if str(available) == "1" else False
         
         if "main_image" not in data:
             if 'images' in data and len(data['images']) > 0:
