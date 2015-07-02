@@ -45,4 +45,6 @@ urlpatterns = patterns('',
     url(r'^export_orders/$', order.export_orders, name='export_orders'),
 
     url(r'^import_meals/$', meals.import_meals, name='import_meals'),    
+    url(r'^manage_credits/$', promotions.manage_credits, name='manage_credits'),    
+    
 )

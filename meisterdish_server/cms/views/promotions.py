@@ -237,3 +237,19 @@ def change_promocode_status(request, data, user):
     except Exception as e:
         log.error("Failed change promo code status." + e.message)
         return custom_error("An error has occurred.")
+
+@check_input('POST', True)
+def manage_credits(request, data, user):
+    try:
+        user_id = data["user_id"]
+        credit = data["credit"]
+
+        usr_obj = User.objects.get(pk=user_id)
+        usr_obj.credits = credit
+        usr_obj.save()
+        
+        return json_response({"status":1, "message": "Updated credits.", "credits":credit, "user_id":user_id})
+    except Exception as e:
+        log.error("Failed change promo code status." + e.message)
+        return custom_error("An error has occurred.")
+
