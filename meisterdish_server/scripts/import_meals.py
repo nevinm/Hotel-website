@@ -84,11 +84,18 @@ class ImportMeals:
                     
                     if key in lists:
                         try:
-                            field = '"'+field.replace('\xe2\x80\x9d', "'").replace('\xe2\x80\x9c', "'").replace("\n", "") + '"'
-                            field = json.loads(field)
+                            if field.strip() == '':
+                                field = []
+                            else:
+                                old_field = field
+                                field = field.strip("").replace("'", "\"")
+                                field = field.replace('\xe2\x80\x9d', '"').replace('\xe2\x80\x9c', '"').replace("\n", "")
+                                field = json.loads(field)
                         except Exception as e:
                             print "No valid json data in " + key + ".. Skipping row"
-                            #print field
+                            print old_field
+                            print field
+                            return
                             continue
                     row[key] = field
                 data.append(row)
@@ -124,18 +131,18 @@ class ImportMeals:
                 meal.preparation_time = row[keys["prep_time"]].strip()
                 meal.saved_time = row[keys["saved_time"]].strip()
 
-                meal.user_to_do = json.dumps(row[keys["all_you_do"]]).strip('"')
+                meal.user_to_do = json.dumps(row[keys["all_you_do"]]).strip("")
 
-                meal.finished_preparation = json.dumps(row[keys["what_we_prepd"]]).strip('"')
+                meal.finished_preparation = json.dumps(row[keys["what_we_prepd"]]).strip("")
 
-                meal.pre_requisites = json.dumps(row[keys["all_you_need"]]).strip('"')
+                meal.pre_requisites = json.dumps(row[keys["all_you_need"]]).strip("")
                 #all_you_need_image
 
-                meal.ingredients = json.dumps(row[keys["ing"]]).strip('"')
+                meal.ingredients = json.dumps(row[keys["ing"]]).strip("")
                 #ing_image
 
                 #tips
-                meal.nutrients = json.dumps(row[keys["nutrients"]]).strip('"')
+                meal.nutrients = json.dumps(row[keys["nutrients"]]).strip("")
 
                 meal.save()
             except Exception as e:
