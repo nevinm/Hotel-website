@@ -33,7 +33,7 @@ def login(request, data):
                 role_id = 1
             else:
                 role_id = 2    
-            user = User.objects.get(email__iexact=email, role__id=role_id)
+            user = User.objects.get(email__iexact=email, role__id=role_id, deleted=False)
                 
             if md5.new(password).hexdigest() == user.password:
                 valid = True
@@ -43,7 +43,7 @@ def login(request, data):
         else:
             try:
                 fb_id = data["fb_id"].strip()
-                user = User.objects.get(fb_user_id=fb_id, email__iexact=email)
+                user = User.objects.get(fb_user_id=fb_id, email__iexact=email, deleted=False)
             except:
                 return custom_error("No user found with the given details")
             else:

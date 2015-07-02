@@ -23,7 +23,7 @@ def login(request, data):
             log.error("Empty email or password.")
             raise Exception("Invalid email or password")
         
-        user = User.objects.get(email__iexact=email)
+        user = User.objects.get(email__iexact=email, deleted=False)
             
         if md5.new(password).hexdigest() == user.password:
             valid = True
