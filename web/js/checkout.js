@@ -884,7 +884,7 @@ var placeOrderCallback = {
 
 function createOrderParams() {
     var driverInstr = $("#driver-description").val(),
-        driverTip = $('.driver-tip').find('option:selected').data().amount,
+        driverTip = $('.driver-tip').val(),
         addressId = $(".address-info .contents").attr('data-id'),
         fullname = $('#name-on-card').val().split(" "),
         deliveryType = $("input[name='delivery-method']:checked").data("type"),
