@@ -178,7 +178,6 @@ function changeEmail() {
 }
 
 //show addaddress popup 
-
 $('#add-address').on("click", function() {
     $(".addaddress-popup")[0].reset();
     if(userDetails){

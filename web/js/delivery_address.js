@@ -158,6 +158,7 @@ function populateAddressToForm(id) {
             $addressPopup.find("input[name*='lastname']").val(value.last_name);
             $addressPopup.find("input[name*='phonenumber']").val(value.phone);
             $addressPopup.find("input[name*='zip']").val(value.zip);
+            $addressPopup.find("input[name*='city']").val(value.city);
             $addressPopup.find("input[name*='street']").val(value.street);
             $addressPopup.find("input[name*='building']").val(value.building);
             $addressPopup.find("input[name*='email']").val(value.email);
