@@ -1,0 +1,366 @@
+Meal Name,Meal Ingredients,Description,Price,Tax,Main Image,Availability,Category,Meal Types,Preparation Time,Saved Time,All You'll Be Doing,What We've Prepped,All You Need,All You Need Image,Ingredients,Ingredients Image,Tips & Tricks,Nutrients
+Grass-Fed Beef Burger,"with Avocado, Mustard Cress and Gruyère on a Brioche Bun","Pasture raised ground Beef from our local farm, with green garden salad, topped with avocado, red onion, tomatoes and gruyere cheese.",$13,4%,burger_web_hero.jpg,0,Mains,,Allow 15-20 minutes,20 minutes saved,"[
+ “Making the Patties”,
+ “Slicing the tomatoes and avocado”,
+ “Cooking the patties”,
+ “Mixing the salad”,
+ “Stacking the burger”
+]","[
+ “Measuring and portioning the ingredients”,
+ “Cleaned the vegetables”,
+ “Peeled the garlic and red onions”,
+ “Chopped the garlic, red onions and gruyére cheese”
+]","[
+ “Knife & Cutting Board”,
+ “2 Pans”,
+ “2 Mixing Bowls”,
+ “Cooking Spoon”,
+ “Salt & Pepper”,
+ “Olive Oil”
+]",burger_web_prep.jpg,"[
+ “Brioche Bun”,
+ “Gras Fed Beef, ground”,
+ “Mustard Cress, picked”,
+ “Avocado”,
+ “Tomato”,
+ “Lemon”,
+ “Garlic”,
+ “Red Onion”,
+ “Gruyère Cheese”
+]
+",burger_web_ingredients.jpg,,
+Pan-fried Pork Loin,with verdant Parsley and Fingerling Potatoes,"Pan-fried Pork Chop, with chopped Parsley and sauté fingerling potatoes.
+Finished with juicy onion rings and sprouts.
+",,,,0,Mains,,Allow 15-20 minutes,20 minutes saved,"[
+ “Pick and chop parsley”,
+ “Fry meat and stir-fry fingerling potatoes with garlic”,
+ “Sauté onion rings”
+ ]","[
+ “Measuring and portioning the ingredients”,
+ “Cleaned the vegetables and meat”,
+ “Peeled the garlic and onions”,
+ “Chopped the garlic and onions”
+]","[
+ “Knife & Cutting Board”,
+ “2 Pans”,
+ “Cooking Spoon”,
+ “Spatula”,
+ “Salt & Pepper”,
+ “Olive Oil”
+]",,"[
+ “Pork Chop”,
+ “Fingerling Potatoes”,
+ “Parsley”,
+ “Sprouts”,
+ “Onion Rings”,
+ “Garlic”
+ ]
+",,,
+Pappardelle al Pomodoro,,"Wide sort of fresh pasta, with a flavorful “classico” tomato sauce, garlic and onions, finished with delicate basil and Parmesan cheese.",,,,1,Pasta,,Allow 15-20 minutes,20 minutes saved,"[
+ “Pick and cut basil',
+ “Stir-fry garlic and onions and tomatoes”,
+ “Cook pasta”
+ ]","[
+ “Measuring and portioning the ingredients”,
+ “Cleaned the vegetables”,
+ “Peeled the garlic and onions”,
+ “Chopped the garlic and onions”
+]","[
+ “Knife & Cutting Board”,
+ “ Pan”,
+ “Cooking Spoon”,
+ “Strainer”,“ Pan”,
+ “Salt & Pepper”,
+ “Olive Oil”
+]",,"[
+ “Pappardelle”,
+ “Garlic”,
+ “Parmesan”,
+ “Basil”,
+ “Onion”,
+ “Lemon”, “Tomatoes”
+ ]
+",,,
+Cavatelli Arrabbiata,with delicate Basil and Tomatoes,"Spicy pasta sauce made from garlic, tomatoes, and red chili peppers cooked in olive oil.
+Finished with basil and Parmesan cheese.
+",,,,0,Pasta,,Allow 15-20 minutes,20 minutes saved,"[
+ “Pick and cut basil',
+ “Stir-fry red pepper, garlic and onions and tomatoes”,
+ “Cook pasta”
+ ]","[
+ “Measuring and portioning the ingredients”,
+ “Cleaned the vegetables”,
+ “Peeled the garlic and onions”,
+ “Chopped the garlic and onions”
+]","[
+ “Knife & Cutting Board”,
+ “ Pan”,
+ “Cooking Spoon”,
+ “Strainer”,“ Pan”,
+ “Salt & Pepper”,
+ “Olive Oil”
+]",,"[
+ “Cavatelli”,
+ “Garlic”,
+ “Parmesan”,
+ “Basil”,
+ “Onion”,
+ “Red Pepper”, “Tomatoes”
+ ]
+",,,
+Linguine with Breadcrumbs,Garlic cloves and herbs,"Pan-fried golden breadcrumbs with gloves of garlic and fresh linguine, finished with chopped herbs.",,,,0,Pasta,,Allow 15-20 minutes,20 minutes saved,"[
+ “Pick and cut parsley and sage',
+ “Fry garlic with breadcrumbs”,
+ “Cook pasta”
+ ]","[
+ “Measuring and portioning the ingredients”,
+ “Cleaned the herbs”,
+ “Peeled the garlic”,
+ “Cut the garlic”
+]","[
+ “Knife & Cutting Board”,
+ “ Pan”,
+ “Cooking Spoon”,
+ “Strainer”,“ Pan”,
+ “Salt & Pepper”,
+ “Olive Oil”
+]",,"[
+ “Linguine”,
+ “Garlic”,
+ “Breadcrumbs”,
+ “Parsley”,
+ “Lemon”,
+ “Sage”, 
+ ]
+",,,
+Fettuccine Pasta,"Kalamata Olvies, Sage, Green Onions and Gras Fed Ground Beef","Fresh Fettuccine, with seared Gras Fed Beef, paired with the acidity of Kalamata olives and rounded with the mild onion flavor of scallions and sage.",,,,0,Pasta,,Allow 15-20 minutes,20 minutes saved,"[
+ “Cut tomatoes and olives',
+ “Fry beef and stir-fry tomatoes with onions”,
+ “Cook pasta”
+ ]","[
+ “Measuring and portioning the ingredients”,
+ “Cleaned the vegetables”,
+ “Peeled the garlic, onion and scallion”,
+ 'cut the garlic, onion and scallion ”
+]","[
+ “Knife & Cutting Board”,
+ “ Pan”,
+ “Cooking Spoon”,
+ “Strainer”,“ Pan”,
+ “Salt & Pepper”,
+ “Olive Oil”
+]",,"[
+ “Fettuccine”,
+ “Garlic”,
+ “Ground Beef”,
+ “Scallion”,
+ “Kalamta Olives”,
+ “Red Onion”, “Tomatoes”
+ ]
+",,,
+Omega 3 Salad,"with Mango, Pistachio, Walnuts and Dried Cranberries","Sliced Mangos, Pistachio and Walnuts are paired with the acidity of chardonnay vinegar and rounded with a yogurt dressing.
+Rich on Omega 3, Vitamin A and C.
+",,,,1,Salad,,Allow 5-10 minutes,20 minutes saved,"[
+ “Season Yogurt Dressing',
+ “Chop nuts”,
+ “Mix salad”
+ ]","[
+ “Measuring and portioning the ingredients”,
+ “Cleaned the salad”,
+ “Peeled the mango”,
+ 'Slice the mango”
+]","[
+  “ 2 Mixing Bowls”,
+ “Cooking Spoon”,
+ “Salt & Pepper”,
+ “Olive Oil”
+]",,"[
+ “Pistachio”,
+ “Walnuts”,
+ “Dried Cranberries”,
+ “Scallion”,
+ “Mango”,
+ “Chardonnay Vinegar”, “Green Salad”,'Yogurt'
+ ]
+",,,
+Danish Blue Cheese,on chervil quinoa salad,A milder flavor blue cheese with a salty and sharp edge that perfectly goes with fresh herbs and greens complemented with quinoa.,,,,0,Salad,,Allow 15-20 minutes,15 Minutes saved,"[
+ “Rinse and cook quinoa',
+ “Mix the dressing”,
+ “Mix the Salad”
+ ]","[
+ “Measuring and portioning the ingredients”,
+ “Cleaned the salad and herbs”
+]","[
+ “Knife & Cutting Board”,
+ “ Pot”,
+ “Cooking Spoon”,
+ “Strainer”,“2 Mixing Bowls”,
+ “Salt & Pepper”,
+ “Olive Oil”
+]",,"[
+ “Danish Blue”,
+ “Quinoa”,
+ “Salad Mix”,
+ “Chervil”,
+ “Yogurt”
+ ]
+",,,
+Pork Loin and 8 Herb Salad,with Fingerling Potatoes and Mustard Dressing,"Flavorful mixture of herbs paired with a rich whole grain mustard, seared pork loin and fingerling potatoes.",,,,1,Salad,,Allow 15-20 minutes,15 Minutes saved,"[
+ “Fry Pork Loin”,
+ “Fry Fingerling Potatoes”,
+ “Season and Mix the Salad”
+ ]","[
+ “Measuring and portioning the ingredients”,
+ “Cleaned the salad and herbs”,
+ “Peeled the scallion”,
+ 'Cut the scallion”
+]","[
+ “Knife & Cutting Board”,
+ “2 Pans”,
+  “Cooking Spoon”,
+ “Mixing Bowl”,
+ “Salt & Pepper”,
+ “Olive Oil”
+]",,"[
+
+“Pork Loin”,
+“Whole grain Mustard”,
+“Fingerling Potatoes”,
+“Spring Onion”,
+“Tarragon”,
+“Spring Mix”,
+“Mint”,
+“Dill”,
+“Parsley”,
+“Cilantro”,
+“Watercress”
+]
+",,,
+Atlantic Cod,with Chorizo-Tarragon reduction and cardamom rice ,"The spice of the chorizo comes along with the sweetness of the carrot and the fresh flavor of the tarragon, which rounds up in a picture with cardamom flavored rice and Atlantic Cod.",,,,0,Mains,,Allow 15-20 minutes,30 minutes saved,"[
+“Cook Rice”,
+“Sauté Cod”,
+“Reduce Carrot Sauce”
+]
+","[
+“Measuring and Portioning“
+“Cut the Chorizo”,
+“Peel carrot, garlic and onion”,
+“Cut carrot, garlic and onion”,
+“Juice Carrot”
+]
+","[
+“Knife & Cutting Board”,
+“2 Pans”,
+“1 Pot”,
+“Cooking spoon”,
+“Salt & Pepper“,
+“Olive Oil”,
+“Spatula”
+]
+",,"[
+“Cod”,
+“Chorizo”,
+“Rice”,
+“Cardamom”,
+“Red Onion“,
+“Garlic”,
+“Butter”,
+“Lemon”,
+“Carrot Juice”,
+“Carrot”
+]
+",,,
+Panko Schnitzel,from Pork Loin with Cucumber Salad,"Panko Breaded Pork Loin with a dill cucumber salad, spiced up with the lightly sweet, but fiery note of horseradish. A delicious classic.",,,,0,Mains,,Allow 15-20 minutes,20 minutes saved,"[
+“Bread the Pork”,
+“Sauté the Schnitzel”,
+“Season Cucumber Salad”
+]
+","[
+“Measuring and Portioning“
+“Peel cucumber”,
+“Cut cucumber”,
+“Clean Dill”
+]
+","[
+“Knife & Cutting Board”,
+“1 Pan”,
+“Mixing Bowl”,
+“Cooking spoon”,
+“Salt & Pepper“,
+“Olive Oil”
+]
+",,"[
+“Pork Loin”,
+“Egg”,
+“Flour”,
+“Panko”,
+“Cucumber”,
+“Dill”,
+“Sour Cream”,
+“Horseradish”,
+“White Wine Vinegar”,
+“Lemon”
+]
+",,,
+Pomegranate & Red Cabbage,with caramelized sunflower seeds & granny smith,Crunchy red cabbage that pairs well with the sweetness of the pomegranate and the acidity of the granny smith.,,,,0,Salad,,Allow 10-13 minutes,25 minutes saved,"[
+“Caramelize Sunflower Seeds”,
+“Cut the granny smith”,
+“Season the salad”
+]
+","[
+“Measuring and Portioning“
+“Clean pomegranate seeds”,
+“Clean and cut red cabbage”
+]
+","[
+“Knife & Cutting Board”,
+“1 Pan”,
+“2 Mixing Bowls”,
+“Cooking spoon”,
+“Salt & Pepper“,
+“Olive Oil”
+]
+",,"[
+“Red Cabbage”,
+“Pomegranate Seeds”,
+“Lemon”,
+“Sunflower seeds”,
+“Apple”,
+“Sugar”
+]
+",,,
+Herb Crusted Chicken Breast,with Bell Peppers and Zucchini,"Pan-fried chicken with a breadcrumb herb crust and crunchy bell pepper zucchini on side.
+
+",,,,0,Mains,,Allow 15-20 minutes,20 minutes saved,"[
+“Pan-Fry Chicken with herb crust”,
+“Pick and Cut Herbs”,
+“Sauté vegetables”
+]
+","[
+“Measuring and Portioning“
+“Picked rosemary and thyme”,
+“Cleaned vegetables”,
+“Cut bell peppers and zucchini”,
+“Picked thyme and rosemary”,
+
+]
+","[
+“Knife & Cutting Board”,
+“2 Pans”,
+“Cooking spoon”,
+“Salt & Pepper“,
+“Olive Oil”,
+“Spatula”
+]
+",,"[
+“Chicken Breast”,
+“Zucchini”,
+“Bell Peppers”,
+“Shallots”,
+“Garlic”,
+“Breadcrumbs”,
+“Parsley”,
+“Rosemary”,
+“Thyme”
+]
+",,,
