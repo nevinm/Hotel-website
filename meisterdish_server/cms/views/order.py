@@ -5,7 +5,7 @@ import settings
 from cms.views.decorators import *
 from datetime import datetime
 from django.core.paginator import Paginator
-from libraries import mail, mail_order_confirmation, check_delivery_area, validate_phone, validate_email, create_address_text_from_model, export_csv
+from libraries import mail, mail_order_confirmation, check_delivery_area, validate_phone, validate_email, create_address_text_from_model, export_csv, get_time_past
 from django.db.models import Q
 from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
@@ -139,6 +139,7 @@ def get_orders(request, data, user):
 
             order_list.append({
                 "id":order.id,
+                "minutes":get_time_past(order.created),
                 "grand_total" : order.grand_total,
                 "user_first_name" : order.cart.user.first_name  if order.cart.user.role.pk == settings.ROLE_USER else 'Guest('+ str(order.email)+')',
                 "user_last_name" : order.cart.user.last_name,
