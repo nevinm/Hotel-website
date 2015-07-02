@@ -247,8 +247,9 @@ def get_users(request, data, user):
 def delete_user(request, data, session_user):
     try:
         user = User.objects.get(id=str(data['id']).strip())
-        user.deleted = True
-        user.save()
+        #user.deleted = True
+        #user.save()
+        user.delete()
         return json_response({"status":1, "message":"Deleted user"})
     except Exception as e:
         log.error("Failed to remove user : "+e.message)
