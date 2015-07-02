@@ -124,17 +124,19 @@ class ImportMeals:
                 meal.preparation_time = row[keys["prep_time"]].strip()
                 meal.saved_time = row[keys["saved_time"]].strip()
 
-                meal.user_to_do = json.dumps(row[keys["all_you_do"]])
-                meal.finished_preparation = json.dumps(row[keys["what_we_prepd"]])
+                meal.user_to_do = json.dumps(row[keys["all_you_do"]]).strip('"')
 
-                meal.pre_requisites = json.dumps(row[keys["all_you_need"]])
+                meal.finished_preparation = json.dumps(row[keys["what_we_prepd"]]).strip('"')
+
+                meal.pre_requisites = json.dumps(row[keys["all_you_need"]]).strip('"')
                 #all_you_need_image
 
-                meal.ingredients = json.dumps(row[keys["ing"]])
+                meal.ingredients = json.dumps(row[keys["ing"]]).strip('"')
                 #ing_image
 
                 #tips
-                meal.nutrients = json.dumps(row[keys["nutrients"]])
+                meal.nutrients = json.dumps(row[keys["nutrients"]]).strip('"')
+
                 meal.save()
             except Exception as e:
                 print "Error in inserting row "+str(count) + " : " +e.message
