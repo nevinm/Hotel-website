@@ -30,6 +30,7 @@ def check_input(method):
                                              "referral_return",
                                              "get_cart_items_count",
                                              "validate_session",
+                                             "save_email",
                                              ]:
 
                         session_key = request.META.get('HTTP_SESSION_KEY', None)

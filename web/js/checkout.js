@@ -225,15 +225,21 @@ function haveAccountCheck() {
 
 function setCurrentTime() {
     currentHour = getCurrentHour();
+    var closingTime = 9;
     $(".today-content .checkout-time-button").each(function(key, value) {
         currentHour = getCurrentHour();
         meridiem = currentHour.substring(currentHour.length - 2);
         if (meridiem == "pm") {
             currentHour = currentHour.substring(0, currentHour.length - 2);
-            if (parseInt(currentHour) == $(value).data().hr) {
-                $(this).prevAll('.set-time-button').remove();
-                $(this).val("NOW");
-                $(this).addClass("checkout-time-button-active");
+            if(currentHour >=closingTime){
+                $(this).remove();
+                $(".shop-status").show();
+            }else{
+                if (parseInt(currentHour) == $(value).data().hr) {
+                    $(this).prevAll('.set-time-button').remove();
+                    $(this).val("NOW");
+                    $(this).addClass("checkout-time-button-active");
+                }
             }
         }
     });

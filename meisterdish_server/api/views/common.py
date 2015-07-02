@@ -276,15 +276,15 @@ def verify_user(request, data, token):
     
     except KeyError as field:
         log.error("verify request request missing "+field.message)
-        return HttpResponseRedirect(login_url+"?account_verify=false")
+        return HttpResponseRedirect(login_url+"?account_verify=false&error=Invalid+token")
 
     except User.DoesNotExist:
         log.error("Verify : No user found with given token")
-        return HttpResponseRedirect(login_url+"?account_verify=false")
+        return HttpResponseRedirect(login_url+"?account_verify=false&error=Invalid+token+or+the+user+is+already+verified.")
 
     except Exception as e:
         log.error("Validate token : Exception : "+e.message)
-        return HttpResponseRedirect(login_url+"?account_verify=false")
+        return HttpResponseRedirect(login_url+"?account_verify=false&error=Failed+to+verify+this+user.")
 
 @check_input('GET')
 def verify_email(request, data, token):
