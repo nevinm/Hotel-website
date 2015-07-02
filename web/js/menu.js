@@ -218,20 +218,22 @@ function populateMealList(mealList, isInfinteScrolling) {
         $(".listContainer").empty();
     } else {}
     $.each(mealList.aaData, function(key, value) {
-        $(".listContainer").append("<div class='listItems'>" +
-            "<img src='" + value.main_image + "' data-id='" + value.id + "' class='thumbnail'>" +
-            "<section class='listItemDetails'>" +
-            "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +
-            "<div class='menuItemDetails'>" +"with " +value.sub + "</div>" +
-            "<hr class='mealList-hr'>"+
-            "</section><section class='listItemDetails'>" +
-            "<h3 class='pullLeft itemCost'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</h3>" +
-            "<span class='per-serving-text'>"+"PER SERVING"+"</span>"+
-            "<div class='removeItemButton'>"+"-"+"</div>"+
-            "<span><a class='btn btn-small-primary medium-green addItemButton' " +
-            "data-id='" + value.id + "'>ADD</a></span>" +
-            "</section></div>");
-        if (value.available && !value.in_cart) {} else {
+        if(value.available){
+            $(".listContainer").append("<div class='listItems'>" +
+                "<img src='" + value.main_image + "' data-id='" + value.id + "' class='thumbnail'>" +
+                "<section class='listItemDetails'>" +
+                "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +
+                "<div class='menuItemDetails'>" +"with " +value.sub + "</div>" +
+                "<hr class='mealList-hr'>"+
+                "</section><section class='listItemDetails'>" +
+                "<h3 class='pullLeft itemCost'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</h3>" +
+                "<span class='per-serving-text'>"+"PER SERVING"+"</span>"+
+                "<div class='removeItemButton'>"+"-"+"</div>"+
+                "<span><a class='btn btn-small-primary medium-green addItemButton' " +
+                "data-id='" + value.id + "'>ADD</a></span>" +
+                "</section></div>");
+        }
+        if (!value.in_cart) {} else {
             $(".addItemButton:last").addClass("button-disabled");
         }
     });
