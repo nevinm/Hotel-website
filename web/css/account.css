@@ -1596,7 +1596,9 @@ img.accepted-cards
 	font-family: 'ProximaNova-regular';
 	color: #9B9B9B;
 }
-
+.shop-status{
+	display: none;
+}
 /*==================================*\
 			&TABLET
 \*==================================*/
