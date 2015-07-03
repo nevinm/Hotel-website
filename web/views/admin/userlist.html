@@ -24,31 +24,31 @@
                 <a href="#"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
                 </a>
                 <ul id="menu" class="pullRight">
-                   <li>
-                       <a href="manage-delivery-areas.html">DELIVERY AREA</a>
-                   </li>
-                   <!-- <li>
+                    <li>
+                        <a href="manage-delivery-areas.html">DELIVERY AREA</a>
+                    </li>
+                    <!-- <li>
                        <a href="promocode.html">PROMOCODES</a>
                    </li>
                    <li>
                        <a href="giftcards.html">GIFTCARDS</a>
                    </li> -->
-                   <li>
-                       <a href="orderlist.html">ORDERS</a>
-                   </li>
-                   <li>
-                       <a href="meallist.html">MEALS</a>
-                   </li>
-                   <li class="bold">
-                       <a href="userlist.html">USERS</a>
-                   </li>
-                   <li>
-                       <a href="categories.html">CATEGORIES</a>
-                   </li>
-                   <li id="navbar-username_hidden" class="bold green">
-                       <a href='../account.html'></a>
-                   </li>
-               </ul>
+                    <li>
+                        <a href="orderlist.html">ORDERS</a>
+                    </li>
+                    <li>
+                        <a href="meallist.html">MEALS</a>
+                    </li>
+                    <li class="bold">
+                        <a href="userlist.html">USERS</a>
+                    </li>
+                    <li>
+                        <a href="categories.html">CATEGORIES</a>
+                    </li>
+                    <li id="navbar-username_hidden" class="bold green">
+                        <a href='../account.html'></a>
+                    </li>
+                </ul>
             </div>
         </header>
         <div id="page-container">
@@ -85,20 +85,31 @@
                 </div>
             </div>
         </div>
-        <div class="popup-wrapper">
+        <div class="popup-wrapper user-list-popup">
             <div class="bk-overlay"></div>
             <div class="popup">
                 <div class="header"></div>
-                <div class="popup-container">
+                <form id='user-credit-form' class="popup-container">
                     <div class="content">
-                    <span>SOMTHING WENT WRONG</span>
+                        <span></span>
+                    </div>
+                    <div class='credits'>
+                        <div class="popup-input-wrapper">
+                            <p class="body-text-big" id="current-user"></p>
+                        </div>
+                        <div class="popup-input-wrapper">
+                            <label class="body-text-small">Credits:</label>
+                            $ &nbsp
+                            <input type="text" class="popup-input user-credits-input" name="credits" id="new-credits">
+                        </div>
                     </div>
                     <div class="button">
-                        <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
+                        <input type="submit" class="btn btn-small-secondary" data-user data-id id="update-user-credits" value="UPDATE">
+                        <input type="button" class="btn btn-small-secondary" id="close" value="CLOSE">
                     </div>
-                </div>
+                </form>
             </div>
-        </div>    
+        </div>
     </div>
     <script type="text/javascript" src='../../js/jquery.min.js'></script>
     <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
