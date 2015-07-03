@@ -550,8 +550,8 @@ input.checkbox{
 	margin: 0;
 	margin-right: 5px;
 	float: left;
-	height: 15px;
-  margin-top: 6px;
+	height: 12px;
+  margin-top: 8px;
 }
 .checkbox-span{
   font-family: 'ProximaNova-regular';
@@ -1318,6 +1318,7 @@ input.radio-button-payment {
   font-family: 'ProximaNova-Regular';
   color: #b0b0b0;
   padding: 20px 20px;
+  min-height: 138px;
 }
 .list-address span{
 	width: 100%;

@@ -1039,9 +1039,10 @@ table#tips-and-tricks-table {
     display: none;
 }
 #new-address-error{
-    left: 56px;
+    left: 0px;
     bottom: 23px;
     width: 202px;
+    padding-left: 0;
 }
 
 /*=======================*\

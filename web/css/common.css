@@ -803,6 +803,7 @@ span.icon-menu {
 	background-color: #EEEFEB;
 	color: #454545;
 	border-radius: 4px 4px 0 0;
+    text-transform: uppercase;
 }
 .popup-container{
 	padding: 15px;

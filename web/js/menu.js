@@ -240,11 +240,11 @@ function populateMealList(mealList, isInfinteScrolling) {
         if (!value.in_cart) {} else {
             $(".addItemButton:last").addClass("button-disabled");
         }
-            if(value.quantity <=2){
-                $('.removeItemButton').hide();
-            }else{
-                $('.removeItemButton').show();
-            }
+        // if(value.quantity < 2){
+        //     $('.removeItemButton').hide();
+        // }else{
+        //     $('.removeItemButton').fadeIn();
+        // }
     });
     if (endOfList) {} else {
         infiniteScrolling();
