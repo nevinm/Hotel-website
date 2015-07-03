@@ -44,16 +44,21 @@ function getOrders(nextPage, userName, orderNum, status, total_amount, phone_num
     getOrdersInstance.sendPost(url, header, data, getOrdersCallback);
 }
 
+function undefinedCheck(param) {
+    return (typeof param === 'undefined') ? "NULL" : param;
+}
+
 //function populate OrderList 
 function populateOrderList(data) {
     var fullMealList = JSON.parse(data);
     $.each(fullMealList.aaData, function(key, value) {
-        var phone = value.phone,
-            name = value.user_first_name + " " + value.user_last_name,
-            deliverytime = value.delivery_time,
-            zip = value.zip,
-            minTime = value.time,
-            orderNum = value.order_num;
+        var phone = undefinedCheck(value.phone),
+            name = undefinedCheck(value.user_first_name + " " + value.user_last_name),
+            deliverytime = undefinedCheck(value.delivery_time),
+            zip = undefinedCheck(value.delivery_address.zip),
+            minTime = undefinedCheck(value.time),
+            orderNum = undefinedCheck(value.order_num),
+            minTime = undefinedCheck(value.minutes);
         $.each(value.meals, function(mealKey, mealValue) {
             $('#order-list tbody').append("<tr data-id='" + mealValue.id + "'>" +
                 "<td>" + deliverytime + "</td>" +
@@ -63,7 +68,7 @@ function populateOrderList(data) {
                 "<td>" + zip + "</td>" +
                 "<td>" + name + "</td>" +
                 "<td>" + phone + "</td>" +
-                "<td><button type='button' class='meal-delete btn btn-small-primary medium-green'"+
+                "<td><button type='button' class='meal-produced meal-delete btn btn-small-primary medium-green'" +
                 "data-id='" + mealValue.id + "'>Produced</button></td></tr>");
         });
 

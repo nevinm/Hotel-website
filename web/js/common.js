@@ -441,6 +441,10 @@ $("form").each(function() {
                 required: true,
                 minAmount: 2
             },
+            credits:{
+                required:true,
+                number:true
+            },
             giftcardcustomamount: {
                 required: true,
                 decimal:true,
@@ -510,6 +514,10 @@ $("form").each(function() {
             amount: {
                 required: "Please enter an amount.",
                 minAmount: "Enter a valid amount"
+            },
+            credits: {
+                required: "Please enter an amount",
+                number: "Enter a valid number"
             },
             delivery_tip:{
                 required: "Please enter a valid amount",
