@@ -78,7 +78,7 @@ def add_to_cart(request, data):
         meal_id = data['meal_id']
         quantity = int(data.get('quantity', 2))
 
-        if quantity %2 == 1 or quantity < 2:
+        if quantity %2 == 1:
             return custom_error("Invalid quantity.")
 
         try:
@@ -97,11 +97,16 @@ def add_to_cart(request, data):
         
         try:
            cart_item = CartItem.objects.get(cart=cart, meal=meal)
+           if quantity < 0-cart_item.quantity:
+              return custom_error("Invalid quantity")
            cart_item.quantity = cart_item.quantity+quantity
         except CartItem.DoesNotExist:
            cart_item = CartItem()
            cart_item.cart = cart
            cart_item.meal = meal
+
+           if quantity < 2:
+              return custom_error("Invalid quantity")
            cart_item.quantity = quantity
         cart_item.save()
         

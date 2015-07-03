@@ -130,7 +130,7 @@ Linguine with Breadcrumbs,Garlic cloves and herbs,"Pan-fried golden breadcrumbs 
  “Breadcrumbs”,
  “Parsley”,
  “Lemon”,
- “Sage”, 
+ “Sage”
  ]
 ",,,
 Fettuccine Pasta,"Kalamata Olvies, Sage, Green Onions and Gras Fed Ground Beef","Fresh Fettuccine, with seared Gras Fed Beef, paired with the acidity of Kalamata olives and rounded with the mild onion flavor of scallions and sage.",,,,0,Pasta,,Allow 15-20 minutes,20 minutes saved,"[
@@ -242,7 +242,7 @@ Atlantic Cod,with Chorizo-Tarragon reduction and cardamom rice ,"The spice of th
 “Reduce Carrot Sauce”
 ]
 ","[
-“Measuring and Portioning“
+“Measuring and Portioning“,
 “Cut the Chorizo”,
 “Peel carrot, garlic and onion”,
 “Cut carrot, garlic and onion”,
@@ -276,7 +276,7 @@ Panko Schnitzel,from Pork Loin with Cucumber Salad,"Panko Breaded Pork Loin with
 “Season Cucumber Salad”
 ]
 ","[
-“Measuring and Portioning“
+“Measuring and Portioning“,
 “Peel cucumber”,
 “Cut cucumber”,
 “Clean Dill”
@@ -308,7 +308,7 @@ Pomegranate & Red Cabbage,with caramelized sunflower seeds & granny smith,Crunch
 “Season the salad”
 ]
 ","[
-“Measuring and Portioning“
+“Measuring and Portioning“,
 “Clean pomegranate seeds”,
 “Clean and cut red cabbage”
 ]
@@ -337,11 +337,11 @@ Herb Crusted Chicken Breast,with Bell Peppers and Zucchini,"Pan-fried chicken wi
 “Sauté vegetables”
 ]
 ","[
-“Measuring and Portioning“
+“Measuring and Portioning“,
 “Picked rosemary and thyme”,
 “Cleaned vegetables”,
 “Cut bell peppers and zucchini”,
-“Picked thyme and rosemary”,
+“Picked thyme and rosemary”
 
 ]
 ","[

@@ -164,7 +164,7 @@ function extractNutrients() {
             var subNutrient = $(this),
                 nutrientSubDetails = extractNutrientInnerDetails(nutrientSub, subNutrient);
             totalSubNutrientData.push(nutrientSubDetails);
-        });
+        }); 
         oneNutrientTotal = {
             "mainNutrient": nutrientMainDetails.nutrientsName,
             "perServing": nutrientMainDetails.servingValue,

@@ -226,3 +226,10 @@ def export_csv(export_list, filename):
     for row in export_list:
         writer.writerow(row)
     return response
+
+def get_time_past(dtm):
+    now = datetime.now()
+    mins = (now - dtm).days*24*60
+    return mins
+
+

@@ -54,6 +54,11 @@ def get_meals(request, data):
             
             meal_types = [{"id":ty.id, "name":ty.name.title()} for ty in meal.types.all()]
             
+            qty = 0
+            if user:
+                ci = CartItem.objects.filter(cart__user=user, cart__completed=False, meal__pk=meal.id)
+                qty = ci[0].quantity if ci.exists() else 0
+
             meal_list.append({
                               "id":meal.id,
                               "name":meal.name,
@@ -68,8 +73,8 @@ def get_meals(request, data):
                               "price":meal.price,
                               "tax":(meal.price * meal.tax) /100,
                               "ingredients":ingredients,
-                              "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, cart__completed=False, meal__pk=meal.id).exists() else 0,
-                              
+                              "in_cart" : 1  if qty != 0 else 0,
+                              "quantity" : qty,
                               })
         return json_response({"status":1, 
                               "aaData":meal_list,
@@ -80,7 +85,7 @@ def get_meals(request, data):
                               "current_page":page,
                               "per_page" : limit,
                               })
-    except Exception as e:
+    except KeyError as e:
         log.error("Failed to list meals : "+e.message)
         return custom_error("Failed to list meals")
     

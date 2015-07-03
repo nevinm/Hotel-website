@@ -252,7 +252,6 @@ function showLocationCheckPopup(userDetails){
 
 }
 
-
 var saveEmailCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
