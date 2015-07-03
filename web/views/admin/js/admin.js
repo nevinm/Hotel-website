@@ -41,7 +41,9 @@ function adminLogin() {
 $(document).ready(function() {
         $("#login-button").on('click',function(e){
             e.preventDefault();
-            adminLogin();
+            if($('form#admin-login').valid()){
+                adminLogin();    
+            }            
         });
 });
 

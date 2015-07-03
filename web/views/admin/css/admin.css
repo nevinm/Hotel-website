@@ -61,6 +61,11 @@ input[type="password"] {
 .adminlogin-container .input {
     position: relative;
 }
+.adminlogin-input {
+    width: 100%;
+    padding-top: 10px;
+    position: relative;
+}
 
 .adminlogin-container .formcontainer {
     padding-left: 35px;
