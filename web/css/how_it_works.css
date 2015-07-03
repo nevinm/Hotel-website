@@ -307,6 +307,7 @@ img#cancel,img#close {
 	transform: translate(-50%,-40%);
 }
 .delivery-area-check-popup .popup-zip-fail .button{
+	float: left;
 	position: initial;
 }
 .delivery-area-check-popup .username-wrapper {
