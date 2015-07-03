@@ -64,44 +64,7 @@
                         <h2>ORDER LIST</h2>
                     </div>
                     <div class="order-list-container">
-                        <div class="filter-container">
-                            <div class='search-filters'>
-                                <label for="user-name">Username</label>
-                                <input type="text" id="user-name" />
-                            </div>
-                            <div class='search-filters'>
-                                <label for="user-name">Order Number</label>
-                                <input type="text" id="order-num" />
-                            </div>
-                            <div class='search-filters'>
-                                <label for="user-name">Phone Number</label>
-                                <input type="text" id="phone-num" />
-                            </div>
-                            <div class='search-filters'>
-                                <label for="user-name">Date</label>
-                                <input type="text" id="date" placeholder="mm/dd/yyyy"/>
-                            </div>
-                            <div class="search-filters">
-                                <label for="user-name">Delivery Type</label>
-                                <input type="text" id="delivery-type" />
-                            </div>
-                            <div class="search-filters">
-                                <label for="user-name">Total amount</label>
-                                <input type="text" id="total-amount" />
-                            </div>
-                            <div class='search-filters'>
-                                <label for="user-name">Status</label>
-                                <select id="order-status-filter" name="status">
-                                    <option value="">Select Status Filter</option>
-                                        <option value='0'>Incomplete</option>
-                                        <option value='1'>Order placed</option>
-                                        <option value='2'>Confirmed</option>
-                                        <option value='3'>Dispatched</option>
-                                        <option value='4'>Complete</option>
-                                </select>
-                            </div>
-                            <input type="button" class="btn btn-small-primary medium-green" id="search-orders" value="SEARCH">
-                        </div>
+                    <div class='kitchen-filter'></div>
                         <table id="order-list" class="display" cellspacing="0" width="100%">
                             <thead>
                                 <tr>

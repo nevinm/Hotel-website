@@ -515,8 +515,12 @@ input#searchBy-name {
     color: #9B9B9B;
     outline: none;
 }
-
-
+.kitchen-filter{
+    height: 50px;
+}
+.meal-produced{
+    cursor: pointer;
+}
 /*=======================*\
      &CREATE -MEAL
 \*=======================*/
