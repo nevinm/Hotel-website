@@ -127,7 +127,7 @@ $(document).ready(function() {
     $(document).on('click', '#add-address-popup', function() {
         getProfile();
         $('.address-payment-list-popup').hide();
-        $('.addresspopup-wrapper').fadeIn();      
+        $('.addresspopup-wrapper').show();      
     });
     $('#close-new-address-form').on("click",function(){
         $('.addresspopup-wrapper').hide();   
