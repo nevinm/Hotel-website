@@ -1610,8 +1610,8 @@ a#add-address-popup {
   padding: 10px 0;
   font-family: 'BrandonGrotesque-Regular';
   color: #8EC657;
-  font-size: 16px;
-  letter-spacing: 1px;
+  font-size: 14px;
+  letter-spacing: .5px;
 }
 a#add-address-popup :hover{
 	color:  #B8E986;

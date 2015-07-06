@@ -12,7 +12,6 @@ $(document).ready(function() {
         savedCardDetails();
         CartItemCount();
         getAddress();
-        getStates();
     } else {
         $('.address-info-guest').show();
         $('.address-info').hide();
@@ -126,6 +125,8 @@ $(document).ready(function() {
     //add address
     $(document).on('click', '#add-address-popup', function() {
         getProfile();
+        getStates();
+        $('#new-address-form').validate().resetForm();
         $('.address-payment-list-popup').hide();
         $('.addresspopup-wrapper').show();      
     });
