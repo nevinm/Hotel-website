@@ -158,7 +158,9 @@ function mealDetailsTab(mealDetails) {
     $(".chef-img").attr("src", mealDetails.chef_image.url);
     $(".chef-img").attr("data-id", mealDetails.chef_image.id);
     $(".chef-comments").text(mealDetails.chef_comments);
-    $(".details-description span").text('"' + mealDetails.description + '"');
+    if(mealDetails.description){
+        $(".details-description span").text('"' + mealDetails.description + '"');
+    }
     $(".chef-name").text("CHEF " + mealDetails.chef_name);
     if (mealDetails.in_cart == 1) {
         $(".add-meal").addClass("button-disabled");
