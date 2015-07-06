@@ -42,10 +42,6 @@ $(document).ready(function() {
         $(".giftcard-selected").removeClass("giftcard-selected");
     });
 
-    $("#recipient-form, #custom-amount").on("submit", function(e) {
-        e.preventDefault();
-    });
-
     $("#edit-giftcard").on("click", function() {
         $(".giftcard-popup-wrapper").show();
         populateEditCardDetails();
@@ -59,12 +55,9 @@ $(document).ready(function() {
         updateRecipientGiftCard();
     });
 
-    $(".proceed-checkout").on("click", function() {
-        $("#recipient-form").submit();
-        if (!$(".giftcard-selected").length) {
-            $("#custom-amount").submit();
-        }
-        if (($(".giftcard-selected").length || $("#custom-amount").valid()) && $("#recipient-form").valid()) {
+    $(".proceed-checkout").on("click", function(e) {
+        e.preventDefault(); 
+        if($('form').valid()){
             getGiftCardData();
             window.location.href = 'giftcard-payment.html';
         } else {}

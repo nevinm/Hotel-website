@@ -232,19 +232,19 @@ function populateMealList(mealList, isInfinteScrolling) {
                 "</section><section class='listItemDetails'>" +
                 "<h3 class='pullLeft itemCost'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</h3>" +
                 "<span class='per-serving-text'>"+"PER SERVING"+"</span>"+
-                // "<div class='removeItemButton'>"+"-"+"</div>"+
+                "<div class='removeItemButton'>"+"-"+"</div>"+
                 "<span><a class='btn btn-small-primary medium-green addItemButton' " +
                 "data-id='" + value.id + "'>ADD</a></span>" +
                 "</section></div>");
         }
-        if (!value.in_cart) {} else {
-            $(".addItemButton:last").addClass("button-disabled");
-        }
-        // if(value.quantity < 2){
-        //     $('.removeItemButton').hide();
-        // }else{
-        //     $('.removeItemButton').fadeIn();
+        // if (!value.in_cart) {} else {
+        //     $(".addItemButton:last").addClass("button-disabled");
         // }
+        if(value.quantity < 2){
+            $('.removeItemButton').hide();
+        }else{
+            $('.removeItemButton').fadeIn();
+        }
     });
     if (endOfList) {} else {
         infiniteScrolling();
@@ -269,11 +269,11 @@ var addToCartCallback = {
         if (status == -1) {
             showPopup(meal_details);
         } else {
-            $('*[data-id="' + mealId + '"]').addClass("button-disabled");
-            showPopup(meal_details);
-        // var $removeButton = $('a[data-id="' + mealId + '"]').closest('.listItems').find('.removeItemButton');
-        //     $removeButton.attr('data-id',mealId);
-        //     $removeButton.fadeIn();
+            // $('*[data-id="' + mealId + '"]').addClass("button-disabled");
+            // showPopup(meal_details);
+        var $removeButton = $('a[data-id="' + mealId + '"]').closest('.listItems').find('.removeItemButton');
+            $removeButton.attr('data-id',mealId);
+            $removeButton.fadeIn();
             if (meal_details.session_key && (meal_details.session_key).length) {
                 localStorage['session_key'] = meal_details.session_key;
                 createCookie("SessionExpireTime", "true", sessionExpiryTime);
