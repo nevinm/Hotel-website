@@ -459,8 +459,11 @@ ol{
 .addresspopup-wrapper{
 	display: none;
 }
+.addresspopup-wrapper .bk-overlay{
+	z-index:9999;
+}
 .addresspopup {
-  position: absolute;
+  position: fixed;
   top: 40%;
   width: 400px;
   left: 50%;
@@ -468,7 +471,7 @@ ol{
   margin-top: -200px;
   background-color: #fff;
   border: 1px solid #ddd;
-  z-index:999999;
+  z-index:99999;
   border-radius: 3px;
 }
 img.popup-close{
@@ -1628,9 +1631,10 @@ a#add-address-popup :hover{
 	background: url(../images/selector_arrow.png) no-repeat 113px 6px #f7f7f7;
 }
 .delivery-adress-wrapper{
-	height: 270px;
   overflow-y: auto;
-  min-height: 180px;
+  min-height: 120px;
+  max-height: 270px;
+  height: auto;
 }
 /*==================================*\
 			&TABLET

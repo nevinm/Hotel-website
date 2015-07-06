@@ -586,7 +586,7 @@ input[type='radio']:checked:before {
     /*background-repeat-x: inherit;*/
     /*background-image: url('../images/white.png');*/
     left: 0;
-    z-index: 999999;
+    z-index: 9999;
     height: 73px;
 }
 
@@ -782,7 +782,7 @@ span.icon-menu {
 	left: 50%;
 	/*margin-top: -125px;
 	margin-left: -200px;*/
-	z-index: 999999;
+	z-index: 9999999;
 	border-radius: 4px;
     -ms-transform: translate(-50%,-40%);
     -moz-transform:translate(-50%,-40%);

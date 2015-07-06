@@ -108,7 +108,7 @@
   height: 30px;
   width: 30px;
   text-align: center;
-  border: 1px solid;
+  border: 1px solid #8EC657;
   line-height: 25px;
   float: right;
   padding: 0 0px;
@@ -118,6 +118,9 @@
   cursor: pointer;
   font-family: 'BrandonGrotesque-bold';
   display: none;
+  background-color: #a9d77b;
+  border-radius: 3px;
+  color: #fff;
 }
 .subMenu ul li.menu-categories-list {
     float: left;

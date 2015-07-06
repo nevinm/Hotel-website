@@ -777,8 +777,12 @@ var addAddressCallback = {
             populateAddedAddress(userDetails.id,flag);
             $('.addresspopup-wrapper').fadeOut();
         } else {
-            showPopup(userDetails);
-            $('.address-info-guest').show();
+            if(flag == 'popup'){
+                showPopup(userDetails);
+            }else{
+                showPopup(userDetails);
+                $('.address-info-guest').show();
+            }  
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
