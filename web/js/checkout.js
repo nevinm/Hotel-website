@@ -121,6 +121,9 @@ $(document).ready(function() {
 
     $(document).on('click', '#change-address', function() {
         populateAddressListPopup();
+        if (localStorage['loggedIn'] == 'false') {
+             $("a#add-address-popup").hide();
+        }else{}
     });
     //add address
     $(document).on('click', '#add-address-popup', function() {
