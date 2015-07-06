@@ -222,10 +222,10 @@ def send_user_verification_mail(user, change_email=False, email=""):
     
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
         if change_email:
-            link = settings.BASE_URL + 'verify_email/'+token+"/"
+            link = settings.BASE_URL + 'verify-email/'+token+"/"
             token = token + "-"+email
         else:
-            link = settings.BASE_URL + 'verify_user/'+token+"/"
+            link = settings.BASE_URL + 'verify-user/'+token+"/"
         
         user.user_verify_token = token
         user.save()
