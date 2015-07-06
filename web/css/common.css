@@ -539,6 +539,7 @@ input[type='radio']:checked:before {
     cursor: pointer;
     position: relative;
     padding-left: 25px;
+    width: 100%;
 }
 .checkbox-green + label:before{
     content: "";
