@@ -273,10 +273,10 @@ CACHES = {
 EMAIL_IMAGES = {
     "meisterdish_logo" : os.path.join(STATIC_ROOT, "default", "logo.png"),
     "social_sprite" : os.path.join(STATIC_ROOT, "default", "social_icon_sprite.png"),
-    #"fb" : os.path.join(STATIC_ROOT, "default", "social_icon_fb.png"),
-    #"pt" : os.path.join(STATIC_ROOT, "default", "social_icon_pt.png"),
-    #"tw" : os.path.join(STATIC_ROOT, "default", "social_icon_tw.png"),
-    #"in" : os.path.join(STATIC_ROOT, "default", "social_icon_in.png"),
+    "fb" : os.path.join(STATIC_ROOT, "default", "Facebook.png"),
+    "pt" : os.path.join(STATIC_ROOT, "default", "Pinterest.png"),
+    "tw" : os.path.join(STATIC_ROOT, "default", "Twitter.png"),
+    "in" : os.path.join(STATIC_ROOT, "default", "Instagram.png"),
 }
 
 PRINTNODE_API_URL = "https://api.printnode.com"

@@ -88,12 +88,14 @@
             <div class="popup">
                 <div class="header">Add Categories</div>
                 <div class="popup-container">
-                    <form id="add-category">
-                        <input class='new-category' type='text' placeholder='Add Category'></input>
+                    <form id="add-new-category">
+                        <div class="popup-input-wrapper">
+                            <input class='new-category' type='text' name="new_category" placeholder='Add Category'>
+                        </div>
                         <div class="button">
-                            <a href="#" class="btn btn-small-secondary" id='add-confirm'>Add
+                            <input type="submit" class="btn btn-small-secondary" id='add-confirm' value="Add">
                             </a>
-                            <a href="#" class="btn btn-small-secondary" id='add-cancel'>Cancel</a>
+                            <a href="#!" class="btn btn-small-secondary" id='add-cancel'>Cancel</a>
                         </div>
                     </form>
                 </div>
@@ -102,13 +104,17 @@
         <div class="update-category-container">
             <div class="bk-overlay"></div>
             <div class="popup">
-                <div class="header">Add Categories</div>
+                <div class="header">UPDATE CATEGORY</div>
                 <div class="popup-container">
-                    <input class='new-category' data-id='' type='text' placeholder='Add Category'></input>
-                    <div class="button">
-                        <a href="#" class="btn btn-small-secondary" id='update-confirm'>Update</a>
-                        <a href="#" class="btn btn-small-secondary" id='update-cancel'>Cancel</a>
-                    </div>
+                    <form id="update-category-form">
+                        <div class="popup-input-wrapper">
+                            <input class='new-category' name="update_category" data-id='' type='text' placeholder='Update Category'></input>
+                        </div>
+                        <div class="button">
+                            <input type="submit" class="btn btn-small-secondary" id='update-confirm' value="Update">
+                            <a href="#!" class="btn btn-small-secondary" id='update-cancel'>Cancel</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

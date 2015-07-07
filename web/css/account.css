@@ -459,17 +459,23 @@ ol{
 .addresspopup-wrapper{
 	display: none;
 }
+.addresspopup-wrapper .bk-overlay{
+	z-index:9999;
+}
 .addresspopup {
-  position: absolute;
-  top: 40%;
-  width: 400px;
-  left: 50%;
-  margin-left: -200px;
-  margin-top: -200px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  z-index:999999;
-  border-radius: 3px;
+	position: fixed;
+	top: 40%;
+	width: 400px;
+	left: 50%;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	z-index:99999;
+	border-radius: 3px;
+	-ms-transform: translate(-50%,-40%);
+	-moz-transform:translate(-50%,-40%);
+	-webkit-transform: translate(-50%,-40%);
+	transform: translate(-50%,-40%);
+
 }
 img.popup-close{
 	width: 60px;
@@ -567,7 +573,7 @@ input.checkbox{
 .addaddress-popup .forminput-wrapper select option{
 	background-color: #F7F7F7;
 }
-form.addaddress-popup {
+form.addaddress-popup,#new-address-form {
   width: 83%;
   margin: 0 auto;
 }
@@ -1603,6 +1609,36 @@ img.accepted-cards
 .shop-status{
 	display: none;
 }
+a#add-address-popup {
+  float: left;
+  width: 100%;
+  text-align: left;
+  padding: 10px 0;
+  font-family: 'BrandonGrotesque-Regular';
+  color: #8EC657;
+  font-size: 14px;
+  letter-spacing: .5px;
+}
+a#add-address-popup :hover{
+	color:  #B8E986;
+}
+#close-new-address-form{
+	float: right;
+	cursor: pointer;
+}
+#new-address-form #address-line-1-error,
+#new-address-form #address-line-2-error{
+	bottom: 74px;
+}
+#new-address-form .styled-select{
+	background: url(../images/selector_arrow.png) no-repeat 113px 6px #f7f7f7;
+}
+.delivery-adress-wrapper{
+  overflow-y: auto;
+  min-height: 120px;
+  max-height: 270px;
+  height: auto;
+}
 /*==================================*\
 			&TABLET
 \*==================================*/
@@ -1710,6 +1746,12 @@ img.accepted-cards
 			&MOBILE
 \*==================================*/
 @media (min-width: 320px)and (max-width:767px){
+	.address .button{
+		width: 99px;
+	}
+	.current-email-container label{
+		width: 100%;
+	}
 	.payment-popup-sub-container{
 		width: 100%;
 	}
@@ -1758,7 +1800,7 @@ img.accepted-cards
 		display: none;
 	}
 	#change-email span.body-text-small{
-		width: 300px;
+		width: 100%;
 	}
 	form.form {
 		width: 90%;
@@ -1887,9 +1929,6 @@ img.accepted-cards
 	.receipt-container .caption{
 		display: none;
 	}
-	input.popup-input{
-		height: 36px;
-	}
 	.forminput-wrapper .styled-select{
 		height: 36px;
 	}
@@ -2002,6 +2041,10 @@ img.accepted-cards
 		max-height: 200px;
 		overflow-y: auto;	 
 	}
+	.addresspopup {
+		width: 85%;
+		max-width: 400px;
+	}
 }
   	@media (max-width:400px){
   		.address-content{
@@ -2043,6 +2086,7 @@ img.accepted-cards
   		.payment-method-container .contents{
   			padding: 20px 12px;
   		}
+  		
 
 	}
 	@media (max-width:500px){
@@ -2068,6 +2112,20 @@ img.accepted-cards
   		#save-payment,#save-delivery-address{
 			line-height: 35px;
 			min-width: 90px;
+  		}
+  		.forminput-wrapper{
+  			width: 100% !important;
+  		}
+  		.addresspopup .forminput-wrapper input.popup-input{
+  			width: 100%;
+  			height:30px;
+  		}
+  		.primary-wrapper input.popup-input{
+  			height: auto !important;
+  			width: auto !important;
+  		}
+  		.section3 .forminput-wrapper label{
+  			width: 100%;
   		}
 	}
 	@media (max-width: 1177px){

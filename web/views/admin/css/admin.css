@@ -109,6 +109,7 @@ li#navbar-username {
 
 #categories .update {
     margin-right: 10px;
+    cursor: pointer;
 }
 
 #userlist,#userlist th,#userlist td,
@@ -180,7 +181,7 @@ thead {
     padding: 10px 0px;
 }
 
-.add-category-container input {
+.new-category {
     margin-top: 10px;
     width: 80%;
     height: 35px;
@@ -226,6 +227,19 @@ thead {
     width: 80%;
     margin: 0 auto;
     padding-bottom: 10px;
+}
+.add-category-container .popup .header,
+.update-category-container .popup .header{
+    padding-left: 0;
+}
+input#add-confirm,#update-confirm{
+    width: 0%;
+    margin-bottom: 1px;
+    margin-top: 0;
+}
+#add-new-category .popup-input-wrapper,
+#update-category-form .popup-input-wrapper{
+    margin-left: 0;
 }
 /*=======================*\
        &Userlist-Page

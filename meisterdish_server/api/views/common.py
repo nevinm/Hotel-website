@@ -256,7 +256,7 @@ def send_user_verification_mail(user, change_email=False, email=""):
 @check_input('GET')
 def verify_user(request, data, token):
     login_url = settings.SITE_URL + "views/login.html"
-    fail_url = settings.SITE_URL + "views/signup_fail.html"
+    fail_url = settings.SITE_URL + "views/signup-fail.html"
     try:
         token = token.strip()
         

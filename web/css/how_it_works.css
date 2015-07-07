@@ -277,6 +277,9 @@ img.image-small{
 }
 #zip-code-error{
 	background: none;
+	width: 60%;
+	left: 0;
+	padding-left: 0;
 }
 .forminput-wrapper{
 	position: relative;
@@ -316,7 +319,7 @@ img#cancel,img#close {
   float: left;
 }
 label#username-error {
-  bottom: 137px;
+  bottom: 117px;
   left: 5px;
   width: 60%;
 }
@@ -325,8 +328,6 @@ label#username-error {
 		font-size: 40px;
 	}
 	.contentWrapper {
-		left: 50%;
-  		margin-left: -30%;
   		width: 60%;
 	}
 	.box-contentWrapper,.tab-header-drop-down ul,
@@ -422,20 +423,18 @@ label#username-error {
     }
     .contentWrapper {
 		width: 100%;
-		top: 0%; 
 		position: relative;
-		left: 0%; 
 		margin-top: 55px !important;
+		top: 0%;
+		left: 0%;
+		transform:none;
+		padding: 0 25px;
 	}
 	.box-contentWrapper{
 		border:none;
 		box-shadow: none;
 		width: 100%;
 		padding-top: 0px;
-	}
-	.contentWrapper{
-		width: 100%;
-		margin-top: 0px;
 	}
 	.button-container{
 		text-align: center;
@@ -591,6 +590,13 @@ label#username-error {
 	#we-inspire,.right-arrow{
     	display: none;
     }
+    .forminput-wrapper{
+    	text-align: left;
+    }
+    .delivery-area-check-popup .popup-zip-fail{
+    	width: 85%;
+    	max-width: 400px;
+    }
 
 }
 @media (max-width: 400px) {
@@ -599,5 +605,16 @@ label#username-error {
 	}
 	.contentWrapper .h0{
 		font-size: 32px;
+	}
+	#zip-code{
+		width: 100%;
+		float: left;
+		margin-bottom: 20px;
+	}
+	input#check-delivery-area{
+		width: 100%;
+	}
+	#zip-code-error{
+		bottom: 98px;
 	}
 }
