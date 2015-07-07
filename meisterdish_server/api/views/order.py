@@ -5,7 +5,7 @@ import settings
 from api.views.decorators import *
 from datetime import datetime
 from django.core.paginator import Paginator
-from libraries import mail, check_delivery_area, validate_phone, validate_email, save_payment_data
+from libraries import mail, mail_order_confirmation, check_delivery_area, validate_phone, validate_email, save_payment_data
 from django.db.models import Q
 from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
@@ -485,3 +485,33 @@ def get_cart_total(cart):
     except Exception as e:
         log.error("Error getting cart total: " + e.message)
     return (amount, tax)
+
+def send_sms_notification(dic):
+    try:
+        if not dic["mobile"]:
+            log.error("No mobile number available to send SMS.")
+            return False
+        if dic["status"] == 2: #Confirmed
+            txt = render_to_string('order_confirmation_sms_template.html', dic)
+        else: #Complete
+            txt = render_to_string('order_complete_sms_template.html', dic)
+        
+        client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+
+        country_code = "+1" if settings.Live else "+1"
+        number = country_code + str(dic["mobile"]).strip()
+
+        message = client.messages.create(body=txt,
+                to= number,
+                from_=settings.TWILIO_NUMBER)
+        log.info(message)
+        if message:
+            log.info("Sent SMS to " + number)
+            return True
+        else:
+            log.error("Failed to send SMS to " + number)
+            return False
+
+    except Exception as e:
+        log.error("Failed to send order SMS to : " + number + " : "+e.message)
+        return False

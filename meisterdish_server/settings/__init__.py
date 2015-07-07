@@ -234,7 +234,7 @@ ORDER_STATUS =  (
     (3, "Dispatched"),
     (4, "Complete"),
     )
-
+"""
 if not Live:
     # SandBox
     PAYPAL_MODE="sandbox"
@@ -252,7 +252,7 @@ else:
     PAYPAL_CLIENT_ID = ""
     PAYPAL_CLIENT_SECRET = ""
     PAYPAL_ACCOUNT = ""
-
+"""
 DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
 DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
 DEFAULT_CHEF_IMAGE  = STATIC_URL + "default/chef_default.png"
@@ -273,13 +273,13 @@ CACHES = {
 EMAIL_IMAGES = {
     "meisterdish_logo" : os.path.join(STATIC_ROOT, "default", "logo.png"),
     "social_sprite" : os.path.join(STATIC_ROOT, "default", "social_icon_sprite.png"),
-    #"fb" : os.path.join(STATIC_ROOT, "default", "social_icon_fb.png"),
-    #"pt" : os.path.join(STATIC_ROOT, "default", "social_icon_pt.png"),
-    #"tw" : os.path.join(STATIC_ROOT, "default", "social_icon_tw.png"),
-    #"in" : os.path.join(STATIC_ROOT, "default", "social_icon_in.png"),
+    "fb" : os.path.join(STATIC_ROOT, "default", "Facebook.png"),
+    "pt" : os.path.join(STATIC_ROOT, "default", "Pinterest.png"),
+    "tw" : os.path.join(STATIC_ROOT, "default", "Twitter.png"),
+    "in" : os.path.join(STATIC_ROOT, "default", "Instagram.png"),
 }
 
 PRINTNODE_API_URL = "https://api.printnode.com"
 
-MAILCHIMP_API_KEY = "744d970910cbd78785543d90d4138a16-us11"
-MAILCHIMP_LIST_ID = 'e7a064df21'
+MAILCHIMP_API_KEY = "859bfa920dd6b90b9a565cfb3d0aff9a-us10"
+MAILCHIMP_LIST_ID = '654414e2b9'

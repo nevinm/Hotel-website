@@ -294,25 +294,25 @@ $("form").each(function() {
         rules: {
             firstname: {
                 required: true,
-                minlength: 2,
+                minlength: 3,
                 maxlength: 15,
                 letters: true
             },
             lastname: {
                 required: true,
-                minlength: 2,
+                minlength: 1,
                 maxlength: 15,
                 letters: true
             },
             fullname: {
                 required: true,
-                minlength: 2,
+                minlength: 3,
                 maxlength: 20,
                 letters: true
             },
             username: {
                 required: true,
-                minlength: 2,
+                minlength: 3,
                 maxlength: 15,
             },
             mealname: {
@@ -458,6 +458,14 @@ $("form").each(function() {
                 required: true,
                 minAmount: 0,
                 maxAmount: 10
+            },
+            category:{
+               required: true,
+               minlength: 3 
+            },
+            update_category:{
+                required: true,
+                minlength: 3 
             }
         },
         messages: {
@@ -473,7 +481,7 @@ $("form").each(function() {
                 minlength: "Name should contain atleast 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
-            phonenumber: "Provide valid phone number",
+            phonenumber: "Please enter as xxxxxxxxxx",
             fullname: {
                 required: "Please enter your full name.",
                 letters: "Name should contain only alphabets.",

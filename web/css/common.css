@@ -389,6 +389,10 @@ body {
     visibility: hidden;
 }
 
+.tableDisplay{
+    display: table !important;
+}
+
 input.arrange {
     width: 100%;
     border-radius: 3px;
@@ -539,6 +543,7 @@ input[type='radio']:checked:before {
     cursor: pointer;
     position: relative;
     padding-left: 25px;
+    width: 100%;
 }
 .checkbox-green + label:before{
     content: "";
@@ -585,7 +590,7 @@ input[type='radio']:checked:before {
     /*background-repeat-x: inherit;*/
     /*background-image: url('../images/white.png');*/
     left: 0;
-    z-index: 999999;
+    z-index: 9999;
     height: 73px;
 }
 
@@ -781,7 +786,7 @@ span.icon-menu {
 	left: 50%;
 	/*margin-top: -125px;
 	margin-left: -200px;*/
-	z-index: 999999;
+	z-index: 9999999;
 	border-radius: 4px;
     -ms-transform: translate(-50%,-40%);
     -moz-transform:translate(-50%,-40%);
@@ -789,7 +794,8 @@ span.icon-menu {
     transform: translate(-50%,-40%);
 
 }
-.add-category-container .header {
+.add-category-container .header,
+.update-category-container .header {
     font-family: 'BrandonGrotesque-Bold';
     color: rgb(107, 107, 107);
     padding: 11px 0px;
@@ -847,7 +853,7 @@ span.icon-menu {
 #recipient-message-error,#fullname-error, #giftcardcustomamount-error, #message-error,
 #tips-video-url-label-error,#tips-and-tricks-label-error, #invite-code-error,#email-error, 
 #new-amount-error, #new-code-error, #new-date-error, #city-selector-error,#adminlogin-password-error,
-#new-credits-error
+#new-credits-error,#category-error,#update_category-error
 {
 	color: #ff7878;
 	background: white;

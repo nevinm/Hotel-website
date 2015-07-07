@@ -185,7 +185,7 @@
                                             </div>
                                             <div class="forminput-wrapper">
                                                 <label class="body-text-small">Phone</label>
-                                                <input type="text" id='guest-phone' name="phonenumber" class="popup-input">
+                                                <input type="text" id='guest-phone'  placeholder='XXXXXXXXXX' name="phonenumber" class="popup-input">
                                             </div>
                                         </div>
                                         <div class="button">
@@ -201,11 +201,6 @@
                             </div>
                             <div class="payment-method-container">
                                 <div class="contents">
-                                    <!-- <div class="paypal-container" style="display:none">
-                                        <input type="radio" id="pp" class='payment-checked' name="payment-radio">
-                                        <span class="content-heading"><input type="checkbox" id="pay-using-paypal"/>PAY WITH PAY PAL</span>
-                                        <img class='paypal' src="../images/paypal_button.png">
-                                    </div> -->
                                     <div class="accepted-cards-wrapper">
                                         <label class="body-text-small">Accepted cards</label>
                                         <div class="accepted-cards-list">
@@ -226,11 +221,6 @@
                             </div>
                             <div class="payment-method-guest-container">
                                 <div class="content">
-                                    <!-- <div class="paypal-container">
-                                        <input type="radio" id="pp-guest" class='payment-checked' name="payment-radio">
-                                        <span class="content-heading"><input type="checkbox" id="pay-using-paypal"/>PAY WITH PAY PAL</span>
-                                        <img class='paypal' src="../images/paypal_button.png">
-                                    </div> -->
                                     <div class="accepted-cards-wrapper">
                                         <label class="body-text-small">Accepted cards</label>
                                         <div class="accepted-cards-list">
@@ -444,6 +434,67 @@
                 <div class="popup">
                     <div class="header">SELECT YOUR DELIVERY ADDRESS</div>
                     <div class="popup-container">
+                    </div>
+                </div>
+            </div>
+            <div class="addresspopup-wrapper">
+                <div class="bk-overlay"></div>
+                <div class="addresspopup">
+                    <div class="header">ADD A NEW ADDRESS
+                        <img src="../images/cross_black.png" id="close-new-address-form">
+                    </div>
+                    <div class="container">
+                        <form id="new-address-form" novalidate="novalidate">
+                                <div class="section1">
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">First Name</label>
+                                        <input type="text" name="firstname" class="popup-input">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Last Name</label>
+                                        <input type="text" name="lastname" class="popup-input">
+                                    </div>
+                                </div>
+                                <div class="section2">
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Email</label>
+                                        <input type="email" name="email" class="popup-input">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Delivery Address</label>
+                                        <input type="text" name="street" class="popup-input" id="address-line-1" style="
+                                        margin-bottom: 10px;">
+                                        <input type="text" name="building" class="popup-input" id="address-line-2">
+                                    </div>
+                                </div>
+                                <div class="section3">
+                                    <div class="forminput-wrapper state-selector-container">
+                                        <label class="body-text-small">State</label>
+                                        <div class="styled-select">
+                                            <select class="state-selector" name="state">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="forminput-wrapper state-selector-container">
+                                        <label class="body-text-small">City</label>
+                                        <input type="text" id='city-selector' name="city" class="popup-input">
+                                    </div>
+                                </div>
+                                <div class="section4">
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Zip</label>
+                                        <input type="text" name="zip" class="popup-input">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Phone</label>
+                                        <input type="text" id='guest-phone' placeholder='XXXXXXXXXX' name="phonenumber" class="popup-input">
+                                    </div>
+                                </div>
+                                <div class="button">
+                                    <input type="submit" id="save-new-address" value="ADD" class="btn btn-small-primary medium-green">
+                                </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -459,8 +459,11 @@ ol{
 .addresspopup-wrapper{
 	display: none;
 }
+.addresspopup-wrapper .bk-overlay{
+	z-index:9999;
+}
 .addresspopup {
-  position: absolute;
+  position: fixed;
   top: 40%;
   width: 400px;
   left: 50%;
@@ -468,7 +471,7 @@ ol{
   margin-top: -200px;
   background-color: #fff;
   border: 1px solid #ddd;
-  z-index:999999;
+  z-index:99999;
   border-radius: 3px;
 }
 img.popup-close{
@@ -567,7 +570,7 @@ input.checkbox{
 .addaddress-popup .forminput-wrapper select option{
 	background-color: #F7F7F7;
 }
-form.addaddress-popup {
+form.addaddress-popup,#new-address-form {
   width: 83%;
   margin: 0 auto;
 }
@@ -1602,6 +1605,36 @@ img.accepted-cards
 }
 .shop-status{
 	display: none;
+}
+a#add-address-popup {
+  float: left;
+  width: 100%;
+  text-align: left;
+  padding: 10px 0;
+  font-family: 'BrandonGrotesque-Regular';
+  color: #8EC657;
+  font-size: 14px;
+  letter-spacing: .5px;
+}
+a#add-address-popup :hover{
+	color:  #B8E986;
+}
+#close-new-address-form{
+	float: right;
+	cursor: pointer;
+}
+#new-address-form #address-line-1-error,
+#new-address-form #address-line-2-error{
+	bottom: 74px;
+}
+#new-address-form .styled-select{
+	background: url(../images/selector_arrow.png) no-repeat 113px 6px #f7f7f7;
+}
+.delivery-adress-wrapper{
+  overflow-y: auto;
+  min-height: 120px;
+  max-height: 270px;
+  height: auto;
 }
 /*==================================*\
 			&TABLET

@@ -121,6 +121,26 @@ $(document).ready(function() {
 
     $(document).on('click', '#change-address', function() {
         populateAddressListPopup();
+        if (localStorage['loggedIn'] == 'false') {
+             $("a#add-address-popup").hide();
+        }else{}
+    });
+    //add address
+    $(document).on('click', '#add-address-popup', function() {
+        getProfile();
+        getStates();
+        $('#new-address-form').validate().resetForm();
+        $('.address-payment-list-popup').hide();
+        $('.addresspopup-wrapper').show();      
+    });
+    $('#close-new-address-form').on("click",function(){
+        $('.addresspopup-wrapper').hide();   
+    })
+    $(document).on('click', '#save-new-address', function(e) {
+        e.preventDefault();
+        if($('#new-address-form').valid()){
+            addAddress('popup');
+        }
     });
 
     $(document).on('click', '#cancel', function() {
@@ -721,6 +741,7 @@ function appendAddresscontent(addressList) {
             "<span>" + value.phone + "</span>" + "</label>" + "</div>");
     });
     $('.address-payment-list-popup .popup-container').append("<div class='button'>" +
+        "<a href='#' id='add-address-popup'>" + "ADD A NEW ADDRESS" + "</a>"+
         "<a href='#' class='btn btn-medium-primary medium-green button-disabled' id='save-delivery-address'>" + "SELECT" + "</a>" +
         "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
 }
@@ -753,20 +774,25 @@ function changeDeliveryAddress(selectedId) {
     $('.address-payment-list-popup').hide();
 }
 var addAddressCallback = {
-    success: function(data, textStatus) {
+    success: function(data, textStatus, flag) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
-            populateAddedAddress(userDetails.id);
+            populateAddedAddress(userDetails.id,flag);
+            $('.addresspopup-wrapper').fadeOut();
         } else {
-            showPopup(userDetails);
-            $('.address-info-guest').show();
+            if(flag == 'popup'){
+                showPopup(userDetails);
+            }else{
+                showPopup(userDetails);
+                $('.address-info-guest').show();
+            }  
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function addAddress() {
-    var newAddress = getNewAddress(),
+function addAddress(flag) {
+    var newAddress = getNewAddress(flag),
         url = baseURL + "add_address/",
         header = {
             "session-key": localStorage["session_key"]
@@ -786,13 +812,18 @@ function addAddress() {
         };
     data = JSON.stringify(userData);
     var addAddressInstance = new AjaxHttpSender();
-    addAddressInstance.sendPost(url, header, data, addAddressCallback);
+    addAddressInstance.sendPost(url, header, data, addAddressCallback,flag);
 }
 
-function getNewAddress() {
-    var $addressContainer = $('#guest-address-info'),
-        state_id = $addressContainer.find(".state-selector").val(),
-        city_name = $("#city-selector").val(),
+function getNewAddress(flag) {
+    var $addressContainer;
+    if(flag == 'popup'){
+        $addressContainer = $('#new-address-form');  
+    }else{
+        $addressContainer = $('#guest-address-info');
+    }
+    var state_id = $addressContainer.find(".state-selector").val(),
+        city_name = $addressContainer.find("input[name*='city']").val(),
         state_name = $addressContainer.find(".state-selector option:selected").text();
     var newAddress = {
         first_name: $addressContainer.find("input[name*='firstname']").val(),
@@ -800,7 +831,7 @@ function getNewAddress() {
         phone: $addressContainer.find("input[name*='phonenumber']").val(),
         zip: $addressContainer.find("input[name*='zip']").val(),
         street: $addressContainer.find("input[name*='street']").val(),
-        email: $("#guest-email").val(),
+        email: $addressContainer.find("input[name*='email']").val(),
         city_id: city_name,
         city: city_name,
         building: $addressContainer.find("input[name*='building']").val(),
@@ -843,11 +874,13 @@ function getStates() {
     getStatesInstance.sendPost(url, header, data, getStatesCallback);
 }
 
-function populateAddedAddress(delivery_address) {
-    var addedAddress = [],
-        newAddress = getNewAddress();
+function populateAddedAddress(delivery_address,flag) {
+    var addedAddress = [],latest_address = {},
+        newAddress = getNewAddress(flag);
     newAddress.id = delivery_address;
-    // localStorage['delivery_addressess'] = newAddress;
+    latest_address = JSON.parse(localStorage['delivery_addressess']);
+    latest_address.address_list.push(newAddress);
+    localStorage['delivery_addressess'] = JSON.stringify(latest_address);
     addedAddress.push(newAddress);
     data = {
             "address_list": addedAddress,
@@ -860,12 +893,9 @@ var placeOrderCallback = {
     success: function(data, textStatus) {
         var response = JSON.parse(data);
         if (response.status == 1) {
-            // clearCart();
             var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
                 adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null,
                 loggedIn = (userLoggedin || adminLoggedin);
-            // dataAfterOrdering = {};
-            // dataAfterOrdering.message = "Your orders are successfully placed.";
             $(".ok-container").show();
             $(".close-container").hide();
             if (loggedIn) {
@@ -1154,6 +1184,8 @@ var getProfileCallback = {
             localStorage['user_profile'] = data;
             $(".address-info-guest").find("#guest-email").val(userDetails.email);
             $(".address-info-guest").find("#guest-phone").val(userDetails.mobile);
+            $('#new-address-form').find("input[name*='email']").val(userDetails.email);
+
         } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
