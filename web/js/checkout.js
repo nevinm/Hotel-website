@@ -891,12 +891,9 @@ var placeOrderCallback = {
     success: function(data, textStatus) {
         var response = JSON.parse(data);
         if (response.status == 1) {
-            // clearCart();
             var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
                 adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null,
                 loggedIn = (userLoggedin || adminLoggedin);
-            // dataAfterOrdering = {};
-            // dataAfterOrdering.message = "Your orders are successfully placed.";
             $(".ok-container").show();
             $(".close-container").hide();
             if (loggedIn) {

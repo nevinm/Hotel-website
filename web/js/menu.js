@@ -229,7 +229,7 @@ function populateMealList(mealList, isInfinteScrolling) {
                 "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +
                 "<div class='menuItemDetails'>" +"with " +value.sub + "</div>" +
                 "<hr class='mealList-hr'>"+
-                "</section><section class='listItemDetails'>" +
+                "</section><section class='listItemDetails tableDisplay'>" +
                 "<h3 class='pullLeft itemCost'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</h3>" +
                 "<span class='per-serving-text'>"+"PER SERVING"+"</span>"+
                 "<div class='removeItemButton' data-id='"+ value.id +"'>"+"-"+"</div>"+

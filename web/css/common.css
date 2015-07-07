@@ -389,6 +389,10 @@ body {
     visibility: hidden;
 }
 
+.tableDisplay{
+    display: table !important;
+}
+
 input.arrange {
     width: 100%;
     border-radius: 3px;
