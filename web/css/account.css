@@ -463,16 +463,19 @@ ol{
 	z-index:9999;
 }
 .addresspopup {
-  position: fixed;
-  top: 40%;
-  width: 400px;
-  left: 50%;
-  margin-left: -200px;
-  margin-top: -200px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  z-index:99999;
-  border-radius: 3px;
+	position: fixed;
+	top: 40%;
+	width: 400px;
+	left: 50%;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	z-index:99999;
+	border-radius: 3px;
+	-ms-transform: translate(-50%,-40%);
+	-moz-transform:translate(-50%,-40%);
+	-webkit-transform: translate(-50%,-40%);
+	transform: translate(-50%,-40%);
+
 }
 img.popup-close{
 	width: 60px;
@@ -1920,9 +1923,6 @@ a#add-address-popup :hover{
 	.receipt-container .caption{
 		display: none;
 	}
-	input.popup-input{
-		height: 36px;
-	}
 	.forminput-wrapper .styled-select{
 		height: 36px;
 	}
@@ -2035,6 +2035,10 @@ a#add-address-popup :hover{
 		max-height: 200px;
 		overflow-y: auto;	 
 	}
+	.addresspopup {
+		width: 85%;
+		max-width: 400px;
+	}
 }
   	@media (max-width:400px){
   		.address-content{
@@ -2076,6 +2080,7 @@ a#add-address-popup :hover{
   		.payment-method-container .contents{
   			padding: 20px 12px;
   		}
+  		
 
 	}
 	@media (max-width:500px){
@@ -2101,6 +2106,20 @@ a#add-address-popup :hover{
   		#save-payment,#save-delivery-address{
 			line-height: 35px;
 			min-width: 90px;
+  		}
+  		.forminput-wrapper{
+  			width: 100% !important;
+  		}
+  		.addresspopup .forminput-wrapper input.popup-input{
+  			width: 100%;
+  			height:30px;
+  		}
+  		.primary-wrapper input.popup-input{
+  			height: auto !important;
+  			width: auto !important;
+  		}
+  		.section3 .forminput-wrapper label{
+  			width: 100%;
   		}
 	}
 	@media (max-width: 1177px){

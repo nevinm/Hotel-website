@@ -428,6 +428,9 @@ function updateReciept(GiftcardDetails, flag) {
         totalDriverTip = 0;
     }
     totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost - totalDiscount - totalCredits;
+    if(totalCost <= 0){
+        totalCost = 0;
+    }
     $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount).toFixed(2));
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));

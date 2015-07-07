@@ -319,7 +319,7 @@ img#cancel,img#close {
   float: left;
 }
 label#username-error {
-  bottom: 137px;
+  bottom: 117px;
   left: 5px;
   width: 60%;
 }
@@ -592,6 +592,10 @@ label#username-error {
     }
     .forminput-wrapper{
     	text-align: left;
+    }
+    .delivery-area-check-popup .popup-zip-fail{
+    	width: 85%;
+    	max-width: 400px;
     }
 
 }
