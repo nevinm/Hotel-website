@@ -93,6 +93,14 @@ li#navbar-username a {
 li#navbar-username {
     padding: 0;
 }
+
+#menu li{
+    display: none;
+}
+
+.showLi{
+    display: inline-block !important;
+}
 /*=======================*\
        &Category-Page
 \*=======================*/
