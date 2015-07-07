@@ -58,6 +58,8 @@ def get_cart_items(request, data, user):
                               "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                               "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
                               "coupon" : coupon,
+                              #Arun
+                              "credits" : user.credits,
                               })
     except Exception as e:
     	log.error("Failed to list cart items." + e.message)

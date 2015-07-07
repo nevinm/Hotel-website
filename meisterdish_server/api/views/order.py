@@ -156,8 +156,8 @@ def create_order(request, data, user):
             return custom_error("Please provide a valid delivery time.")
 
         tip = int(data.get('tip', 5))
-        if tip < 5:
-            return custom_error("Miniumum tip amount is $5.") 
+        #if tip < 5:
+        #    return custom_error("Miniumum tip amount is $5.") 
         
         del_type = data["delivery_type"].strip()
         if del_type.lower() == "pickup":
