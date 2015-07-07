@@ -5,21 +5,25 @@ $(document).ready(function() {
     $("#add-category").on('click', function() {
         $(".add-category-container, .update-category-container").hide();
         $(".add-category-container").show();
+        $('form#add-new-category').validate().resetForm();
+
     });
 
     $("#add-cancel, #update-cancel").on('click', hideAddCategory);
-    $("#add-confirm").on('click', function() {
-        if ($(".add-category-container .new-category").val().length === 0) {
-            $(".add-status").text("No category present");
-        } else {
+    $("#add-confirm").on('click', function(e) {
+        e.preventDefault();
+        if($('#add-new-category').valid()){
             addCategories();
-        }
+        }            
     });
 
-    $("#update-confirm").on('click', function() {
+    $("#update-confirm").on('click', function(e) {
+        e.preventDefault();
         var newCategory = $(".update-category-container .new-category").val(),
             Id = $(".update-category-container .new-category").attr('data-id');
-        updateCategories(Id, newCategory);
+        if($('#update-category-form').valid()){
+            updateCategories(Id, newCategory);
+        } 
     })
 
     $(document).on('click', '.cross', function() {
@@ -33,6 +37,7 @@ $(document).ready(function() {
         $(".update-category-container").show();
         $(".update-category-container .new-category").attr("data-id", updateId);
         $(".update-category-container .new-category").val(initialCategory);
+        $('form#update-category-form').validate().resetForm();
     });
 
 });

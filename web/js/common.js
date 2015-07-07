@@ -294,25 +294,25 @@ $("form").each(function() {
         rules: {
             firstname: {
                 required: true,
-                minlength: 2,
+                minlength: 3,
                 maxlength: 15,
                 letters: true
             },
             lastname: {
                 required: true,
-                minlength: 2,
+                minlength: 1,
                 maxlength: 15,
                 letters: true
             },
             fullname: {
                 required: true,
-                minlength: 2,
+                minlength: 3,
                 maxlength: 20,
                 letters: true
             },
             username: {
                 required: true,
-                minlength: 2,
+                minlength: 3,
                 maxlength: 15,
             },
             mealname: {
@@ -458,6 +458,14 @@ $("form").each(function() {
                 required: true,
                 minAmount: 0,
                 maxAmount: 10
+            },
+            category:{
+               required: true,
+               minlength: 3 
+            },
+            update_category:{
+                required: true,
+                minlength: 3 
             }
         },
         messages: {
