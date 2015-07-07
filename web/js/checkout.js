@@ -352,7 +352,12 @@ function getCartItems() {
 
 //Save delivery time
 var saveDeliveryTimeCallback = {
-    success: function(data, textStatus) {},
+    success: function(data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if(userDetails.status == -1){
+            showPopup(userDetails);
+        }else{}
+    },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
@@ -694,11 +699,11 @@ function popuplateAddressList(data) {
     }
 }
 
-function populateAddresstoInfoContainer(data) {
+function populateAddresstoInfoContainer(userDetails) {
     $('.address-info .contents').remove();
-    var selectedId = data.delivery_address;
+    var selectedId = userDetails.delivery_address;
     if (selectedId) {
-        $.each(data.address_list, function(key, value) {
+        $.each(userDetails.address_list, function(key, value) {
             if (value.id == selectedId) {
                 $('.address-info').append("<div class='contents address-added' data-id='" + value.id + "'>" +
                     "<span class='content-heading'>" + "DELIVERY ADDRESS" + "</span>" +
