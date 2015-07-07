@@ -229,9 +229,11 @@ def save_delivery_time(request, data, user):
             field = "time"
         
         if "delivery_address" in data:
-            cart.delivery_address = Address.objects.get(pk=int(data["delivery_address"]))
+            add = Address.objects.get(pk=int(data["delivery_address"]), user=user)
+            cart.delivery_address = add
             field = "address"
-
+        if field == '':
+           return custom_error("Invalid input")
         cart.save()
 
         return json_response({"status":1, "message":"Successfully updated delivery " + field + "."})

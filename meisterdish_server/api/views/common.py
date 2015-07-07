@@ -69,16 +69,41 @@ def login(request, data):
                 log.info("Logging in to guest session")
                 try:
                     guest_user = User.objects.get(pk=session["user"]["id"], role__pk=settings.ROLE_GUEST)
-                    cart = Cart.objects.get(user=guest_user, completed=False)
-                    cart.user = user
-                    cart.save()
-                    guest_user.delete()
+                    try:
+                        my_cart = Cart.objects.get(user__email=user.email, completed=False)
+                    except Cart.DoesNotExist:
+                        try:
+                            guest_cart = Cart.objects.get(user=guest_user, completed=False)
+                            guest_cart.user=user
+                            guest_cart.save()
+                        except Cart.DoesNotExist:
+                            pass
+                    else:
+                        try:
+                            guest_cart = Cart.objects.get(user=guest_user, completed=False)
+                        except Cart.DoesNotExist:
+                            pass
+                        else:
+                            for ci in CartItem.objects.filter(cart=guest_cart):
+                                my_ci = CartItem.objects.filter(cart=my_cart, meal__pk=ci.meal.id)
+                                if my_ci.exists():
+                                    my_ci[0].quantity = ci.quantity
+                                    my_ci[0].save()
+                                    ci.delete()
+                                else:
+                                    ci.cart = my_cart
+                                    ci.save()
+                                
+                            guest_cart.delete()
+
                     session.delete()
                     session = SessionStore()
                     session.create()
                     log.info("User Logged in to guest session. cart updated")
-                except:
-                    log.error("No guest session found with guest user/no cart in guest session")
+                except Exception as e:
+                    log.error("No guest session found with guest user/no cart in guest session"+e.message)
+                else:
+                    guest_user.delete()
 
             else:
                 log.info("New session")
@@ -580,8 +605,8 @@ def get_address_list(request, data, user):
         delivery_address = 0
 
         for add in addresses:
-            if not check_delivery_area(add.zip):
-                continue
+            #if 'checkout' in data and data['checkout'] == 1 and not check_delivery_area(add.zip):
+            #    continue
             if add.is_primary:
                 delivery_address = add.id
             address_list.append({
@@ -598,10 +623,11 @@ def get_address_list(request, data, user):
                                  "zip":add.zip,
                                  "phone":add.phone,
                                  "email":add.email,
+                                 "delivery" : True if check_delivery_area(add.zip) else False,
                                  })
         try:
             del_address = Cart.objects.get(user=user, completed=False).delivery_address
-            if del_address:
+            if del_address and del_address in addresses:
                 delivery_address = del_address.id
         except:
             pass

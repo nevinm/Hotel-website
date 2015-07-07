@@ -205,6 +205,7 @@ def get_users(request, data, user):
             search = data["search"]
             users = users.filter(Q(first_name__istartswith=search)| Q(last_name__istartswith=search))
         
+        users = users.order_by('-id')
         actual_count = users.count()
         try:
             paginator = Paginator(users, limit)
