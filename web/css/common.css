@@ -1386,7 +1386,6 @@ span.icon-menu {
 @media (max-width: 443px) {
     .popup{
         width: 75%;
-        margin-left: -37.5%;
         height: 225px;
     }
 }
