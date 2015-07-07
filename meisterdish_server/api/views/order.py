@@ -365,7 +365,7 @@ def send_order_placed_notification(order):
                "delivery_time" : order.delivery_time.strftime("%A, %B %d"+suffix+", %Y"),
                "total_amount":"{0:.2f}".format(order.total_amount),
                "discount" : "{0:.2f}".format(order.discount),
-               "credit" : "{0:.2f}".format(order.credit),
+               "credit" : "{0:.2f}".format(order.credits),
                "tax" : "{0:.2f}".format(order.total_tax),
                "shipping" : "{0:.2f}".format(settings.SHIPPING_CHARGE),
                "tip":"{0:.2f}".format(order.tip),
