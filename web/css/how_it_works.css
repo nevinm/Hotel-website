@@ -277,6 +277,9 @@ img.image-small{
 }
 #zip-code-error{
 	background: none;
+	width: 60%;
+	left: 0;
+	padding-left: 0;
 }
 .forminput-wrapper{
 	position: relative;
@@ -587,6 +590,9 @@ label#username-error {
 	#we-inspire,.right-arrow{
     	display: none;
     }
+    .forminput-wrapper{
+    	text-align: left;
+    }
 
 }
 @media (max-width: 400px) {
@@ -595,5 +601,16 @@ label#username-error {
 	}
 	.contentWrapper .h0{
 		font-size: 32px;
+	}
+	#zip-code{
+		width: 100%;
+		float: left;
+		margin-bottom: 20px;
+	}
+	input#check-delivery-area{
+		width: 100%;
+	}
+	#zip-code-error{
+		bottom: 98px;
 	}
 }
