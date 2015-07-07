@@ -1743,6 +1743,12 @@ a#add-address-popup :hover{
 			&MOBILE
 \*==================================*/
 @media (min-width: 320px)and (max-width:767px){
+	.address .button{
+		width: 99px;
+	}
+	.current-email-container label{
+		width: 100%;
+	}
 	.payment-popup-sub-container{
 		width: 100%;
 	}
@@ -1791,7 +1797,7 @@ a#add-address-popup :hover{
 		display: none;
 	}
 	#change-email span.body-text-small{
-		width: 300px;
+		width: 100%;
 	}
 	form.form {
 		width: 90%;
