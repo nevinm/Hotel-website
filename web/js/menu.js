@@ -222,7 +222,6 @@ function populateMealList(mealList, isInfinteScrolling) {
         $(".listContainer").empty();
     } else {}
     $.each(mealList.aaData, function(key, value) {
-        debugger;
         if(value.available){
             $(".listContainer").append("<div class='listItems'>" +
                 "<img src='" + value.main_image + "' data-id='" + value.id + "' class='thumbnail'>" +

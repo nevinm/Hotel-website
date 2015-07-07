@@ -309,7 +309,8 @@ hr.mealList-hr {
 .listItemDetails {
     float: left;
     width: 100%;
-    display: table;
+    display: inline-block;
+    position: relative;
     margin-bottom: 2px;
 }
 
@@ -355,6 +356,13 @@ hr.mealList-hr {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     margin-bottom: 0px;
+    word-break: break-all;
+    word-wrap: break-word;
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     line-height: 20px;
 }
 
