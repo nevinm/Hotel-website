@@ -74,36 +74,40 @@ function addReviews(review, starRating , orderId, mealId) {
 }
 
 function populateReviews(userDetails) {
-    $(userDetails.reviews).each(function(key, value){
-        $(".meal-review-container").append("<div class='meal-reviews meal-reviews-row'>" +
-            "<div class='details meal-review-cell'>" +
-            "<img class='meal-image' src='"+value.meal_image+"'>" +
-            "<span class='meal-name'>"+value.meal_name+"</span>" +
-            "</div><div class='rating meal-review-cell'>" +
-            "<span class='meal-star-rating'><input type='radio' class='rating-input' id='rating-input-1-5' name='rating-input-1' data-id='5'>" +
-            "<label for='rating-input-1-5' class='rating-star'></label>" +
-            "<input type='radio' class='rating-input' id='rating-input-1-4' name='rating-input-1' data-id='4'>" +
-            "<label for='rating-input-1-4' class='rating-star'></label>" +
-            "<input type='radio' class='rating-input' id='rating-input-1-3' name='rating-input-1' data-id='3'>" +
-            "<label for='rating-input-1-3' class='rating-star'></label>" +
-            "<input type='radio' class='rating-input' id='rating-input-1-2' name='rating-input-1' data-id='2'>" +
-            "<label for='rating-input-1-2' class='rating-star'></label>" +
-            "<input type='radio' class='rating-input' id='rating-input-1-1' name='rating-input-1' data-id='1'>" +
-            "<label for='rating-input-1-1' class='rating-star'></label></span>" +
-            "</div><div class='meal-review-textarea meal-review-cell'>" +
-            "<textarea maxlength='250' class='user-reviews' placeholder='Leave a reivew (Optional) '>"+value.review+"</textarea>" +
-            "</div><div class='meal-review-submit meal-review-cell'>" +
-            "<a href='#' class='btn btn-medium-primary medium-green add-review' id='add-review' data-meal-id='"+value.meal_id+"'"+
-            "data-order-id='"+value.order_id+"' >Submit</a></div></div>");
+    if(userDetails.reviews.length){
+        $(userDetails.reviews).each(function(key, value){
+            $(".meal-review-container").append("<div class='meal-reviews meal-reviews-row'>" +
+                "<div class='details meal-review-cell'>" +
+                "<img class='meal-image' src='"+value.meal_image+"'>" +
+                "<span class='meal-name'>"+value.meal_name+"</span>" +
+                "</div><div class='rating meal-review-cell'>" +
+                "<span class='meal-star-rating'><input type='radio' class='rating-input' id='rating-input-1-5' name='rating-input-1' data-id='5'>" +
+                "<label for='rating-input-1-5' class='rating-star'></label>" +
+                "<input type='radio' class='rating-input' id='rating-input-1-4' name='rating-input-1' data-id='4'>" +
+                "<label for='rating-input-1-4' class='rating-star'></label>" +
+                "<input type='radio' class='rating-input' id='rating-input-1-3' name='rating-input-1' data-id='3'>" +
+                "<label for='rating-input-1-3' class='rating-star'></label>" +
+                "<input type='radio' class='rating-input' id='rating-input-1-2' name='rating-input-1' data-id='2'>" +
+                "<label for='rating-input-1-2' class='rating-star'></label>" +
+                "<input type='radio' class='rating-input' id='rating-input-1-1' name='rating-input-1' data-id='1'>" +
+                "<label for='rating-input-1-1' class='rating-star'></label></span>" +
+                "</div><div class='meal-review-textarea meal-review-cell'>" +
+                "<textarea maxlength='250' class='user-reviews' placeholder='Leave a reivew (Optional) '>"+value.review+"</textarea>" +
+                "</div><div class='meal-review-submit meal-review-cell'>" +
+                "<a href='#' class='btn btn-medium-primary medium-green add-review' id='add-review' data-meal-id='"+value.meal_id+"'"+
+                "data-order-id='"+value.order_id+"' >Submit</a></div></div>");
 
-        var reviewMeal = $(".meal-review-container").find(".meal-reviews:last"),
-            starRating = $($(reviewMeal).find(".rating-star").get().reverse())[value.rating - 1];
-        if(value.review.length){
-            $(".user-reviews:last").attr("disabled",true);
-            $(".meal-star-rating:last").find(".rating-star").addClass("disable-star");
-        }
-        $(starRating).trigger("click");
-    });
+            var reviewMeal = $(".meal-review-container").find(".meal-reviews:last"),
+                starRating = $($(reviewMeal).find(".rating-star").get().reverse())[value.rating - 1];
+            if(value.review.length){
+                $(".user-reviews:last").attr("disabled",true);
+                $(".meal-star-rating:last").find(".rating-star").addClass("disable-star");
+            }
+            $(starRating).trigger("click");
+        });
+    }else{
+        $(".message").show();
+    }
 }
 function changeSessionKey(){
     var currentUrl = window.location.href,newSession,orderId;
