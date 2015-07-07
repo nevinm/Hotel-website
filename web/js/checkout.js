@@ -875,10 +875,12 @@ function getStates() {
 }
 
 function populateAddedAddress(delivery_address,flag) {
-    var addedAddress = [],
+    var addedAddress = [],latest_address = {},
         newAddress = getNewAddress(flag);
     newAddress.id = delivery_address;
-    // localStorage['delivery_addressess'] = newAddress;
+    latest_address = JSON.parse(localStorage['delivery_addressess']);
+    latest_address.address_list.push(newAddress);
+    localStorage['delivery_addressess'] = JSON.stringify(latest_address);
     addedAddress.push(newAddress);
     data = {
             "address_list": addedAddress,

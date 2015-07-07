@@ -227,7 +227,7 @@ function populateMealList(mealList, isInfinteScrolling) {
                 "<img src='" + value.main_image + "' data-id='" + value.id + "' class='thumbnail'>" +
                 "<section class='listItemDetails'>" +
                 "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +
-                "<div class='menuItemDetails'>" +"with " +value.sub + "</div>" +
+                "<div class='menuItemDetails'>" + value.sub + "</div>" +
                 "<hr class='mealList-hr'>"+
                 "</section><section class='listItemDetails tableDisplay'>" +
                 "<h3 class='pullLeft itemCost'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</h3>" +
