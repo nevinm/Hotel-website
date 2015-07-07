@@ -222,9 +222,16 @@ function populateMealList(mealList, isInfinteScrolling) {
         $(".listContainer").empty();
     } else {}
     $.each(mealList.aaData, function(key, value) {
+        debugger;
         if(value.available){
             $(".listContainer").append("<div class='listItems'>" +
+                "<div class='meal-image-wrapper'>"+
                 "<img src='" + value.main_image + "' data-id='" + value.id + "' class='thumbnail'>" +
+                "<div class='meal-overlay' data-id='" + value.id + "'>"+"<p class='upper-line'>"+
+                "<span>"+ value.quantity + "</span>" +" "+ 
+                "SERVINGS" + "</p>" +
+                "<p class='lower-line'>" + "Added to cart" + "</p>"+
+                "</div>" + "</div>" +
                 "<section class='listItemDetails'>" +
                 "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +
                 "<div class='menuItemDetails'>" + value.sub + "</div>" +
@@ -232,19 +239,22 @@ function populateMealList(mealList, isInfinteScrolling) {
                 "</section><section class='listItemDetails tableDisplay'>" +
                 "<h3 class='pullLeft itemCost'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</h3>" +
                 "<span class='per-serving-text'>"+"PER SERVING"+"</span>"+
-                // "<div class='removeItemButton' data-id='"+ value.id +"'>"+"-"+"</div>"+
+                "<div class='removeItemButton' data-id='"+ value.id +"'>"+"-"+"</div>"+
                 "<span><a class='btn btn-small-primary medium-green addItemButton' " +
                 "data-id='" + value.id + "'>ADD</a></span>" +
                 "</section></div>");
         }
-        if (!value.in_cart) {} else {
-            $(".addItemButton:last").addClass("button-disabled");
-        }
-        // if(value.quantity < 2){
-        //     $('.removeItemButton[data-id="'+ value.id +'"]').hide();
-        // }else{
-        //     $('.removeItemButton[data-id="'+ value.id +'"]').show();
+        // if (!value.in_cart) {} else {
+        //     $(".addItemButton:last").addClass("button-disabled");
         // }
+        if(value.quantity < 2){
+            $('.removeItemButton[data-id="'+ value.id +'"]').hide();
+            $('.meal-overlay[data-id="'+ value.id +'"]').hide();
+        }else{
+
+            $('.removeItemButton[data-id="'+ value.id +'"]').show();
+            $('.meal-overlay[data-id="'+ value.id +'"]').show();
+        }
     });
     if (endOfList) {} else {
         infiniteScrolling();
@@ -269,21 +279,25 @@ var addToCartCallback = {
         if (status == -1) {
             showPopup(meal_details);
         } else {
-            $('*[data-id="' + mealId + '"]').addClass("button-disabled");
-            showPopup(meal_details);
+            // $('*[data-id="' + mealId + '"]').addClass("button-disabled");
+            // showPopup(meal_details);
         var $removeButton = $('a[data-id="' + mealId + '"]').closest('.listItems').find('.removeItemButton'),
-            $addButton = $('a[data-id="' + 57 + '"]').closest('.listItems').find('.addItemButton');
-            // if(meal_details.quantity == 0){
-            //     $removeButton.hide();
-            // }else{
-            //     $removeButton.fadeIn();
-            // }
+            $addButton = $('a[data-id="' + mealId + '"]').closest('.listItems').find('.addItemButton'),
+            $showOverlay = $('.meal-overlay[data-id="'+ mealId +'"]');
+            $showOverlay.find('.upper-line span').text(meal_details.quantity);
+            if(meal_details.quantity == 0){
+                $removeButton.hide();
+                $showOverlay.hide();
+            }else{
+                $removeButton.fadeIn();
+                $showOverlay.show();
+            }
 
-            // if(meal_details.quantity >= 10){
-            //     $addButton.hide();
-            // }else{
-            //     $addButton.show();
-            // }
+            if(meal_details.quantity >= 10){
+                $addButton.hide();
+            }else{
+                $addButton.show();
+            }
             if (meal_details.session_key && (meal_details.session_key).length) {
                 localStorage['session_key'] = meal_details.session_key;
                 createCookie("SessionExpireTime", "true", sessionExpiryTime);
