@@ -436,7 +436,7 @@ def get_kitchen_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(is_deleted=False, delivery_time__gte=datetime.now()).exclude(status=0)
+        orders = Order.objects.filter(is_deleted=False, delivery_time__gte=datetime.now()-datetime.timedelta(days=2), status__gt=0, status__lt=4)
         
         total_count = orders.count()
 
@@ -553,7 +553,7 @@ def get_delivery_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(delivery_type__iexact='delivery', status=2, is_deleted=False, delivery_time__gte=datetime.now())
+        orders = Order.objects.filter(delivery_type__iexact='delivery', status__gte=2, is_deleted=False, delivery_time__gte=datetime.now()-datetime.timedelta(days=2))
         
         total_count = orders.count()
 

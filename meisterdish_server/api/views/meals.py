@@ -65,7 +65,7 @@ def get_meals(request, data):
                               "sub":meal.sub,
                               "description":meal.description,
                               #"images":meal_images,
-                              "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.thumb.url,
+                              "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.image.url,
                               "available":1 if meal.available else 0,
                               "category":"Not Available" if not meal.category else meal.category.name.title(),
                               "meal_types":meal_types,
