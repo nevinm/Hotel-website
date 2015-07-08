@@ -30,7 +30,7 @@ $(document).ready(function() {
     });
     
     //hide social media icons
-    $(".footer-links .socialMedia").hide();
+    $(".footer-links").remove();
 
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
