@@ -1082,7 +1082,7 @@ form.addaddress-popup,#new-address-form {
 	left: 30px;
 
 }
-form#pay-form,form#credit-card-form {
+form#pay-form,form#credit-card-form,form#update-pay-form {
   width: 100%;
   float: left;
 }
@@ -1947,7 +1947,7 @@ a#add-address-popup :hover{
 	.pay-by-credit-container{
 		width: 100%;
 	}
-	form#pay-form,form#credit-card-from{
+	form#pay-form,form#credit-card-from,form#update-pay-form{
 		padding-bottom: 20px;
 	}
 	#guest-address-info{

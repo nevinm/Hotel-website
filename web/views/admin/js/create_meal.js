@@ -109,6 +109,13 @@ $(document).ready(function() {
     getFilterContent();
 });
 
+function bindEnterSubmittion() {
+    $(".tips-enter-submit").on("keydown", function search(e) {
+        if (e.keyCode == 13) {
+            $("#add-tips-main").trigger("click");
+        }
+    });
+}
 
 function addDynamicApiUrlUploadPicture(element) {
     $("#" + element).attr("data-url", baseURL + "cms/upload_image/");
@@ -164,7 +171,7 @@ function extractNutrients() {
             var subNutrient = $(this),
                 nutrientSubDetails = extractNutrientInnerDetails(nutrientSub, subNutrient);
             totalSubNutrientData.push(nutrientSubDetails);
-        }); 
+        });
         oneNutrientTotal = {
             "mainNutrient": nutrientMainDetails.nutrientsName,
             "perServing": nutrientMainDetails.servingValue,

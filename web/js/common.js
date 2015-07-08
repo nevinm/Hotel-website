@@ -28,6 +28,10 @@ $(document).ready(function() {
             window.open('http://pinterest.com/meisterdish','_blank');
         }
     });
+    
+    //hide social media icons
+    $(".footer-links .socialMedia").hide();
+
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
         clicked = 1;
