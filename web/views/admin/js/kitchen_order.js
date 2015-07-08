@@ -42,13 +42,23 @@ function getOrders(nextPage, userName, orderNum, status, total_amount, phone_num
 
 //Update orders API process
 var updateOrdersCallback = {
-    success: function(data, textStatus) {
-        console.log("Order Updated");
+    success: function(data, textStatus, element) {
+        updatedOrders = JSON.parse(data);
+        if (updatedOrders.status) {
+            if ($(element).is(":checked")) {
+                $(element).parents().eq(1).addClass("produced-meal")
+            } else {
+                $(element).parents().eq(1).removeClass("produced-meal")
+            }
+        }
+        else{
+            showPopup(data);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function updateOrders(producedMeals, orderId) {
+function updateOrders(producedMeals, orderId, element) {
     var url = baseURL + "cms/update_order/" + orderId + "/",
         header = {
             "session-key": localStorage["session_key"]
@@ -58,7 +68,7 @@ function updateOrders(producedMeals, orderId) {
         }
     data = JSON.stringify(params);
     var updateOrdersInstance = new AjaxHttpSender();
-    updateOrdersInstance.sendPost(url, header, data, updateOrdersCallback);
+    updateOrdersInstance.sendPost(url, header, data, updateOrdersCallback, element);
 }
 
 function undefinedCheck(param) {
@@ -137,6 +147,6 @@ function populateOrderList(data) {
                 producedMeals.push($(value).data("meal-id"));
             } else {}
         });
-        updateOrders(producedMeals, orderId);
+        updateOrders(producedMeals, orderId, this);
     });
 }
