@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from api.views.decorators import *
 import sys, traceback
-from libraries import manage_image_upload, check_delivery_area
+from libraries import manage_image_upload, check_delivery_area, add_to_mailing_list
 
 log = logging.getLogger('api')
 
@@ -295,6 +295,7 @@ def verify_user(request, data, token):
 
         if not check_delivery_area(user.zipcode):
             log.error("User's zip code not available.")
+            add_to_mailing_list(user.email)
             return HttpResponseRedirect(fail_url)        
 
         return HttpResponseRedirect(login_url+"?account_verify=true")

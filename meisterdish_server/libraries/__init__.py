@@ -233,4 +233,14 @@ def get_time_past(dtm):
     mins = (now - dtm).days*24*60
     return mins
 
-
+def add_to_mailing_list(email):
+    try:
+        import mailchimp
+        mc = mailchimp.Mailchimp(settings.MAILCHIMP_API_KEY)
+        res = mc.lists.subscribe(settings.MAILCHIMP_LIST_ID, {'email': email}, double_optin=False)
+        if res and res['euid']:
+            log.info("Added email to list")
+        else:
+            log.info("Failed to add email to list")
+    except Exception as e:
+        log.error("Failed to add to mailing list : "+e.message)
