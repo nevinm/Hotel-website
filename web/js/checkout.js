@@ -890,9 +890,11 @@ function populateAddedAddress(delivery_address,flag) {
     var addedAddress = [],latest_address = {},
         newAddress = getNewAddress(flag);
     newAddress.id = delivery_address;
-    latest_address = JSON.parse(localStorage['delivery_addressess']);
-    latest_address.address_list.push(newAddress);
-    localStorage['delivery_addressess'] = JSON.stringify(latest_address);
+    if (localStorage['loggedIn'] == 'true') {
+        latest_address = JSON.parse(localStorage['delivery_addressess']);
+        latest_address.address_list.push(newAddress);
+        localStorage['delivery_addressess'] = JSON.stringify(latest_address);
+    }
     addedAddress.push(newAddress);
     data = {
             "address_list": addedAddress,
