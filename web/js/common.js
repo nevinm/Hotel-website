@@ -30,7 +30,7 @@ $(document).ready(function() {
     });
     
     //hide social media icons
-    $(".footer-links .socialMedia").hide();
+    $(".footer-links").remove();
 
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
@@ -232,6 +232,7 @@ function logingOut() {
     localStorage.removeItem('user_profile');
     localStorage.removeItem('delivery_addressess');
     localStorage.removeItem('fb-image');
+    localStorage.removeItem('admin_role');
     localStorage['loggedIn'] = false;
     localStorage['admin_loggedIn'] = false;
     $('#navbar-username a').text('');

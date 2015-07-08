@@ -119,11 +119,15 @@ $(document).ready(function() {
         }
     }
 
+    $(document).on('click', 'input[type=radio][name=address]', function() {
+        $('#save-delivery-address').removeClass('button-disabled');
+    });
+
     $(document).on('click', '#change-address', function() {
         populateAddressListPopup();
-        if (localStorage['loggedIn'] == 'false') {
-             $("a#add-address-popup").hide();
-        }else{}
+        // if (localStorage['loggedIn'] == 'false') {
+        //      $("a#add-address-popup").hide();
+        // }else{}
     });
     //add address
     $(document).on('click', '#add-address-popup', function() {
@@ -738,9 +742,6 @@ function populateAddressListPopup() {
         getAddress("populateAddressToPopUp");
         $('.address-payment-list-popup').show();
     }
-    $('input[type=radio][name=address]').on("click", function() {
-        $('#save-delivery-address').removeClass('button-disabled');
-    });
 }
 
 function appendAddresscontent(addressList) {

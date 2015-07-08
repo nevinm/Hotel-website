@@ -93,6 +93,14 @@ li#navbar-username a {
 li#navbar-username {
     padding: 0;
 }
+
+#menu li{
+    display: none;
+}
+
+.showLi{
+    display: inline-block !important;
+}
 /*=======================*\
        &Category-Page
 \*=======================*/
@@ -126,6 +134,13 @@ li#navbar-username {
     font-family: 'BrandonGrotesque-Regular';
     text-transform: uppercase;
     font-size: 12px;
+}
+.space td{
+    border: none !important;
+}
+.produced-meal{
+    background-color: rgb(115, 115, 115);
+    color: rgb(226, 215, 215);
 }
 #order-list,#order-list th,#order-list td{
     border: 1px solid #d0d0d0;
@@ -391,6 +406,7 @@ table#userlist {
 }
 #order-list tbody tr:hover{
     background-color: rgb(234, 234, 234);
+    color: black;
 }
 .content-heading:nth-child(1),.content-heading:nth-child(2){
     margin-right: 30%
