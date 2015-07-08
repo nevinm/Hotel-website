@@ -31,16 +31,13 @@ def update_order(request, data, user, order_id):
             if user.role.id != settings.ROLE_KITCHEN:
                 return custom_error("Only the kitchen staff is authorized to do this operation.")
 
-            for order_meal in data["produced_meals"]:
-                cart_item = order.cart.cartitem_set.filter(meal__pk=order_meal)
-                if not cart_item.exists():
-                  return custom_error("The meal with ID " +str(order_meal) + " does not exist in cart.")
-                cart_item = cart_item[0]
-                cart_item.produced = True
+            for cart_item in order.cart.cartitem_set.all():
+                if cart_item.meal.id in data["produced_meals"]:
+                    cart_item.produced = True
+                else:
+                    cart_item.produced = False
                 cart_item.save()
                 
-                print cart_item
-
         if "status" in data:
             if not user.role.id in(settings.ROLE_KITCHEN, settings.ROLE_ADMIN):
                 return custom_error("You are not authorized to change the order status.")
