@@ -1,15 +1,20 @@
 setTimeout(function() {
-    $('#pay-form')[0].reset();
+    $('form')[0].reset();
 }, 50);
 $(document).ready(function() {
     populateYear();
     CartItemCount();
     stripeIntegration();
     var card_id = checkIfEdit();
-    $('#update-credit-card').on('click',function(e){
+    $('.update-add-credit-card').on('click',function(e){
         e.preventDefault();
-        if($('#pay-form').valid()){
-            updateCardDetails(card_id);
+        if($('form').valid()){
+            if($('.update-add-credit-card').val() == "ADD"){
+                $('form').submit();
+            }
+            if($('.update-add-credit-card').val() == "UPDATE"){
+                updateCardDetails(card_id);
+            }
         }
     })
 });
@@ -19,15 +24,15 @@ function checkIfEdit() {
     if (siteUrl.indexOf('cardId') != -1) {
         card_id = getParameterFromUrl('cardId');
         savedCardDetails(card_id);      
-        $("#update-credit-card").addClass('show');
-        $("#add-credit-card").hide();
-        $("#pay-form").validate({
+        $('.update-add-credit-card').val("UPDATE");
+        $("form").attr('id','update-pay-form');
+        $("form").validate({
             ignore: ".ignore"
         });
         return card_id;
     }else{
-        $("#update-credit-card").hide();
-        $("#add-credit-card").addClass('show');
+        $("form").attr('id','pay-form');
+        $('.update-add-credit-card').val("ADD");
     }
 }
 
@@ -44,7 +49,7 @@ var saveCreditCardDetailsCallback = {
     success: function(data, textStatus) {
         var response = JSON.parse(data);
         if (response.status == 1) {
-            $("#pay-form")[0].reset();
+            $("form")[0].reset();
             window.location.href = 'manage-creditcard.html';
         } else {
             showPopup(response);

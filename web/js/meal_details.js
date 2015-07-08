@@ -215,7 +215,7 @@ function tipsTricksTab(mealDetails) {
             "<div class='container'>" +
             "<span class='mob-view-header tips-header'>" + value.title + "</span>" +
             "<div class='video-container'>" +
-            "<iframe height='280' src='" + value.video_url + "' frameborder='0' allowfullscreen=''></iframe>" +
+            "<iframe height='280' src='//www.youtube.com/embed/" + convertToEmbedded(value.video_url) + "' frameborder='0' allowfullscreen=''></iframe>" +
             "</div><div class='list-container'>" +
             "<span class='list-header tips-header'>" + value.title + "</span>" +
             "<ul class='video-tips'></ul>" +

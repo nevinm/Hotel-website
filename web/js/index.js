@@ -40,8 +40,9 @@ function isSessionExpired() {
 function renderFullPageJS() {
     $('#fullpage').fullpage({
         scrollingSpeed: 1000,
-        slidesNavigation: true,
-        controlArrows: false,
+        // slidesNavigation: true,
+        // controlArrows: false,
+        keyboardScrolling: false,
         navigation: true,
         afterResize: function() {
             destroyFullPageJS();
@@ -54,7 +55,8 @@ function renderMobileFullPageJs() {
     $('#fullpage').fullpage({
         scrollingSpeed: 1000,
         slidesNavigation: false,
-        controlArrows: true,
+        controlArrows: false,
+        keyboardScrolling: false,
         navigation: false,
         autoScrolling: false,
         scrollBar: true,
