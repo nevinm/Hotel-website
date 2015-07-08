@@ -223,7 +223,13 @@ def get_cart_items_count(request, data):
 def save_delivery_time(request, data, user):
     try:
         field = ""
-        cart = Cart.objects.get(user=user, completed=False)
+        try:
+            cart = Cart.objects.get(user=user, completed=False)
+        except Cart.DoesNotExist:
+            cart = Cart()
+            cart.user = user
+            cart,save()
+            
         if "delivery_time" in data:
             del_time = data['delivery_time'].strip()
             delivery_time = datetime.strptime(del_time,"%m-%d-%Y %H:%M:%S")
@@ -241,8 +247,6 @@ def save_delivery_time(request, data, user):
         cart.save()
 
         return json_response({"status":1, "message":"Successfully updated delivery " + field + "."})
-    except Cart.DoesNotExist:
-        return custom_error("Please add some meals to the cart.")
     except Exception as e:
         log.error("Save delivery time/address " + e.message)
         return custom_error("Failed to update delivery: " + field + ". Please try again later.")

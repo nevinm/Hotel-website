@@ -3,6 +3,7 @@ import json as simplejson
 import logging 
 import settings
 from cms.views.decorators import *
+from datetime import timedelta
 from datetime import datetime
 from django.core.paginator import Paginator
 from libraries import mail, mail_order_confirmation, check_delivery_area, validate_phone, validate_email, create_address_text_from_model, export_csv, get_time_past
@@ -436,7 +437,7 @@ def get_kitchen_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(is_deleted=False, delivery_time__gte=datetime.now()-datetime.timedelta(days=2), status__gt=0, status__lt=4)
+        orders = Order.objects.filter(is_deleted=False, delivery_time__gte=datetime.now()-timedelta(days=2), status__gt=0, status__lt=4)
         
         total_count = orders.count()
 
@@ -553,7 +554,7 @@ def get_delivery_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(delivery_type__iexact='delivery', status__gte=2, is_deleted=False, delivery_time__gte=datetime.now()-datetime.timedelta(days=2))
+        orders = Order.objects.filter(delivery_type__iexact='delivery', status__gte=2, is_deleted=False, delivery_time__gte=datetime.now()-timedelta(days=2))
         
         total_count = orders.count()
 
