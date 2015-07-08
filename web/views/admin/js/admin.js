@@ -11,7 +11,11 @@ var adminCallback = {
             localStorage['admin_loggedIn'] = true;
             localStorage['admin_role'] = adminDetails.role_name;
             createCookie("SessionExpireTime", "true", sessionExpiryTime);
-            window.location.href = 'orderlist.html'
+            if (adminDetails.role_name == "ADMIN") {
+                window.location.href = 'orderlist.html'
+            } else if (adminDetails.role_name == "KITCHEN") {
+                window.location.href = 'kitchen_order.html'
+            }
         } else {
             alert(adminDetails.message);
         }

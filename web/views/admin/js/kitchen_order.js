@@ -25,7 +25,7 @@ var getOrdersCallback = {
 
 function getOrders(nextPage, userName, orderNum, status, total_amount, phone_num, date, delivery_type) {
     $('#order-list tbody').empty();
-    var url = baseURL + "cms/get_orders/",
+    var url = baseURL + "cms/get_kitchen_orders/",
         header = {
             "session-key": localStorage["session_key"]
         },
@@ -33,15 +33,32 @@ function getOrders(nextPage, userName, orderNum, status, total_amount, phone_num
             "nextPage": nextPage,
             "search": userName,
             "num": orderNum,
-            "status": status,
-            "phone": phone_num,
-            "date": date,
-            "amount": total_amount,
-            "delivery_type": delivery_type
+            "status": status
         }
     data = JSON.stringify(params);
     var getOrdersInstance = new AjaxHttpSender();
     getOrdersInstance.sendPost(url, header, data, getOrdersCallback);
+}
+
+//Update orders API process
+var updateOrdersCallback = {
+    success: function(data, textStatus) {
+        console.log("Order Updated");
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function updateOrders(producedMeals, orderId) {
+    var url = baseURL + "cms/update_order/" + orderId + "/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {
+            "produced_meals": producedMeals
+        }
+    data = JSON.stringify(params);
+    var updateOrdersInstance = new AjaxHttpSender();
+    updateOrdersInstance.sendPost(url, header, data, updateOrdersCallback);
 }
 
 function undefinedCheck(param) {
@@ -59,8 +76,20 @@ function populateOrderList(data) {
             minTime = undefinedCheck(value.time),
             orderNum = undefinedCheck(value.order_num),
             minTime = undefinedCheck(value.minutes);
+
         $.each(value.meals, function(mealKey, mealValue) {
-            $('#order-list tbody').append("<tr data-id='" + mealValue.id + "'>" +
+            var prevOrderNum = $($("#order-list tbody .row:nth-last-child(2)")[0]).data("order-id");
+            if (prevOrderNum && (prevOrderNum == orderNum)) {} else {
+                $('#order-list tbody').append("<tr class='row space'" +
+                    " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id + "'>" +
+                    "<td></td><td></td><td></td>" +
+                    "<td></td><td></td><td></td>" +
+                    "<td></td><td></td>" +
+                    "</tr>");
+            }
+
+            $('#order-list tbody').append("<tr class='row'" +
+                " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id + "'>" +
                 "<td>" + deliverytime + "</td>" +
                 "<td>" + orderNum + "</td>" +
                 "<td>" + mealValue.name + "</td>" +
@@ -68,8 +97,19 @@ function populateOrderList(data) {
                 "<td>" + zip + "</td>" +
                 "<td>" + name + "</td>" +
                 "<td>" + phone + "</td>" +
-                "<td><button type='button' class='meal-produced meal-delete btn btn-small-primary medium-green'" +
-                "data-id='" + mealValue.id + "'>Produced</button></td></tr>");
+                "</tr>");
+
+
+            if (mealValue.produced) {
+                $("#order-list tbody .row:last").addClass("produced-meal");
+                $("#order-list tbody .row:last").append("<td><input checked type='checkbox'" +
+                    "data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id +
+                    "' class='status down'/></td>");
+            } else {
+                $("#order-list tbody .row:last").append("<td><input type='checkbox'" +
+                    " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id +
+                    "' class='status'/></td>");
+            }
         });
 
         currentStatus = value.status_id;
@@ -81,8 +121,22 @@ function populateOrderList(data) {
         currentPage: fullMealList.current_page,
         cssStyle: 'light-theme',
         onPageClick: function(pageNumber, event) {
-            searchParams = returnSearchParams();
-            getOrders(pageNumber, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date);
+            getOrders(pageNumber);
         }
+    });
+
+    $('#order-list tbody').find("tr")[0].remove();
+
+    $(".status").on("change", function() {
+        var orderId = $(this).data('order-id'),
+            mealId = $(this).data('meal-id'),
+            producedMealsElements = $("input[data-order-id='" + orderId + "']"),
+            producedMeals = [];
+        $.each(producedMealsElements, function(key, value) {
+            if ($(value).is(":checked")) {
+                producedMeals.push($(value).data("meal-id"));
+            } else {}
+        });
+        updateOrders(producedMeals, orderId);
     });
 }
