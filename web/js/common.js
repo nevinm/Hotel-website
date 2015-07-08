@@ -28,6 +28,10 @@ $(document).ready(function() {
             window.open('http://pinterest.com/meisterdish','_blank');
         }
     });
+    
+    //hide social media icons
+    $(".footer-links .socialMedia").hide();
+
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
         clicked = 1;
@@ -71,15 +75,15 @@ $(document).ready(function() {
         }, 600)
     });
 
-    // $(document).keypress(function (e) {
-    //     var key = e.which;
-    //     if(key == 13)  // the enter key code
-    //     {  
-    //         if($('.popup-wrapper').is(':visible')){
-    //             $('#close').trigger('click');
-    //         }
-    //     }
-    // });   
+    $(document).keypress(function (e) {
+        var key = e.which;
+        if(key == 13)  // the enter key code
+        {  
+            if($('.popup-wrapper').is(':visible')){
+                $('#close').trigger('click');
+            }
+        }
+    });   
 
     verifyAccount();
 });
