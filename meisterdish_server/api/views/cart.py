@@ -228,8 +228,8 @@ def save_delivery_time(request, data, user):
         except Cart.DoesNotExist:
             cart = Cart()
             cart.user = user
-            cart,save()
-            
+            cart.save()
+
         if "delivery_time" in data:
             del_time = data['delivery_time'].strip()
             delivery_time = datetime.strptime(del_time,"%m-%d-%Y %H:%M:%S")
