@@ -149,8 +149,9 @@ $(document).ready(function() {
 
     $(document).on('click', '#save-delivery-address', function() {
         var selectedId = $('input[type=radio][name=address]:checked').attr('data-id');
-        changeDeliveryAddress(selectedId);
         saveDeliveryTime("", selectedId);
+        $('.address-payment-list-popup').hide();
+
     });
 
     $('#add-guest-address').on("click", function(e) {
@@ -352,11 +353,15 @@ function getCartItems() {
 
 //Save delivery time
 var saveDeliveryTimeCallback = {
-    success: function(data, textStatus) {
+    success: function(data, textStatus,delivery_Id) {
         var userDetails = JSON.parse(data);
         if(userDetails.status == -1){
             showPopup(userDetails);
-        }else{}
+        }else{
+            if(delivery_Id){
+                changeDeliveryAddress(delivery_Id);    
+            }else{}
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -378,7 +383,7 @@ function saveDeliveryTime(date, delivery_Id) {
     }
     data = JSON.stringify(params);
     var saveDeliveryTimeInstance = new AjaxHttpSender();
-    saveDeliveryTimeInstance.sendPost(url, header, data, saveDeliveryTimeCallback);
+    saveDeliveryTimeInstance.sendPost(url, header, data, saveDeliveryTimeCallback,delivery_Id);
 }
 
 //populate cart items
@@ -779,7 +784,6 @@ function changeDeliveryAddress(selectedId) {
         htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
     $('.address-info .contents').html(htmlContent);
-    $('.address-payment-list-popup').hide();
 }
 var addAddressCallback = {
     success: function(data, textStatus, flag) {
