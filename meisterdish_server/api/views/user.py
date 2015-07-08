@@ -386,7 +386,7 @@ def save_email(request, data):
         if not validate_email(email):
             return custom_error("Please enter a valid email.")
         mc = mailchimp.Mailchimp(settings.MAILCHIMP_API_KEY)
-        res = mc.lists.subscribe(settings.MAILCHIMP_LIST_ID, {'email': email})
+        res = mc.lists.subscribe(settings.MAILCHIMP_LIST_ID, {'email': email}, double_optin=False)
         if res and res['euid']:
             log.info("Added email to list")
         else:

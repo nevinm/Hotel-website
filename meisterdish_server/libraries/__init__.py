@@ -20,6 +20,7 @@ def mail(to_list, subject, message, sender="Meisterdish<contact@meisterdish.com>
     
     msg = EmailMessage(subject, message, sender, to_list, headers=headers)
     msg.content_subtype = "html"
+    msg.mixed_subtype = 'related'
     if design:
       for cid, img in settings.EMAIL_IMAGES.items():
           fp = open(img, 'rb')
@@ -36,7 +37,7 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
     try:
         msg = EmailMessage(subject, message, sender, to_list, headers=headers)
         msg.content_subtype = "html"
-        
+        msg.mixed_subtype = 'related'
         share_images = {
           "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
           "share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
