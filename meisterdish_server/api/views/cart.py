@@ -58,6 +58,8 @@ def get_cart_items(request, data, user):
                               "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                               "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
                               "coupon" : coupon,
+                              #Arun
+                              "credits" : user.credits,
                               })
     except Exception as e:
     	log.error("Failed to list cart items." + e.message)
@@ -227,9 +229,11 @@ def save_delivery_time(request, data, user):
             field = "time"
         
         if "delivery_address" in data:
-            cart.delivery_address = Address.objects.get(pk=int(data["delivery_address"]))
+            add = Address.objects.get(pk=int(data["delivery_address"]), user=user)
+            cart.delivery_address = add
             field = "address"
-
+        if field == '':
+           return custom_error("Invalid input")
         cart.save()
 
         return json_response({"status":1, "message":"Successfully updated delivery " + field + "."})

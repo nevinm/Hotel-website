@@ -459,7 +459,7 @@ $("form").each(function() {
                 minAmount: 0,
                 maxAmount: 10
             },
-            category:{
+            new_category:{
                required: true,
                minlength: 3 
             },
