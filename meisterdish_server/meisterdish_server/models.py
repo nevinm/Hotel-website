@@ -140,7 +140,7 @@ class User(models.Model):
     zipcode = models.CharField(db_index=True, max_length=6, null=True, blank=True)
     email = models.EmailField(db_index=True, max_length=30, null=True)
     mobile = models.CharField(max_length=15, null=True)
-    profile_image = models.ForeignKey(Image, null=True)
+    profile_image = models.ForeignKey(Image, null=True, blank=True)
     
     user_verify_token = models.CharField(max_length=50, null=True, blank=True, default="")
     password_reset_token = models.CharField(max_length=20, null=True, blank=True, default="")
