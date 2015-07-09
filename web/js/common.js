@@ -75,15 +75,21 @@ $(document).ready(function() {
         }, 600)
     });
 
-    // $(document).keypress(function (e) {
-    //     var key = e.which;
-    //     if(key == 13)  // the enter key code
-    //     {  
-    //         if($('.popup-wrapper').is(':visible')){
-    //             $('#close').trigger('click');
-    //         }
-    //     }
-    // });   
+    $(document).on('keypress', function (e) {
+        var key = e.which;
+        if(key == 13)  // the enter key code
+        {  
+            if($('.popup-container').is(':visible')){
+                if($('.popup-container').find('form').length === 0) {
+                    e.preventDefault();
+                    $('#close').trigger('click');
+                    if($('#cancel')){
+                        $('#close').trigger('click');
+                    }
+                }                
+            }
+        }
+    });   
 
     verifyAccount();
 });

@@ -105,22 +105,32 @@
     display: none;
 }
 .removeItemButton {
-  height: 30px;
-  width: 30px;
+  height: 32px;
+  width: 32px;
   text-align: center;
-  border: 1px solid #8EC657;
-  line-height: 25px;
-  float: right;
+  border: 1px solid #A9D77B;
+  line-height: 26px;
+  float: left;
   padding: 0 0px;
-  margin: 0;
-  margin-bottom: .5em;
+  margin-right: 20px;
+  margin-bottom: 6.5px;
   min-width: 30px;
   cursor: pointer;
-  font-family: 'BrandonGrotesque-bold';
+  font-weight: bold;
+  font-size: 25px;
   display: none;
   background-color: #a9d77b;
   border-radius: 3px;
   color: #fff;
+  -webkit-transition: color .4s, background-color .4s, border .4s;
+  transition: color .4s, background-color .4s, border .4s;
+  -moz-transition: color .4s, background-color .4s, border .4s;
+  -ms-transition: color .4s, background-color .4s, border .4s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.removeItemButton:hover{
+    background-color: #8EC657;
 }
 .subMenu ul li.menu-categories-list {
     float: left;
@@ -263,7 +273,7 @@ p.lower-line {
   font-size: 18px;
   text-align: center;
   width: 100%;
-  top: 50%;
+  top: 55%;
   position: absolute;
 }
 .listItemDetails{
@@ -275,7 +285,6 @@ p.lower-line {
 .listItemDetails span{
 	display: table-cell;
 	width: 100%;
-	padding: 0 2%;
 }
 .subMenuHeader{
 	float: left;
@@ -337,21 +346,6 @@ hr.mealList-hr {
     font-family: 'BrandonGrotesque-bold';
     font-size: 13px;
 }
-
-.listItemDetails {
-    float: left;
-    width: 100%;
-    display: inline-block;
-    position: relative;
-    margin-bottom: 2px;
-}
-
-.listItemDetails span {
-    display: table-cell;
-    width: 100%;
-    padding: 0 2%;
-}
-
 .contentWrapper {
     float: left;
     width: 100%;
@@ -414,6 +408,7 @@ span.per-serving-text {
   font-size: 12px;
   vertical-align: middle;
   letter-spacing: 1px;
+  padding-left: 5px;
 }
 
 .menu-pagination {
