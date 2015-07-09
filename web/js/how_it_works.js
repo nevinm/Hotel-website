@@ -138,6 +138,21 @@ $(document).ready(function() {
     $(document).on('click', '.delivery-area-check-popup img#cancel', function() {
     	 $('.delivery-area-check-popup').fadeOut();
     });
+
+    //popup re-direction on enter
+    $(document).on('keypress', function (e) {
+        var key = e.which;
+        if(key == 13)  // the enter key code
+        {  
+            if($('.popup-container').is(':visible')){
+                if($("#see-menu").is(":visible")){
+                	$('#see-menu')[0].click();
+                }
+            }                
+        }
+    });   
+
+
 // //Resize function 
 // 	$(window).resize(function() {
 // 		$('.next-sub-tab').hide();

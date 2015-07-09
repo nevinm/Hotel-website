@@ -125,9 +125,6 @@ $(document).ready(function() {
 
     $(document).on('click', '#change-address', function() {
         populateAddressListPopup();
-        // if (localStorage['loggedIn'] == 'false') {
-        //      $("a#add-address-popup").hide();
-        // }else{}
     });
     //add address
     $(document).on('click', '#add-address-popup', function() {
@@ -218,7 +215,8 @@ $(document).ready(function() {
             getProfile();
         }
 
-    })
+    });
+    
     $('#delivery-radio').on("click", function() {
         if ($('.address-info').is(':empty')) {
             $('.address-info-guest').show();
@@ -232,10 +230,11 @@ $(document).ready(function() {
         $('.pickup-content').hide();
         $("#add-guest-address").show();
         $(".state-selector-container").show();
-    })
+    });
+    
     $('#is-gift-card').on('click', function() {
         $('.isPromocode-wrapper').slideToggle();
-    })
+    });   
 });
 
 
@@ -332,6 +331,7 @@ var getCartItemsCallback = {
             if (cartItems.coupon != null) {
                 populateCoupon(cartItems.coupon);
             }
+            $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
         } else {
             $('.order-list-items').remove();
             $(".emtpy-cart-message").empty();

@@ -221,7 +221,6 @@ function populateMealList(mealList, isInfinteScrolling) {
         $(".listContainer").empty();
     } else {}
     $.each(mealList.aaData, function(key, value) {
-        debugger;
         if(value.available){
             $(".listContainer").append("<div class='listItems'>" +
                 "<div class='meal-image-wrapper'>"+
@@ -239,7 +238,7 @@ function populateMealList(mealList, isInfinteScrolling) {
                 "<input type='hidden' class='hidden-field' value='"+ value.quantity +"'>" +
                 "<h3 class='pullLeft itemCost'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</h3>" +
                 "<span class='per-serving-text'>"+"PER SERVING"+"</span>"+
-                "<div class='removeItemButton' data-id='"+ value.id +"'>"+"-"+"</div>"+
+                "<div class='removeItemButton' data-id='"+ value.id +"'>"+"&#8211"+"</div>"+
                 "<span><a class='btn btn-small-primary medium-green addItemButton' " +
                 "data-id='" + value.id + "'>ADD</a></span>" +
                 "</section></div>");
