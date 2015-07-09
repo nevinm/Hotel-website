@@ -211,6 +211,9 @@ def create_meal(request, data, user):
                 if "image" in tip:
                     tip_obj.image = Image.objects.get(pk=int(tip['image']))
                 
+                if "image_url" in tip:
+                    tip_obj.video_url = tip['image_url'].strip()
+
                 if "video_url" in tip:
                     tip_obj.video_url = tip['video_url'].strip()
                 
@@ -297,6 +300,7 @@ def get_meal_details(request, data, user, meal_id):
                 "description" : "" if tips.description.strip() == "" else simplejson.loads(tips.description),
                 "image_url" : settings.DEFAULT_MEAL_IMAGE if tips.image is None else tips.image.image.url,
                 "video_url" : "" if tips.video_url is None else tips.video_url,
+                "image_url1":"" if tips.image_url is None else tips.image_url,
                 })
         
         return json_response({
