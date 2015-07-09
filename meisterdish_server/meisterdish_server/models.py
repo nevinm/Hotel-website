@@ -211,6 +211,7 @@ class MealType(models.Model):
     name = models.CharField(db_index=True, max_length=25)
     is_hidden = models.BooleanField(db_index=True, default=False)
     is_deleted =  models.BooleanField(db_index=True, default=False)
+    image = models.ForeignKey(Image)
     
     def __unicode__(self):
         return self.name
@@ -277,6 +278,9 @@ class Meal(models.Model):
     
     is_deleted = models.BooleanField(db_index=True, default=False)
     available = models.BooleanField(db_index=True, default=True)
+
+    attribute = models.ForeignKey("Attribute", null=True, blank=True)
+
     def __unicode__(self):
         return self.name
 
@@ -461,3 +465,10 @@ class Configuration(models.Model):
 
     def __str__(self):
         return self.key + " = " + self.value
+
+class Attribute(models.Model):
+    name = models.CharField(db_index=True, max_length=20)
+    image = models.ForeignKey(Image)
+    is_deleted =  models.BooleanField(db_index=True, default=False)
+    def __unicode__(self):
+        return self.name
