@@ -358,3 +358,63 @@ def get_meal_details(request, data, user, meal_id):
 @check_input('GET')
 def import_meals(request, data):
     return HttpResponse("Not Done Via Web Interface")
+
+@check_input('POST', settings.ROLE_ADMIN)
+def create_attribute(request, data, user):
+    try:
+        attribute_id = False
+        if 'attribute_id' in data:
+            attribute_id = data['attribute_id']
+            attribute = Attribute.objects.get(pk=int(data['attribute_id']))
+            
+        if 'attribute_name' in data and 'attribute_image' in data and data['attribute_name'].strip() != '':
+            if not attribute_id:
+                attribute = Attribute()
+            attribute.name = data['attribute_name'].strip()
+            attribute.image = Image.objects.get(pk=int(data['attribute_image']))
+            attribute.save()
+            return HttpResponse("Attribute saved successfully.")
+        else:
+            return custom_error("No name/image found for the attribute.")
+    except Exception as e:
+        log.error("create_attribute details : " + e.message)
+        return custom_error("Failed to create/update attribute")
+
+@check_input('POST', settings.ROLE_ADMIN)
+def list_attributes(request, data, user):
+    try:
+        if 'attribute_id' in data:
+            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in Attribute.objects.get(pk=int(data['attribute_id']))]
+        else:
+            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in Attribute.objects.all()]
+        return json_response({"status":1, 
+                              "aaData":attributes,
+                              })
+    except Exception as e:
+        log.error("list_attributes details : " + e.message)
+        return custom_error("Failed to fetch attribute list")
+
+@check_input('POST', settings.ROLE_ADMIN)
+def get_attribute_details(request, data, user, attribute_id):
+    try:
+        attribute = Attribute.objects.get(is_deleted=False, pk=attribute_id)
+        return json_response({"status":1, 
+                              "id":attribute.id,
+                              "name":attribute.name,
+                              "image":attribute.image,
+                              })
+    except Exception as e:
+        log.error("get_attribute_details : " + e.message)
+        return custom_error("Failed to fetch attribute details")
+
+
+@check_input('POST', settings.ROLE_ADMIN)
+def delete_attribute(request, data, user, attribute_id):
+    try:
+        attribute = Attribute.objects.get(is_deleted=False, pk=attribute_id)
+        attribute.is_deleted=True
+        attribute.save()
+        return json_response({"status":1, "message":"Deleted Attribute", "id":attribute_id})
+    except Exception as e:
+        log.error("Failed to delete attribute : "+e.message)
+        return custom_error("Failed to delete attribute. Does that exist?")
