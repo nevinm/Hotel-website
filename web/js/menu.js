@@ -51,7 +51,7 @@ $(document).ready(function() {
         }
     });
         
-    $(document).on("click", '.thumbnail', function() {
+    $(document).on("click", '.thumbnail,.meal-overlay', function() {
         mealId = this.dataset.id;
         window.location.href = 'meal-details.html?mealId=' + mealId;
     });
@@ -238,7 +238,7 @@ function populateMealList(mealList, isInfinteScrolling) {
                 "<input type='hidden' class='hidden-field' value='"+ value.quantity +"'>" +
                 "<h3 class='pullLeft itemCost'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</h3>" +
                 "<span class='per-serving-text'>"+"PER SERVING"+"</span>"+
-                "<div class='removeItemButton' data-id='"+ value.id +"'>"+"-"+"</div>"+
+                "<div class='removeItemButton' data-id='"+ value.id +"'>"+"&#8211"+"</div>"+
                 "<span><a class='btn btn-small-primary medium-green addItemButton' " +
                 "data-id='" + value.id + "'>ADD</a></span>" +
                 "</section></div>");

@@ -14,7 +14,7 @@ var adminCallback = {
             if (adminDetails.role_name == "ADMIN") {
                 window.location.href = 'orderlist.html'
             } else if (adminDetails.role_name == "KITCHEN") {
-                window.location.href = 'kitchen_order.html'
+                window.location.href = 'kitchen-order.html'
             }
         } else {
             alert(adminDetails.message);
