@@ -372,16 +372,19 @@ def create_attribute(request, data, user):
             
         if 'attribute_name' in data and 'attribute_image' in data and data['attribute_name'].strip() != '':
             if not attribute_id:
-                attribute = MealType.objects.get_or_create(name__iexact=data['attribute_name'].strip())
+                try:
+                    attribute = MealType.objects.get(name__iexact=str(data['attribute_name']).strip())
+                except MealType.DoesNotExist:
+                    attribute = MealType()
             elif MealType.objects.filter(name__iexact=data['attribute_name'].strip()).exclude(id=attribute_id).exists():
                 return custom_error("Another Meal Type exists with the same name.")
             attribute.name = data['attribute_name'].strip()
             attribute.image = Image.objects.get(pk=int(data['attribute_image']))
             attribute.save()
-            return HttpResponse("Attribute saved successfully.")
+            return json_response({"status":1, "message":"Attribute saved successfully."})
         else:
             return custom_error("No name/image found for the attribute.")
-    except KeyError as e:
+    except Exception as e:
         log.error("create_attribute details : " + e.message)
         return custom_error("Failed to create/update attribute")
 
