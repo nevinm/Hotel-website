@@ -500,7 +500,7 @@ span.upper-content,span.lower-content,
     float: left;
 }
 .meal-full-details{
-    margin-left: -30px;
+    margin-left: -5%;
 }
 span.upper-content {
   font-family: 'BrandonGrotesque-Regular';
@@ -508,6 +508,7 @@ span.upper-content {
   font-size: 24px;
   min-height: 40px;
   text-align: center;
+  word-break:break-word;
 }
 .icons-container1{
     padding-bottom: 30px;
@@ -518,6 +519,7 @@ span.lower-content{
     letter-spacing: 1px;
     color: #6B6B6B;
     text-align: center;
+    word-break:break-word;
 }
 .icons-container1 .details-content{
     width: 25%;
