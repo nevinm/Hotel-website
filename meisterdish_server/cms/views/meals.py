@@ -364,21 +364,24 @@ def create_attribute(request, data, user):
     try:
         attribute_id = False
         if 'attribute_id' in data:
-            attribute_id = data['attribute_id']
-            attribute = MealType.objects.get(pk=int(data['attribute_id']))
+            attribute_id = str(data['attribute_id']).strip()
+            if attribute_id == '':
+                attribute_id = False
+            else:
+                attribute = MealType.objects.get(pk=attribute_id)
             
         if 'attribute_name' in data and 'attribute_image' in data and data['attribute_name'].strip() != '':
             if not attribute_id:
                 attribute = MealType.objects.get_or_create(name__iexact=data['attribute_name'].strip())
-            elif MealType.objects.filter(name__iexact=data['attribute_name'].strip()).exclude(id=data['attribute_id']).exists():
-                return custom_error("Another Meal Typoe exists with the same name.")
+            elif MealType.objects.filter(name__iexact=data['attribute_name'].strip()).exclude(id=attribute_id).exists():
+                return custom_error("Another Meal Type exists with the same name.")
             attribute.name = data['attribute_name'].strip()
             attribute.image = Image.objects.get(pk=int(data['attribute_image']))
             attribute.save()
             return HttpResponse("Attribute saved successfully.")
         else:
             return custom_error("No name/image found for the attribute.")
-    except Exception as e:
+    except KeyError as e:
         log.error("create_attribute details : " + e.message)
         return custom_error("Failed to create/update attribute")
 
@@ -414,8 +417,8 @@ def get_attribute_details(request, data, user, attribute_id):
 def delete_attribute(request, data, user, attribute_id):
     try:
         attribute = MealType.objects.get(is_deleted=False, pk=attribute_id)
-        attribute.is_deleted=True
-        attribute.save()
+        attribute.delete()
+
         return json_response({"status":1, "message":"Deleted Attribute", "id":attribute_id})
     except Exception as e:
         log.error("Failed to delete attribute : "+e.message)
