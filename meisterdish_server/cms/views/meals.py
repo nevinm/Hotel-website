@@ -365,11 +365,13 @@ def create_attribute(request, data, user):
         attribute_id = False
         if 'attribute_id' in data:
             attribute_id = data['attribute_id']
-            attribute = Attribute.objects.get(pk=int(data['attribute_id']))
+            attribute = MealType.objects.get(pk=int(data['attribute_id']))
             
         if 'attribute_name' in data and 'attribute_image' in data and data['attribute_name'].strip() != '':
             if not attribute_id:
-                attribute = Attribute()
+                attribute = MealType.objects.get_or_create(name__iexact=data['attribute_name'].strip())
+            elif MealType.objects.filter(name__iexact=data['attribute_name'].strip()).exclude(id=data['attribute_id']).exists():
+                return custom_error("Another Meal Typoe exists with the same name.")
             attribute.name = data['attribute_name'].strip()
             attribute.image = Image.objects.get(pk=int(data['attribute_image']))
             attribute.save()
@@ -384,9 +386,9 @@ def create_attribute(request, data, user):
 def list_attributes(request, data, user):
     try:
         if 'attribute_id' in data:
-            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in Attribute.objects.get(pk=int(data['attribute_id']))]
+            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in MealType.objects.get(pk=int(data['attribute_id']))]
         else:
-            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in Attribute.objects.all()]
+            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in MealType.objects.all()]
         return json_response({"status":1, 
                               "aaData":attributes,
                               })
@@ -397,7 +399,7 @@ def list_attributes(request, data, user):
 @check_input('POST', settings.ROLE_ADMIN)
 def get_attribute_details(request, data, user, attribute_id):
     try:
-        attribute = Attribute.objects.get(is_deleted=False, pk=attribute_id)
+        attribute = MealType.objects.get(is_deleted=False, pk=attribute_id)
         return json_response({"status":1, 
                               "id":attribute.id,
                               "name":attribute.name,
@@ -411,7 +413,7 @@ def get_attribute_details(request, data, user, attribute_id):
 @check_input('POST', settings.ROLE_ADMIN)
 def delete_attribute(request, data, user, attribute_id):
     try:
-        attribute = Attribute.objects.get(is_deleted=False, pk=attribute_id)
+        attribute = MealType.objects.get(is_deleted=False, pk=attribute_id)
         attribute.is_deleted=True
         attribute.save()
         return json_response({"status":1, "message":"Deleted Attribute", "id":attribute_id})
