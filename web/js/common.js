@@ -238,6 +238,7 @@ function logingOut() {
     localStorage.removeItem('user_profile');
     localStorage.removeItem('delivery_addressess');
     localStorage.removeItem('fb-image');
+    localStorage.removeItem('admin_role');
     localStorage['loggedIn'] = false;
     localStorage['admin_loggedIn'] = false;
     $('#navbar-username a').text('');
@@ -642,5 +643,16 @@ function mobileResponsive() {
     } else {
         $('#page-container').css("margin-left", "0px");
         $('#header').css("margin-left", "0px");
+    }
+}
+
+function convertToEmbedded(url) {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+
+    if (match && match[2].length == 11) {
+        return match[2];
+    } else {
+        return 'error';
     }
 }

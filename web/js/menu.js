@@ -243,9 +243,7 @@ function populateMealList(mealList, isInfinteScrolling) {
                 "data-id='" + value.id + "'>ADD</a></span>" +
                 "</section></div>");
         }
-        // if (!value.in_cart) {} else {
-        //     $(".addItemButton:last").addClass("button-disabled");
-        // }
+       
         if(value.quantity < 2){
             $('.removeItemButton[data-id="'+ value.id +'"]').hide();
             $('.meal-overlay[data-id="'+ value.id +'"]').hide();

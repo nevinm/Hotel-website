@@ -148,8 +148,9 @@ def add_category(request, data, user):
     try:
         cat_name = data['category'].strip()
         try:
-            cat = Category.objects.get(name__iexact=cat)
-        except:
+            cat = Category.objects.get(name__iexact=cat_name)
+            return custom_error("Catergory "+cat_name+" already exists.")
+        except Category.DoesNotExist:
             cat = Category()
             cat.name = cat_name
             cat.save()
@@ -166,9 +167,12 @@ def remove_category(request, data, user):
             cat = Category.objects.get(name__iexact=str(data['category']).strip())
         elif "id" in data:
             cat = Category.objects.get(id=str(data['id']).strip())
-            
-        cat.is_deleted=True
-        cat.save()
+        
+        for meal in Meals.objects.filter(category=cat):
+            meal.category = None
+            meal.save()
+        cat.delete()
+
         return json_response({"status":1, "message":"Removed Category"})
     except Exception as e:
         log.error("Failed to remove category : "+e.message)
