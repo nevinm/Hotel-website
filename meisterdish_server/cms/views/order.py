@@ -338,10 +338,10 @@ def send_order_complete_notification(order):
                "site_url":settings.SITE_URL,
                }
         
-        msg = render_to_string('order_complete_email_template.html', dic)
-        sub = 'Your order at Meisterdish is complete'
+        #msg = render_to_string('order_complete_email_template.html', dic)
+        #sub = 'Your order at Meisterdish is complete'
         
-        mail([to_email], sub, msg )
+        #mail([to_email], sub, msg )
 
         if user.need_sms_notification:
             if not send_sms_notification(dic):
