@@ -5,8 +5,23 @@ $(document).ready(function() {
     getMealDetails(mealId);
 
     $(".add-meal").on('click', function() {
-        var mealId = $(this).attr("data-id");
-        addToCart(mealId);
+        var mealId = $(this).attr("data-id"),
+            count = 0;
+        count = parseInt($('.hidden-field').val()) + 2;
+        if(count <= 10){
+            $('.hidden-field').val(count);
+            addToCart(mealId);
+        }
+    });
+
+    $(".removeItemButton").on("click",function(){
+        var mealId = $(this).attr('data-id'),
+            count = 0, quantity = -2;
+        count =  parseInt($('.hidden-field').val()) - 2;
+        if(count >= 0){
+            $('.hidden-field').val(count);
+            addToCart(mealId,quantity);
+        }
     });
 });
 
@@ -79,8 +94,7 @@ var addToCartCallback = {
         if (status == -1) {
             showPopup(meal_details);
         } else {
-            $('*[data-id="' + mealId + '"]').addClass("button-disabled");
-            showPopup(meal_details);
+            addMultipleMeal(meal_details);
             CartItemCount(true);
             if (meal_details.session_key && (meal_details.session_key).length) {
                 localStorage['session_key'] = meal_details.session_key;
@@ -90,13 +104,14 @@ var addToCartCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function addToCart(mealId) {
+function addToCart(mealId,quantity) {
     var url = baseURL + 'add_to_cart/',
         header = {
             "session-key": localStorage["session_key"]
         },
         params = {
             "meal_id": mealId,
+            "quantity" : quantity
         };
     data = JSON.stringify(params);
     var addToCartInstance = new AjaxHttpSender();
@@ -151,6 +166,10 @@ function populateMealDetails(mealDetails) {
 
 function mealDetailsTab(mealDetails) {
     $(".add-meal").attr("data-id", mealDetails.id);
+    $(".removeItemButton").attr("data-id", mealDetails.id);
+    $('.hidden-field').val(mealDetails.quantity);
+    $('.add-meal-message span').text(mealDetails.quantity);
+    $('.meal-overlay .upper-line span').text(mealDetails.quantity)
     $(".meal-name").text(mealDetails.name);
     $(".price").text(dollarConvert((mealDetails.price + mealDetails.tax).toFixed(2)));
     $(".thumbnail").attr('src', mealDetails.main_image.url);
@@ -158,13 +177,18 @@ function mealDetailsTab(mealDetails) {
     $(".chef-img").attr("src", mealDetails.chef_image.url);
     $(".chef-img").attr("data-id", mealDetails.chef_image.id);
     $(".chef-comments").text(mealDetails.chef_comments);
+    if(mealDetails.quantity >= 2){
+        $('.removeItemButton').show();
+        $('.add-meal-message').show();
+        $('.meal-overlay').show();
+    }
     if(mealDetails.description){
         $(".details-description span").text('"' + mealDetails.description + '"');
     }
     $(".chef-name").text("CHEF " + mealDetails.chef_name);
-    if (mealDetails.in_cart == 1) {
-        $(".add-meal").addClass("button-disabled");
-    }
+    // if (mealDetails.in_cart == 1) {
+    //     $(".add-meal").addClass("button-disabled");
+    // }
     $(".rating-count").text("("+mealDetails.ratings_count+")")
     $(".meal-ingredients").text(mealDetails.sub);
 
@@ -269,4 +293,28 @@ function reviewsTab(mealDetails) {
         });
         $(starRating).trigger("click");
     });
+}
+
+function addMultipleMeal(meal_details){
+    var $removeButton = $('.removeItemButton');
+        $addButton = $('.add-meal');
+    
+    $('.add-meal-message').fadeIn();
+    $('.add-meal-message span').text(meal_details.quantity);
+    $('.meal-overlay .upper-line span').text(meal_details.quantity);
+    if(meal_details.quantity >= 10){
+        $addButton.hide();
+        $('.add-meal-message span').text(10);
+        $('.meal-overlay .upper-line span').text(10);
+
+    }else{
+        $addButton.show();
+    }
+    if(meal_details.quantity == 0){
+        $removeButton.hide();
+        $('.meal-overlay').hide();
+    }else{
+       $removeButton.fadeIn();
+       $('.meal-overlay').show(); 
+    }
 }
