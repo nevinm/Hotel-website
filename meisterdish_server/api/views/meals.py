@@ -135,7 +135,11 @@ def get_meal_details(request, data, meal_id):
                 "image_url" : settings.DEFAULT_MEAL_IMAGE if tips.image is None else tips.image.image.url,
                 "video_url" : "" if tips.video_url is None else tips.video_url,
                 })
-        
+        qty = 0
+        if user:
+            ci = CartItem.objects.filter(cart__user=user, cart__completed=False, meal__pk=meal.id)
+            qty = ci[0].quantity if ci.exists() else 0
+
         return json_response({
             "status":1,
             "id" : meal.id,
@@ -186,6 +190,7 @@ def get_meal_details(request, data, meal_id):
                 "url":meal.main_image.image.url,
             },
             "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, meal__pk=meal.id).exists() else 0,
+            "quantity" : qty,
         })
     except Exception as e:
         log.error("get_meal details : " + e.message)
