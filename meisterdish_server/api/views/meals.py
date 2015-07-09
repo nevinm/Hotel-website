@@ -150,6 +150,7 @@ def get_meal_details(request, data, meal_id):
             "price":meal.price,
             "tax":(meal.price * meal.tax) /100,
             "available" : 1 if meal.available else 0,
+            "calories" : meal.calories,
             "filters" : [type.id for type in meal.types.all()],
             "cat_id" : 'Not Available' if not meal.category else {
                 "id":meal.category.id,

@@ -264,6 +264,7 @@ class Meal(models.Model):
 
     #nutrients = models.ManyToManyField(Nutrient, through="MealNutrient", null=True, blank=True)
     nutrients = models.TextField(max_length=1024, null=True, blank=True, default="")
+    calories =  models.CharField(max_length=30, null=True, blank=True, default="")
 
     #ingredients = models.ManyToManyField(Ingredient, through="MealIngredient", null=True, blank=True)
     ingredients = models.TextField(max_length=1024, null=True, blank=True, default="")

@@ -195,6 +195,9 @@ def create_meal(request, data, user):
         if 'saved_time' in data and data['saved_time'].strip() != '':
             meal.saved_time = data['saved_time'].strip()
         
+        if "calories" in data:
+            meal.calories = data["calories"]
+
         my_tip_ids = []
         if "tips" in data and len(data['tips']) > 0:
             for tip in data['tips']:
@@ -313,6 +316,7 @@ def get_meal_details(request, data, user, meal_id):
             "tax":meal.price* meal.tax/100,
             "tax_percentage" : meal.tax,
             "available" : 1 if meal.available else 0,
+            "calories" : meal.calories,
             "filters" : [type.id for type in meal.types.all()],
             "cat_id" : 'Not Available' if not meal.category else {
                 "id":meal.category.id,
