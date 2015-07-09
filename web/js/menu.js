@@ -51,7 +51,7 @@ $(document).ready(function() {
         }
     });
         
-    $(document).on("click", '.thumbnail', function() {
+    $(document).on("click", '.thumbnail,.meal-overlay', function() {
         mealId = this.dataset.id;
         window.location.href = 'meal-details.html?mealId=' + mealId;
     });

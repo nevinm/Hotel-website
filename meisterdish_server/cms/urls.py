@@ -50,4 +50,7 @@ urlpatterns = patterns('',
     url(r'^import_meals/$', meals.import_meals, name='import_meals'),    
     url(r'^manage_credits/$', promotions.manage_credits, name='manage_credits'),    
     
+    url(r'^create_attribute/$', meals.create_attribute, name='create_attribute'),
+    url(r'^list_attributes/$', meals.list_attributes, name='list_attributes'),
+    url(r'^delete_attribute/$', meals.delete_attribute, name='delete_attribute'),
 )

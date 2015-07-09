@@ -28,7 +28,7 @@ def delete_order(request, data, user, order_id):
 def update_order(request, data, user, order_id):
     try:
         order = Order.objects.get(pk=order_id, is_deleted=False, cart__completed=True)
-        if "produced_meals" in data and len(data["produced_meals"]):
+        if "produced_meals" in data and type(data["produced_meals"] == type([])):
             if user.role.id != settings.ROLE_KITCHEN:
                 return custom_error("Only the kitchen staff is authorized to do this operation.")
 
@@ -338,10 +338,10 @@ def send_order_complete_notification(order):
                "site_url":settings.SITE_URL,
                }
         
-        msg = render_to_string('order_complete_email_template.html', dic)
-        sub = 'Your order at Meisterdish is complete'
+        #msg = render_to_string('order_complete_email_template.html', dic)
+        #sub = 'Your order at Meisterdish is complete'
         
-        mail([to_email], sub, msg )
+        #mail([to_email], sub, msg )
 
         if user.need_sms_notification:
             if not send_sms_notification(dic):
