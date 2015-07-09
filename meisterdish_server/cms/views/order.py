@@ -57,6 +57,10 @@ def update_order(request, data, user, order_id):
                 sent = send_order_confirmation_notification(order)
                 if not sent:
                     log.error("Failed to send order confirmation notification")
+            elif int(status) == 3: #Dispatched
+                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.mobile})
+                if not sent:
+                    log.error("Failed to send order dispatched notification")
             elif int(status) == 4: #Delivered
                 sent = send_order_complete_notification(order)
                 if not sent:
@@ -312,7 +316,7 @@ def send_order_confirmation_notification(order):
                 return False
         return True
 
-    except KeyError as e:
+    except Exception as e:
         log.error("Send confirmation mail : " + e.message)
         return False
 
@@ -347,7 +351,7 @@ def send_order_complete_notification(order):
             if not send_sms_notification(dic):
                 return False
         return True
-    except KeyError as e:
+    except Exception as e:
         log.error("Send order completion mail : " + e.message)
         return False
 
@@ -358,6 +362,8 @@ def send_sms_notification(dic):
             return False
         if dic["status"] == 2: #Confirmed
             txt = render_to_string('order_confirmation_sms_template.html', dic)
+        if dic["status"] == 3: #Dispatched
+            txt = render_to_string('order_dispatched_sms_template.html', dic)
         else: #Complete
             txt = render_to_string('order_complete_sms_template.html', dic)
         
