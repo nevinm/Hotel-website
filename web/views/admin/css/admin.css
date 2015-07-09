@@ -125,7 +125,8 @@ li#navbar-username {
 #promocodes-list,#promocodes-list th,#promocodes-list td,
 #categories,#categories th,#categories td,
 #meal-list,#meal-list th,#meal-list td,
-#delivery-area,#delivery-area th,#delivery-area td
+#delivery-area,#delivery-area th,#delivery-area td,
+#mealtype-area,#mealtype-area th,#mealtype-area td
  {
     border: 1px solid #d0d0d0;
     padding: 10px;
@@ -299,15 +300,39 @@ table#userlist {
 #userlist .cross {
     float: none;
 }
+
+/*MealType*/
+
+.mealtype-change-icon{
+    cursor: pointer;
+    display: inline !important;
+    float: left;
+    padding: 0  !important;
+    width: auto  !important;
+    margin-right: 40px;
+}
 .credits-edit,
 .mealtype-image-upload{
     display: none;
     color: red;
     cursor: pointer;
 }
+.mealtype-image-upload-element{
+    display: none !important;
+}
 .row:hover .credits-edit,
 .row:hover .mealtype-image-upload{
     display: block;
+}
+.mealtype-icon, .mealtype-image{
+    max-width: 50px;
+    max-height: 50px;
+}
+#mealtype-container .popup{
+    height: 230px;
+}
+.icon-change{
+    cursor: pointer;
 }
 /*=======================*\
        &Order-Page
@@ -516,7 +541,8 @@ table#userlist {
     float: left;
 }
 
-table#promocodes-list, table#meal-list,table#delivery-area,table#giftcards-list {
+table#promocodes-list, table#meal-list,table#delivery-area,table#giftcards-list,
+table#mealtype-area {
     width: 100%;
     float: right;
     margin-top: 20px;
