@@ -78,6 +78,10 @@ function renderMobileFullPageJs() {
         fitToSection: false,
         afterResize: function() {
             destroyFullPageJS();
+        },
+        afterRender : function(){
+            $("#slide2").remove();
+            $("#slide4").remove();
         }
     });
     mobileRendered = true;
