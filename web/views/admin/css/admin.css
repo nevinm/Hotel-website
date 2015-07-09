@@ -299,12 +299,14 @@ table#userlist {
 #userlist .cross {
     float: none;
 }
-.credits-edit{
+.credits-edit,
+.mealtype-image-upload{
     display: none;
     color: red;
     cursor: pointer;
 }
-.row:hover .credits-edit{
+.row:hover .credits-edit,
+.row:hover .mealtype-image-upload{
     display: block;
 }
 /*=======================*\
@@ -1041,7 +1043,7 @@ table#tips-and-tricks-table {
 .manage-area-container .popup-container .content span{
     display: block;
 }
-#edit-delivery-area,#add-delivery-area{
+#edit-delivery-area,#add-delivery-area, #add-mealtype{
     float: left;
     display: none;
 }
