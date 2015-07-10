@@ -266,6 +266,7 @@ p.upper-line {
   position: absolute;
   top: 30%;
   width: 100%;
+  left: 0;
 }
 p.lower-line {
   font-family: 'BrandonGrotesque-Medium';
@@ -276,6 +277,7 @@ p.lower-line {
   width: 100%;
   top: 55%;
   position: absolute;
+  left: 0;
 }
 .listItemDetails{
 	float: left;
@@ -494,6 +496,10 @@ span.per-serving-text {
     }
     .meal-area{
         /*padding: 0 3.5em;*/
+    }
+    .meal-overlay {
+        height: 100%;
+        width: 98%;
     }
 
 }
