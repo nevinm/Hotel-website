@@ -334,6 +334,20 @@ table#userlist {
 .icon-change{
     cursor: pointer;
 }
+
+.mealtype-change-icon{
+    margin-top: 12px;
+    margin-left: 20px;
+    text-decoration: underline;
+}
+.upload-gif{
+    display: none;
+    margin-top: 15px;
+}
+
+.mealtype-image{
+    float: left;
+}
 /*=======================*\
        &Order-Page
 \*=======================*/
