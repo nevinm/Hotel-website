@@ -127,7 +127,8 @@ $(document).ready(function() {
 			locationCheck(zip);
 		}
 	});
-	$('#submit-email').on("click",function(){
+	$('#submit-email').on("click",function(e){
+		e.preventDefault();
         var email = $('input[type=email]').val(),
         	zipcode = $('#zip-code').val();
         if($('form#validate-email').valid()){

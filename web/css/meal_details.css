@@ -401,9 +401,10 @@ span.sub-header {
 #nutrient-table td {
     padding: 5px 0;
     padding-left: 10px;
-}
-#nutrient-table tr td :first-child{
     text-transform: uppercase;
+}
+.per-serving{
+    text-transform: lowercase !important;
 }
 span.sub-description{
     width: 100%;
