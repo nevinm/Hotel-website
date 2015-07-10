@@ -29,7 +29,9 @@ def get_meals(request, data):
             
         if "type_ids" in data and len(data['type_ids']) >0 and str(data['type_ids']) != '':
             meals = meals.filter(types__id__in=data['type_ids'])
-            
+        
+        meals = meals.order_by("order")
+
         actual_count = meals.count()
         try:
             paginator = Paginator(meals, limit)
@@ -75,6 +77,7 @@ def get_meals(request, data):
                               "ingredients":ingredients,
                               "in_cart" : 1  if qty != 0 else 0,
                               "quantity" : qty,
+                              "order":meal.order,
                               })
         return json_response({"status":1, 
                               "aaData":meal_list,
@@ -85,7 +88,7 @@ def get_meals(request, data):
                               "current_page":page,
                               "per_page" : limit,
                               })
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to list meals : "+e.message)
         return custom_error("Failed to list meals")
     
