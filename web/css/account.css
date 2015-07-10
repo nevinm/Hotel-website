@@ -1086,6 +1086,9 @@ form#pay-form,form#credit-card-form,form#update-pay-form {
   width: 100%;
   float: left;
 }
+#tip-form{
+	position: relative;
+}
 #credit-card-submit{
 	display: none;
 }
@@ -1162,21 +1165,31 @@ form#pay-form,form#credit-card-form,form#update-pay-form {
 .instruction-container {
 	padding-top: 20px;
 }
-.driver-tip-container .styled-select{
-	background: url(../images/selector_arrow.png) no-repeat 57px 6px #f7f7f7;
-	width: 75px;
-	float: left;
-} 
-.driver-tip-container select{
+.driver-tip-container{
 	font-family: 'ProximaNova-Regular';
 	color: #b0b0b0;
 	font-weight: bold;
 	font-size: 12px !important;
-	width: 150px !important;
+	/*width: 150px !important;*/
 }
-.driver-tip-container .inner-content span{
-	float: right;
-	font-weight: bold;
+.tip-input-container {
+  position: relative;
+  float: left;
+  width: 75%;
+  padding-top: 20px;
+}
+.inner-content.body-text-small {
+  width: 100%;
+  float: left;
+}
+/*.driver-tip-container .inner-content span{
+	/*float: right;*/
+	/*font-weight: bold;*/
+/*}*/
+span.driver-tip-display{
+	width: 25%;
+	text-align: right;
+	float: left;padding-top: 30px;
 }
 .gift-card-container hr{
 	border:0;
@@ -1472,6 +1485,9 @@ form#guest-address-info #address-line-2-error{
 #pickup-radio,#delivery-radio,#is-gift-card{
 	cursor: pointer;
 }
+span#is-gift-card{
+	width: 100px;
+}
 #manage-payment-method-container .saved-card-list{
 	width: 50%;
 	padding: 20px 0;
@@ -1576,7 +1592,7 @@ img.accepted-cards
 	height: 35px;
 	width: 57%;
 	float: left;
-	 margin-right: 3%;
+	margin-right: 3%;
 }
 .isPromocode-wrapper .btn{
 	width: 40%;
@@ -1605,6 +1621,16 @@ img.accepted-cards
 .driver-tip{
 	font-family: 'ProximaNova-regular';
 	color: #9B9B9B;
+	width: 80% !important;
+}
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+#tip-error{
+	bottom: 30px;
 }
 .shop-status{
 	display: none;
