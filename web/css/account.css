@@ -1590,6 +1590,7 @@ img.accepted-cards
 	display: none;
 	width: 100%;
 	word-break:break-all;
+	float: left;
 }
 .isPromocode-wrapper .popup-input{
 	height: 35px;
@@ -1610,6 +1611,8 @@ img.accepted-cards
 	word-break:break-word;
 	line-height: 15px;
 	letter-spacing: .6px;
+	float: left;
+	width: 100%;
 }
 .address-payment-list-popup .bk-overlay{
 	z-index: 999999;

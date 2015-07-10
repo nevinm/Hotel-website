@@ -35,7 +35,9 @@ $(document).ready(function() {
     });
 
     $('.driver-tip').on('keyup input', function() {
-        if ($('#tip-form').valid()) {
+        selectedTip = 0;
+        $('.driver-tip-display').text("$00.00");
+        if($('#tip-form').valid()){
             selectedTip = this.value;
             if (this.value.length > 2) {
                 selectedTip = this.value = this.value.slice(0, 2);
@@ -333,12 +335,14 @@ var getCartItemsCallback = {
         cartItems = JSON.parse(data);
         if (cartItems.status == 1) {
             $(".emtpy-cart-message").hide();
+            $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
+            $('#hidden-credit').val(cartItems.credits);
             populateCartItems(cartItems);
             populateDate(cartItems);
             if (cartItems.coupon != null) {
                 populateCoupon(cartItems.coupon);
             }
-            $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
+            
         } else {
             $('.order-list-items').remove();
             $(".emtpy-cart-message").empty();
@@ -428,6 +432,7 @@ function updateReciept(GiftcardDetails, flag) {
         totalCredits = 0,
         totalDriverTip = parseFloat($('.driver-tip').val()),
         totalDeliveryCost = 2;
+        totalCredits = parseInt($('#hidden-credit').val());
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
         price = parseFloat($(value).find('.price-container').attr("data-price"));
@@ -452,7 +457,7 @@ function updateReciept(GiftcardDetails, flag) {
     if (totalCost <= 0) {
         totalCost = 0;
     }
-    $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount).toFixed(2));
+    $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount + totalCredits).toFixed(2));
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
     $(".total-cost").text("$" + (totalCost).toFixed(2));
