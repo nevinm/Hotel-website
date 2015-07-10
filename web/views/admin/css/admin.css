@@ -136,6 +136,9 @@ li#navbar-username {
     text-transform: uppercase;
     font-size: 12px;
 }
+#order-list td{
+    vertical-align: middle;
+}
 .space td{
     border: none !important;
 }
