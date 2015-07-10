@@ -97,6 +97,24 @@ function addDynamicApiUrlUploadPicture(element) {
 
 function uploadImage(imageElementSelect, imageElement) {
     $(imageElementSelect).fileupload({
+        add: function(e, data) {
+            var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i,
+                error = [];
+            if (data.originalFiles[0]['type'] && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+                error.message = 'Not an accepted file type';
+                showCallBackStatusPre();
+                showPopup(error);
+                return;
+            }
+            if (data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > 2000000) {
+                error.message = 'Filesize is too big';
+                showCallBackStatusPre();
+                showPopup(error);
+                return;
+            } else {
+                data.submit();
+            }
+        },
         dataType: 'json',
         headers: {
             "session-key": localStorage["session_key"]
@@ -109,7 +127,7 @@ function uploadImage(imageElementSelect, imageElement) {
         },
         done: function(e, data) {
             $(".upload-gif").hide();
-            if (data.result.status) {
+            if (data.result.status == 1) {
                 $(imageElement).attr('src', data.result.thumbnail_url);
                 $(imageElement).attr('data-id', data.result.id);
                 $(imageElement).show();
