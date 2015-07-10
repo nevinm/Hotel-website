@@ -226,6 +226,7 @@ $(document).ready(function() {
     $('#delivery-radio').on("click", function() {
         if ($('.address-info').is(':empty')) {
             $('.address-info-guest').show();
+
             $('.address-info').hide();
         } else {
             $('.address-info').show();
@@ -873,6 +874,7 @@ var getStatesCallback = {
                     text: value.name,
                 }));
             });
+            hideSecondaryStates();
         } else {
             showErrorPopup(userDetails);
         }
@@ -1231,3 +1233,4 @@ function getProfile() {
     var getProfileInstance = new AjaxHttpSender();
     getProfileInstance.sendPost(url, header, data, getProfileCallback);
 }
+
