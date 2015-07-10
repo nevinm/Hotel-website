@@ -400,9 +400,9 @@ def create_attribute(request, data, user):
 def list_attributes(request, data, user):
     try:
         if 'attribute_id' in data:
-            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in MealType.objects.get(pk=int(data['attribute_id']))]
+            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url, "image_id": attr.image.id} for attr in MealType.objects.get(pk=int(data['attribute_id']))]
         else:
-            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in MealType.objects.all()]
+            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url, "image_id":attr.image.id} for attr in MealType.objects.all()]
         return json_response({"status":1, 
                               "aaData":attributes,
                               })
