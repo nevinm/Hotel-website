@@ -30,12 +30,12 @@ $(document).ready(function() {
         var meal_id = $(this).parent().attr('data-id'); //may change
         removeCartItems(meal_id);
     });
-    $('#tip-form').on('submit' ,function(e){
+    $('#tip-form').on('submit', function(e) {
         e.preventDefault();
     });
 
     $('.driver-tip').on('keyup input', function() {
-        if($('#tip-form').valid()){
+        if ($('#tip-form').valid()) {
             selectedTip = this.value;
             if (this.value.length > 2) {
                 selectedTip = this.value = this.value.slice(0, 2);
@@ -47,9 +47,9 @@ $(document).ready(function() {
             } else if (selectedTip == 0 || isNaN(selectedTip)) {
                 $('.driver-tip-display').text("$00.00");
             }
-            updateReciept();  
+            updateReciept();
         }
-        
+
     });
 
     //Set time for delivery API call
@@ -138,14 +138,14 @@ $(document).ready(function() {
         getStates();
         $('#new-address-form').validate().resetForm();
         $('.address-payment-list-popup').hide();
-        $('.addresspopup-wrapper').show();      
+        $('.addresspopup-wrapper').show();
     });
-    $('#close-new-address-form').on("click",function(){
-        $('.addresspopup-wrapper').hide();   
+    $('#close-new-address-form').on("click", function() {
+        $('.addresspopup-wrapper').hide();
     })
     $(document).on('click', '#save-new-address', function(e) {
         e.preventDefault();
-        if($('#new-address-form').valid()){
+        if ($('#new-address-form').valid()) {
             addAddress('popup');
         }
     });
@@ -222,10 +222,11 @@ $(document).ready(function() {
         }
 
     });
-    
+
     $('#delivery-radio').on("click", function() {
         if ($('.address-info').is(':empty')) {
             $('.address-info-guest').show();
+
             $('.address-info').hide();
         } else {
             $('.address-info').show();
@@ -237,10 +238,10 @@ $(document).ready(function() {
         $("#add-guest-address").show();
         $(".state-selector-container").show();
     });
-    
+
     $('#is-gift-card').on('click', function() {
         $('.isPromocode-wrapper').slideToggle();
-    });   
+    });
 });
 
 
@@ -261,10 +262,10 @@ function setCurrentTime() {
         meridiem = currentHour.substring(currentHour.length - 2);
         if (meridiem == "pm") {
             currentHour = currentHour.substring(0, currentHour.length - 2);
-            if(currentHour >=closingTime){
+            if (currentHour >= closingTime) {
                 $(this).remove();
                 $(".shop-status").show();
-            }else{
+            } else {
                 if (parseInt(currentHour) == $(value).data().hr) {
                     $(this).prevAll('.set-time-button').remove();
                     $(this).val("NOW");
@@ -363,14 +364,14 @@ function getCartItems() {
 
 //Save delivery time
 var saveDeliveryTimeCallback = {
-    success: function(data, textStatus,delivery_Id) {
+    success: function(data, textStatus, delivery_Id) {
         var userDetails = JSON.parse(data);
-        if(userDetails.status == -1){
+        if (userDetails.status == -1) {
             showPopup(userDetails);
-        }else{
-            if(delivery_Id){
-                changeDeliveryAddress(delivery_Id);    
-            }else{}
+        } else {
+            if (delivery_Id) {
+                changeDeliveryAddress(delivery_Id);
+            } else {}
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -393,7 +394,7 @@ function saveDeliveryTime(date, delivery_Id) {
     }
     data = JSON.stringify(params);
     var saveDeliveryTimeInstance = new AjaxHttpSender();
-    saveDeliveryTimeInstance.sendPost(url, header, data, saveDeliveryTimeCallback,delivery_Id);
+    saveDeliveryTimeInstance.sendPost(url, header, data, saveDeliveryTimeCallback, delivery_Id);
 }
 
 //populate cart items
@@ -448,7 +449,7 @@ function updateReciept(GiftcardDetails, flag) {
         totalDriverTip = 0;
     }
     totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost - totalDiscount - totalCredits;
-    if(totalCost <= 0){
+    if (totalCost <= 0) {
         totalCost = 0;
     }
     $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount).toFixed(2));
@@ -761,7 +762,7 @@ function appendAddresscontent(addressList) {
             "<span>" + value.phone + "</span>" + "</label>" + "</div>");
     });
     $('.address-payment-list-popup .popup-container').append("<div class='button'>" +
-        "<a href='#' id='add-address-popup'>" + "ADD A NEW ADDRESS" + "</a>"+
+        "<a href='#' id='add-address-popup'>" + "ADD A NEW ADDRESS" + "</a>" +
         "<a href='#' class='btn btn-medium-primary medium-green button-disabled' id='save-delivery-address'>" + "SELECT" + "</a>" +
         "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
 }
@@ -796,15 +797,15 @@ var addAddressCallback = {
     success: function(data, textStatus, flag) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
-            populateAddedAddress(userDetails.id,flag);
+            populateAddedAddress(userDetails.id, flag);
             $('.addresspopup-wrapper').fadeOut();
         } else {
-            if(flag == 'popup'){
+            if (flag == 'popup') {
                 showPopup(userDetails);
-            }else{
+            } else {
                 showPopup(userDetails);
                 $('.address-info-guest').show();
-            }  
+            }
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -831,14 +832,14 @@ function addAddress(flag) {
         };
     data = JSON.stringify(userData);
     var addAddressInstance = new AjaxHttpSender();
-    addAddressInstance.sendPost(url, header, data, addAddressCallback,flag);
+    addAddressInstance.sendPost(url, header, data, addAddressCallback, flag);
 }
 
 function getNewAddress(flag) {
     var $addressContainer;
-    if(flag == 'popup'){
-        $addressContainer = $('#new-address-form');  
-    }else{
+    if (flag == 'popup') {
+        $addressContainer = $('#new-address-form');
+    } else {
         $addressContainer = $('#guest-address-info');
     }
     var state_id = $addressContainer.find(".state-selector").val(),
@@ -873,6 +874,7 @@ var getStatesCallback = {
                     text: value.name,
                 }));
             });
+            hideSecondaryStates();
         } else {
             showErrorPopup(userDetails);
         }
@@ -893,8 +895,9 @@ function getStates() {
     getStatesInstance.sendPost(url, header, data, getStatesCallback);
 }
 
-function populateAddedAddress(delivery_address,flag) {
-    var addedAddress = [],latest_address = {},
+function populateAddedAddress(delivery_address, flag) {
+    var addedAddress = [],
+        latest_address = {},
         newAddress = getNewAddress(flag);
     newAddress.id = delivery_address;
     if (localStorage['loggedIn'] == 'true') {
@@ -1116,6 +1119,12 @@ function validateOrder() {
             return false;
         }
     }
+
+    if (!$("#tip-form").valid()) {
+        data.message = "Please enter a tip";
+        showPopup(data);
+        return false;
+    }
     return true;
 }
 
@@ -1224,3 +1233,4 @@ function getProfile() {
     var getProfileInstance = new AjaxHttpSender();
     getProfileInstance.sendPost(url, header, data, getProfileCallback);
 }
+

@@ -211,6 +211,7 @@ var getStatesCallback = {
                     text: value.name,
                 }));
             });
+            hideSecondaryStates();
         } else {
             showErrorPopup(userDetails);
         }

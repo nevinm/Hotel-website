@@ -403,6 +403,9 @@ span.sub-header {
     padding: 5px 0;
     padding-left: 10px;
 }
+.per-serving{
+    text-transform: lowercase !important;
+}
 span.sub-description{
     width: 100%;
     float: left;
