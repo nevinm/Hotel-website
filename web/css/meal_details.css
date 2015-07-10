@@ -399,9 +399,11 @@ span.sub-header {
   padding: 5px 0;
 }
 #nutrient-table td {
-    text-transform: uppercase;
     padding: 5px 0;
     padding-left: 10px;
+}
+#nutrient-table tr td :first-child{
+    text-transform: uppercase;
 }
 span.sub-description{
     width: 100%;
@@ -418,6 +420,10 @@ span.sub-description{
 td.sub-nutrients{
     color: #9b9b9b;
     padding-left: 20px !important;
+    text-transform: uppercase;
+}
+td.main-nutrients{
+    text-transform: uppercase;
 }
 table tr:last-child td:first-child {
     -moz-border-radius-bottomleft:10px;
@@ -501,6 +507,7 @@ span.upper-content,span.lower-content,
 }
 .meal-full-details{
     margin-left: -5%;
+    display: none;
 }
 span.upper-content {
   font-family: 'BrandonGrotesque-Regular';
@@ -536,6 +543,7 @@ span.lower-content{
     border:0;
     background-color: #A9D77B;
     margin: 20px 0;
+    display: none;
 }
 /*==============================*\
         Media Query

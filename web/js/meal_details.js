@@ -254,7 +254,7 @@ function tipsTricksTab(mealDetails) {
 
 function nutrientsTab(mealDetails) {
     $.each(mealDetails.nutrients, function(key, value) {
-        $("#nutrient-table tbody").append("<tr><td>" + value.mainNutrient + "</td>" +
+        $("#nutrient-table tbody").append("<tr><td class = 'main-nutrients'>" + value.mainNutrient + "</td>" +
             "<td>" + value.perServing + "</td>" +
             "<td>" + value.dailyValue + "</td>" +
             "</tr>");
@@ -321,8 +321,15 @@ function addMultipleMeal(meal_details){
 }
 
 function foodSettings(meal_details){
-    var saved_time = meal_details.saved_time,
+    var preparation_time = meal_details.preparation_time,
         calories = meal_details.calories;
-    $('#saved-time').text(saved_time);
+    $('#saved-time').text(preparation_time);
     $('#calories').text(calories);
+    var mealTypeObject = meal_details.meal_types;
+    $.each(mealTypeObject,function( key, value){
+        $('.icons-container2').append("<div class='details-content'>"+
+            "<span class='upper-content'>"+"<img style='height:31px;width:22px' src='"+value.image_url+"'>"+"</span>"+
+            "<span class='lower-content'>"+value.meal_type_name+"</span>"+"</div>");
+        });
+    $('.meal-full-details,.meal-details-hr').fadeIn();
 }
