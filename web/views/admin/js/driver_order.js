@@ -1,18 +1,17 @@
 $(document).ready(function() {
-    // getOrders();
+    getDeliveryOrders(0);
 });
 
-
 //Get orders API process
-var getOrdersCallback = {
+var getDeliveryOrdersCallback = {
     success: function(data, textStatus) {
         var order = JSON.parse(data);
         if (order.status == 1) {
             if (order.aaData.length > 0) {
-                $(".order-list-empty").hide();
-                populateOrderList(data);
+                // $(".order-list-empty").hide();
+                populateDeliveryOrderList(order);
             } else {
-                $(".order-list-empty").show();
+                // $(".order-list-empty").show();
                 $(".pagination").pagination({
                     pages: 0,
                     cssStyle: 'light-theme',
@@ -23,9 +22,9 @@ var getOrdersCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getOrders(nextPage, userName, orderNum, status, total_amount, phone_num, date, delivery_type) {
-    $('#order-list tbody').empty();
-    var url = baseURL + "cms/get_kitchen_orders/",
+function getDeliveryOrders(nextPage, userName, orderNum, status, total_amount, phone_num, date, delivery_type) {
+    // $('#order-list tbody').empty();
+    var url = baseURL + "cms/get_delivery_orders/",
         header = {
             "session-key": localStorage["session_key"]
         },
@@ -36,117 +35,45 @@ function getOrders(nextPage, userName, orderNum, status, total_amount, phone_num
             "status": status
         }
     data = JSON.stringify(params);
-    var getOrdersInstance = new AjaxHttpSender();
-    getOrdersInstance.sendPost(url, header, data, getOrdersCallback);
+    var getDeliveryOrdersInstance = new AjaxHttpSender();
+    getDeliveryOrdersInstance.sendPost(url, header, data, getDeliveryOrdersCallback);
 }
 
-//Update orders API process
-var updateOrdersCallback = {
-    success: function(data, textStatus, element) {
-        updatedOrders = JSON.parse(data);
-        if (updatedOrders.status) {
-            if ($(element).is(":checked")) {
-                $(element).parents().eq(1).addClass("produced-meal")
-            } else {
-                $(element).parents().eq(1).removeClass("produced-meal")
-            }
-        }
-        else{
-            showPopup(data);
-        }
-    },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-}
-
-function updateOrders(producedMeals, orderId, element) {
-    var url = baseURL + "cms/update_order/" + orderId + "/",
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        params = {
-            "produced_meals": producedMeals
-        }
-    data = JSON.stringify(params);
-    var updateOrdersInstance = new AjaxHttpSender();
-    updateOrdersInstance.sendPost(url, header, data, updateOrdersCallback, element);
+function populateDeliveryOrderList(order_data){
+    $.each(order_data.aaData, function(key, value) {
+        
+         var phone = undefinedCheck(value.phone),
+            name = undefinedCheck(value.user_first_name + " " + value.user_last_name),
+            deliverytime = undefinedCheck(value.delivery_time),
+            zip = undefinedCheck(value.delivery_address.zip),
+            email = undefinedCheck(value.email),
+            grand_total = undefinedCheck(value.grand_total),
+            delivery_address = {},
+            delivery_address = value.delivery_address,
+            address_name = delivery_address.first_name +" "+ delivery_address.last_name,
+            building = delivery_address.building,
+            street = delivery_address.street,
+            city = delivery_address.city,
+            state = delivery_address.state,
+            address_phone = delivery_address.phone, 
+            address_zip = delivery_address.zip;
+        $('table#delivery-order tbody').append("<tr>"+"<td>"+value.user_first_name+"</td>"+
+            "<td>"+value.user_last_name+"</td>"+
+            "<td>"+value.order_num+"</td>"+
+            "<td>"+value.status+"</td>"+
+            "<td>"+deliverytime+"</td>"+
+            "<td>"+phone+"</td>"+
+            "<td>"+email+"</td>"+
+            "<td>"+"<span>"+address_name+"</span>"+
+            "<span>"+building+", "+street+"</span>"+
+            "<span>"+city+", "+state+"</span>"+
+            "<span>"+address_phone+"</span>"+
+            "<span>"+address_zip+"</span>"+"</td>"+
+            "<td>"+dollarConvert(parseFloat(grand_total).toFixed(2))+"</td>"+
+            +"</tr>");
+    });
 }
 
 function undefinedCheck(param) {
     return (typeof param === 'undefined') ? "NULL" : param;
-}
-
-//function populate OrderList 
-function populateOrderList(data) {
-    var fullMealList = JSON.parse(data);
-    $.each(fullMealList.aaData, function(key, value) {
-        var phone = undefinedCheck(value.phone),
-            name = undefinedCheck(value.user_first_name + " " + value.user_last_name),
-            deliverytime = undefinedCheck(value.delivery_time),
-            zip = undefinedCheck(value.delivery_address.zip),
-            minTime = undefinedCheck(value.time),
-            orderNum = undefinedCheck(value.id),
-            minTime = undefinedCheck(value.minutes);
-
-        $.each(value.meals, function(mealKey, mealValue) {
-            var prevOrderNum = $($("#order-list tbody .row:nth-last-child(2)")[0]).data("order-id");
-            if (prevOrderNum && (prevOrderNum == orderNum)) {} else {
-                $('#order-list tbody').append("<tr class='row space'" +
-                    " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id + "'>" +
-                    "<td></td><td></td><td></td>" +
-                    "<td></td><td></td><td></td>" +
-                    "<td></td><td></td>" +
-                    "</tr>");
-            }
-
-            $('#order-list tbody').append("<tr class='row'" +
-                " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id + "'>" +
-                "<td>" + deliverytime + "</td>" +
-                "<td>" + orderNum + "</td>" +
-                "<td>" + mealValue.name + "</td>" +
-                "<td>" + minTime + "</td>" +
-                "<td>" + zip + "</td>" +
-                "<td>" + name + "</td>" +
-                "<td>" + phone + "</td>" +
-                "</tr>");
-
-
-            if (mealValue.produced) {
-                $("#order-list tbody .row:last").addClass("produced-meal");
-                $("#order-list tbody .row:last").append("<td><input checked type='checkbox'" +
-                    "data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id +
-                    "' class='status down'/></td>");
-            } else {
-                $("#order-list tbody .row:last").append("<td><input type='checkbox'" +
-                    " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id +
-                    "' class='status'/></td>");
-            }
-        });
-
-        currentStatus = value.status_id;
-        $(".order-status:last").val(currentStatus);
-    });
-
-    $(".pagination").pagination({
-        pages: fullMealList.num_pages,
-        currentPage: fullMealList.current_page,
-        cssStyle: 'light-theme',
-        onPageClick: function(pageNumber, event) {
-            getOrders(pageNumber);
-        }
-    });
-
-    $('#order-list tbody').find("tr")[0].remove();
-
-    $(".status").on("change", function() {
-        var orderId = $(this).data('order-id'),
-            mealId = $(this).data('meal-id'),
-            producedMealsElements = $("input[data-order-id='" + orderId + "']"),
-            producedMeals = [];
-        $.each(producedMealsElements, function(key, value) {
-            if ($(value).is(":checked")) {
-                producedMeals.push($(value).data("meal-id"));
-            } else {}
-        });
-        updateOrders(producedMeals, orderId, this);
-    });
 }
