@@ -477,6 +477,11 @@ $("form").each(function() {
             update_category:{
                 required: true,
                 minlength: 3 
+            },
+            tip:{
+                required : true,
+                number : true
+
             }
         },
         messages: {
@@ -563,7 +568,8 @@ $("form").each(function() {
             tips_details: "Enter valid title.",
             invitecode: "Enter Invitecode",
             date: "Please enter date",
-            promocode: "Please enter promocode."
+            promocode: "Please enter promocode.",
+            tip: "Enter valid Tip."
                 // image_upload:"Please select an image."
         }
     });
@@ -587,6 +593,9 @@ if ($.validator) {
     });
     $.validator.addMethod('decimal', function(value, element) {
         return this.optional(element) || /^[0-9,]+$/.test(value);
+    });
+    $.validator.addMethod('positiveNumber',function (value) { 
+        return Number(value) > 0;
     });
 }
 

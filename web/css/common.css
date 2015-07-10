@@ -853,7 +853,7 @@ span.icon-menu {
 #recipient-message-error,#fullname-error, #giftcardcustomamount-error, #message-error,
 #tips-video-url-label-error,#tips-and-tricks-label-error, #invite-code-error,#email-error, 
 #new-amount-error, #new-code-error, #new-date-error, #city-selector-error,#adminlogin-password-error,
-#new-credits-error,#new_category-error,#update_category-error
+#new-credits-error,#new_category-error,#update_category-error,#tip-error
 {
 	color: #ff7878;
 	background: white;

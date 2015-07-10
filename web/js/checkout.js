@@ -30,20 +30,26 @@ $(document).ready(function() {
         var meal_id = $(this).parent().attr('data-id'); //may change
         removeCartItems(meal_id);
     });
+    $('#tip-form').on('submit' ,function(e){
+        e.preventDefault();
+    });
 
     $('.driver-tip').on('keyup input', function() {
-        selectedTip = this.value;
-        if (this.value.length > 2) {
-            selectedTip = this.value = this.value.slice(0, 2);
+        if($('#tip-form').valid()){
+            selectedTip = this.value;
+            if (this.value.length > 2) {
+                selectedTip = this.value = this.value.slice(0, 2);
+            }
+            if (selectedTip >= 1) {
+                $('.driver-tip-display').text("$" + selectedTip + ".00");
+            } else if (selectedTip < 1 && selectedTip > 0) {
+                $('.driver-tip-display').text("$00." + selectedTip);
+            } else if (selectedTip == 0 || isNaN(selectedTip)) {
+                $('.driver-tip-display').text("$00.00");
+            }
+            updateReciept();  
         }
-        if (selectedTip >= 1) {
-            $('.driver-tip-display').text("$" + selectedTip + ".00");
-        } else if (selectedTip < 1 && selectedTip > 0) {
-            $('.driver-tip-display').text("$00." + selectedTip);
-        } else if (selectedTip == 0 || isNaN(selectedTip)) {
-            $('.driver-tip-display').text("$00.00");
-        }
-        updateReciept();
+        
     });
 
     //Set time for delivery API call
@@ -185,7 +191,7 @@ $(document).ready(function() {
         if (button_value == "DELETE") {
             removePromocode();
         }
-    })
+    });
 
     $("#place-order").on("click", function(e) {
         e.preventDefault();

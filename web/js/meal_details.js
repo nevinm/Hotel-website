@@ -123,7 +123,9 @@ var getMealDetailsCallback = {
     success: function(data, textStatus) {
         mealDetails = JSON.parse(data);
         if (mealDetails.status == 1) {
+            debugger;
             populateMealDetails(mealDetails);
+            foodSettings(mealDetails);
         } else {
             console.log("somthing wrong with meals");
         }
@@ -317,4 +319,11 @@ function addMultipleMeal(meal_details){
        $removeButton.fadeIn();
        $('.meal-overlay').show(); 
     }
+}
+
+function foodSettings(meal_details){
+    var saved_time = meal_details.saved_time,
+        calories = meal_details.calories;
+    $('#saved-time').text(saved_time);
+    $('#calories').text(calories);
 }
