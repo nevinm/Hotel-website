@@ -195,6 +195,9 @@ def create_meal(request, data, user):
         if 'saved_time' in data and data['saved_time'].strip() != '':
             meal.saved_time = data['saved_time'].strip()
         
+        if "calories" in data:
+            meal.calories = data["calories"]
+
         my_tip_ids = []
         if "tips" in data and len(data['tips']) > 0:
             for tip in data['tips']:
@@ -211,6 +214,9 @@ def create_meal(request, data, user):
                 if "image" in tip:
                     tip_obj.image = Image.objects.get(pk=int(tip['image']))
                 
+                if "image_url" in tip:
+                    tip_obj.video_url = tip['image_url'].strip()
+
                 if "video_url" in tip:
                     tip_obj.video_url = tip['video_url'].strip()
                 
@@ -297,6 +303,7 @@ def get_meal_details(request, data, user, meal_id):
                 "description" : "" if tips.description.strip() == "" else simplejson.loads(tips.description),
                 "image_url" : settings.DEFAULT_MEAL_IMAGE if tips.image is None else tips.image.image.url,
                 "video_url" : "" if tips.video_url is None else tips.video_url,
+                "image_url1":"" if tips.image_url is None else tips.image_url,
                 })
         
         return json_response({
@@ -309,6 +316,7 @@ def get_meal_details(request, data, user, meal_id):
             "tax":meal.price* meal.tax/100,
             "tax_percentage" : meal.tax,
             "available" : 1 if meal.available else 0,
+            "calories" : meal.calories,
             "filters" : [type.id for type in meal.types.all()],
             "cat_id" : 'Not Available' if not meal.category else {
                 "id":meal.category.id,
@@ -364,16 +372,24 @@ def create_attribute(request, data, user):
     try:
         attribute_id = False
         if 'attribute_id' in data:
-            attribute_id = data['attribute_id']
-            attribute = Attribute.objects.get(pk=int(data['attribute_id']))
+            attribute_id = str(data['attribute_id']).strip()
+            if attribute_id == '':
+                attribute_id = False
+            else:
+                attribute = MealType.objects.get(pk=attribute_id)
             
         if 'attribute_name' in data and 'attribute_image' in data and data['attribute_name'].strip() != '':
             if not attribute_id:
-                attribute = Attribute()
+                try:
+                    attribute = MealType.objects.get(name__iexact=str(data['attribute_name']).strip())
+                except MealType.DoesNotExist:
+                    attribute = MealType()
+            elif MealType.objects.filter(name__iexact=data['attribute_name'].strip()).exclude(id=attribute_id).exists():
+                return custom_error("Another Meal Type exists with the same name.")
             attribute.name = data['attribute_name'].strip()
             attribute.image = Image.objects.get(pk=int(data['attribute_image']))
             attribute.save()
-            return HttpResponse("Attribute saved successfully.")
+            return json_response({"status":1, "message":"Attribute saved successfully."})
         else:
             return custom_error("No name/image found for the attribute.")
     except Exception as e:
@@ -384,9 +400,9 @@ def create_attribute(request, data, user):
 def list_attributes(request, data, user):
     try:
         if 'attribute_id' in data:
-            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in Attribute.objects.get(pk=int(data['attribute_id']))]
+            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in MealType.objects.get(pk=int(data['attribute_id']))]
         else:
-            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in Attribute.objects.all()]
+            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in MealType.objects.all()]
         return json_response({"status":1, 
                               "aaData":attributes,
                               })
@@ -397,7 +413,7 @@ def list_attributes(request, data, user):
 @check_input('POST', settings.ROLE_ADMIN)
 def get_attribute_details(request, data, user, attribute_id):
     try:
-        attribute = Attribute.objects.get(is_deleted=False, pk=attribute_id)
+        attribute = MealType.objects.get(is_deleted=False, pk=attribute_id)
         return json_response({"status":1, 
                               "id":attribute.id,
                               "name":attribute.name,
@@ -411,9 +427,9 @@ def get_attribute_details(request, data, user, attribute_id):
 @check_input('POST', settings.ROLE_ADMIN)
 def delete_attribute(request, data, user, attribute_id):
     try:
-        attribute = Attribute.objects.get(is_deleted=False, pk=attribute_id)
-        attribute.is_deleted=True
-        attribute.save()
+        attribute = MealType.objects.get(is_deleted=False, pk=attribute_id)
+        attribute.delete()
+
         return json_response({"status":1, "message":"Deleted Attribute", "id":attribute_id})
     except Exception as e:
         log.error("Failed to delete attribute : "+e.message)

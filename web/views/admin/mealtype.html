@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,34 +23,34 @@
                 <a href="#"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
                 </a>
                 <ul id="menu" class="pullRight">
-                   <li class="bold admin-links">
-                       <a href="manage-delivery-areas.html">DELIVERY AREA</a>
-                   </li>
-                   <!-- <li class='admin-links'>
+                    <li class="bold admin-links">
+                        <a href="manage-mealtype-areas.html">DELIVERY AREA</a>
+                    </li>
+                    <!-- <li class='admin-links'>
                        <a href="promocode.html">PROMOCODES</a>
                    </li>
                    <li class='admin-links'>
                        <a href="giftcards.html">GIFTCARDS</a>
                    </li> -->
-                   <li class='admin-links'>
-                       <a href="orderlist.html">ORDERS</a>
-                   </li>
-                   <li class="kitchen-links">
+                    <li class='admin-links'>
+                        <a href="orderlist.html">ORDERS</a>
+                    </li>
+                    <li class="kitchen-links">
                         <a href="#">KITCHEN</a>
                     </li>
-                   <li class='admin-links'>
-                       <a href="meallist.html">MEALS</a>
-                   </li>
-                   <li class='admin-links'>
-                       <a href="userlist.html">USERS</a>
-                   </li>
-                   <li class='admin-links'>
-                       <a href="categories.html">CATEGORIES</a>
-                   </li>
-                   <li id="navbar-username_hidden" class="bold green">
-                       <a href='../account.html'></a>
-                   </li>
-               </ul>
+                    <li class='admin-links'>
+                        <a href="meallist.html">MEALS</a>
+                    </li>
+                    <li class='admin-links'>
+                        <a href="userlist.html">USERS</a>
+                    </li>
+                    <li class='admin-links'>
+                        <a href="categories.html">CATEGORIES</a>
+                    </li>
+                    <li id="navbar-username_hidden" class="bold green">
+                        <a href='../account.html'></a>
+                    </li>
+                </ul>
             </div>
         </header>
         <div id="page-container">
@@ -63,11 +64,11 @@
                     <div class="admin-header">
                         <h2>MANAGE MEAL TYPES</h2>
                     </div>
-                    <div class="manage-area-container">
+                    <div class="manage-area-container" id='mealtype-container'>
                         <div class="add-deliveryarea-wrapper">
                             <input type="button" class="btn btn-small-primary medium-green" value="Add meal type" id="add-new-mealtype">
-                        </div> 
-                        <table id="delivery-area" class="display" cellspacing="0" width="100%">
+                        </div>
+                        <table id="mealtype-area" class="display" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th>Meal Type</th>
@@ -89,13 +90,20 @@
                                     <div class="content">
                                         <div class="popup-input-wrapper">
                                             <label class="body-text-small">New Meal Type:</label>
-                                            <input type="text" class="popup-input" name="zip" id="new-mealtype">
+                                            <input type="text" class="popup-input" name="meal_type" id="new-mealtype">
                                         </div>
+                                        <div class="popup-input-wrapper">
+                                            <img src='' class='mealtype-image mealtype-icon '/>
+                                            <p class='mealtype-change-icon'>Edit Icon</p>
+                                            <input class='mealtype-image-upload-element' value='' type='file' name='image_upload'/>
+                                            <img class='upload-gif' src='../../images/ajax-loader.gif'/>
+                                        </div>
+                                        <span class='callback-status'></span>
                                     </div>
                                     <div class="button">
                                         <input type="submit" class="btn btn-small-secondary" id="edit-mealtype" value="SUBMIT">
                                         <input type="submit" class="btn btn-small-secondary" id="add-mealtype" value="SUBMIT">
-                                        <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
+                                        <a href="#!" class="btn btn-small-secondary" id="close">CLOSE</a>
                                     </div>
                                 </form>
                             </div>
@@ -109,27 +117,30 @@
                                         <span>Are you sure want to delete this?</span>
                                     </div>
                                     <div class="button">
-                                        <a href="#" class="btn btn-small-secondary" id="yes-button">YES
+                                        <a href="#!" class="btn btn-small-secondary" id="yes-button">YES
                                         </a>
-                                        <a href="#" class="btn btn-small-secondary" id="no-button">NO</a>
+                                        <a href="#!" class="btn btn-small-secondary" id="no-button">NO</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>      
+                </div>
             </div>
-        <div class="popup-message">
-            <span></span>
+            <div class="popup-message">
+                <span></span>
+            </div>
         </div>
-        </div>    
     </div>
     <script type="text/javascript" src='../../js/jquery.min.js'></script>
     <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
     <script type="text/javascript" src='../../js/jquery.validate.min.js'></script>
+    <script type="text/javascript" src='../../js/jquery-ui.min.js'></script>
+    <script type="text/javascript" src='../../js/jquery.fileupload.js'></script>
     <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
     <script type="text/javascript" src='../../js/common.js'></script>
     <script type="text/javascript" src='js/admin.js'></script>
     <script type="text/javascript" src='js/mealtype.js'></script>
 </body>
+
 </html>

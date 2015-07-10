@@ -183,7 +183,7 @@ function mealDetailsTab(mealDetails) {
         $('.meal-overlay').show();
     }
     if(mealDetails.description){
-        $(".details-description span").text('"' + mealDetails.description + '"');
+        $(".details-description span").text(mealDetails.description);
     }
     $(".chef-name").text("CHEF " + mealDetails.chef_name);
     // if (mealDetails.in_cart == 1) {

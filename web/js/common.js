@@ -74,7 +74,7 @@ $(document).ready(function() {
             $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
         }, 600)
     });
-
+    $(document).focus();
     $(document).on('keypress', function (e) {
         var key = e.which;
         if(key == 13)  // the enter key code

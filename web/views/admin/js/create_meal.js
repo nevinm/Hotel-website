@@ -102,6 +102,16 @@ $(document).ready(function() {
     $("#ingredients-image-input").on('click', function() {
         uploadImage("ingredients-image-input", "ingredients-image");
     });
+
+    $('.forminput-wrapper').on("keydown",function(e){
+        if(e.keyCode == 13){
+            var button_class = $(this).parent().find('input[type=button][value=add]');
+            if(button_class.length){
+                e.preventDefault();
+                $(button_class).trigger('click');
+            }
+        }
+    })
     addDynamicApiUrlUploadPicture("meal-image-input");
     addDynamicApiUrlUploadPicture("chef-image-input");
     addDynamicApiUrlUploadPicture("kitchen-image-input");
