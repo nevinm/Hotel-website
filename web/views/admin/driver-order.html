@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Meisterdish - Admin</title>
+    <script type="text/javascript" src='js/redirect_admin.js'></script>
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../css/fontello.css">
+    <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
+    <link rel="stylesheet" type="text/css" href="../../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../../css/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/admin.css">
+    <link rel="stylesheet" type="text/css" href="css/driver-orders.css">
+    <script type="text/javascript" src='../../js/validate_session.js'></script>
+</head>
+
+<body>
+    <div id="admin-mainWrapper">
+        <header id="header">
+            <div class="contentArea adminContentArea">
+                <a href="#"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
+                </a>
+                <ul id="menu" class="pullRight">
+                    <li class='admin-links'>
+                        <a href="manage-delivery-areas.html">DELIVERY AREA</a>
+                    </li>
+                    <li class='admin-links'>
+                        <a href="promocode.html">PROMOCODES</a>
+                    </li>
+                    <li class='admin-links'>
+                        <a href="giftcards.html">GIFTCARDS</a>
+                    </li>
+                    <li class='admin-links'>
+                        <a href="orderlist.html">ORDERS</a>
+                    </li>
+                    <li class="bold kitchen-links">
+                        <a href="#">KITCHEN</a>
+                    </li>
+                    <li class='admin-links'>
+                        <a href="meallist.html">MEALS</a>
+                    </li>
+                    <li class='admin-links'>
+                        <a href="mealtype.html">MEAL TYPE</a>
+                    </li>
+                    <li class='admin-links'>
+                        <a href="userlist.html">USERS</a>
+                    </li>
+                    <li class='admin-links'>
+                        <a href="categories.html">CATEGORIES</a>
+                    </li>
+                    <li id="navbar-username_hidden" class="bold green">
+                        <a href='../account.html'></a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <div id="page-container">
+            <div class='admin-inner-wrapper'>
+                <div class="accountNav">
+                    <div class="logout body-text-bold">
+                        <a id='logout'>LOG OUT</a>
+                    </div>
+                </div>
+                <div class="admin-page-container">
+                    <div class="admin-header">
+                        <h2>DRIVER LIST</h2>
+                    </div>
+                    <div class="order-list-container">
+                        <div class='kitchen-filter'></div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Job Title</th>
+                                    <th>Favorite Color</th>
+                                    <th>Wars or Trek?</th>
+                                    <th>Porn Name</th>
+                                    <th>Date of Birth</th>
+                                    <th>Dream Vacation City</th>
+                                    <th>GPA</th>
+                                    <th>Arbitrary Data</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>James</td>
+                                    <td>Matman</td>
+                                    <td>Chief Sandwich Eater</td>
+                                    <td>Lettuce Green</td>
+                                    <td>Trek</td>
+                                    <td>Digby Green</td>
+                                    <td>January 13, 1979</td>
+                                    <td>Gotham City</td>
+                                    <td>3.1</td>
+                                    <td>RBX-12</td>
+                                </tr>
+                                <tr>
+                                    <td>The</td>
+                                    <td>Tick</td>
+                                    <td>Crimefighter Sorta</td>
+                                    <td>Blue</td>
+                                    <td>Wars</td>
+                                    <td>John Smith</td>
+                                    <td>July 19, 1968</td>
+                                    <td>Athens</td>
+                                    <td>N/A</td>
+                                    <td>Edlund, Ben (July 1996).</td>
+                                </tr>
+                                <tr>
+                                    <td>Jokey</td>
+                                    <td>Smurf</td>
+                                    <td>Giving Exploding Presents</td>
+                                    <td>Smurflow</td>
+                                    <td>Smurf</td>
+                                    <td>Smurflane Smurfmutt</td>
+                                    <td>Smurfuary Smurfteenth, 1945</td>
+                                    <td>New Smurf City</td>
+                                    <td>4.Smurf</td>
+                                    <td>One</td>
+                                </tr>
+                                <tr>
+                                    <td>Cindy</td>
+                                    <td>Beyler</td>
+                                    <td>Sales Representative</td>
+                                    <td>Red</td>
+                                    <td>Wars</td>
+                                    <td>Lori Quivey</td>
+                                    <td>July 5, 1956</td>
+                                    <td>Paris</td>
+                                    <td>3.4</td>
+                                    <td>3451</td>
+                                </tr>
+                                <tr>
+                                    <td>Captain</td>
+                                    <td>Cool</td>
+                                    <td>Tree Crusher</td>
+                                    <td>Blue</td>
+                                    <td>Wars</td>
+                                    <td>Steve 42nd</td>
+                                    <td>December 13, 1982</td>
+                                    <td>Las Vegas</td>
+                                    <td>1.9</td>
+                                    <td>Under the couch</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class='order-list-empty'>Order List is Empty</div>
+                    </div>
+                    <div class="admin-nav">
+                        <div class='pagination'></div>
+                        <div class='add-status'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup-wrapper">
+        <div class="bk-overlay"></div>
+        <div class="popup">
+            <div class="header"></div>
+            <div class="popup-container">
+                <div class="content">
+                    <span>SOMTHING WENT WRONG</span>
+                </div>
+                <div class="button">
+                    <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script type="text/javascript" src='../../js/jquery.min.js'></script>
+    <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
+    <script type="text/javascript" src='../../js/jquery.validate.min.js'></script>
+    <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../../js/jquery-ui.min.js'></script>
+    <script type="text/javascript" src='../../js/common.js'></script>
+    <script type="text/javascript" src='js/admin.js'></script>
+    <script type="text/javascript" src='js/driver_order.js'></script>
+</body>
+
+</html>
