@@ -255,13 +255,13 @@ function tipsTricksTab(mealDetails) {
 function nutrientsTab(mealDetails) {
     $.each(mealDetails.nutrients, function(key, value) {
         $("#nutrient-table tbody").append("<tr><td>" + value.mainNutrient + "</td>" +
-            "<td>" + value.perServing + "</td>" +
+            "<td class='per-serving'>" + value.perServing + "</td>" +
             "<td>" + value.dailyValue + "</td>" +
             "</tr>");
         if (value.subNutrients.length) {
             $.each(value.subNutrients, function(key, value) {
                 $("#nutrient-table tbody").append("<tr><td class='sub-nutrients'>" + value.nutrientsName + "</td>" +
-                    "<td>" + value.servingValue + "</td>" +
+                    "<td class='per-serving'>" + value.servingValue + "</td>" +
                     "<td>" + value.dailyValue + "</td>" +
                     "</tr>");
             });

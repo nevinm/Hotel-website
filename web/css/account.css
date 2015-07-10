@@ -1603,6 +1603,7 @@ img.accepted-cards
 	min-width: 55px;
 }
 .promo-validation-message {
+	float: left;
 	font-family:'ProximaNova-Regular';
 	font-size: 12px;
 	color: #ff7878;
