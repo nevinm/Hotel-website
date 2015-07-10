@@ -123,7 +123,6 @@ var getMealDetailsCallback = {
     success: function(data, textStatus) {
         mealDetails = JSON.parse(data);
         if (mealDetails.status == 1) {
-            debugger;
             populateMealDetails(mealDetails);
             foodSettings(mealDetails);
         } else {
