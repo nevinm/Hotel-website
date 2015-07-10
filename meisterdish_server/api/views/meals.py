@@ -143,7 +143,7 @@ def get_meal_details(request, data, meal_id):
         if user:
             ci = CartItem.objects.filter(cart__user=user, cart__completed=False, meal__pk=meal.id)
             qty = ci[0].quantity if ci.exists() else 0
-        meal_types = [{"image_id": ty.image.image.id, "image_url":ty.image.image.url, "meal_type_name":ty.name } for ty in meal.types.all()]
+        meal_types = [{"image_id": ty.image.id, "image_url":ty.image.image.url, "meal_type_name":ty.name } for ty in meal.types.all()]
         return json_response({
             "status":1,
             "id" : meal.id,
@@ -154,7 +154,7 @@ def get_meal_details(request, data, meal_id):
             "tax":(meal.price * meal.tax) /100,
             "available" : 1 if meal.available else 0,
             "calories" : meal.calories,
-            "filters" : [type.id for type in meal.types.all()],
+            #"filters" : [type.id for type in meal.types.all()],
             "cat_id" : 'Not Available' if not meal.category else {
                 "id":meal.category.id,
                 "name":meal.category.name.title(),

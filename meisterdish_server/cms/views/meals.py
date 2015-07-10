@@ -319,7 +319,7 @@ def get_meal_details(request, data, user, meal_id):
             "tax_percentage" : meal.tax,
             "available" : 1 if meal.available else 0,
             "calories" : meal.calories,
-            "filters" : [type.id for type in meal.types.all()],
+            "filters" : [{"image_id": ty.image.id, "image_url":ty.image.image.url, "meal_type_name":ty.name } for ty in meal.types.all()],
             "cat_id" : 'Not Available' if not meal.category else {
                 "id":meal.category.id,
                 "name":meal.category.name.title(),
