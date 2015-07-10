@@ -1,6 +1,8 @@
 var current_tr;
 $(document).ready(function() {
     $("#add-new-mealtype").on("click", function() {
+        showMealTypeManagePre();
+        $(".mealtype-image").attr("src", "");
         $("#new-mealtype").val("");
         $("#add-mealtype").show();
         $("#edit-mealtype").hide();
@@ -41,11 +43,14 @@ $(document).ready(function() {
 
     $(document).on('click', '#edit-mealtype-name', function() {
         var mealtype = $(this).closest('tr').find('.mealtype-name-value').text(),
-            imageUrl = $(this).data("url");
+            imageUrl = $(this).data("url"),
+            imageId = $(this).data("imageid");
+        showMealTypeManagePre();
         $("#add-mealtype").hide();
         $("#edit-mealtype").show();
-        $(".header").text("CHANGE DELIVERY AREA");
+        $(".header").text("EDIT MEAL TYPE");
         $("#new-mealtype").val(mealtype);
+        $(".mealtype-image").attr("data-id", imageId);
         $('.popup-wrapper').show();
         if ($("#new-mealtype").hasClass("error")) {
             $('form.popup-container').valid();
@@ -72,6 +77,20 @@ $(document).ready(function() {
     getMealtypes(1);
 });
 
+function showCallBackStatusPre() {
+    $(".popup-input-wrapper").hide();
+    $("#add-mealtype, #edit-mealtype").hide();
+    $(".callback-status").show();
+    $(".header").text("MESSAGE");
+    $("#close").addClass("clear");
+}
+
+function showMealTypeManagePre() {
+    $("#close").removeClass("clear");
+    $(".popup-input-wrapper").show();
+    $(".callback-status").hide();
+}
+
 function addDynamicApiUrlUploadPicture(element) {
     $("." + element).attr("data-url", baseURL + "cms/upload_image/");
 }
@@ -85,21 +104,31 @@ function uploadImage(imageElementSelect, imageElement) {
         formData: {
             example: 'test'
         },
+        start: function(e){
+            $(".upload-gif").show();
+        },
         done: function(e, data) {
-            $(imageElement).attr('src', data.result.thumbnail_url);
-            $(imageElement).attr('data-id', data.result.id);
-            $(imageElement).show();
+            $(".upload-gif").hide();
+            if (data.result.status) {
+                $(imageElement).attr('src', data.result.thumbnail_url);
+                $(imageElement).attr('data-id', data.result.id);
+                $(imageElement).show();
+            } else {
+                showCallBackStatusPre();
+                showPopup(data.result);
+            }
         }
     });
 }
 
-// get delivery areas
+// get Mealtypes callback
 var getMealtypesCallback = {
     success: function(data, textStatus) {
         var mealTypeList = JSON.parse(data);
-        if (mealTypeList.status) {
+        if (mealTypeList.status == 1) {
             populateMealtypes(mealTypeList);
         } else {
+            showCallBackStatusPre();
             showPopup(mealTypeList);
         }
     },
@@ -126,11 +155,10 @@ function populateMealtypes(mealTypeList) {
         $('#mealtype-area tbody').append("<tr class='row' data-id='" + value.id + "'>" +
             "<td class='mealtype-name-value'>" + value.name + "</td>" +
             "<td>" + "<input type='button' data-url='" + value.image + "' class='btn btn-small-primary medium-green'" +
-            " id='edit-mealtype-name' value='EDIT'>" + "</td>" +
+            " id='edit-mealtype-name' data-imageid='" + value.image_id + "' value='EDIT'>" + "</td>" +
             "<td>" + "<input type='button' class='btn btn-small-primary medium-green'" +
             " id='delete-mealtype' value='DELETE'>" + "</td>" +
             "<td><img class='mealtype-icon' src='" + value.image + "'/>" +
-            "<span class='mealtype-image-upload'> EDIT</span>" +
             "<input class='mealtype-image-upload-element' value='' type='file' name='image_upload'/></td>" +
             "</tr>");
     });
@@ -139,15 +167,15 @@ function populateMealtypes(mealTypeList) {
         $(this).parent().find(".mealtype-image-upload-element").click();
     });
 
-    $(".pagination").pagination({
-        items: mealTypeList.total_count,
-        itemsOnPage: mealTypeList.per_page,
-        currentPage: mealTypeList.current_page,
-        cssStyle: 'light-theme',
-        onPageClick: function(pageNumber, event) {
-            getMealtypes(pageNumber);
-        }
-    });
+    // $(".pagination").pagination({
+    //     items: mealTypeList.total_count,
+    //     itemsOnPage: mealTypeList.per_page,
+    //     currentPage: mealTypeList.current_page,
+    //     cssStyle: 'light-theme',
+    //     onPageClick: function(pageNumber, event) {
+    //         getMealtypes(pageNumber);
+    //     }
+    // });
 
     $(".mealtype-image-upload-element").on('click', function() {
         var inputElement = $(this),
@@ -163,6 +191,7 @@ var manageMealtypeCallback = {
     success: function(data, textStatus) {
         var mealManageData = JSON.parse(data);
         if (mealManageData.status == -1) {
+            showCallBackStatusPre();
             showPopup(mealManageData);
         } else {
             getMealtypes(1);
@@ -193,6 +222,7 @@ var deleteMealtypeCallback = {
     success: function(data, textStatus) {
         var deleteMealTypeData = JSON.parse(data);
         if (deleteMealTypeData.status == -1) {
+            showCallBackStatusPre();
             showPopup(deleteMealTypeData);
         } else {
             getMealtypes(1);

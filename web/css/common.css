@@ -393,6 +393,10 @@ body {
     display: table !important;
 }
 
+.clear{
+    float: none !important; 
+}
+
 input.arrange {
     width: 100%;
     border-radius: 3px;
@@ -818,7 +822,8 @@ span.icon-menu {
 	/*padding: 43px 0 !important;*/
 	float: none !important;
 }
- .popup-container .content span{
+ .popup-container .content span,
+ .popup-container .content p{
 	width: 100%;
 	float: left;
 	text-align: center;
@@ -853,7 +858,8 @@ span.icon-menu {
 #recipient-message-error,#fullname-error, #giftcardcustomamount-error, #message-error,
 #tips-video-url-label-error,#tips-and-tricks-label-error, #invite-code-error,#email-error, 
 #new-amount-error, #new-code-error, #new-date-error, #city-selector-error,#adminlogin-password-error,
-#new-credits-error,#new_category-error,#update_category-error,#tip-error
+#new-credits-error,#new_category-error,#update_category-error,#tip-error,#new-mealtype-error
+>>>>>>> 8659a8572c194b74cf3e5c449dabf2fdd52bd0a5
 {
 	color: #ff7878;
 	background: white;
