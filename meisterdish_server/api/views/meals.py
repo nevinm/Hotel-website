@@ -134,6 +134,7 @@ def get_meal_details(request, data, meal_id):
                 "description" : "" if tips.description.strip() == "" else simplejson.loads(tips.description),
                 "image_url" : settings.DEFAULT_MEAL_IMAGE if tips.image is None else tips.image.image.url,
                 "video_url" : "" if tips.video_url is None else tips.video_url,
+                "image_url1":"" if tips.image_url is None else tips.image_url,
                 })
         qty = 0
         if user:
@@ -149,6 +150,7 @@ def get_meal_details(request, data, meal_id):
             "price":meal.price,
             "tax":(meal.price * meal.tax) /100,
             "available" : 1 if meal.available else 0,
+            "calories" : meal.calories,
             "filters" : [type.id for type in meal.types.all()],
             "cat_id" : 'Not Available' if not meal.category else {
                 "id":meal.category.id,

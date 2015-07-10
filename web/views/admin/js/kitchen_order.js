@@ -84,7 +84,7 @@ function populateOrderList(data) {
             deliverytime = undefinedCheck(value.delivery_time),
             zip = undefinedCheck(value.delivery_address.zip),
             minTime = undefinedCheck(value.time),
-            orderNum = undefinedCheck(value.order_num),
+            orderNum = undefinedCheck(value.id),
             minTime = undefinedCheck(value.minutes);
 
         $.each(value.meals, function(mealKey, mealValue) {

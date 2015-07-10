@@ -140,7 +140,7 @@ class User(models.Model):
     zipcode = models.CharField(db_index=True, max_length=6, null=True, blank=True)
     email = models.EmailField(db_index=True, max_length=30, null=True)
     mobile = models.CharField(max_length=15, null=True)
-    profile_image = models.ForeignKey(Image, null=True)
+    profile_image = models.ForeignKey(Image, null=True, blank=True)
     
     user_verify_token = models.CharField(max_length=50, null=True, blank=True, default="")
     password_reset_token = models.CharField(max_length=20, null=True, blank=True, default="")
@@ -237,6 +237,7 @@ class Tips(models.Model):
     description = models.TextField(max_length=1024)
     image = models.ForeignKey(Image, null=True, blank=True)
     video_url = models.CharField(max_length=1024, null=True, blank=True)
+    image_url = models.CharField(max_length=1024, null=True, blank=True)
 
 class Meal(models.Model):
     name = models.CharField(db_index=True, max_length=100)
@@ -263,6 +264,7 @@ class Meal(models.Model):
 
     #nutrients = models.ManyToManyField(Nutrient, through="MealNutrient", null=True, blank=True)
     nutrients = models.TextField(max_length=1024, null=True, blank=True, default="")
+    calories =  models.CharField(max_length=30, null=True, blank=True, default="")
 
     #ingredients = models.ManyToManyField(Ingredient, through="MealIngredient", null=True, blank=True)
     ingredients = models.TextField(max_length=1024, null=True, blank=True, default="")
@@ -278,8 +280,6 @@ class Meal(models.Model):
     
     is_deleted = models.BooleanField(db_index=True, default=False)
     available = models.BooleanField(db_index=True, default=True)
-
-    attribute = models.ForeignKey("Attribute", null=True, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -465,10 +465,3 @@ class Configuration(models.Model):
 
     def __str__(self):
         return self.key + " = " + self.value
-
-class Attribute(models.Model):
-    name = models.CharField(db_index=True, max_length=20)
-    image = models.ForeignKey(Image)
-    is_deleted =  models.BooleanField(db_index=True, default=False)
-    def __unicode__(self):
-        return self.name

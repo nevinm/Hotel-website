@@ -52,5 +52,5 @@ urlpatterns = patterns('',
     
     url(r'^create_attribute/$', meals.create_attribute, name='create_attribute'),
     url(r'^list_attributes/$', meals.list_attributes, name='list_attributes'),
-    url(r'^delete_attribute/$', meals.delete_attribute, name='delete_attribute'),
+    url(r'^delete_attribute/(?P<attribute_id>[0-9]+)/$', meals.delete_attribute, name='delete_attribute'),
 )

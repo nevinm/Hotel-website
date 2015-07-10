@@ -99,8 +99,11 @@ def add_to_cart(request, data):
         
         try:
            cart_item = CartItem.objects.get(cart=cart, meal=meal)
-           if quantity < 0-cart_item.quantity:
+           if quantity == 0 or quantity == 0-cart_item.quantity:
+              cart_item.delete()
+           elif quantity < 0-cart_item.quantity:
               return custom_error("Invalid quantity")
+
            cart_item.quantity = cart_item.quantity+quantity
         except CartItem.DoesNotExist:
            cart_item = CartItem()
