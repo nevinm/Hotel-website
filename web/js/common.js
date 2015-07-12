@@ -482,6 +482,10 @@ $("form").each(function() {
                 required : true,
                 number : true
 
+            },
+            order:{
+                required : true,
+                number : true  
             }
         },
         messages: {
@@ -569,7 +573,8 @@ $("form").each(function() {
             invitecode: "Enter Invitecode",
             date: "Please enter date",
             promocode: "Please enter promocode.",
-            tip: "Enter valid Tip."
+            tip: "Enter valid Tip.",
+            order: "Enter valid Order."
                 // image_upload:"Please select an image."
         }
     });

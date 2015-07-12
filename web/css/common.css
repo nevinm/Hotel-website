@@ -806,7 +806,8 @@ span.icon-menu {
     background-color: #f7f7f7;
 }
 
-.popup .header,.delivery-address-error-popup .header,.popup-zip-fail .header{
+.popup .header,.delivery-address-error-popup .header,
+.popup-zip-fail .header{
 	border-bottom: 1px solid #D0D0D0;
 	height: 46px;
 	padding-left: 35px;
@@ -858,7 +859,8 @@ span.icon-menu {
 #recipient-message-error,#fullname-error, #giftcardcustomamount-error, #message-error,
 #tips-video-url-label-error,#tips-and-tricks-label-error, #invite-code-error,#email-error, 
 #new-amount-error, #new-code-error, #new-date-error, #city-selector-error,#adminlogin-password-error,
-#new-credits-error,#new_category-error,#update_category-error,#tip-error,#new-mealtype-error
+#new-credits-error,#new_category-error,#update_category-error,#tip-error,#new-mealtype-error,
+#new-order-error
 {
 	color: #ff7878;
 	background: white;
