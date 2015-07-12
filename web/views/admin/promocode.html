@@ -97,28 +97,30 @@
                     <div class="bk-overlay"></div>
                     <div class="popup popup-giftcard">
                         <div class="header"></div>
-                        <form class="popup-container" id='promocode-form'>
-                            <div class="content">
-                                <div class="popup-input-wrapper">
-                                    <label class="body-text-small">Promo Code:</label>
-                                    <input type="text" name='promocode' class="popup-input" id="new-code">
+                        <div class="popup-container" >
+                            <form id='promocode-form'>
+                                <div class="content">
+                                    <div class="popup-input-wrapper">
+                                        <label class="body-text-small">Promo Code:</label>
+                                        <input type="text" name='promocode' class="popup-input" id="new-code">
+                                    </div>
+                                    <div class="popup-input-wrapper">
+                                        <label class="body-text-small">Date:</label>
+                                       <input type="text" name='date' class="popup-input" id="new-date" placeholder="mm/dd/yyyy">
+                                    </div>
+                                    <div class="popup-input-wrapper">
+                                        <label class="body-text-small">Amount:</label>
+                                        <input type="number" name='amount' class="popup-input" min="1" id="new-amount">
+                                    </div>
                                 </div>
-                                <div class="popup-input-wrapper">
-                                    <label class="body-text-small">Date:</label>
-                                   <input type="text" name='date' class="popup-input" id="new-date" placeholder="mm/dd/yyyy">
+                                <div class="button">
+                                    <input type="submit" class="btn btn-small-secondary" id="edit-delivery-area" value="SUMBIT">
+                                    <input type="submit" class="btn btn-small-secondary" id="add-delivery-area" value="SUBMIT">
+                                    <a href="#" class="btn btn-small-secondary" id="update">UPDATE</a>
+                                    <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
                                 </div>
-                                <div class="popup-input-wrapper">
-                                    <label class="body-text-small">Amount:</label>
-                                    <input type="number" name='amount' class="popup-input" min="1" id="new-amount">
-                                </div>
-                            </div>
-                            <div class="button">
-                                <input type="submit" class="btn btn-small-secondary" id="edit-delivery-area" value="SUMBIT">
-                                <input type="submit" class="btn btn-small-secondary" id="add-delivery-area" value="SUBMIT">
-                                <a href="#" class="btn btn-small-secondary" id="update">UPDATE</a>
-                                <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="error-popup-wrapper">

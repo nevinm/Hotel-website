@@ -1204,3 +1204,10 @@ input#add-gift-card{
 #search-coupon-code{
     margin-top: 17px;
 }
+form.edit-gift-card #update{
+    width: initial;
+    margin-bottom: 1px;
+}
+form.edit-gift-card #new-name-error{
+    bottom: 26px;
+}

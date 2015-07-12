@@ -106,28 +106,28 @@
                     <div class="bk-overlay"></div>
                     <div class="popup popup-giftcard">
                         <div class="header"></div>
-                        <form class="popup-container">
-                            <div class="content">
-                                <div class="popup-input-wrapper">
-                                    <label class="body-text-small">Code:</label>
-                                    <input type="text" class="popup-input" id="new-code">
+                        <div class="popup-container">
+                            <form class="edit-gift-card">
+                                <div class="content">
+                                    <div class="popup-input-wrapper">
+                                        <label class="body-text-small">Code:</label>
+                                        <input type="text" class="popup-input" name="giftcard" id="new-code" autofocus>
+                                    </div>
+                                    <div class="popup-input-wrapper">
+                                        <label class="body-text-small">Name:</label>
+                                        <input type="text" class="popup-input" name="giftcardname" id="new-name">
+                                    </div>
+                                    <div class="popup-input-wrapper">
+                                        <label class="body-text-small">Amount:</label>
+                                        <input type="number" class="popup-input" name="amount" id="new-amount">
+                                    </div>
                                 </div>
-                                <div class="popup-input-wrapper">
-                                    <label class="body-text-small">Name:</label>
-                                    <input type="text" class="popup-input" id="new-name">
+                                <div class="button">
+                                    <input type="submit" class="btn btn-small-secondary" id="update"value="UPDATE">
+                                    <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
                                 </div>
-                                <div class="popup-input-wrapper">
-                                    <label class="body-text-small">Amount:</label>
-                                    <input type="number" class="popup-input" id="new-amount">
-                                </div>
-                            </div>
-                            <div class="button">
-                                <input type="submit" class="btn btn-small-secondary" id="edit-delivery-area" value="SUMBIT">
-                                <input type="submit" class="btn btn-small-secondary" id="add-delivery-area" value="SUBMIT">
-                                <a href="#" class="btn btn-small-secondary" id="update">UPDATE</a>
-                                <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="error-popup-wrapper">
