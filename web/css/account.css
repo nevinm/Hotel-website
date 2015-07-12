@@ -187,9 +187,15 @@ form.gift-cardform .redeem {
   padding-left: 20px;
   padding-top: 10px;
   padding-bottom: 30px;
+  position: relative;
+}
+#change-contact .update-button{
+	padding-top: 20px;
 }
  .notify input[type="checkbox"]{
  	float: left;
+ 	position: absolute;
+ 	left: 0;
  }
  .changepassword-container{
  	padding: 20px 0px 20px 0px;
