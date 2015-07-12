@@ -49,7 +49,8 @@ only screen and (max-width: 760px),
 
 	/* Force table to not be like tables anymore */
 	table, thead, tbody, th, td, tr { 
-		display: block; 
+		display: block;
+		overflow: hidden; 
 	}
 	
 	/* Hide table headers (but not display: none;, for accessibility) */
@@ -67,6 +68,8 @@ only screen and (max-width: 760px),
 		border-bottom: 1px solid #eee; 
 		position: relative;
 		padding-left: 50%; 
+		width: 100%;
+		float: left;
 	}
 	
 	td:before { 

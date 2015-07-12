@@ -1,22 +1,26 @@
 var current_tr;
 $(document).ready(function() {
 	$("#add-new-delivery-area").on("click",function(){
-		$("#new-address").val("");
-		$("#add-delivery-area").show();
-		$("#edit-delivery-area").hide();
+		$('#add-edit-button').val("ADD");
 		$(".header").text("ADD NEW DELIVERY AREA");
 		$('.popup-wrapper').show();
-		if($("#new-address").hasClass("error")){
-			$('form.popup-container').valid();
-		}
-		$("form").data('validator').resetForm();		
+		$('form#manage-zip').validate().resetForm();	
 	});
-	$("#add-delivery-area").on("click",function(e){
+	// $("#add-delivery-area, #edit-delivery-area").on('submit',function(e){
+	// 	e.preventDefault();
+	// });
+	$("#add-edit-button").on("click",function(e){
 		e.preventDefault();
-		if($(".popup-container").valid()){
-			$('.popup-wrapper').hide();
-			var zip = $("#new-address").val();
-			manageDeliveryArea("","",zip,"add");
+		if($("#manage-zip").valid()){
+			if($(this).val() == "ADD"){
+				var zip = $("#new-address").val();
+				manageDeliveryArea("","",zip);	
+			}
+			if($(this).val() == "UPDATE"){
+				var id = current_tr.attr('data-id'),
+				zip = $('#new-address').val();
+				manageDeliveryArea(id,"",zip);
+			}	
 		}
 	});
 	$(document).on('click', '#delete-zip', function() {
@@ -35,28 +39,15 @@ $(document).ready(function() {
 	$("#no-button").on("click",function(){
 		$(".confirm-popup-wrapper").hide();
 	});
-	$(document).on('click', '#edit-zip', function() {
-		
+	$(document).on('click', '#edit-zip', function() {	
 		var zip = $(this).closest('tr').find('.zip-value').text();
-		$("#add-delivery-area").hide();
-		$("#edit-delivery-area").show();
+		$('#add-edit-button').val('UPDATE');
 		$(".header").text("CHANGE DELIVERY AREA");
 		$("#new-address").val(zip);
-		$('.popup-wrapper').show();
-		if($("#new-address").hasClass("error")){
-			$('form.popup-container').valid();
-		}	
+		$('.popup-wrapper').show();	
 		current_tr = $(this).closest('tr');
+		$("#manage-zip").validate().resetForm();
 	});
-	$("#edit-delivery-area").on("click",function(e){
-		e.preventDefault();
-		if($(".popup-container").valid()){
-			$('.popup-wrapper').hide();
-			var id = current_tr.attr('data-id'),
-				zip = $('#new-address').val();
-			manageDeliveryArea(id,"",zip,"edit");
-		}
-	})
 	getDeliveryAreas(1);
 });
 // get delivery areas
@@ -115,6 +106,7 @@ var manageDeliveryAreaCallback = {
 				getDeliveryAreas(1);
 			}
 		}
+		$('.popup-wrapper').hide();
 	},
 	failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
