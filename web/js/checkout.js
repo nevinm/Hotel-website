@@ -437,10 +437,16 @@ function updateReciept(GiftcardDetails, flag) {
         totalCredits = parseInt($('#hidden-credit').val());
         if($('#pickup-radio').prop('checked')){
             totalDeliveryCost = 0;
+            totalDriverTip = 0;
+            $('.driver-tip').val(0);
+            $('.driver-tip-display').text("$0.00");
             $('span.total-delivery-cost').text('$0.00');
         }else{
             totalDeliveryCost = 2.95;
             $('span.total-delivery-cost').text('$2.95');
+            $('.driver-tip-display').text("$5.00");
+            $('.driver-tip').val(5);
+            totalDriverTip = parseFloat($('.driver-tip').val());
         }
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
