@@ -642,6 +642,10 @@ input#searchBy-name {
 .meal-produced{
     cursor: pointer;
 }
+.meal-list-img{
+    height: auto;
+    width: 77px;
+}
 /*=======================*\
      &CREATE -MEAL
 \*=======================*/
