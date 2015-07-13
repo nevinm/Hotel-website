@@ -53,10 +53,10 @@ SLIDER
     min-height: 100%;
 }
 /*==============================*\
-			&Section 1
+		&Section what is
 \*==============================*/
 
-#section1 {
+#section-what-is {
     background: url(../images/homepageslider/homepage_1.jpg) 0% 50% no-repeat;
     background-position: fixed;
     padding: 6% 0 0 0;
@@ -64,14 +64,14 @@ SLIDER
     text-align: center;
 }
 
-#section1 .main-header {
+#section-what-is .main-header {
     font-family: 'BrandonGrotesque-Medium';
     font-size: 40px;
     letter-spacing: 2.5px;
     color: #6B6B6B;
 }
 
-#section1 .sub-header {
+#section-what-is .sub-header {
     font-family: 'BrandonGrotesque-Regular';
     font-size: 18px;
     letter-spacing: 1px;
@@ -86,7 +86,7 @@ SLIDER
     padding-bottom: 20px;
 }
 
-#section1 .slide-description {
+#section-what-is .slide-description {
     background-color: white;
     max-width: 700px;
     border-radius: 5px;
@@ -101,9 +101,22 @@ SLIDER
     border-radius: 5px;
 }
 
-#section1 .btn {
+#section-what-is .btn {
     margin-bottom: 30px;
     padding: 0 40px;
+}
+/*====================================*\
+		&Section what to expect
+\*====================================*/
+
+/*==============================*\
+			&Section 3
+\*==============================*/
+#section3{
+	background: url(../images/homepageslider/map_banner.jpg) center top no-repeat;
+	background-position: fixed;
+	padding: 6% 0 0 0;
+	background-size: cover;
 }
 /*==============================*\
 			&Section 4
