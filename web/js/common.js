@@ -491,8 +491,8 @@ $("form").each(function() {
             },
             tip:{
                 required : true,
-                number : true
-
+                number : true,
+                maxAmount: 10
             },
             order:{
                 required : true,
@@ -585,7 +585,11 @@ $("form").each(function() {
             date: "Please enter date",
             promocode: "Please enter valid promocode.",
             giftcard: "Please enter valid code.",
-            tip: "Enter valid Tip.",
+            tip:{
+                required: "Please enter tip",
+                number: "Enter a number less than 10.",
+                maxAmount: "Enter a number less than 10."
+            },
             giftcardname :"Enter valid giftcardname.",
             order: "Enter valid Order."
                 // image_upload:"Please select an image."
