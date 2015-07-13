@@ -50,15 +50,31 @@
 .username-wrapper input, .password-wrapper input{
   width: 100%;
 }
-.fb-signupButton img{
-    height: 45px;
-    min-width: 130px;
-    width: 100%;
-    padding: 0 35px;
-}
 span.forgot-password{
   margin: 10px 0px;
   float: left;
+}
+.fb-login-signup-btn {
+  height: 45px;
+  background-color: #39579a;
+  border-radius: 2px;
+}
+.btn-wrapper{
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 11px;
+}
+.fb-login-img{
+  height: 22px;
+  width: 22px;
+  float: left;
+}
+span.facebook-login-text {
+  font-size: 16px;
+  color: #fff;
+  font-family: "BrandonGrotesque-Black";
+  letter-spacing: 0.7px;
 }
 /*==================================*\
       &SIGNUP
@@ -87,7 +103,8 @@ span.forgot-password{
 }
 .fb-signupButton{
   text-align: center;
-  padding: 20px 0;
+  padding: 20px 35px;
+  cursor: pointer;
 }
 .facebook-signup,.facebook-login{
   font-family: 'BrandonGrotesque-Bold';
@@ -237,7 +254,7 @@ form#resetpassword-form {
 hr{
   display: none;
 }
-@media only screen and (min-width: 320px)and (max-width:767px){
+@media (min-width: 320px)and (max-width:767px){
  #login-container,#account-mainWrapper{
       background-image: none;
       border:none;
@@ -251,6 +268,9 @@ hr{
   }
   .facebook-signup, .facebook-login{
     text-align: center;
+  }
+  .fb-signupButton{
+    padding: 20px 20px;
   }
   span.or{
     width: 100%;
@@ -330,7 +350,7 @@ hr{
     margin-bottom: 20px;
   }
 }
-@media only screen and (min-width: 320px)and (max-width:420px){
+@media (min-width: 320px)and (max-width:420px){
     .signup-input {
       width: 100%;
     }
@@ -340,4 +360,20 @@ hr{
     .email-wrapper .signup-input:nth-child(2){
       margin-top: 0px;
     }
+    .btn-wrapper{
+      width: 93% !important;
+    }
+    span.facebook-login-text{
+      font-size: 14px;
+    }
   }
+
+@media (max-width:500px){
+  .btn-wrapper{
+    width: 85%;
+  }
+  .span.facebook-login-text{
+    font-size: 15px;
+    letter-spacing: .3px;
+  }
+}
