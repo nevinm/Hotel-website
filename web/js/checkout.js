@@ -908,7 +908,7 @@ function getStates() {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "search": ""
+            "search": "New York"
         };
     data = JSON.stringify(userData);
     var getStatesInstance = new AjaxHttpSender();
