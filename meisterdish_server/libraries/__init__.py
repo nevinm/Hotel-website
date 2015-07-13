@@ -233,11 +233,12 @@ def get_time_past(dtm):
     mins = (now - dtm).days*24*60
     return mins
 
-def add_to_mailing_list(email):
+def add_to_mailing_list(email, zip):
     try:
+        zip = int(zip)
         import mailchimp
         mc = mailchimp.Mailchimp(settings.MAILCHIMP_API_KEY)
-        res = mc.lists.subscribe(settings.MAILCHIMP_LIST_ID, {'email': email}, double_optin=False)
+        res = mc.lists.subscribe(settings.MAILCHIMP_LIST_ID, {'email': email}, {"merge3":zip}, double_optin=False)
         if res and res['euid']:
             log.info("Added email to list")
         else:
