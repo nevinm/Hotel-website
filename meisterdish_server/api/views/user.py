@@ -397,4 +397,7 @@ def save_email(request, data):
         return json_response({"status":1, "message":"Your email has already been recorded. You will be notified when delivery becomes available at your location."})
     except KeyError as e:
         log.error("Save email :"+ e.message)
-        return custom_error("An error has occurred. Please try again later.")        
+        return custom_error("An error has occurred. Please try again later.")
+    except Exception as e:        
+        return custom_error(e.message)
+    
