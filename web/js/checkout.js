@@ -37,7 +37,6 @@ $(document).ready(function() {
     $('.driver-tip').on('keyup input', function() {
         selectedTip = 0;
         $('.driver-tip-display').text("$00.00");
-        if($('#tip-form').valid()){
             selectedTip = this.value;
             if (this.value.length > 2) {
                 selectedTip = this.value = this.value.slice(0, 2);
@@ -49,9 +48,9 @@ $(document).ready(function() {
             } else if (selectedTip == 0 || isNaN(selectedTip)) {
                 $('.driver-tip-display').text("$00.00");
             }
+        if($('#tip-form').valid()){
             updateReciept();
         }
-
     });
 
     //Set time for delivery API call
@@ -438,14 +437,13 @@ function updateReciept(GiftcardDetails, flag) {
         if($('#pickup-radio').prop('checked')){
             totalDeliveryCost = 0;
             totalDriverTip = 0;
-            $('.driver-tip').val(0);
-            $('.driver-tip-display').text("$0.00");
+            $(".driver-tip-container").hide();
             $('span.total-delivery-cost').text('$0.00');
         }else{
             totalDeliveryCost = 2.95;
             $('span.total-delivery-cost').text('$2.95');
-            $('.driver-tip-display').text("$5.00");
-            $('.driver-tip').val(5);
+            $(".driver-tip-container").show();
+            // $('.driver-tip').val(5);
             totalDriverTip = parseFloat($('.driver-tip').val());
         }
     $(".order-list-items").each(function(key, value) {
@@ -908,7 +906,7 @@ function getStates() {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "search": ""
+            "search": "New York"
         };
     data = JSON.stringify(userData);
     var getStatesInstance = new AjaxHttpSender();
