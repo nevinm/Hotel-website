@@ -355,7 +355,7 @@ def forgot_password(request, data):
         
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
         #link = settings.BASE_URL + 'password_reset_return/'+token+"/"
-        link = settings.SITE_URL+"views/reset_password.html?token="+token
+        link = settings.SITE_URL+"views/reset-password.html?token="+token
         user.password_reset_token = token
         user.save()
         
