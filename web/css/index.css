@@ -108,7 +108,23 @@ SLIDER
 /*====================================*\
 		&Section what to expect
 \*====================================*/
-
+#section-what-to-expect{
+    background-color: #F5F5F5;
+}
+.slide-header{
+    font-size: 35px;
+    letter-spacing: 2.5px;
+    font-family: 'BrandonGrotesque-Medium';
+    color: #6B6B6B;
+    text-align: center;
+}
+.header-hr{
+    height: 1px;
+    border:0;
+    width: 20%;
+    margin: 0 auto;
+    background-color: #A9D77B;
+}
 /*==============================*\
 			&Section 3
 \*==============================*/
