@@ -32,7 +32,9 @@ def get_meals(request, data, user):
             
         if "type_ids" in data and len(data['type_ids']) >0 and str(data['type_ids']) != '':
             meals = meals.filter(types__id__in=data['type_ids'])
-            
+        
+        meals = meals.order_by("order")
+
         actual_count = meals.count()
         try:
             paginator = Paginator(meals, limit)
@@ -72,7 +74,7 @@ def get_meals(request, data, user):
                               "tax":meal.price * meal.tax/100,
                               "ingredients":ingredients,
                               "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, cart__completed=False, meal__pk=meal.id).exists() else 0,
-                              
+                              "order":meal.order,
                               })
         return json_response({"status":1, 
                               "aaData":meal_list,
@@ -317,7 +319,7 @@ def get_meal_details(request, data, user, meal_id):
             "tax_percentage" : meal.tax,
             "available" : 1 if meal.available else 0,
             "calories" : meal.calories,
-            "filters" : [type.id for type in meal.types.all()],
+            "filters" : [{"image_id": ty.image.id, "image_url":ty.image.image.url, "meal_type_name":ty.name } for ty in meal.types.all()],
             "cat_id" : 'Not Available' if not meal.category else {
                 "id":meal.category.id,
                 "name":meal.category.name.title(),
@@ -400,9 +402,9 @@ def create_attribute(request, data, user):
 def list_attributes(request, data, user):
     try:
         if 'attribute_id' in data:
-            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in MealType.objects.get(pk=int(data['attribute_id']))]
+            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url, "image_id": attr.image.id} for attr in MealType.objects.get(pk=int(data['attribute_id']))]
         else:
-            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url} for attr in MealType.objects.all()]
+            attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url, "image_id":attr.image.id} for attr in MealType.objects.all()]
         return json_response({"status":1, 
                               "aaData":attributes,
                               })
@@ -434,3 +436,18 @@ def delete_attribute(request, data, user, attribute_id):
     except Exception as e:
         log.error("Failed to delete attribute : "+e.message)
         return custom_error("Failed to delete attribute. Does that exist?")
+
+@check_input('POST', settings.ROLE_ADMIN)
+def update_meal_order(request, data, user, meal_id):
+    try:
+        order = int(str(data['order']).strip())
+        if order <1 or order > 999999:
+            return custom_error("Invalid Order.")
+        meal = Meal.objects.get(is_deleted=False, pk=meal_id)
+        meal.order = order
+        meal.save()
+
+        return json_response({"status":1, "message":"Updated meal order", "order":order})
+    except Exception as e:
+        log.error("Failed to update meal order : "+e.message)
+        return custom_error("Failed to save meal order.")

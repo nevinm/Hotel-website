@@ -247,7 +247,7 @@
                                                 <input type="password" size="4" data-stripe="cvc" class="popup-input" id="cvv-number" name="cvv">
                                             </div>
                                             <div class="forminput-wrapper">
-                                                <label class="body-text-small">Expiry Date</label>
+                                                <label class="body-text-small expiryDate-label">Expiry Date</label>
                                                 <div class="styled-select">
                                                     <select name="expiryMonth" id="ExpMonth" data-stripe="exp-month">
                                                         <option value=""></option>
@@ -362,7 +362,7 @@
                                 </div>
                                 <div class="inner-content body-text-small">
                                     <span>Delivery</span>
-                                    <span class='total-delivery-cost'>$2.00</span>
+                                    <span class='total-delivery-cost'>$2.95</span>
                                 </div>
                                 <div class="inner-content body-text-small">
                                     <span>Tax</span>
@@ -390,6 +390,7 @@
                                 <hr>
                             </div>
                             <div class="discount-container body-text-small">
+                                <input type="hidden" id="hidden-credit" value="0">
                                 <span>Credit</span>
                                 <span class="discount-amount">-$0.00</span>
                             </div>

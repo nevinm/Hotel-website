@@ -136,6 +136,9 @@ li#navbar-username {
     text-transform: uppercase;
     font-size: 12px;
 }
+#meal-list td{
+    vertical-align: middle;
+}
 #order-list td{
     vertical-align: middle;
 }
@@ -361,12 +364,43 @@ table#userlist {
 #order-list{
     width: 100%;
     float: left;
+    cursor: pointer;
 }
-
+span.edit-meal-order{
+    width: 100%;
+    float: left;
+    cursor: pointer;
+    color: #8EC657;
+}
+.edit-meal-order-popup{
+    display: none;
+}
 #order-list tbody{
     cursor: pointer;
 }
-
+img#cancel {
+  cursor:pointer; 
+  float: right;
+  padding-right: 20px;
+  padding-top: 3px;
+}
+.edit-meal-order-popup .forminput-wrapper{
+    width: 100%;
+    margin-left: 28%;
+    padding-top: 0px;
+}
+.edit-meal-order-popup .popup{
+    height: 180px;
+}
+.edit-meal-order-popup .forminput-wrapper .body-text-small{
+    text-align: left;
+}
+#new-order-error{
+    width: 150px;
+    bottom: 24px;
+    left: 0px;
+    padding-left: 0;
+}
 .order-detail-popup{
     display: none;
     width: 800px;
@@ -1060,7 +1094,8 @@ table#tips-and-tricks-table {
 .manage-area-container .popup{
     height: 190px;
 }
-.manage-area-container .popup .header, .user-list-popup .header{
+.manage-area-container .popup .header, .user-list-popup .header,
+.edit-meal-order-popup .header{
     font-family: 'BrandonGrotesque-Bold';
     color: rgb(107, 107, 107);
     padding: 11px 0px;
@@ -1168,4 +1203,11 @@ input#add-gift-card{
 }
 #search-coupon-code{
     margin-top: 17px;
+}
+form.edit-gift-card #update{
+    width: initial;
+    margin-bottom: 1px;
+}
+form.edit-gift-card #new-name-error{
+    bottom: 26px;
 }

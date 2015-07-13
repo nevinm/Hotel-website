@@ -105,11 +105,17 @@ $(document).ready(function() {
 
     $('.forminput-wrapper').on("keydown",function(e){
         if(e.keyCode == 13){
-            var button_class = $(this).parent().find('input[type=button][value=add]');
+            var button_class = $(this).parent().find('input[type=button][value=add]'),
+                input_id = $(this).find('input').attr('id');
             if(button_class.length){
                 e.preventDefault();
                 $(button_class).trigger('click');
+                if(input_id == "meal-saved-time" || input_id == "meal-prep-time"){}
+                else{
+                    $('#'+input_id).val('');
+                }
             }
+            
         }
     })
     addDynamicApiUrlUploadPicture("meal-image-input");

@@ -187,9 +187,15 @@ form.gift-cardform .redeem {
   padding-left: 20px;
   padding-top: 10px;
   padding-bottom: 30px;
+  position: relative;
+}
+#change-contact .update-button{
+	padding-top: 20px;
 }
  .notify input[type="checkbox"]{
  	float: left;
+ 	position: absolute;
+ 	left: 0;
  }
  .changepassword-container{
  	padding: 20px 0px 20px 0px;
@@ -1590,6 +1596,7 @@ img.accepted-cards
 	display: none;
 	width: 100%;
 	word-break:break-all;
+	float: left;
 }
 .isPromocode-wrapper .popup-input{
 	height: 35px;
@@ -1610,6 +1617,8 @@ img.accepted-cards
 	word-break:break-word;
 	line-height: 15px;
 	letter-spacing: .6px;
+	float: left;
+	width: 100%;
 }
 .address-payment-list-popup .bk-overlay{
 	z-index: 999999;
@@ -1983,6 +1992,9 @@ a#add-address-popup :hover{
 	#guest-address-info{
 		padding-bottom: 20px;
 	}
+	#guest-address-info .popup-input,.payment-method-guest-container .popup-input{
+		height: 36px;
+	}
 	.payment-method-container .contents span:last-child{
 		left: 30px;
 	}
@@ -1994,7 +2006,7 @@ a#add-address-popup :hover{
 		padding: 0 20px;
 		left: 0;
 	}
-	..delivery-info-container{
+	.delivery-info-container{
 		width: 100%;
 	}
 	#pay-using-card,#pay-using-paypal{
@@ -2101,9 +2113,9 @@ a#add-address-popup :hover{
   		.body-text-small{
   			font-size: 11px;
   		}
-  		#guest-address-info .section3 .forminput-wrapper{
+/*  		#guest-address-info .section3 .forminput-wrapper{
   			width: 29.4%;
-  		}
+  		}*/
   		.quantity-container{
   			width: 64px;
   		}
@@ -2115,6 +2127,9 @@ a#add-address-popup :hover{
   		}
   		.payment-method-container .contents{
   			padding: 20px 12px;
+  		}
+  		.expiryDate-label{
+  			width: 107px !important;
   		}
   		
 
@@ -2143,18 +2158,18 @@ a#add-address-popup :hover{
 			line-height: 35px;
 			min-width: 90px;
   		}
-  		.forminput-wrapper{
+  		.addresspopup .forminput-wrapper{
   			width: 100% !important;
   		}
   		.addresspopup .forminput-wrapper input.popup-input{
   			width: 100%;
   			height:30px;
   		}
-  		.primary-wrapper input.popup-input{
+  		.addresspopup .primary-wrapper input.popup-input{
   			height: auto !important;
   			width: auto !important;
   		}
-  		.section3 .forminput-wrapper label{
+  		.addresspopup .section3 .forminput-wrapper label{
   			width: 100%;
   		}
 	}

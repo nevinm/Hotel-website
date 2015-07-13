@@ -74,8 +74,7 @@ $(document).ready(function() {
             $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
         }, 600)
     });
-    $(document).focus();
-    $(document).on('keypress', function (e) {
+    $(document).on('keydown', function (e) {
         var key = e.which;
         if(key == 13)  // the enter key code
         {  
@@ -83,10 +82,13 @@ $(document).ready(function() {
                 if($('.popup-container').find('form').length === 0) {
                     e.preventDefault();
                     $('#close').trigger('click');
-                    if($('#cancel')){
-                        $('#close').trigger('click');
-                    }
-                }                
+                }
+                if($('#ok-button').is(':visible')){
+                    $('#ok-button').trigger('click');
+                }                            
+                if($('#no-button').is(":visible")){
+                    $('#no-button').trigger('click');
+                }
             }
         }
     });   
@@ -387,7 +389,16 @@ $("form").each(function() {
                 equalTo: "#new-password"
             },
             promocode: {
-                required: true
+                required: true,
+                maxlength : 8
+            },
+            giftcard : {
+                required: true,
+                maxlength : 8
+            },
+            giftcardname :{
+                required :true,
+                maxlength :8
             },
             zip: {
                 // required: true,
@@ -482,6 +493,10 @@ $("form").each(function() {
                 required : true,
                 number : true
 
+            },
+            order:{
+                required : true,
+                number : true  
             }
         },
         messages: {
@@ -568,8 +583,11 @@ $("form").each(function() {
             tips_details: "Enter valid title.",
             invitecode: "Enter Invitecode",
             date: "Please enter date",
-            promocode: "Please enter promocode.",
-            tip: "Enter valid Tip."
+            promocode: "Please enter valid promocode.",
+            giftcard: "Please enter valid code.",
+            tip: "Enter valid Tip.",
+            giftcardname :"Enter valid giftcardname.",
+            order: "Enter valid Order."
                 // image_upload:"Please select an image."
         }
     });

@@ -35,7 +35,9 @@ $(document).ready(function() {
     });
 
     $('.driver-tip').on('keyup input', function() {
-        if ($('#tip-form').valid()) {
+        selectedTip = 0;
+        $('.driver-tip-display').text("$00.00");
+        if($('#tip-form').valid()){
             selectedTip = this.value;
             if (this.value.length > 2) {
                 selectedTip = this.value = this.value.slice(0, 2);
@@ -213,6 +215,7 @@ $(document).ready(function() {
         $('.pickup-content').show();
         $("#add-guest-address").hide();
         $(".state-selector-container").hide();
+        updateReciept();
         if (!(localStorage.getItem('user_profile') === null)) {
             var userProfile = JSON.parse(localStorage['user_profile']);
             $(".address-info-guest").find("#guest-email").val(userProfile.email);
@@ -237,6 +240,7 @@ $(document).ready(function() {
         $('.pickup-content').hide();
         $("#add-guest-address").show();
         $(".state-selector-container").show();
+        updateReciept();
     });
 
     $('#is-gift-card').on('click', function() {
@@ -333,12 +337,14 @@ var getCartItemsCallback = {
         cartItems = JSON.parse(data);
         if (cartItems.status == 1) {
             $(".emtpy-cart-message").hide();
+            $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
+            $('#hidden-credit').val(cartItems.credits);
             populateCartItems(cartItems);
             populateDate(cartItems);
             if (cartItems.coupon != null) {
                 populateCoupon(cartItems.coupon);
             }
-            $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
+            
         } else {
             $('.order-list-items').remove();
             $(".emtpy-cart-message").empty();
@@ -427,7 +433,21 @@ function updateReciept(GiftcardDetails, flag) {
     var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
         totalCredits = 0,
         totalDriverTip = parseFloat($('.driver-tip').val()),
-        totalDeliveryCost = 2;
+        totalDeliveryCost = 2.95;
+        totalCredits = parseInt($('#hidden-credit').val());
+        if($('#pickup-radio').prop('checked')){
+            totalDeliveryCost = 0;
+            totalDriverTip = 0;
+            $('.driver-tip').val(0);
+            $('.driver-tip-display').text("$0.00");
+            $('span.total-delivery-cost').text('$0.00');
+        }else{
+            totalDeliveryCost = 2.95;
+            $('span.total-delivery-cost').text('$2.95');
+            $('.driver-tip-display').text("$5.00");
+            $('.driver-tip').val(5);
+            totalDriverTip = parseFloat($('.driver-tip').val());
+        }
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
         price = parseFloat($(value).find('.price-container').attr("data-price"));
@@ -452,7 +472,7 @@ function updateReciept(GiftcardDetails, flag) {
     if (totalCost <= 0) {
         totalCost = 0;
     }
-    $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount).toFixed(2));
+    $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount + totalCredits).toFixed(2));
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
     $(".total-cost").text("$" + (totalCost).toFixed(2));

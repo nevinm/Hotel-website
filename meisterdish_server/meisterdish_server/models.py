@@ -280,6 +280,7 @@ class Meal(models.Model):
     
     is_deleted = models.BooleanField(db_index=True, default=False)
     available = models.BooleanField(db_index=True, default=True)
+    order = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.name
@@ -409,7 +410,11 @@ class Order(models.Model):
             gc_amt = 0 if not gc_amt else gc_amt
             self.discount += gc_amt
 
-            self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE - self.discount - self.credits
+            self.grand_total = self.total_amount + self.total_tax + self.tip - self.discount - self.credits
+            
+            if self.delivery_type == 'delivery':
+                self.grand_total += SHIPPING_CHARGE
+            
             self.grand_total = 0 if self.grand_total < 0 else self.grand_total
 
         super(Order, self).save(*args, **kwargs)

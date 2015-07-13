@@ -20,13 +20,14 @@ $(document).ready(function() {
         $("#new-name").val(name);
         $("#new-amount").val(amount);
         $("#update").data("id", $this.data('id'));
-         $('#update').text("update");
+         $('#update').val("update");
         $(".popup-wrapper").show();
+        $('form.edit-gift-card').validate().resetForm();
     });
 
-    $("#update").on('click', function() {        
-        
-        if($('#update').text() == "add"){
+    $("#update").on('click', function(e) {        
+        e.preventDefault();
+        if($('#update').val() == "add"){
             var newCode = $("#new-code").val(),
             newName = $("#new-name").val(),
             newAmount = $("#new-amount").val();
@@ -35,7 +36,10 @@ $(document).ready(function() {
             "name": newName,
             "amount": newAmount
             }
-            manageGiftcards(giftcardaddDetails);
+            if($('form').valid()){
+                manageGiftcards(giftcardaddDetails);
+            }
+            
         }else{
            var newCode = $("#new-code").val(),
             newName = $("#new-name").val(),
@@ -46,15 +50,18 @@ $(document).ready(function() {
                 "code": newCode,
                 "name": newName,
                 "amount": newAmount
-            } 
-            manageGiftcards(giftcardDetails);
+            }
+            if($('form').valid()){ 
+                manageGiftcards(giftcardDetails);
+            }
         }
     });
 
     $(document).on('click', "#add-gift-card", function() {  
-        $('#update').text("add");
-        $('form.popup-container')[0].reset();
+        $('#update').val("add");
+        $('form.edit-gift-card')[0].reset();
         $(".popup-wrapper").show();
+        $('form.edit-gift-card').validate().resetForm();
     });
 
     //search in gift card
@@ -62,7 +69,7 @@ $(document).ready(function() {
         var name = $('#gift-card-name').val(),
             code = $('#coupon-code').val();
         listGiftCards("",name,code);
-    }); 
+    });
 });
 
 //List gift cards
@@ -132,6 +139,7 @@ var manageGiftcardsCallback = {
         } else {
             showErrorPopup(manageGiftcards);
         }
+        $('.popup-wrapper').hide();
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }

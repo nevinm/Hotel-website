@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="../../css/common.css">
     <link rel="stylesheet" type="text/css" href="../../css/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="css/admin.css">
+    <link rel="stylesheet" type="text/css" href="css/driver-orders.css">
     <script type="text/javascript" src='../../js/validate_session.js'></script>
 </head>
 
@@ -67,24 +68,29 @@
                 </div>
                 <div class="admin-page-container">
                     <div class="admin-header">
-                        <h2>ORDER LIST</h2>
+                        <h2>DRIVER LIST</h2>
                     </div>
                     <div class="order-list-container">
-                        <div class='kitchen-filter'></div>
-                        <table id="order-list" class="display" cellspacing="0" width="100%">
+                        <div class='Driver-filter'></div>
+                        <table id = "delivery-order">
                             <thead>
                                 <tr>
-                                    <th>Delivery Time</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
                                     <th>Order Number</th>
-                                    <th>Meal</th>
-                                    <th>Min Time</th>
-                                    <th>Zip</th>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>Produced</th>
+                                    <th>Order Status</th>
+                                    <th>Delivery Time</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
+                                    <th>Delivery address</th>
+                                    <th>Grand Total</th>
+                                    <!-- <th>Zip</th> -->
+                                    
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody>
+                                <tr></tr>
+                            </tbody>
                         </table>
                         <div class='order-list-empty'>Order List is Empty</div>
                     </div>
@@ -118,7 +124,7 @@
     <script type="text/javascript" src='../../js/jquery-ui.min.js'></script>
     <script type="text/javascript" src='../../js/common.js'></script>
     <script type="text/javascript" src='js/admin.js'></script>
-    <script type="text/javascript" src='js/kitchen_order.js'></script>
+    <script type="text/javascript" src='js/driver_order.js'></script>
 </body>
 
 </html>

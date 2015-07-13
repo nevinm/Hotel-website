@@ -96,26 +96,27 @@ def add_to_cart(request, data):
            cart.save()
         else:
           cart = carts[0]
-        
+        log.info(quantity == 0)
         try:
            cart_item = CartItem.objects.get(cart=cart, meal=meal)
-           if quantity == 0 or quantity == 0-cart_item.quantity:
-              cart_item.delete()
-           elif quantity < 0-cart_item.quantity:
-              return custom_error("Invalid quantity")
-
            cart_item.quantity = cart_item.quantity+quantity
+           if cart_item.quantity <= 0:
+              cart_item.delete()
+              qty = 0
+           else:
+              cart_item.save()
+              qty = cart_item.quantity
         except CartItem.DoesNotExist:
+           if quantity < 2:
+              return custom_error("Invalid quantity")
            cart_item = CartItem()
            cart_item.cart = cart
            cart_item.meal = meal
-
-           if quantity < 2:
-              return custom_error("Invalid quantity")
            cart_item.quantity = quantity
-        cart_item.save()
-        
-        response = {"status":1, "message":meal.name.title() + " has been added to the cart.", "quantity":cart_item.quantity}
+           cart_item.save()
+           qty = cart_item.quantity
+
+        response = {"status":1, "message":meal.name.title() + " has been added to the cart.", "quantity":qty}
         if session_key:
           response["session_key"] = session_key
         return json_response(response)

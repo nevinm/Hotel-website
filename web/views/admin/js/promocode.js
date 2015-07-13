@@ -22,11 +22,12 @@ $(document).ready(function() {
         $("#update").data("id", $this.data('id'));
         $("#update").text("update");
         $(".popup-wrapper").show();
+        $('form#promocode-form').validate().resetForm();
     });
 
     $(document).on('click', "#add-new-promo", function() {
         $("#update").text("add");
-        $('form.popup-container')[0].reset();
+        $('form#promocode-form')[0].reset();
         $(".popup-wrapper").show();
     })
 
