@@ -111,6 +111,10 @@ SLIDER
     display: none;
 }
 /*====================================*\
+    &Section what is meisterdish
+\*====================================*/
+
+/*====================================*\
         &Section what to expect
 \*====================================*/
 #section-what-to-expect{
@@ -130,19 +134,17 @@ SLIDER
     margin: 0 auto;
     background-color: #A9D77B;
 }
+
 /*==============================*\
-            &Section 3
+        &Section zip code
 \*==============================*/
 
-#section3 {
+#section-zipcode {
     background: url(../images/homepageslider/map_banner.jpg) center top no-repeat;
     background-position: fixed;
     padding: 6% 0 0 0;
     background-size: cover;
 }
-/*==============================*\
-            &Section 4
-\*==============================*/
 
 #zip-code {
     width: 130px;
