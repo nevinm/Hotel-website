@@ -1,13 +1,13 @@
 @charset "UTF-8";
 /*==============================*\
-			&CONTENTS
+            &CONTENTS
 \*==============================*/
 /*
 SLIDER-FOOTER
 SLIDER
 */
 /*==============================*\
-			&slider-footer
+            &slider-footer
 \*==============================*/
 /*Footer is Unique to the slider as it differs from the other common footers */
 
@@ -43,7 +43,7 @@ SLIDER
     text-align: center;
 }
 /*==============================*\
-			&SLIDER
+            &SLIDER
 \*==============================*/
 
 #main-slider-wrapper {
@@ -53,7 +53,7 @@ SLIDER
     min-height: 100%;
 }
 /*==============================*\
-		&Section what is
+        &Section what is
 \*==============================*/
 
 #section-what-is {
@@ -101,25 +101,30 @@ SLIDER
     border-radius: 5px;
 }
 
-#section-what-is .btn {
+.menu-button {
     margin-bottom: 30px;
     padding: 0 40px;
 }
-/*====================================*\
-		&Section what to expect
-\*====================================*/
 
+#section-what-is .section-logo img,
+.mobile-menu-button {
+    display: none;
+}
+/*====================================*\
+        &Section what to expect
+\*====================================*/
 /*==============================*\
-			&Section 3
+            &Section 3
 \*==============================*/
-#section3{
-	background: url(../images/homepageslider/map_banner.jpg) center top no-repeat;
-	background-position: fixed;
-	padding: 6% 0 0 0;
-	background-size: cover;
+
+#section3 {
+    background: url(../images/homepageslider/map_banner.jpg) center top no-repeat;
+    background-position: fixed;
+    padding: 6% 0 0 0;
+    background-size: cover;
 }
 /*==============================*\
-			&Section 4
+            &Section 4
 \*==============================*/
 
 #zip-code {
@@ -131,20 +136,24 @@ SLIDER
     margin-right: 5px;
     color: #9B9B9B;
 }
+
 input#zip-code[type="text"] {
     font-size: 16px;
     font-family: 'BrandonGrotesque-Light';
     text-transform: uppercase;
 }
+
 img#cancel,
 img#close {
     float: right;
     padding: 14px 17px 0px 0px;
     cursor: pointer;
 }
+
 .delivery-area-check-popup {
     display: none;
 }
+
 .delivery-area-check-popup .popup-zip-fail {
     height: auto;
     position: fixed;
@@ -159,22 +168,52 @@ img#close {
     -webkit-transform: translate(-50%, -40%);
     transform: translate(-50%, -40%);
 }
+
 .delivery-area-check-popup .popup-zip-fail .button {
     position: initial;
     float: left;
 }
+
 .delivery-area-check-popup .username-wrapper {
     padding-bottom: 20px;
     width: 100%;
     float: left;
 }
+
 label#zip-code-error {
     background-color: none;
     background: none;
     bottom: 51px;
 }
+
 label#username-error {
     bottom: 120px;
     left: 5px;
     width: 60%;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+    #section-what-is .section-logo img {
+        display: block;
+        max-width: 80%;
+        margin: 0 auto;
+    }
+    .outer-slide-description{
+        max-width: 80%;
+        margin: 0 auto;
+    }
+    .section-logo{
+        padding: 30px 0;
+    }
+    #section-what-is .main-header {
+        font-size: 25px;
+    }
+    .mobile-menu-button{
+        display: block;
+        margin: 30px auto 0 auto !important;
+        width: 200px;
+    }
+    .menu-button{
+        display: none;
+    }
 }
