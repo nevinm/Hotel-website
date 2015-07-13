@@ -225,7 +225,7 @@ function getStates() {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "search": ""
+            "search": "New York"
         };
     data = JSON.stringify(userData);
     var getStatesInstance = new AjaxHttpSender();
@@ -250,14 +250,22 @@ $(document).ready(function() {
 
     $("#savepopup-data").on('click', function(e) {
         e.preventDefault();
-        var currentId = $(this).attr("data-id"),
-            isPrimary = 0;
-        if ($('form.addaddress-popup').valid()) {
-            if ($("input[name='is-primary']").is(":checked")) {
-                isPrimary = 1;
-            }
-            editAddress(currentId, isPrimary);
+        if($(this).val() == "SAVE ADDRESS"){
+           var currentId = $(this).attr("data-id"),
+               isPrimary = 0;
+            if ($('form.addaddress-popup').valid()) {
+                if ($("input[name='is-primary']").is(":checked")) {
+                    isPrimary = 1;
+                }
+                editAddress(currentId, isPrimary);
+            } 
         }
+        if($(this).val() == "ADD ADDRESS"){
+            if ($('form.addaddress-popup').valid()) {
+                addAddress();
+            }
+        }
+        
     });
 
 
@@ -265,13 +273,6 @@ $(document).ready(function() {
         var currentId = $(this).data().id;
         // populateAddressToForm(currentId);
         editAddress(currentId, 1, "justId");
-    });
-
-    $("#addpopup-data").on('click', function(e) {
-        e.preventDefault();
-        if ($('form.addaddress-popup').valid()) {
-            addAddress();
-        }
     });
 
     $(document).on('click', '.remove-address', function() {
@@ -285,6 +286,32 @@ $(document).ready(function() {
         $('#no-button').on('click', function() {
             $(".popup-wrapper").hide();
         });
+    });
+
+    //show addaddress popup 
+    $('#add-address').on("click", function() {
+        $(".addaddress-popup")[0].reset();
+        $('.editaddress-popup .header span').text('ADD A NEW ADDRESS');
+        $('#savepopup-data').val("ADD ADDRESS");
+        if(userDetails){
+            $("#guest-email").val(userDetails.email);
+        }
+        $("#savepopup-data").show();
+        $(".addresspopup-wrapper").show();
+    });
+    $('#cancel').on("click", function() {
+        $(".addaddress-popup").validate().resetForm();
+        $(".addresspopup-wrapper").hide();
+    });
+
+    //show edit address popup
+    $(document).on("click", ".edit-address", function() {
+        $('.editaddress-popup .header span').text('EDIT ADDRESS');
+        $('#savepopup-data').val("SAVE ADDRESS");
+        currentId = $(this).data().id;
+        $("#savepopup-data").attr("data-id", currentId);
+        populateAddressToForm(currentId);
+        $(".addresspopup-wrapper").show();
     });
 
 

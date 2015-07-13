@@ -240,6 +240,7 @@ $(document).ready(function() {
         $("#add-guest-address").show();
         $(".state-selector-container").show();
         updateReciept();
+        $('.driver-tip').val(0);
     });
 
     $('#is-gift-card').on('click', function() {
@@ -437,13 +438,13 @@ function updateReciept(GiftcardDetails, flag) {
         if($('#pickup-radio').prop('checked')){
             totalDeliveryCost = 0;
             totalDriverTip = 0;
+            $('.driver-tip').val(0);
             $(".driver-tip-container").hide();
             $('span.total-delivery-cost').text('$0.00');
         }else{
             totalDeliveryCost = 2.95;
             $('span.total-delivery-cost').text('$2.95');
             $(".driver-tip-container").show();
-            // $('.driver-tip').val(5);
             totalDriverTip = parseFloat($('.driver-tip').val());
         }
     $(".order-list-items").each(function(key, value) {
@@ -906,7 +907,7 @@ function getStates() {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "search": ""
+            "search": "New York"
         };
     data = JSON.stringify(userData);
     var getStatesInstance = new AjaxHttpSender();
@@ -1139,7 +1140,7 @@ function validateOrder() {
     }
 
     if (!$("#tip-form").valid()) {
-        data.message = "Please enter a tip";
+        data.message = "Please enter a valid tip";
         showPopup(data);
         return false;
     }
