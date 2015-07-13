@@ -399,9 +399,10 @@ def send_order_placed_notification(order):
         else:
             log.error("Failed to send order placed mail to "+to_email)
 
-        if user.need_sms_notification:
-            if not send_sms_notification(dic):
-                return False
+        # Not needed here
+        #if user.need_sms_notification:
+        #    if not send_sms_notification(dic):
+        #        return False
         return True
 
     except Exception as e:
