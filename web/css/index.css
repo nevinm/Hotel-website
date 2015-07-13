@@ -114,39 +114,100 @@ SLIDER
     &Section what is meisterdish
 \*====================================*/
 
+#section-what-is-meisterdish {
+    margin-top: 50px;
+}
+
+#section-what-is-meisterdish .meisterdish-details-icon {
+    height: 100px;
+    width: auto;
+}
+
+#section-what-is-meisterdish .inner-header {
+    font-family: 'BrandonGrotesque-Medium';
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: #6B6B6B;
+}
+
+#section-what-is-meisterdish .slide-description {
+    background-color: white;
+    width: 100%;
+    overflow: hidden;
+}
+
+#section-what-is-meisterdish .slide-header {
+    padding-bottom: 20px;
+}
+
+#section-what-is-meisterdish .outer-slide-description {
+    max-width: 1100px;
+    margin: 40px auto 0 auto;
+}
+
+#section-what-is-meisterdish .meisterdish-details {
+    width: 25%;
+    padding: 50px 0;
+    text-align: center;
+    float: left;
+}
+
+#section-what-is-meisterdish .inner-header {
+    margin: 40px 0 0 0;
+}
+
+#section-what-is-meisterdish .inner-details {
+    font-family: 'ProximaNova-regular';
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: #9B9B9B;
+}
+
+#section-what-is-meisterdish .inner-header-hr {
+    height: 1px;
+    border: 0;
+    width: 60%;
+    margin: 0 auto 20px auto;
+    background-color: #A9D77B;
+}
 /*====================================*\
         &Section what to expect
 \*====================================*/
-#section-what-to-expect{
+
+#section-what-to-expect {
     background-color: #F8F8F8;
 }
-.slide-header{
+
+.slide-header {
     font-size: 35px;
     letter-spacing: 2.5px;
     font-family: 'BrandonGrotesque-Medium';
     color: #6B6B6B;
     text-align: center;
 }
-.header-hr{
+
+.header-hr {
     height: 1px;
-    border:0;
+    border: 0;
     width: 20%;
     margin: 0 auto;
     background-color: #A9D77B;
 }
-#section-what-to-expect .outer-slide-description{
+
+#section-what-to-expect .outer-slide-description {
     max-width: 1100px;
 }
-#section-what-to-expect .slide-description{
+
+#section-what-to-expect .slide-description {
     background-color: #fff;
 }
+
 .meal-details,
 .what-you-get-section,
-.button-container{
+.button-container {
     width: 100%;
     float: left;
 }
-
 /*==============================*\
         &Section zip code
 \*==============================*/
@@ -229,22 +290,22 @@ label#username-error {
         max-width: 80%;
         margin: 0 auto;
     }
-    .outer-slide-description{
+    .outer-slide-description {
         max-width: 80%;
         margin: 0 auto;
     }
-    .section-logo{
+    .section-logo {
         padding: 30px 0;
     }
     #section-what-is .main-header {
         font-size: 25px;
     }
-    .mobile-menu-button{
+    .mobile-menu-button {
         display: block;
         margin: 30px auto 0 auto !important;
         width: 200px;
     }
-    .menu-button{
+    .menu-button {
         display: none;
     }
 }
