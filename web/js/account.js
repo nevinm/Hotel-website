@@ -193,28 +193,3 @@ function changeEmail() {
     var changeEmailInstance = new AjaxHttpSender();
     changeEmailInstance.sendPost(url, header, data, changeEmailCallback);
 }
-
-//show addaddress popup 
-$('#add-address').on("click", function() {
-    $(".addaddress-popup")[0].reset();
-    if(userDetails){
-        $("#guest-email").val(userDetails.email);
-    }
-    $(".addresspopup-wrapper").show();
-    $("#savepopup-data").hide();
-    $("#addpopup-data").show();
-});
-$('#cancel').on("click", function() {
-    $(".addaddress-popup").validate().resetForm();
-    $(".addresspopup-wrapper").hide();
-});
-
-//show edit address popup
-$(document).on("click", ".edit-address", function() {
-    currentId = $(this).data().id;
-    $("#savepopup-data").attr("data-id", currentId);
-    populateAddressToForm(currentId);
-    $(".addresspopup-wrapper").show();
-    $("#addpopup-data").hide();
-    $("#savepopup-data").show();
-})

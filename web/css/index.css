@@ -109,7 +109,7 @@ SLIDER
 		&Section what to expect
 \*====================================*/
 #section-what-to-expect{
-    background-color: #F5F5F5;
+    background-color: #F8F8F8;
 }
 .slide-header{
     font-size: 35px;
@@ -124,6 +124,18 @@ SLIDER
     width: 20%;
     margin: 0 auto;
     background-color: #A9D77B;
+}
+#section-what-to-expect .outer-slide-description{
+    max-width: 1100px;
+}
+#section-what-to-expect .slide-description{
+    background-color: #fff;
+}
+.meal-details,
+.what-you-get-section,
+.button-container{
+    width: 100%;
+    float: left;
 }
 /*==============================*\
 			&Section 3
