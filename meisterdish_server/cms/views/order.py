@@ -61,10 +61,10 @@ def update_order(request, data, user, order_id):
                 sent = send_sms_notification({"order_num":order.order_num, "mobile":order.mobile})
                 if not sent:
                     log.error("Failed to send order dispatched notification")
-            elif int(status) == 4: #Delivered
-                sent = send_order_complete_notification(order)
-                if not sent:
-                    log.error("Failed to send order complete notification")
+            #elif int(status) == 4: #Delivered
+            #    sent = send_order_complete_notification(order)
+            #    if not sent:
+            #        log.error("Failed to send order complete notification")
 
         return json_response({"status":1, "message":"The order has been updated", "id":str(order_id)+"."})
     except Exception as e:
@@ -311,9 +311,10 @@ def send_order_confirmation_notification(order):
         else:
             log.error("Failed to send order confirmation mail to "+to_email)
 
-        if True:#user.need_sms_notification:
-            if not send_sms_notification(dic):
-                return False
+        #Not needed here.
+        #if user.need_sms_notification:
+        #    if not send_sms_notification(dic):
+        #        return False
         return True
 
     except Exception as e:
