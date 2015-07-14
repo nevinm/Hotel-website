@@ -136,17 +136,71 @@ SLIDER
 }
 #section-what-to-expect .outer-slide-description{
     max-width: 1100px;
+    overflow: hidden;
 }
 #section-what-to-expect .slide-description{
     background-color: #fff;
+    overflow: hidden;
 }
 .meal-details,
-.what-you-get-section,
-.button-container{
+.button-container,.meal-name,
+.meal-sub-description,.meal-properies,
+span.lower-content,span.upper-content,
+.ingredients-wrapper{
     width: 100%;
     float: left;
 }
-
+.meal-image{
+    width: 40%;
+    float: left;
+}
+.meal-description-wrapper{
+    width: 60%;
+    float: left;
+}
+.meal-name span,.meal-sub-description span,span.lower-content{
+    letter-spacing: 2.5px;
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 30px;
+    color: #6B6B6B;
+}
+.meal-sub-description span,span.lower-content{
+    letter-spacing: 1.5px;
+    font-size: 20px;
+}
+span.lower-content{
+    text-align: center;
+}
+span.upper-content {
+  font-family: 'BrandonGrotesque-Regular';
+  color: #8DC56A;
+  font-size: 24px;
+  min-height: 40px;
+  text-align: center;
+  word-break:break-word;
+}
+.details-content{
+    width: 20%;
+    float: left;
+}
+.what-you-get-section{
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.what-you-get-section p{
+    font-family: 'BrandonGrotesque-Medium';
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: #6B6B6B;
+    text-align: center;
+}
+.what-you-get-section .details-content{
+    width: 14.28%;
+}
+.what-you-get-section .upper-content img{
+    height: 50px;
+}
 /*==============================*\
         &Section zip code
 \*==============================*/
