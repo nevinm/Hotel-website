@@ -286,11 +286,66 @@ def create_order(request, data, user):
 
         if not send_order_placed_notification(order):
             log.error("Failed to send order notification")
-        return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way."})
+        cart_items = get_order_cart_items(order)
+        return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way.", "cart_items":cart_items})
         
     except Exception as e:
         log.error("Failed to create order." + e.message)
         return custom_error(e.message + "is missing.")
+
+def get_order_cart_items(order):
+    try:
+      cart_list = []
+      items_count = 0
+      for cart_item in CartItem.objects.filter(cart__order=order):
+            cart_list.append(
+            {
+              "id" : cart_item.meal.id,
+              "name": cart_item.meal.name,
+              "description": cart_item.meal.description,
+              "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
+              "available": 1 if cart_item.meal.available else 0,
+              "category": cart_item.meal.category.name.title() if cart_item.meal.category else "Not Available",
+              "price": cart_item.meal.price,
+              "tax": cart_item.meal.price * cart_item.meal.tax/100,
+              "quantity":cart_item.quantity,
+            })
+            items_count += cart_item.quantity
+
+      coupon = None
+      if items_count > 0:
+          cart = cart_item.cart
+          if cart.promo_code:
+              if cart.promo_code.expiry_date <= datetime.now():
+                  cart.promo_code = None
+                  cart.save()
+              coupon = {
+                "code" : cart.promo_code.code,
+                "amount":cart.promo_code.amount,
+                "message":"Discount of $ "+str(cart.promo_code.amount) + " has been applied to your cart."
+              }
+          elif cart.gift_cards.all().count():
+              gc = cart.gift_cards.all()[0]
+              coupon = {
+                "code" : gc.code,
+                "amount":gc.amount,
+                "message":"Discount of $ "+str(gc.amount) + " has been applied to your cart."
+              }
+
+      if not len(cart_list):
+          return False
+      else:
+          return {
+                  "aaData":cart_list,
+                  "total_count":items_count,
+                  "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
+                  "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
+                  "coupon" : coupon,
+                  "credits" : user.credits,
+                  }
+    except Exception as e:
+        log.error("Failed to list order cart items." + e.message)
+        return False
 
 def make_payment(order, user):
     try:
