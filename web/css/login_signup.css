@@ -177,6 +177,19 @@ form.signup-formcontainer {
 }
 .referral-message-container{
   display: none;
+  text-align: center;
+}
+.referral-message-container .header{
+  font-family: "BrandonGrotesque-Medium";
+  letter-spacing: 0.75px;
+  text-align: center;
+  color: #5A5555;
+}
+.referral-message-container .message{
+    font-family: "BrandonGrotesque-Light";
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
 }
 /*==================================*\
       &RESET PASSWORD
