@@ -307,7 +307,7 @@ $("form").each(function() {
         rules: {
             firstname: {
                 required: true,
-                minlength: 3,
+                minlength: 2,
                 maxlength: 15,
                 letters: true
             },
@@ -504,20 +504,20 @@ $("form").each(function() {
             firstname: {
                 required: "Please enter your first name.",
                 letters: "Name should contain only alphabets.",
-                minlength: "Name should contain atleast 2 characters.",
+                minlength: "Name should contain at least 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
             lastname: {
                 required: "Please enter your last name.",
                 letters: "Name should contain only alphabets.",
-                minlength: "Name should contain atleast 2 characters.",
+                minlength: "Name should contain at least 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
             phonenumber: "Please enter as xxxxxxxxxx",
             fullname: {
                 required: "Please enter your full name.",
                 letters: "Name should contain only alphabets.",
-                minlength: "Name should contain atleast 2 characters.",
+                minlength: "Name should contain at least 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
             password: {
@@ -526,7 +526,7 @@ $("form").each(function() {
             },
             username: {
                 required: "Plaese enter username.",
-                minlength: "Name should contain atleast 2 characters.",
+                minlength: "Name should contain at least 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
             confirmpassword: {

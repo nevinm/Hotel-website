@@ -331,8 +331,8 @@ table#userlist {
     display: block;
 }
 .mealtype-icon, .mealtype-image{
-    max-width: 50px;
-    max-height: 50px;
+    max-width: 45px;
+    max-height:45px;
 }
 #mealtype-container .popup{
     height: 230px;
