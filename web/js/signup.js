@@ -58,6 +58,7 @@ function signupInit() {
     referralCode = getParameterFromUrl('ref');
     if (referralCode.length) {
         referralUIIntegrate();
+        $("#invite-code").val(referralCode);
         $(".referral-message-container").show();
     }else{}
 }
