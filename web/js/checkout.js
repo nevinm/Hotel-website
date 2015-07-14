@@ -240,7 +240,9 @@ $(document).ready(function() {
         $("#add-guest-address").show();
         $(".state-selector-container").show();
         updateReciept();
-        $('.driver-tip').val(0);
+        $('span.driver-tip-display').text('$5.00');
+        $('.driver-tip').val(5);
+        $('#tip-form').validate().resetForm();
     });
 
     $('#is-gift-card').on('click', function() {
