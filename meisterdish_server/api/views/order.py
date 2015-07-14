@@ -341,7 +341,7 @@ def get_order_cart_items(order):
                   "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                   "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
                   "coupon" : coupon,
-                  "credits" : user.credits,
+                  "credits" : order.cart.user.credits,
                   }
     except Exception as e:
         log.error("Failed to list order cart items." + e.message)
