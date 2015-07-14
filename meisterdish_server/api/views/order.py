@@ -288,7 +288,7 @@ def create_order(request, data, user):
             log.error("Failed to send order notification")
         return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way."})
         
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to create order." + e.message)
         return custom_error(e.message + "is missing.")
 

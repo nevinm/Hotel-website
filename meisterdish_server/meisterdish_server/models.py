@@ -348,7 +348,7 @@ class Cart(models.Model):
     completed = models.BooleanField(default=False)
 
     def str(self):
-        return "Cart for user "+user,first_name + " "+user.last_name
+        return "Cart for user "+user.first_name + " "+user.last_name
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart)
@@ -418,6 +418,7 @@ class Order(models.Model):
                 self.tip = 0
             
             self.grand_total = 0 if self.grand_total < 0 else self.grand_total
+            self.grand_total = round(self.grand_total,2)
 
         super(Order, self).save(*args, **kwargs)
         self.order_num = '0' * (6-len(str(self.id))) + str(self.id)
