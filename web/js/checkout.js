@@ -1121,7 +1121,11 @@ function validateOrder() {
         }
     }
     if (!$(".checkout-time-button-active").length) {
-        data.message = "Add delivery time and then proceed";
+        if($('#pickup-radio').prop('checked')){
+            data.message = "Add pickup time and then proceed";
+        }else{
+            data.message = "Add delivery time and then proceed";
+        }
         showPopup(data);
         return false;
     }
