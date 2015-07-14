@@ -205,7 +205,6 @@ SLIDER
 }
 
 .meal-details,
-<<<<<<< HEAD
 .button-container,.meal-name,
 .meal-sub-description,.meal-properies,
 span.lower-content,span.upper-content,
@@ -264,13 +263,6 @@ span.upper-content {
 .what-you-get-section .upper-content img{
     height: 50px;
 }
-=======
-.what-you-get-section,
-.button-container {
-    width: 100%;
-    float: left;
-}
->>>>>>> 23219571d3f9476eb251b6e16cf38c98d3ab5b2d
 /*==============================*\
         &Section zip code
 \*==============================*/
