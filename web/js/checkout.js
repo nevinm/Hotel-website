@@ -11,7 +11,7 @@ $(document).ready(function() {
         getAddress();
         getCartItems();
         savedCardDetails();
-        CartItemCount();
+        // CartItemCount();
     } else {
         $('.address-info-guest').show();
         $('.address-info').hide();
@@ -533,7 +533,11 @@ function clearCart() {
 //update cart items call back
 var updateCartItemsCallback = {
     success: function(data, textStatus) {
-        localStorage['cartItems'] = data;
+        var cartDetails = JSON.parse(data);
+        if(cartDetails.status == 1){
+            CartItemCount();
+            localStorage['cartItems'] = data;
+        } 
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -894,7 +898,6 @@ var getStatesCallback = {
                     text: value.name,
                 }));
             });
-            hideSecondaryStates();
         } else {
             showErrorPopup(userDetails);
         }
