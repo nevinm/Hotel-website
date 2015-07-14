@@ -792,6 +792,21 @@ form.addaddress-popup,#new-address-form {
 	color: #666666;
 	font-size: 13px;
 }
+.loading-indicator{
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+	display: none;
+}
+.loading-indicator .loader{
+	top: 40%;
+	left: 50%;
+	position: fixed;
+	-ms-transform: translate(-50%,-40%);
+    -moz-transform:translate(-50%,-40%);
+    -webkit-transform: translate(-50%,-40%);
+    transform: translate(-50%,-40%);
+}
 .state-disable{
 	background-color: rgb(190, 187, 187) !important;
 }

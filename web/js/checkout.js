@@ -951,6 +951,7 @@ var placeOrderCallback = {
         } else {
             showPopup(response);
         }
+        $('.loading-indicator').hide();
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -1071,6 +1072,7 @@ function createOrder(orderParams) {
     data = JSON.stringify(orderParams);
     var placeOrderInstance = new AjaxHttpSender();
     placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
+    $('.loading-indicator').show();
 }
 
 function populateCreditCardDetails() {
