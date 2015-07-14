@@ -314,9 +314,11 @@ function addMultipleMeal(meal_details){
     if(meal_details.quantity == 0){
         $removeButton.hide();
         $('.meal-overlay').hide();
+        $('.add-meal-message').hide();
     }else{
        $removeButton.fadeIn();
        $('.meal-overlay').show(); 
+       $('.add-meal-message').show();
     }
 }
 

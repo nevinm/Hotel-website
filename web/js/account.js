@@ -16,18 +16,6 @@ function profileAutoPopulate() {
     }
 }
 
-function hideSecondaryStates() {
-    $(".state-selector").each(function(key, value) {
-        $(value).find("option").each(function(innerKey, innerValue){
-            if (!($(innerValue).val() == 85)) {
-                $(this).attr("disabled", "disabled");
-                $(this).addClass("state-disable");
-            } else {}
-        });
-    });
-    $(".state-selector").val("85");
-}
-
 function showAdminLink() {
         if (localStorage['admin_loggedIn'] == 'true') {
             $(".admin-button").show();
