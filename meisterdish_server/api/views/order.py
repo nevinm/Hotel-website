@@ -202,6 +202,9 @@ def create_order(request, data, user):
             order.driver_instructions = driver_instructions
             email = order.delivery_address.email
             phone = order.delivery_address.phone
+            order.tip = tip
+        else:
+            order.tip = 0
         
         order.email = email
         order.phone = phone
@@ -210,11 +213,10 @@ def create_order(request, data, user):
         
         order.total_amount = total_price
         order.total_tax = total_tax
-        order.tip = tip
-
-        order.total_payable = total_price + total_tax + tip 
+        
+        order.total_payable = total_price + total_tax
         if order.delivery_type == "delivery":
-            order.total_payable += settings.SHIPPING_CHARGE
+            order.total_payable += settings.SHIPPING_CHARGE + tip
         
         referral_bonus = float(Configuration.objects.get(key="REFERRAL_BONUS").value)
         referred = Referral.objects.filter(referree=user).exists() and user.credits >= referral_bonus
@@ -399,9 +401,10 @@ def send_order_placed_notification(order):
         else:
             log.error("Failed to send order placed mail to "+to_email)
 
-        if user.need_sms_notification:
-            if not send_sms_notification(dic):
-                return False
+        # Not needed here
+        #if user.need_sms_notification:
+        #    if not send_sms_notification(dic):
+        #        return False
         return True
 
     except Exception as e:
