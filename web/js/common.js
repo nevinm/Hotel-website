@@ -492,7 +492,8 @@ $("form").each(function() {
             tip:{
                 required : true,
                 number : true,
-                maxAmount: 10
+                maxAmount: 10,
+                minAmount :0
             },
             order:{
                 required : true,
@@ -559,7 +560,7 @@ $("form").each(function() {
                 number: "Enter a valid number"
             },
             delivery_tip:{
-                required: "Please enter a valid amount",
+                required: "Please enter a valid tip",
                 minAmount: "Enter amount between 1 and 10",
                 maxAmount: "Enter amount between 1 and 10"
             },
@@ -588,7 +589,8 @@ $("form").each(function() {
             tip:{
                 required: "Please enter tip",
                 number: "Enter a number less than 10.",
-                maxAmount: "Enter a number less than 10."
+                maxAmount: "Enter a number less than 10.",
+                minAmount :"Enter a number greater than 0."
             },
             giftcardname :"Enter valid giftcardname.",
             order: "Enter valid Order."

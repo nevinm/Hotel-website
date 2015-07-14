@@ -410,10 +410,12 @@ class Order(models.Model):
             gc_amt = 0 if not gc_amt else gc_amt
             self.discount += gc_amt
 
-            self.grand_total = self.total_amount + self.total_tax + self.tip - self.discount - self.credits
+            self.grand_total = self.total_amount + self.total_tax  - self.discount - self.credits
             
             if self.delivery_type == 'delivery':
-                self.grand_total += SHIPPING_CHARGE
+                self.grand_total += SHIPPING_CHARGE + self.tip
+            else:
+                self.tip = 0
             
             self.grand_total = 0 if self.grand_total < 0 else self.grand_total
 

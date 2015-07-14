@@ -295,7 +295,7 @@ def verify_user(request, data, token):
 
         if not check_delivery_area(user.zipcode):
             log.error("User's zip code not available.")
-            add_to_mailing_list(user.email)
+            add_to_mailing_list(user.email, user.zipcode)
             return HttpResponseRedirect(fail_url)        
 
         return HttpResponseRedirect(login_url+"?account_verify=true")
@@ -355,7 +355,7 @@ def forgot_password(request, data):
         
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
         #link = settings.BASE_URL + 'password_reset_return/'+token+"/"
-        link = settings.SITE_URL+"views/reset_password.html?token="+token
+        link = settings.SITE_URL+"views/reset-password.html?token="+token
         user.password_reset_token = token
         user.save()
         
@@ -577,23 +577,30 @@ def get_states(request, data, user):
 @check_input('POST')
 def change_email(request, data, user):
     try:
-        email = data["email"].strip()
-        
-        if user.email == email:
-            raise Exception("Please enter a different email.")
-        elif User.objects.filter(email=email).exists():
-            raise Exception("Email already exists for another user.")
-        else:
-            if send_user_verification_mail(user, True, email):
-                log.info("Sent verification mail to " + email)
-                return json_response({"status":1, "message": "A verification email has been sent to your email ("+email+"). Please follow the link in verification email to verify."})
+        if "email" in data:
+            email = data["email"].strip()
+            
+            if user.email == email:
+                raise Exception("Please enter a different email.")
+            elif User.objects.filter(email=email).exists():
+                raise Exception("Email already exists for another user.")
             else:
-                log.error("Failed to send user verification mail : "+email)
-                return custom_error("An error has occurred in sending verification mail. Please try later.")
+                if send_user_verification_mail(user, True, email):
+                    log.info("Sent verification mail to " + email)
+                    return json_response({"status":1, "message": "A verification email has been sent to your email ("+email+"). Please follow the link in verification email to verify."})
+                else:
+                    log.error("Failed to send user verification mail : "+email)
+                    return custom_error("An error has occurred in sending verification mail. Please try later.")
 
-            user.email = email
+                user.email = email
+                user.save()
+                
+        if "email_promotion" in data:
+            promo = int(str(data['email_promotion']).strip())
+            user.need_sms_notification = bool(promo)
             user.save()
-            return json_response({"status":1, "message":"Updated email address"})
+
+        return json_response({"status":1, "message":"Updated email address", "email_promotion":user.need_sms_notification})
     except Exception as e:
         log.error("Failed to change email : " + e.message)
         return custom_error("Failed to change email.")

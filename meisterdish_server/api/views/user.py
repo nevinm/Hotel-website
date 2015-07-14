@@ -383,10 +383,10 @@ def save_email(request, data):
     try:
         email = data["email"].strip()
         zip = str(data["zipcode"]).strip()  
-        if not validate_email(email):
-            return custom_error("Please enter a valid email.")
+        if not validate_email(email) or not validate_zipcode(zip):
+            return custom_error("Please enter a valid email and zipcode.")
         mc = mailchimp.Mailchimp(settings.MAILCHIMP_API_KEY)
-        res = mc.lists.subscribe(settings.MAILCHIMP_LIST_ID, {'email': email}, double_optin=False)
+        res = mc.lists.subscribe(settings.MAILCHIMP_LIST_ID, {'email': email}, {"merge3":int(zip)}, double_optin=0)
         if res and res['euid']:
             log.info("Added email to list")
         else:
