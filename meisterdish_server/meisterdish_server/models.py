@@ -151,6 +151,7 @@ class User(models.Model):
     credits = models.FloatField(db_index=True, validators=[MinValueValidator(0), MaxValueValidator(1000)], default=0)
     
     need_sms_notification = models.BooleanField(default=True)
+    need_email_promotions = models.BooleanField(default=True)
     deleted = models.BooleanField(db_index=True, default=False)
     
     referral_code = models.CharField(max_length=10)

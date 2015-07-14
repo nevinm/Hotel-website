@@ -241,7 +241,10 @@ def add_to_mailing_list(email, zip):
         res = mc.lists.subscribe(settings.MAILCHIMP_LIST_ID, {'email': email}, {"merge3":zip}, double_optin=False)
         if res and res['euid']:
             log.info("Added email to list")
+            return True
         else:
             log.info("Failed to add email to list")
+            return False
     except Exception as e:
         log.error("Failed to add to mailing list : "+e.message)
+        return False
