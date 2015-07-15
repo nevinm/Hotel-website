@@ -608,6 +608,21 @@ def get_delivery_orders(request, data, user):
 
         #Format response
         for order in orders:
+            meals = []
+            for cart_item in CartItem.objects.filter(cart__order=order, cart__completed=True):
+                meals.append(
+                {
+                  "id" : cart_item.meal.id,
+                  "name": cart_item.meal.name,
+                  "description": cart_item.meal.description,
+                  "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
+                  "available": 1 if cart_item.meal.available else 0,
+                  "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
+                  "price": cart_item.meal.price,
+                  "tax": cart_item.meal.price * cart_item.meal.tax/100,
+                  "quantity":cart_item.quantity,
+                  "produced" : cart_item.produced,
+                })
             order_list.append({
                 "id":order.id,
                 "order_num" : order.order_num,
@@ -621,6 +636,7 @@ def get_delivery_orders(request, data, user):
                 "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                 "phone": order.phone,
                 "email":order.email,
+                "meals":meals,
                 "delivery_address" : {
                      "id":order.delivery_address.id ,
                      "first_name":order.delivery_address.first_name,

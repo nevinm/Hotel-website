@@ -372,3 +372,5 @@ def export_users_for_promotion(request, data, user):
     except Exception as e:
         log.error("Export User promotions list "+ e.message)
         return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
+@check_input('POST', settings.ROLE_ADMIN)
+def export_zips_unsupported
