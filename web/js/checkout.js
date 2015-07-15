@@ -936,10 +936,37 @@ function populateAddedAddress(delivery_address, flag) {
         populateAddresstoInfoContainer(data);
 }
 
+function setEcommerceOrderConfirm(response) {
+    var deliveryAddress = response.cart_items.delivery_address;
+    if (response.cart_items.delivery_address) {} else {
+        deliveryAddress = "pickup";
+    }
+    ga('ecommerce:addTransaction', {
+        'id': response.cart_items.transaction_id, // Transaction ID. Required.
+        'affiliation': 'Meisterdish', // Affiliation or store name.
+        'revenue': response.cart_items.grand_total, // Grand Total.
+        'shipping': response.cart_items.shipping, // Shipping.
+        'tax': response.cart_items.tax, // Tax.
+        'dimension1': deliveryAddress, // Product-scoped custom dimension (string).
+    });
+    $.each(response.cart_items.aaData, function(key, value) {
+        ga('ecommerce:addItem', {
+            'id': value.id, // Transaction ID. Required.
+            'name': value.name, // Product name. Required.
+            'category': value.category, // Category or variation.
+            'price': value.price, // Unit price.
+            'quantity': value.quantity // Quantity.
+        });
+    });
+    ga('ecommerce:send');
+}
+
+
 var placeOrderCallback = {
     success: function(data, textStatus) {
         var response = JSON.parse(data);
         if (response.status == 1) {
+            setEcommerceOrderConfirm(response);
             var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
                 adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null,
                 loggedIn = (userLoggedin || adminLoggedin);
