@@ -232,20 +232,31 @@ function ingredientsTab(mealDetails) {
 }
 
 function tipsTricksTab(mealDetails) {
-    $("#tips-and-tricks .section").each(function(key, value) {
-        $(this).find(".tips-header").text();
-    });
+    $("#tips-and-tricks .video-container").remove(); 
+    // $("#tips-and-tricks .section").each(function(key, value) {
+    //     $(this).find(".tips-header").text();
+    // });
+        
     $(mealDetails.tips).each(function(key, value) {
+        $("#tips-and-tricks .video-container img").remove();
         $("#tips-and-tricks").append("<div class='section'>" +
             "<div class='container'>" +
             "<span class='mob-view-header tips-header'>" + value.title + "</span>" +
             "<div class='video-container'>" +
-            "<iframe height='280' src='//www.youtube.com/embed/" + convertToEmbedded(value.video_url) + "' frameborder='0' allowfullscreen=''></iframe>" +
             "</div><div class='list-container'>" +
             "<span class='list-header tips-header'>" + value.title + "</span>" +
             "<ul class='video-tips'></ul>" +
             "</div></div></div>");
+        if(imgValidation(value.video_url)){
+            $("#tips-and-tricks .video-container").append("<img src = '"+value.video_url+"'>");
+        }
+        
+        if(ytVidId(value.video_url)){
+            $("#tips-and-tricks .video-container").append("<iframe height='280' src='//www.youtube.com/embed/" + 
+                convertToEmbedded(value.video_url) + 
+                "' frameborder='0' allowfullscreen=''></iframe>");
 
+        }
         $(value.description).each(function(key, value){
             $(".video-tips:last").append("<li>"+value+"</li>");
         });
@@ -334,4 +345,15 @@ function foodSettings(meal_details){
             "<span class='lower-content'>"+value.meal_type_name+"</span>"+"</div>");
         });
     $('.meal-full-details,.meal-details-hr').fadeIn();
+}
+
+
+function imgValidation(img_url){
+   var result = (/^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:jpe?g|gif|png)$/).test(img_url);
+   return result;  
+}
+
+function ytVidId(url) {
+    var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    return (url.match(p)) ? true : false;
 }
