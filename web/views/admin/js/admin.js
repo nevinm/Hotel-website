@@ -57,6 +57,26 @@ if (localStorage.getItem('admin_role') === null) {} else {
     }
 }
 
+//Update orders API process
+var downloadOrderPDFCallback = {
+    success: function(data, textStatus) {
+        console.log("PDF Downloaded");
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function downloadOrderPDF(url) {
+    var url = baseURL + url,
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {}
+    data = JSON.stringify(params);
+    var downloadOrderPDFInstance = new AjaxHttpSender();
+    downloadOrderPDFInstance.sendPost(url, header, data, downloadOrderPDFCallback);
+}
+
+
 $(document).ready(function() {
     $("#login-button").on('click', function(e) {
         e.preventDefault();

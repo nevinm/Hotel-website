@@ -167,7 +167,7 @@ var manageCreditsCallback = {
         if (creditsData.status == 1) {
             currentPage = $('.pagination').pagination('getCurrentPage');
             getUserlist(currentPage);
-        $('.popup-wrapper').hide();
+            $('.popup-wrapper').hide();
         } else {
             showUserCreditPoup(creditsData);
         }
@@ -208,5 +208,13 @@ $(document).ready(function() {
         if ($("#user-credit-form").valid()) {
             manageCredits(currentId, newCredits);
         } else {}
+    });
+
+    $("#download-users-pdf").on("click", function() {
+        downloadOrderPDF("cms/export_users/");
+    });
+
+    $("#download-users-promotion-pdf").on("click", function() {
+        downloadOrderPDF("cms/export_users_for_promotion/");
     });
 });
