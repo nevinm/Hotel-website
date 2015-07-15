@@ -751,18 +751,21 @@ span.icon-menu {
     background-position: -16px 0;
     width: 16px;
     height: 16px;
+    display: none !important;
 }
 
 #instagram {
     background-position: -32px 0;
     width: 16px;
     height: 16px;
+    display: none !important;
 }
 
 #pinterest {
     background-position: -49px 0;
     width: 14px;
     height: 16px;
+    display: none !important;
 }
 
 /*==============================*\

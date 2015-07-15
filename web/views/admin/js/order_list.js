@@ -32,6 +32,10 @@ $(document).ready(function() {
         updateOrders(status, orderId);
     });
     $("#date").datepicker();
+
+    $("#download-orders-csv").on("click",function(){
+        downloadOrderCSV("/api/cms/export_orders/");
+    });
 });
 
 function returnSearchParams() {

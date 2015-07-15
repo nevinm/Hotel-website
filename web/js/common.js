@@ -30,7 +30,7 @@ $(document).ready(function() {
     });
     
     //hide social media icons
-    $(".footer-links").remove();
+    // $(".footer-links").remove();
 
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
@@ -79,16 +79,19 @@ $(document).ready(function() {
         if(key == 13)  // the enter key code
         {  
             if($('.popup-container').is(':visible')){
-                if($('.popup-container').find('form').length === 0) {
-                    e.preventDefault();
-                    $('#close').trigger('click');
-                }
                 if($('#ok-button').is(':visible')){
                     $('#ok-button').trigger('click');
                 }                            
                 if($('#no-button').is(":visible")){
                     $('#no-button').trigger('click');
                 }
+                if($('#ok').is(":visible")){
+                    window.location.href = $('#ok').attr('href');
+                }           
+                if($('.popup-container').find('form').length === 0) {
+                    e.preventDefault();
+                    $('#close').trigger('click');
+                }  
             }
         }
     });   
@@ -157,9 +160,10 @@ function getCurrentDateMonth(days) {
     return dateMonth = ('0' + currentdate.getDate()).slice(-2) + " " + monthName;
 }
 
-function getCurrentHour() {
+function getCurrentHourMin() {
     var currentdate = new Date();
-    var hours = currentdate.getHours();
+    var hours = currentdate.getHours(),
+    minutes = ("0"+currentdate.getMinutes()).slice(-2);
     if (hours > 12) {
         meridiem = "pm";
     } else {
@@ -167,7 +171,7 @@ function getCurrentHour() {
     }
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    var strTime = hours;
+    var strTime = hours+":"+minutes;
     return strTime + meridiem;
 }
 

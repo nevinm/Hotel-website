@@ -49,6 +49,10 @@ $(document).ready(function() {
 		$("#manage-zip").validate().resetForm();
 	});
 	getDeliveryAreas(1);
+
+	$("#download-zip-unsupported-csv").on("click",function(){
+        downloadOrderCSV("cms/export_zips_unsupported/");
+	});
 });
 // get delivery areas
 var getDeliveryAreasCallback = {
