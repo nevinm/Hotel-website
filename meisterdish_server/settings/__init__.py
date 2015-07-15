@@ -39,7 +39,7 @@ ALLOWED_HOSTS = []
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/New_York'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -220,11 +220,11 @@ PAYMENT_METHODS = (
                    )
 
 ORDER_STATUS =  (
-    (0, "Incomplete"),
-    (1, "Order placed"),
-    (2, "Confirmed"),
+    (0, "Cancelled"),
+    (1, "Placed"),
+    (2, "Packed"),
     (3, "Dispatched"),
-    (4, "Complete"),
+    (4, "Delivered"),
     )
 
 
