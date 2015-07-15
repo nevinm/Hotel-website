@@ -86,7 +86,7 @@ $(document).ready(function() {
                     $('#no-button').trigger('click');
                 }
                 if($('#ok').is(":visible")){
-                    window.location.href = "orderhistory.html";
+                    window.location.href = $('#ok').attr('href');
                 }           
                 if($('.popup-container').find('form').length === 0) {
                     e.preventDefault();
