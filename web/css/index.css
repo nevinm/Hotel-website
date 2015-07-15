@@ -185,7 +185,12 @@ SLIDER
     color: #6B6B6B;
     text-align: center;
 }
-
+#section-what-to-expect .slide-header{
+    padding-bottom: 30px;
+}
+.meal-properties{
+    padding-top: 20px;
+}
 .header-hr {
     height: 1px;
     border: 0;
@@ -197,6 +202,7 @@ SLIDER
 #section-what-to-expect .outer-slide-description {
     max-width: 1100px;
     overflow: hidden;
+    margin: 40px auto 0 auto;
 }
 
 #section-what-to-expect .slide-description {
@@ -206,11 +212,14 @@ SLIDER
 
 .meal-details,
 .button-container,.meal-name,
-.meal-sub-description,.meal-properies,
+.meal-sub-description,.meal-properties,
 span.lower-content,span.upper-content,
 .ingredients-wrapper{
     width: 100%;
     float: left;
+}
+.meal-details{
+    padding-top: 30px;
 }
 .meal-image{
     width: 40%;
@@ -229,6 +238,9 @@ span.lower-content,span.upper-content,
 .meal-sub-description span,span.lower-content{
     letter-spacing: 1.5px;
     font-size: 20px;
+}
+.meal-name, .meal-sub-description{
+    padding-left: 30px;
 }
 span.lower-content{
     text-align: center;
@@ -256,6 +268,7 @@ span.upper-content {
     letter-spacing: 1px;
     color: #6B6B6B;
     text-align: center;
+    padding-bottom: 30px;
 }
 .what-you-get-section .details-content{
     width: 14.28%;
@@ -263,25 +276,59 @@ span.upper-content {
 .what-you-get-section .upper-content img{
     height: 50px;
 }
+.button-container{
+    padding:30px 0;
+    text-align: center;
+}
+.button-container .btn{
+    margin: 0 10px;
+    width: 180px;
+}
+.button-container .see-menu{
+    color: #B8E986;
+    border-color: #B8E986;
+}
 /*==============================*\
         &Section zip code
 \*==============================*/
 
 #section-zipcode {
-    background: url(../images/homepageslider/map_banner.jpg) center top no-repeat;
+    background: url(../images/homepageslider/Map_UpperEastSide.png) center top no-repeat;
     background-position: fixed;
     padding: 6% 0 0 0;
     background-size: cover;
 }
+#section-zipcode .slide-description{
+    background-color: #fff;
+    overflow: hidden;
+}
+#section-zipcode .body-text-small,.zip-code-container, 
+#section-zipcode .slide-header{
+    text-align: center;
+    padding:20px 0;
+}
+
+#section-zipcode .body-text-small{
+    color: #6B6B6B;
+    font-family: 'BrandonGrotesque-Bold';
+}
+
+.check-delivery{
+    width: 145px;
+    margin-bottom: 4px;
+}
 
 #zip-code {
-    width: 130px;
+    width: 145px;
     height: 45px;
+    border-radius: 3px;
     text-align: center;
     margin-top: -4px;
+    border: 1px solid;
     padding: 0px 10px;
     margin-right: 5px;
     color: #9B9B9B;
+    line-height: 31px;
 }
 
 input#zip-code[type="text"] {
