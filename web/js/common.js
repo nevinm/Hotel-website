@@ -79,16 +79,19 @@ $(document).ready(function() {
         if(key == 13)  // the enter key code
         {  
             if($('.popup-container').is(':visible')){
-                if($('.popup-container').find('form').length === 0) {
-                    e.preventDefault();
-                    $('#close').trigger('click');
-                }
                 if($('#ok-button').is(':visible')){
                     $('#ok-button').trigger('click');
                 }                            
                 if($('#no-button').is(":visible")){
                     $('#no-button').trigger('click');
                 }
+                if($('#ok').is(":visible")){
+                    window.location.href = "orderhistory.html";
+                }           
+                if($('.popup-container').find('form').length === 0) {
+                    e.preventDefault();
+                    $('#close').trigger('click');
+                }  
             }
         }
     });   
