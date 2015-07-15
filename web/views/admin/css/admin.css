@@ -101,8 +101,12 @@ li#navbar-username {
 .showLi{
     display: inline-block !important;
 }
-.download-pdf{
+
+.download-csv{
     float: left;
+}
+.download-csv:nth-child(2){
+    margin-left: 20px;
 }
 /*=======================*\
        &Category-Page
