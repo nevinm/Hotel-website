@@ -11,6 +11,7 @@ function profileAutoPopulate() {
     if(currentPage == 'Meisterdish -Change Email'){
         $('.current-email-container span').text(userDetails.email);
         $('input[name=notification]').prop('checked', userDetails.email_promotions);
+        $('#hidden-email-promotion').val(userDetails.email_promotions);
     }
     if (currentPage == 'Meisterdish - Account') {
         $(".small-profile-pic").attr('src', userDetails.profile_image_thumb);
@@ -156,11 +157,26 @@ var changeEmailCallback = {
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
+$('input[name=notification]').on("click",function(){
+    $('#change-email').validate().resetForm();
+});
 
 $('#update-email').on('click', function(e) {
     e.preventDefault();
-    if ($('form').valid()) {
-        changeEmail();
+    var checkBoxState = JSON.parse($('#hidden-email-promotion').val());
+    if( $('input[name=notification]').prop('checked') == checkBoxState){
+        if ($('form').valid()) {
+            changeEmail();
+        }
+    }else{
+        if($('#change-email').find('input[name=email]').val() == "" &&
+            $('#change-email').find('input[name=confirmEmail]').val() == ""){
+            changeEmail();    
+        }else{
+            if ($('form').valid()) {
+                changeEmail();
+            }
+        }
     }
 });
 
