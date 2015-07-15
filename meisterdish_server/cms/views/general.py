@@ -372,5 +372,28 @@ def export_users_for_promotion(request, data, user):
     except Exception as e:
         log.error("Export User promotions list "+ e.message)
         return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
+"""        
 @check_input('POST', settings.ROLE_ADMIN)
-def export_zips_unsupported
+def export_zips_unsupported:
+    try:
+        users = User.objects.exclude(role__pk=settings.ROLE_GUEST).filter(deleted=False, need_email_promotions=True)
+        
+        users = users.order_by('first_name')
+        users_list = [[
+            'Name',
+            'Email',
+            'Mobile',
+            'Zip Code',
+        ]]
+        for user in users:
+            users_list.append([
+                (user.first_name + " "+ user.last_name).title(),
+                user.email,
+                "" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
+                user.zipcode
+            ])
+        return export_csv(users_list, "users_promotions_list.csv")
+    except Exception as e:
+        log.error("Export User promotions list "+ e.message)
+        return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
+"""
