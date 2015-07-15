@@ -40,8 +40,8 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
         msg.mixed_subtype = 'related'
         share_images = {
           "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
-          "share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
-          "share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
+          #"share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
+          #"share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
           "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo.png"),
         }
 
@@ -241,7 +241,10 @@ def add_to_mailing_list(email, zip):
         res = mc.lists.subscribe(settings.MAILCHIMP_LIST_ID, {'email': email}, {"merge3":zip}, double_optin=False)
         if res and res['euid']:
             log.info("Added email to list")
+            return True
         else:
             log.info("Failed to add email to list")
+            return False
     except Exception as e:
         log.error("Failed to add to mailing list : "+e.message)
+        return False

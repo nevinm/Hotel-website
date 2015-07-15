@@ -8,10 +8,10 @@ var billingAddressId, cardDetails,
 $(document).ready(function() {
     CartItemCount();
     if (localStorage["session_key"]) {
+        getAddress();
         getCartItems();
         savedCardDetails();
-        CartItemCount();
-        getAddress();
+        // CartItemCount();
     } else {
         $('.address-info-guest').show();
         $('.address-info').hide();
@@ -36,7 +36,7 @@ $(document).ready(function() {
 
     $('.driver-tip').on('keyup input', function() {
         selectedTip = 0;
-        $('.driver-tip-display').text("$00.00");
+        $('.driver-tip-display').text("$0.00");
             selectedTip = this.value;
             if (this.value.length > 2) {
                 selectedTip = this.value = this.value.slice(0, 2);
@@ -44,9 +44,9 @@ $(document).ready(function() {
             if (selectedTip >= 1) {
                 $('.driver-tip-display').text("$" + selectedTip + ".00");
             } else if (selectedTip < 1 && selectedTip > 0) {
-                $('.driver-tip-display').text("$00." + selectedTip);
+                $('.driver-tip-display').text("$0." + selectedTip);
             } else if (selectedTip == 0 || isNaN(selectedTip)) {
-                $('.driver-tip-display').text("$00.00");
+                $('.driver-tip-display').text("$0.00");
             }
         if($('#tip-form').valid()){
             updateReciept();
@@ -240,7 +240,9 @@ $(document).ready(function() {
         $("#add-guest-address").show();
         $(".state-selector-container").show();
         updateReciept();
-        $('.driver-tip').val(0);
+        $('span.driver-tip-display').text('$5.00');
+        $('.driver-tip').val(5);
+        $('#tip-form').validate().resetForm();
     });
 
     $('#is-gift-card').on('click', function() {
@@ -337,22 +339,21 @@ var getCartItemsCallback = {
         cartItems = JSON.parse(data);
         if (cartItems.status == 1) {
             $(".emtpy-cart-message").hide();
-            $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
-            $('#hidden-credit').val(cartItems.credits);
             populateCartItems(cartItems);
             populateDate(cartItems);
             if (cartItems.coupon != null) {
                 populateCoupon(cartItems.coupon);
             }
-            
+            $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
+            $('#hidden-credit').val(cartItems.credits);
         } else {
             $('.order-list-items').remove();
             $(".emtpy-cart-message").empty();
             $(".emtpy-cart-message").append("<span>" + cartItems.message + "</span>");
             $(".emtpy-cart-message").show();
-            updateReciept();
             $(".items-container .item-count").text('(0)');
         }
+        updateReciept();
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -434,7 +435,7 @@ function updateReciept(GiftcardDetails, flag) {
         totalCredits = 0,
         totalDriverTip = parseFloat($('.driver-tip').val()),
         totalDeliveryCost = 2.95;
-        totalCredits = parseInt($('#hidden-credit').val());
+        totalCredits = parseFloat($('#hidden-credit').val());
         if($('#pickup-radio').prop('checked')){
             totalDeliveryCost = 0;
             totalDriverTip = 0;
@@ -532,7 +533,11 @@ function clearCart() {
 //update cart items call back
 var updateCartItemsCallback = {
     success: function(data, textStatus) {
-        localStorage['cartItems'] = data;
+        var cartDetails = JSON.parse(data);
+        if(cartDetails.status == 1){
+            CartItemCount();
+            localStorage['cartItems'] = data;
+        } 
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -893,7 +898,6 @@ var getStatesCallback = {
                     text: value.name,
                 }));
             });
-            hideSecondaryStates();
         } else {
             showErrorPopup(userDetails);
         }
@@ -951,6 +955,7 @@ var placeOrderCallback = {
         } else {
             showPopup(response);
         }
+        $('.loading-indicator').hide();
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -1071,6 +1076,7 @@ function createOrder(orderParams) {
     data = JSON.stringify(orderParams);
     var placeOrderInstance = new AjaxHttpSender();
     placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
+    $('.loading-indicator').show();
 }
 
 function populateCreditCardDetails() {
@@ -1120,7 +1126,11 @@ function validateOrder() {
         }
     }
     if (!$(".checkout-time-button-active").length) {
-        data.message = "Add delivery time and then proceed";
+        if($('#pickup-radio').prop('checked')){
+            data.message = "Add pickup time and then proceed";
+        }else{
+            data.message = "Add delivery time and then proceed";
+        }
         showPopup(data);
         return false;
     }
@@ -1234,7 +1244,6 @@ var getProfileCallback = {
             $(".address-info-guest").find("#guest-email").val(userDetails.email);
             $(".address-info-guest").find("#guest-phone").val(userDetails.mobile);
             $('#new-address-form').find("input[name*='email']").val(userDetails.email);
-
         } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}

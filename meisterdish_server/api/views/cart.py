@@ -130,7 +130,6 @@ def update_cart(request, data, user):
     try:
         meal_id = data['meal_id']
         qty = int(data['quantity'])
-        
         if qty %2 == 1 :
             return custom_error("Please provide a valid quantity for each meal.")
 
@@ -139,14 +138,14 @@ def update_cart(request, data, user):
         except:
           return custom_error("Sorry, meal #" +str(meal_id)+ " is currently not available.")
 
-        carts = Cart.objects.get(user=user, completed=False)
+        carts = Cart.objects.filter(user=user, completed=False)
         if not carts.exists():
            cart = Cart()
            cart.user = user
            cart.save()
         else:
           cart = carts[0]
-        
+
         try:
            cart_item = CartItem.objects.get(cart=cart, meal__pk=meal_id)
            if qty == 0:

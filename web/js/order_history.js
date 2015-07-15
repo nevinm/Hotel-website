@@ -39,7 +39,7 @@
                "<h4 class='status'>" + value.status + "</h4></div><div class='accordion-content body-text-small'>" +
                "<div class='row'><div class='accordion-subcontent'>" +
                "<div class='order-head'>ORDER TOTAL</div>" +
-               "<div class='order-content'>" + dollarConvert(value.grand_total) + "</div>" +
+               "<div class='order-content'>" + dollarConvert(value.grand_total.toFixed(2))+ "</div>" +
                "</div>" +
                "<div class='accordion-subcontent'>" +
                "<div class='order-head'>ORDER DATE</div>" +

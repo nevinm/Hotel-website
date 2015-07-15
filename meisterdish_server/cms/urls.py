@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^get_users/$', general.get_users, name='get_users'),
     url(r'^change_user_status/$', general.change_user_status, name='change_user_status'),
     url(r'^export_users/$', general.export_users, name='export_users'),
+    url(r'^export_users_for_promotion/$', general.export_users_for_promotion, name='export_users_for_promotion'),
     
     url(r'^get_meals/$', meals.get_meals, name='get_meals'),
     url(r'^get_meal_details/(?P<meal_id>[0-9]+)/$', meals.get_meal_details, name='get_meal_details'),

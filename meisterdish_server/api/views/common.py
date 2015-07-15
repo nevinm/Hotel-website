@@ -475,7 +475,7 @@ def get_profile(request, data, user):
                      "meals_in_cart" : meals,
                      "meals_in_cart_count" : len(meals),
                      "credits" : user.credits,
-                     "sms_notification" : user.need_sms_notification,
+                     "sms_notification" : user.need_email_promotions,#need_sms_notification,
                      "address_list" : address_list,
                      "first_name" : user.first_name.title(),
                      "last_name" : user.last_name.title(),
@@ -597,10 +597,10 @@ def change_email(request, data, user):
                 
         if "email_promotion" in data:
             promo = int(str(data['email_promotion']).strip())
-            user.need_sms_notification = bool(promo)
+            user.need_email_promotions = bool(promo)
             user.save()
 
-        return json_response({"status":1, "message":"Updated email address", "email_promotion":user.need_sms_notification})
+        return json_response({"status":1, "message":"Updated email address", "email_promotion":user.need_email_promotions})
     except Exception as e:
         log.error("Failed to change email : " + e.message)
         return custom_error("Failed to change email.")

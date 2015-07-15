@@ -4,7 +4,7 @@ import json as simplejson
 import logging 
 import settings
 from api.views.decorators import *
-from libraries import validate_zipcode, validate_phone, check_delivery_area, validate_email, mail
+from libraries import validate_zipcode, validate_phone, check_delivery_area, validate_email, mail, add_to_mailing_list
 import stripe
 from datetime import datetime, timedelta
 from django.template.loader import render_to_string
@@ -379,15 +379,13 @@ def share_via_email(request, data, user):
 
 @check_input('POST')
 def save_email(request, data):
-    import mailchimp
     try:
         email = data["email"].strip()
         zip = str(data["zipcode"]).strip()  
         if not validate_email(email) or not validate_zipcode(zip):
             return custom_error("Please enter a valid email and zipcode.")
-        mc = mailchimp.Mailchimp(settings.MAILCHIMP_API_KEY)
-        res = mc.lists.subscribe(settings.MAILCHIMP_LIST_ID, {'email': email}, {"merge3":int(zip)}, double_optin=0)
-        if res and res['euid']:
+        added = add_to_mailing_list(email, zip)
+        if added:
             log.info("Added email to list")
         else:
             log.info("Failed to add email to list")
