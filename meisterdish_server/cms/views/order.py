@@ -425,7 +425,7 @@ def export_orders(request, data, user):
                 order.order_num,
                 order.created.strftime("%m-%d-%Y %H:%M:%S"),
                 order.cart.user.first_name.title() + " " + order.cart.user.last_name.title(),
-                order.cart.phone,
+                order.phone,
                 create_address_text_from_model(order.delivery_address),
                 order.grand_total,
                 order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
