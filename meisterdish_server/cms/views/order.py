@@ -58,7 +58,7 @@ def update_order(request, data, user, order_id):
                 if not sent:
                     log.error("Failed to send order confirmation notification")
             elif int(status) == 3: #Dispatched
-                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.mobile})
+                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.mobile, "status":3})
                 if not sent:
                     log.error("Failed to send order dispatched notification")
             #elif int(status) == 4: #Delivered

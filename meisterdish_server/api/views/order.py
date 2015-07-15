@@ -296,7 +296,7 @@ def create_order(request, data, user):
 
 def print_order(order):
     try:
-        
+
         return True
     except Exception as e:
         log.error("Failed to print order." + e.message)
@@ -350,6 +350,10 @@ def get_order_cart_items(order):
                   "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
                   "coupon" : coupon,
                   "credits" : order.cart.user.credits,
+                  "transaction_id" : order.payment.transaction_id if order.payment else "Not Available",
+                  "tax" : "{0:.2f}".format(order.total_tax),
+                  "shipping" : "{0:.2f}".format(settings.SHIPPING_CHARGE),
+                  "grand_total":"{0:.2f}".format(order.grand_total),
                   }
     except Exception as e:
         log.error("Failed to list order cart items." + e.message)
