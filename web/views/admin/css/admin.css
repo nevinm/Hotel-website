@@ -101,6 +101,9 @@ li#navbar-username {
 .showLi{
     display: inline-block !important;
 }
+.download-pdf{
+    float: left;
+}
 /*=======================*\
        &Category-Page
 \*=======================*/
