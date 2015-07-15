@@ -160,9 +160,10 @@ function getCurrentDateMonth(days) {
     return dateMonth = ('0' + currentdate.getDate()).slice(-2) + " " + monthName;
 }
 
-function getCurrentHour() {
+function getCurrentHourMin() {
     var currentdate = new Date();
-    var hours = currentdate.getHours();
+    var hours = currentdate.getHours(),
+    minutes = ("0"+currentdate.getMinutes()).slice(-2);
     if (hours > 12) {
         meridiem = "pm";
     } else {
@@ -170,7 +171,7 @@ function getCurrentHour() {
     }
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    var strTime = hours;
+    var strTime = hours+":"+minutes;
     return strTime + meridiem;
 }
 

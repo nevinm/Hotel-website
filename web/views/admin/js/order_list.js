@@ -32,7 +32,33 @@ $(document).ready(function() {
         updateOrders(status, orderId);
     });
     $("#date").datepicker();
+
+    $("#download-orders-pdf").on("click",function(){
+        downloadOrderPDF();
+    });
 });
+
+//Update orders API process
+var downloadOrderPDFCallback = {
+    success: function(data, textStatus) {
+        console.log("Order Updated");
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function downloadOrderPDF(statusId, orderId) {
+    var url = baseURL + "cms/export_orders/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {
+            
+        }
+    data = JSON.stringify(params);
+    var downloadOrderPDFInstance = new AjaxHttpSender();
+    downloadOrderPDFInstance.sendPost(url, header, data, downloadOrderPDFCallback);
+}
+
 
 function returnSearchParams() {
     var userName = $("#user-name").val(),
