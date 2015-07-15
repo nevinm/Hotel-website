@@ -37,18 +37,18 @@ $(document).ready(function() {
     $('.driver-tip').on('keyup input', function() {
         selectedTip = 0;
         $('.driver-tip-display').text("$0.00");
-            selectedTip = this.value;
-            if (this.value.length > 2) {
-                selectedTip = this.value = this.value.slice(0, 2);
-            }
-            if (selectedTip >= 1) {
-                $('.driver-tip-display').text("$" + selectedTip + ".00");
-            } else if (selectedTip < 1 && selectedTip > 0) {
-                $('.driver-tip-display').text("$0." + selectedTip);
-            } else if (selectedTip == 0 || isNaN(selectedTip)) {
-                $('.driver-tip-display').text("$0.00");
-            }
-        if($('#tip-form').valid()){
+        selectedTip = this.value;
+        if (this.value.length > 2) {
+            selectedTip = this.value = this.value.slice(0, 2);
+        }
+        if (selectedTip >= 1) {
+            $('.driver-tip-display').text("$" + selectedTip + ".00");
+        } else if (selectedTip < 1 && selectedTip > 0) {
+            $('.driver-tip-display').text("$0." + selectedTip);
+        } else if (selectedTip == 0 || isNaN(selectedTip)) {
+            $('.driver-tip-display').text("$0.00");
+        }
+        if ($('#tip-form').valid()) {
             updateReciept();
         }
     });
@@ -261,21 +261,25 @@ function haveAccountCheck() {
 }
 
 function setCurrentTime() {
-    currentHour = getCurrentHour();
-    var closingTime = 9;
+    currentHourMin = getCurrentHourMin();
+    var closingTime = 9,
+        minutesToCLose = 15;
     $(".today-content .checkout-time-button").each(function(key, value) {
-        currentHour = getCurrentHour();
-        meridiem = currentHour.substring(currentHour.length - 2);
+        meridiem = currentHourMin.substring(currentHourMin.length - 2);
         if (meridiem == "pm") {
-            currentHour = currentHour.substring(0, currentHour.length - 2);
+            currentHour = currentHourMin.substring(0, currentHourMin.length - 5);
             if (currentHour >= closingTime) {
                 $(this).remove();
                 $(".shop-status").show();
             } else {
+                currentMintues = parseInt(currentHourMin.slice(-4,-2));
                 if (parseInt(currentHour) == $(value).data().hr) {
                     $(this).prevAll('.set-time-button').remove();
                     $(this).val("NOW");
                     $(this).addClass("checkout-time-button-active");
+                    if(currentMintues >= minutesToCLose){
+                        $(this).addClass("button-disabled");
+                    }
                 }
             }
         }
@@ -435,19 +439,19 @@ function updateReciept(GiftcardDetails, flag) {
         totalCredits = 0,
         totalDriverTip = parseFloat($('.driver-tip').val()),
         totalDeliveryCost = 2.95;
-        totalCredits = parseFloat($('#hidden-credit').val());
-        if($('#pickup-radio').prop('checked')){
-            totalDeliveryCost = 0;
-            totalDriverTip = 0;
-            $('.driver-tip').val(0);
-            $(".driver-tip-container").hide();
-            $('span.total-delivery-cost').text('$0.00');
-        }else{
-            totalDeliveryCost = 2.95;
-            $('span.total-delivery-cost').text('$2.95');
-            $(".driver-tip-container").show();
-            totalDriverTip = parseFloat($('.driver-tip').val());
-        }
+    totalCredits = parseFloat($('#hidden-credit').val());
+    if ($('#pickup-radio').prop('checked')) {
+        totalDeliveryCost = 0;
+        totalDriverTip = 0;
+        $('.driver-tip').val(0);
+        $(".driver-tip-container").hide();
+        $('span.total-delivery-cost').text('$0.00');
+    } else {
+        totalDeliveryCost = 2.95;
+        $('span.total-delivery-cost').text('$2.95');
+        $(".driver-tip-container").show();
+        totalDriverTip = parseFloat($('.driver-tip').val());
+    }
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
         price = parseFloat($(value).find('.price-container').attr("data-price"));
@@ -534,10 +538,10 @@ function clearCart() {
 var updateCartItemsCallback = {
     success: function(data, textStatus) {
         var cartDetails = JSON.parse(data);
-        if(cartDetails.status == 1){
+        if (cartDetails.status == 1) {
             CartItemCount();
             localStorage['cartItems'] = data;
-        } 
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -1153,9 +1157,9 @@ function validateOrder() {
         }
     }
     if (!$(".checkout-time-button-active").length) {
-        if($('#pickup-radio').prop('checked')){
+        if ($('#pickup-radio').prop('checked')) {
             data.message = "Add pickup time and then proceed";
-        }else{
+        } else {
             data.message = "Add delivery time and then proceed";
         }
         showPopup(data);
@@ -1288,4 +1292,3 @@ function getProfile() {
     var getProfileInstance = new AjaxHttpSender();
     getProfileInstance.sendPost(url, header, data, getProfileCallback);
 }
-
