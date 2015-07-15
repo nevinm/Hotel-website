@@ -58,22 +58,22 @@ if (localStorage.getItem('admin_role') === null) {} else {
 }
 
 //Update orders API process
-var downloadOrderPDFCallback = {
+var downloadOrderCSVCallback = {
     success: function(data, textStatus) {
-        console.log("PDF Downloaded");
+        console.log("csv Downloaded");
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function downloadOrderPDF(url) {
+function downloadOrderCSV(url) {
     var url = baseURL + url,
         header = {
             "session-key": localStorage["session_key"]
         },
         params = {}
     data = JSON.stringify(params);
-    var downloadOrderPDFInstance = new AjaxHttpSender();
-    downloadOrderPDFInstance.sendPost(url, header, data, downloadOrderPDFCallback);
+    var downloadOrderCSVInstance = new AjaxHttpSender();
+    downloadOrderCSVInstance.sendPost(url, header, data, downloadOrderCSVCallback);
 }
 
 

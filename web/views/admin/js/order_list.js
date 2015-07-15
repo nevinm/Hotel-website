@@ -33,8 +33,8 @@ $(document).ready(function() {
     });
     $("#date").datepicker();
 
-    $("#download-orders-pdf").on("click",function(){
-        downloadOrderPDF("/api/cms/export_orders/");
+    $("#download-orders-csv").on("click",function(){
+        downloadOrderCSV("/api/cms/export_orders/");
     });
 });
 

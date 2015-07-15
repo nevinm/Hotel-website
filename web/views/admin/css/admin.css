@@ -102,10 +102,10 @@ li#navbar-username {
     display: inline-block !important;
 }
 
-.download-pdf{
+.download-csv{
     float: left;
 }
-.download-pdf:nth-child(2){
+.download-csv:nth-child(2){
     margin-left: 20px;
 }
 /*=======================*\

@@ -210,11 +210,11 @@ $(document).ready(function() {
         } else {}
     });
 
-    $("#download-users-pdf").on("click", function() {
-        downloadOrderPDF("cms/export_users/");
+    $("#download-users-csv").on("click", function() {
+        downloadOrderCSV("cms/export_users/");
     });
 
-    $("#download-users-promotion-pdf").on("click", function() {
-        downloadOrderPDF("cms/export_users_for_promotion/");
+    $("#download-users-promotion-csv").on("click", function() {
+        downloadOrderCSV("cms/export_users_for_promotion/");
     });
 });
