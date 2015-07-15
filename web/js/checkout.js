@@ -11,7 +11,7 @@ $(document).ready(function() {
         getAddress();
         getCartItems();
         savedCardDetails();
-        CartItemCount();
+        // CartItemCount();
     } else {
         $('.address-info-guest').show();
         $('.address-info').hide();
@@ -240,7 +240,9 @@ $(document).ready(function() {
         $("#add-guest-address").show();
         $(".state-selector-container").show();
         updateReciept();
-        $('.driver-tip').val(0);
+        $('span.driver-tip-display').text('$5.00');
+        $('.driver-tip').val(5);
+        $('#tip-form').validate().resetForm();
     });
 
     $('#is-gift-card').on('click', function() {
@@ -531,7 +533,11 @@ function clearCart() {
 //update cart items call back
 var updateCartItemsCallback = {
     success: function(data, textStatus) {
-        localStorage['cartItems'] = data;
+        var cartDetails = JSON.parse(data);
+        if(cartDetails.status == 1){
+            CartItemCount();
+            localStorage['cartItems'] = data;
+        } 
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -892,7 +898,6 @@ var getStatesCallback = {
                     text: value.name,
                 }));
             });
-            hideSecondaryStates();
         } else {
             showErrorPopup(userDetails);
         }

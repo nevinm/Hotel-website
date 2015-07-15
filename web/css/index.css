@@ -237,12 +237,12 @@ label#username-error {
 	#home-page-main-wrapper{
 		background-color:#CDD5CE;
 	}
-	 #section1, #section2{
+	 #section1, #section2, #section3{
 		border:1px hidden;
 		box-shadow: 0 0 6px grey;
 		background-color: #fff;
 		border-radius: 4px ;
-		z-index: 99999;
+		z-index: 999;
 	}
 	#section1{
 		margin-top: 105px;
@@ -346,12 +346,13 @@ label#username-error {
 		border: 1px hidden;
 		border-top: none;
 		border-radius: 0 0 4px 4px;
+        box-shadow: 0 0 6px grey;
 	}
 	div#section3 {
 		border: 1px hidden;
 		border-bottom: none;
 		margin-top: 20px;
-		/*box-shadow: 0 0 3px grey;*/
+		/*box-shadow: none;*/
 		border-radius: 4px 4px 0 0;
 	}
 	.zip-code-container {

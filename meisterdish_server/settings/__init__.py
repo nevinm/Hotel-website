@@ -214,14 +214,6 @@ LOGGING = {
     }
 }
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'contact@meisterdish.com'
-EMAIL_HOST_PASSWORD = 'mgmaileisterdish'
-DEFAULT_FROM_EMAIL = 'Meisterdish<contact@meisterdish.com>'
-SERVER_EMAIL = 'contact@meisterdish.com'
-
 PAYMENT_METHODS = (
                    ('CC', 'Credit Card'),
                    ('PP', 'PayPal'),
@@ -234,35 +226,14 @@ ORDER_STATUS =  (
     (3, "Dispatched"),
     (4, "Complete"),
     )
-"""
-if not Live:
-    # SandBox
-    PAYPAL_MODE="sandbox"
-    PAYPAL_ENDPOINT = "api.sandbox.paypal.com"
-    PAYPAL_PAYMENT_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr"
-    PAYPAL_CLIENT_ID = "AfPVcIBPTPK4v-ssJY7FvudRt4bYlSviIY02zi7b8JbtmaL91ZneDCMMJSOiIgqo9hBVemBUkpF8p_1F"
-    PAYPAL_CLIENT_SECRET = "EDrB0Fsr8fny7_aTopTkjC4t5btB-SvoRQDx2B2omc6OabinTG503o1aVx7_jm1D9giX-9bPfsgB_fGE"
-    PAYPAL_ACCOUNT = "nazz007online-facilitator@gmail.com"
-    PAYPAL_ID_TOKEN = "Yw2OCYWBNM2QKVTcgaR2jQMtApfxO03e-ZdUBNHg44mBYXO5MUyRx3ebLra"
-    
-else:
-    PAYPAL_MODE="live"
-    PAYPAL_ENDPOINT = "api.paypal.com"
-    PAYPAL_PAYMENT_URL = "https://www.paypal.com/cgi-bin/webscr"
-    PAYPAL_CLIENT_ID = ""
-    PAYPAL_CLIENT_SECRET = ""
-    PAYPAL_ACCOUNT = ""
-"""
+
+
 DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
 DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
 DEFAULT_CHEF_IMAGE  = STATIC_URL + "default/chef_default.png"
 DEFAULT_INGREDIENTS_IMAGE  = STATIC_URL + "default/ingredients_default.png"
 DEFAULT_PRE_REQ_IMAGE  = STATIC_URL + "default/pre_requisites_default.png"
 
-ORDER_DELIVERY_WINDOW = 3 #Hours
-SHIPPING_CHARGE = 2.95 # in $
-PER_PAGE = 10
-SESSION_EXPIRY = 5 * 60 # 5 mins
 
 CACHES = {
     'default': {
@@ -278,8 +249,3 @@ EMAIL_IMAGES = {
     "tw" : os.path.join(STATIC_ROOT, "default", "Twitter.png"),
     "in" : os.path.join(STATIC_ROOT, "default", "Instagram.png"),
 }
-
-PRINTNODE_API_URL = "https://api.printnode.com"
-
-MAILCHIMP_API_KEY = "859bfa920dd6b90b9a565cfb3d0aff9a-us10"
-MAILCHIMP_LIST_ID = '654414e2b9'
