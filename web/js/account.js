@@ -10,6 +10,7 @@ function profileAutoPopulate() {
     }
     if(currentPage == 'Meisterdish -Change Email'){
         $('.current-email-container span').text(userDetails.email);
+        $('input[name=notification]').prop('checked', userDetails.email_promotions);
     }
     if (currentPage == 'Meisterdish - Account') {
         $(".small-profile-pic").attr('src', userDetails.profile_image_thumb);
