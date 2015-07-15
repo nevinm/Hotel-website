@@ -40,8 +40,8 @@ def update_order(request, data, user, order_id):
                 cart_item.save()
                 
         if "status" in data:
-            if not user.role.id in(settings.ROLE_KITCHEN, settings.ROLE_ADMIN):
-                return custom_error("You are not authorized to change the order status.")
+            #if not user.role.id in(settings.ROLE_KITCHEN, settings.ROLE_ADMIN):
+            #    return custom_error("You are not authorized to change the order status.")
             status = int(data['status'])
             if status < 0 or status > 4:
                 log.error("Invalid order status: " + str(status))
@@ -52,13 +52,15 @@ def update_order(request, data, user, order_id):
                 order.cart.completed=True
                 order.cart.save()
             order.session_key = request.META.get('HTTP_SESSION_KEY', None)
-            
+            """
             if int(status) == 2: #Confirmed
                 sent = send_order_confirmation_notification(order)
                 if not sent:
                     log.error("Failed to send order confirmation notification")
-            elif int(status) == 3: #Dispatched
-                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.mobile, "status":3})
+            el
+            """
+            if int(status) == 3: #Dispatched
+                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.phone, "status":3})
                 if not sent:
                     log.error("Failed to send order dispatched notification")
             #elif int(status) == 4: #Delivered
@@ -444,7 +446,7 @@ def get_kitchen_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(is_deleted=False, delivery_time__gte=datetime.now()-timedelta(days=2), status__gt=0, status__lt=4)
+        orders = Order.objects.filter(is_deleted=False, status__gt=0)
         
         total_count = orders.count()
 
@@ -561,7 +563,7 @@ def get_delivery_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(delivery_type__iexact='delivery', status__gte=2, is_deleted=False, delivery_time__gte=datetime.now()-timedelta(days=2))
+        orders = Order.objects.filter(delivery_type__iexact='delivery', status__gte=1, is_deleted=False)
         
         total_count = orders.count()
 
