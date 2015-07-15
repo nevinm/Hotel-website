@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.core.mail import EmailMessage
 from email.MIMEImage import MIMEImage
 import logging
-from meisterdish_server.models import Image, User, Role, DeliveryArea, Payment, Address
+from meisterdish_server.models import Image, User, Role, DeliveryArea, Payment, Address, ZipUnavailable
 import re
 import settings
 from django.contrib.sessions.backends.db import SessionStore
@@ -237,6 +237,13 @@ def add_to_mailing_list(email, zip):
     try:
         zip = int(zip)
         import mailchimp
+
+        if not ZipUnavailable.objects.filter(email=email).exists():
+          zu = ZipUnavailable()
+          zu.email = email
+          zu.zipcode = zip
+          zu.save()
+
         mc = mailchimp.Mailchimp(settings.MAILCHIMP_API_KEY)
         res = mc.lists.subscribe(settings.MAILCHIMP_LIST_ID, {'email': email}, {"merge3":zip}, double_optin=False)
         if res and res['euid']:

@@ -474,3 +474,7 @@ class Configuration(models.Model):
 
     def __str__(self):
         return self.key + " = " + self.value
+
+class ZipUnavailable(models.Model):
+    email = models.CharField(max_length=25)
+    zipcode = models.CharField(max_length=10)
