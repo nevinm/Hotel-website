@@ -129,8 +129,13 @@
                         Sign up for free below to claim your credit.</span>
                     </div>
                     <div class="fb-signupButton">
-                        <a onclick="checkLoginState();"><img src="../images/fb_signup.png" border="0" alt=""></a>
-                        <div id='status'></div>
+                        <div class="fb-login-signup-btn" onclick="checkLoginState();">
+                            <div class="btn-wrapper">
+                                <img src="../images/Rectangle 2.png" class="fb-login-img">
+                                <span class="facebook-login-text">SIGN UP WITH FACEBOOK</span>
+                                <!-- <div id='status'></div> -->
+                            </div>
+                        </div>
                     </div>
                     <span class="or">
                         <hr>
@@ -139,7 +144,7 @@
                     <form class="signup-formcontainer">
                         <div class="signup-input marginRight">
                             <label class="body-text-small">First Name</label>
-                            <input class="arrange" type="text" name="firstname" id="signup-firstname"></input>
+                            <input class="arrange" type="text" name="firstname" id="signup-firstname" autofocus></input>
 
                         </div>
                         <div class="signup-input">

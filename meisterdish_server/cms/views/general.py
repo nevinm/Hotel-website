@@ -148,8 +148,9 @@ def add_category(request, data, user):
     try:
         cat_name = data['category'].strip()
         try:
-            cat = Category.objects.get(name__iexact=cat)
-        except:
+            cat = Category.objects.get(name__iexact=cat_name)
+            return custom_error("Catergory "+cat_name+" already exists.")
+        except Category.DoesNotExist:
             cat = Category()
             cat.name = cat_name
             cat.save()
@@ -166,9 +167,12 @@ def remove_category(request, data, user):
             cat = Category.objects.get(name__iexact=str(data['category']).strip())
         elif "id" in data:
             cat = Category.objects.get(id=str(data['id']).strip())
-            
-        cat.is_deleted=True
-        cat.save()
+        
+        for meal in Meals.objects.filter(category=cat):
+            meal.category = None
+            meal.save()
+        cat.delete()
+
         return json_response({"status":1, "message":"Removed Category"})
     except Exception as e:
         log.error("Failed to remove category : "+e.message)
@@ -205,6 +209,7 @@ def get_users(request, data, user):
             search = data["search"]
             users = users.filter(Q(first_name__istartswith=search)| Q(last_name__istartswith=search))
         
+        users = users.order_by('-id')
         actual_count = users.count()
         try:
             paginator = Paginator(users, limit)
@@ -342,4 +347,28 @@ def export_users(request, data, user):
         return export_csv(users_list, "users_list.csv")
     except Exception as e:
         log.error("Export User list "+ e.message)
+        return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
+
+@check_input('POST', settings.ROLE_ADMIN)
+def export_users_for_promotion(request, data, user):
+    try:
+        users = User.objects.exclude(role__pk=settings.ROLE_GUEST).filter(deleted=False, need_email_promotions=True)
+        
+        users = users.order_by('first_name')
+        users_list = [[
+            'Name',
+            'Email',
+            'Mobile',
+            'Zip Code',
+        ]]
+        for user in users:
+            users_list.append([
+                (user.first_name + " "+ user.last_name).title(),
+                user.email,
+                "" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
+                user.zipcode
+            ])
+        return export_csv(users_list, "users_promotions_list.csv")
+    except Exception as e:
+        log.error("Export User promotions list "+ e.message)
         return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")

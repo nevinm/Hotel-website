@@ -23,21 +23,35 @@ $(document).ready(function() {
         e.preventDefault();
         // var listItems = $(this).closest('.listItems');
         // listItems.find('.removeItemButton').fadeIn();
-        var x = {},
+        var x = {},count = 0,
             meal_id = $(this).attr('data-id');
-        if (localStorage['loggedIn'] == 'true') {
-            addToCart(meal_id);
-        } else if (localStorage['loggedIn'] == 'false' || localStorage.getItem('loggedIn') === null) {
-            addToCart(meal_id);
+        count = parseInt($(this).closest('.listItemDetails').find('.hidden-field').val()) + 2;
+        if(count <= 10){
+            $(this).closest('.listItemDetails').find('.hidden-field').val(count);
+            if (localStorage['loggedIn'] == 'true') {
+                addToCart(meal_id);
+            } else if (localStorage['loggedIn'] == 'false' || localStorage.getItem('loggedIn') === null) {
+                addToCart(meal_id);
+            }  
+        }else{
+            // $(this).hide();
         }
+        
     });
     $(document).on("click", '.removeItemButton', function(e) {
-        var quantity = -2,
+        var quantity = -2,count = 0,
             mealId = $(this).attr('data-id');
-        addToCart(mealId,quantity);
+            count = parseInt($(this).closest('.listItemDetails').find('.hidden-field').val()) - 2;
+        if(count >= 0){
+            $(this).closest('.listItemDetails').find('.hidden-field').val(count);
+            addToCart(mealId,quantity);
+        }
+        else{
+            // removeCartItems(mealId);
+        }
     });
         
-    $(document).on("click", '.thumbnail', function() {
+    $(document).on("click", '.thumbnail,.meal-overlay', function() {
         mealId = this.dataset.id;
         window.location.href = 'meal-details.html?mealId=' + mealId;
     });
@@ -106,21 +120,6 @@ $(document).ready(function() {
         }
 
     });
-    $('#done-share').on('click', function() {
-        $('.share-popup-wrapper').hide();
-    })
-
-    $('#facebook-share').on('click', function() {
-        checkLoginState();
-    })
-
-    $('#twitter-share').on('click', function() {
-        twitterShare(homeUrl);
-    })
-
-    $('#email-share').on('click', function() {
-        emailShare(homeUrl);
-    })
 
     CartItemCount();
     getCategory();
@@ -222,29 +221,36 @@ function populateMealList(mealList, isInfinteScrolling) {
         $(".listContainer").empty();
     } else {}
     $.each(mealList.aaData, function(key, value) {
-        debugger;
         if(value.available){
             $(".listContainer").append("<div class='listItems'>" +
+                "<div class='meal-image-wrapper'>"+
                 "<img src='" + value.main_image + "' data-id='" + value.id + "' class='thumbnail'>" +
+                "<div class='meal-overlay' data-id='" + value.id + "'>"+"<p class='upper-line'>"+
+                "<span>"+ value.quantity + "</span>" +" "+ 
+                "SERVINGS" + "</p>" +
+                "<p class='lower-line'>" + "Added to cart" + "</p>"+
+                "</div>" + "</div>" +
                 "<section class='listItemDetails'>" +
                 "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +
-                "<div class='menuItemDetails'>" +"with " +value.sub + "</div>" +
+                "<div class='menuItemDetails'>" + value.sub + "</div>" +
                 "<hr class='mealList-hr'>"+
-                "</section><section class='listItemDetails'>" +
+                "</section><section class='listItemDetails tableDisplay'>" +
+                "<input type='hidden' class='hidden-field' value='"+ value.quantity +"'>" +
                 "<h3 class='pullLeft itemCost'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</h3>" +
                 "<span class='per-serving-text'>"+"PER SERVING"+"</span>"+
-                "<div class='removeItemButton' data-id='"+ value.id +"'>"+"-"+"</div>"+
+                "<div class='removeItemButton' data-id='"+ value.id +"'>"+"&#8211"+"</div>"+
                 "<span><a class='btn btn-small-primary medium-green addItemButton' " +
                 "data-id='" + value.id + "'>ADD</a></span>" +
                 "</section></div>");
         }
-        // if (!value.in_cart) {} else {
-        //     $(".addItemButton:last").addClass("button-disabled");
-        // }
+       
         if(value.quantity < 2){
             $('.removeItemButton[data-id="'+ value.id +'"]').hide();
+            $('.meal-overlay[data-id="'+ value.id +'"]').hide();
         }else{
+
             $('.removeItemButton[data-id="'+ value.id +'"]').show();
+            $('.meal-overlay[data-id="'+ value.id +'"]').show();
         }
     });
     if (endOfList) {} else {
@@ -271,17 +277,22 @@ var addToCartCallback = {
             showPopup(meal_details);
         } else {
             // $('*[data-id="' + mealId + '"]').addClass("button-disabled");
-            showPopup(meal_details);
+            // showPopup(meal_details);
         var $removeButton = $('a[data-id="' + mealId + '"]').closest('.listItems').find('.removeItemButton'),
-            $addButton = $('a[data-id="' + 57 + '"]').closest('.listItems').find('.addItemButton');
+            $addButton = $('a[data-id="' + mealId + '"]').closest('.listItems').find('.addItemButton'),
+            $showOverlay = $('.meal-overlay[data-id="'+ mealId +'"]');
+            $showOverlay.find('.upper-line span').text(meal_details.quantity);
             if(meal_details.quantity == 0){
                 $removeButton.hide();
+                $showOverlay.hide();
             }else{
                 $removeButton.fadeIn();
+                $showOverlay.show();
             }
 
             if(meal_details.quantity >= 10){
                 $addButton.hide();
+                $showOverlay.find('.upper-line span').text(10);
             }else{
                 $addButton.show();
             }
@@ -308,3 +319,30 @@ function addToCart(meal_id,quantity) {
     var addToCartInstance = new AjaxHttpSender();
     addToCartInstance.sendPost(url, header, data, addToCartCallback, meal_id);
 }
+
+//Remove cart items call back
+// var removeCartItemsCallback = {
+//     success: function(data, textStatus) {
+//         removeData = JSON.parse(data);
+//         if (removeData.status == 1) {
+//             showPopup(removeData);
+//         } else {
+//             showPopup(removeData);
+//         }
+//     },
+//     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+// }
+
+// //Remove cart items
+// function removeCartItems(meal_id) {
+//     var url = baseURL + "remove_from_cart/",
+//         header = {
+//             "session-key": localStorage["session_key"]
+//         },
+//         params = {
+//             "meal_id": meal_id
+//         };
+//     data = JSON.stringify(params);
+//     var removeCartItemsInstance = new AjaxHttpSender();
+//     removeCartItemsInstance.sendPost(url, header, data, removeCartItemsCallback);
+// }

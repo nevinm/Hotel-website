@@ -185,7 +185,7 @@
                                             </div>
                                             <div class="forminput-wrapper">
                                                 <label class="body-text-small">Phone</label>
-                                                <input type="text" id='guest-phone' name="phonenumber" class="popup-input">
+                                                <input type="text" id='guest-phone'  placeholder='XXXXXXXXXX' name="phonenumber" class="popup-input">
                                             </div>
                                         </div>
                                         <div class="button">
@@ -201,11 +201,6 @@
                             </div>
                             <div class="payment-method-container">
                                 <div class="contents">
-                                    <!-- <div class="paypal-container" style="display:none">
-                                        <input type="radio" id="pp" class='payment-checked' name="payment-radio">
-                                        <span class="content-heading"><input type="checkbox" id="pay-using-paypal"/>PAY WITH PAY PAL</span>
-                                        <img class='paypal' src="../images/paypal_button.png">
-                                    </div> -->
                                     <div class="accepted-cards-wrapper">
                                         <label class="body-text-small">Accepted cards</label>
                                         <div class="accepted-cards-list">
@@ -226,11 +221,6 @@
                             </div>
                             <div class="payment-method-guest-container">
                                 <div class="content">
-                                    <!-- <div class="paypal-container">
-                                        <input type="radio" id="pp-guest" class='payment-checked' name="payment-radio">
-                                        <span class="content-heading"><input type="checkbox" id="pay-using-paypal"/>PAY WITH PAY PAL</span>
-                                        <img class='paypal' src="../images/paypal_button.png">
-                                    </div> -->
                                     <div class="accepted-cards-wrapper">
                                         <label class="body-text-small">Accepted cards</label>
                                         <div class="accepted-cards-list">
@@ -257,7 +247,7 @@
                                                 <input type="password" size="4" data-stripe="cvc" class="popup-input" id="cvv-number" name="cvv">
                                             </div>
                                             <div class="forminput-wrapper">
-                                                <label class="body-text-small">Expiry Date</label>
+                                                <label class="body-text-small expiryDate-label">Expiry Date</label>
                                                 <div class="styled-select">
                                                     <select name="expiryMonth" id="ExpMonth" data-stripe="exp-month">
                                                         <option value=""></option>
@@ -288,7 +278,7 @@
                                                 <label class="body-text-small">Billing zip</label>
                                                 <input type="text" name="zip" class="popup-input" id="billing-zip">
                                             </div>
-                                            <button id='credit-card-submit' type="submit"></button>
+                                            <!-- <button id='credit-card-submit' type="submit"></button> -->
                                             <div class="button">
                                                 <input type="checkbox" name="save-card-details" id="save-credit-card"><span>Save card details?</span>
                                             </div>
@@ -372,7 +362,7 @@
                                 </div>
                                 <div class="inner-content body-text-small">
                                     <span>Delivery</span>
-                                    <span class='total-delivery-cost'>$2.00</span>
+                                    <span class='total-delivery-cost'>$2.95</span>
                                 </div>
                                 <div class="inner-content body-text-small">
                                     <span>Tax</span>
@@ -382,9 +372,11 @@
                             <div class="driver-tip-container">
                                 <span class="content-heading">DRIVER TIP</span>
                                 <div class="inner-content body-text-small">
-                                    <div class="styled-select">
-                                        <input class="driver-tip popup-input" type='number' max='10' min='0' value="5" />
-                                    </div>
+                                    <form id="tip-form">
+                                        <div class="tip-input-container">
+                                            <input class="driver-tip popup-input" type="text" value="5" name="tip" />
+                                        </div>
+                                    </form>
                                     <span class='driver-tip-display'>$5.00</span>
                                 </div>
                             </div>
@@ -398,6 +390,7 @@
                                 <hr>
                             </div>
                             <div class="discount-container body-text-small">
+                                <input type="hidden" id="hidden-credit" value="0">
                                 <span>Credit</span>
                                 <span class="discount-amount">-$0.00</span>
                             </div>
@@ -431,10 +424,10 @@
                             <span>SOMTHING WENT WRONG</span>
                         </div>
                         <div class="button close-container">
-                            <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
+                            <a href="#!" class="btn btn-small-secondary" id="close">CLOSE</a>
                         </div>
                         <div class="button ok-container">
-                            <a href="" class="btn btn-small-secondary" id="ok">OK</a>
+                            <a href="#!" class="btn btn-small-secondary" id="ok">OK</a>
                         </div>
                     </div>
                 </div>
@@ -498,7 +491,7 @@
                                     </div>
                                     <div class="forminput-wrapper">
                                         <label class="body-text-small">Phone</label>
-                                        <input type="text" id='guest-phone' name="phonenumber" class="popup-input">
+                                        <input type="text" id='guest-phone' placeholder='XXXXXXXXXX' name="phonenumber" class="popup-input">
                                     </div>
                                 </div>
                                 <div class="button">
@@ -508,13 +501,16 @@
                     </div>
                 </div>
             </div>
+            <div class="loading-indicator">
+                <div class="bk-overlay"></div>
+                <div class="loader">...loading</div>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src='../js/jquery.min.js'></script>
     <script type="text/javascript" src='../js/jquery.validate.min.js'></script>
     <script type="text/javascript" src='../js/ajax_reusable.js'></script>
     <script type="text/javascript" src='../js/common.js'></script>
-    <!-- // <script type="text/javascript" src='../js/account.js'></script> -->
     <script type="text/javascript" src='../js/stripe_integration.js'></script>
     <script type="text/javascript" src='../js/checkout.js'></script>
 </body>

@@ -23,25 +23,31 @@
                 <a href="#"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
                 </a>
                 <ul id="menu" class="pullRight">
-                   <li>
+                   <li class='admin-links'>
                        <a href="manage-delivery-areas.html">DELIVERY AREA</a>
                    </li>
-                   <!-- <li>
+                   <!-- <li class='admin-links'>
                        <a href="promocode.html">PROMOCODES</a>
                    </li>
-                   <li>
+                   <li class='admin-links'>
                        <a href="giftcards.html">GIFTCARDS</a>
                    </li> -->
-                   <li>
+                   <li class='admin-links'>
                        <a href="orderlist.html">ORDERS</a>
                    </li>
-                   <li class="bold">
+                   <li class="kitchen-links">
+                        <a href="#">KITCHEN</a>
+                    </li>
+                   <li class="bold admin-links">
                        <a href="meallist.html">MEALS</a>
                    </li>
-                   <li>
+                   <li class='admin-links'>
+                        <a href="mealtype.html">MEAL TYPE</a>
+                    </li>
+                   <li class='admin-links'>
                        <a href="userlist.html">USERS</a>
                    </li>
-                   <li>
+                   <li class='admin-links'>
                        <a href="categories.html">CATEGORIES</a>
                    </li>
                    <li id="navbar-username_hidden" class="bold green">
@@ -95,6 +101,10 @@
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">Tax Percentage</label>
                                     <input type="text" name="mealtax" class="create-meal-input" id="meal-tax">
+                                </div>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Calories</label>
+                                    <input type="text" name="calories" class="create-meal-input" id="meal-calories">
                                 </div>
                             </div>
                             <div class="content-1">
@@ -248,12 +258,12 @@
                                 <div class="tips-container">
                                         <div class="forminput-wrapper">
                                             <label class="body-text-small">Video URL</label>
-                                            <input type="text" class="create-meal-input" id="tips-video-url">
+                                            <input type="text" class="create-meal-input tips-enter-submit" id="tips-video-url">
                                             <label id="tips-video-url-label-error">Invalid video URL</label>
                                         </div>
                                         <div class="forminput-wrapper">
                                             <label class="body-text-small">Title</label>
-                                            <input type="text" class="create-meal-input" id="tips-and-tricks">
+                                            <input type="text" class="create-meal-input tips-enter-submit" id="tips-and-tricks">
                                             <label id="tips-and-tricks-label-error">Invalid title</label>
                                         </div>
                                         <input type="button" id="add-tips-main" value="add">

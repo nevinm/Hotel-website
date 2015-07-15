@@ -3,6 +3,7 @@ import json as simplejson
 import logging 
 import settings
 from cms.views.decorators import *
+from datetime import timedelta
 from datetime import datetime
 from django.core.paginator import Paginator
 from libraries import mail, mail_order_confirmation, check_delivery_area, validate_phone, validate_email, create_address_text_from_model, export_csv, get_time_past
@@ -27,20 +28,17 @@ def delete_order(request, data, user, order_id):
 def update_order(request, data, user, order_id):
     try:
         order = Order.objects.get(pk=order_id, is_deleted=False, cart__completed=True)
-        if "produced_meals" in data and len(data["produced_meals"]):
+        if "produced_meals" in data and type(data["produced_meals"] == type([])):
             if user.role.id != settings.ROLE_KITCHEN:
                 return custom_error("Only the kitchen staff is authorized to do this operation.")
 
-            for order_meal in data["produced_meals"]:
-                cart_item = order.cart.cartitem_set.filter(meal__pk=order_meal)
-                if not cart_item.exists():
-                  return custom_error("The meal with ID " +str(order_meal) + " does not exist in cart.")
-                cart_item = cart_item[0]
-                cart_item.produced = True
+            for cart_item in order.cart.cartitem_set.all():
+                if cart_item.meal.id in data["produced_meals"]:
+                    cart_item.produced = True
+                else:
+                    cart_item.produced = False
                 cart_item.save()
                 
-                print cart_item
-
         if "status" in data:
             if not user.role.id in(settings.ROLE_KITCHEN, settings.ROLE_ADMIN):
                 return custom_error("You are not authorized to change the order status.")
@@ -59,10 +57,14 @@ def update_order(request, data, user, order_id):
                 sent = send_order_confirmation_notification(order)
                 if not sent:
                     log.error("Failed to send order confirmation notification")
-            elif int(status) == 4: #Delivered
-                sent = send_order_complete_notification(order)
+            elif int(status) == 3: #Dispatched
+                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.mobile})
                 if not sent:
-                    log.error("Failed to send order complete notification")
+                    log.error("Failed to send order dispatched notification")
+            #elif int(status) == 4: #Delivered
+            #    sent = send_order_complete_notification(order)
+            #    if not sent:
+            #        log.error("Failed to send order complete notification")
 
         return json_response({"status":1, "message":"The order has been updated", "id":str(order_id)+"."})
     except Exception as e:
@@ -276,6 +278,7 @@ def send_order_confirmation_notification(order):
                "delivery_time" : order.delivery_time.strftime("%A, %B %d"+suffix+", %Y"),
                "total_amount":"{0:.2f}".format(order.total_amount),
                "discount" : "{0:.2f}".format(order.discount),
+               "credit" : "{0:.2f}".format(order.credits),
                "tax" : "{0:.2f}".format(order.total_tax),
                "shipping" : "{0:.2f}".format(settings.SHIPPING_CHARGE),
                "tip":"{0:.2f}".format(order.tip),
@@ -308,12 +311,13 @@ def send_order_confirmation_notification(order):
         else:
             log.error("Failed to send order confirmation mail to "+to_email)
 
-        if True:#user.need_sms_notification:
-            if not send_sms_notification(dic):
-                return False
+        #Not needed here.
+        #if user.need_sms_notification:
+        #    if not send_sms_notification(dic):
+        #        return False
         return True
 
-    except KeyError as e:
+    except Exception as e:
         log.error("Send confirmation mail : " + e.message)
         return False
 
@@ -339,16 +343,16 @@ def send_order_complete_notification(order):
                "site_url":settings.SITE_URL,
                }
         
-        msg = render_to_string('order_complete_email_template.html', dic)
-        sub = 'Your order at Meisterdish is complete'
+        #msg = render_to_string('order_complete_email_template.html', dic)
+        #sub = 'Your order at Meisterdish is complete'
         
-        mail([to_email], sub, msg )
+        #mail([to_email], sub, msg )
 
         if user.need_sms_notification:
             if not send_sms_notification(dic):
                 return False
         return True
-    except KeyError as e:
+    except Exception as e:
         log.error("Send order completion mail : " + e.message)
         return False
 
@@ -359,6 +363,8 @@ def send_sms_notification(dic):
             return False
         if dic["status"] == 2: #Confirmed
             txt = render_to_string('order_confirmation_sms_template.html', dic)
+        if dic["status"] == 3: #Dispatched
+            txt = render_to_string('order_dispatched_sms_template.html', dic)
         else: #Complete
             txt = render_to_string('order_complete_sms_template.html', dic)
         
@@ -438,7 +444,7 @@ def get_kitchen_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(is_deleted=False, delivery_time__gte=datetime.now()).exclude(status=0)
+        orders = Order.objects.filter(is_deleted=False, delivery_time__gte=datetime.now()-timedelta(days=2), status__gt=0, status__lt=4)
         
         total_count = orders.count()
 
@@ -555,7 +561,7 @@ def get_delivery_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(delivery_type__iexact='delivery', status=2, is_deleted=False, delivery_time__gte=datetime.now())
+        orders = Order.objects.filter(delivery_type__iexact='delivery', status__gte=2, is_deleted=False, delivery_time__gte=datetime.now()-timedelta(days=2))
         
         total_count = orders.count()
 

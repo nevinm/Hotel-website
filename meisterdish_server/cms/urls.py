@@ -18,12 +18,15 @@ urlpatterns = patterns('',
     url(r'^get_users/$', general.get_users, name='get_users'),
     url(r'^change_user_status/$', general.change_user_status, name='change_user_status'),
     url(r'^export_users/$', general.export_users, name='export_users'),
+    url(r'^export_users_for_promotion/$', general.export_users_for_promotion, name='export_users_for_promotion'),
     
     url(r'^get_meals/$', meals.get_meals, name='get_meals'),
     url(r'^get_meal_details/(?P<meal_id>[0-9]+)/$', meals.get_meal_details, name='get_meal_details'),
     url(r'^create_meal/$', meals.create_meal, name='create_meal'),
     url(r'^delete_meal/(?P<meal_id>[0-9]+)/$', meals.delete_meal, name='delete_meal'),
     #url(r'^export_meals/$', meals.export_meals, name='export_meals'),
+    url(r'^update_meal_order/(?P<meal_id>[0-9]+)/$', meals.update_meal_order, name='update_meal_order'),
+    
 
     url(r'^delete_order/(?P<order_id>[0-9]+)/$', order.delete_order, name='delete_order'),
     url(r'^update_order/(?P<order_id>[0-9]+)/$', order.update_order, name='update_order'),
@@ -50,4 +53,7 @@ urlpatterns = patterns('',
     url(r'^import_meals/$', meals.import_meals, name='import_meals'),    
     url(r'^manage_credits/$', promotions.manage_credits, name='manage_credits'),    
     
+    url(r'^create_attribute/$', meals.create_attribute, name='create_attribute'),
+    url(r'^list_attributes/$', meals.list_attributes, name='list_attributes'),
+    url(r'^delete_attribute/(?P<attribute_id>[0-9]+)/$', meals.delete_attribute, name='delete_attribute'),
 )

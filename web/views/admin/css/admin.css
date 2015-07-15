@@ -93,6 +93,14 @@ li#navbar-username a {
 li#navbar-username {
     padding: 0;
 }
+
+#menu li{
+    display: none;
+}
+
+.showLi{
+    display: inline-block !important;
+}
 /*=======================*\
        &Category-Page
 \*=======================*/
@@ -109,6 +117,7 @@ li#navbar-username {
 
 #categories .update {
     margin-right: 10px;
+    cursor: pointer;
 }
 
 #userlist,#userlist th,#userlist td,
@@ -116,7 +125,8 @@ li#navbar-username {
 #promocodes-list,#promocodes-list th,#promocodes-list td,
 #categories,#categories th,#categories td,
 #meal-list,#meal-list th,#meal-list td,
-#delivery-area,#delivery-area th,#delivery-area td
+#delivery-area,#delivery-area th,#delivery-area td,
+#mealtype-area,#mealtype-area th,#mealtype-area td
  {
     border: 1px solid #d0d0d0;
     padding: 10px;
@@ -125,6 +135,19 @@ li#navbar-username {
     font-family: 'BrandonGrotesque-Regular';
     text-transform: uppercase;
     font-size: 12px;
+}
+#meal-list td{
+    vertical-align: middle;
+}
+#order-list td{
+    vertical-align: middle;
+}
+.space td{
+    border: none !important;
+}
+.produced-meal{
+    background-color: rgb(115, 115, 115);
+    color: rgb(226, 215, 215);
 }
 #order-list,#order-list th,#order-list td{
     border: 1px solid #d0d0d0;
@@ -180,7 +203,7 @@ thead {
     padding: 10px 0px;
 }
 
-.add-category-container input {
+.new-category {
     margin-top: 10px;
     width: 80%;
     height: 35px;
@@ -227,6 +250,19 @@ thead {
     margin: 0 auto;
     padding-bottom: 10px;
 }
+.add-category-container .popup .header,
+.update-category-container .popup .header{
+    padding-left: 0;
+}
+input#add-confirm,#update-confirm{
+    width: 0%;
+    margin-bottom: 1px;
+    margin-top: 0;
+}
+#add-new-category .popup-input-wrapper,
+#update-category-form .popup-input-wrapper{
+    margin-left: 0;
+}
 /*=======================*\
        &Userlist-Page
 \*=======================*/
@@ -270,13 +306,53 @@ table#userlist {
 #userlist .cross {
     float: none;
 }
-.credits-edit{
+
+/*MealType*/
+
+.mealtype-change-icon{
+    cursor: pointer;
+    display: inline !important;
+    float: left;
+    padding: 0  !important;
+    width: auto  !important;
+    margin-right: 40px;
+}
+.credits-edit,
+.mealtype-image-upload{
     display: none;
     color: red;
     cursor: pointer;
 }
-.row:hover .credits-edit{
+.mealtype-image-upload-element{
+    display: none !important;
+}
+.row:hover .credits-edit,
+.row:hover .mealtype-image-upload{
     display: block;
+}
+.mealtype-icon, .mealtype-image{
+    max-width: 45px;
+    max-height:45px;
+}
+#mealtype-container .popup{
+    height: 230px;
+}
+.icon-change{
+    cursor: pointer;
+}
+
+.mealtype-change-icon{
+    margin-top: 12px;
+    margin-left: 20px;
+    text-decoration: underline;
+}
+.upload-gif{
+    display: none;
+    margin-top: 15px;
+}
+
+.mealtype-image{
+    float: left;
 }
 /*=======================*\
        &Order-Page
@@ -288,19 +364,50 @@ table#userlist {
 #order-list{
     width: 100%;
     float: left;
+    cursor: pointer;
 }
-
+span.edit-meal-order{
+    width: 100%;
+    float: left;
+    cursor: pointer;
+    color: #8EC657;
+}
+.edit-meal-order-popup{
+    display: none;
+}
 #order-list tbody{
     cursor: pointer;
 }
-
+img#cancel {
+  cursor:pointer; 
+  float: right;
+  padding-right: 20px;
+  padding-top: 3px;
+}
+.edit-meal-order-popup .forminput-wrapper{
+    width: 100%;
+    margin-left: 28%;
+    padding-top: 0px;
+}
+.edit-meal-order-popup .popup{
+    height: 180px;
+}
+.edit-meal-order-popup .forminput-wrapper .body-text-small{
+    text-align: left;
+}
+#new-order-error{
+    width: 150px;
+    bottom: 24px;
+    left: 0px;
+    padding-left: 0;
+}
 .order-detail-popup{
     display: none;
     width: 800px;
     height: 475px;
     margin: auto;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
+    position: fixed;
+    top: 7%; left: 0; bottom: 0; right: 0;
     background-color: white;
     border-radius: 5px;
     border: 1px solid rgb(218, 218, 218);
@@ -377,6 +484,7 @@ table#userlist {
 }
 #order-list tbody tr:hover{
     background-color: rgb(234, 234, 234);
+    color: black;
 }
 .content-heading:nth-child(1),.content-heading:nth-child(2){
     margin-right: 30%
@@ -484,7 +592,8 @@ table#userlist {
     float: left;
 }
 
-table#promocodes-list, table#meal-list,table#delivery-area,table#giftcards-list {
+table#promocodes-list, table#meal-list,table#delivery-area,table#giftcards-list,
+table#mealtype-area {
     width: 100%;
     float: right;
     margin-top: 20px;
@@ -532,6 +641,10 @@ input#searchBy-name {
 }
 .meal-produced{
     cursor: pointer;
+}
+.meal-list-img{
+    height: auto;
+    width: 77px;
 }
 /*=======================*\
      &CREATE -MEAL
@@ -985,7 +1098,8 @@ table#tips-and-tricks-table {
 .manage-area-container .popup{
     height: 190px;
 }
-.manage-area-container .popup .header, .user-list-popup .header{
+.manage-area-container .popup .header, .user-list-popup .header,
+.edit-meal-order-popup .header{
     font-family: 'BrandonGrotesque-Bold';
     color: rgb(107, 107, 107);
     padding: 11px 0px;
@@ -1011,7 +1125,7 @@ table#tips-and-tricks-table {
 .manage-area-container .popup-container .content span{
     display: block;
 }
-#edit-delivery-area,#add-delivery-area{
+#edit-delivery-area,#add-delivery-area, #add-mealtype{
     float: left;
     display: none;
 }
@@ -1093,4 +1207,11 @@ input#add-gift-card{
 }
 #search-coupon-code{
     margin-top: 17px;
+}
+form.edit-gift-card #update{
+    width: initial;
+    margin-bottom: 1px;
+}
+form.edit-gift-card #new-name-error{
+    bottom: 26px;
 }

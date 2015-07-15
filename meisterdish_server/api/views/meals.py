@@ -29,7 +29,9 @@ def get_meals(request, data):
             
         if "type_ids" in data and len(data['type_ids']) >0 and str(data['type_ids']) != '':
             meals = meals.filter(types__id__in=data['type_ids'])
-            
+        
+        meals = meals.order_by("order")
+
         actual_count = meals.count()
         try:
             paginator = Paginator(meals, limit)
@@ -65,7 +67,7 @@ def get_meals(request, data):
                               "sub":meal.sub,
                               "description":meal.description,
                               #"images":meal_images,
-                              "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.thumb.url,
+                              "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.image.url,
                               "available":1 if meal.available else 0,
                               "category":"Not Available" if not meal.category else meal.category.name.title(),
                               "meal_types":meal_types,
@@ -75,6 +77,7 @@ def get_meals(request, data):
                               "ingredients":ingredients,
                               "in_cart" : 1  if qty != 0 else 0,
                               "quantity" : qty,
+                              "order":meal.order,
                               })
         return json_response({"status":1, 
                               "aaData":meal_list,
@@ -85,7 +88,7 @@ def get_meals(request, data):
                               "current_page":page,
                               "per_page" : limit,
                               })
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to list meals : "+e.message)
         return custom_error("Failed to list meals")
     
@@ -134,8 +137,13 @@ def get_meal_details(request, data, meal_id):
                 "description" : "" if tips.description.strip() == "" else simplejson.loads(tips.description),
                 "image_url" : settings.DEFAULT_MEAL_IMAGE if tips.image is None else tips.image.image.url,
                 "video_url" : "" if tips.video_url is None else tips.video_url,
+                "image_url1":"" if tips.image_url is None else tips.image_url,
                 })
-        
+        qty = 0
+        if user:
+            ci = CartItem.objects.filter(cart__user=user, cart__completed=False, meal__pk=meal.id)
+            qty = ci[0].quantity if ci.exists() else 0
+        meal_types = [{"image_id": ty.image.id, "image_url":ty.image.image.url, "meal_type_name":ty.name } for ty in meal.types.all()]
         return json_response({
             "status":1,
             "id" : meal.id,
@@ -145,7 +153,8 @@ def get_meal_details(request, data, meal_id):
             "price":meal.price,
             "tax":(meal.price * meal.tax) /100,
             "available" : 1 if meal.available else 0,
-            "filters" : [type.id for type in meal.types.all()],
+            "calories" : meal.calories,
+            #"filters" : [type.id for type in meal.types.all()],
             "cat_id" : 'Not Available' if not meal.category else {
                 "id":meal.category.id,
                 "name":meal.category.name.title(),
@@ -186,6 +195,8 @@ def get_meal_details(request, data, meal_id):
                 "url":meal.main_image.image.url,
             },
             "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, meal__pk=meal.id).exists() else 0,
+            "quantity" : qty,
+            "meal_types" : meal_types,
         })
     except Exception as e:
         log.error("get_meal details : " + e.message)

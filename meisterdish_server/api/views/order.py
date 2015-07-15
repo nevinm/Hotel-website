@@ -156,8 +156,8 @@ def create_order(request, data, user):
             return custom_error("Please provide a valid delivery time.")
 
         tip = int(data.get('tip', 5))
-        if tip < 5:
-            return custom_error("Miniumum tip amount is $5.") 
+        #if tip < 5:
+        #    return custom_error("Miniumum tip amount is $5.") 
         
         del_type = data["delivery_type"].strip()
         if del_type.lower() == "pickup":
@@ -202,6 +202,9 @@ def create_order(request, data, user):
             order.driver_instructions = driver_instructions
             email = order.delivery_address.email
             phone = order.delivery_address.phone
+            order.tip = tip
+        else:
+            order.tip = 0
         
         order.email = email
         order.phone = phone
@@ -210,9 +213,10 @@ def create_order(request, data, user):
         
         order.total_amount = total_price
         order.total_tax = total_tax
-        order.tip = tip
-
-        order.total_payable = total_price + total_tax + tip + settings.SHIPPING_CHARGE
+        
+        order.total_payable = total_price + total_tax
+        if order.delivery_type == "delivery":
+            order.total_payable += settings.SHIPPING_CHARGE + tip
         
         referral_bonus = float(Configuration.objects.get(key="REFERRAL_BONUS").value)
         referred = Referral.objects.filter(referree=user).exists() and user.credits >= referral_bonus
@@ -282,11 +286,66 @@ def create_order(request, data, user):
 
         if not send_order_placed_notification(order):
             log.error("Failed to send order notification")
-        return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way."})
+        cart_items = get_order_cart_items(order)
+        return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way.", "cart_items":cart_items})
         
-    except KeyError as e:
+    except Exception as e:
         log.error("Failed to create order." + e.message)
         return custom_error(e.message + "is missing.")
+
+def get_order_cart_items(order):
+    try:
+      cart_list = []
+      items_count = 0
+      for cart_item in CartItem.objects.filter(cart__order=order):
+            cart_list.append(
+            {
+              "id" : cart_item.meal.id,
+              "name": cart_item.meal.name,
+              "description": cart_item.meal.description,
+              "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
+              "available": 1 if cart_item.meal.available else 0,
+              "category": cart_item.meal.category.name.title() if cart_item.meal.category else "Not Available",
+              "price": cart_item.meal.price,
+              "tax": cart_item.meal.price * cart_item.meal.tax/100,
+              "quantity":cart_item.quantity,
+            })
+            items_count += cart_item.quantity
+
+      coupon = None
+      if items_count > 0:
+          cart = cart_item.cart
+          if cart.promo_code:
+              if cart.promo_code.expiry_date <= datetime.now():
+                  cart.promo_code = None
+                  cart.save()
+              coupon = {
+                "code" : cart.promo_code.code,
+                "amount":cart.promo_code.amount,
+                "message":"Discount of $ "+str(cart.promo_code.amount) + " has been applied to your cart."
+              }
+          elif cart.gift_cards.all().count():
+              gc = cart.gift_cards.all()[0]
+              coupon = {
+                "code" : gc.code,
+                "amount":gc.amount,
+                "message":"Discount of $ "+str(gc.amount) + " has been applied to your cart."
+              }
+
+      if not len(cart_list):
+          return False
+      else:
+          return {
+                  "aaData":cart_list,
+                  "total_count":items_count,
+                  "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
+                  "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
+                  "coupon" : coupon,
+                  "credits" : order.cart.user.credits,
+                  }
+    except Exception as e:
+        log.error("Failed to list order cart items." + e.message)
+        return False
 
 def make_payment(order, user):
     try:
@@ -363,12 +422,13 @@ def send_order_placed_notification(order):
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
                "delivery_time" : order.delivery_time.strftime("%A, %B %d"+suffix+", %Y"),
-               "total_amount":order.total_amount,
-               "discount" : order.discount,
-               "tax" : order.total_tax,
-               "shipping" : settings.SHIPPING_CHARGE,
-               "tip":order.tip,
-               "grand_total":order.grand_total,
+               "total_amount":"{0:.2f}".format(order.total_amount),
+               "discount" : "{0:.2f}".format(order.discount),
+               "credit" : "{0:.2f}".format(order.credits),
+               "tax" : "{0:.2f}".format(order.total_tax),
+               "shipping" : "{0:.2f}".format(settings.SHIPPING_CHARGE),
+               "tip":"{0:.2f}".format(order.tip),
+               "grand_total":"{0:.2f}".format(order.grand_total),
                "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
                "last_name" : user.last_name.title() if user.role.id == settings.ROLE_USER else "",
                "status":order.status,
@@ -396,9 +456,10 @@ def send_order_placed_notification(order):
         else:
             log.error("Failed to send order placed mail to "+to_email)
 
-        if user.need_sms_notification:
-            if not send_sms_notification(dic):
-                return False
+        # Not needed here
+        #if user.need_sms_notification:
+        #    if not send_sms_notification(dic):
+        #        return False
         return True
 
     except Exception as e:

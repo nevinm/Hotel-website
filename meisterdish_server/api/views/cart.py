@@ -58,6 +58,8 @@ def get_cart_items(request, data, user):
                               "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                               "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
                               "coupon" : coupon,
+                              #Arun
+                              "credits" : user.credits,
                               })
     except Exception as e:
     	log.error("Failed to list cart items." + e.message)
@@ -94,23 +96,27 @@ def add_to_cart(request, data):
            cart.save()
         else:
           cart = carts[0]
-        
+        log.info(quantity == 0)
         try:
            cart_item = CartItem.objects.get(cart=cart, meal=meal)
-           if quantity < 0-cart_item.quantity:
-              return custom_error("Invalid quantity")
            cart_item.quantity = cart_item.quantity+quantity
+           if cart_item.quantity <= 0:
+              cart_item.delete()
+              qty = 0
+           else:
+              cart_item.save()
+              qty = cart_item.quantity
         except CartItem.DoesNotExist:
+           if quantity < 2:
+              return custom_error("Invalid quantity")
            cart_item = CartItem()
            cart_item.cart = cart
            cart_item.meal = meal
-
-           if quantity < 2:
-              return custom_error("Invalid quantity")
            cart_item.quantity = quantity
-        cart_item.save()
-        
-        response = {"status":1, "message":meal.name.title() + " has been added to the cart.", "quantity":cart_item.quantity}
+           cart_item.save()
+           qty = cart_item.quantity
+
+        response = {"status":1, "message":meal.name.title() + " has been added to the cart.", "quantity":qty}
         if session_key:
           response["session_key"] = session_key
         return json_response(response)
@@ -124,8 +130,7 @@ def update_cart(request, data, user):
     try:
         meal_id = data['meal_id']
         qty = int(data['quantity'])
-        
-        if qty %2 == 1 or qty < 2:
+        if qty %2 == 1 :
             return custom_error("Please provide a valid quantity for each meal.")
 
         try:
@@ -140,16 +145,20 @@ def update_cart(request, data, user):
            cart.save()
         else:
           cart = carts[0]
-        
-        
+
         try:
            cart_item = CartItem.objects.get(cart=cart, meal__pk=meal_id)
+           if qty == 0:
+              cart_item.delete()
+           else:
+              cart_item.quantity = qty
+              cart_item.save()
         except CartItem.DoesNotExist:
            cart_item = CartItem()
            cart_item.cart = cart
            cart_item.meal = meal
-        cart_item.quantity = qty
-        cart_item.save()
+           cart_item.quantity = qty
+           cart_item.save()
 
         cart_list = []
         items_count = 0
@@ -217,7 +226,13 @@ def get_cart_items_count(request, data):
 def save_delivery_time(request, data, user):
     try:
         field = ""
-        cart = Cart.objects.get(user=user, completed=False)
+        try:
+            cart = Cart.objects.get(user=user, completed=False)
+        except Cart.DoesNotExist:
+            cart = Cart()
+            cart.user = user
+            cart.save()
+
         if "delivery_time" in data:
             del_time = data['delivery_time'].strip()
             delivery_time = datetime.strptime(del_time,"%m-%d-%Y %H:%M:%S")
@@ -227,15 +242,18 @@ def save_delivery_time(request, data, user):
             field = "time"
         
         if "delivery_address" in data:
-            cart.delivery_address = Address.objects.get(pk=int(data["delivery_address"]))
+            add = Address.objects.get(pk=int(data["delivery_address"]), user=user)
+            cart.delivery_address = add
             field = "address"
-
+        if field == '':
+           return custom_error("Invalid input")
         cart.save()
 
         return json_response({"status":1, "message":"Successfully updated delivery " + field + "."})
     except Exception as e:
         log.error("Save delivery time/address " + e.message)
-        return custom_error("Failed to update delivery " + field + ". Please try again later.")
+        return custom_error("Failed to update delivery: " + field + ". Please try again later.")
+        
 
 @check_input('POST')
 def check_delivery(request, data, user=None):

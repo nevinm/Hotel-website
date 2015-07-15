@@ -187,9 +187,15 @@ form.gift-cardform .redeem {
   padding-left: 20px;
   padding-top: 10px;
   padding-bottom: 30px;
+  position: relative;
+}
+#change-contact .update-button{
+	padding-top: 20px;
 }
  .notify input[type="checkbox"]{
  	float: left;
+ 	position: absolute;
+ 	left: 0;
  }
  .changepassword-container{
  	padding: 20px 0px 20px 0px;
@@ -225,7 +231,7 @@ span.body-text-small{
   width: 100%;
   float: left;
   padding: 12px 0px 0px 20px;
-  padding: 20p;
+  padding-bottom: 20px;
 }
 .current-email-container label{
 	width: 35%;
@@ -237,7 +243,7 @@ span.body-text-small{
 	color: #6b6b6b;
 	font-size: 16px;
 	padding: 0;
-	font-family: 'BrandonGrotesque-Bold';
+	font-family: 'BrandonGrotesque-Regular';
 }
 
 /*==================================*\
@@ -463,16 +469,19 @@ ol{
 	z-index:9999;
 }
 .addresspopup {
-  position: fixed;
-  top: 40%;
-  width: 400px;
-  left: 50%;
-  margin-left: -200px;
-  margin-top: -200px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  z-index:99999;
-  border-radius: 3px;
+	position: fixed;
+	top: 40%;
+	width: 400px;
+	left: 50%;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	z-index:99999;
+	border-radius: 3px;
+	-ms-transform: translate(-50%,-40%);
+	-moz-transform:translate(-50%,-40%);
+	-webkit-transform: translate(-50%,-40%);
+	transform: translate(-50%,-40%);
+
 }
 img.popup-close{
 	width: 60px;
@@ -783,6 +792,24 @@ form.addaddress-popup,#new-address-form {
 	color: #666666;
 	font-size: 13px;
 }
+.loading-indicator{
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+	display: none;
+}
+.loading-indicator .loader{
+	top: 40%;
+	left: 50%;
+	position: fixed;
+	-ms-transform: translate(-50%,-40%);
+    -moz-transform:translate(-50%,-40%);
+    -webkit-transform: translate(-50%,-40%);
+    transform: translate(-50%,-40%);
+}
+.state-disable{
+	background-color: rgb(190, 187, 187) !important;
+}
 .box-border{
 	border: 1px solid #C7C7C7;
 	border-radius: 4px;
@@ -975,7 +1002,7 @@ form.addaddress-popup,#new-address-form {
 .quantity-container {
    width: 18%;
   float: left;
-  margin-right: 8%;
+  margin-right: 7%;
 }
 .price-container{
 	font-family: 'BrandonGrotesque-Bold';
@@ -1079,9 +1106,12 @@ form.addaddress-popup,#new-address-form {
 	left: 30px;
 
 }
-form#pay-form,form#credit-card-form {
+form#pay-form,form#credit-card-form,form#update-pay-form {
   width: 100%;
   float: left;
+}
+#tip-form{
+	position: relative;
 }
 #credit-card-submit{
 	display: none;
@@ -1159,21 +1189,31 @@ form#pay-form,form#credit-card-form {
 .instruction-container {
 	padding-top: 20px;
 }
-.driver-tip-container .styled-select{
-	background: url(../images/selector_arrow.png) no-repeat 57px 6px #f7f7f7;
-	width: 75px;
-	float: left;
-} 
-.driver-tip-container select{
+.driver-tip-container{
 	font-family: 'ProximaNova-Regular';
 	color: #b0b0b0;
 	font-weight: bold;
 	font-size: 12px !important;
-	width: 150px !important;
+	/*width: 150px !important;*/
 }
-.driver-tip-container .inner-content span{
-	float: right;
-	font-weight: bold;
+.tip-input-container {
+  position: relative;
+  float: left;
+  width: 75%;
+  padding-top: 20px;
+}
+.inner-content.body-text-small {
+  width: 100%;
+  float: left;
+}
+/*.driver-tip-container .inner-content span{
+	/*float: right;*/
+	/*font-weight: bold;*/
+/*}*/
+span.driver-tip-display{
+	width: 25%;
+	text-align: right;
+	float: left;padding-top: 30px;
 }
 .gift-card-container hr{
 	border:0;
@@ -1469,6 +1509,9 @@ form#guest-address-info #address-line-2-error{
 #pickup-radio,#delivery-radio,#is-gift-card{
 	cursor: pointer;
 }
+span#is-gift-card{
+	width: 100px;
+}
 #manage-payment-method-container .saved-card-list{
 	width: 50%;
 	padding: 20px 0;
@@ -1568,12 +1611,13 @@ img.accepted-cards
 	display: none;
 	width: 100%;
 	word-break:break-all;
+	float: left;
 }
 .isPromocode-wrapper .popup-input{
 	height: 35px;
 	width: 57%;
 	float: left;
-	 margin-right: 3%;
+	margin-right: 3%;
 }
 .isPromocode-wrapper .btn{
 	width: 40%;
@@ -1581,12 +1625,15 @@ img.accepted-cards
 	min-width: 55px;
 }
 .promo-validation-message {
+	float: left;
 	font-family:'ProximaNova-Regular';
 	font-size: 12px;
 	color: #ff7878;
 	word-break:break-word;
 	line-height: 15px;
 	letter-spacing: .6px;
+	float: left;
+	width: 100%;
 }
 .address-payment-list-popup .bk-overlay{
 	z-index: 999999;
@@ -1602,6 +1649,16 @@ img.accepted-cards
 .driver-tip{
 	font-family: 'ProximaNova-regular';
 	color: #9B9B9B;
+	width: 80% !important;
+}
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+#tip-error{
+	bottom: 33px;
 }
 .shop-status{
 	display: none;
@@ -1743,6 +1800,12 @@ a#add-address-popup :hover{
 			&MOBILE
 \*==================================*/
 @media (min-width: 320px)and (max-width:767px){
+	.address .button{
+		width: 99px;
+	}
+	.current-email-container label{
+		width: 100%;
+	}
 	.payment-popup-sub-container{
 		width: 100%;
 	}
@@ -1791,7 +1854,7 @@ a#add-address-popup :hover{
 		display: none;
 	}
 	#change-email span.body-text-small{
-		width: 300px;
+		width: 100%;
 	}
 	form.form {
 		width: 90%;
@@ -1920,9 +1983,6 @@ a#add-address-popup :hover{
 	.receipt-container .caption{
 		display: none;
 	}
-	input.popup-input{
-		height: 36px;
-	}
 	.forminput-wrapper .styled-select{
 		height: 36px;
 	}
@@ -1941,11 +2001,14 @@ a#add-address-popup :hover{
 	.pay-by-credit-container{
 		width: 100%;
 	}
-	form#pay-form,form#credit-card-from{
+	form#pay-form,form#credit-card-from,form#update-pay-form{
 		padding-bottom: 20px;
 	}
 	#guest-address-info{
 		padding-bottom: 20px;
+	}
+	#guest-address-info .popup-input,.payment-method-guest-container .popup-input{
+		height: 36px;
 	}
 	.payment-method-container .contents span:last-child{
 		left: 30px;
@@ -1958,7 +2021,7 @@ a#add-address-popup :hover{
 		padding: 0 20px;
 		left: 0;
 	}
-	..delivery-info-container{
+	.delivery-info-container{
 		width: 100%;
 	}
 	#pay-using-card,#pay-using-paypal{
@@ -2035,6 +2098,10 @@ a#add-address-popup :hover{
 		max-height: 200px;
 		overflow-y: auto;	 
 	}
+	.addresspopup {
+		width: 85%;
+		max-width: 400px;
+	}
 }
   	@media (max-width:400px){
   		.address-content{
@@ -2061,9 +2128,9 @@ a#add-address-popup :hover{
   		.body-text-small{
   			font-size: 11px;
   		}
-  		#guest-address-info .section3 .forminput-wrapper{
+/*  		#guest-address-info .section3 .forminput-wrapper{
   			width: 29.4%;
-  		}
+  		}*/
   		.quantity-container{
   			width: 64px;
   		}
@@ -2076,6 +2143,10 @@ a#add-address-popup :hover{
   		.payment-method-container .contents{
   			padding: 20px 12px;
   		}
+  		.expiryDate-label{
+  			width: 107px !important;
+  		}
+  		
 
 	}
 	@media (max-width:500px){
@@ -2101,6 +2172,20 @@ a#add-address-popup :hover{
   		#save-payment,#save-delivery-address{
 			line-height: 35px;
 			min-width: 90px;
+  		}
+  		.addresspopup .forminput-wrapper{
+  			width: 100% !important;
+  		}
+  		.addresspopup .forminput-wrapper input.popup-input{
+  			width: 100%;
+  			height:30px;
+  		}
+  		.addresspopup .primary-wrapper input.popup-input{
+  			height: auto !important;
+  			width: auto !important;
+  		}
+  		.addresspopup .section3 .forminput-wrapper label{
+  			width: 100%;
   		}
 	}
 	@media (max-width: 1177px){

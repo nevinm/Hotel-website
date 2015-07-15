@@ -140,7 +140,7 @@ class User(models.Model):
     zipcode = models.CharField(db_index=True, max_length=6, null=True, blank=True)
     email = models.EmailField(db_index=True, max_length=30, null=True)
     mobile = models.CharField(max_length=15, null=True)
-    profile_image = models.ForeignKey(Image, null=True)
+    profile_image = models.ForeignKey(Image, null=True, blank=True)
     
     user_verify_token = models.CharField(max_length=50, null=True, blank=True, default="")
     password_reset_token = models.CharField(max_length=20, null=True, blank=True, default="")
@@ -151,6 +151,7 @@ class User(models.Model):
     credits = models.FloatField(db_index=True, validators=[MinValueValidator(0), MaxValueValidator(1000)], default=0)
     
     need_sms_notification = models.BooleanField(default=True)
+    need_email_promotions = models.BooleanField(default=True)
     deleted = models.BooleanField(db_index=True, default=False)
     
     referral_code = models.CharField(max_length=10)
@@ -211,6 +212,7 @@ class MealType(models.Model):
     name = models.CharField(db_index=True, max_length=25)
     is_hidden = models.BooleanField(db_index=True, default=False)
     is_deleted =  models.BooleanField(db_index=True, default=False)
+    image = models.ForeignKey(Image)
     
     def __unicode__(self):
         return self.name
@@ -236,6 +238,7 @@ class Tips(models.Model):
     description = models.TextField(max_length=1024)
     image = models.ForeignKey(Image, null=True, blank=True)
     video_url = models.CharField(max_length=1024, null=True, blank=True)
+    image_url = models.CharField(max_length=1024, null=True, blank=True)
 
 class Meal(models.Model):
     name = models.CharField(db_index=True, max_length=100)
@@ -262,6 +265,7 @@ class Meal(models.Model):
 
     #nutrients = models.ManyToManyField(Nutrient, through="MealNutrient", null=True, blank=True)
     nutrients = models.TextField(max_length=1024, null=True, blank=True, default="")
+    calories =  models.CharField(max_length=30, null=True, blank=True, default="")
 
     #ingredients = models.ManyToManyField(Ingredient, through="MealIngredient", null=True, blank=True)
     ingredients = models.TextField(max_length=1024, null=True, blank=True, default="")
@@ -277,6 +281,8 @@ class Meal(models.Model):
     
     is_deleted = models.BooleanField(db_index=True, default=False)
     available = models.BooleanField(db_index=True, default=True)
+    order = models.IntegerField(default=0)
+
     def __unicode__(self):
         return self.name
 
@@ -343,7 +349,7 @@ class Cart(models.Model):
     completed = models.BooleanField(default=False)
 
     def str(self):
-        return "Cart for user "+user,first_name + " "+user.last_name
+        return "Cart for user "+user.first_name + " "+user.last_name
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart)
@@ -405,8 +411,15 @@ class Order(models.Model):
             gc_amt = 0 if not gc_amt else gc_amt
             self.discount += gc_amt
 
-            self.grand_total = self.total_amount + self.total_tax + self.tip + SHIPPING_CHARGE - self.discount - self.credits
+            self.grand_total = self.total_amount + self.total_tax  - self.discount - self.credits
+            
+            if self.delivery_type == 'delivery':
+                self.grand_total += SHIPPING_CHARGE + self.tip
+            else:
+                self.tip = 0
+            
             self.grand_total = 0 if self.grand_total < 0 else self.grand_total
+            self.grand_total = round(self.grand_total,2)
 
         super(Order, self).save(*args, **kwargs)
         self.order_num = '0' * (6-len(str(self.id))) + str(self.id)

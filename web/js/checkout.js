@@ -8,10 +8,10 @@ var billingAddressId, cardDetails,
 $(document).ready(function() {
     CartItemCount();
     if (localStorage["session_key"]) {
+        getAddress();
         getCartItems();
         savedCardDetails();
-        CartItemCount();
-        getAddress();
+        // CartItemCount();
     } else {
         $('.address-info-guest').show();
         $('.address-info').hide();
@@ -30,20 +30,27 @@ $(document).ready(function() {
         var meal_id = $(this).parent().attr('data-id'); //may change
         removeCartItems(meal_id);
     });
+    $('#tip-form').on('submit', function(e) {
+        e.preventDefault();
+    });
 
     $('.driver-tip').on('keyup input', function() {
-        selectedTip = this.value;
-        if (this.value.length > 2) {
-            selectedTip = this.value = this.value.slice(0, 2);
+        selectedTip = 0;
+        $('.driver-tip-display').text("$0.00");
+            selectedTip = this.value;
+            if (this.value.length > 2) {
+                selectedTip = this.value = this.value.slice(0, 2);
+            }
+            if (selectedTip >= 1) {
+                $('.driver-tip-display').text("$" + selectedTip + ".00");
+            } else if (selectedTip < 1 && selectedTip > 0) {
+                $('.driver-tip-display').text("$0." + selectedTip);
+            } else if (selectedTip == 0 || isNaN(selectedTip)) {
+                $('.driver-tip-display').text("$0.00");
+            }
+        if($('#tip-form').valid()){
+            updateReciept();
         }
-        if (selectedTip >= 1) {
-            $('.driver-tip-display').text("$" + selectedTip + ".00");
-        } else if (selectedTip < 1 && selectedTip > 0) {
-            $('.driver-tip-display').text("$00." + selectedTip);
-        } else if (selectedTip == 0 || isNaN(selectedTip)) {
-            $('.driver-tip-display').text("$00.00");
-        }
-        updateReciept();
     });
 
     //Set time for delivery API call
@@ -119,11 +126,12 @@ $(document).ready(function() {
         }
     }
 
+    $(document).on('click', 'input[type=radio][name=address]', function() {
+        $('#save-delivery-address').removeClass('button-disabled');
+    });
+
     $(document).on('click', '#change-address', function() {
         populateAddressListPopup();
-        if (localStorage['loggedIn'] == 'false') {
-             $("a#add-address-popup").hide();
-        }else{}
     });
     //add address
     $(document).on('click', '#add-address-popup', function() {
@@ -131,14 +139,14 @@ $(document).ready(function() {
         getStates();
         $('#new-address-form').validate().resetForm();
         $('.address-payment-list-popup').hide();
-        $('.addresspopup-wrapper').show();      
+        $('.addresspopup-wrapper').show();
     });
-    $('#close-new-address-form').on("click",function(){
-        $('.addresspopup-wrapper').hide();   
+    $('#close-new-address-form').on("click", function() {
+        $('.addresspopup-wrapper').hide();
     })
     $(document).on('click', '#save-new-address', function(e) {
         e.preventDefault();
-        if($('#new-address-form').valid()){
+        if ($('#new-address-form').valid()) {
             addAddress('popup');
         }
     });
@@ -149,8 +157,9 @@ $(document).ready(function() {
 
     $(document).on('click', '#save-delivery-address', function() {
         var selectedId = $('input[type=radio][name=address]:checked').attr('data-id');
-        changeDeliveryAddress(selectedId);
         saveDeliveryTime("", selectedId);
+        $('.address-payment-list-popup').hide();
+
     });
 
     $('#add-guest-address').on("click", function(e) {
@@ -183,7 +192,7 @@ $(document).ready(function() {
         if (button_value == "DELETE") {
             removePromocode();
         }
-    })
+    });
 
     $("#place-order").on("click", function(e) {
         e.preventDefault();
@@ -205,6 +214,7 @@ $(document).ready(function() {
         $('.pickup-content').show();
         $("#add-guest-address").hide();
         $(".state-selector-container").hide();
+        updateReciept();
         if (!(localStorage.getItem('user_profile') === null)) {
             var userProfile = JSON.parse(localStorage['user_profile']);
             $(".address-info-guest").find("#guest-email").val(userProfile.email);
@@ -213,10 +223,12 @@ $(document).ready(function() {
             getProfile();
         }
 
-    })
+    });
+
     $('#delivery-radio').on("click", function() {
         if ($('.address-info').is(':empty')) {
             $('.address-info-guest').show();
+
             $('.address-info').hide();
         } else {
             $('.address-info').show();
@@ -227,10 +239,15 @@ $(document).ready(function() {
         $('.pickup-content').hide();
         $("#add-guest-address").show();
         $(".state-selector-container").show();
-    })
+        updateReciept();
+        $('span.driver-tip-display').text('$5.00');
+        $('.driver-tip').val(5);
+        $('#tip-form').validate().resetForm();
+    });
+
     $('#is-gift-card').on('click', function() {
         $('.isPromocode-wrapper').slideToggle();
-    })
+    });
 });
 
 
@@ -251,10 +268,10 @@ function setCurrentTime() {
         meridiem = currentHour.substring(currentHour.length - 2);
         if (meridiem == "pm") {
             currentHour = currentHour.substring(0, currentHour.length - 2);
-            if(currentHour >=closingTime){
+            if (currentHour >= closingTime) {
                 $(this).remove();
                 $(".shop-status").show();
-            }else{
+            } else {
                 if (parseInt(currentHour) == $(value).data().hr) {
                     $(this).prevAll('.set-time-button').remove();
                     $(this).val("NOW");
@@ -327,14 +344,16 @@ var getCartItemsCallback = {
             if (cartItems.coupon != null) {
                 populateCoupon(cartItems.coupon);
             }
+            $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
+            $('#hidden-credit').val(cartItems.credits);
         } else {
             $('.order-list-items').remove();
             $(".emtpy-cart-message").empty();
             $(".emtpy-cart-message").append("<span>" + cartItems.message + "</span>");
             $(".emtpy-cart-message").show();
-            updateReciept();
             $(".items-container .item-count").text('(0)');
         }
+        updateReciept();
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -352,7 +371,16 @@ function getCartItems() {
 
 //Save delivery time
 var saveDeliveryTimeCallback = {
-    success: function(data, textStatus) {},
+    success: function(data, textStatus, delivery_Id) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == -1) {
+            showPopup(userDetails);
+        } else {
+            if (delivery_Id) {
+                changeDeliveryAddress(delivery_Id);
+            } else {}
+        }
+    },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
@@ -373,7 +401,7 @@ function saveDeliveryTime(date, delivery_Id) {
     }
     data = JSON.stringify(params);
     var saveDeliveryTimeInstance = new AjaxHttpSender();
-    saveDeliveryTimeInstance.sendPost(url, header, data, saveDeliveryTimeCallback);
+    saveDeliveryTimeInstance.sendPost(url, header, data, saveDeliveryTimeCallback, delivery_Id);
 }
 
 //populate cart items
@@ -406,7 +434,20 @@ function updateReciept(GiftcardDetails, flag) {
     var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
         totalCredits = 0,
         totalDriverTip = parseFloat($('.driver-tip').val()),
-        totalDeliveryCost = 2;
+        totalDeliveryCost = 2.95;
+        totalCredits = parseFloat($('#hidden-credit').val());
+        if($('#pickup-radio').prop('checked')){
+            totalDeliveryCost = 0;
+            totalDriverTip = 0;
+            $('.driver-tip').val(0);
+            $(".driver-tip-container").hide();
+            $('span.total-delivery-cost').text('$0.00');
+        }else{
+            totalDeliveryCost = 2.95;
+            $('span.total-delivery-cost').text('$2.95');
+            $(".driver-tip-container").show();
+            totalDriverTip = parseFloat($('.driver-tip').val());
+        }
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
         price = parseFloat($(value).find('.price-container').attr("data-price"));
@@ -428,7 +469,10 @@ function updateReciept(GiftcardDetails, flag) {
         totalDriverTip = 0;
     }
     totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost - totalDiscount - totalCredits;
-    $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount).toFixed(2));
+    if (totalCost <= 0) {
+        totalCost = 0;
+    }
+    $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount + totalCredits).toFixed(2));
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
     $(".total-cost").text("$" + (totalCost).toFixed(2));
@@ -489,7 +533,11 @@ function clearCart() {
 //update cart items call back
 var updateCartItemsCallback = {
     success: function(data, textStatus) {
-        localStorage['cartItems'] = data;
+        var cartDetails = JSON.parse(data);
+        if(cartDetails.status == 1){
+            CartItemCount();
+            localStorage['cartItems'] = data;
+        } 
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -691,11 +739,11 @@ function popuplateAddressList(data) {
     }
 }
 
-function populateAddresstoInfoContainer(data) {
+function populateAddresstoInfoContainer(userDetails) {
     $('.address-info .contents').remove();
-    var selectedId = data.delivery_address;
+    var selectedId = userDetails.delivery_address;
     if (selectedId) {
-        $.each(data.address_list, function(key, value) {
+        $.each(userDetails.address_list, function(key, value) {
             if (value.id == selectedId) {
                 $('.address-info').append("<div class='contents address-added' data-id='" + value.id + "'>" +
                     "<span class='content-heading'>" + "DELIVERY ADDRESS" + "</span>" +
@@ -725,9 +773,6 @@ function populateAddressListPopup() {
         getAddress("populateAddressToPopUp");
         $('.address-payment-list-popup').show();
     }
-    $('input[type=radio][name=address]').on("click", function() {
-        $('#save-delivery-address').removeClass('button-disabled');
-    });
 }
 
 function appendAddresscontent(addressList) {
@@ -741,7 +786,7 @@ function appendAddresscontent(addressList) {
             "<span>" + value.phone + "</span>" + "</label>" + "</div>");
     });
     $('.address-payment-list-popup .popup-container').append("<div class='button'>" +
-        "<a href='#' id='add-address-popup'>" + "ADD A NEW ADDRESS" + "</a>"+
+        "<a href='#' id='add-address-popup'>" + "ADD A NEW ADDRESS" + "</a>" +
         "<a href='#' class='btn btn-medium-primary medium-green button-disabled' id='save-delivery-address'>" + "SELECT" + "</a>" +
         "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
 }
@@ -771,21 +816,20 @@ function changeDeliveryAddress(selectedId) {
         htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
     $('.address-info .contents').html(htmlContent);
-    $('.address-payment-list-popup').hide();
 }
 var addAddressCallback = {
     success: function(data, textStatus, flag) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
-            populateAddedAddress(userDetails.id,flag);
+            populateAddedAddress(userDetails.id, flag);
             $('.addresspopup-wrapper').fadeOut();
         } else {
-            if(flag == 'popup'){
+            if (flag == 'popup') {
                 showPopup(userDetails);
-            }else{
+            } else {
                 showPopup(userDetails);
                 $('.address-info-guest').show();
-            }  
+            }
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -812,14 +856,14 @@ function addAddress(flag) {
         };
     data = JSON.stringify(userData);
     var addAddressInstance = new AjaxHttpSender();
-    addAddressInstance.sendPost(url, header, data, addAddressCallback,flag);
+    addAddressInstance.sendPost(url, header, data, addAddressCallback, flag);
 }
 
 function getNewAddress(flag) {
     var $addressContainer;
-    if(flag == 'popup'){
-        $addressContainer = $('#new-address-form');  
-    }else{
+    if (flag == 'popup') {
+        $addressContainer = $('#new-address-form');
+    } else {
         $addressContainer = $('#guest-address-info');
     }
     var state_id = $addressContainer.find(".state-selector").val(),
@@ -867,18 +911,23 @@ function getStates() {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "search": ""
+            "search": "New York"
         };
     data = JSON.stringify(userData);
     var getStatesInstance = new AjaxHttpSender();
     getStatesInstance.sendPost(url, header, data, getStatesCallback);
 }
 
-function populateAddedAddress(delivery_address,flag) {
+function populateAddedAddress(delivery_address, flag) {
     var addedAddress = [],
+        latest_address = {},
         newAddress = getNewAddress(flag);
     newAddress.id = delivery_address;
-    // localStorage['delivery_addressess'] = newAddress;
+    if (localStorage['loggedIn'] == 'true') {
+        latest_address = JSON.parse(localStorage['delivery_addressess']);
+        latest_address.address_list.push(newAddress);
+        localStorage['delivery_addressess'] = JSON.stringify(latest_address);
+    }
     addedAddress.push(newAddress);
     data = {
             "address_list": addedAddress,
@@ -891,12 +940,9 @@ var placeOrderCallback = {
     success: function(data, textStatus) {
         var response = JSON.parse(data);
         if (response.status == 1) {
-            // clearCart();
             var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
                 adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null,
                 loggedIn = (userLoggedin || adminLoggedin);
-            // dataAfterOrdering = {};
-            // dataAfterOrdering.message = "Your orders are successfully placed.";
             $(".ok-container").show();
             $(".close-container").hide();
             if (loggedIn) {
@@ -909,6 +955,7 @@ var placeOrderCallback = {
         } else {
             showPopup(response);
         }
+        $('.loading-indicator').hide();
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -1029,6 +1076,7 @@ function createOrder(orderParams) {
     data = JSON.stringify(orderParams);
     var placeOrderInstance = new AjaxHttpSender();
     placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
+    $('.loading-indicator').show();
 }
 
 function populateCreditCardDetails() {
@@ -1078,7 +1126,11 @@ function validateOrder() {
         }
     }
     if (!$(".checkout-time-button-active").length) {
-        data.message = "Add delivery time and then proceed";
+        if($('#pickup-radio').prop('checked')){
+            data.message = "Add pickup time and then proceed";
+        }else{
+            data.message = "Add delivery time and then proceed";
+        }
         showPopup(data);
         return false;
     }
@@ -1095,6 +1147,12 @@ function validateOrder() {
             showPopup(data);
             return false;
         }
+    }
+
+    if (!$("#tip-form").valid()) {
+        data.message = "Please enter a valid tip";
+        showPopup(data);
+        return false;
     }
     return true;
 }
@@ -1186,7 +1244,6 @@ var getProfileCallback = {
             $(".address-info-guest").find("#guest-email").val(userDetails.email);
             $(".address-info-guest").find("#guest-phone").val(userDetails.mobile);
             $('#new-address-form').find("input[name*='email']").val(userDetails.email);
-
         } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -1204,3 +1261,4 @@ function getProfile() {
     var getProfileInstance = new AjaxHttpSender();
     getProfileInstance.sendPost(url, header, data, getProfileCallback);
 }
+

@@ -102,6 +102,22 @@ $(document).ready(function() {
     $("#ingredients-image-input").on('click', function() {
         uploadImage("ingredients-image-input", "ingredients-image");
     });
+
+    $('.forminput-wrapper').on("keydown",function(e){
+        if(e.keyCode == 13){
+            var button_class = $(this).parent().find('input[type=button][value=add]'),
+                input_id = $(this).find('input').attr('id');
+            if(button_class.length){
+                e.preventDefault();
+                $(button_class).trigger('click');
+                if(input_id == "meal-saved-time" || input_id == "meal-prep-time"){}
+                else{
+                    $('#'+input_id).val('');
+                }
+            }
+            
+        }
+    })
     addDynamicApiUrlUploadPicture("meal-image-input");
     addDynamicApiUrlUploadPicture("chef-image-input");
     addDynamicApiUrlUploadPicture("kitchen-image-input");
@@ -109,6 +125,13 @@ $(document).ready(function() {
     getFilterContent();
 });
 
+function bindEnterSubmittion() {
+    $(".tips-enter-submit").on("keydown", function search(e) {
+        if (e.keyCode == 13) {
+            $("#add-tips-main").trigger("click");
+        }
+    });
+}
 
 function addDynamicApiUrlUploadPicture(element) {
     $("#" + element).attr("data-url", baseURL + "cms/upload_image/");
@@ -164,7 +187,7 @@ function extractNutrients() {
             var subNutrient = $(this),
                 nutrientSubDetails = extractNutrientInnerDetails(nutrientSub, subNutrient);
             totalSubNutrientData.push(nutrientSubDetails);
-        }); 
+        });
         oneNutrientTotal = {
             "mainNutrient": nutrientMainDetails.nutrientsName,
             "perServing": nutrientMainDetails.servingValue,
@@ -255,6 +278,7 @@ function createMeal() {
     var name = $('#meal-name').val(),
         price = $('#meal-price').val(),
         tax = $('#meal-tax').val(),
+        calories = $('#meal-calories').val(),
         prep_time = $('#meal-prep-time').val(),
         saved_time = $('#meal-saved-time').val(),
         descptn = $('#description').val(),
@@ -305,6 +329,7 @@ function createMeal() {
         "description": descptn,
         "price": price,
         "tax": tax,
+        "calories": calories,
         "chef_image": chef_image,
         "chef_name": chef_name,
         "chef_comments": chef_comments,
@@ -461,6 +486,7 @@ function populateMealDetails(mealDetails) {
     $("#meal-sub-name").val(mealDetails.sub);
     $("#meal-price").val(parseFloat(mealDetails.price).toFixed(2));
     $("#meal-tax").val(parseFloat(mealDetails.tax_percentage));
+    $("#meal-calories").val(mealDetails.calories);
     $("#chef-name").val(mealDetails.chef_name);
     $("#chef-comments").val(mealDetails.chef_comments);
     $("#create-meal-available").val(mealDetails.available);

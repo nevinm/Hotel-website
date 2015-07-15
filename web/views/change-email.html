@@ -144,7 +144,7 @@
                     <div class="account-header">
                         <h3 style="color:#000;font-size:20px">CHANGE YOUR EMAIL</h3></div>
                     <div class="current-email-container">
-                        <label class="body-text-small">Current email:</label>
+                        <label class="body-text-small">Current Email:</label>
                         <span class="body-text-small"></span>
                     </div>
                     <form class="form" id="change-email">
@@ -156,7 +156,9 @@
                             <label class="body-text-small" name="email">Retype New Email</label>
                             <input class="arrange" type="email" name='confirmEmail'></input>
                         </div>
-                        <span class="body-text-small">We will send a confirmation to your new email address.</span>
+                        <div class="notify">
+                            <input type="checkbox" name="notification"><span class="body-text-small">Allow menu promotion emails?</span></input>
+                        </div>
                         <div class="update-button">
                             <input type="submit" class="btn btn-large-primary medium-green" id="update-email" value="UPDATE">
                         </div>

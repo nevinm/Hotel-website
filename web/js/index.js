@@ -22,10 +22,25 @@ $(document).ready(function() {
             saveEmail(email,zipcode);
         }
     });
+    
     $('.delivery-area-check-popup img#cancel').on("click",function(){
         $('.delivery-area-check-popup').fadeOut();
     });
+
+    //popup re-direction on enter
+    $(document).on('keypress', function (e) {
+        var key = e.which;
+        if(key == 13)  // the enter key code
+        {  
+            if($('.popup-container').is(':visible')){
+                if($("#see-menu").is(":visible")){
+                    $('#see-menu')[0].click();
+                }
+            }                
+        }
+    });   
 });
+
 var mobileRendered;
 
 function isSessionExpired() {
@@ -40,8 +55,9 @@ function isSessionExpired() {
 function renderFullPageJS() {
     $('#fullpage').fullpage({
         scrollingSpeed: 1000,
-        slidesNavigation: true,
-        controlArrows: false,
+        // slidesNavigation: true,
+        // controlArrows: false,
+        keyboardScrolling: false,
         navigation: true,
         afterResize: function() {
             destroyFullPageJS();
@@ -54,13 +70,18 @@ function renderMobileFullPageJs() {
     $('#fullpage').fullpage({
         scrollingSpeed: 1000,
         slidesNavigation: false,
-        controlArrows: true,
+        controlArrows: false,
+        keyboardScrolling: false,
         navigation: false,
         autoScrolling: false,
         scrollBar: true,
         fitToSection: false,
         afterResize: function() {
             destroyFullPageJS();
+        },
+        afterRender : function(){
+            $("#slide2").remove();
+            $("#slide4").remove();
         }
     });
     mobileRendered = true;
@@ -122,6 +143,7 @@ function showLocationCheckPopup(userDetails){
     var message = userDetails.message;
     $('.delivery-area-check-popup .deliver-message span').text(message);
     $('.delivery-area-check-popup').show();
+    $('form#validate-email').validate().resetForm();
 }
 
 var saveEmailCallback = {

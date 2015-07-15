@@ -165,12 +165,17 @@ $('#update-email').on('click', function(e) {
 
 function changeEmail() {
     var url = baseURL + "change_email/",
-        newemail = $('#change-email').find('input[name=email]').val(),
+        newemail = $('#change-email').find('input[name=email]').val();
+        isEmailPromotion = 0;
+        if ($('input[name=notification]').prop('checked')) {
+            isEmailPromotion = 1;
+        }
         header = {
             "session-key": localStorage["session_key"]
         },
         userData = {
-            "email": newemail
+            "email": newemail,
+            "email_promotion" : isEmailPromotion
         },
         data = JSON.stringify(userData);
     var changeEmailInstance = new AjaxHttpSender();

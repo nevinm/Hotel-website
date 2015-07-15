@@ -117,10 +117,10 @@
                                             </tr>
                                             <tr>
                                                 <th style='font-weight: normal;padding-left:30px'>
-                                                    <span style='font-weight:bold'>Discounts</span>
+                                                    <span style='font-weight:bold'>Credit</span>
                                                 </th>
                                                 <th style='font-weight: normal;padding-left:10px'>
-                                                    <span style='font-weight:bold'>-${{discount}}</span>
+                                                    <span style='font-weight:bold'>-${{credit}}</span>
                                                 </th>
                                             </tr>
                                             {% if delivery_type != "pickup" %}
@@ -186,26 +186,6 @@
                                         </td>
                                     </tr>
                                 {% endfor %}
-                                <tr>
-                                    <td>
-                                        <img style='width: 100px;float: left;margin-right: 17px;border-radius: 3px;border: 1px solid #D8CFCF;' src="../../web/images/meal_main.png">
-                                        <table style='float: left;width: 70%;font-weight=normal;'>
-                                            <tr>
-                                                <td style='float: left;width:100%'>
-                                                    <span>
-                                                 Lancaster Farm Beef Burger with Salad.
-                                          </span>
-                                                </td>
-                                                <th style='color:#9B9B9B;float: left;padding: 10px 10px 0 0;'>
-                                                    <span style='font-weight: normal;'>$10.95</span>
-                                                </th>
-                                                <th style='color:#9B9B9B;float: left;padding: 10px 10px 0 0;'>
-                                                    <span style='font-weight: normal;'>Quantity: 1</span>
-                                                </th>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
                             </table>
                         </td>
                     </tr>
@@ -220,13 +200,13 @@
                             <td style="font-size:24px;text-align: center;width: 100%;float: left;"><span>SHARE FOR ${{referral_bonus}} FREE CREDIT</span></td>
                         </tr>
                         <tr style="padding:20px 0;float:left;width:100%;">
-                            <td style="font-size:16px;text-align: center;width: 100%;float: left;">meisterdish.com/share/{{referral_code}}</td>
+                            <td style="font-size:16px;text-align: center;width: 100%;float: left;">http://meisterdish.com/backend/share/{{referral_code}}</td>
                         </tr>
-                        <tr style="padding:20px 0;float:left;">
-                            <td style="width:33.33%;text-align:center">
+                        <tr style="padding:20px 0;float:left;width:100%;">
+                            <td style="text-align:center;width:100%;float:left;">
                                 <img src="cid:share_fb" style="padding:0 20px;max-height: 45px;padding-left:0px;">
-                                <img src="cid:share_tw" style="padding:0 20px;max-height: 45px;">
-                                <img src="cid:share_em" style="padding:0 20px;max-height: 45px;padding-right:0px;">
+                                <!-- <img src="cid:share_tw" style="padding:0 20px;max-height: 45px;">
+                                <img src="cid:share_em" style="padding:0 20px;max-height: 45px;padding-right:0px;"> -->
                             </td>
                         </tr>
                     </tbody>

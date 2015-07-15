@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 	tabRendering();
 	CartItemCount();
@@ -126,7 +127,8 @@ $(document).ready(function() {
 			locationCheck(zip);
 		}
 	});
-	$('#submit-email').on("click",function(){
+	$('#submit-email').on("click",function(e){
+		e.preventDefault();
         var email = $('input[type=email]').val(),
         	zipcode = $('#zip-code').val();
         if($('form#validate-email').valid()){
@@ -137,6 +139,21 @@ $(document).ready(function() {
     $(document).on('click', '.delivery-area-check-popup img#cancel', function() {
     	 $('.delivery-area-check-popup').fadeOut();
     });
+
+    //popup re-direction on enter
+    $(document).on('keypress', function (e) {
+        var key = e.which;
+        if(key == 13)  // the enter key code
+        {  
+            if($('.popup-container').is(':visible')){
+                if($("#see-menu").is(":visible")){
+                	$('#see-menu')[0].click();
+                }
+            }                
+        }
+    });   
+
+
 // //Resize function 
 // 	$(window).resize(function() {
 // 		$('.next-sub-tab').hide();
@@ -249,6 +266,7 @@ function showLocationCheckPopup(userDetails){
     var message = userDetails.message;
     $('.delivery-area-check-popup .deliver-message span').text(message);
     $('.delivery-area-check-popup').show();
+    $('form#validate-email').validate().resetForm();
 
 }
 

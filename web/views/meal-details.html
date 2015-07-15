@@ -73,16 +73,33 @@
                     <div class='meal-price-rating'>
                         <span class='price'></span>
                         <span class="per-serving-text">PER SERVING</span>
-                        <a href="#" class="btn btn-small-primary medium-green add-meal" data-id="">ADD</a>
+                        <div class="button-container">
+                            <input type="hidden" class="hidden-field" value="0">
+                            <a href="#!" class="btn btn-small-primary medium-green add-meal" data-id="">ADD</a>
+                            <input type="button" class="removeItemButton" value="&#8211"> 
+                        </div>
+                        <div class="add-meal-message"><span></span> servings added to cart</div>
                     </div>
                 </div>
                 <div class="selected-menu">
-                    <img src="" class="thumbnail">
+                    <div class="meal-image-wrapper">
+                        <img src="" class="thumbnail">
+                        <div class="meal-overlay">
+                            <p class="upper-line">
+                                <span></span>
+                                SERVINGS
+                            </p>
+                            <p class="lower-line">
+                                ADDED TO CART
+                            </p>
+                        </div>    
+                    </div>
                     <div class="contents">
                         <span class="h0 menu-header meal-name"></span>
                         <div class="button-hr-container">
                             <hr>
-                            <a href="#" class="btn btn-small-primary medium-green add-meal" data-id="44">ADD</a>
+                            <a href="#!" class="btn btn-small-primary medium-green add-meal">ADD</a>
+                            <input type="button" class="removeItemButton" value="&#8211">
                         </div>
                         <span class='price'></span>
                     </div>
@@ -118,11 +135,11 @@
                             <div class="meal-full-details">
                                 <div class="icons-container1">
                                     <div class="details-content">
-                                        <span class='upper-content'>15-20</span>
+                                        <span class='upper-content' id="saved-time"></span>
                                         <span class='lower-content'>Minutes</span>
                                     </div>
                                     <div class="details-content">
-                                        <span class='upper-content'>450</span>
+                                        <span class='upper-content' id="calories"></span>
                                         <span class='lower-content'>Calories</span>
                                     </div>
                                     <div class="details-content">
@@ -130,24 +147,7 @@
                                         <span class='lower-content'>Serves 2</span>
                                     </div>
                                 </div>
-                                <div class="icons-container2">
-                                    <div class="details-content">
-                                        <span class='upper-content'><img src="../images/Vegetarian.png"></span>
-                                        <span class='lower-content'>Vegitarian</span>
-                                    </div>
-                                    <div class="details-content">
-                                        <span class='upper-content'><img src="../images/Vegetarian.png"></span>
-                                        <span class='lower-content'>Vegan</span>
-                                    </div>
-                                    <div class="details-content">
-                                        <span class='upper-content'><img src="../images/Vegetarian.png"></span>
-                                        <span class='lower-content'>Dairy-Free</span>
-                                    </div>
-                                     <div class="details-content">
-                                        <span class='upper-content'><img src="../images/Vegetarian.png"></span>
-                                        <span class='lower-content'>Nut-Free</span>
-                                    </div>
-                                </div>
+                                <div class="icons-container2"></div>
                             </div>
                             <hr class="meal-details-hr">
                             <div class='details-description'>

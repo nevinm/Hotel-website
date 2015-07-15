@@ -28,6 +28,10 @@ $(document).ready(function() {
             window.open('http://pinterest.com/meisterdish','_blank');
         }
     });
+    
+    //hide social media icons
+    $(".footer-links").remove();
+
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
         clicked = 1;
@@ -70,16 +74,27 @@ $(document).ready(function() {
             $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
         }, 600)
     });
-
-    // $(document).keypress(function (e) {
-    //     var key = e.which;
-    //     if(key == 13)  // the enter key code
-    //     {  
-    //         if($('.popup-wrapper').is(':visible')){
-    //             $('#close').trigger('click');
-    //         }
-    //     }
-    // });   
+    $(document).on('keydown', function (e) {
+        var key = e.which;
+        if(key == 13)  // the enter key code
+        {  
+            if($('.popup-container').is(':visible')){
+                if($('#ok-button').is(':visible')){
+                    $('#ok-button').trigger('click');
+                }                            
+                if($('#no-button').is(":visible")){
+                    $('#no-button').trigger('click');
+                }
+                if($('#ok').is(":visible")){
+                    window.location.href = $('#ok').attr('href');
+                }           
+                if($('.popup-container').find('form').length === 0) {
+                    e.preventDefault();
+                    $('#close').trigger('click');
+                }  
+            }
+        }
+    });   
 
     verifyAccount();
 });
@@ -228,6 +243,7 @@ function logingOut() {
     localStorage.removeItem('user_profile');
     localStorage.removeItem('delivery_addressess');
     localStorage.removeItem('fb-image');
+    localStorage.removeItem('admin_role');
     localStorage['loggedIn'] = false;
     localStorage['admin_loggedIn'] = false;
     $('#navbar-username a').text('');
@@ -300,19 +316,19 @@ $("form").each(function() {
             },
             lastname: {
                 required: true,
-                minlength: 2,
+                minlength: 1,
                 maxlength: 15,
                 letters: true
             },
             fullname: {
                 required: true,
-                minlength: 2,
+                minlength: 3,
                 maxlength: 20,
                 letters: true
             },
             username: {
                 required: true,
-                minlength: 2,
+                minlength: 3,
                 maxlength: 15,
             },
             mealname: {
@@ -376,7 +392,16 @@ $("form").each(function() {
                 equalTo: "#new-password"
             },
             promocode: {
-                required: true
+                required: true,
+                maxlength : 8
+            },
+            giftcard : {
+                required: true,
+                maxlength : 8
+            },
+            giftcardname :{
+                required :true,
+                maxlength :8
             },
             zip: {
                 // required: true,
@@ -458,26 +483,44 @@ $("form").each(function() {
                 required: true,
                 minAmount: 0,
                 maxAmount: 10
+            },
+            new_category:{
+               required: true,
+               minlength: 3 
+            },
+            update_category:{
+                required: true,
+                minlength: 3 
+            },
+            tip:{
+                required : true,
+                number : true,
+                maxAmount: 10,
+                minAmount :0
+            },
+            order:{
+                required : true,
+                number : true  
             }
         },
         messages: {
             firstname: {
                 required: "Please enter your first name.",
                 letters: "Name should contain only alphabets.",
-                minlength: "Name should contain atleast 2 characters.",
+                minlength: "Name should contain at least 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
             lastname: {
                 required: "Please enter your last name.",
                 letters: "Name should contain only alphabets.",
-                minlength: "Name should contain atleast 2 characters.",
+                minlength: "Name should contain at least 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
-            phonenumber: "Provide valid phone number",
+            phonenumber: "Please enter as xxxxxxxxxx",
             fullname: {
                 required: "Please enter your full name.",
                 letters: "Name should contain only alphabets.",
-                minlength: "Name should contain atleast 2 characters.",
+                minlength: "Name should contain at least 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
             password: {
@@ -486,7 +529,7 @@ $("form").each(function() {
             },
             username: {
                 required: "Plaese enter username.",
-                minlength: "Name should contain atleast 2 characters.",
+                minlength: "Name should contain at least 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
             confirmpassword: {
@@ -520,7 +563,7 @@ $("form").each(function() {
                 number: "Enter a valid number"
             },
             delivery_tip:{
-                required: "Please enter a valid amount",
+                required: "Please enter a valid tip",
                 minAmount: "Enter amount between 1 and 10",
                 maxAmount: "Enter amount between 1 and 10"
             },
@@ -544,7 +587,16 @@ $("form").each(function() {
             tips_details: "Enter valid title.",
             invitecode: "Enter Invitecode",
             date: "Please enter date",
-            promocode: "Please enter promocode."
+            promocode: "Please enter valid promocode.",
+            giftcard: "Please enter valid code.",
+            tip:{
+                required: "Please enter tip",
+                number: "Enter a number less than 10.",
+                maxAmount: "Enter a number less than 10.",
+                minAmount :"Enter a number greater than 0."
+            },
+            giftcardname :"Enter valid giftcardname.",
+            order: "Enter valid Order."
                 // image_upload:"Please select an image."
         }
     });
@@ -568,6 +620,9 @@ if ($.validator) {
     });
     $.validator.addMethod('decimal', function(value, element) {
         return this.optional(element) || /^[0-9,]+$/.test(value);
+    });
+    $.validator.addMethod('positiveNumber',function (value) { 
+        return Number(value) > 0;
     });
 }
 
@@ -624,5 +679,16 @@ function mobileResponsive() {
     } else {
         $('#page-container').css("margin-left", "0px");
         $('#header').css("margin-left", "0px");
+    }
+}
+
+function convertToEmbedded(url) {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+
+    if (match && match[2].length == 11) {
+        return match[2];
+    } else {
+        return 'error';
     }
 }

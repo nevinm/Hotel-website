@@ -16,6 +16,28 @@ $(document).ready(function() {
             deleteMeal(currentMealId);
         } else {}
     });
+    $(document).on('click', '.edit-meal-order', function() {
+       var mealId = $(this).data().id,
+           mealOrder = $(this).parent().find('.each-meal-order').text();
+           $("#hidden-meal-id").val(mealId);
+           $('#new-order').val(mealOrder);
+           $('.edit-meal-order-popup').show();
+           $('form#change-meal-order-form').validate().resetForm();
+    });
+    
+    $('#change-order').on('click',function(e){
+        e.preventDefault();
+        var new_order = $('#new-order').val(),
+            mealId = $("#hidden-meal-id").val();
+        if($('form#change-meal-order-form').valid()){
+           updateMealOrder(mealId,new_order); 
+        }
+    });
+
+    $('#cancel').on('click',function(){
+         $('.edit-meal-order-popup').hide();
+    });
+    
     getmealList('', '', '', 0);
     getFilterContent();
 });
@@ -127,14 +149,43 @@ function populateFilterData(data) {
         $('.filter-container #category').append("<option value='" + v.id + "'>" + v.name + "</option>");
     });
 }
+//Update meal order
+var updateMealOrderCallback = {
+    success: function(data, textStatus) {
+        var updateMealResponse = JSON.parse(data);
+        if(updateMealResponse.status == 1){
+            currentPage = $('.pagination').pagination('getCurrentPage');
+            getmealList();    
+        }else{
+            showPopup(updateMealResponse);
+        }
+        $('.edit-meal-order-popup').hide();
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
 
+function updateMealOrder(currentMealId , order) {
+    var url = baseURL + "cms/update_meal_order/" + currentMealId + "/";
+    header = {
+        "session-key": localStorage['session_key']
+    }
+    params = {
+        "order": order
+    }
+    data = JSON.stringify(params);
+    var updateMealOrderInstance = new AjaxHttpSender();
+    updateMealOrderInstance.sendPost(url, header, data, updateMealOrderCallback);
+}
 //function populate MealList 
 function populateMealList(data) {
     $('#meal-list tbody').empty();
     var fullMealList = data;
     $.each(fullMealList.aaData, function(key, value) {
-        $('#meal-list tbody').append("<tr>" + "<td>" + value.name + "</td>" +
+        $('#meal-list tbody').append("<tr>" +"<td>" + "<img class='meal-list-img'src = '" + value.main_image + "'>" +"</td>" +
+            "<td>" + value.name + "</td>" +
             "<td>" + value.description + "</td>" +
+            "<td>" + "<span class = 'each-meal-order'>" + value.order + "</span>" + 
+            "<span  data-id = '"+value.id+"' class = 'edit-meal-order'>" +"EDIT"+ "</span>" + "</td>" +
             "<td>" + value.available + "</td>" +
             "<td>" + value.category + "</td>" +
             "<td class='meal-type'></td>" +

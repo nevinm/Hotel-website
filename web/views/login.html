@@ -126,8 +126,13 @@
                         <h4>LOG IN</h4>
                 </div>
                 <div class="fb-signupButton">
-                    <a onclick="checkLoginState();"><img src="../images/fb_login.png" border="0" alt=""></a>
-                    <div id='status'></div>
+                    <div class="fb-login-signup-btn" onclick="checkLoginState();">
+                        <div class="btn-wrapper">
+                            <img src="../images/Rectangle 2.png" class="fb-login-img">
+                            <span class="facebook-login-text">LOG IN WITH FACEBOOK</span>
+                            <!-- <div id='status'></div> -->
+                        </div>
+                    </div>
                 </div>
                 <span class="or">
                     <hr>
@@ -136,7 +141,7 @@
                 <form id='login-form' accept-charset='UTF-8'>
                     <div class="username-wrapper">
                         <label class="body-text-small" for='username'>Email:</label>
-                        <input class="arrange" value='' type='email' name='email' id='username' maxlength="50" />
+                        <input class="arrange" value='' type='email' name='email' id='username' maxlength="50" autofocus/>
                     </div>
                     <div class='password-wrapper'>
                         <label class="body-text-small" for='password'>Password:</label>

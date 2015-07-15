@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from api.views.decorators import *
 import sys, traceback
-from libraries import manage_image_upload, check_delivery_area
+from libraries import manage_image_upload, check_delivery_area, add_to_mailing_list
 
 log = logging.getLogger('api')
 
@@ -69,16 +69,41 @@ def login(request, data):
                 log.info("Logging in to guest session")
                 try:
                     guest_user = User.objects.get(pk=session["user"]["id"], role__pk=settings.ROLE_GUEST)
-                    cart = Cart.objects.get(user=guest_user, completed=False)
-                    cart.user = user
-                    cart.save()
-                    guest_user.delete()
+                    try:
+                        my_cart = Cart.objects.get(user__email=user.email, completed=False)
+                    except Cart.DoesNotExist:
+                        try:
+                            guest_cart = Cart.objects.get(user=guest_user, completed=False)
+                            guest_cart.user=user
+                            guest_cart.save()
+                        except Cart.DoesNotExist:
+                            pass
+                    else:
+                        try:
+                            guest_cart = Cart.objects.get(user=guest_user, completed=False)
+                        except Cart.DoesNotExist:
+                            pass
+                        else:
+                            for ci in CartItem.objects.filter(cart=guest_cart):
+                                my_ci = CartItem.objects.filter(cart=my_cart, meal__pk=ci.meal.id)
+                                if my_ci.exists():
+                                    my_ci[0].quantity = ci.quantity
+                                    my_ci[0].save()
+                                    ci.delete()
+                                else:
+                                    ci.cart = my_cart
+                                    ci.save()
+                                
+                            guest_cart.delete()
+
                     session.delete()
                     session = SessionStore()
                     session.create()
                     log.info("User Logged in to guest session. cart updated")
-                except:
-                    log.error("No guest session found with guest user/no cart in guest session")
+                except Exception as e:
+                    log.error("No guest session found with guest user/no cart in guest session"+e.message)
+                else:
+                    guest_user.delete()
 
             else:
                 log.info("New session")
@@ -270,6 +295,7 @@ def verify_user(request, data, token):
 
         if not check_delivery_area(user.zipcode):
             log.error("User's zip code not available.")
+            add_to_mailing_list(user.email, user.zipcode)
             return HttpResponseRedirect(fail_url)        
 
         return HttpResponseRedirect(login_url+"?account_verify=true")
@@ -329,7 +355,7 @@ def forgot_password(request, data):
         
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
         #link = settings.BASE_URL + 'password_reset_return/'+token+"/"
-        link = settings.SITE_URL+"views/reset_password.html?token="+token
+        link = settings.SITE_URL+"views/reset-password.html?token="+token
         user.password_reset_token = token
         user.save()
         
@@ -449,7 +475,7 @@ def get_profile(request, data, user):
                      "meals_in_cart" : meals,
                      "meals_in_cart_count" : len(meals),
                      "credits" : user.credits,
-                     "sms_notification" : user.need_sms_notification,
+                     "sms_notification" : user.need_email_promotions,#need_sms_notification,
                      "address_list" : address_list,
                      "first_name" : user.first_name.title(),
                      "last_name" : user.last_name.title(),
@@ -551,23 +577,30 @@ def get_states(request, data, user):
 @check_input('POST')
 def change_email(request, data, user):
     try:
-        email = data["email"].strip()
-        
-        if user.email == email:
-            raise Exception("Please enter a different email.")
-        elif User.objects.filter(email=email).exists():
-            raise Exception("Email already exists for another user.")
-        else:
-            if send_user_verification_mail(user, True, email):
-                log.info("Sent verification mail to " + email)
-                return json_response({"status":1, "message": "A verification email has been sent to your email ("+email+"). Please follow the link in verification email to verify."})
+        if "email" in data:
+            email = data["email"].strip()
+            
+            if user.email == email:
+                raise Exception("Please enter a different email.")
+            elif User.objects.filter(email=email).exists():
+                raise Exception("Email already exists for another user.")
             else:
-                log.error("Failed to send user verification mail : "+email)
-                return custom_error("An error has occurred in sending verification mail. Please try later.")
+                if send_user_verification_mail(user, True, email):
+                    log.info("Sent verification mail to " + email)
+                    return json_response({"status":1, "message": "A verification email has been sent to your email ("+email+"). Please follow the link in verification email to verify."})
+                else:
+                    log.error("Failed to send user verification mail : "+email)
+                    return custom_error("An error has occurred in sending verification mail. Please try later.")
 
-            user.email = email
+                user.email = email
+                user.save()
+                
+        if "email_promotion" in data:
+            promo = int(str(data['email_promotion']).strip())
+            user.need_email_promotions = bool(promo)
             user.save()
-            return json_response({"status":1, "message":"Updated email address"})
+
+        return json_response({"status":1, "message":"Updated email address", "email_promotion":user.need_email_promotions})
     except Exception as e:
         log.error("Failed to change email : " + e.message)
         return custom_error("Failed to change email.")
@@ -580,8 +613,8 @@ def get_address_list(request, data, user):
         delivery_address = 0
 
         for add in addresses:
-            if not check_delivery_area(add.zip):
-                continue
+            #if 'checkout' in data and data['checkout'] == 1 and not check_delivery_area(add.zip):
+            #    continue
             if add.is_primary:
                 delivery_address = add.id
             address_list.append({
@@ -598,10 +631,11 @@ def get_address_list(request, data, user):
                                  "zip":add.zip,
                                  "phone":add.phone,
                                  "email":add.email,
+                                 "delivery" : True if check_delivery_area(add.zip) else False,
                                  })
         try:
             del_address = Cart.objects.get(user=user, completed=False).delivery_address
-            if del_address:
+            if del_address and del_address in addresses:
                 delivery_address = del_address.id
         except:
             pass

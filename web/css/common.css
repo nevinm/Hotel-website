@@ -389,6 +389,14 @@ body {
     visibility: hidden;
 }
 
+.tableDisplay{
+    display: table !important;
+}
+
+.clear{
+    float: none !important; 
+}
+
 input.arrange {
     width: 100%;
     border-radius: 3px;
@@ -790,14 +798,16 @@ span.icon-menu {
     transform: translate(-50%,-40%);
 
 }
-.add-category-container .header {
+.add-category-container .header,
+.update-category-container .header {
     font-family: 'BrandonGrotesque-Bold';
     color: rgb(107, 107, 107);
     padding: 11px 0px;
     background-color: #f7f7f7;
 }
 
-.popup .header,.delivery-address-error-popup .header,.popup-zip-fail .header{
+.popup .header,.delivery-address-error-popup .header,
+.popup-zip-fail .header{
 	border-bottom: 1px solid #D0D0D0;
 	height: 46px;
 	padding-left: 35px;
@@ -813,7 +823,8 @@ span.icon-menu {
 	/*padding: 43px 0 !important;*/
 	float: none !important;
 }
- .popup-container .content span{
+ .popup-container .content span,
+ .popup-container .content p{
 	width: 100%;
 	float: left;
 	text-align: center;
@@ -848,7 +859,8 @@ span.icon-menu {
 #recipient-message-error,#fullname-error, #giftcardcustomamount-error, #message-error,
 #tips-video-url-label-error,#tips-and-tricks-label-error, #invite-code-error,#email-error, 
 #new-amount-error, #new-code-error, #new-date-error, #city-selector-error,#adminlogin-password-error,
-#new-credits-error
+#new-credits-error,#new_category-error,#update_category-error,#tip-error,#new-mealtype-error,
+#new-order-error,#new-name-error
 {
 	color: #ff7878;
 	background: white;
@@ -1381,7 +1393,6 @@ span.icon-menu {
 @media (max-width: 443px) {
     .popup{
         width: 75%;
-        margin-left: -37.5%;
         height: 225px;
     }
 }
