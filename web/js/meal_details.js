@@ -341,7 +341,7 @@ function foodSettings(meal_details){
     var mealTypeObject = meal_details.meal_types;
     $.each(mealTypeObject,function( key, value){
         $('.icons-container2').append("<div class='details-content'>"+
-            "<span class='upper-content'>"+"<img style='height:31px;width:22px' src='"+value.image_url+"'>"+"</span>"+
+            "<span class='upper-content'>"+"<img class='meal-type-icon' src='"+value.image_url+"'>"+"</span>"+
             "<span class='lower-content'>"+value.meal_type_name+"</span>"+"</div>");
         });
     $('.meal-full-details,.meal-details-hr').fadeIn();
