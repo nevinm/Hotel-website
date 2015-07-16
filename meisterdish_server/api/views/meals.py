@@ -151,6 +151,7 @@ def get_meal_details(request, data, meal_id):
             "sub":meal.sub,
             "description" : meal.description,
             "price":meal.price,
+            "need_boiling_water":meal.need_boiling_water,
             "tax":(meal.price * meal.tax) /100,
             "available" : 1 if meal.available else 0,
             "calories" : meal.calories,

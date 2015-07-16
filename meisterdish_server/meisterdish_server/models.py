@@ -274,7 +274,7 @@ class Meal(models.Model):
     tips = models.ManyToManyField(Tips, null=True, blank=True)
 
     allergy_notice = models.TextField(max_length=1024,  null=True, blank=True, default="")
-
+    need_boiling_water = models.BooleanField(default=False)
     
     price = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])

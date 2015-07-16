@@ -60,7 +60,8 @@ def update_order(request, data, user, order_id):
             el
             """
             if int(status) == 3: #Dispatched
-                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.phone, "status":3})
+                need_boiling = CartItem.objects.filter(cart__order=order, meal__need_boiling_water=True).exists()
+                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.phone, "status":3, "need_boiling":need_boiling})
                 if not sent:
                     log.error("Failed to send order dispatched notification")
             #elif int(status) == 4: #Delivered

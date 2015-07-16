@@ -430,6 +430,13 @@ def send_order_placed_notification(order):
             suffix = "th"
         else:
             suffix = ["st", "nd", "rd"][day % 10 - 1]
+        
+        credit = order.credits + order.discount
+        shipping  = 0 if order.delivery_type == 'pickup' else settings.SHIPPING_CHARGE
+        gt = order.total_amount + order.total_tax + order.tip + shipping
+        if credit > gt:
+            credit = gt
+
         dic = {
                "order_num" : order.order_num,
                "mobile" : order.phone,
@@ -439,9 +446,9 @@ def send_order_placed_notification(order):
                "delivery_time" : order.delivery_time.strftime("%A, %B %d"+suffix+", %Y"),
                "total_amount":"{0:.2f}".format(order.total_amount),
                "discount" : "{0:.2f}".format(order.discount),
-               "credit" : "{0:.2f}".format(order.credits),
+               "credit" : "{0:.2f}".format(credit),
                "tax" : "{0:.2f}".format(order.total_tax),
-               "shipping" : "{0:.2f}".format(settings.SHIPPING_CHARGE),
+               "shipping" : '0.00' if order.delivery_type == 'pickup' else "{0:.2f}".format(settings.SHIPPING_CHARGE),
                "tip":"{0:.2f}".format(order.tip),
                "grand_total":"{0:.2f}".format(order.grand_total),
                "first_name" : user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest",
