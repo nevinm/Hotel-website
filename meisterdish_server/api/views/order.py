@@ -155,7 +155,7 @@ def create_order(request, data, user):
             log.error("Invalid delivery time : "+e.message)
             return custom_error("Please provide a valid delivery time.")
 
-        if del_time < datetime.now():# - timedelta(hours=settings.ORDER_DELIVERY_WINDOW):
+        if delivery_time < datetime.now():# - timedelta(hours=settings.ORDER_DELIVERY_WINDOW):
             return custom_error("Sorry, you cannot choose a past time as delivery time.")
 
         tip = int(data.get('tip', 5))
@@ -299,11 +299,42 @@ def create_order(request, data, user):
 
 def print_order(order):
     try:
+        pdf_path = save_pdf(order)
+        if not pdf_path:
+            return False
+        
 
         return True
     except Exception as e:
         log.error("Failed to print order." + e.message)
         return False
+
+def save_pdf(order):
+    try:
+        from libraries.pdfcreator import save_to_pdf
+        path = settings.MEDIA_ROOT+"/prints/order_"+order.order_num+".pdf"
+        cart_items = CartItem.objects.filter(cart__order=order)
+        res = save_to_pdf(
+                    'order_print.html',
+                    {
+                        'pagesize':'A5',
+                        'order':order,
+                        'cart_items':cart_items,
+                        'date':order.delivery_time.strftime("%m-%d-%Y"),
+                        "time" : order.delivery_time.strftime("%I"),
+                        "ampm" : order.delivery_time.strftime("%p"),
+                    },
+                    path
+            )
+        if res:
+            log.info("Saved PDF :"+path)
+            return path
+        log.error("Failed to save PDF for order #"+order.order_num)
+        return False
+    except Exception as e:
+        log.error("Failed to save pdf." + e.message)
+        return False
+
 def get_order_cart_items(order):
     try:
       cart_list = []
