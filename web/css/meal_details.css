@@ -514,6 +514,10 @@ span.upper-content,span.lower-content,
     margin-left: -5%;
     display: none;
 }
+.meal-type-icon{
+  max-width: 45px;
+  max-height: 45px;
+}
 span.upper-content {
   font-family: 'BrandonGrotesque-Regular';
   color: #8DC56A;

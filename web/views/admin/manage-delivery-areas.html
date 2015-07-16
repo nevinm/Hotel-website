@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,44 +23,47 @@
                 <a href="#"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
                 </a>
                 <ul id="menu" class="pullRight">
-                   <li class="bold admin-links">
-                       <a href="manage-delivery-areas.html">DELIVERY AREA</a>
-                   </li>
-                   <!-- <li class='admin-links'>
+                    <li class="bold admin-links">
+                        <a href="manage-delivery-areas.html">DELIVERY AREA</a>
+                    </li>
+                    <!-- <li class='admin-links'>
                        <a href="promocode.html">PROMOCODES</a>
                    </li>
                    <li class='admin-links'>
                        <a href="giftcards.html">GIFTCARDS</a>
                    </li> -->
-                   <li class='admin-links'>
-                       <a href="orderlist.html">ORDERS</a>
-                   </li>
-                   <li class="kitchen-links">
+                    <li class='admin-links'>
+                        <a href="orderlist.html">ORDERS</a>
+                    </li>
+                    <li class="kitchen-links">
                         <a href="#">KITCHEN</a>
                     </li>
-                   <li class='admin-links'>
-                       <a href="meallist.html">MEALS</a>
-                   </li>
-                   <li class='admin-links'>
+                    <li class='admin-links'>
+                        <a href="meallist.html">MEALS</a>
+                    </li>
+                    <li class='admin-links'>
                         <a href="mealtype.html">MEAL TYPE</a>
                     </li>
-                   <li class='admin-links'>
-                       <a href="userlist.html">USERS</a>
-                   </li>
-                   <li class='admin-links'>
-                       <a href="categories.html">CATEGORIES</a>
-                   </li>
-                   <li id="navbar-username_hidden" class="bold green">
-                       <a href='../account.html'></a>
-                   </li>
-               </ul>
+                    <li class='admin-links'>
+                        <a href="userlist.html">USERS</a>
+                    </li>
+                    <li class='admin-links'>
+                        <a href="categories.html">CATEGORIES</a>
+                    </li>
+                    <li id="navbar-username_hidden" class="bold green">
+                        <a href='../account.html'></a>
+                    </li>
+                </ul>
             </div>
         </header>
         <div id="page-container">
             <div class='admin-inner-wrapper'>
                 <div class="accountNav">
                     <div class="logout body-text-bold">
-                        <input type="button" class="btn btn-small-primary medium-green download-csv" id="download-zip-unsupported-csv" value="DOWNLOAD USERS CSV">
+                        <form id='download-zips-form' action="" method="post">
+                            <input type='hidden' name='session_key' />
+                            <input type="submit" class="btn btn-small-primary medium-green download-csv" id="download-zip-unsupported-csv" value="DOWNLOAD USERS CSV">
+                        </form>
                         <a id='logout'>LOG OUT</a>
                     </div>
                 </div>
@@ -70,7 +74,7 @@
                     <div class="manage-area-container">
                         <div class="add-deliveryarea-wrapper">
                             <input type="button" class="btn btn-small-primary medium-green" value="Add zip" id="add-new-delivery-area">
-                        </div> 
+                        </div>
                         <table id="delivery-area" class="display" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
@@ -89,18 +93,18 @@
                             <div class="popup">
                                 <div class="header"></div>
                                 <div class="popup-container">
-                                  <form id="manage-zip">
-                                    <div class="content">
-                                        <div class="popup-input-wrapper">
-                                            <label class="body-text-small">New Zip:</label>
-                                            <input type="text" class="popup-input" name="zip" id="new-address">
+                                    <form id="manage-zip">
+                                        <div class="content">
+                                            <div class="popup-input-wrapper">
+                                                <label class="body-text-small">New Zip:</label>
+                                                <input type="text" class="popup-input" name="zip" id="new-address">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="button">
-                                        <input type="submit" class="btn btn-small-secondary" id="add-edit-button" value="">
-                                        <a href="#!" class="btn btn-small-secondary" id="close">CLOSE</a>
-                                    </div>
-                                  </form>
+                                        <div class="button">
+                                            <input type="submit" class="btn btn-small-secondary" id="add-edit-button" value="">
+                                            <a href="#!" class="btn btn-small-secondary" id="close">CLOSE</a>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -121,12 +125,12 @@
                             </div>
                         </div>
                     </div>
-                </div>      
+                </div>
             </div>
-        <div class="popup-message">
-            <span></span>
+            <div class="popup-message">
+                <span></span>
+            </div>
         </div>
-        </div>    
     </div>
     <script type="text/javascript" src='../../js/jquery.min.js'></script>
     <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
@@ -136,4 +140,5 @@
     <script type="text/javascript" src='js/admin.js'></script>
     <script type="text/javascript" src='js/manage_delivery_area.js'></script>
 </body>
+
 </html>

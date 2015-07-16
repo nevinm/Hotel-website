@@ -62,7 +62,10 @@
             <div class='admin-inner-wrapper'>
                 <div class="accountNav">
                     <div class="logout body-text-bold">
-                        <input type="button" class="btn btn-small-primary medium-green download-csv" id="download-orders-csv" value="DOWNLOAD ORDERS CSV">
+                   <form id='download-orders-form' action="" method="post">
+                        <input type='hidden' name='session_key'/>
+                        <input type="submit" class="btn btn-small-primary medium-green download-csv" id="download-orders-csv" value="DOWNLOAD ORDERS CSV">
+                    </form>
                         <a id='logout'>LOG OUT</a>
                     </div>
                 </div>
