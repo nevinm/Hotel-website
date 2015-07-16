@@ -183,6 +183,14 @@ def json_request(request):
     else:
         return None
 
+def nvp_request(request):
+    if (request.method == 'GET'):
+        req = request.GET
+        return req
+    else:
+        req = request.POST
+    return req        
+
 def json_response(response, wrap=False):
     if (wrap == True):
         final_response = {"data" : response}

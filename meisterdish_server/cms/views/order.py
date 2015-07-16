@@ -397,47 +397,47 @@ def export_orders(request, data):
         if session_key :
             session = SessionStore(session_key=session_key)
             if session and 'user' in session :
-            orders = Order.objects.filter(is_deleted=False).exclude(status=0)
-            
-            q = Q()
-            #Filter
-            
-            if "user_id" in data and str(data['user_id']).strip() != "":
-                q &= Q(cart__user__pk=data['user_id'])
+              orders = Order.objects.filter(is_deleted=False).exclude(status=0)
+              
+              q = Q()
+              #Filter
+              
+              if "user_id" in data and str(data['user_id']).strip() != "":
+                  q &= Q(cart__user__pk=data['user_id'])
 
-            if "status" in data and str(data['status']).strip() != "":
-                 q |= Q(status=int(data['status']))
+              if "status" in data and str(data['status']).strip() != "":
+                   q |= Q(status=int(data['status']))
 
-            if "date" in data and str(data["date"]).strip() != "":
-                date_obj = datetime.strptime(data['date'], "%Y-%m-%d")# %H:%M:%S")
-                q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
+              if "date" in data and str(data["date"]).strip() != "":
+                  date_obj = datetime.strptime(data['date'], "%Y-%m-%d")# %H:%M:%S")
+                  q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
 
-            orders = orders.filter(q)
-            # End filter
-            orders = orders.order_by("-id")
-            export_list = [[
-                    'Order Number', 
-                    'Order Date',
-                    'Name',
-                    'Phone',
-                    'Delivery Address',
-                    'Amount',
-                    'Delivery Date',
-                    "Status"
-                ]]
-            
-            for order in orders:
-                export_list.append([
-                    order.order_num,
-                    order.created.strftime("%m-%d-%Y %H:%M:%S"),
-                    order.cart.user.first_name.title() + " " + order.cart.user.last_name.title(),
-                    order.phone,
-                    create_address_text_from_model(order.delivery_address),
-                    order.grand_total,
-                    order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
-                    dict(settings.ORDER_STATUS)[order.status],
-                ])
-            return export_csv(export_list, "orders_list.csv")
+              orders = orders.filter(q)
+              # End filter
+              orders = orders.order_by("-id")
+              export_list = [[
+                      'Order Number', 
+                      'Order Date',
+                      'Name',
+                      'Phone',
+                      'Delivery Address',
+                      'Amount',
+                      'Delivery Date',
+                      "Status"
+                  ]]
+              
+              for order in orders:
+                  export_list.append([
+                      str(order.order_num),
+                      order.created.strftime("%m-%d-%Y %H:%M:%S"),
+                      order.cart.user.first_name.title() + " " + order.cart.user.last_name.title(),
+                      str(order.phone),
+                      create_address_text_from_model(order.delivery_address),
+                      str(order.grand_total),
+                      order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
+                      dict(settings.ORDER_STATUS)[order.status],
+                  ])
+              return export_csv(export_list, "orders_list.csv")
         log.error("Failed to export orders : Invalid session")
         return HttpResponseRedirect(settings.SITE_URL + "views/admin/orderlist.html")
     except Exception as e:

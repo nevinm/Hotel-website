@@ -155,6 +155,9 @@ def create_order(request, data, user):
             log.error("Invalid delivery time : "+e.message)
             return custom_error("Please provide a valid delivery time.")
 
+        if del_time < datetime.now():# - timedelta(hours=settings.ORDER_DELIVERY_WINDOW):
+            return custom_error("Sorry, you cannot choose a past time as delivery time.")
+
         tip = int(data.get('tip', 5))
         #if tip < 5:
         #    return custom_error("Miniumum tip amount is $5.") 
