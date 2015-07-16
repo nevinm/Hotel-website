@@ -57,6 +57,7 @@ function renderFullPageJS() {
         scrollingSpeed: 1000,
         // slidesNavigation: true,
         // controlArrows: false,
+        paddingTop : '70px',
         keyboardScrolling: false,
         navigation: true,
         afterResize: function() {
@@ -73,6 +74,7 @@ function renderMobileFullPageJs() {
         controlArrows: false,
         keyboardScrolling: false,
         navigation: false,
+        paddingTop : '70px',
         autoScrolling: false,
         scrollBar: true,
         fitToSection: false,

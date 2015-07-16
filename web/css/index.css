@@ -1,14 +1,21 @@
 @charset "UTF-8";
+
 /*==============================*\
             &CONTENTS
 \*==============================*/
+
+
 /*
 SLIDER-FOOTER
 SLIDER
 */
+
+
 /*==============================*\
             &slider-footer
 \*==============================*/
+
+
 /*Footer is Unique to the slider as it differs from the other common footers */
 
 #slider-footer {
@@ -18,7 +25,7 @@ SLIDER
     left: 0;
     bottom: 0;
     padding-top: 20px;
-    height: 175px;
+    height: 100px;
     background: #fff;
 }
 
@@ -42,6 +49,8 @@ SLIDER
 .footer-links {
     text-align: center;
 }
+
+
 /*==============================*\
             &SLIDER
 \*==============================*/
@@ -52,6 +61,8 @@ SLIDER
     background-color: #f1f1f1;
     min-height: 100%;
 }
+
+
 /*==============================*\
         &Section what is
 \*==============================*/
@@ -86,7 +97,8 @@ SLIDER
     padding-bottom: 20px;
 }
 
-#section-what-is .slide-description {
+#section-what-is .slide-description,
+#section-zipcode .slide-description {
     background-color: white;
     max-width: 700px;
     border-radius: 5px;
@@ -110,13 +122,17 @@ SLIDER
 .mobile-menu-button {
     display: none;
 }
+
+
 /*====================================*\
     &Section what is meisterdish
 \*====================================*/
 
-#section-what-is-meisterdish {
+
+/*#section-what-is-meisterdish {
     margin-top: 50px;
 }
+*/
 
 #section-what-is-meisterdish .meisterdish-details-icon {
     height: 100px;
@@ -136,11 +152,13 @@ SLIDER
     overflow: hidden;
 }
 
-#section-what-is-meisterdish .slide-header {
+#section-what-is-meisterdish .slide-header,
+#section-what-to-expect .slide-header {
     padding-bottom: 20px;
 }
 
-#section-what-is-meisterdish .outer-slide-description {
+#section-what-is-meisterdish .outer-slide-description,
+#section-what-to-expect .outer-slide-description {
     max-width: 1100px;
     margin: 40px auto 0 auto;
 }
@@ -170,6 +188,8 @@ SLIDER
     margin: 0 auto 20px auto;
     background-color: #A9D77B;
 }
+
+
 /*====================================*\
         &Section what to expect
 \*====================================*/
@@ -202,67 +222,109 @@ SLIDER
 #section-what-to-expect .slide-description {
     background-color: #fff;
     overflow: hidden;
+    padding: 30px;
 }
 
 .meal-details,
-.button-container,.meal-name,
-.meal-sub-description,.meal-properies,
-span.lower-content,span.upper-content,
-.ingredients-wrapper{
+.button-container,
+.meal-name,
+.meal-sub-description,
+.meal-properties,
+p.lower-content,
+p.upper-content,
+.ingredients-wrapper {
     width: 100%;
     float: left;
 }
-.meal-image{
+
+.meal-image {
     width: 40%;
     float: left;
 }
-.meal-description-wrapper{
+
+.meal-description-wrapper {
     width: 60%;
+    padding: 20px 30px;
     float: left;
 }
-.meal-name span,.meal-sub-description span,span.lower-content{
+
+.meal-name p,
+.meal-sub-description p,
+p.lower-content {
     letter-spacing: 2.5px;
     font-family: 'BrandonGrotesque-Regular';
     font-size: 30px;
     color: #6B6B6B;
 }
-.meal-sub-description span,span.lower-content{
+
+.meal-sub-description p,
+p.lower-content {
     letter-spacing: 1.5px;
     font-size: 20px;
 }
-span.lower-content{
+
+p.lower-content {
     text-align: center;
 }
-span.upper-content {
-  font-family: 'BrandonGrotesque-Regular';
-  color: #8DC56A;
-  font-size: 24px;
-  min-height: 40px;
-  text-align: center;
-  word-break:break-word;
+
+p.upper-content {
+    font-family: 'BrandonGrotesque-Regular';
+    color: #8DC56A;
+    font-size: 30px;
+    min-height: 40px;
+    text-align: center;
+    word-break: break-word;
 }
-.details-content{
+
+.details-content {
     width: 20%;
     float: left;
 }
-.what-you-get-section{
+
+.what-you-get-section {
     width: 80%;
     margin: 0 auto;
     overflow: hidden;
 }
-.what-you-get-section p{
-    font-family: 'BrandonGrotesque-Medium';
+
+.what-you-get-section p {
+    font-family: 'BrandonGrotesque-Regular';
     font-size: 24px;
     letter-spacing: 1px;
     color: #6B6B6B;
     text-align: center;
 }
-.what-you-get-section .details-content{
+
+.what-you-get-section .sub-heading {
+    font-family: 'BrandonGrotesque-Medium';
+}
+
+.what-you-get-section .details-content {
     width: 14.28%;
 }
-.what-you-get-section .upper-content img{
+
+.what-you-get-section .upper-content img {
     height: 50px;
 }
+
+#section-what-to-expect .ingredients-wrapper {
+    padding: 25px 0;
+}
+
+#section-what-to-expect .meal-properties {
+    margin-top: 20px;
+}
+
+#section-what-to-expect .button-container {
+    text-align: center;
+}
+
+#section-what-to-expect .button-container a {
+    width: 150px;
+    margin: 0 20px;
+}
+
+
 /*==============================*\
         &Section zip code
 \*==============================*/
@@ -274,13 +336,23 @@ span.upper-content {
     background-size: cover;
 }
 
+#section-zipcode .outer-slide-description {
+    margin-top: -100px;
+}
+
+.zip-code-container {
+    text-align: center;
+    padding: 30px 0;
+    position: relative;
+}
+
 #zip-code {
     width: 130px;
     height: 45px;
     text-align: center;
-    margin-top: -4px;
-    padding: 0px 10px;
-    margin-right: 5px;
+    margin-top: -7px;
+    padding-top: 8px;
+    margin-right: 20px;
     color: #9B9B9B;
 }
 
@@ -330,7 +402,8 @@ img#close {
 label#zip-code-error {
     background-color: none;
     background: none;
-    bottom: 51px;
+    top: 0;
+    left: 0;
 }
 
 label#username-error {
@@ -339,7 +412,31 @@ label#username-error {
     width: 60%;
 }
 
+#section-zipcode .header-hr {
+    width: 40%;
+    margin-bottom: 20px;
+}
+
+#section-zipcode .slide-header {
+    padding: 30px;
+}
+
+#section-zipcode .zip-text {
+    margin-bottom: 20px;
+}
+
+#section-zipcode .zip-text p {
+    letter-spacing: 1.5px;
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 15px;
+    color: #6B6B6B;
+    text-align: center;
+}
+
 @media (min-width: 320px) and (max-width: 767px) {
+    #section-what-is-meisterdish .meisterdish-details {
+        width: 100%;
+    }
     #section-what-is .section-logo img {
         display: block;
         max-width: 80%;
@@ -362,5 +459,101 @@ label#username-error {
     }
     .menu-button {
         display: none;
+    }
+    #section-zipcode .slide-header {
+        font-size: 30px;
+    }
+    .meal-image {
+        width: 100%;
+        padding: 0 10%;
+    }
+    .details-content {
+        width: 25%;
+    }
+    .what-you-get-section .details-content {
+        width: 25%;
+    }
+    .meal-description-wrapper {
+        width: 100%;
+        text-align: center;
+    }
+    #section-what-to-expect .button-container a {
+        width: 100%;
+        margin: 10px 0px;
+        height: 40px !important;
+        max-width: 300px;
+    }
+    .what-you-get-section p {
+        font-size: 17px;
+    }
+    p.upper-content {
+        font-size: 20px;
+    }
+    .meal-type-description-icon {
+        width: 20px;
+    }
+    .meal-sub-description p,
+    p.lower-content {
+        font-size: 17px;
+    }
+    #section-what-to-expect .slide-description {
+        padding: 0;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 400px) {
+    #zip-code,
+    #zip-check {
+        width: 100px;
+        margin: 0;
+    }
+    .meal-sub-description p,
+    p.lower-content {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    #section-what-to-expect .what-you-get-section {
+        width: 100%;
+    }
+}
+
+@media (min-width: 767px) and (max-width: 1400px) {
+    #section-what-is-meisterdish .slide-header,
+    #section-what-to-expect .slide-header {
+        padding-bottom: 10px;
+    }
+    #section-what-to-expect .slide-header {
+        font-size: 25px;
+        letter-spacing: 2.5px;
+        font-family: 'BrandonGrotesque-Medium';
+        color: #6B6B6B;
+        margin-top: 25px;
+        text-align: center
+    }
+    #section-what-is-meisterdish .outer-slide-description,
+    #section-what-to-expect .outer-slide-description {
+        margin: 20px auto 0 auto;
+    }
+    .meal-name p {
+        font-size: 25px;
+    }
+    .meal-sub-description p,
+    p.lower-content {
+        font-size: 15px;
+    }
+    p.upper-content {
+        font-size: 25px;
+    }
+    #section-what-to-expect .slide-description {
+        padding: 10px;
+    }
+    .what-you-get-section .sub-heading {
+        font-size: 20px;
+    }
+    .meal-image {
+        padding-left: 10%;
+        padding-top: 2%;
     }
 }
