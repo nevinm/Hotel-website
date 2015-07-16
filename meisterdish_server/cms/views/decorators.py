@@ -18,6 +18,10 @@ def check_input(method, role=False): # Allow all users by default
                     if func.__name__ not in ['login',
                                              'logout',
                                              'import_meals',
+                                             'export_users',
+                                             'export_orders',
+                                             'export_users_for_promotion',
+                                             'export_zips_unsupported',
                                              ]:
                         
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
