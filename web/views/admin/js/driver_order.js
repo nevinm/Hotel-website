@@ -56,21 +56,30 @@ function populateDeliveryOrderList(order_data){
             city = delivery_address.city,
             state = delivery_address.state,
             address_phone = delivery_address.phone, 
-            address_zip = delivery_address.zip;
-        $('table#delivery-order tbody').append("<tr>"+"<td>"+value.user_first_name+"</td>"+
-            "<td>"+value.user_last_name+"</td>"+
+            address_zip = delivery_address.zip,
+            meals = value.meals;
+
+
+        $('table#delivery-order tbody').append("<tr>"+"<td>"+deliverytime+"</td>"+
             "<td>"+value.order_num+"</td>"+
-            "<td>"+value.status+"</td>"+
-            "<td>"+deliverytime+"</td>"+
+            "<td>"+zip+"</td>"+
+            "<td>"+"<span>"+building+", "+street+"</span>"+"</td>"+
+            "<td>"+"<span>"+city+", "+state+"</span>"+"</td>"+
+            "<td>"+name+"</td>"+
             "<td>"+phone+"</td>"+
-            "<td>"+email+"</td>"+
-            "<td>"+"<span>"+address_name+"</span>"+
-            "<span>"+building+", "+street+"</span>"+
-            "<span>"+city+", "+state+"</span>"+
-            "<span>"+address_phone+"</span>"+
-            "<span>"+address_zip+"</span>"+"</td>"+
-            "<td>"+dollarConvert(parseFloat(grand_total).toFixed(2))+"</td>"+
+            "<td class='meals'>"+"</td>"+
+            "<td>"+""+"</td>"+
+            "<td>"+"<select data-id='" + value.id + "'class='order-status' name='status'>" +
+            "<option value='0'>Placed</option>" +
+            "<option value='1'>Packed</option>" +
+            "<option value='2'>Dispatched</option>" +
+            "<option value='3'>Delivered</option>" +
+            "<option value='4'>Cancelled</option>" +
+            "</select>"+"</td>"+
             +"</tr>");
+        $.each(meals, function(key, value) {
+            $("#delivery-order td.meals").append("<span>"+value.name +","+"</span>")
+        });
     });
 }
 

@@ -287,12 +287,20 @@ def create_order(request, data, user):
         if not send_order_placed_notification(order):
             log.error("Failed to send order notification")
         cart_items = get_order_cart_items(order)
+        print_sucess = print_order(order)
         return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way.", "cart_items":cart_items})
         
     except Exception as e:
         log.error("Failed to create order." + e.message)
         return custom_error(e.message + "is missing.")
 
+def print_order(order):
+    try:
+
+        return True
+    except Exception as e:
+        log.error("Failed to print order." + e.message)
+        return False
 def get_order_cart_items(order):
     try:
       cart_list = []
@@ -342,6 +350,10 @@ def get_order_cart_items(order):
                   "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
                   "coupon" : coupon,
                   "credits" : order.cart.user.credits,
+                  "transaction_id" : order.payment.transaction_id if order.payment else "Not Available",
+                  "tax" : "{0:.2f}".format(order.total_tax),
+                  "shipping" : "{0:.2f}".format(settings.SHIPPING_CHARGE),
+                  "grand_total":"{0:.2f}".format(order.grand_total),
                   }
     except Exception as e:
         log.error("Failed to list order cart items." + e.message)

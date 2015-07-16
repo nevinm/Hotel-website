@@ -40,8 +40,8 @@ def update_order(request, data, user, order_id):
                 cart_item.save()
                 
         if "status" in data:
-            if not user.role.id in(settings.ROLE_KITCHEN, settings.ROLE_ADMIN):
-                return custom_error("You are not authorized to change the order status.")
+            #if not user.role.id in(settings.ROLE_KITCHEN, settings.ROLE_ADMIN):
+            #    return custom_error("You are not authorized to change the order status.")
             status = int(data['status'])
             if status < 0 or status > 4:
                 log.error("Invalid order status: " + str(status))
@@ -52,13 +52,15 @@ def update_order(request, data, user, order_id):
                 order.cart.completed=True
                 order.cart.save()
             order.session_key = request.META.get('HTTP_SESSION_KEY', None)
-            
+            """
             if int(status) == 2: #Confirmed
                 sent = send_order_confirmation_notification(order)
                 if not sent:
                     log.error("Failed to send order confirmation notification")
-            elif int(status) == 3: #Dispatched
-                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.mobile})
+            el
+            """
+            if int(status) == 3: #Dispatched
+                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.phone, "status":3})
                 if not sent:
                     log.error("Failed to send order dispatched notification")
             #elif int(status) == 4: #Delivered
@@ -425,7 +427,7 @@ def export_orders(request, data, user):
                 order.order_num,
                 order.created.strftime("%m-%d-%Y %H:%M:%S"),
                 order.cart.user.first_name.title() + " " + order.cart.user.last_name.title(),
-                order.cart.phone,
+                order.phone,
                 create_address_text_from_model(order.delivery_address),
                 order.grand_total,
                 order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
@@ -444,7 +446,7 @@ def get_kitchen_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(is_deleted=False, delivery_time__gte=datetime.now()-timedelta(days=2), status__gt=0, status__lt=4)
+        orders = Order.objects.filter(is_deleted=False, status__gt=0)
         
         total_count = orders.count()
 
@@ -561,7 +563,7 @@ def get_delivery_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(delivery_type__iexact='delivery', status__gte=2, is_deleted=False, delivery_time__gte=datetime.now()-timedelta(days=2))
+        orders = Order.objects.filter(delivery_type__iexact='delivery', status__gte=1, is_deleted=False)
         
         total_count = orders.count()
 
@@ -608,6 +610,21 @@ def get_delivery_orders(request, data, user):
 
         #Format response
         for order in orders:
+            meals = []
+            for cart_item in CartItem.objects.filter(cart__order=order, cart__completed=True):
+                meals.append(
+                {
+                  "id" : cart_item.meal.id,
+                  "name": cart_item.meal.name,
+                  "description": cart_item.meal.description,
+                  "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
+                  "available": 1 if cart_item.meal.available else 0,
+                  "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
+                  "price": cart_item.meal.price,
+                  "tax": cart_item.meal.price * cart_item.meal.tax/100,
+                  "quantity":cart_item.quantity,
+                  "produced" : cart_item.produced,
+                })
             order_list.append({
                 "id":order.id,
                 "order_num" : order.order_num,
@@ -621,6 +638,7 @@ def get_delivery_orders(request, data, user):
                 "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                 "phone": order.phone,
                 "email":order.email,
+                "meals":meals,
                 "delivery_address" : {
                      "id":order.delivery_address.id ,
                      "first_name":order.delivery_address.first_name,
