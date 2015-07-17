@@ -927,7 +927,7 @@ function populateAddedAddress(delivery_address, flag) {
         latest_address = {},
         newAddress = getNewAddress(flag);
     newAddress.id = delivery_address;
-    if (localStorage['loggedIn'] == 'true') {
+    if (localStorage['loggedIn'] == 'true' && localStorage.getItem("delivery_addressess")) {
         latest_address = JSON.parse(localStorage['delivery_addressess']);
         latest_address.address_list.push(newAddress);
         localStorage['delivery_addressess'] = JSON.stringify(latest_address);
@@ -937,7 +937,7 @@ function populateAddedAddress(delivery_address, flag) {
             "address_list": addedAddress,
             "delivery_address": delivery_address
         },
-        populateAddresstoInfoContainer(data);
+    populateAddresstoInfoContainer(data);
 }
 
 function setEcommerceOrderConfirm(response) {
