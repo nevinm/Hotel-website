@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^get_users/$', general.get_users, name='get_users'),
     url(r'^change_user_status/$', general.change_user_status, name='change_user_status'),
     url(r'^export_users/$', general.export_users, name='export_users'),
+    url(r'^export_users_for_promotion/$', general.export_users_for_promotion, name='export_users_for_promotion'),
     
     url(r'^get_meals/$', meals.get_meals, name='get_meals'),
     url(r'^get_meal_details/(?P<meal_id>[0-9]+)/$', meals.get_meal_details, name='get_meal_details'),
@@ -55,4 +56,6 @@ urlpatterns = patterns('',
     url(r'^create_attribute/$', meals.create_attribute, name='create_attribute'),
     url(r'^list_attributes/$', meals.list_attributes, name='list_attributes'),
     url(r'^delete_attribute/(?P<attribute_id>[0-9]+)/$', meals.delete_attribute, name='delete_attribute'),
+
+    url(r'^export_zips_unsupported/$', general.export_zips_unsupported, name='export_zips_unsupported'),
 )

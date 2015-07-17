@@ -1,5 +1,3 @@
-//var baseURL = 'http://10.7.2.51:86/backend/api/',
-//var baseURL = 'http://10.1.4.32:8083/api/',
 var baseURL = 'http://meisterdish.com/backend/api/',
     homeUrl = "http://meisterdish.com",
     userDetails, currentPage = $("title").text(),
@@ -30,7 +28,7 @@ $(document).ready(function() {
     });
     
     //hide social media icons
-    $(".footer-links").remove();
+    // $(".footer-links").remove();
 
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
@@ -79,16 +77,19 @@ $(document).ready(function() {
         if(key == 13)  // the enter key code
         {  
             if($('.popup-container').is(':visible')){
-                if($('.popup-container').find('form').length === 0) {
-                    e.preventDefault();
-                    $('#close').trigger('click');
-                }
                 if($('#ok-button').is(':visible')){
                     $('#ok-button').trigger('click');
                 }                            
                 if($('#no-button').is(":visible")){
                     $('#no-button').trigger('click');
                 }
+                if($('#ok').is(":visible")){
+                    window.location.href = $('#ok').attr('href');
+                }           
+                if($('.popup-container').find('form').length === 0) {
+                    e.preventDefault();
+                    $('#close').trigger('click');
+                }  
             }
         }
     });   
@@ -157,9 +158,10 @@ function getCurrentDateMonth(days) {
     return dateMonth = ('0' + currentdate.getDate()).slice(-2) + " " + monthName;
 }
 
-function getCurrentHour() {
+function getCurrentHourMin() {
     var currentdate = new Date();
-    var hours = currentdate.getHours();
+    var hours = currentdate.getHours(),
+    minutes = ("0"+currentdate.getMinutes()).slice(-2);
     if (hours > 12) {
         meridiem = "pm";
     } else {
@@ -167,7 +169,7 @@ function getCurrentHour() {
     }
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    var strTime = hours;
+    var strTime = hours+":"+minutes;
     return strTime + meridiem;
 }
 
@@ -307,7 +309,7 @@ $("form").each(function() {
         rules: {
             firstname: {
                 required: true,
-                minlength: 3,
+                minlength: 2,
                 maxlength: 15,
                 letters: true
             },
@@ -504,20 +506,20 @@ $("form").each(function() {
             firstname: {
                 required: "Please enter your first name.",
                 letters: "Name should contain only alphabets.",
-                minlength: "Name should contain atleast 2 characters.",
+                minlength: "Name should contain at least 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
             lastname: {
                 required: "Please enter your last name.",
                 letters: "Name should contain only alphabets.",
-                minlength: "Name should contain atleast 2 characters.",
+                minlength: "Name should contain at least 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
             phonenumber: "Please enter as xxxxxxxxxx",
             fullname: {
                 required: "Please enter your full name.",
                 letters: "Name should contain only alphabets.",
-                minlength: "Name should contain atleast 2 characters.",
+                minlength: "Name should contain at least 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
             password: {
@@ -526,7 +528,7 @@ $("form").each(function() {
             },
             username: {
                 required: "Plaese enter username.",
-                minlength: "Name should contain atleast 2 characters.",
+                minlength: "Name should contain at least 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
             confirmpassword: {

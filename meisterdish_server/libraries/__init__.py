@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.core.mail import EmailMessage
 from email.MIMEImage import MIMEImage
 import logging
-from meisterdish_server.models import Image, User, Role, DeliveryArea, Payment, Address
+from meisterdish_server.models import Image, User, Role, DeliveryArea, Payment, Address, ZipUnavailable
 import re
 import settings
 from django.contrib.sessions.backends.db import SessionStore
@@ -40,8 +40,8 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
         msg.mixed_subtype = 'related'
         share_images = {
           "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
-          "share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
-          "share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
+          #"share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
+          #"share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
           "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo.png"),
         }
 
@@ -183,6 +183,14 @@ def json_request(request):
     else:
         return None
 
+def nvp_request(request):
+    if (request.method == 'GET'):
+        req = request.GET
+        return req
+    else:
+        req = request.POST
+    return req        
+
 def json_response(response, wrap=False):
     if (wrap == True):
         final_response = {"data" : response}
@@ -237,11 +245,21 @@ def add_to_mailing_list(email, zip):
     try:
         zip = int(zip)
         import mailchimp
+
+        if not ZipUnavailable.objects.filter(email=email).exists():
+          zu = ZipUnavailable()
+          zu.email = email
+          zu.zipcode = zip
+          zu.save()
+
         mc = mailchimp.Mailchimp(settings.MAILCHIMP_API_KEY)
         res = mc.lists.subscribe(settings.MAILCHIMP_LIST_ID, {'email': email}, {"merge3":zip}, double_optin=False)
         if res and res['euid']:
             log.info("Added email to list")
+            return True
         else:
             log.info("Failed to add email to list")
+            return False
     except Exception as e:
         log.error("Failed to add to mailing list : "+e.message)
+        return False

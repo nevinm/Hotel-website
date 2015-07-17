@@ -7,6 +7,13 @@ var signupCallback = {
         } else {
             $('.signup-formcontainer')[0].reset();
             showPopup(userDetails);
+            ga('send', {
+                'hitType': 'event', // Required.
+                'eventCategory': 'button', // Required.
+                'eventAction': 'click', // Required.
+                'eventLabel': 'Account Creation',
+                'eventValue': 4
+            });
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}

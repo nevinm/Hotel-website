@@ -12,7 +12,7 @@ $(document).ready(function() {
              var message = userDetails.message;
             $('.popup-container .content span').text(message);
             $('.popup-wrapper').show();
-        }
+            }
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }

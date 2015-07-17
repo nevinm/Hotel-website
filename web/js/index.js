@@ -145,6 +145,7 @@ function showLocationCheckPopup(userDetails){
     var message = userDetails.message;
     $('.delivery-area-check-popup .deliver-message span').text(message);
     $('.delivery-area-check-popup').show();
+    $('form#validate-email').validate().resetForm();
 }
 
 var saveEmailCallback = {

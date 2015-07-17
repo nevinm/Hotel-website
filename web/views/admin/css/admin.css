@@ -101,6 +101,13 @@ li#navbar-username {
 .showLi{
     display: inline-block !important;
 }
+
+.download-csv{
+    float: left;
+}
+.download-csv:nth-child(2){
+    margin-left: 20px;
+}
 /*=======================*\
        &Category-Page
 \*=======================*/
@@ -331,8 +338,8 @@ table#userlist {
     display: block;
 }
 .mealtype-icon, .mealtype-image{
-    max-width: 50px;
-    max-height: 50px;
+    max-width: 45px;
+    max-height:45px;
 }
 #mealtype-container .popup{
     height: 230px;

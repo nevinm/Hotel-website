@@ -8,10 +8,10 @@ var billingAddressId, cardDetails,
 $(document).ready(function() {
     CartItemCount();
     if (localStorage["session_key"]) {
+        getAddress();
         getCartItems();
         savedCardDetails();
-        CartItemCount();
-        getAddress();
+        // CartItemCount();
     } else {
         $('.address-info-guest').show();
         $('.address-info').hide();
@@ -36,19 +36,19 @@ $(document).ready(function() {
 
     $('.driver-tip').on('keyup input', function() {
         selectedTip = 0;
-        $('.driver-tip-display').text("$00.00");
-            selectedTip = this.value;
-            if (this.value.length > 2) {
-                selectedTip = this.value = this.value.slice(0, 2);
-            }
-            if (selectedTip >= 1) {
-                $('.driver-tip-display').text("$" + selectedTip + ".00");
-            } else if (selectedTip < 1 && selectedTip > 0) {
-                $('.driver-tip-display').text("$00." + selectedTip);
-            } else if (selectedTip == 0 || isNaN(selectedTip)) {
-                $('.driver-tip-display').text("$00.00");
-            }
-        if($('#tip-form').valid()){
+        $('.driver-tip-display').text("$0.00");
+        selectedTip = this.value;
+        if (this.value.length > 2) {
+            selectedTip = this.value = this.value.slice(0, 2);
+        }
+        if (selectedTip >= 1) {
+            $('.driver-tip-display').text("$" + selectedTip + ".00");
+        } else if (selectedTip < 1 && selectedTip > 0) {
+            $('.driver-tip-display').text("$0." + selectedTip);
+        } else if (selectedTip == 0 || isNaN(selectedTip)) {
+            $('.driver-tip-display').text("$0.00");
+        }
+        if ($('#tip-form').valid()) {
             updateReciept();
         }
     });
@@ -240,7 +240,9 @@ $(document).ready(function() {
         $("#add-guest-address").show();
         $(".state-selector-container").show();
         updateReciept();
-        $('.driver-tip').val(0);
+        $('span.driver-tip-display').text('$5.00');
+        $('.driver-tip').val(5);
+        $('#tip-form').validate().resetForm();
     });
 
     $('#is-gift-card').on('click', function() {
@@ -259,21 +261,25 @@ function haveAccountCheck() {
 }
 
 function setCurrentTime() {
-    currentHour = getCurrentHour();
-    var closingTime = 9;
+    currentHourMin = getCurrentHourMin();
+    var closingTime = 9,
+        minutesToCLose = 15;
     $(".today-content .checkout-time-button").each(function(key, value) {
-        currentHour = getCurrentHour();
-        meridiem = currentHour.substring(currentHour.length - 2);
+        meridiem = currentHourMin.substring(currentHourMin.length - 2);
         if (meridiem == "pm") {
-            currentHour = currentHour.substring(0, currentHour.length - 2);
+            currentHour = currentHourMin.substring(0, currentHourMin.length - 5);
             if (currentHour >= closingTime) {
                 $(this).remove();
                 $(".shop-status").show();
             } else {
+                currentMintues = parseInt(currentHourMin.slice(-4,-2));
                 if (parseInt(currentHour) == $(value).data().hr) {
                     $(this).prevAll('.set-time-button').remove();
                     $(this).val("NOW");
                     $(this).addClass("checkout-time-button-active");
+                    if(currentMintues >= minutesToCLose){
+                        $(this).addClass("button-disabled");
+                    }
                 }
             }
         }
@@ -337,22 +343,21 @@ var getCartItemsCallback = {
         cartItems = JSON.parse(data);
         if (cartItems.status == 1) {
             $(".emtpy-cart-message").hide();
-            $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
-            $('#hidden-credit').val(cartItems.credits);
             populateCartItems(cartItems);
             populateDate(cartItems);
             if (cartItems.coupon != null) {
                 populateCoupon(cartItems.coupon);
             }
-            
+            $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
+            $('#hidden-credit').val(cartItems.credits);
         } else {
             $('.order-list-items').remove();
             $(".emtpy-cart-message").empty();
             $(".emtpy-cart-message").append("<span>" + cartItems.message + "</span>");
             $(".emtpy-cart-message").show();
-            updateReciept();
             $(".items-container .item-count").text('(0)');
         }
+        updateReciept();
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -434,19 +439,19 @@ function updateReciept(GiftcardDetails, flag) {
         totalCredits = 0,
         totalDriverTip = parseFloat($('.driver-tip').val()),
         totalDeliveryCost = 2.95;
-        totalCredits = parseInt($('#hidden-credit').val());
-        if($('#pickup-radio').prop('checked')){
-            totalDeliveryCost = 0;
-            totalDriverTip = 0;
-            $('.driver-tip').val(0);
-            $(".driver-tip-container").hide();
-            $('span.total-delivery-cost').text('$0.00');
-        }else{
-            totalDeliveryCost = 2.95;
-            $('span.total-delivery-cost').text('$2.95');
-            $(".driver-tip-container").show();
-            totalDriverTip = parseFloat($('.driver-tip').val());
-        }
+    totalCredits = parseFloat($('#hidden-credit').val());
+    if ($('#pickup-radio').prop('checked')) {
+        totalDeliveryCost = 0;
+        totalDriverTip = 0;
+        $('.driver-tip').val(0);
+        $(".driver-tip-container").hide();
+        $('span.total-delivery-cost').text('$0.00');
+    } else {
+        totalDeliveryCost = 2.95;
+        $('span.total-delivery-cost').text('$2.95');
+        $(".driver-tip-container").show();
+        totalDriverTip = parseFloat($('.driver-tip').val());
+    }
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
         price = parseFloat($(value).find('.price-container').attr("data-price"));
@@ -532,7 +537,11 @@ function clearCart() {
 //update cart items call back
 var updateCartItemsCallback = {
     success: function(data, textStatus) {
-        localStorage['cartItems'] = data;
+        var cartDetails = JSON.parse(data);
+        if (cartDetails.status == 1) {
+            CartItemCount();
+            localStorage['cartItems'] = data;
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -893,7 +902,6 @@ var getStatesCallback = {
                     text: value.name,
                 }));
             });
-            hideSecondaryStates();
         } else {
             showErrorPopup(userDetails);
         }
@@ -932,10 +940,37 @@ function populateAddedAddress(delivery_address, flag) {
         populateAddresstoInfoContainer(data);
 }
 
+function setEcommerceOrderConfirm(response) {
+    var deliveryAddress = response.cart_items.delivery_address;
+    if (response.cart_items.delivery_address) {} else {
+        deliveryAddress = "pickup";
+    }
+    ga('ecommerce:addTransaction', {
+        'id': response.cart_items.transaction_id, // Transaction ID. Required.
+        'affiliation': 'Meisterdish', // Affiliation or store name.
+        'revenue': response.cart_items.grand_total, // Grand Total.
+        'shipping': response.cart_items.shipping, // Shipping.
+        'tax': response.cart_items.tax, // Tax.
+        'dimension1': deliveryAddress, // Product-scoped custom dimension (string).
+    });
+    $.each(response.cart_items.aaData, function(key, value) {
+        ga('ecommerce:addItem', {
+            'id': value.id, // Transaction ID. Required.
+            'name': value.name, // Product name. Required.
+            'category': value.category, // Category or variation.
+            'price': value.price, // Unit price.
+            'quantity': value.quantity // Quantity.
+        });
+    });
+    ga('ecommerce:send');
+}
+
+
 var placeOrderCallback = {
     success: function(data, textStatus) {
         var response = JSON.parse(data);
         if (response.status == 1) {
+            setEcommerceOrderConfirm(response);
             var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
                 adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null,
                 loggedIn = (userLoggedin || adminLoggedin);
@@ -951,6 +986,7 @@ var placeOrderCallback = {
         } else {
             showPopup(response);
         }
+        $('.loading-indicator').hide();
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -1071,6 +1107,7 @@ function createOrder(orderParams) {
     data = JSON.stringify(orderParams);
     var placeOrderInstance = new AjaxHttpSender();
     placeOrderInstance.sendPost(url, header, data, placeOrderCallback);
+    $('.loading-indicator').show();
 }
 
 function populateCreditCardDetails() {
@@ -1120,7 +1157,11 @@ function validateOrder() {
         }
     }
     if (!$(".checkout-time-button-active").length) {
-        data.message = "Add delivery time and then proceed";
+        if ($('#pickup-radio').prop('checked')) {
+            data.message = "Add pickup time and then proceed";
+        } else {
+            data.message = "Add delivery time and then proceed";
+        }
         showPopup(data);
         return false;
     }
@@ -1234,7 +1275,6 @@ var getProfileCallback = {
             $(".address-info-guest").find("#guest-email").val(userDetails.email);
             $(".address-info-guest").find("#guest-phone").val(userDetails.mobile);
             $('#new-address-form').find("input[name*='email']").val(userDetails.email);
-
         } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -1252,4 +1292,3 @@ function getProfile() {
     var getProfileInstance = new AjaxHttpSender();
     getProfileInstance.sendPost(url, header, data, getProfileCallback);
 }
-

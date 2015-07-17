@@ -61,6 +61,14 @@
             <div class='admin-inner-wrapper'>
                 <div class="accountNav">
                     <div class="logout body-text-bold">
+                    <form id='download-users-form' action="" method="post">
+                        <input type='hidden' name='session_key'/>
+                        <input type="submit" class="btn btn-small-primary medium-green download-csv" id="download-users-csv" value="DOWNLOAD USERS CSV">
+                    </form>
+                    <form id='download-users-promotion-form' action="" method="post">
+                        <input type='hidden' name='session_key'/>
+                        <input type="submit" class="btn btn-small-primary medium-green download-csv" id="download-users-promotion-csv" value="DOWNLOAD ORDERS CSV">
+                    </form>
                         <a id='logout'>LOG OUT</a>
                     </div>
                 </div>

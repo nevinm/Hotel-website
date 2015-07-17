@@ -151,6 +151,7 @@ class User(models.Model):
     credits = models.FloatField(db_index=True, validators=[MinValueValidator(0), MaxValueValidator(1000)], default=0)
     
     need_sms_notification = models.BooleanField(default=True)
+    need_email_promotions = models.BooleanField(default=True)
     deleted = models.BooleanField(db_index=True, default=False)
     
     referral_code = models.CharField(max_length=10)
@@ -273,7 +274,7 @@ class Meal(models.Model):
     tips = models.ManyToManyField(Tips, null=True, blank=True)
 
     allergy_notice = models.TextField(max_length=1024,  null=True, blank=True, default="")
-
+    need_boiling_water = models.BooleanField(default=False)
     
     price = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
@@ -348,7 +349,7 @@ class Cart(models.Model):
     completed = models.BooleanField(default=False)
 
     def str(self):
-        return "Cart for user "+user,first_name + " "+user.last_name
+        return "Cart for user "+user.first_name + " "+user.last_name
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart)
@@ -418,6 +419,7 @@ class Order(models.Model):
                 self.tip = 0
             
             self.grand_total = 0 if self.grand_total < 0 else self.grand_total
+            self.grand_total = round(self.grand_total,2)
 
         super(Order, self).save(*args, **kwargs)
         self.order_num = '0' * (6-len(str(self.id))) + str(self.id)
@@ -472,3 +474,7 @@ class Configuration(models.Model):
 
     def __str__(self):
         return self.key + " = " + self.value
+
+class ZipUnavailable(models.Model):
+    email = models.CharField(max_length=25)
+    zipcode = models.CharField(max_length=10)

@@ -5,19 +5,29 @@ from functools import wraps
 import logging
 from meisterdish_server.models import User
 import settings
-from libraries import json_request, json_response, custom_error
+from libraries import json_request, json_response, custom_error, nvp_request
 log = logging.getLogger('cms')
 
 def check_input(method, role=False): # Allow all users by default
     def wrapper(func):
         def inner_decorator(request, *args, **kwargs):
             if request.method.upper() == method.upper():
-                req = json_request(request)
+                if func.__name__  in ['export_users',
+                                        'export_orders',
+                                        'export_users_for_promotion',
+                                        'export_zips_unsupported',]:
+                    req = nvp_request(request)
+                else:
+                    req = json_request(request)
                 if req is not None:
                     log.info('API : '+func.__name__+', Input: '+str(req))
                     if func.__name__ not in ['login',
                                              'logout',
                                              'import_meals',
+                                             'export_users',
+                                             'export_orders',
+                                             'export_users_for_promotion',
+                                             'export_zips_unsupported',
                                              ]:
                         
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
