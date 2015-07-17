@@ -117,6 +117,9 @@ def create_meal(request, data, user):
         meal.sub = sub.title()
         meal.description = desc
         
+        if "need_boiling_water" in data and data['need_boiling_water'] != '':
+            meal.need_boiling_water = bool(str(data['need_boiling_water']))
+
         meal.price = price
         meal.tax = tax
         meal.available = True if str(available) == "1" else False
@@ -316,6 +319,7 @@ def get_meal_details(request, data, user, meal_id):
             "description" : meal.description,
             "price":meal.price,
             "tax":meal.price* meal.tax/100,
+            "need_boiling_water":meal.need_boiling_water,
             "tax_percentage" : meal.tax,
             "available" : 1 if meal.available else 0,
             "calories" : meal.calories,

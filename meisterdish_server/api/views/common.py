@@ -10,7 +10,6 @@ from django.template.loader import render_to_string
 from api.views.decorators import *
 import sys, traceback
 from libraries import manage_image_upload, check_delivery_area, add_to_mailing_list, validate_email
-
 log = logging.getLogger('api')
 
 def home(request):

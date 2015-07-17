@@ -315,70 +315,88 @@ def delete_image(request, data, user, pk):
         return custom_error("Failed to delete image. Please try again later.")
 
 @check_input('POST', settings.ROLE_ADMIN)
-def export_users(request, data, user):
+def export_users(request, data):
     try:
-        users = User.objects.exclude(role__pk=settings.ROLE_GUEST).filter(deleted=False)
-        
-        if "new" in data and data["new"]==1:
-            today = dt.today()
-            users = users.filter(created__year=today.year, created__month=today.month, created__day=today.day)
+        session_key = data.get('session_key', None)
+        if session_key :
+            session = SessionStore(session_key=session_key)
+            if session and 'user' in session :
+                users = User.objects.exclude(role__pk=settings.ROLE_GUEST).filter(deleted=False)
+                
+                if "new" in data and data["new"]==1:
+                    today = dt.today()
+                    users = users.filter(created__year=today.year, created__month=today.month, created__day=today.day)
 
-        if "search" in data:
-            search = data["search"]
-            users = users.filter(Q(first_name__istartswith=search)| Q(last_name__istartswith=search))
-        users = users.order_by('-id')
-        users_list = [[
-            'Name',
-            "Role",
-            'Email',
-            'Mobile',
-            'Credits',
-            'Activation Status',
-        ]]
-        for user in users:
-            users_list.append([
-                (user.first_name + " "+ user.last_name).title(),
-                settings.ROLE_DIC[user.role.pk],
-                user.email,
-                "Not Available" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
-                "$ "+str(user.credits),
-                "Active" if user.is_active else "Inactive",
-            ])
-        return export_csv(users_list, "users_list.csv")
+                if "search" in data:
+                    search = data["search"]
+                    users = users.filter(Q(first_name__istartswith=search)| Q(last_name__istartswith=search))
+                users = users.order_by('-id')
+                users_list = [[
+                    'Name',
+                    "Role",
+                    'Email',
+                    'Mobile',
+                    'Credits',
+                    'Activation Status',
+                ]]
+                for user in users:
+                    users_list.append([
+                        (user.first_name + " "+ user.last_name).title(),
+                        settings.ROLE_DIC[user.role.pk],
+                        user.email,
+                        "Not Available" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
+                        "$ "+str(user.credits),
+                        "Active" if user.is_active else "Inactive",
+                    ])
+                return export_csv(users_list, "users_list.csv")
+        log.error("Export User list :Invalid session")
+        return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
     except Exception as e:
         log.error("Export User list "+ e.message)
         return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
 
 @check_input('POST', settings.ROLE_ADMIN)
-def export_users_for_promotion(request, data, user):
+def export_users_for_promotion(request, data):
     try:
-        users = User.objects.exclude(role__pk=settings.ROLE_GUEST).filter(deleted=False, need_email_promotions=True)
-        
-        users = users.order_by('first_name')
-        users_list = [[
-            'Name',
-            'Email',
-            'Mobile',
-            'Zip Code',
-        ]]
-        for user in users:
-            users_list.append([
-                (user.first_name + " "+ user.last_name).title(),
-                user.email,
-                "" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
-                user.zipcode
-            ])
-        return export_csv(users_list, "users_promotions_list.csv")
+        session_key = data.get('session_key', None)
+        if session_key :
+            session = SessionStore(session_key=session_key)
+            if session and 'user' in session :
+                users = User.objects.exclude(role__pk=settings.ROLE_GUEST).filter(deleted=False, need_email_promotions=True)
+                
+                users = users.order_by('first_name')
+                users_list = [[
+                    'Name',
+                    'Email',
+                    'Mobile',
+                    'Zip Code',
+                ]]
+                for user in users:
+                    users_list.append([
+                        (user.first_name + " "+ user.last_name).title(),
+                        user.email,
+                        "" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
+                        user.zipcode
+                    ])
+                return export_csv(users_list, "users_promotions_list.csv")
+        log.error("Export User promotions list : Invalid session key")
+        return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
     except Exception as e:
         log.error("Export User promotions list "+ e.message)
         return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
 
 @check_input('POST', settings.ROLE_ADMIN)
-def export_zips_unsupported(request, data, user):
+def export_zips_unsupported(request, data):
     try:
-        email_list = [[zu.email, zu.zipcode]for zu in ZipUnavailable.objects.all()]
-        email_list.insert(0,['Email','Zip Code'])
-        return export_csv(email_list, "zip_unsupported_users_list.csv")
+        session_key = data.get('session_key', None)
+        if session_key :
+            session = SessionStore(session_key=session_key)
+            if session and 'user' in session :
+                email_list = [[zu.email, zu.zipcode]for zu in ZipUnavailable.objects.all()]
+                email_list.insert(0,['Email','Zip Code'])
+                return export_csv(email_list, "zip_unsupported_users_list.csv")
+        log.error("Export zips zip_unsupported_users : Invalid session key")
+        return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
     except Exception as e:
         log.error("Export zips zip_unsupported_users : "+ e.message)
-        return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
+        return HttpResponseRedirect(settings.SITE_URL + "views/admin/manage-delivery-areas.html")

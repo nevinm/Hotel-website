@@ -1,5 +1,13 @@
 {% if delivery_type == "pickup" %}
-    Your Meisterdish order ({{order_num}}) is on its way.
+    {% if need_boiling%}
+        Your Meisterdish order ({{order_num}}) is on its way.
+    {%else%}
+        Your Meisterdish order ({{order_num}}) is on its way.
+    {% endif %}
 {% else %}
-    Your Meisterdish order ({{order_num}}) is on its way.
+    {% if need_boiling%}
+        Your Meisterdish order ({{order_num}}) is on its way.
+    {%else%}
+        Your Meisterdish order ({{order_num}}) is on its way.
+    {% endif %}    
 {% endif %}
