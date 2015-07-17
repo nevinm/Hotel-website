@@ -305,6 +305,7 @@ def print_order(order):
         
 
         return True
+        #If True, delete the PDF
     except Exception as e:
         log.error("Failed to print order." + e.message)
         return False
