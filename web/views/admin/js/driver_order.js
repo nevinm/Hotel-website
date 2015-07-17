@@ -2,6 +2,32 @@ $(document).ready(function() {
     getDeliveryOrders(0);
 });
 
+//Update orders API process
+var updateOrdersCallback = {
+    success: function(data, textStatus, element) {
+        updatedOrders = JSON.parse(data);
+        if (updatedOrders.status) {
+          
+        } else {
+            showPopup(data);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function updateOrders(orderId, currentMealStatusId, element) {
+    var url = baseURL + "cms/update_order/" + orderId + "/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {
+            "meal_status": currentMealStatusId
+        }
+    data = JSON.stringify(params);
+    var updateOrdersInstance = new AjaxHttpSender();
+    updateOrdersInstance.sendPost(url, header, data, updateOrdersCallback, element);
+}
+
 //Get orders API process
 var getDeliveryOrdersCallback = {
     success: function(data, textStatus) {
@@ -39,47 +65,70 @@ function getDeliveryOrders(nextPage, userName, orderNum, status, total_amount, p
     getDeliveryOrdersInstance.sendPost(url, header, data, getDeliveryOrdersCallback);
 }
 
-function populateDeliveryOrderList(order_data){
+function populateDeliveryOrderList(order_data) {
     $.each(order_data.aaData, function(key, value) {
-        
-         var phone = undefinedCheck(value.phone),
+
+        var phone = undefinedCheck(value.phone),
             name = undefinedCheck(value.user_first_name + " " + value.user_last_name),
-            deliverytime = undefinedCheck(value.delivery_time),
+            deliverytime = (undefinedCheck(value.delivery_time)).slice(0, -3),
             zip = undefinedCheck(value.delivery_address.zip),
             email = undefinedCheck(value.email),
             grand_total = undefinedCheck(value.grand_total),
             delivery_address = {},
             delivery_address = value.delivery_address,
-            address_name = delivery_address.first_name +" "+ delivery_address.last_name,
+            address_name = delivery_address.first_name + " " + delivery_address.last_name,
             building = delivery_address.building,
             street = delivery_address.street,
             city = delivery_address.city,
             state = delivery_address.state,
-            address_phone = delivery_address.phone, 
+            address_phone = delivery_address.phone,
             address_zip = delivery_address.zip,
-            meals = value.meals;
+            meals = value.meals,
+            instructions = value.instructions;
 
 
-        $('table#delivery-order tbody').append("<tr>"+"<td>"+deliverytime+"</td>"+
-            "<td>"+value.order_num+"</td>"+
-            "<td>"+zip+"</td>"+
-            "<td>"+"<span>"+building+", "+street+"</span>"+"</td>"+
-            "<td>"+"<span>"+city+", "+state+"</span>"+"</td>"+
-            "<td>"+name+"</td>"+
-            "<td>"+phone+"</td>"+
-            "<td class='meals'>"+"</td>"+
-            "<td>"+""+"</td>"+
-            "<td>"+"<select data-id='" + value.id + "'class='order-status' name='status'>" +
+        $('table#delivery-order tbody').append("<tr data-id='" + value.id + "'><td>" + deliverytime + "</td>" +
+            "<td>" + value.order_num + "</td>" +
+            "<td>" + zip + "</td>" +
+            "<td>" + "<span>" + building + ", " + street + "</span>" + "</td>" +
+            "<td>" + "<span>" + city + ", " + state + "</span>" + "</td>" +
+            "<td>" + name + "</td>" +
+            "<td>" + phone + "</td>" +
+            "<td class='meals'>" + "</td>" +
+            "<td>" + "" + "</td>" +
+            "<td>" + "<select data-id='" + value.id + "'class='order-status' name='status'>" +
             "<option value='0'>Placed</option>" +
             "<option value='1'>Packed</option>" +
             "<option value='2'>Dispatched</option>" +
             "<option value='3'>Delivered</option>" +
             "<option value='4'>Cancelled</option>" +
-            "</select>"+"</td>"+
+            "</select></td>" +
             +"</tr>");
+
+        mealLength = meals.length;
         $.each(meals, function(key, value) {
-            $("#delivery-order td.meals").append("<span>"+value.name +","+"</span>")
+            if (key + 1 == mealLength) {
+                $("#delivery-order td.meals:last").append("<span>" + value.name + " " + "</span>")
+            } else {
+                $("#delivery-order td.meals:last").append("<span>" + value.name + "," + "</span>")
+            }
         });
+
+        currentStatus = value.status_id;
+        $(".order-status:last").val(currentStatus);
+    });
+
+    $(".order-status").on("change", function() {
+        var orderId = $(this).data('id'),
+            mealStatus = $(this).val();
+        //     producedMealsElements = $("input[data-order-id='" + orderId + "']"),
+        //     producedMeals = [];
+        // $.each(producedMealsElements, function(key, value) {
+        //     if ($(value).is(":checked")) {
+        //         producedMeals.push($(value).data("meal-id"));
+        //     } else {}
+        // });
+        updateOrders(orderId, mealStatus, this);
     });
 }
 
