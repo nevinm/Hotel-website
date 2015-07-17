@@ -83,7 +83,8 @@ function populateDeliveryOrderList(order_data) {
             state = delivery_address.state,
             address_phone = delivery_address.phone,
             address_zip = delivery_address.zip,
-            meals = value.meals;
+            meals = value.meals,
+            instructions = value.instructions;
 
 
         $('table#delivery-order tbody').append("<tr data-id='" + value.id + "'><td>" + deliverytime + "</td>" +
