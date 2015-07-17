@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
-from settings import PAYMENT_METHODS, ORDER_STATUS, SHIPPING_CHARGE, ROLE_USER
+from settings import PAYMENT_METHODS, ORDER_STATUS, SHIPPING_CHARGE, ROLE_USER, MEAL_STATUS
 import logging
 log = logging.getLogger('model')
 import sys, traceback
@@ -355,7 +355,7 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart)
     meal = models.ForeignKey(Meal, related_name="cartitem")
     quantity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
-    produced = models.BooleanField(default=False)
+    status = models.IntegerField(db_index=True, choices=MEAL_STATUS, default=0)
 
 delivery_types = (
         ("pickup", "Pick Up"),
