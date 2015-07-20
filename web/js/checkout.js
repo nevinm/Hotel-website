@@ -184,7 +184,7 @@ $(document).ready(function() {
             } else if (code_length > 8) {
                 $('.promo-validation-message').text("* " + "Please enter valid Giftcard/Promocode");
             } else if (localStorage['loggedIn'] != 'true') {
-                $('.promo-validation-message').text("Session is Invalid.Please login and try");
+                $('.promo-validation-message').text("You must be logged in to use this code");
             } else {
                 checkPromoCode(code);
             }
@@ -927,7 +927,7 @@ function populateAddedAddress(delivery_address, flag) {
         latest_address = {},
         newAddress = getNewAddress(flag);
     newAddress.id = delivery_address;
-    if (localStorage['loggedIn'] == 'true') {
+    if (localStorage['loggedIn'] == 'true' && localStorage.getItem("delivery_addressess")) {
         latest_address = JSON.parse(localStorage['delivery_addressess']);
         latest_address.address_list.push(newAddress);
         localStorage['delivery_addressess'] = JSON.stringify(latest_address);
@@ -937,7 +937,7 @@ function populateAddedAddress(delivery_address, flag) {
             "address_list": addedAddress,
             "delivery_address": delivery_address
         },
-        populateAddresstoInfoContainer(data);
+    populateAddresstoInfoContainer(data);
 }
 
 function setEcommerceOrderConfirm(response) {

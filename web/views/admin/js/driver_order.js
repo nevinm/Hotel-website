@@ -21,7 +21,7 @@ function updateOrders(orderId, currentMealStatusId, element) {
             "session-key": localStorage["session_key"]
         },
         params = {
-            "meal_status": currentMealStatusId
+            "status": currentMealStatusId
         }
     data = JSON.stringify(params);
     var updateOrdersInstance = new AjaxHttpSender();
