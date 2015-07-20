@@ -476,6 +476,9 @@ function updateReciept(GiftcardDetails, flag) {
     if (totalCost <= 0) {
         totalCost = 0;
     }
+    // if (totalCost <= totalCredits){
+    //     totalCredits = totalCost;
+    // }
     $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount + totalCredits).toFixed(2));
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
