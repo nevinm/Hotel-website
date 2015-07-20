@@ -33,7 +33,7 @@ def get_meals(request, data, user):
         if "type_ids" in data and len(data['type_ids']) >0 and str(data['type_ids']) != '':
             meals = meals.filter(types__id__in=data['type_ids'])
         
-        meals = meals.order_by("order")
+        meals = meals.order_by("order", 'name')
 
         actual_count = meals.count()
         try:
@@ -45,6 +45,11 @@ def get_meals(request, data, user):
             log.error("meal list pagination : " + e.message)
             custom_error("There was an error listing meals.")
         
+        try:
+            home_meal = Configuration.objects.get(key='home_meal_id').value
+        except Configuration.DoesNotExist:
+            home_meal = None
+
         for meal in meals:
             """
             meal_images = []
@@ -75,6 +80,7 @@ def get_meals(request, data, user):
                               "ingredients":ingredients,
                               "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, cart__completed=False, meal__pk=meal.id).exists() else 0,
                               "order":meal.order,
+                              "primary_meal" : 1 if str(meal.id) == str(home_meal) else 0,
                               })
         return json_response({"status":1, 
                               "aaData":meal_list,
