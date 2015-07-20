@@ -653,6 +653,13 @@ input#searchBy-name {
     height: auto;
     width: 77px;
 }
+
+#meal-list .primary-meal{
+    color: green;
+}
+#meal-list .non-primary-meal{
+    color: red;
+}
 /*=======================*\
      &CREATE -MEAL
 \*=======================*/

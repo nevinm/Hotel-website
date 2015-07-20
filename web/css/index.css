@@ -376,6 +376,11 @@ p.upper-content {
     margin: 0 20px;
 }
 
+.meal-type-description-icon{
+    max-width: 45px;
+    max-height: 45px;
+}
+
 
 /*==============================*\
         &Section zip code
