@@ -35,7 +35,9 @@ SLIDER
     display: inline-block;
     font-family: 'ProximaNova-semibold';
     font-size: 12px;
-    cursor: pointer;
+    line-height: 30px;
+    height: 38px;
+    vertical-align: middle;
 }
 
 #slider-footer ul li a {
@@ -70,6 +72,7 @@ SLIDER
     background: url('../images/footer_sml_sprite.png') no-repeat;
     width: 38px;
     height: 35px;
+    cursor: pointer;
 }
 
 #slider-footer .social-media-icons .facebook {
@@ -88,6 +91,15 @@ SLIDER
 
 #slider-footer .social-media-icons .pintrest {
     background-position: -105px 0px;
+}
+
+.social-media-icons-parent {
+    /*    margin-top: -12px;
+    position: absolute;*/
+}
+
+.footer-non-social {
+    margin-top: 12px;
 }
 
 
