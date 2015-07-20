@@ -153,7 +153,12 @@ var changeEmailCallback = {
     success: function(data, textStatus) {
         userDetails = JSON.parse(data);
         showPopup(userDetails);
-        $('#change-email')[0].reset();
+        if (userDetails.status == 1) {
+            $('#change-email')[0].reset();
+            $('input[name=notification]').prop('checked', userDetails.email_promotion);
+            $('#hidden-email-promotion').val(userDetails.email_promotion);
+        }else{}
+        
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
