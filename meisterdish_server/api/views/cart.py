@@ -59,7 +59,7 @@ def get_cart_items(request, data, user):
                               "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
                               "coupon" : coupon,
                               #Arun
-                              "credits" : user.credits,
+                              "credits" : get_user_credit(user),
                               })
     except Exception as e:
     	log.error("Failed to list cart items." + e.message)
@@ -267,3 +267,13 @@ def check_delivery(request, data, user=None):
         log.error("Check delivery by ZIP error : " + e.message)
         return custom_error("Sorry, we are currently not delivering in your area. We are coming soon. Please leave your email that we can inform you once we are near.")
 
+def get_user_credit(user):
+    try:
+      referral_bonus = float(Configuration.objects.get(key="REFERRAL_BONUS").value)
+      referred = Referral.objects.filter(referree=user).exists() and user.credits >= referral_bonus
+      if not Order.objects.filter(cart__user=user).exists() and referred:
+          return referral_bonus/2
+      return user.credits
+    except Exception as e:
+      log.error("Failed to get credit")
+      return 0.0

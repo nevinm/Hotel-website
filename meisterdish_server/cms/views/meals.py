@@ -492,3 +492,61 @@ def get_home_meal(request, data, user):
     except Exception as e:
         log.error("Failed to get home meal. : "+e.message)
         return custom_error("Failed to get the home meal.")
+
+@check_input('POST', settings.ROLE_ADMIN)
+def add_ingredient(request, data, user):
+    try:
+        name = data['ingredient']
+        img = data['image_id']
+        try:
+            ing = Ingredient.objects.get(name__iexact=name)
+            return custom_error(name + " Already exists.")
+        except Ingredient.DoesNotExist:
+            ing = Ingredient()
+            ing.name = name
+            ing.image = Image.objects.get(pk=img)
+            ing.save()
+            return json_response({"status":1, "message" :"Added "+name, "id":ing.id})
+    except Exception as e:
+        log.error("Failed to add ingredient. : "+e.message)
+        return custom_error("Failed to add ingredient.")
+
+@check_input('POST', settings.ROLE_ADMIN)
+def update_ingredient(request, data, user, ing_id):
+    try:
+        
+        img = data['image_id']
+        ing = Ingredient.objects.get(pk=ing_id)
+        if "ingredient" in data and data["ingredient"].strip() != "":
+            name = data['ingredient']
+            if Ingredient.objects.exclude(pk=ing_id).filter(name__iexact=name).exists():
+                return custom_error("Another ingredient exists with name : "+name)
+            ing.name = name
+        
+        if "image_id" in data:
+            ing.image = Image.objects.get(pk=img)
+        
+        ing.save()
+        return json_response({"status":1, "message" :"Updated Ingredient", "id":ing.id})
+    except Exception as e:
+        log.error("Failed to update ingredient. : "+e.message)
+        return custom_error("Failed to update ingredient.")
+
+@check_input('POST', settings.ROLE_ADMIN)
+def delete_ingredient(request, data, user, ing_id):
+    try:
+        ing = Ingredient.objects.get(pk=ing_id).delete()
+        return json_response({"status":1, "message" :"Deleted Ingredient", "id":ing.id})
+    except Exception as e:
+        log.error("Failed to delete ingredient. : "+e.message)
+        return custom_error("Failed to delete ingredient.")
+"""
+@check_input('POST', settings.ROLE_ADMIN)
+def list_ingredients(request, data, user, ing_id):
+    try:
+        ing = Ingredient.objects.get(pk=ing_id).delete()
+        return json_response({"status":1, "message" :"Deleted Ingredient", "id":ing.id})
+    except Exception as e:
+        log.error("Failed to delete ingredient. : "+e.message)
+        return custom_error("Failed to delete ingredient.")
+"""

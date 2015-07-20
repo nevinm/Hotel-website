@@ -188,8 +188,9 @@ def signup(request, data):
                     bonus = float(Configuration.objects.get(key='REFERRAL_BONUS').value)
                     user.credits = bonus
                     user.save()               
-                    referrer.credits += bonus
-                    referrer.save()
+                    # Commented - awarded up on first transaction only
+                    #referrer.credits += bonus
+                    #referrer.save()
 
                     referral = Referral()
                     referral.referrer = referrer
