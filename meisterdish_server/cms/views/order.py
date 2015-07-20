@@ -28,20 +28,26 @@ def delete_order(request, data, user, order_id):
 def update_order(request, data, user, order_id):
     try:
         order = Order.objects.get(pk=order_id, is_deleted=False, cart__completed=True)
-        if "produced_meals" in data and type(data["produced_meals"] == type([])):
-            if user.role.id != settings.ROLE_KITCHEN:
-                return custom_error("Only the kitchen staff is authorized to do this operation.")
+        if "produced_meals" in data and type(data["produced_meals"]) == type([]) and len(data['produced_meals']):
+            try:
+              st = int(data['meal_status'])
+              if st < 0 or st > 4:
+                log.error("Invalid order status: " + str(st))
+                return custom_error("Invalid order status")
+            except:
+              return custom_error("Invalid order status.")
+            #if user.role.id != settings.ROLE_KITCHEN:
+            #    return custom_error("Only the kitchen staff is authorized to do this operation.")
 
             for cart_item in order.cart.cartitem_set.all():
                 if cart_item.meal.id in data["produced_meals"]:
-                    cart_item.produced = True
-                else:
-                    cart_item.produced = False
+                    cart_item.status = st
+                
                 cart_item.save()
                 
         if "status" in data:
-            #if not user.role.id in(settings.ROLE_KITCHEN, settings.ROLE_ADMIN):
-            #    return custom_error("You are not authorized to change the order status.")
+            if not user.role.id in(settings.ROLE_KITCHEN, settings.ROLE_ADMIN):
+                return custom_error("You are not authorized to change the order status.")
             status = int(data['status'])
             if status < 0 or status > 4:
                 log.error("Invalid order status: " + str(status))
@@ -52,23 +58,12 @@ def update_order(request, data, user, order_id):
                 order.cart.completed=True
                 order.cart.save()
             order.session_key = request.META.get('HTTP_SESSION_KEY', None)
-            """
-            if int(status) == 2: #Confirmed
-                sent = send_order_confirmation_notification(order)
-                if not sent:
-                    log.error("Failed to send order confirmation notification")
-            el
-            """
-            if int(status) == 3: #Dispatched
+            if status == 3: #Dispatched
                 need_boiling = CartItem.objects.filter(cart__order=order, meal__need_boiling_water=True).exists()
                 sent = send_sms_notification({"order_num":order.order_num, "mobile":order.phone, "status":3, "need_boiling":need_boiling})
                 if not sent:
                     log.error("Failed to send order dispatched notification")
-            #elif int(status) == 4: #Delivered
-            #    sent = send_order_complete_notification(order)
-            #    if not sent:
-            #        log.error("Failed to send order complete notification")
-
+            
         return json_response({"status":1, "message":"The order has been updated", "id":str(order_id)+"."})
     except Exception as e:
         log.error("Update order status : " + e.message)
@@ -517,7 +512,7 @@ def get_kitchen_orders(request, data, user):
                   "price": cart_item.meal.price,
                   "tax": cart_item.meal.price * cart_item.meal.tax/100,
                   "quantity":cart_item.quantity,
-                  "produced" : cart_item.produced,
+                  "status_id" : int(cart_item.status),
                 })
 
             order_list.append({
@@ -629,7 +624,7 @@ def get_delivery_orders(request, data, user):
                   "price": cart_item.meal.price,
                   "tax": cart_item.meal.price * cart_item.meal.tax/100,
                   "quantity":cart_item.quantity,
-                  "produced" : cart_item.produced,
+                  "status_id" : cart_item.status,
                 })
             order_list.append({
                 "id":order.id,

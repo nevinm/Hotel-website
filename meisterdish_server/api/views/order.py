@@ -305,6 +305,7 @@ def print_order(order):
         
 
         return True
+        #If True, delete the PDF
     except Exception as e:
         log.error("Failed to print order." + e.message)
         return False
@@ -314,6 +315,7 @@ def save_pdf(order):
         from libraries.pdfcreator import save_to_pdf
         path = settings.MEDIA_ROOT+"/prints/order_"+order.order_num+".pdf"
         cart_items = CartItem.objects.filter(cart__order=order)
+        
         res = save_to_pdf(
                     'order_print.html',
                     {
@@ -321,8 +323,7 @@ def save_pdf(order):
                         'order':order,
                         'cart_items':cart_items,
                         'date':order.delivery_time.strftime("%m-%d-%Y"),
-                        "time" : order.delivery_time.strftime("%I"),
-                        "ampm" : order.delivery_time.strftime("%p"),
+                        "time" : order.delivery_time.strftime("%I") + " - " +str(int(order.delivery_time.strftime("%I"))+1) + " " + order.delivery_time.strftime("%p"),
                     },
                     path
             )
