@@ -1,5 +1,3 @@
-//var baseURL = 'http://10.7.2.51:86/backend/api/',
-//var baseURL = 'http://10.1.4.32:8083/api/',
 var baseURL = 'http://meisterdish.com/backend/api/',
     homeUrl = "http://meisterdish.com",
     userDetails, currentPage = $("title").text(),
@@ -30,7 +28,7 @@ $(document).ready(function() {
     });
     
     //hide social media icons
-    $(".footer-links").remove();
+    // $(".footer-links").remove();
 
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
@@ -160,9 +158,10 @@ function getCurrentDateMonth(days) {
     return dateMonth = ('0' + currentdate.getDate()).slice(-2) + " " + monthName;
 }
 
-function getCurrentHour() {
+function getCurrentHourMin() {
     var currentdate = new Date();
-    var hours = currentdate.getHours();
+    var hours = currentdate.getHours(),
+    minutes = ("0"+currentdate.getMinutes()).slice(-2);
     if (hours > 12) {
         meridiem = "pm";
     } else {
@@ -170,7 +169,7 @@ function getCurrentHour() {
     }
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    var strTime = hours;
+    var strTime = hours+":"+minutes;
     return strTime + meridiem;
 }
 

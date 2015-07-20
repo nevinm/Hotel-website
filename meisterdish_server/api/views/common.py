@@ -9,8 +9,7 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from api.views.decorators import *
 import sys, traceback
-from libraries import manage_image_upload, check_delivery_area, add_to_mailing_list
-
+from libraries import manage_image_upload, check_delivery_area, add_to_mailing_list, validate_email
 log = logging.getLogger('api')
 
 def home(request):
@@ -475,7 +474,7 @@ def get_profile(request, data, user):
                      "meals_in_cart" : meals,
                      "meals_in_cart_count" : len(meals),
                      "credits" : user.credits,
-                     "sms_notification" : user.need_email_promotions,#need_sms_notification,
+                     "email_promotions" : user.need_email_promotions,#need_sms_notification,
                      "address_list" : address_list,
                      "first_name" : user.first_name.title(),
                      "last_name" : user.last_name.title(),
@@ -577,9 +576,10 @@ def get_states(request, data, user):
 @check_input('POST')
 def change_email(request, data, user):
     try:
-        if "email" in data:
+        if "email" in data and data["email"].strip() != "":
             email = data["email"].strip()
-            
+            if not validate_email(email):
+                return custom_error("Please provide a valid email.")
             if user.email == email:
                 raise Exception("Please enter a different email.")
             elif User.objects.filter(email=email).exists():

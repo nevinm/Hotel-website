@@ -167,7 +167,7 @@ var manageCreditsCallback = {
         if (creditsData.status == 1) {
             currentPage = $('.pagination').pagination('getCurrentPage');
             getUserlist(currentPage);
-        $('.popup-wrapper').hide();
+            $('.popup-wrapper').hide();
         } else {
             showUserCreditPoup(creditsData);
         }
@@ -209,4 +209,7 @@ $(document).ready(function() {
             manageCredits(currentId, newCredits);
         } else {}
     });
+
+    downloadOrderCSV("cms/export_users/","download-users-form");
+    downloadOrderCSV("cms/export_users_for_promotion/","download-users-promotion-form");
 });

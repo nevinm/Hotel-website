@@ -105,6 +105,13 @@ def get_meal_details(request, data, meal_id):
         else:
             user=None
 
+        if str(meal_id) == '0' : # Get meal for home page
+            meal_id = Configuration.objects.filter(key='home_meal_id')
+            if not meal_id.exists():
+                return custom_error("Home meal is not set.")
+            else:
+                meal_id = int(meal_id[0].value)
+        
         meal = Meal.objects.get(pk=meal_id, is_deleted=False, available=True)
         rating_list = []
         rating_sum = 0.0
@@ -151,6 +158,7 @@ def get_meal_details(request, data, meal_id):
             "sub":meal.sub,
             "description" : meal.description,
             "price":meal.price,
+            "need_boiling_water":meal.need_boiling_water,
             "tax":(meal.price * meal.tax) /100,
             "available" : 1 if meal.available else 0,
             "calories" : meal.calories,

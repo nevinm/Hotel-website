@@ -2,7 +2,6 @@ $(document).ready(function() {
     getOrders();
 });
 
-
 //Get orders API process
 var getOrdersCallback = {
     success: function(data, textStatus) {
@@ -50,21 +49,21 @@ var updateOrdersCallback = {
             } else {
                 $(element).parents().eq(1).removeClass("produced-meal")
             }
-        }
-        else{
+        } else {
             showPopup(data);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function updateOrders(producedMeals, orderId, element) {
+function updateOrders(producedMeals, orderId, currentMealStatusId, element) {
     var url = baseURL + "cms/update_order/" + orderId + "/",
         header = {
             "session-key": localStorage["session_key"]
         },
         params = {
-            "produced_meals": producedMeals
+            "produced_meals": producedMeals,
+            "meal_status": currentMealStatusId
         }
     data = JSON.stringify(params);
     var updateOrdersInstance = new AjaxHttpSender();
@@ -81,7 +80,7 @@ function populateOrderList(data) {
     $.each(fullMealList.aaData, function(key, value) {
         var phone = undefinedCheck(value.phone),
             name = undefinedCheck(value.user_first_name + " " + value.user_last_name),
-            deliverytime = undefinedCheck(value.delivery_time),
+            deliverytime = (undefinedCheck(value.delivery_time)).slice(0, -3),
             zip = undefinedCheck(value.delivery_address.zip),
             minTime = undefinedCheck(value.time),
             orderNum = undefinedCheck(value.id),
@@ -107,19 +106,27 @@ function populateOrderList(data) {
                 "<td>" + zip + "</td>" +
                 "<td>" + name + "</td>" +
                 "<td>" + phone + "</td>" +
+                "<td><select data-id='"+value.id+"' data-order-id='"+orderNum+"'"+
+                "data-meal-id='" + mealValue.id + "'class='order-status' name='status'>" +
+                "<option value='0'>Placed</option>" +
+                "<option value='1'>Packed</option>" +
+                "<option value='2'>Dispatched</option>" +
+                "<option value='3'>Delivered</option>" +
+                "<option value='4'>Cancelled</option>" +
+                "</select>" + "</td>" +
                 "</tr>");
 
 
-            if (mealValue.produced) {
-                $("#order-list tbody .row:last").addClass("produced-meal");
-                $("#order-list tbody .row:last").append("<td><input checked type='checkbox'" +
-                    "data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id +
-                    "' class='status down'/></td>");
-            } else {
-                $("#order-list tbody .row:last").append("<td><input type='checkbox'" +
-                    " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id +
-                    "' class='status'/></td>");
-            }
+            // if (mealValue.produced) {
+            //     $("#order-list tbody .row:last").addClass("produced-meal");
+            //     $("#order-list tbody .row:last").append("<td><input checked type='checkbox'" +
+            //         "data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id +
+            //         "' class='status down'/></td>");
+            // } else {
+            //     $("#order-list tbody .row:last").append("<td><input type='checkbox'" +
+            //         " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id +
+            //         "' class='status'/></td>");
+            // }
         });
 
         currentStatus = value.status_id;
@@ -137,16 +144,17 @@ function populateOrderList(data) {
 
     $('#order-list tbody').find("tr")[0].remove();
 
-    $(".status").on("change", function() {
+    $(".order-status").on("change", function() {
         var orderId = $(this).data('order-id'),
             mealId = $(this).data('meal-id'),
-            producedMealsElements = $("input[data-order-id='" + orderId + "']"),
+            mealStatus = $(this).val(),
+            producedMealsElements = $("select[data-order-id='" + orderId + "']"),
             producedMeals = [];
-        $.each(producedMealsElements, function(key, value) {
-            if ($(value).is(":checked")) {
-                producedMeals.push($(value).data("meal-id"));
-            } else {}
-        });
-        updateOrders(producedMeals, orderId, this);
+        // $.each(producedMealsElements, function(key, value) {
+            // if ($(value).val()==1) {
+                producedMeals.push($(this).data("meal-id"));
+            // } else {}
+        // });
+        updateOrders(producedMeals, orderId, mealStatus, this);
     });
 }

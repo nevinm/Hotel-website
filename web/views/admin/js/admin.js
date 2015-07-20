@@ -57,6 +57,12 @@ if (localStorage.getItem('admin_role') === null) {} else {
     }
 }
 
+function downloadOrderCSV(url, element) {
+    $("#" + element).attr("action", baseURL + url);
+    $("#" + element).find("input[name='session_key']").val(localStorage['session_key']);
+}
+
+
 $(document).ready(function() {
     $("#login-button").on('click', function(e) {
         e.preventDefault();

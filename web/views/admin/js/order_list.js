@@ -32,6 +32,13 @@ $(document).ready(function() {
         updateOrders(status, orderId);
     });
     $("#date").datepicker();
+
+    downloadOrderCSV("cms/export_orders/","download-orders-form");
+    // $("#download-orders-form").attr("action",baseURL+"cms/export_orders/");
+    // $("#download-orders-form").find("input[name='session_key']").val(localStorage['session_key']);
+    // $("#download-orders-csv").on("click",function(){
+    //     downloadOrderCSV("/api/cms/export_orders/");
+    // });
 });
 
 function returnSearchParams() {

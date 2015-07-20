@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
-from settings import PAYMENT_METHODS, ORDER_STATUS, SHIPPING_CHARGE, ROLE_USER
+from settings import PAYMENT_METHODS, ORDER_STATUS, SHIPPING_CHARGE, ROLE_USER, MEAL_STATUS
 import logging
 log = logging.getLogger('model')
 import sys, traceback
@@ -274,7 +274,7 @@ class Meal(models.Model):
     tips = models.ManyToManyField(Tips, null=True, blank=True)
 
     allergy_notice = models.TextField(max_length=1024,  null=True, blank=True, default="")
-
+    need_boiling_water = models.BooleanField(default=False)
     
     price = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
@@ -355,7 +355,7 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart)
     meal = models.ForeignKey(Meal, related_name="cartitem")
     quantity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
-    produced = models.BooleanField(default=False)
+    status = models.IntegerField(db_index=True, choices=MEAL_STATUS, default=0)
 
 delivery_types = (
         ("pickup", "Pick Up"),
@@ -474,3 +474,7 @@ class Configuration(models.Model):
 
     def __str__(self):
         return self.key + " = " + self.value
+
+class ZipUnavailable(models.Model):
+    email = models.CharField(max_length=25)
+    zipcode = models.CharField(max_length=10)

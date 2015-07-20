@@ -49,7 +49,7 @@ $(document).ready(function() {
         var video_URL = $('#tips-video-url').val(),
             tips_heading = $('#tips-and-tricks').val(),
             valid_url, valid_title;
-        valid_url = ytVidId(video_URL);
+        valid_url = ytVidId(video_URL) || imgValidation(video_URL);
         valid_title = emptyvalidation(tips_heading);
         if (valid_url && valid_title) {
             addMainTipsTricks(video_URL, tips_heading);
@@ -519,4 +519,9 @@ function ytVidId(url) {
 function emptyvalidation(value) {
     var p = /^[\s\t\r\n]*\S+/ig;
     return (value.match(p)) ? true : false;
+}
+
+function imgValidation(img_url){
+   var result = (/^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:jpe?g|gif|png)$/).test(img_url);
+   return result;  
 }

@@ -37,18 +37,18 @@ $(document).ready(function() {
     $('.driver-tip').on('keyup input', function() {
         selectedTip = 0;
         $('.driver-tip-display').text("$0.00");
-            selectedTip = this.value;
-            if (this.value.length > 2) {
-                selectedTip = this.value = this.value.slice(0, 2);
-            }
-            if (selectedTip >= 1) {
-                $('.driver-tip-display').text("$" + selectedTip + ".00");
-            } else if (selectedTip < 1 && selectedTip > 0) {
-                $('.driver-tip-display').text("$0." + selectedTip);
-            } else if (selectedTip == 0 || isNaN(selectedTip)) {
-                $('.driver-tip-display').text("$0.00");
-            }
-        if($('#tip-form').valid()){
+        selectedTip = this.value;
+        if (this.value.length > 2) {
+            selectedTip = this.value = this.value.slice(0, 2);
+        }
+        if (selectedTip >= 1) {
+            $('.driver-tip-display').text("$" + selectedTip + ".00");
+        } else if (selectedTip < 1 && selectedTip > 0) {
+            $('.driver-tip-display').text("$0." + selectedTip);
+        } else if (selectedTip == 0 || isNaN(selectedTip)) {
+            $('.driver-tip-display').text("$0.00");
+        }
+        if ($('#tip-form').valid()) {
             updateReciept();
         }
     });
@@ -184,7 +184,7 @@ $(document).ready(function() {
             } else if (code_length > 8) {
                 $('.promo-validation-message').text("* " + "Please enter valid Giftcard/Promocode");
             } else if (localStorage['loggedIn'] != 'true') {
-                $('.promo-validation-message').text("Session is Invalid.Please login and try");
+                $('.promo-validation-message').text("You must be logged in to use this code");
             } else {
                 checkPromoCode(code);
             }
@@ -261,21 +261,25 @@ function haveAccountCheck() {
 }
 
 function setCurrentTime() {
-    currentHour = getCurrentHour();
-    var closingTime = 9;
+    currentHourMin = getCurrentHourMin();
+    var closingTime = 9,
+        minutesToCLose = 15;
     $(".today-content .checkout-time-button").each(function(key, value) {
-        currentHour = getCurrentHour();
-        meridiem = currentHour.substring(currentHour.length - 2);
+        meridiem = currentHourMin.substring(currentHourMin.length - 2);
         if (meridiem == "pm") {
-            currentHour = currentHour.substring(0, currentHour.length - 2);
+            currentHour = currentHourMin.substring(0, currentHourMin.length - 5);
             if (currentHour >= closingTime) {
                 $(this).remove();
                 $(".shop-status").show();
             } else {
+                currentMintues = parseInt(currentHourMin.slice(-4,-2));
                 if (parseInt(currentHour) == $(value).data().hr) {
                     $(this).prevAll('.set-time-button').remove();
                     $(this).val("NOW");
                     $(this).addClass("checkout-time-button-active");
+                    if(currentMintues >= minutesToCLose){
+                        $(this).addClass("button-disabled");
+                    }
                 }
             }
         }
@@ -435,19 +439,19 @@ function updateReciept(GiftcardDetails, flag) {
         totalCredits = 0,
         totalDriverTip = parseFloat($('.driver-tip').val()),
         totalDeliveryCost = 2.95;
-        totalCredits = parseFloat($('#hidden-credit').val());
-        if($('#pickup-radio').prop('checked')){
-            totalDeliveryCost = 0;
-            totalDriverTip = 0;
-            $('.driver-tip').val(0);
-            $(".driver-tip-container").hide();
-            $('span.total-delivery-cost').text('$0.00');
-        }else{
-            totalDeliveryCost = 2.95;
-            $('span.total-delivery-cost').text('$2.95');
-            $(".driver-tip-container").show();
-            totalDriverTip = parseFloat($('.driver-tip').val());
-        }
+    totalCredits = parseFloat($('#hidden-credit').val());
+    if ($('#pickup-radio').prop('checked')) {
+        totalDeliveryCost = 0;
+        totalDriverTip = 0;
+        $('.driver-tip').val(0);
+        $(".driver-tip-container").hide();
+        $('span.total-delivery-cost').text('$0.00');
+    } else {
+        totalDeliveryCost = 2.95;
+        $('span.total-delivery-cost').text('$2.95');
+        $(".driver-tip-container").show();
+        totalDriverTip = parseFloat($('.driver-tip').val());
+    }
     $(".order-list-items").each(function(key, value) {
         quantity = parseInt($(value).find('.quantity').val());
         price = parseFloat($(value).find('.price-container').attr("data-price"));
@@ -534,10 +538,10 @@ function clearCart() {
 var updateCartItemsCallback = {
     success: function(data, textStatus) {
         var cartDetails = JSON.parse(data);
-        if(cartDetails.status == 1){
+        if (cartDetails.status == 1) {
             CartItemCount();
             localStorage['cartItems'] = data;
-        } 
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -923,7 +927,7 @@ function populateAddedAddress(delivery_address, flag) {
         latest_address = {},
         newAddress = getNewAddress(flag);
     newAddress.id = delivery_address;
-    if (localStorage['loggedIn'] == 'true') {
+    if (localStorage['loggedIn'] == 'true' && localStorage.getItem("delivery_addressess")) {
         latest_address = JSON.parse(localStorage['delivery_addressess']);
         latest_address.address_list.push(newAddress);
         localStorage['delivery_addressess'] = JSON.stringify(latest_address);
@@ -933,13 +937,40 @@ function populateAddedAddress(delivery_address, flag) {
             "address_list": addedAddress,
             "delivery_address": delivery_address
         },
-        populateAddresstoInfoContainer(data);
+    populateAddresstoInfoContainer(data);
 }
+
+function setEcommerceOrderConfirm(response) {
+    var deliveryAddress = response.cart_items.delivery_address;
+    if (response.cart_items.delivery_address) {} else {
+        deliveryAddress = "pickup";
+    }
+    ga('ecommerce:addTransaction', {
+        'id': response.cart_items.transaction_id, // Transaction ID. Required.
+        'affiliation': 'Meisterdish', // Affiliation or store name.
+        'revenue': response.cart_items.grand_total, // Grand Total.
+        'shipping': response.cart_items.shipping, // Shipping.
+        'tax': response.cart_items.tax, // Tax.
+        'dimension1': deliveryAddress, // Product-scoped custom dimension (string).
+    });
+    $.each(response.cart_items.aaData, function(key, value) {
+        ga('ecommerce:addItem', {
+            'id': value.id, // Transaction ID. Required.
+            'name': value.name, // Product name. Required.
+            'category': value.category, // Category or variation.
+            'price': value.price, // Unit price.
+            'quantity': value.quantity // Quantity.
+        });
+    });
+    ga('ecommerce:send');
+}
+
 
 var placeOrderCallback = {
     success: function(data, textStatus) {
         var response = JSON.parse(data);
         if (response.status == 1) {
+            setEcommerceOrderConfirm(response);
             var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
                 adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null,
                 loggedIn = (userLoggedin || adminLoggedin);
@@ -1126,9 +1157,9 @@ function validateOrder() {
         }
     }
     if (!$(".checkout-time-button-active").length) {
-        if($('#pickup-radio').prop('checked')){
+        if ($('#pickup-radio').prop('checked')) {
             data.message = "Add pickup time and then proceed";
-        }else{
+        } else {
             data.message = "Add delivery time and then proceed";
         }
         showPopup(data);
@@ -1261,4 +1292,3 @@ function getProfile() {
     var getProfileInstance = new AjaxHttpSender();
     getProfileInstance.sendPost(url, header, data, getProfileCallback);
 }
-

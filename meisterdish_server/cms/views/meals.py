@@ -117,6 +117,9 @@ def create_meal(request, data, user):
         meal.sub = sub.title()
         meal.description = desc
         
+        if "need_boiling_water" in data and data['need_boiling_water'] != '':
+            meal.need_boiling_water = bool(str(data['need_boiling_water']))
+
         meal.price = price
         meal.tax = tax
         meal.available = True if str(available) == "1" else False
@@ -316,6 +319,7 @@ def get_meal_details(request, data, user, meal_id):
             "description" : meal.description,
             "price":meal.price,
             "tax":meal.price* meal.tax/100,
+            "need_boiling_water":meal.need_boiling_water,
             "tax_percentage" : meal.tax,
             "available" : 1 if meal.available else 0,
             "calories" : meal.calories,
@@ -361,7 +365,7 @@ def get_meal_details(request, data, user, meal_id):
             },
             "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, meal__pk=meal.id).exists() else 0,
         })
-    except KeyError as e:
+    except Exception as e:
         log.error("get_meal details : " + e.message)
         return custom_error("Failed to get the meal details.")
 
@@ -451,3 +455,34 @@ def update_meal_order(request, data, user, meal_id):
     except Exception as e:
         log.error("Failed to update meal order : "+e.message)
         return custom_error("Failed to save meal order.")
+
+@check_input('POST', settings.ROLE_ADMIN)
+def update_home_meal(request, data, user):
+    try:
+        meal_id = data['meal_id']
+        meal = Meal.objects.get(pk=int(meal_id), is_deleted=False, available=True)
+        try:
+            conf = Configuration.objects.get(key='home_meal_id')
+        except Configuration.DoesNotExist:
+            conf = Configuration()
+            conf.key = 'home_meal_id'
+        conf.value= meal_id
+        conf.save()
+
+        return json_response({"status":1, "message":"Updated home meal"})
+    except Exception as e:
+        log.error("Failed to update home meal. : "+e.message)
+        return custom_error("Failed to update home meal. Please make sure whether the meal is available and not deleted.")
+
+@check_input('POST', settings.ROLE_ADMIN)
+def get_home_meal(request, data, user):
+    try:
+        try:
+            conf = Configuration.objects.get(key='home_meal_id')
+            return json_response({"status":1, "meal_id":conf.value})
+        except Configuration.DoesNotExist:
+            return custom_error("No home meal is set.")
+
+    except Exception as e:
+        log.error("Failed to get home meal. : "+e.message)
+        return custom_error("Failed to get the home meal.")
