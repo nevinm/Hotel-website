@@ -1367,6 +1367,12 @@ span.icon-menu {
         position: relative;
         height: 250px;
     }
+    .popup .button{
+        position: initial;
+    }
+    .popup{
+        height: auto;
+    }
 
 }
 
@@ -1395,8 +1401,8 @@ span.icon-menu {
 }
 @media (max-width: 443px) {
     .popup{
-        width: 75%;
-        height: 225px;
+        width: 85%;
+        height: auto;
     }
 }
 
