@@ -42,13 +42,27 @@ $(document).ready(function() {
     });
 
     $("#meal-info").on("click", function() {
-        mealId = $(this).data().mealId;
+        mealId = $(this).attr('data-id');
         window.location.href = 'meal-details.html?mealId=' + mealId;
     });
 
     $("#meal-add").on("click", function() {
-        mealId = $(this).data().mealId;
-        window.location.href = 'meal-details.html?mealId=' + mealId;
+       var mealId = $(this).attr('data-id'),count = 0;
+        count = parseInt($("#hidden-count").val()) + 2;
+        if(count < 10){
+            $("#hidden-count").val(count);
+            addToCart(mealId);
+        }
+    });
+
+    $(".removeItemButton").on("click", function() {
+        var quantity = -2 , count = 0,
+        mealId = $(this).attr('data-id');
+        count = parseInt($("#hidden-count").val()) - 2;
+        if(count >=2){
+           $("#hidden-count").val(count); 
+           addToCart(mealId,quantity);
+        }
     });
 });
 
@@ -59,7 +73,13 @@ var addToCartCallback = {
     success: function(data, textStatus, mealId) {
         var meal_details = JSON.parse(data),
             status = meal_details.status;
-        showPopup(meal_details);
+            if (status == -1) {
+               showPopup(meal_details); 
+           }else{
+               populateOverlayDetails(meal_details);
+               CartItemCount();
+           }
+            
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -101,6 +121,7 @@ function getHomePageMeal() {
 }
 
 function populateHomePageMeal(mealDetails) {
+
     var $sectionWhatToExpect = $("#section-what-to-expect");
     $sectionWhatToExpect.find(".meal-name p").text(mealDetails.name);
     $sectionWhatToExpect.find(".meal-image img").attr("src", mealDetails.main_image.url);
@@ -108,8 +129,19 @@ function populateHomePageMeal(mealDetails) {
     $sectionWhatToExpect.find(".meal-properties .preparation-time").text(mealDetails.preparation_time);
     $sectionWhatToExpect.find(".meal-properties .calories").text(mealDetails.calories);
     $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src", mealDetails.meal_types[0].image_url);
-    $("#meal-info").data("meal-id", mealDetails.id);
-    $("#meal-add").data("meal-id", mealDetails.id);
+    $("#meal-info").attr("data-id", mealDetails.id);
+    $("#meal-add").attr("data-id", mealDetails.id);
+    $(".removeItemButton").attr("data-id",mealDetails.id);
+    $(".meal-overlay").attr("data-id", mealDetails.id);
+    $(".meal-overlay .upper-line span").text(mealDetails.quantity);
+    $("#hidden-count").val(mealDetails.quantity);
+    if (mealDetails.quantity < 2) {
+        $(".meal-overlay").hide();
+        $('.removeItemButton').hide();
+    }else{
+        $(".meal-overlay").show();
+        $('.removeItemButton').show();
+    }
 }
 
 function isSessionExpired() {
@@ -247,4 +279,22 @@ function saveEmail(email, zipcode) {
     data = JSON.stringify(userData);
     var saveEmailInstance = new AjaxHttpSender();
     saveEmailInstance.sendPost(url, header, data, saveEmailCallback);
+}
+
+function  populateOverlayDetails(mealDetails){
+    if(mealDetails.quantity == 0){
+        $(".meal-overlay").hide();
+        $(".removeItemButton").hide();
+
+    }else{
+        $(".removeItemButton").show();
+        $(".meal-overlay").show();
+        $(".meal-overlay .upper-line span").text(mealDetails.quantity);
+        $("#hidden-count").val(mealDetails.quantity);
+    }
+    if(mealDetails.quantity >= 10){
+        $("#meal-add").addClass("button-disabled");
+    }else{
+        $("#meal-add").removeClass("button-disabled");
+    }
 }
