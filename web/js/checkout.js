@@ -184,7 +184,7 @@ $(document).ready(function() {
             } else if (code_length > 8) {
                 $('.promo-validation-message').text("* " + "Please enter valid Giftcard/Promocode");
             } else if (localStorage['loggedIn'] != 'true') {
-                $('.promo-validation-message').text("Session is Invalid.Please login and try");
+                $('.promo-validation-message').text("You must be logged in to use this code");
             } else {
                 checkPromoCode(code);
             }
