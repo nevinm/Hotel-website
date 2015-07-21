@@ -183,7 +183,7 @@ def apply_promocode(request, data, user):
         code = data["code"].strip()
 
         try:
-            code_obj = PromoCode.objects.get(code__iexact=code, deleted=False)
+            code_obj = PromoCode.objects.get(code__iexact=code, deleted=False, active=True)
             if code_obj.expiry_date < datetime.now():
                 return custom_error("Sorry, the promo code ("+ code +") has expired.")
             cart.promo_code = code_obj
@@ -209,12 +209,6 @@ def apply_promocode(request, data, user):
         cart.save()
 
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
-
-        applied_credit = 0
-        tot = total_price + tax - discount
-        
-        if credits > tot:
-            credits = tot
         
         return json_response({"status":1, "message":code_type + code + " has been applied. You will get a discount of "+"{0:.2f}".format(amt), 
             "amount":total_price,

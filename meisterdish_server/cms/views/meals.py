@@ -169,8 +169,8 @@ def create_meal(request, data, user):
 
             for fid in data['filter_ids']:
                 try:
-                    log.info(fid)
-                    log.info("nazz")
+                    if fid in ['0', 0]:
+                        continue
                     mt = MealType.objects.get(is_hidden=False, is_deleted=False, pk=int(fid))
                     if mt not in meal.types.all():
                         meal.types.add(mt)
