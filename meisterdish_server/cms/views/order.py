@@ -46,7 +46,7 @@ def update_order(request, data, user, order_id):
                 cart_item.save()
                 
         if "status" in data:
-            if not user.role.id in(settings.ROLE_KITCHEN, settings.ROLE_ADMIN):
+            if not user.role.id in(settings.ROLE_DELIVERY, settings.ROLE_ADMIN):
                 return custom_error("You are not authorized to change the order status.")
             status = int(data['status'])
             if status < 0 or status > 4:
@@ -428,7 +428,7 @@ def export_orders(request, data):
                       order.created.strftime("%m-%d-%Y %H:%M:%S"),
                       order.cart.user.first_name.title() + " " + order.cart.user.last_name.title(),
                       str(order.phone),
-                      create_address_text_from_model(order.delivery_address),
+                      create_address_text_from_model(order.delivery_address, order.phone),
                       str(order.grand_total),
                       order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                       dict(settings.ORDER_STATUS)[order.status],

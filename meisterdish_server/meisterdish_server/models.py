@@ -177,6 +177,8 @@ class Address(models.Model):
     first_name = models.CharField(max_length=50, default="")
     last_name = models.CharField(max_length=50, default="")
     is_primary = models.BooleanField(db_index=True, default=False)
+    is_business = models.BooleanField(db_index=True, default=False)
+    company = models.CharField(max_length=100, default="")
     street = models.CharField(max_length=50)
     building = models.CharField(max_length=50)
     state =models.ForeignKey(State) 
@@ -224,6 +226,7 @@ class Nutrient(models.Model):
     
 class Ingredient(models.Model):
     name = models.CharField(db_index=True, max_length=20)
+    image = models.ForeignKey(Image)
     def __unicode__(self):
         return self.name
 

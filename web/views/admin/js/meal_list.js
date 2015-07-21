@@ -182,6 +182,9 @@ var updatePrimaryMealOrderCallback = {
     success: function(data, textStatus, currentElement) {
         var updateMealResponse = JSON.parse(data);
         if (updateMealResponse.status == 1) {
+            $(".primary-meal").addClass("non-primary-meal");
+            $(".primary-meal").text("NO");
+            $(".primary-meal").removeClass("primary-meal");
             $(currentElement).removeClass("non-primary-meal");
             $(currentElement).addClass("primary-meal");
             $(currentElement).text("YES");
