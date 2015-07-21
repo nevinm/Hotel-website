@@ -70,6 +70,7 @@ function getDeliveryOrders(nextPage, userName, orderNum, status, total_amount, p
 }
 
 function populateDeliveryOrderList(order_data) {
+    $('table#delivery-order tbody').empty();
     $.each(order_data.aaData, function(key, value) {
 
         var phone = undefinedCheck(value.phone),
