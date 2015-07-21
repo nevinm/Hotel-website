@@ -1,5 +1,9 @@
 $(document).ready(function() {
     getDeliveryOrders(0);
+
+     setInterval(function(){
+        getDeliveryOrders();
+    },60000);
 });
 
 //Update orders API process

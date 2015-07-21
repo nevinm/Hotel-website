@@ -1,5 +1,9 @@
 $(document).ready(function() {
     getOrders();
+
+    setInterval(function(){
+        getOrders();
+    },60000);
 });
 
 //Get orders API process
