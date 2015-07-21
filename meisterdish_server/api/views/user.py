@@ -23,7 +23,6 @@ def add_address(request, data, user):
         state_id = data["state_id"]
         zip = data["zip"].strip()
         phone = data["phone"].strip()
-        
         email = data.get("email", False)
 
         if not check_delivery_area(zip):
@@ -35,6 +34,11 @@ def add_address(request, data, user):
         elif not Address.objects.filter(user=user, is_primary=True).exists():
             is_primary = True
         
+        is_business = False
+        if "is_business" in data and str(data["is_business"]) != '':
+            is_business = True
+            company = data['company'].strip()
+        
         if not validate_zipcode(zip):
             return custom_error("Please provide a valid zip code.")
         elif not validate_phone(phone):
@@ -44,6 +48,9 @@ def add_address(request, data, user):
 
         add = Address()
         add.is_primary = is_primary
+        add.is_business = is_business
+        if add.is_business:
+            add.company = company
         add.user = user
         
         add.first_name = fname
@@ -71,7 +78,7 @@ def add_address(request, data, user):
                 primary.is_primary=False
                 primary.save()
         return json_response({"status":1, "message":"Added Address", "id":add.id})
-    except KeyError as e:
+    except Exception as e:
         log.error("Add address failed: "+e.message)
         return custom_error("Failed to add address : "+e.message)
 
@@ -120,6 +127,11 @@ def update_address(request, data, user, address_id):
             add.is_primary = True
         else:
             add.is_primary = False
+
+        if "is_business" in data and str(data['is_business']) != '':
+            add.is_business = bool(data['is_business'])
+            add.company = data['company'].strip()
+        
         add.save()
         
         if add.id and add.is_primary:
