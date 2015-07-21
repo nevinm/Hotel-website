@@ -31,7 +31,7 @@ var getProfileCallback = {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
             localStorage['user_profile'] = data;
-            $(".account-credit").text(dollarConvert(userDetails.credits));
+            $(".account-credit").text(dollarConvert((userDetails.credits).toFixed(2)));
             profileAutoPopulate();
             if (profileId) {
                 if (userDetails.profile_image_thumb != "Not Available") {

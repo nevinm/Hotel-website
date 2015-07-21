@@ -80,6 +80,7 @@ function undefinedCheck(param) {
 
 //function populate OrderList 
 function populateOrderList(data) {
+    $('#order-list tbody').empty();
     var fullMealList = JSON.parse(data);
     $.each(fullMealList.aaData, function(key, value) {
         var phone = undefinedCheck(value.phone),

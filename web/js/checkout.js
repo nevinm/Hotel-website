@@ -239,9 +239,9 @@ $(document).ready(function() {
         $('.pickup-content').hide();
         $("#add-guest-address").show();
         $(".state-selector-container").show();
-        updateReciept();
         $('span.driver-tip-display').text('$5.00');
         $('.driver-tip').val(5);
+        updateReciept();
         $('#tip-form').validate().resetForm();
     });
 
@@ -436,7 +436,8 @@ function updateQuantity() {
 
 function updateReciept(GiftcardDetails, flag) {
     var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
-        totalCredits = 0,appliedCredit = 0, sureAmount = 0,
+        totalCredits = 0,appliedCredit = 0, grandTotal = 0,
+        appliedUserCredit = 0,appliedDiscount = 0,
         totalDriverTip = parseFloat($('.driver-tip').val()),
         totalDeliveryCost = 2.95;
     totalCredits = parseFloat($('#hidden-credit').val());
@@ -463,32 +464,54 @@ function updateReciept(GiftcardDetails, flag) {
     if (isNaN(totalDriverTip)) {
         totalDriverTip = 0;
     }
-    sureAmount = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost;
-    if(sureAmount > totalCredits){
-        appliedCredit = totalCredits;
-        $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
-    }else{
-        appliedCredit = sureAmount;
-        $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
-    }
+    grandTotal = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost;
     if (GiftcardDetails && !flag) {
         totalItemCost = GiftcardDetails.amount;
         totalTaxCost = GiftcardDetails.tax;
         totalDiscount = GiftcardDetails.discount;
-        totalCredits = GiftcardDetails.credits;
-        appliedCredit = totalDiscount + totalCredits;
+        totalCredits = GiftcardDetails.credits;    
     }
     if (flag == "coupon-applied") {
         totalDiscount = GiftcardDetails.discount;
     }
-    totalCost = sureAmount - totalDiscount - totalCredits;
-    if (totalCost <= 0) {
-        totalCost = 0;
-    }
+    if(totalDiscount && grandTotal > totalDiscount){
+        grandTotal = grandTotal - totalDiscount;
+        appliedDiscount = totalDiscount;
+    }else if (grandTotal < totalDiscount){
+        grandTotal = 0;
+        appliedDiscount =  totalDiscount ; 
+    }else{}
+    
+    if(totalCredits && grandTotal > totalCredits){
+        grandTotal = grandTotal - totalCredits;
+        appliedUserCredit = totalCredits;
+    }else if(grandTotal < totalCredits){
+        appliedUserCredit = grandTotal;
+        grandTotal = 0;
+    }else{}
+    appliedCredit = appliedUserCredit + appliedDiscount;
+    // if(totalDiscount > grandTotal){
+    //     appliedCredit = 0;
+    // }else{
+    //     if(totalCredits > 0){
+    //         appliedCredit = grandTotal - totalDiscount;
+    //     }
+    // }
+    // if(grandTotal > totalCredits){
+    //     appliedCredit = totalCredits;
+    //     $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
+    // }else{
+    //     appliedCredit = grandTotal;
+    //     $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
+    // }
+    // totalCost = grandTotal - totalDiscount - totalCredits;
+    // if (grandTotal <= 0) {
+    //     grandTotal = 0;
+    // }
     $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
-    $(".total-cost").text("$" + (totalCost).toFixed(2));
+    $(".total-cost").text("$" + (grandTotal).toFixed(2));
 }
 
 //Remove cart items call back
