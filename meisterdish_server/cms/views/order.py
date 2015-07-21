@@ -46,7 +46,7 @@ def update_order(request, data, user, order_id):
                 cart_item.save()
                 
         if "status" in data:
-            if not user.role.id in(settings.ROLE_KITCHEN, settings.ROLE_ADMIN):
+            if not user.role.id in(settings.ROLE_DELIVERY, settings.ROLE_ADMIN):
                 return custom_error("You are not authorized to change the order status.")
             status = int(data['status'])
             if status < 0 or status > 4:
