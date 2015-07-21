@@ -239,9 +239,9 @@ $(document).ready(function() {
         $('.pickup-content').hide();
         $("#add-guest-address").show();
         $(".state-selector-container").show();
-        updateReciept();
         $('span.driver-tip-display').text('$5.00');
         $('.driver-tip').val(5);
+        updateReciept();
         $('#tip-form').validate().resetForm();
     });
 
