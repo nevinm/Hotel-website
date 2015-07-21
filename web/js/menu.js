@@ -295,12 +295,12 @@ var addToCartCallback = {
                 $showOverlay.show();
             }
 
-            // if(meal_details.quantity >= 10){
-            //     $addButton.hide();
-            //     $showOverlay.find('.upper-line span').text(10);
-            // }else{
-            //     $addButton.show();
-            // }
+            if(meal_details.quantity >= 10){
+                $addButton.hide();
+                $showOverlay.find('.upper-line span').text(10);
+            }else{
+                $addButton.show();
+            }
             if (meal_details.session_key && (meal_details.session_key).length) {
                 localStorage['session_key'] = meal_details.session_key;
                 createCookie("SessionExpireTime", "true", sessionExpiryTime);

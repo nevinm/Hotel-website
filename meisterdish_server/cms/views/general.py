@@ -229,7 +229,7 @@ def get_users(request, data, user):
                               "profile_image" : settings.DEFAULT_USER_IMAGE if user.profile_image is None else user.profile_image.image.url,
                               "profile_image_thumb" : settings.DEFAULT_USER_IMAGE if user.profile_image is None else user.profile_image.thumb.url,
                               "is_admin": "Yes" if user.role.id == 1 else "No",
-                              "credits" : "$ "+str(user.credits),
+                              "credits" : "$ "+"{0:.2f}".format(user.credits),
                               "is_active": user.is_active,
                               })
         
@@ -345,7 +345,7 @@ def export_users(request, data):
                         settings.ROLE_DIC[user.role.pk],
                         user.email,
                         "Not Available" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
-                        "$ "+str(user.credits),
+                        "$ "+"{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
                     ])
                 return export_csv(users_list, "users_list.csv")

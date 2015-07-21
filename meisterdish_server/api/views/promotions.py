@@ -210,11 +210,18 @@ def apply_promocode(request, data, user):
 
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
 
+        applied_credit = 0
+        if user.credits > total_price:
+            applied_credit = total_price
+        else:
+            applied_credit = user.credits
+
         return json_response({"status":1, "message":code_type + code + " has been applied. You will get a discount of "+"{0:.2f}".format(amt), 
             "amount":total_price,
             "tax":total_tax,
             "discount":discount,
             "credits":credits,
+            "applied_credit":applied_credit,
             "code":code
         })
     except Cart.DoesNotExist:
