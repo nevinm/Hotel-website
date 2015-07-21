@@ -183,7 +183,7 @@ def apply_promocode(request, data, user):
         code = data["code"].strip()
 
         try:
-            code_obj = PromoCode.objects.get(code__iexact=code, deleted=False)
+            code_obj = PromoCode.objects.get(code__iexact=code, deleted=False, active=True)
             if code_obj.expiry_date < datetime.now():
                 return custom_error("Sorry, the promo code ("+ code +") has expired.")
             cart.promo_code = code_obj
