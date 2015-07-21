@@ -223,10 +223,15 @@ def create_order(request, data, user):
         
         referral_bonus = float(Configuration.objects.get(key="REFERRAL_BONUS").value)
         referred = Referral.objects.filter(referree=user).exists() and user.credits >= referral_bonus
+        
+        referred_user_first_order = False
+
         if not Order.objects.filter(cart__user=user).exists() and referred:
             #First Order
-            user.credits -= referral_bonus
-            order.total_payable -= referral_bonus
+            user.credits -= referral_bonus/2 # Half of referral bonus
+            order.credits = referral_bonus/2
+            order.total_payable -= referral_bonus/2
+            referred_user_first_order = True
         else:
             if order.cart.promo_code:
                 if order.cart.promo_code.amount > order.total_payable:
@@ -246,6 +251,11 @@ def create_order(request, data, user):
                     order.total_payable -=  gc_amount
             if user.credits > 0:
                 log.info("User has credits : "+str(user.credits))
+                # Is there a need to do a check for second transaction?
+                # If yes, pls comment this and do the flow.
+                #if not Order.objects.filter(cart__user=user).count() == 1 and referred:
+                #    log.info("Referred user - 2nd txn")
+
                 if user.credits > order.total_payable:
                     user.credits = user.credits - order.total_payable
                     order.credits = order.total_payable
@@ -286,6 +296,12 @@ def create_order(request, data, user):
         if not order.cart.completed:
             order.cart.completed=True
             order.cart.save()
+
+        if referred_user_first_order:
+            referrer = Referral.objects.get(referree=user).referrer
+            referrer.credits += referral_bonus
+            referrer.save()
+            log.info("Added referral bonus to referrer: "+str(referrer.id))
 
         if not send_order_placed_notification(order):
             log.error("Failed to send order notification")
@@ -384,7 +400,7 @@ def get_order_cart_items(order):
                   "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                   "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
                   "coupon" : coupon,
-                  "credits" : order.cart.user.credits,
+                  "credits" : order.credits,
                   "transaction_id" : order.payment.transaction_id if order.payment else "Not Available",
                   "tax" : "{0:.2f}".format(order.total_tax),
                   "shipping" : "{0:.2f}".format(settings.SHIPPING_CHARGE),

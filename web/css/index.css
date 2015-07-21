@@ -1,8 +1,7 @@
-@charset "UTF-8";
-
 /*==============================*\
-			&CONTENTS
+            &CONTENTS
 \*==============================*/
+
 
 /*
 SLIDER-FOOTER
@@ -11,359 +10,753 @@ SLIDER
 
 
 /*==============================*\
-			&slider-footer
+            &slider-footer
 \*==============================*/
-/*Footer is Unique to the slider as it differs from the other common footers */
-/*.slider-footer{
-	padding: 20px 0 !important;
-}*/
-#slider-footer{
-   width: 100%;
-   float: left;
-   position: absolute;
-   left: 0;
-   bottom: 0;
-   padding-top: 20px;
-   height: 175px;
-   background: #fff;}
 
-#slider-footer ul{
-	text-align: center;
-	margin: 0;
+
+/*Footer is Unique to the slider as it differs from the other common footers */
+
+#slider-footer {
+    width: 100%;
+    float: left;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    background: #fff;
 }
-#slider-footer ul li{
-	display: inline-block;
-	font-family: 'ProximaNova-semibold';
-	font-size: 12px;
-	cursor: pointer;
+
+#slider-footer ul {
+    text-align: center;
+    margin: 0;
 }
-#slider-footer ul li a{
-	margin: 0 40px 0 0;
-	color: #9B9B9B;
+
+#slider-footer ul li {
+    display: inline-block;
+    font-family: 'ProximaNova-semibold';
+    font-size: 12px;
+    line-height: 30px;
+    height: 38px;
+    vertical-align: middle;
 }
-.footer-links{
-	text-align: center;
+
+#slider-footer ul li a {
+    margin: 0 40px 0 0;
+    color: #6B6B6B;
+    font-family: 'BrandonGrotesque-Light';
+    text-transform: uppercase;
+    letter-spacing: 1px
+}
+
+.footer-links {
+    text-align: center;
+}
+
+.footerContent {
+    height: 100%;
+}
+
+.footer-list {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.meisterdish-copyright {
+    color: rgb(165, 165, 165) !important;
+}
+
+.sml_sprite {
+    background: url('../images/footer_sml_sprite.png') no-repeat;
+    width: 38px;
+    height: 35px;
+    cursor: pointer;
+}
+
+#slider-footer .social-media-icons .facebook {
+    background-position: 3px 0px;
+}
+
+#slider-footer .social-media-icons .twitter {
+    background-position: -35px 0px;
+    width: 34px;
+}
+
+#slider-footer .social-media-icons .instagram {
+    background-position: -70px 0px;
+    width: 35px;
+}
+
+#slider-footer .social-media-icons .pintrest {
+    background-position: -105px 0px;
+}
+
+.social-media-icons-parent {
+    /*    margin-top: -12px;
+    position: absolute;*/
+}
+
+.footer-non-social {
+    margin-top: 12px;
 }
 
 
 /*==============================*\
-			&SLIDER
+            &SLIDER
 \*==============================*/
-#main-slider-wrapper{
-	width: 100%;
-	float: left;
-	background-color: #f1f1f1;
-	min-height: 100%;
-}
-#section1 .slide-description {
-	position: absolute;
-	top: 20%;
-	left: 14.5%;
-	width: 20%;
-	z-index: 5;
-	line-height: -11px;
-	color: #9b9b9b;
-}
-#section1 .slide-description h4{
-	width: 360px;
-}
-.slide-description h3{
-	text-transform: uppercase;
-}
-#section1 .slide-description .h0,#slide3 .slide-description .h0,#section3 .slide-description .h0{
-	text-transform: uppercase;
-	color: #9b9b9b;
-	line-height: 55px;
-	padding-bottom: 5px;
-	letter-spacing: 4px;
-	font-size: 50px;
-}
-#section2 .slide-description{
-	position: absolute;
-	top: 37%;
-	margin-left: 25%;
-	width: 21%;
-	color: #9b9b9b;
-}
-#section2 .slide-description h4{
-	padding-bottom: 10px;
-}
-#section3 .slide-description{
-	position: absolute;
-  	top: 23%;
-  	margin-left: 10%;
+
+#main-slider-wrapper {
+    width: 100%;
+    float: left;
+    background-color: #f1f1f1;
+    min-height: 100%;
 }
 
-#section3 .slide-description .body-text-small{
-	font-family: 'BrandonGrotesque-bold';
-	font-size: 12px;
-	padding-bottom: 5px;
-	letter-spacing: .5px;
-	line-height: 25px;
+
+/*==============================*\
+        &Section what is
+\*==============================*/
+
+#section-what-is {
+    background: url(../images/homepageslider/homepage_1.jpg) 0% 50% no-repeat;
+    background-position: fixed;
+    padding: 6% 0 0 0;
+    background-size: cover;
+    text-align: center;
 }
-#zip-code{
-	width: 130px;
-  	height: 45px;
-  	text-align: center;
-  	margin-top: -4px;
-    padding: 0px 10px;
-    margin-right: 5px;
+
+#section-what-is .main-header {
+    font-family: 'BrandonGrotesque-Medium';
+    font-size: 40px;
+    letter-spacing: 2.5px;
+    color: #6B6B6B;
+}
+
+#section-what-is .sub-header {
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: #6B6B6B;
+}
+
+.main-header-container {
+    padding: 30px 0;
+}
+
+.sub-header-container {
+    padding-bottom: 20px;
+}
+
+#section-what-is .slide-description,
+#section-zipcode .slide-description {
+    background-color: white;
+    max-width: 700px;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+.outer-slide-description {
+    padding: 10px;
+    background-color: rgb(244, 244, 244);
+    max-width: 720px;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+.menu-button {
+    margin-bottom: 30px;
+    padding: 0 40px;
+}
+
+#section-what-is .section-logo img,
+.mobile-menu-button {
+    display: none;
+}
+
+.meal-overlay {
+  position: absolute;
+  height: 99%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(142, 198, 87, 0.65);
+  display: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+p.upper-line {
+  font-family: 'BrandonGrotesque-bold';
+  font-size: 40px;
+  color: #fff;
+  text-align: center;
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  left: 0;
+}
+p.lower-line {
+  font-family: 'BrandonGrotesque-Medium';
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  width: 100%;
+  top: 55%;
+  position: absolute;
+  left: 0;
+}
+.meal-image-container{
+    position: relative;
+}
+.removeItemButton {
+  height: 35px;
+  width: 35px;
+  text-align: center;
+  border: 1px solid #A9D77B;
+  line-height: 28px;
+  float: left;
+  padding: 0 0px;
+  margin-bottom: 6.5px;
+  min-width: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 25px;
+  display: none;
+  background-color: #a9d77b;
+  border-radius: 3px;
+  color: #fff;
+  -webkit-transition: color .4s, background-color .4s, border .4s;
+  transition: color .4s, background-color .4s, border .4s;
+  -moz-transition: color .4s, background-color .4s, border .4s;
+  -ms-transition: color .4s, background-color .4s, border .4s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.removeItemButton:hover{
+    background-color: #8EC657;
+}
+/*====================================*\
+    &Section what is meisterdish
+\*====================================*/
+
+
+/*#section-what-is-meisterdish {
+    margin-top: 50px;
+}
+*/
+
+#section-what-is-meisterdish .meisterdish-details-icon {
+    height: 100px;
+    width: auto;
+}
+
+#section-what-is-meisterdish .inner-header {
+    font-family: 'BrandonGrotesque-Medium';
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: #6B6B6B;
+}
+
+#section-what-is-meisterdish .slide-description {
+    background-color: white;
+    width: 100%;
+    overflow: hidden;
+}
+
+#section-what-is-meisterdish .slide-header,
+#section-what-to-expect .slide-header {
+    padding-bottom: 20px;
+}
+
+#section-what-is-meisterdish .outer-slide-description,
+#section-what-to-expect .outer-slide-description {
+    max-width: 1100px;
+    margin: 40px auto 0 auto;
+}
+
+#section-what-is-meisterdish .meisterdish-details {
+    width: 25%;
+    padding: 50px 0;
+    text-align: center;
+    float: left;
+}
+
+#section-what-is-meisterdish .inner-header {
+    margin: 40px 0 0 0;
+}
+
+#section-what-is-meisterdish .inner-details {
+    font-family: 'ProximaNova-regular';
+    font-size: 15px;
+    letter-spacing: 1px;
     color: #9B9B9B;
 }
 
-.slide-description-mobile{
-	display: none;
+#section-what-is-meisterdish .inner-header-hr {
+    height: 1px;
+    border: 0;
+    width: 60%;
+    margin: 0 auto 20px auto;
+    background-color: #A9D77B;
 }
 
-#section0,
-#section1,
-#section2,
-#section3{
-	background-size: cover;
+
+/*====================================*\
+        &Section what to expect
+\*====================================*/
+
+#section-what-to-expect {
+    background-color: #F8F8F8;
 }
 
-#slide1{
-	background: url(../images/homepageslider/homepage_1.jpg) 0% 50% no-repeat;
-	background-position: fixed;
-	padding: 6% 0 0 0;
-	background-size: cover;
+.slide-header {
+    font-size: 35px;
+    letter-spacing: 2.5px;
+    font-family: 'BrandonGrotesque-Medium';
+    color: #6B6B6B;
+    text-align: center;
 }
-#slide2{
-	background: url(../images/homepageslider/homepage_12.jpg) center top no-repeat;
-	background-position: fixed;
-	padding: 6% 0 0 0;
-	background-size: cover;
+/*#section-what-to-expect .slide-header{
+    padding-bottom: 30px;
 }
-#slide3{
-	background: url(../images/homepageslider/homepage_2.jpg) center top no-repeat;
-	padding: 6% 0 0 0;
-	background-position: fixed;
-	/*padding: 30% 0 0 0;*/
-	background-size: cover;
+.meal-properties{
+    padding-top: 20px;
+}*/
+.header-hr {
+    height: 1px;
+    border: 0;
+    width: 20%;
+    margin: 0 auto;
+    background-color: #A9D77B;
 }
-#slide4{
-	background: url(../images/homepageslider/homepage_14.jpg) center top no-repeat;
-	padding: 6% 0 0 0;
-	background-position: fixed;
-	/*padding: 30% 0 0 0;*/
-	background-size: cover;
+
+#section-what-to-expect .outer-slide-description {
+    max-width: 1100px;
+    overflow: hidden;
+    /*margin: 40px auto 0 auto;*/
 }
-#section3{
-	background: url(../images/homepageslider/map_banner.jpg) center top no-repeat;
-	background-position: fixed;
-	padding: 6% 0 0 0;
-	background-size: cover;
+
+#section-what-to-expect .slide-description {
+    background-color: #fff;
+    overflow: hidden;
+    padding: 30px;
 }
-input#zip-code[type="text"]{
-	font-size: 16px;
-	font-family: 'BrandonGrotesque-Light';
-	text-transform: uppercase;
+
+.meal-details,
+.button-container,
+.meal-name,
+.meal-sub-description,
+.meal-properties,
+p.lower-content,
+p.upper-content,
+.ingredients-wrapper {
+    width: 100%;
+    float: left;
 }
-.logo-mobile{
-	display: none;
+
+.meal-image {
+    width: 40%;
+    float: left;
 }
-.deliver-message{
-	padding: 18px 0;
+.meal-name{
+    padding-left: 22px;
+    text-transform: uppercase;
 }
-img#cancel,img#close {
-  float: right;
-  padding: 14px 17px 0px 0px;
-  cursor: pointer;
+.meal-sub-description{
+    padding-left: 22px;
 }
-.delivery-area-check-popup{
-	display: none;
+.meal-description-wrapper {
+    width: 60%;
+    padding: 20px 30px;
+    float: left;
 }
-.delivery-area-check-popup .popup-zip-fail{
-	height: auto;
-	position: fixed;
-	width: 400px;
-	background-color: #fff;
-	top: 40%;
-	left: 50%;
-	z-index: 999999;
-	border-radius: 4px;
-	-ms-transform: translate(-50%,-40%);
-	-moz-transform: translate(-50%,-40%);
-	-webkit-transform: translate(-50%,-40%);
-	transform: translate(-50%,-40%);
+
+.meal-name p,
+.meal-sub-description p,
+p.lower-content {
+    letter-spacing: 2.5px;
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 30px;
+    color: #6B6B6B;
 }
-.delivery-area-check-popup .popup-zip-fail .button{
-	position: initial;
-	float: left;
+
+.meal-sub-description p,
+p.lower-content {
+    letter-spacing: 1.5px;
+    font-size: 20px;
 }
+
+p.lower-content {
+    text-align: center;
+}
+
+p.upper-content {
+    font-family: 'BrandonGrotesque-Regular';
+    color: #8DC56A;
+    font-size: 30px;
+    min-height: 40px;
+    text-align: center;
+    word-break: break-word;
+}
+
+.details-content {
+    width: 20%;
+    float: left;
+}
+
+.what-you-get-section {
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.what-you-get-section p {
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: #6B6B6B;
+    text-align: center;
+    /*padding-bottom: 30px;*/
+}
+
+.what-you-get-section .sub-heading {
+    font-family: 'BrandonGrotesque-Medium';
+}
+
+.what-you-get-section .details-content {
+    width: 14.28%;
+}
+
+.what-you-get-section .upper-content img {
+    height: 50px;
+}
+#section-what-to-expect .ingredients-wrapper {
+    padding: 25px 0;
+}
+
+#section-what-to-expect .meal-properties {
+    margin-top: 20px;
+}
+
+#section-what-to-expect .button-container {
+    text-align: center;
+    width: 55%;
+    margin: 0 auto;
+    float: none;
+}
+
+#section-what-to-expect .button-container a{
+    width: 150px;
+}
+.cart-button-container{
+    width: 33.33%;
+    float: left;
+    text-align: center;
+}
+.cart-button-container .btn{
+    cursor: pointer;
+    width: 150px;
+}
+
+.meal-type-description-icon{
+    max-width: 45px;
+    max-height: 45px;
+}
+
+/*==============================*\
+        &Section zip code
+\*==============================*/
+
+#section-zipcode {
+    background: url(../images/homepageslider/Map_UpperEastSide.png) center top no-repeat;
+    background-position: fixed;
+    padding: 6% 0 0 0;
+    background-size: cover;
+}
+/*#section-zipcode .slide-description{
+    background-color: #fff;
+    overflow: hidden;
+}
+#section-zipcode .body-text-small,.zip-code-container, 
+#section-zipcode .slide-header{
+    text-align: center;
+    padding:20px 0;
+}
+
+#section-zipcode .body-text-small{
+    color: #6B6B6B;
+    font-family: 'BrandonGrotesque-Bold';
+}
+
+.check-delivery{
+    width: 145px;
+    margin-bottom: 4px;
+}*/
+
+#section-zipcode .outer-slide-description {
+    margin-top: -100px;
+}
+
+.zip-code-container {
+    text-align: center;
+    padding: 30px 0;
+    position: relative;
+}
+
+#zip-code {
+    width: 145px;
+    height: 45px;
+    /*border-radius: 3px;*/
+    text-align: center;
+    margin-top: -7px;
+    padding-top: 8px;
+    margin-right: 20px;
+    color: #9B9B9B;
+    /*line-height: 31px;*/
+}
+
+input#zip-code[type="text"] {
+    font-size: 16px;
+    font-family: 'BrandonGrotesque-Light';
+    text-transform: uppercase;
+}
+
+img#cancel,
+img#close {
+    float: right;
+    padding: 14px 17px 0px 0px;
+    cursor: pointer;
+}
+
+.delivery-area-check-popup {
+    display: none;
+}
+
+.delivery-area-check-popup .popup-zip-fail {
+    height: auto;
+    position: fixed;
+    width: 400px;
+    background-color: #fff;
+    top: 40%;
+    left: 50%;
+    z-index: 999999;
+    border-radius: 4px;
+    -ms-transform: translate(-50%, -40%);
+    -moz-transform: translate(-50%, -40%);
+    -webkit-transform: translate(-50%, -40%);
+    transform: translate(-50%, -40%);
+}
+
+.delivery-area-check-popup .popup-zip-fail .button {
+    position: initial;
+    float: left;
+}
+
 .delivery-area-check-popup .username-wrapper {
-  padding-bottom: 20px;
-  width: 100%;
-  float: left;
-}
-label#zip-code-error {
-  background-color: none;
-  background: none;
-  bottom: 51px;
-}
-label#username-error {
-  bottom: 120px;
-  left: 5px;
-  width: 60%;
+    padding-bottom: 20px;
+    width: 100%;
+    float: left;
 }
 
-/*==============================*\
-			&Media-query
-\*==============================*/
-@media (min-width: 768px) and (max-width:1024px){
-	#slide1 .slide-description .h0,#slide3 .slide-description .h0,#section3 .slide-description .h0{
-		line-height: 42px;
-		padding-bottom: 5px;
-		letter-spacing: 4px;
-		font-size: 35px;
-	}
-	#slide1 .slide-description{
-		left: 18%;
-	}
+label#zip-code-error {
+    background-color: none;
+    background: none;
+    top: 0;
+    left: 0;
 }
-/*==============================*\
-	     &HOME-RESPONSIVE
-\*==============================*/
-@media (min-width: 320px) and (max-width:767px){
-	.logo-mobile{
-		display: block;
-		margin-top: 5px;
-	}	
-	.logo-mobile-container {
-		width: 262px;
-		overflow: hidden;
-		margin: 0 auto;
-	}
-	#home-page-main-wrapper{
-		background-color:#CDD5CE;
-	}
-	 #section1, #section2, #section3{
-		border:1px hidden;
-		box-shadow: 0 0 6px grey;
-		background-color: #fff;
-		border-radius: 4px ;
-		z-index: 999;
-	}
-	#section1{
-		margin-top: 105px;
-	}
-	#section2{
-		margin-top: 20px;
-	}
-	.section .slide-description, #slider-footer{
-		display: none;
-	}
-	#slide1, #slide2,#section3, #slide3,#slide4{
-		height: 150px !important;
-		width: 100%;
-	}
-	#slide1,#slide2,#slide3,#slide4 {
-		border-radius: 4px 4px 0 0;
-	}
-	.section{
-		border: 2px solid black;
-		height: auto !important;
-	}
-	.fp-tableCell{
-		height:150px !important;
-	}
-	.fp-slides{
-		height: auto;
-	}
-	div#fullpage {
-		margin: 0 10px;
-	}
-	.slide-description-mobile{
-		display: block;
-		width: 88%;
-		margin: 0 auto;
-		padding-top: 20px;
-	}
-	.slide-description-mobile .h0 {
-		text-transform: uppercase;
-		color: #9b9b9b;
-		line-height: 42px;
-		padding-bottom: 5px;
-		letter-spacing: 4px;
-		font-size: 30px;
-		font-family: 'BrandonGrotesque-Regular';
-	}
-	.slide-description-mobile h4 {
-		color: #9b9b9b;
-		line-height: 21px;
-  		font-size: 13px;
-  		font-family: 'BrandonGrotesque-Regular';
-	}
-	.slide-description-mobile	a.btn.btn-large-secondary{
-		background-color: #A9D77B;
-		color: #fff;
-		border-color: #A9D77B;
-		width: 100%;
-		margin-top: 40px;
-		margin-bottom: 20px;
-		font-size: 20px;
-	}
-	.slide-description-mobile .h0 span{
-		width: 100%;
-		float: left;
-	}
-	.slide-description-mobile h4 span{
-		width: 100%;
-		float: left;
-		padding: 3px 0;
-	}
-	.slide-description-mobile hr{
-		height: 1px;
-		border: 0;
-		background-color: #A9D77B;
-		margin-bottom: 20px;
-		margin-right: 70%;
-		margin-top: 10px;
-	}
-	.slide-description-mobile:nth-child(2) h4{
-		padding-bottom: 20px;
-	}
-	.slide-description-mobile #zip-code{
-		width: 100%;
-	}
-	.slide-description-mobile .zip-code-container a{
-		width: 100%;
-		margin-top:15px;
-	}
-	.slide-description-mobile .body-text-small{
-		font-family: 'BrandonGrotesque-Regular';
-		margin-bottom: 35px;
-		font-size: 12px;
-		font-weight: bold;
-	}
-	#section3-description{
-		background-color: #fff;
-		width: 100%;
-		padding: 0 5%;
-		padding-top: 20px;
-		padding-bottom: 15px;
-		margin-bottom: 20px;
-		border: 1px hidden;
-		border-top: none;
-		border-radius: 0 0 4px 4px;
-        box-shadow: 0 0 6px grey;
-	}
-	div#section3 {
-		border: 1px hidden;
-		border-bottom: none;
-		margin-top: 20px;
-		/*box-shadow: none;*/
-		border-radius: 4px 4px 0 0;
-	}
-	.zip-code-container {
-		padding-top: 20px;
-	}
+
+label#username-error {
+    bottom: 120px;
+    left: 5px;
+    width: 60%;
 }
-@media (min-width: 320px) and (max-width:400px){
-	.logo-mobile-container{
-		width:181px;
-	}
-	.logo-mobile{
-		margin-top: 9px;
-	}
+
+#section-zipcode .header-hr {
+    width: 40%;
+    margin-bottom: 20px;
+}
+
+#section-zipcode .slide-header {
+    padding: 30px;
+}
+
+#section-zipcode .zip-text {
+    margin-bottom: 20px;
+}
+
+#section-zipcode .zip-text p {
+    letter-spacing: 1.5px;
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 15px;
+    color: #6B6B6B;
+    text-align: center;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+    #section-what-is-meisterdish .meisterdish-details {
+        width: 100%;
+    }
+    #section-what-is .section-logo img {
+        display: block;
+        max-width: 80%;
+        margin: 0 auto;
+    }
+    .outer-slide-description {
+        max-width: 80%;
+        margin: 0 auto;
+    }
+    .section-logo {
+        padding: 30px 0;
+    }
+    #section-what-is .main-header {
+        font-size: 25px;
+    }
+    .mobile-menu-button {
+        display: block;
+        margin: 30px auto 0 auto !important;
+        width: 200px;
+    }
+    .menu-button {
+        display: none;
+    }
+    #section-zipcode .slide-header {
+        font-size: 30px;
+    }
+    .meal-image {
+        width: 100%;
+        padding: 0 10%;
+    }
+    .details-content {
+        width: 25%;
+    }
+    .what-you-get-section .details-content {
+        width: 25%;
+    }
+    .meal-description-wrapper {
+        width: 100%;
+        text-align: center;
+    }
+/*    #section-what-to-expect .button-container a {
+        width: 100%;
+        margin: 10px 0px;
+        height: 40px !important;
+        max-width: 300px;
+    }*/
+    .what-you-get-section p {
+        font-size: 17px;
+    }
+    p.upper-content {
+        font-size: 20px;
+    }
+    .meal-type-description-icon {
+        width: 20px;
+    }
+    .meal-sub-description p,
+    p.lower-content {
+        font-size: 17px;
+    }
+    #section-what-to-expect .slide-description {
+        padding: 0;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 400px) {
+    #zip-code,
+    #zip-check {
+        width: 100px;
+        margin: 0;
+    }
+    .meal-sub-description p,
+    p.lower-content {
+        font-size: 12px;
+    }
+    p.upper-line{
+        font-size: 35px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    #section-what-to-expect .what-you-get-section {
+        width: 100%;
+    }
+}
+
+@media (min-width: 767px) and (max-width: 1400px) {
+    #section-what-is-meisterdish .slide-header,
+    #section-what-to-expect .slide-header {
+        padding-bottom: 10px;
+    }
+    #section-what-to-expect .slide-header {
+        font-size: 25px;
+        letter-spacing: 2.5px;
+        font-family: 'BrandonGrotesque-Medium';
+        color: #6B6B6B;
+        margin-top: 25px;
+        text-align: center
+    }
+    #section-what-is-meisterdish .outer-slide-description,
+    #section-what-to-expect .outer-slide-description {
+        margin: 20px auto 0 auto;
+    }
+    .meal-name p {
+        font-size: 25px;
+    }
+    .meal-sub-description p,
+    p.lower-content {
+        font-size: 15px;
+    }
+    p.upper-content {
+        font-size: 25px;
+    }
+    #section-what-to-expect .slide-description {
+        padding: 10px;
+    }
+    .what-you-get-section .sub-heading {
+        font-size: 20px;
+    }
+    .meal-image {
+        padding-left: 10%;
+        padding-top: 2%;
+    }
+}
+@media (min-width: 320px) and (max-width: 1024px) {
+    #section-what-to-expect .button-container {
+        text-align: center;
+        width: 80%;
+        margin: 0 auto;
+    }
+    .cart-button-container{
+        width: 100%;
+        padding: 10px 0;
+        max-width: 350px;
+        float: none;
+        margin:0 auto;
+    }
+    #section-what-to-expect .button-container a{
+        width: 100%;
+        height: 40px !important;
+        line-height: 36px;
+    }
+    .cart-button-container .btn{
+        width: 100%;
+        height: 40px !important;
+        line-height: 36px;
+    }
+    .removeItemButton {
+        height: 40px;
+        width: 13%;
+        float: left;
+        margin-right: 4%;
+        min-width: 0px;
+    }
+    .width-adjust{
+        width: 83% !important;
+    }
+}
+@media (min-width: 1024px) and (max-width: 1100px) {
+    .cart-button-container .btn{
+        width: 140px;
+    }
 }
