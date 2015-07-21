@@ -127,10 +127,9 @@ function populateOrderList(data) {
             //         " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id +
             //         "' class='status'/></td>");
             // }
-        });
-
-        currentStatus = value.status_id;
+        currentStatus = mealValue.status_id;
         $(".order-status:last").val(currentStatus);
+        });
     });
 
     $(".pagination").pagination({
