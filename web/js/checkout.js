@@ -436,7 +436,7 @@ function updateQuantity() {
 
 function updateReciept(GiftcardDetails, flag) {
     var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
-        totalCredits = 0,
+        totalCredits = 0,appliedCredit = 0, sureAmount = 0,
         totalDriverTip = parseFloat($('.driver-tip').val()),
         totalDeliveryCost = 2.95;
     totalCredits = parseFloat($('#hidden-credit').val());
@@ -460,26 +460,32 @@ function updateReciept(GiftcardDetails, flag) {
         totalItemCost += (price * quantity);
         totalTaxCost += (tax * quantity);
     });
+    if (isNaN(totalDriverTip)) {
+        totalDriverTip = 0;
+    }
+    sureAmount = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost;
+    if(sureAmount > totalCredits){
+        appliedCredit = totalCredits;
+        $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
+    }else{
+        appliedCredit = sureAmount;
+        $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
+    }
     if (GiftcardDetails && !flag) {
         totalItemCost = GiftcardDetails.amount;
         totalTaxCost = GiftcardDetails.tax;
         totalDiscount = GiftcardDetails.discount;
         totalCredits = GiftcardDetails.credits;
+        appliedCredit = totalDiscount + totalCredits;
     }
     if (flag == "coupon-applied") {
         totalDiscount = GiftcardDetails.discount;
     }
-    if (isNaN(totalDriverTip)) {
-        totalDriverTip = 0;
-    }
-    totalCost = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost - totalDiscount - totalCredits;
+    totalCost = sureAmount - totalDiscount - totalCredits;
     if (totalCost <= 0) {
         totalCost = 0;
     }
-    // if (totalCost <= totalCredits){
-    //     totalCredits = totalCost;
-    // }
-    $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount + totalCredits).toFixed(2));
+    $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
     $(".total-cost").text("$" + (totalCost).toFixed(2));

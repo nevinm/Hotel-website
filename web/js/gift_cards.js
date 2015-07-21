@@ -29,11 +29,15 @@ $(document).ready(function() {
     }
 
     $(".giftcard-selector").on("click", function() {
+        
+        var giftcardAmount = 0;
         $(".giftcard-selector").removeClass("giftcard-selected");
         $(this).addClass("giftcard-selected");
         $(".checkbox-image").attr("src", "../images/unchecked.png");
         $(this).find(".checkbox-image").attr("src", "../images/checked.png");
         $("#giftcard-custom-amount").val("");
+        giftcardAmount = $(this).find('.giftcard-amount').attr('data-amount');
+        $("#giftcard-custom-amount").val(giftcardAmount);
         $("#custom-amount").validate().resetForm();
     });
 
@@ -81,15 +85,16 @@ $(document).ready(function() {
         return false;
     })
     
-    $("#place-order").on("click", function(e) {
+    $("#gift-place-order").on("click", function(e) {
         e.preventDefault();
         if (validateGiftOrder()) {
             placeGiftOrder();
         };
-    });
+    });  
 });
 
 function placeGiftOrder() {
+    $('.loading-indicator').show();
     //Saved card is present.
     if(localStorage['loggedIn'] == 'false'){
         if($('#address').valid()){
@@ -206,6 +211,7 @@ function fetchGiftCardData(token, cardId) {
 var saveCreditCardGiftCardCallback = {
     success: function(data, textStatus) {
         var response = JSON.parse(data);
+        $('.loading-indicator').hide();
         if (response.status == 1) {
             $("#pay-form")[0].reset();
             $("#close").addClass("redirectApproved");
