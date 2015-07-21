@@ -209,12 +209,6 @@ def apply_promocode(request, data, user):
         cart.save()
 
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
-
-        applied_credit = 0
-        tot = total_price + tax - discount
-        
-        if credits > tot:
-            credits = tot
         
         return json_response({"status":1, "message":code_type + code + " has been applied. You will get a discount of "+"{0:.2f}".format(amt), 
             "amount":total_price,
