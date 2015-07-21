@@ -429,7 +429,7 @@ def export_orders(request, data):
                       order.cart.user.first_name.title() + " " + order.cart.user.last_name.title(),
                       str(order.phone),
                       create_address_text_from_model(order.delivery_address, order.phone),
-                      str(order.grand_total),
+                      "{0:.2f}".format(order.grand_total),
                       order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                       dict(settings.ORDER_STATUS)[order.status],
                   ])
