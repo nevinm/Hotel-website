@@ -193,7 +193,14 @@
                         <div class='slide-description'>
                             <div class="meal-details">
                                 <div class="meal-image">
-                                    <img src="images/homepageslider/Pappardelle-Hero_Web.png">
+                                    <div class="meal-image-container">
+                                        <img src="images/homepageslider/Pappardelle-Hero_Web.png">
+                                        <input type="hidden" id="hidden-count" value="">
+                                        <div class="meal-overlay">
+                                            <p class="upper-line"><span></span> SERVINGS</p>
+                                            <p class="lower-line">Added to cart</p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="meal-description-wrapper">
                                     <div class="meal-name">
@@ -273,9 +280,16 @@
                                 </div>
                             </div>
                             <div class="button-container">
-                                <a href="#!" class="btn btn-small-secondary" id='meal-info'>MEAL INFO</a>
-                                <a href="#!" class="btn btn-small-primary medium-green" id='meal-add'>ADD TO CART</a>
-                                <a href="views/menu.html" class="btn btn-small-secondary">SEE FULL MENU</a>
+                                <div class="cart-button-container">
+                                    <a href="#!" class="btn btn-small-secondary" id='meal-info'>MEAL INFO</a>
+                                </div>
+                                <div class="cart-button-container">
+                                    <div class="removeItemButton">&#8211</div>
+                                    <div class="btn btn-small-primary medium-green" id='meal-add'>ADD TO CART</div>
+                                </div>
+                                <div class="cart-button-container">
+                                    <a href="views/menu.html" class="btn btn-small-secondary">SEE FULL MENU</a>
+                                </div>
                             </div>
                         </div>
                     </div>
