@@ -211,6 +211,11 @@ def apply_promocode(request, data, user):
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
 
         applied_credit = 0
+        if discount > total_price:
+            total_price = discount - total_price
+        else:
+            total_price = total_price - discount
+
         if user.credits > total_price:
             applied_credit = total_price
         else:
