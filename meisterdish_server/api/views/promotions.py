@@ -211,7 +211,7 @@ def apply_promocode(request, data, user):
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
 
         applied_credit = 0
-        tot = total_price + tax - discount
+        tot = total_price + total_tax - discount
         
         if credits > tot:
             credits = tot
