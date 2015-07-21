@@ -112,7 +112,6 @@
   line-height: 26px;
   float: left;
   padding: 0 0px;
-  margin-right: 20px;
   margin-bottom: 6.5px;
   min-width: 30px;
   cursor: pointer;
@@ -377,6 +376,7 @@ hr.mealList-hr {
     padding: 0 0px;
     border-radius: 4px;
     float: right;
+    margin-left: 20px;
 }
 
 .menuItemName {

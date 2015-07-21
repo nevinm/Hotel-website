@@ -360,7 +360,13 @@ p.upper-content,
     width: 40%;
     float: left;
 }
-
+.meal-name{
+    padding-left: 22px;
+    text-transform: uppercase;
+}
+.meal-sub-description{
+    padding-left: 22px;
+}
 .meal-description-wrapper {
     width: 60%;
     padding: 20px 30px;
@@ -451,6 +457,7 @@ p.upper-content {
 }
 .cart-button-container .btn{
     cursor: pointer;
+    width: 150px;
 }
 
 .meal-type-description-icon{
@@ -631,12 +638,12 @@ label#username-error {
         width: 100%;
         text-align: center;
     }
-    #section-what-to-expect .button-container a {
+/*    #section-what-to-expect .button-container a {
         width: 100%;
         margin: 10px 0px;
         height: 40px !important;
         max-width: 300px;
-    }
+    }*/
     .what-you-get-section p {
         font-size: 17px;
     }
@@ -664,6 +671,9 @@ label#username-error {
     .meal-sub-description p,
     p.lower-content {
         font-size: 12px;
+    }
+    p.upper-line{
+        font-size: 35px;
     }
 }
 
@@ -709,5 +719,44 @@ label#username-error {
     .meal-image {
         padding-left: 10%;
         padding-top: 2%;
+    }
+}
+@media (min-width: 320px) and (max-width: 1024px) {
+    #section-what-to-expect .button-container {
+        text-align: center;
+        width: 80%;
+        margin: 0 auto;
+    }
+    .cart-button-container{
+        width: 100%;
+        padding: 10px 0;
+        max-width: 350px;
+        float: none;
+        margin:0 auto;
+    }
+    #section-what-to-expect .button-container a{
+        width: 100%;
+        height: 40px !important;
+        line-height: 36px;
+    }
+    .cart-button-container .btn{
+        width: 100%;
+        height: 40px !important;
+        line-height: 36px;
+    }
+    .removeItemButton {
+        height: 40px;
+        width: 13%;
+        float: left;
+        margin-right: 4%;
+        min-width: 0px;
+    }
+    .width-adjust{
+        width: 83% !important;
+    }
+}
+@media (min-width: 1024px) and (max-width: 1100px) {
+    .cart-button-container .btn{
+        width: 140px;
     }
 }

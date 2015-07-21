@@ -49,7 +49,7 @@ $(document).ready(function() {
     $("#meal-add").on("click", function() {
        var mealId = $(this).attr('data-id'),count = 0;
         count = parseInt($("#hidden-count").val()) + 2;
-        if(count < 10){
+        if(count <= 10){
             $("#hidden-count").val(count);
             addToCart(mealId);
         }
@@ -59,10 +59,10 @@ $(document).ready(function() {
         var quantity = -2 , count = 0,
         mealId = $(this).attr('data-id');
         count = parseInt($("#hidden-count").val()) - 2;
-        if(count >=2){
+        if(count >=0){
            $("#hidden-count").val(count); 
            addToCart(mealId,quantity);
-        }
+        }else{}
     });
 });
 
@@ -138,9 +138,16 @@ function populateHomePageMeal(mealDetails) {
     if (mealDetails.quantity < 2) {
         $(".meal-overlay").hide();
         $('.removeItemButton').hide();
+        $("#meal-add").removeClass("width-adjust");
     }else{
         $(".meal-overlay").show();
         $('.removeItemButton').show();
+        $("#meal-add").addClass("width-adjust");
+    }
+    if (mealDetails.quantity >= 10) {
+        $("#meal-add").addClass("button-disabled");
+    }else{
+        $("#meal-add").removeClass("button-disabled");
     }
 }
 
@@ -282,19 +289,23 @@ function saveEmail(email, zipcode) {
 }
 
 function  populateOverlayDetails(mealDetails){
+    $(".meal-overlay .upper-line span").text(mealDetails.quantity);
     if(mealDetails.quantity == 0){
-        $(".meal-overlay").hide();
         $(".removeItemButton").hide();
-
+        $(".meal-overlay").hide();
+        $("#meal-add").removeClass("width-adjust");
     }else{
-        $(".removeItemButton").show();
+        $(".removeItemButton").fadeIn();
+        $("#meal-add").addClass("width-adjust");
         $(".meal-overlay").show();
-        $(".meal-overlay .upper-line span").text(mealDetails.quantity);
-        $("#hidden-count").val(mealDetails.quantity);
     }
     if(mealDetails.quantity >= 10){
         $("#meal-add").addClass("button-disabled");
     }else{
         $("#meal-add").removeClass("button-disabled");
+    }
+    if (mealDetails.session_key && (mealDetails.session_key).length) {
+        localStorage['session_key'] = mealDetails.session_key;
+        createCookie("SessionExpireTime", "true", sessionExpiryTime);
     }
 }
