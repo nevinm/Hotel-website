@@ -218,12 +218,12 @@ def save_payment_data(data):
         log.error("Failed to save payment data " + e.message)
         return False
 
-def create_address_text_from_model(address):
+def create_address_text_from_model(address, phone=None):
     if not address or not isinstance(address, Address):
-        return ""
-    text = address.first_name.title() + " " + address.last_name.title() + "\n"
-    text += address.street + ", " + address.building + "\n"
-    text += address.city.title() + ", "+address.state.name + "\n"
+        return "Pick up ( Ph: +1 "+str(phone)+")"
+    text = address.first_name.title() + " " + address.last_name.title() + ", "
+    text += address.street + ", " + address.building + ", "
+    text += address.city.title() + ", "+address.state.name + ", "
     text += str(address.zip) + ", Ph: +1 "+str(address.phone)
     return text
 
