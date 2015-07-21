@@ -82,6 +82,7 @@
     border: 1px solid #ddd;
     -moz-appearance:textfield;
     -webkit-appearance: none;
+    color: #6B6B6B;
 }
 
 .giftcard-selected {
@@ -591,10 +592,8 @@ input[type=radio],
 
 .address-payment-list-popup .popup {
     width: 64%;
-    margin-left: -32%;
     height: auto;
-    top: 50%;
-    min-height: 260px;
+    min-height: 200px;
 }
 
 .address-payment-list-popup .header {
@@ -610,6 +609,7 @@ input[type=radio],
 .address-payment-list-popup .button {
     padding-left: 20px;
     float: left;
+    position: relative;
 }
 
 .address-payment-list-popup .button #cancel {
@@ -633,15 +633,18 @@ input[type=radio],
 
 .giftcardpopup {
     position: fixed;
-    top: 53%;
+    top: 40%;
     width: 400px;
     left: 50%;
-    margin-left: -200px;
-    margin-top: -200px;
     background-color: #fff;
     border: 1px solid #ddd;
     z-index: 999999;
     border-radius: 3px;
+    -ms-transform: translate(-50%,-40%);
+    -moz-transform:translate(-50%,-40%);
+    -webkit-transform: translate(-50%,-40%);
+    transform: translate(-50%,-40%);
+
 }
 
 .giftcardpopup .header {
@@ -680,6 +683,22 @@ form#edit-recipient-details input.popup-input{
 }
 .fullWidth-hr{
     margin-bottom: 30px;
+}
+
+.loading-indicator{
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    display: none;
+}
+.loading-indicator .loader{
+    top: 40%;
+    left: 50%;
+    position: fixed;
+    -ms-transform: translate(-50%,-40%);
+    -moz-transform:translate(-50%,-40%);
+    -webkit-transform: translate(-50%,-40%);
+    transform: translate(-50%,-40%);
 }
 
 @media (max-width: 1366px) {

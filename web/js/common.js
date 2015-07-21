@@ -90,6 +90,12 @@ $(document).ready(function() {
                     e.preventDefault();
                     $('#close').trigger('click');
                 }  
+            }else{ ///for gift card form submit
+                if($("#gift-place-order").is(":visible")){
+                    if($("#address").valid() && $("#pay-form").valid()){
+                        $("#gift-place-order").trigger("click");
+                    } 
+                }   
             }
         }
     });   

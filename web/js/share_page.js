@@ -55,13 +55,14 @@ function popitup(url) {
 }
 
 function facebookShare(site_url, accessToken) {
-    var imgURL = homeUrl + "/images/fb_sharing.png"; //change with your external photo url
+    var imgURL = homeUrl + "/images/fb_sharing.png", //change with your external photo url
+    referralCode = localStorage['referral_code'];
     FB.api('me/photos', 'post', {
         message: 'Ready to cook meals, delivered on demand.' +
             'Start cooking today' +
             'for $20 off your first order!' +
             'Fresh ingredients washed and prepped by us,' +
-            'cooked to perfection by you. http://www.meisterdish.com/',
+            'cooked to perfection by you. '+referralCode ,
         status: 'success',
         access_token: accessToken,
         url: imgURL
@@ -118,6 +119,7 @@ var getProfileCallback = {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
             $('#clipboard-text').text(userDetails.referral_code);
+            localStorage['referral_code'] = userDetails.referral_code;
         } else {
             $('#clipboard-text').text(userDetails.message);
         }
