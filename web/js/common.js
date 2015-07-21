@@ -1,4 +1,4 @@
-var baseURL = 'http://10.7.2.51:86/backend/api/',
+var baseURL = 'http://meisterdish.qburst.com/backend/api/',
     homeUrl = "http://meisterdish.qburst.com",
     userDetails, currentPage = $("title").text(),
     currentPageTitle,
