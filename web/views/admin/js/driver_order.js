@@ -122,6 +122,16 @@ function populateDeliveryOrderList(order_data) {
         $(".order-status:last").val(currentStatus);
     });
 
+    $(".pagination").pagination({
+        items: order_data.total_count,
+        itemsOnPage: order_data.per_page,
+        currentPage: order_data.current_page,
+        cssStyle: 'light-theme',
+        onPageClick: function(pageNumber, event) {
+            getDeliveryOrders(pageNumber);
+        }
+    });
+
     $(".order-status").on("change", function() {
         var orderId = $(this).data('id'),
             mealStatus = $(this).val();
