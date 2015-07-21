@@ -252,6 +252,11 @@ function populateMealList(mealList, isInfinteScrolling) {
             $('.removeItemButton[data-id="'+ value.id +'"]').show();
             $('.meal-overlay[data-id="'+ value.id +'"]').show();
         }
+        if(value.quantity >= 10){
+             $('.addItemButton[data-id="'+ value.id +'"]').hide();            
+        }else{
+             $('.addItemButton[data-id="'+ value.id +'"]').show();
+        }
     });
     if (endOfList) {} else {
         infiniteScrolling();
