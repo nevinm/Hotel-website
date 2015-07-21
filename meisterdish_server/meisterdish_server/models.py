@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
-from settings import PAYMENT_METHODS, ORDER_STATUS, SHIPPING_CHARGE, ROLE_USER
+from settings import PAYMENT_METHODS, ORDER_STATUS, SHIPPING_CHARGE, ROLE_USER, MEAL_STATUS
 import logging
 log = logging.getLogger('model')
 import sys, traceback
@@ -177,6 +177,8 @@ class Address(models.Model):
     first_name = models.CharField(max_length=50, default="")
     last_name = models.CharField(max_length=50, default="")
     is_primary = models.BooleanField(db_index=True, default=False)
+    is_business = models.BooleanField(db_index=True, default=False)
+    company = models.CharField(max_length=100, default="")
     street = models.CharField(max_length=50)
     building = models.CharField(max_length=50)
     state =models.ForeignKey(State) 
@@ -224,6 +226,7 @@ class Nutrient(models.Model):
     
 class Ingredient(models.Model):
     name = models.CharField(db_index=True, max_length=20)
+    image = models.ForeignKey(Image)
     def __unicode__(self):
         return self.name
 
@@ -355,7 +358,7 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart)
     meal = models.ForeignKey(Meal, related_name="cartitem")
     quantity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
-    produced = models.BooleanField(default=False)
+    status = models.IntegerField(db_index=True, choices=MEAL_STATUS, default=0)
 
 delivery_types = (
         ("pickup", "Pick Up"),

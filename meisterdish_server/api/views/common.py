@@ -188,8 +188,9 @@ def signup(request, data):
                     bonus = float(Configuration.objects.get(key='REFERRAL_BONUS').value)
                     user.credits = bonus
                     user.save()               
-                    referrer.credits += bonus
-                    referrer.save()
+                    # Commented - awarded up on first transaction only
+                    #referrer.credits += bonus
+                    #referrer.save()
 
                     referral = Referral()
                     referral.referrer = referrer
@@ -622,6 +623,8 @@ def get_address_list(request, data, user):
                                  "first_name":add.first_name,
                                  "last_name":add.last_name,
                                  "is_primary":1 if add.is_primary else 0,
+                                 "is_business":1 if add.is_business else 0,
+                                 "company" : add.company,
                                  "street":add.street,
                                  "building":add.building,
                                  "city":add.city.title(),

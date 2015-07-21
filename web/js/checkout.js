@@ -184,7 +184,7 @@ $(document).ready(function() {
             } else if (code_length > 8) {
                 $('.promo-validation-message').text("* " + "Please enter valid Giftcard/Promocode");
             } else if (localStorage['loggedIn'] != 'true') {
-                $('.promo-validation-message').text("Session is Invalid.Please login and try");
+                $('.promo-validation-message').text("You must be logged in to use this code");
             } else {
                 checkPromoCode(code);
             }
@@ -476,6 +476,9 @@ function updateReciept(GiftcardDetails, flag) {
     if (totalCost <= 0) {
         totalCost = 0;
     }
+    // if (totalCost <= totalCredits){
+    //     totalCredits = totalCost;
+    // }
     $(".discount-container .discount-amount").text("-" + "$" + (totalDiscount + totalCredits).toFixed(2));
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));

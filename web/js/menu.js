@@ -252,6 +252,11 @@ function populateMealList(mealList, isInfinteScrolling) {
             $('.removeItemButton[data-id="'+ value.id +'"]').show();
             $('.meal-overlay[data-id="'+ value.id +'"]').show();
         }
+        if(value.quantity >= 10){
+             $('.addItemButton[data-id="'+ value.id +'"]').hide();            
+        }else{
+             $('.addItemButton[data-id="'+ value.id +'"]').show();
+        }
     });
     if (endOfList) {} else {
         infiniteScrolling();
@@ -290,12 +295,12 @@ var addToCartCallback = {
                 $showOverlay.show();
             }
 
-            if(meal_details.quantity >= 10){
-                $addButton.hide();
-                $showOverlay.find('.upper-line span').text(10);
-            }else{
-                $addButton.show();
-            }
+            // if(meal_details.quantity >= 10){
+            //     $addButton.hide();
+            //     $showOverlay.find('.upper-line span').text(10);
+            // }else{
+            //     $addButton.show();
+            // }
             if (meal_details.session_key && (meal_details.session_key).length) {
                 localStorage['session_key'] = meal_details.session_key;
                 createCookie("SessionExpireTime", "true", sessionExpiryTime);

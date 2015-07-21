@@ -227,6 +227,13 @@ ORDER_STATUS =  (
     (4, "Delivered"),
     )
 
+MEAL_STATUS =  (
+    (0, "Placed"),
+    (1, "Packed"),
+    (2, "Dispatched"),
+    (3, "Delivered"),
+    (4, "Cancelled"),
+    )
 
 DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
 DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"

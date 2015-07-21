@@ -492,7 +492,8 @@ function populateMealDetails(mealDetails) {
     $("#create-meal-available").val(mealDetails.available);
     $("#create-meal-category").val(mealDetails.cat_id.id);
     $.each(mealDetails.filters, function(key, value) {
-        $("#create-meal-mealType option[value='" + value + "']").prop("selected", true);
+        $($("#create-meal-mealType option")[0]).attr("selected",false);
+        $("#create-meal-mealType option[value='" + value.id + "']").prop("selected", true);
     });
     $('#meal-prep-time').val(mealDetails.preparation_time);
     $('#meal-saved-time').val(mealDetails.saved_time);

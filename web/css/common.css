@@ -1152,12 +1152,12 @@ span.icon-menu {
         position: absolute;
         bottom: 20px;
     }*/
-    .footerContent ul{
+   /* .footerContent ul{
         margin-top: 42px !important;
         border-top: none !important;
         border-bottom: none !important;
         margin-bottom: 20px;
-    }
+    }*/
     .footerContent ul li a{
         color: #6b6b6b;
         font-size: 12px;
@@ -1367,6 +1367,12 @@ span.icon-menu {
         position: relative;
         height: 250px;
     }
+    .popup .button{
+        position: initial;
+    }
+    .popup{
+        height: auto;
+    }
 
 }
 
@@ -1395,8 +1401,8 @@ span.icon-menu {
 }
 @media (max-width: 443px) {
     .popup{
-        width: 75%;
-        height: 225px;
+        width: 85%;
+        height: auto;
     }
 }
 

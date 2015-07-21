@@ -58,4 +58,10 @@ urlpatterns = patterns('',
     url(r'^delete_attribute/(?P<attribute_id>[0-9]+)/$', meals.delete_attribute, name='delete_attribute'),
 
     url(r'^export_zips_unsupported/$', general.export_zips_unsupported, name='export_zips_unsupported'),
+    url(r'^update_home_meal/$', meals.update_home_meal, name='update_home_meal'),
+    url(r'^get_home_meal/$', meals.get_home_meal, name='get_home_meal'),
+    
+    url(r'^add_ingredient/$', meals.add_ingredient, name='add_ingredient'),
+    url(r'^update_ingredient/$', meals.update_ingredient, name='update_ingredient'),
+    url(r'^delete_ingredient/(?P<ing_id>[0-9]+)/$', meals.delete_ingredient, name='delete_ingredient'),
 )
