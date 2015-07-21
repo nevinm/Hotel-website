@@ -156,7 +156,7 @@ def get_cart_total(cart):
         referral_bonus = float(Configuration.objects.get(key="REFERRAL_BONUS").value)
         referred = Referral.objects.filter(referree=cart.user).exists() and user.credits >= referral_bonus
         if not Order.objects.filter(cart__user=cart.user, cart__user__role__pk=settings.ROLE_USER).exists() and referred:
-            credits = referral_bonus
+            credits = referral_bonus/2
         else:
             credits = cart.user.credits
             if cart.promo_code:
@@ -211,22 +211,16 @@ def apply_promocode(request, data, user):
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
 
         applied_credit = 0
-        if discount > total_price:
-            total_price = discount - total_price
-        else:
-            total_price = total_price - discount
-
-        if user.credits > total_price:
-            applied_credit = total_price
-        else:
-            applied_credit = user.credits
-
+        tot = total_price + tax - discount
+        
+        if credits > tot:
+            credits = tot
+        
         return json_response({"status":1, "message":code_type + code + " has been applied. You will get a discount of "+"{0:.2f}".format(amt), 
             "amount":total_price,
             "tax":total_tax,
             "discount":discount,
             "credits":credits,
-            "applied_credit":applied_credit,
             "code":code
         })
     except Cart.DoesNotExist:
