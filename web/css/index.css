@@ -582,10 +582,10 @@ img#close {
 }
 
 label#zip-code-error {
-    background-color: none;
     background: none;
     top: 0;
     left: 0;
+    width: 68%;
 }
 
 label#username-error {
