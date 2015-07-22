@@ -275,7 +275,7 @@ def create_order(request, data, user):
             
             if not order.card_id:
                 order.token = data["stripeToken"].strip()
-            order.status = 0
+            order.status = 4
             order.save()
             payment = make_payment(order, user)
             
@@ -289,7 +289,7 @@ def create_order(request, data, user):
             log.info("Order success - Amount = 0..")
 
         order.payment = payment
-        order.status = 1
+        order.status = 0
         order.save()
         user.save()
 
