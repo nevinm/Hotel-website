@@ -799,7 +799,8 @@ span.icon-menu {
 	border-radius: 4px 4px 0 0;
     text-transform: uppercase;
 }
-.popup-container{
+.popup-container,
+.deliveryarea-popup-container{
 	padding: 15px;
 }
 .popup .content{

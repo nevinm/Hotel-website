@@ -28,18 +28,18 @@ $(document).ready(function() {
         $('.delivery-area-check-popup').fadeOut();
     });
 
-    //popup re-direction on enter
-    $(document).on('keypress', function(e) {
-        var key = e.which;
-        if (key == 13) // the enter key code
-        {
-            if ($('.popup-container').is(':visible')) {
-                if ($("#see-menu").is(":visible")) {
-                    $('#see-menu')[0].click();
-                }
-            }
-        }
-    });
+    // //popup re-direction on enter
+    // $(document).on('keypress', function(e) {
+    //     var key = e.which;
+    //     if (key == 13) // the enter key code
+    //     {
+    //         if ($('.popup-container').is(':visible')) {
+    //             if ($("#see-menu").is(":visible")) {
+    //                 $('#see-menu')[0].click();
+    //             }
+    //         }
+    //     }
+    // });
 
     $("#meal-info").on("click", function() {
         mealId = $(this).attr('data-id');
@@ -259,17 +259,8 @@ function showLocationCheckPopup(userDetails) {
 var saveEmailCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
-        if (userDetails.status == 1) {
-            $('.delivery-area-check-popup').hide();
-            showPopup(userDetails);
-        }
-        if (userDetails.status == -1) {
-            showPopup(userDetails);
-        }
-        if (userDetails.status == -2) {
-            $('.delivery-area-check-popup').hide();
-            showPopup(userDetails);
-        }
+        $('.delivery-area-check-popup').hide();
+        showPopup(userDetails);
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
