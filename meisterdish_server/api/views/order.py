@@ -308,8 +308,8 @@ def create_order(request, data, user):
         cart_items = get_order_cart_items(order)
         
         if not print_order(order):
-            log.error("Failed to print order #"+str(order.order_num)
-                
+            log.error("Failed to print order #"+str(order.order_num))
+
         return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way.", "cart_items":cart_items})
         
     except Exception as e:
