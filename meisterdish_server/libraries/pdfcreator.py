@@ -11,19 +11,20 @@ import logging
 log = logging.getLogger(__name__)
 
 def render_to_pdf( template_src, context_dict):
-
-    template = get_template(template_src)
-    context = Context(context_dict)
-    html  = template.render(context)
-    result = StringIO.StringIO()
-    #return HttpResponse(html)
-    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), dest=result, link_callback=fetch_resources)
-    name = now.strftime("%Y-%m-%d_%H:%M")
-    if not pdf.err:
-        response = HttpResponse(result.getvalue(), mimetype='application/pdf',)
-        response['Content-Disposition'] = 'attachment; filename='+name+'_generated.pdf'
-        return response
-    return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))
+    try:
+        template = get_template(template_src)
+        context = Context(context_dict)
+        html  = template.render(context)
+        result = StringIO.StringIO()
+        
+        pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), dest=result, link_callback=fetch_resources)
+        name = "print"
+        if not pdf.err:
+            response = HttpResponse(result.getvalue())
+            response['Content-Disposition'] = 'attachment; filename='+name+'_generated.pdf'
+            return response
+    except Exception as e:
+        return HttpResponse(e.message)
 
 def save_to_pdf( template_src, context_dict, path):
     template = get_template(template_src)
