@@ -201,6 +201,7 @@ function getParameterFromUrl(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+
 function getCurrentPage(firstChar, secondChar, url) {
     currentPage = url.substring(url.lastIndexOf(firstChar) + 1, url.lastIndexOf(secondChar));
     return currentPage;
@@ -250,6 +251,7 @@ function logingOut() {
     localStorage.removeItem('delivery_addressess');
     localStorage.removeItem('fb-image');
     localStorage.removeItem('admin_role');
+    localStorage.removeItem('referral_code');
     localStorage['loggedIn'] = false;
     localStorage['admin_loggedIn'] = false;
     $('#navbar-username a').text('');
