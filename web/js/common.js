@@ -469,6 +469,9 @@ $("form").each(function() {
             url: {
                 youtube_url: true
             },
+            preperationtime:{
+                required: true
+            },
             tips_details: {
                 required: true,
                 minlength: 2
@@ -512,6 +515,10 @@ $("form").each(function() {
             order:{
                 required : true,
                 number : true  
+            },
+            calories:{
+                required: true,
+                number: true
             }
         },
         messages: {
@@ -538,8 +545,12 @@ $("form").each(function() {
                 required: "Please provide a password.",
                 minlength: "Password should be of minimum 6 characters."
             },
+            calories:{
+                required:"Please enter calories",
+                number:"Please enter a number"
+            },
             username: {
-                required: "Plaese enter username.",
+                required: "Please enter username.",
                 minlength: "Name should contain at least 2 characters.",
                 maxlength: "Name should not contain more than 15 charcters."
             },
@@ -577,6 +588,9 @@ $("form").each(function() {
                 required: "Please enter a valid tip",
                 minAmount: "Enter amount between 1 and 10",
                 maxAmount: "Enter amount between 1 and 10"
+            },
+            preperationtime:{
+                required: "Please enter prepared time"
             },
             nameOnCard: "Enter valid name.",
             expiryMonth: "Enter exp month.",
