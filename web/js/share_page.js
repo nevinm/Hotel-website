@@ -59,23 +59,24 @@ function facebookShare(site_url, accessToken) {
     referralCode = localStorage['referral_code'];
     FB.api('me/photos', 'post', {
         message: 'Ready to cook meals, delivered on demand.' +
-            'Start cooking today' +
-            'for $20 off your first order!' +
+            'Start cooking today for $20 off your first order!' +
             'Fresh ingredients washed and prepped by us,' +
             'cooked to perfection by you. '+referralCode ,
         status: 'success',
         access_token: accessToken,
         url: imgURL
     }, function(response) {
-        console.log(response)
+        console.log(response);
     });
 }
 
 function twitterShare(site_url) {
     site_url = homeUrl+ "/views/share-page.html", 
     referralCode = localStorage['referral_code'];
+    referralCode = referralCode.split("share/")[1].slice(0,-1);
     var subjText = "Start cooking today with $20 off your first order!" + site_url;
-    popitup('http://twitter.com/share?url=' + site_url + '&text='+ referralCode);
+    site_url = site_url + '&refferalCode='+ referralCode;
+    popitup('http://twitter.com/share?url=' + site_url);
 }
 
 //copy to clipboard

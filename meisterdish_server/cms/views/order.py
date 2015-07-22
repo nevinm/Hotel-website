@@ -566,7 +566,7 @@ def get_delivery_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(delivery_type__iexact='delivery', status__gte=1, is_deleted=False)
+        orders = Order.objects.filter(delivery_type__iexact='delivery', status__lte=3, is_deleted=False)
         
         total_count = orders.count()
 
