@@ -318,6 +318,28 @@ img#cancel,img#close {
   width: 100%;
   float: left;
 }
+
+.deliveryarea-popup-container .content span,
+.deliveryarea-popup-container .content p{
+    width: 100%;
+    float: left;
+    text-align: center;
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 16px;
+    padding: 20px 0;
+    color: #5C5C5C;
+    word-break:break-word;
+}
+
+.deliveryarea-popup-container .button{
+    width: 100%;
+    text-align: center;
+    padding: 10px 0px;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
 label#username-error {
   bottom: 117px;
   left: 5px;

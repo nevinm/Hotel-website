@@ -86,7 +86,10 @@ $(document).ready(function() {
                 }
                 if($('#ok').is(":visible")){
                     window.location.href = $('#ok').attr('href');
-                }           
+                }
+                if ($(".popup-container #see-menu").is(":visible")) {
+                    $('.popup-container #see-menu')[0].click();
+                }          
                 if($('.popup-container').find('form').length === 0) {
                     e.preventDefault();
                     $('#close').trigger('click');
