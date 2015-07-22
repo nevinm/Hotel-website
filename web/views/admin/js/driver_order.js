@@ -1,9 +1,9 @@
 $(document).ready(function() {
     getDeliveryOrders(0);
 
-     setInterval(function(){
+    setInterval(function() {
         getDeliveryOrders();
-    },60000);
+    }, 60000);
 });
 
 //Update orders API process
@@ -11,7 +11,7 @@ var updateOrdersCallback = {
     success: function(data, textStatus, element) {
         updatedOrders = JSON.parse(data);
         if (updatedOrders.status) {
-          
+
         } else {
             showPopup(data);
         }
@@ -88,8 +88,14 @@ function populateDeliveryOrderList(order_data) {
             state = delivery_address.state,
             address_phone = delivery_address.phone,
             address_zip = delivery_address.zip,
-            meals = value.meals,
-            instructions = value.instructions;
+            meals = value.meals;
+
+        if (value.driver_instructions.length) {
+            instructions = value.driver_instructions;
+        } else {
+            instructions = "None";
+        }
+
 
 
         $('table#delivery-order tbody').append("<tr data-id='" + value.id + "'><td>" + deliverytime + "</td>" +
@@ -100,7 +106,7 @@ function populateDeliveryOrderList(order_data) {
             "<td>" + name + "</td>" +
             "<td>" + phone + "</td>" +
             "<td class='meals'>" + "</td>" +
-            "<td>" + "" + "</td>" +
+            "<td>" + instructions + "</td>" +
             "<td>" + "<select data-id='" + value.id + "'class='order-status' name='status'>" +
             "<option value='0'>Placed</option>" +
             "<option value='1'>Packed</option>" +
