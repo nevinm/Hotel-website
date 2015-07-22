@@ -76,7 +76,7 @@ function twitterShare(site_url) {
     referralCode = referralCode.split("share/")[1].slice(0,-1);
     var subjText = "Start cooking today with $20 off your first order!" + site_url;
     site_url = site_url + '#refferalCode='+ referralCode;
-    popitup('http://twitter.com/share?url=' + site_url+);
+    popitup('http://twitter.com/share?url=' + site_url);
 }
 
 //copy to clipboard
