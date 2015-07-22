@@ -616,7 +616,7 @@ def get_cart_total(cart):
     except Exception as e:
         log.error("Error getting cart total: " + e.message)
     return (amount, tax)
-
+"""
 def send_sms_notification(dic):
     try:
         if not dic["mobile"]:
@@ -646,7 +646,7 @@ def send_sms_notification(dic):
     except Exception as e:
         log.error("Failed to send order SMS to : " + number + " : "+e.message)
         return False
-
+"""
 def print_pdf(request):
     try:
         from libraries.pdfcreator import render_to_pdf

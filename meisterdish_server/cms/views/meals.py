@@ -330,6 +330,7 @@ def get_meal_details(request, data, user, meal_id):
             "available" : 1 if meal.available else 0,
             "calories" : meal.calories,
             "filters" : [{"id": ty.id, "image_id": ty.image.id, "image_url":ty.image.image.url, "meal_type_name":ty.name } for ty in meal.types.all()],
+            #"default_meal_type_image": settings.DE
             "cat_id" : 'Not Available' if not meal.category else {
                 "id":meal.category.id,
                 "name":meal.category.name.title(),
