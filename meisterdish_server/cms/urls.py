@@ -62,6 +62,6 @@ urlpatterns = patterns('',
     url(r'^get_home_meal/$', meals.get_home_meal, name='get_home_meal'),
     
     url(r'^add_ingredient/$', meals.add_ingredient, name='add_ingredient'),
-    url(r'^update_ingredient/$', meals.update_ingredient, name='update_ingredient'),
+    url(r'^update_ingredient/(?P<ing_id>[0-9]+)/$', meals.update_ingredient, name='update_ingredient'),
     url(r'^delete_ingredient/(?P<ing_id>[0-9]+)/$', meals.delete_ingredient, name='delete_ingredient'),
 )

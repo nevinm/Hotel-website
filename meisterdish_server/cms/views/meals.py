@@ -169,8 +169,8 @@ def create_meal(request, data, user):
 
             for fid in data['filter_ids']:
                 try:
-                    log.info(fid)
-                    log.info("nazz")
+                    if fid in ['0', 0]:
+                        continue
                     mt = MealType.objects.get(is_hidden=False, is_deleted=False, pk=int(fid))
                     if mt not in meal.types.all():
                         meal.types.add(mt)
@@ -506,7 +506,7 @@ def add_ingredient(request, data, user):
             ing.name = name
             ing.image = Image.objects.get(pk=img)
             ing.save()
-            return json_response({"status":1, "message" :"Added "+name, "id":ing.id})
+            return json_response({"status":1, "message" :"Added "+name, "id":ing.id, "name":ing.name, "image_id":ing.image.id, "image_url":ing.image.image.url})
     except Exception as e:
         log.error("Failed to add ingredient. : "+e.message)
         return custom_error("Failed to add ingredient.")
@@ -514,8 +514,6 @@ def add_ingredient(request, data, user):
 @check_input('POST', settings.ROLE_ADMIN)
 def update_ingredient(request, data, user, ing_id):
     try:
-        
-        img = data['image_id']
         ing = Ingredient.objects.get(pk=ing_id)
         if "ingredient" in data and data["ingredient"].strip() != "":
             name = data['ingredient']
@@ -527,7 +525,7 @@ def update_ingredient(request, data, user, ing_id):
             ing.image = Image.objects.get(pk=img)
         
         ing.save()
-        return json_response({"status":1, "message" :"Updated Ingredient", "id":ing.id})
+        return json_response({"status":1, "message" :"Updated Ingredient", "id":ing.id, "name":ing.name, "image_id":ing.image.id, "image_url":ing.image.image.url})
     except Exception as e:
         log.error("Failed to update ingredient. : "+e.message)
         return custom_error("Failed to update ingredient.")
@@ -540,13 +538,47 @@ def delete_ingredient(request, data, user, ing_id):
     except Exception as e:
         log.error("Failed to delete ingredient. : "+e.message)
         return custom_error("Failed to delete ingredient.")
-"""
+
 @check_input('POST', settings.ROLE_ADMIN)
 def list_ingredients(request, data, user, ing_id):
     try:
-        ing = Ingredient.objects.get(pk=ing_id).delete()
-        return json_response({"status":1, "message" :"Deleted Ingredient", "id":ing.id})
+        limit = settings.PER_PAGE
+        page = 1
+        if "nextPage" in data and int(data["nextPage"]) >0:
+            page = data["nextPage"]
+            
+        ings = Ingredient.objects.all().order_by("name")
+        total_count = ings.count()
+        
+        if 'search' in data:
+            search = str(data['search']).strip()
+            ings = ings.filter(name__startswith=search)
+        
+        actual_count = ings.count()
+        if actual_count == 0:
+            return custom_error("There are no ingredients to list.")
+        
+        try:
+            paginator = Paginator(ings, limit)
+            if page <1 or page > paginator.page_range:
+                page = 1
+            ings = paginator.page(page)
+        except Exception as e:
+            log.error("ingredients list pagination : " + e.message)
+            custom_error("There was an error listing ingredients.")
+        
+        ing_list = [{"id":ing.id, "name":ing.name, "image_id":ing.image.id, "image_url":ing.image.image.url} for ing in ings.object_list]
+        
+        return json_response({
+                              "status":1,
+                              "aaData": ing_list,
+                              "total_count":total_count,
+                              "actual_count":actual_count,
+                              "num_pages" : paginator.num_pages,
+                              "page_range" : paginator.page_range,
+                              "current_page":page,
+                              "per_page" : limit,
+                              })
     except Exception as e:
-        log.error("Failed to delete ingredient. : "+e.message)
-        return custom_error("Failed to delete ingredient.")
-"""
+        log.error("Failed to list ingredients : "+e.message)
+        return custom_error("Failed to retrieve ingredients")

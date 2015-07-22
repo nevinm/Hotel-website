@@ -1,5 +1,9 @@
 $(document).ready(function() {
     getOrders();
+
+    setInterval(function(){
+        getOrders();
+    },60000);
 });
 
 //Get orders API process
@@ -76,6 +80,7 @@ function undefinedCheck(param) {
 
 //function populate OrderList 
 function populateOrderList(data) {
+    $('#order-list tbody').empty();
     var fullMealList = JSON.parse(data);
     $.each(fullMealList.aaData, function(key, value) {
         var phone = undefinedCheck(value.phone),

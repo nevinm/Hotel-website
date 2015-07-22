@@ -333,7 +333,7 @@ def save_pdf(order):
         cart_items = CartItem.objects.filter(cart__order=order)
         
         res = save_to_pdf(
-                    'order_print.html',
+                    'print_order.html',
                     {
                         'pagesize':'A5',
                         'order':order,
@@ -645,4 +645,19 @@ def send_sms_notification(dic):
 
     except Exception as e:
         log.error("Failed to send order SMS to : " + number + " : "+e.message)
+        return False
+
+def print_pdf(request):
+    try:
+        from libraries.pdfcreator import render_to_pdf
+        return render_to_pdf(
+                    'print_order.html',
+                    {
+                        'pagesize':'A5',
+                        #'context_instance':RequestContext(request),
+                        #'static_url':settings.STATIC_URL
+                    }
+                )
+    except Exception as e:
+        log.error("Failed to save pdf." + e.message)
         return False

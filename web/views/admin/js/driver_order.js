@@ -1,5 +1,9 @@
 $(document).ready(function() {
     getDeliveryOrders(0);
+
+     setInterval(function(){
+        getDeliveryOrders();
+    },60000);
 });
 
 //Update orders API process
@@ -66,6 +70,7 @@ function getDeliveryOrders(nextPage, userName, orderNum, status, total_amount, p
 }
 
 function populateDeliveryOrderList(order_data) {
+    $('table#delivery-order tbody').empty();
     $.each(order_data.aaData, function(key, value) {
 
         var phone = undefinedCheck(value.phone),
@@ -116,6 +121,16 @@ function populateDeliveryOrderList(order_data) {
 
         currentStatus = value.status_id;
         $(".order-status:last").val(currentStatus);
+    });
+
+    $(".pagination").pagination({
+        items: order_data.total_count,
+        itemsOnPage: order_data.per_page,
+        currentPage: order_data.current_page,
+        cssStyle: 'light-theme',
+        onPageClick: function(pageNumber, event) {
+            getDeliveryOrders(pageNumber);
+        }
     });
 
     $(".order-status").on("change", function() {

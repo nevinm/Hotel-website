@@ -99,7 +99,7 @@ def add_to_cart(request, data):
         log.info(quantity == 0)
         try:
            cart_item = CartItem.objects.get(cart=cart, meal=meal)
-           cart_item.quantity = cart_item.quantity+quantity
+           cart_item.quantity += quantity
            if cart_item.quantity <= 0:
               cart_item.delete()
               qty = 0

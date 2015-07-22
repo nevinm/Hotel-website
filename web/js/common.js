@@ -1,5 +1,5 @@
-var baseURL = 'http://meisterdish.com/backend/api/',
-    homeUrl = "http://meisterdish.com",
+var baseURL = 'http://meisterdish.qburst.com/backend/api/',
+    homeUrl = "http://meisterdish.qburst.com",
     userDetails, currentPage = $("title").text(),
     currentPageTitle,
     clicked = 0;
@@ -90,6 +90,12 @@ $(document).ready(function() {
                     e.preventDefault();
                     $('#close').trigger('click');
                 }  
+            }else{ ///for gift card form submit
+                if($("#gift-place-order").is(":visible")){
+                    if($("#address").valid() && $("#pay-form").valid()){
+                        $("#gift-place-order").trigger("click");
+                    } 
+                }   
             }
         }
     });   

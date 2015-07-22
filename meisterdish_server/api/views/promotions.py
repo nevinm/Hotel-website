@@ -156,7 +156,7 @@ def get_cart_total(cart):
         referral_bonus = float(Configuration.objects.get(key="REFERRAL_BONUS").value)
         referred = Referral.objects.filter(referree=cart.user).exists() and user.credits >= referral_bonus
         if not Order.objects.filter(cart__user=cart.user, cart__user__role__pk=settings.ROLE_USER).exists() and referred:
-            credits = referral_bonus
+            credits = referral_bonus/2
         else:
             credits = cart.user.credits
             if cart.promo_code:
@@ -183,7 +183,7 @@ def apply_promocode(request, data, user):
         code = data["code"].strip()
 
         try:
-            code_obj = PromoCode.objects.get(code__iexact=code, deleted=False)
+            code_obj = PromoCode.objects.get(code__iexact=code, deleted=False, active=True)
             if code_obj.expiry_date < datetime.now():
                 return custom_error("Sorry, the promo code ("+ code +") has expired.")
             cart.promo_code = code_obj
@@ -209,7 +209,7 @@ def apply_promocode(request, data, user):
         cart.save()
 
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
-
+        
         return json_response({"status":1, "message":code_type + code + " has been applied. You will get a discount of "+"{0:.2f}".format(amt), 
             "amount":total_price,
             "tax":total_tax,
