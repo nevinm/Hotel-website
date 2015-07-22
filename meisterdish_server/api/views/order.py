@@ -306,7 +306,10 @@ def create_order(request, data, user):
         if not send_order_placed_notification(order):
             log.error("Failed to send order notification")
         cart_items = get_order_cart_items(order)
-        print_sucess = print_order(order)
+        
+        if not print_order(order):
+            log.error("Failed to print order #"+str(order.order_num)
+                
         return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way.", "cart_items":cart_items})
         
     except Exception as e:
@@ -339,7 +342,7 @@ def save_pdf(order):
                         'order':order,
                         'cart_items':cart_items,
                         'date':order.delivery_time.strftime("%m-%d-%Y"),
-                        "time" : order.delivery_time.strftime("%I") + " - " +str(int(order.delivery_time.strftime("%I"))+1) + " " + order.delivery_time.strftime("%p"),
+                        "time" : str(int(order.delivery_time.strftime("%I"))) + " - " +str(int(order.delivery_time.strftime("%I"))+1) + " " + order.delivery_time.strftime("%p"),
                     },
                     path
             )

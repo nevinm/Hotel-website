@@ -5,87 +5,112 @@
         *, html {
             font-family: "sans-serif";
         }
+        tr {
+            border:none;
+        }
+
+        td {
+            padding:2px 0;
+            padding-left:10px;
+        }
     </style>
     </head>
     <body style="margin: 0; font-family: sans-serif; font-size:16px;padding: 0;">
-        <!-- <div style="overflow: auto;">
-            <div style="border: 1px solid black;width:400px;float:left;padding:20px;">
-                <div style='width:199px;height:100%;float:left;'>
-                    <h1>5 - 6pm</h1>
-                    <span style="float: left;width: 100%;display: block;margin-bottom:10px;">John Smith </span>
-                    <span style="float: left;width: 100%;display: block;margin-bottom:10px;">211 E81th </span>
-                    <span style="float: left;width: 100%;display: block;margin-bottom:10px;">App822</span>
-                    <span style="float: left;width: 100%;display: block;margin-bottom:10px;">212 456 660</span>
-                    <span style="float: left;width: 100%;display: block;margin-bottom:10px;">00001 </span>
-                </div>
-                <div style='width:200px;float:left;  border-left: 1px solid black;'>
-                    <div style="float:left;padding:20px;margin-top: 75px;">
-                        <p>1 Herb chicken</p>
-                        <p>1 Red salad</p>
-                        <p>1 Burger</p>
-                        <p>Leave in cooler with doorman</p>
-                    </div>
-                    <div style="float:left;padding:20px;">
-                        <p>1 Herb chicken</p>
-                        <p>1 Red salad</p>
-                        <p>1 Burger</p>
-                        <p>Leave in cooler with doorman</p>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <table style="border:2px solid black;padding:20px;border-collapse: collapse;margin:0 auto;" width="400">
+        <table style="border:2px solid black;padding:20px;border-collapse: collapse;margin:0 auto;" width="450">
             <thead></thead>
-            <tbody>
-                <tr style="border:none;">
-                   <td style="border-right:1px solid;padding-left:10px;"><p style="font-size:28px;font-weight:bolder;margin:0;padding-bottom:10px;">5 - 6pm</p></td>
-                   <td></td> 
-                </tr>
-                <tr style="border:none;">
-                    <td style="padding:2px 0;border-right:1px solid black;padding-left:10px" width="40%">John Smith</td> 
-                    <td width="60%" style="padding:2px 0;border-right:1px;padding-left:10px">1 Herb chicken</td>
-                </tr>
-                <tr style="border:none;">
-                    <td style="padding:2px 0;border-right:1px solid black;padding-left:10px">211 E81th</td> 
-                    <td style="padding:2px 0;padding-left:10px">1 Red salad</td>
-                </tr>
-                <tr style="border:none;">
-                    <td style="padding:2px 0;border-right:1px solid black;padding-left:10px">App  822</td> 
-                    <td style="padding:2px 0;padding-left:10px">1 Burger</td>
-                </tr>
-                <tr style="border:none;">
-                    <td style="padding:2px 0;border-right:1px solid black;padding-left:10px">212 456 660</td> 
-                    <td style="padding:2px 0;"></td>
-                </tr>
-                <tr style="border:none;">
-                    <td style="padding:2px 0;border-right:1px solid black;padding-left:10px">00001</td>
-                    <td style="padding:2px 0;padding-left:10px">Leave in cooler with doorman</td>
-                </tr>
-                <tr style="border:none">
-                    <td style="padding:10px 0;border-right:1px solid black"></td>
-                    <td style="padding:10px 0;border-right:1px solid black"></td>
-                </tr>
-                <tr style="border:none;">
-                    <td style="padding:2px 0;border-right:1px solid black;padding-left:10px"></td>
-                    <td style="padding:2px 0;border-right:1px solid black;padding-left:10px">1 Herb chicken</td>
-                </tr>
-                <tr style="border:none;">
-                    <td style="padding:2px 0;border-right:1px solid black;padding-left:10px"></td>
-                    <td style="padding:2px 0;border-right:1px solid black;padding-left:10px">1 Red salad</td>
-                </tr>
-                <tr style="border:none;">
-                    <td style="padding:2px 0;border-right:1px solid black;padding-left:10px"></td>
-                    <td style="padding:2px 0;border-right:1px solid black;padding-left:10px">1 Burger</td>
-                </tr>
-                <tr style="border:none;">
-                    <td style="padding:10px 0;border-right:1px solid black;padding-left:10px"></td> 
-                    <td style="padding:10px 0;"></td>
-                </tr>
-                <tr style="border:none;">
-                    <td style="padding:2px 0;border-right:1px solid black;padding-left:10px"></td>
-                    <td style="padding:2px 0;border-right:1px solid black;padding-left:10px">Leave in cooler with doorman</td>
-                </tr>
-            </tbody>
+            {% if order.delivery_address%}
+                <tbody>
+                    <tr>
+                       <td style="border-right:2px solid;width:40%;">
+                        <table>
+                            <thead></thead>
+                            <tbody>
+                                <tr>
+                                   <td style="padding-left:10px;">
+                                        <p style="font-size:26px;font-weight:bolder;margin:0;padding-bottom:10px;">{{time}}</p>
+                                   </td>
+                                </tr>
+                                <tr>
+                                    <td>{{order.delivery_address.first_name|title}} {{order.delivery_address.last_name|title}}asd</td>
+                                </tr>
+                                <tr>
+                                    <td>{{order.delivery_address.building|title}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{order.delivery_address.street|title}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{order.phone}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{order.order_num}}</td>
+                                </tr>
+                            <tbody>
+                        </table>
+                       </td> 
+                       <td>
+                           <table>
+                                <thead></thead>
+                                <tbody>
+                                    {% for ci in cart_items %}
+                                        <tr>
+                                            <td>{{ci.quantity}} {{ci.meal.name|title}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                           </table>
+                       </td> 
+                    </tr>
+                </tbody>
+            {% else %}
+                <tbody>
+                    <tr>
+                       <td style="border-right:2px solid;width:40%;">
+                        <table>
+                            <tr>
+                               <td style="padding-left:10px;">
+                                    <p style="font-size:28px;font-weight:bolder;margin:0;padding-bottom:10px;">{{time}}</p>
+                               </td>
+                            </tr>
+                            <tr>
+                                <td>{{order.email}}</td>
+                            <tr>
+                            <tr>
+                                <td>Pick up</td>
+                            <tr>
+                            <tr>
+                                <td></td>
+                            <tr>
+                            <tr>
+                                <td>{{order.phone}}</td>
+                            <tr>
+                            <tr>
+                                <td>{{order.order_num}}</td>
+                            <tr>
+                        </table>
+                       </td> 
+                       <td>
+                           <table>
+                                <tr>
+                                   <td style="height:10px;"></td>
+                                </tr>
+                                <tr>
+                                    <td>1 Herb chicken</td>
+                                </tr>
+                                <tr>
+                                    <td>1 Herb chicken</td>
+                                </tr>
+                                <tr>
+                                    <td>1 Herb chicken</td>
+                                </tr>
+                                <tr>
+                                    <td>1 Herb chicken</td>
+                                </tr>
+                            </table>
+                       </td> 
+                    </tr>
+                </tbody>
+            {% endif %}
         </table>
     </body>
 </html>
