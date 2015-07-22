@@ -6,7 +6,6 @@ var adminCallback = {
             var userName = adminDetails.user.first_name;
             localStorage['username'] = userName;
             localStorage['session_key'] = adminDetails.session_key;
-            localStorage['admin_loggedIn'] = true;
             localStorage['loggedIn'] = false;
             localStorage['admin_loggedIn'] = true;
             localStorage['admin_role'] = adminDetails.role_name;
