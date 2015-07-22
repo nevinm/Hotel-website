@@ -5,9 +5,12 @@ function getrefferallFromUrl(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-if(getrefferallFromUrl("refferalCode").length){
-	window.location.replace("signup.html?ref=" + refferalCode);
-}else{}
+function referralCodePresent(){
+	var refferalCode = getrefferallFromUrl("refferalCode");
+	if(refferalCode.length){
+		window.location.replace("signup.html?ref=" + refferalCode);
+	}else{}
+}	
 
 function redirectIfNotLoggedIn(){
 	if(document.title=="Meisterdish - Log in"){
@@ -22,3 +25,4 @@ function redirectIfNotLoggedIn(){
 	}
 }
 redirectIfNotLoggedIn();
+referralCodePresent();
