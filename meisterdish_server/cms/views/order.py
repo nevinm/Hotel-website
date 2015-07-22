@@ -641,6 +641,7 @@ def get_delivery_orders(request, data, user):
                 "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                 "phone": order.phone,
                 "email":order.email,
+                "driver_instructions":order.driver_instructions,
                 "meals":meals,
                 "delivery_address" : {
                      "id":order.delivery_address.id ,
