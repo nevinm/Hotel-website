@@ -318,13 +318,26 @@ def create_order(request, data, user):
 
 def print_order(order):
     try:
-        pdf_path = save_pdf(order)
-        if not pdf_path:
+        pdf_file = save_pdf(order)
+        if not pdf_file:
             return False
-        
-
-        return True
-        #If True, delete the PDF
+        from libraries.printnode import api_call
+        import base64
+        content = base64.b64encode(pdf_file)
+        data = {
+            "printerId": 49349, 
+            "title": "My Test PrintJob", 
+            "contentType": "pdf_base64",
+            "content": content,
+            "source": "api documentation!",
+            "options": {"copies":1, "paper":"A5", "bin":"Tray 1"},
+        }
+        if api_call('printjobs', data):
+            log.info("Printing success")
+            #Delete PDF
+            return True
+        log.error("Prinrt failed")
+        return False
     except Exception as e:
         log.error("Failed to print order." + e.message)
         return False
@@ -348,7 +361,7 @@ def save_pdf(order):
             )
         if res:
             log.info("Saved PDF :"+path)
-            return path
+            return res
         log.error("Failed to save PDF for order #"+order.order_num)
         return False
     except Exception as e:

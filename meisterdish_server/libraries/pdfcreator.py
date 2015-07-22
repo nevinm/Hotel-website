@@ -35,7 +35,7 @@ def save_to_pdf( template_src, context_dict, path):
     if not pdf.err:
         file = open (path, 'ab')
         file.write(result.getvalue())
-        return True
+        return file
     return False
 
 
