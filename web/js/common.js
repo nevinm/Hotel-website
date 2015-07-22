@@ -7,6 +7,7 @@ var baseURL = 'http://meisterdish.com/backend/api/',
 var $userentry = $('.login-signup');
 
 $(document).ready(function() {
+
     //Logout process
     $("#logout,.mobile-logout").on('click', function() {
         logingOut();

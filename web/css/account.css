@@ -7,7 +7,9 @@
 	height: 100%;
 	margin-top: 73px;
 }
-
+input.autofillremove:-webkit-autofill { 	/*for checkout */
+    -webkit-box-shadow: 0 0 0 1000px #D0D0D0 inset;
+}
 .small-profile-pic{
 	height: 148px;
 	max-width: 250px;

@@ -209,8 +209,11 @@ $(document).ready(function() {
         $('.address-info').hide();
         $("#guest-address-info").validate().resetForm();
         $("#guest-address-info input").removeClass('error');
+        $("#guest-address-info").find("input").not("#guest-email, #guest-phone,#add-guest-address").val("");
+        $("#guest-address-info").find("input").not("#guest-email, #guest-phone,#add-guest-address").addClass("autofillremove");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").attr("disabled", "disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").addClass("button-disabled");
+        $("#guest-address-info").find("#guest-email, #guest-phone").css("background-color","#f7f7f7");
         $('.pickup-content').show();
         $("#add-guest-address").hide();
         $(".state-selector-container").hide();
@@ -236,6 +239,7 @@ $(document).ready(function() {
         }
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeAttr("disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeClass("button-disabled");
+        $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeClass("autofillremove");
         $('.pickup-content').hide();
         $("#add-guest-address").show();
         $(".state-selector-container").show();
