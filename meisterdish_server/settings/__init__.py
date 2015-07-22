@@ -219,13 +219,21 @@ PAYMENT_METHODS = (
                    ('PP', 'PayPal'),
                    )
 
+#ORDER_STATUS =  (
+#    (0, "Cancelled"),
+#    (1, "Placed"),
+#    (2, "Packed"),
+#    (3, "Dispatched"),
+#    (4, "Delivered"),
+#    )
 ORDER_STATUS =  (
-    (0, "Cancelled"),
-    (1, "Placed"),
-    (2, "Packed"),
-    (3, "Dispatched"),
-    (4, "Delivered"),
+    (0, "Placed"),
+    (1, "Packed"),
+    (2, "Dispatched"),
+    (3, "Delivered"),
+    (4, "Cancelled"),
     )
+
 
 MEAL_STATUS =  (
     (0, "Placed"),
