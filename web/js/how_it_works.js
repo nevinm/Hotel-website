@@ -273,16 +273,8 @@ function showLocationCheckPopup(userDetails){
 var saveEmailCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
-        if (userDetails.status == 1) {
-            $('.delivery-area-check-popup').hide();
-            showPopup(userDetails);
-        } if(userDetails.status == -1) {
-        	showPopup(userDetails);
-        }
-        if(userDetails.status == -2){
-        	$('.delivery-area-check-popup').hide();
-        	showPopup(userDetails);
-        }
+        $('.delivery-area-check-popup').hide();
+        showPopup(userDetails);
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
