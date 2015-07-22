@@ -1,10 +1,10 @@
 $(document).ready(function() {
     getOrders();
     //auto refresh
-    setInterval(function(){
+    setInterval(function() {
         getOrders();
-    },60000);
-    
+    }, 60000);
+
     $(document).on('click', "#order-list td:not(.no-popup)", function() {
         currentOrderId = $(this).parent().data().id;
         getOrderDetails(currentOrderId);
@@ -33,7 +33,7 @@ $(document).ready(function() {
     });
     $("#date").datepicker();
 
-    downloadOrderCSV("cms/export_orders/","download-orders-form");
+    downloadOrderCSV("cms/export_orders/", "download-orders-form");
     // $("#download-orders-form").attr("action",baseURL+"cms/export_orders/");
     // $("#download-orders-form").find("input[name='session_key']").val(localStorage['session_key']);
     // $("#download-orders-csv").on("click",function(){
@@ -48,7 +48,7 @@ function returnSearchParams() {
         phone_num = $("#phone-num").val(),
         date = $("#date").val(),
         deliveryType = $("#delivery-type").val();
-        status = $("#order-status-filter option:selected").val(),
+    status = $("#order-status-filter option:selected").val(),
         searchParams = {};
     searchParams = {
         "userName": userName,
@@ -57,7 +57,7 @@ function returnSearchParams() {
         "phone_num": phone_num,
         "date": date,
         "status": status,
-        "delivery_type" : deliveryType
+        "delivery_type": deliveryType
     }
     return searchParams;
 }
@@ -103,7 +103,7 @@ var getOrdersCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getOrders(nextPage, userName, orderNum, status, total_amount, phone_num, date,delivery_type) {
+function getOrders(nextPage, userName, orderNum, status, total_amount, phone_num, date, delivery_type) {
     $('#order-list tbody').empty();
     var url = baseURL + "cms/get_orders/",
         header = {
@@ -154,7 +154,7 @@ var deleteOrderCallback = {
         if (deleteOrder.status == 1) {
             var searchParams = returnSearchParams();
             currentPage = $('.pagination').pagination('getCurrentPage');
-            getOrders(currentPage, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date,searchParams.delivery_type);
+            getOrders(currentPage, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date, searchParams.delivery_type);
         } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -183,11 +183,11 @@ function populateOrderList(data) {
             "<td>" + value.delivery_type + "</td>" +
             "<td>" + dollarConvert(parseFloat(value.grand_total).toFixed(2)) + "</td>" +
             "<td class='no-popup'><select data-id='" + value.id + "'class='order-status' name='status'>" +
-            "<option value='0'>Incomplete</option>" +
-            "<option value='1'>Order placed</option>" +
-            "<option value='2'>Confirmed</option>" +
-            "<option value='3'>Dispatched</option>" +
-            "<option value='4'>Complete</option>" +
+            "<option value='0'>Placed</option>" +
+            "<option value='1'>Packed</option>" +
+            "<option value='2'>Dispatched</option>" +
+            "<option value='3'>Delivered</option>" +
+            "<option value='4'>Cancelled</option>" +
             "</select></td>" +
             "<td class='no-popup'><a class='meal-delete cross' data-id='" + value.id + "'></a></td></tr>");
 
@@ -229,6 +229,6 @@ function populateOrderDetails(orderDetails) {
             "<img src='" + value.image + "'>" + "<span class='body-text-small'>" + value.name + "</span>" +
             "<div class='quantity-container'>" +
             "<input type='text' disabled='disabled' class='quantity' value='" + value.quantity + "'></div>" +
-            "<span class='price-container' data-tax='" + value.tax + "'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</span></div>");
+            "<span class='price-container' data-tax='" + value.tax + "'>" + dollarConvert(parseFloat(value.tax + value.price).toFixed(2)) + "</span></div>");
     });
 }

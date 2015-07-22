@@ -94,7 +94,6 @@ $(document).ready(function() {
 });
 
 function placeGiftOrder() {
-    $('.loading-indicator').show();
     //Saved card is present.
     if(localStorage['loggedIn'] == 'false'){
         if($('#address').valid()){
@@ -211,7 +210,6 @@ function fetchGiftCardData(token, cardId) {
 var saveCreditCardGiftCardCallback = {
     success: function(data, textStatus) {
         var response = JSON.parse(data);
-        $('.loading-indicator').hide();
         if (response.status == 1) {
             $("#pay-form")[0].reset();
             $("#close").addClass("redirectApproved");
@@ -220,7 +218,9 @@ var saveCreditCardGiftCardCallback = {
             showPopup(response);
         }
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {
+        $('.loading-indicator').hide();
+    }
 }
 
 //save credit card items
