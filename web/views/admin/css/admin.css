@@ -646,6 +646,10 @@ input#searchBy-name {
 .kitchen-filter{
     height: 50px;
 }
+#kitchen-order-container td{
+    cursor: default;
+}
+
 .meal-produced{
     cursor: pointer;
 }
