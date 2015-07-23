@@ -128,7 +128,12 @@ function populateHomePageMeal(mealDetails) {
     $sectionWhatToExpect.find(".meal-sub-description p").text(mealDetails.sub);
     $sectionWhatToExpect.find(".meal-properties .preparation-time").text(mealDetails.preparation_time);
     $sectionWhatToExpect.find(".meal-properties .calories").text(mealDetails.calories);
-    $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src", mealDetails.meal_types[0].image_url);
+    if(mealDetails.meal_types.length){
+        $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src", mealDetails.meal_types[0].image_url);
+    }
+    else{
+        $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src",  mealDetails.default_meal_type_image.image_url);
+    }
     $("#meal-info").attr("data-id", mealDetails.id);
     $("#meal-add").attr("data-id", mealDetails.id);
     $(".removeItemButton").attr("data-id",mealDetails.id);
