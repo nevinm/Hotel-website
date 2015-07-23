@@ -394,8 +394,10 @@ def save_email(request, data):
     try:
         email = data["email"].strip()
         zip = str(data["zipcode"]).strip()  
-        if not validate_email(email) or not validate_zipcode(zip):
-            return custom_error("Please enter a valid email and zipcode.")
+        if not validate_email(email):
+            return custom_error("Please enter a valid email.")
+        elif not validate_zipcode(zip):
+            return custom_error("Please enter a valid zip code.")
         added = add_to_mailing_list(email, zip)
         if added:
             log.info("Added email to list")
