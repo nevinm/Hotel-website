@@ -233,34 +233,34 @@ function ingredientsTab(mealDetails) {
 
 function tipsTricksTab(mealDetails) {
     $("#tips-and-tricks .video-container").remove(); 
-    // $("#tips-and-tricks .section").each(function(key, value) {
-    //     $(this).find(".tips-header").text();
-    // });
-        
-    $(mealDetails.tips).each(function(key, value) {
-        $("#tips-and-tricks .video-container img").remove();
-        $("#tips-and-tricks").append("<div class='section'>" +
+    if(mealDetails.tips.length){
+        $(mealDetails.tips).each(function(key, value) {
+            $("#tips-and-tricks").append("<div class='section'>" +
             "<div class='container'>" +
             "<span class='mob-view-header tips-header'>" + value.title + "</span>" +
-            "<div class='video-container'>" +
+            "<div class='video-container' data-id='"+value.id+"'>" +
             "</div><div class='list-container'>" +
             "<span class='list-header tips-header'>" + value.title + "</span>" +
             "<ul class='video-tips'></ul>" +
             "</div></div></div>");
-        if(imgValidation(value.video_url)){
-            $("#tips-and-tricks .video-container").append("<img src = '"+value.video_url+"'>");
-        }
+            if(imgValidation(value.video_url)){
+                $("#tips-and-tricks .video-container[data-id = '"+value.id+"']").append("<img src = '"+value.video_url+"'>");
+            }
         
-        if(ytVidId(value.video_url)){
-            $("#tips-and-tricks .video-container").append("<iframe height='280' src='//www.youtube.com/embed/" + 
+            else if(ytVidId(value.video_url)){
+                $("#tips-and-tricks .video-container[data-id = '"+value.id+"']").append("<iframe height='280' src='//www.youtube.com/embed/" + 
                 convertToEmbedded(value.video_url) + 
-                "' frameborder='0' allowfullscreen=''></iframe>");
-
-        }
-        $(value.description).each(function(key, value){
-            $(".video-tips:last").append("<li>"+value+"</li>");
+                "' frameborder='0' allowfullscreen=''></iframe>");  
+            }else{}
+            
+            $(value.description).each(function(key, value){
+                $(".video-tips:last").append("<li>"+value+"</li>");
+            });
         });
-    });
+    }else{
+        $("#tips-and-tricks").append("<div class='section'><p>" + 
+            "NO TIPS AND TRICKS ARE ADDED FOR THIS MEAL YET." + "</p></div>");
+    }     
 }
 
 function nutrientsTab(mealDetails) {
