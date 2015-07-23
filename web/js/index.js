@@ -101,7 +101,7 @@ function addToCart(meal_id, quantity) {
 //Get home page meal details.
 var getHomePageMealCallback = {
     success: function(data, textStatus) {
-        var meal_detailstails = JSON.parse(data);
+        var mealDetails = JSON.parse(data);
         if (mealDetails.status == 1) {
             populateHomePageMeal(mealDetails);
         } else {}
