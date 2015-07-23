@@ -302,13 +302,27 @@ p.lower-line {
     background-color: #A9D77B;
 }
 
+#section-what-is-meisterdish .outer-slide-description{
+    webkit-box-shadow: 0 0 5px 3px #DADADA;
+    -moz-box-shadow: 0 0 5px 3px #DADADA;
+    box-shadow: 0 0 5px 3px #DADADA;
+    margin-bottom: 5px;
+}
 
+#section-what-is-meisterdish .fp-tableCell{
+    background-color: transparent;
+}
 /*====================================*\
         &Section what to expect
 \*====================================*/
 
 #section-what-to-expect {
-    background-color: #F8F8F8;
+    background: url('../images/featured-meal-bg.jpg');
+    /*box-shadow: inset 0 0 10px #D3CFCF;*/
+    padding: 10px;
+}
+#section-what-to-expect,#section-what-is-meisterdish, #section-zipcode {
+    box-shadow: inset 0 7px 9px -7px rgba(211,207,207, 0.8);
 }
 
 .slide-header {
@@ -385,7 +399,7 @@ p.lower-content {
 .meal-sub-description p,
 p.lower-content {
     letter-spacing: 1.5px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 p.lower-content {
@@ -430,7 +444,7 @@ p.upper-content {
 }
 
 .what-you-get-section .upper-content img {
-    height: 50px;
+    height: 40px;
 }
 #section-what-to-expect .ingredients-wrapper {
     padding: 25px 0;
@@ -496,7 +510,7 @@ p.upper-content {
 }*/
 
 #section-zipcode .outer-slide-description {
-    margin-top: -100px;
+    margin-top: -50px;
 }
 
 .zip-code-container {
@@ -709,24 +723,24 @@ label#username-error {
     #section-what-to-expect .slide-header {
         padding-bottom: 10px;
     }
-    #section-what-to-expect .slide-header {
+   /* #section-what-to-expect .slide-header {
         font-size: 25px;
         letter-spacing: 2.5px;
         font-family: 'BrandonGrotesque-Medium';
         color: #6B6B6B;
         margin-top: 25px;
         text-align: center
-    }
+    }*/
     #section-what-is-meisterdish .outer-slide-description,
     #section-what-to-expect .outer-slide-description {
-        margin: 20px auto 0 auto;
+            /*margin: 20px auto 0 auto;*/
     }
     .meal-name p {
-        font-size: 25px;
+        /*font-size: 25px;*/
     }
     .meal-sub-description p,
     p.lower-content {
-        font-size: 15px;
+        font-size: 18px;
     }
     p.upper-content {
         font-size: 25px;
@@ -735,7 +749,7 @@ label#username-error {
         padding: 10px;
     }
     .what-you-get-section .sub-heading {
-        font-size: 20px;
+        /*font-size: 20px;*/
     }
     .meal-image {
         padding-left: 10%;

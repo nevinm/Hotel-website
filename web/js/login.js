@@ -47,7 +47,7 @@ function checkReferredPage() {
     referredPage = getCurrentPage("/", ".html", referrer);
     if (referredPage == "checkout") {
         window.location.href = 'checkout.html';
-    } else if (referredPage == "giftcard_payment") {
+    } else if (referredPage == "giftcard-payment") {
         window.location.href = 'giftcard-payment.html';
     } else {
         window.location.href = 'menu.html';
