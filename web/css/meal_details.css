@@ -325,6 +325,15 @@ span.mob-view-header{
     float: left;
     padding:10px 0;
 }
+#tips-and-tricks .section p {
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: #6B6B6B;
+    text-align: center;
+    text-transform: uppercase;
+    text-align: center;
+}
 .video-container iframe{
     border: 1px solid #ddd;
     border-radius: 4px;
