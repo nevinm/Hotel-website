@@ -22,9 +22,13 @@ $(document).ready(function() {
     $('.add-nutrition-content').on("click", function() {
         var nutrients = $('#nutrients').val(),
             per_serving = $('#nutrients-per-serving').val(),
-            daily_value = $('#nutrients-daily-value').val();
-        if (nutrients != undefined && nutrients != "") {
+            daily_value = $('#nutrients-daily-value').val(),
+            numberOnly = /^\d+$/;
+        if (nutrients != undefined && nutrients != "" && numberOnly.test(daily_value)) {
             populateNutrients(nutrients, per_serving, daily_value);
+            $("#nutrients").val("");
+            $("#nutrients-per-serving").val("");
+            $("#nutrients-daily-value").val("");
         }
     });
 

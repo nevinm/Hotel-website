@@ -76,7 +76,7 @@ def get_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(is_deleted=False).exclude(status=0)
+        orders = Order.objects.filter(is_deleted=False)
         
         total_count = orders.count()
 
