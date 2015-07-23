@@ -16,7 +16,7 @@ def render_to_pdf( template_src, context_dict):
         context = Context(context_dict)
         html  = template.render(context)
         result = StringIO.StringIO()
-        
+        #return HttpResponse(html)
         pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), dest=result, link_callback=fetch_resources)
         name = "print"
         if not pdf.err:
@@ -31,7 +31,6 @@ def save_to_pdf( template_src, context_dict, path):
     context = Context(context_dict)
     html  = template.render(context)
     result = StringIO.StringIO()
-
     pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), dest=result, link_callback=fetch_resources)
     if not pdf.err:
         file = open (path, 'ab')

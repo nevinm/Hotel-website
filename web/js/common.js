@@ -1,5 +1,5 @@
-var baseURL = 'http://meisterdish.qburst.com/backend/api/',
-    homeUrl = "http://meisterdish.qburst.com",
+var baseURL = 'http://meisterdish.com/backend/api/',
+    homeUrl = "http://meisterdish.com",
     userDetails, currentPage = $("title").text(),
     currentPageTitle,
     clicked = 0;

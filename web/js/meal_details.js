@@ -264,7 +264,8 @@ function tipsTricksTab(mealDetails) {
 }
 
 function nutrientsTab(mealDetails) {
-    $.each(mealDetails.nutrients, function(key, value) {
+    if(mealDetails.nutrients.length){
+        $.each(mealDetails.nutrients, function(key, value) {
         $("#nutrient-table tbody").append("<tr><td>" + value.mainNutrient + "</td>" +
             "<td class='per-serving'>" + value.perServing + "</td>" +
             "<td>" + value.dailyValue + "</td>" +
@@ -277,7 +278,11 @@ function nutrientsTab(mealDetails) {
                     "</tr>");
             });
         }
-    });
+        });
+    }else{
+        $("#nutrient-table tbody").append("<tr>"+"<td><div>" +"No nutrients present...."+"</div></td>"+"<td></td>"+"<td></td>"+"</tr>");
+    }
+    
 }
 
 function reviewsTab(mealDetails) {

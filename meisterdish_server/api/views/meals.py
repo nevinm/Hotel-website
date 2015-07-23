@@ -162,7 +162,6 @@ def get_meal_details(request, data, meal_id):
             "tax":(meal.price * meal.tax) /100,
             "available" : 1 if meal.available else 0,
             "calories" : meal.calories,
-            #"filters" : [type.id for type in meal.types.all()],
             "cat_id" : 'Not Available' if not meal.category else {
                 "id":meal.category.id,
                 "name":meal.category.name.title(),
@@ -205,6 +204,7 @@ def get_meal_details(request, data, meal_id):
             "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, meal__pk=meal.id).exists() else 0,
             "quantity" : qty,
             "meal_types" : meal_types,
+            "default_meal_type_image": settings.DEFAULT_MEAL_TYPE_IMAGE,
         })
     except Exception as e:
         log.error("get_meal details : " + e.message)
