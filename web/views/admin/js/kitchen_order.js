@@ -1,9 +1,9 @@
 $(document).ready(function() {
     getOrders();
 
-    setInterval(function(){
+    setInterval(function() {
         getOrders();
-    },60000);
+    }, 60000);
 });
 
 //Get orders API process
@@ -89,7 +89,8 @@ function populateOrderList(data) {
             zip = undefinedCheck(value.delivery_address.zip),
             minTime = undefinedCheck(value.time),
             orderNum = undefinedCheck(value.id),
-            minTime = undefinedCheck(value.minutes);
+            minTime = undefinedCheck(value.minutes),
+            orderStatus = undefinedCheck(value.status);
 
         $.each(value.meals, function(mealKey, mealValue) {
             var prevOrderNum = $($("#order-list tbody .row:nth-last-child(2)")[0]).data("order-id");
@@ -111,14 +112,15 @@ function populateOrderList(data) {
                 "<td>" + zip + "</td>" +
                 "<td>" + name + "</td>" +
                 "<td>" + phone + "</td>" +
-                "<td><select data-id='"+value.id+"' data-order-id='"+orderNum+"'"+
-                "data-meal-id='" + mealValue.id + "'class='order-status' name='status'>" +
-                "<option value='0'>Placed</option>" +
-                "<option value='1'>Packed</option>" +
-                "<option value='2'>Dispatched</option>" +
-                "<option value='3'>Delivered</option>" +
-                "<option value='4'>Cancelled</option>" +
-                "</select>" + "</td>" +
+                // "<td><select data-id='" + value.id + "' data-order-id='" + orderNum + "'" +
+                // "data-meal-id='" + mealValue.id + "'class='order-status' name='status'>" +
+                // "<option value='0'>Placed</option>" +
+                // "<option value='1'>Packed</option>" +
+                // "<option value='2'>Dispatched</option>" +
+                // "<option value='3'>Delivered</option>" +
+                // "<option value='4'>Cancelled</option>" +
+                // "</select>" + "</td>" +
+                "<td><b>"+orderStatus+"</b></td>"+
                 "</tr>");
 
 
@@ -132,8 +134,8 @@ function populateOrderList(data) {
             //         " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id +
             //         "' class='status'/></td>");
             // }
-        currentStatus = mealValue.status_id;
-        $(".order-status:last").val(currentStatus);
+            // currentStatus = mealValue.status_id;
+            // $(".order-status:last").val(orderStatus);
         });
     });
 
@@ -155,9 +157,9 @@ function populateOrderList(data) {
             producedMealsElements = $("select[data-order-id='" + orderId + "']"),
             producedMeals = [];
         // $.each(producedMealsElements, function(key, value) {
-            // if ($(value).val()==1) {
-                producedMeals.push($(this).data("meal-id"));
-            // } else {}
+        // if ($(value).val()==1) {
+        producedMeals.push($(this).data("meal-id"));
+        // } else {}
         // });
         updateOrders(producedMeals, orderId, mealStatus, this);
     });
