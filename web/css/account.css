@@ -2084,7 +2084,9 @@ a#add-address-popup :hover{
 		border:none;
 	}
 	.pickup-content {
-		float: none;padding-bottom: 45px;
+		float: none;
+		padding-bottom: 45px;
+		overflow: hidden;
 	}
 	.address-payment-list-popup .header{
 		letter-spacing: .2px;
