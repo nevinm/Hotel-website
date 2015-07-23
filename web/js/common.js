@@ -99,7 +99,9 @@ $(document).ready(function() {
                     if($("#address").valid() && $("#pay-form").valid()){
                         $("#gift-place-order").trigger("click");
                     } 
-                }   
+                }if($(".resetsuccess-container ").is(":visible") && $("#done-button").is(":visible")) {
+                    $("#done-button")[0].click();
+                }  
             }
         }
     });   
@@ -701,17 +703,17 @@ $(window).load(function() {
     mobileResponsive();
 });
 
-function mobileResponsive() {
-    if ($(window).width() <= 767 && $(window).width() >= 320) {
-        if (clicked == 1) {
-            $('#page-container').css("margin-left", "60%");
-            $('#header').css("margin-left", "60%");
-        }
-    } else {
-        $('#page-container').css("margin-left", "0px");
-        $('#header').css("margin-left", "0px");
-    }
-}
+// function mobileResponsive() {
+//     if ($(window).width() <= 767 && $(window).width() >= 320) {
+//         if (clicked == 1) {
+//             $('#page-container').css("margin-left", "60%");
+//             $('#header').css("margin-left", "60%");
+//         }
+//     } else {
+//         $('#page-container').css("margin-left", "0px");
+//         $('#header').css("margin-left", "0px");
+//     }
+// }
 
 function convertToEmbedded(url) {
     var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
