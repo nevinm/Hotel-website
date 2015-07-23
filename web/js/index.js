@@ -170,8 +170,11 @@ function renderFullPageJS() {
         scrollingSpeed: 1000,
         // slidesNavigation: true,
         // controlArrows: false,
+        autoScrolling: false,
+        scrollBar: true,
         paddingTop: '70px',
         keyboardScrolling: false,
+        fitToSection: false,
         navigation: true,
         afterResize: function() {
             destroyFullPageJS();
