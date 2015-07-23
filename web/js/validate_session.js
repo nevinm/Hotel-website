@@ -1,4 +1,4 @@
-var sessionExpiryTime = 5;
+var sessionExpiryTime = 30;
 function getCurrentPage(firstChar, secondChar, url) {
     currentPage = url.substring(url.lastIndexOf(firstChar) + 1, url.lastIndexOf(secondChar));
     return currentPage;

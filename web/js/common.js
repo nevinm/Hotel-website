@@ -519,6 +519,9 @@ $("form").each(function() {
             calories:{
                 required: true,
                 number: true
+            },
+            dailyvalue:{
+                number:true
             }
         },
         messages: {
@@ -591,6 +594,9 @@ $("form").each(function() {
             },
             preperationtime:{
                 required: "Please enter prepared time"
+            },
+            dailyvalue:{
+                number:"Should be a number"
             },
             nameOnCard: "Enter valid name.",
             expiryMonth: "Enter exp month.",
