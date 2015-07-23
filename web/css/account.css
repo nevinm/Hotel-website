@@ -2046,7 +2046,10 @@ a#add-address-popup :hover{
 		width: 25%;
 	}
 	form#guest-address-info #address-line-1-error{
-		bottom: 104px;
+		bottom: 88px;
+	}
+	form#guest-address-info #address-line-2-error{
+		bottom: 88px;
 	}
 	#add-payment-method-container,#manage-payment-method-container{
 		float: none;
