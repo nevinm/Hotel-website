@@ -236,9 +236,9 @@ def save_delivery_time(request, data, user):
         if "delivery_time" in data:
             del_time = data['delivery_time'].strip()
             delivery_time = datetime.strptime(del_time,"%m-%d-%Y %H:%M:%S")
-            if delivery_time < datetime.now():# - timedelta(hours=settings.ORDER_DELIVERY_WINDOW):
+            #if delivery_time < datetime.now():# - timedelta(hours=settings.ORDER_DELIVERY_WINDOW):
                 #return custom_error("Sorry, the delivery time should be at least "+str(settings.ORDER_DELIVERY_WINDOW) + " hours from now.")
-                return custom_error("Sorry, you cannot choose a past time as delivery time.")
+            #    return custom_error("Sorry, you cannot choose a past time as delivery time.")
             cart.delivery_time = delivery_time
             field = "time"
         
