@@ -26,6 +26,9 @@ $(document).ready(function() {
             numberOnly = /^\d+$/;
         if (nutrients != undefined && nutrients != "" && numberOnly.test(daily_value)) {
             populateNutrients(nutrients, per_serving, daily_value);
+            $("#nutrients").val("");
+            $("#nutrients-per-serving").val("");
+            $("#nutrients-daily-value").val("");
         }
     });
 
