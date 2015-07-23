@@ -402,7 +402,7 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         self.updated = datetime.datetime.now()
 
-        if self.status >= 1:
+        if self.status != 4:
             self.cart.completed = True
             self.cart.save()
 
