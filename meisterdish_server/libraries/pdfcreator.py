@@ -33,9 +33,10 @@ def save_to_pdf( template_src, context_dict, path):
     result = StringIO.StringIO()
     pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), dest=result, link_callback=fetch_resources)
     if not pdf.err:
-        file = open (path, 'ab')
-        file.write(result.getvalue())
-        return file
+        # Save PDF?
+        #file = open (path, 'ab+')
+        #file.write(result.getvalue())
+        return result.getvalue()
     return False
 
 

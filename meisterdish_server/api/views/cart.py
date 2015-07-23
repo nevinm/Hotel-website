@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 from datetime import datetime, timedelta
 from libraries import get_request_user, create_guest_user, validate_zipcode
 
-log = logging.getLogger('cart')
+log = logging.getLogger(__name__)
 
 @check_input('POST')
 def get_cart_items(request, data, user):

@@ -5,7 +5,7 @@ import settings
 from django.core.paginator import Paginator
 from libraries import validate_zipcode
 
-log = logging.getLogger('cms')
+log = logging.getLogger(__name__)
 
 
 @check_input('POST', True)

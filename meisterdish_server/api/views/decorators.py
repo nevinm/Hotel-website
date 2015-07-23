@@ -5,7 +5,7 @@ import logging, settings
 from libraries import json_request, json_response, custom_error
 from meisterdish_server.models import User
 from django.db.models import Q
-log = logging.getLogger('api')
+log = logging.getLogger(__name__)
 
 def check_input(method):
     def wrapper(func):

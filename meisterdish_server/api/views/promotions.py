@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-log = logging.getLogger('api')
+log = logging.getLogger(__name__)
 
 
 @check_input('POST')

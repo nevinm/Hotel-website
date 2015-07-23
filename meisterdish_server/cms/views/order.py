@@ -11,7 +11,7 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
 
-log = logging.getLogger('cms')
+log = logging.getLogger(__name__)
 
 @check_input('POST', settings.ROLE_ADMIN)
 def delete_order(request, data, user, order_id):
@@ -365,6 +365,8 @@ def send_sms_notification(dic):
         client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
 
         country_code = "+1" if settings.Live else "+1"
+        if str(dic["mobile"]).strip() == "7034088806":
+            country_code = "+91"
         number = country_code + str(dic["mobile"]).strip()
 
         message = client.messages.create(body=txt,
@@ -389,7 +391,7 @@ def export_orders(request, data):
         if session_key :
             session = SessionStore(session_key=session_key)
             if session and 'user' in session :
-              orders = Order.objects.filter(is_deleted=False).exclude(status=0)
+              orders = Order.objects.filter(is_deleted=False).exclude(status=4)
               
               q = Q()
               #Filter
@@ -411,10 +413,18 @@ def export_orders(request, data):
                       'Order Number', 
                       'Order Date',
                       'Name',
+                      "Email",
                       'Phone',
                       'Delivery Address',
                       "Zip Code",
-                      'Amount',
+                      "Price",
+                      "Tax",
+                      "Tip",
+                      "Discount",
+                      "Credits Used",
+                      'Grand Total',
+                      "Delivery Type",
+                      "Driver Instructions",
                       'Delivery Date',
                       "Status"
                   ]]
@@ -423,11 +433,19 @@ def export_orders(request, data):
                   export_list.append([
                       str(order.order_num),
                       order.created.strftime("%m-%d-%Y %H:%M:%S"),
-                      order.cart.user.first_name.title() + " " + order.cart.user.last_name.title(),
+                      order.cart.user.first_name.title() + " " + order.cart.user.last_name.title() if order.cart.user.role.id == ROLE_USER else "Guest",
+                      order.email,
                       str(order.phone),
                       create_address_text_from_model(order.delivery_address, order.phone),
                       order.delivery_address.zip if order.delivery_address else "Pick up",
+                      "{0:.2f}".format(order.total_amount),
+                      "{0:.2f}".format(order.total_tax),
+                      "{0:.2f}".format(order.tip),
+                      "{0:.2f}".format(order.discount),
+                      "{0:.2f}".format(order.credits),
                       "{0:.2f}".format(order.grand_total),
+                      order.delivery_type.title(),
+                      order.driver_instructions,
                       order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                       dict(settings.ORDER_STATUS)[order.status],
                   ])
