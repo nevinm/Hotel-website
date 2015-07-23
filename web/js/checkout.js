@@ -172,6 +172,11 @@ $(document).ready(function() {
     $('#change-payment-method').on("click", function() {
         populateCreditCardDetails();
     })
+    $('#promo-gift-input').on("keydown",function(e){
+         if(e.keyCode == 13){
+            $("#apply-promo-gift").trigger("click");
+         }
+    });
 
     $('#apply-promo-gift').on("click", function() {
         var button_value = $('#apply-promo-gift').val(),
@@ -179,12 +184,12 @@ $(document).ready(function() {
             code_length = code.length;
         if (button_value == "APPLY") {
             $('.promo-validation-message').css('color', '#ff7878');
-            if (code == "") {
-                $('.promo-validation-message').text("* " + "Please enter Giftcard/Promocode");
+            if (localStorage['loggedIn'] != 'true') {
+                $('.promo-validation-message').text("You must be LoggedIn to use coupons.");
+            } else if (code == "") {
+                $('.promo-validation-message').text("* " + "Please enter Giftcard/Promocode.");
             } else if (code_length > 8) {
-                $('.promo-validation-message').text("* " + "Please enter valid Giftcard/Promocode");
-            } else if (localStorage['loggedIn'] != 'true') {
-                $('.promo-validation-message').text("You must be logged in to use this code");
+                $('.promo-validation-message').text("* " + "Please enter valid Giftcard/Promocode.");
             } else {
                 checkPromoCode(code);
             }
