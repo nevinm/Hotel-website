@@ -50,7 +50,7 @@ $(document).ready(function() {
     //Add tips n tricks main
     $('#add-tips-main').on("click", function(e) {
         e.preventDefault();
-        var video_URL = $('#tips-video-url').val(),
+        var video_URL = $('#tips-video-url').val().trim(),
             tips_heading = $('#tips-and-tricks').val(),
             valid_url, valid_title;
         valid_url = ytVidId(video_URL) || imgValidation(video_URL);
