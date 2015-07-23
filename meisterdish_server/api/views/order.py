@@ -21,7 +21,7 @@ def get_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(is_deleted=False, cart__user=user).exclude(status=0)
+        orders = Order.objects.filter(is_deleted=False, cart__user=user)
         
         total_count = orders.count()
 
@@ -275,7 +275,7 @@ def create_order(request, data, user):
             
             if not order.card_id:
                 order.token = data["stripeToken"].strip()
-            order.status = 0
+            order.status = 4
             order.save()
             payment = make_payment(order, user)
             
@@ -289,7 +289,7 @@ def create_order(request, data, user):
             log.info("Order success - Amount = 0..")
 
         order.payment = payment
-        order.status = 1
+        order.status = 0
         order.save()
         user.save()
 
@@ -306,7 +306,10 @@ def create_order(request, data, user):
         if not send_order_placed_notification(order):
             log.error("Failed to send order notification")
         cart_items = get_order_cart_items(order)
-        print_sucess = print_order(order)
+        
+        if not print_order(order):
+            log.error("Failed to print order #"+str(order.order_num))
+
         return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way.", "cart_items":cart_items})
         
     except Exception as e:
@@ -315,13 +318,26 @@ def create_order(request, data, user):
 
 def print_order(order):
     try:
-        pdf_path = save_pdf(order)
-        if not pdf_path:
+        pdf_file = save_pdf(order)
+        if not pdf_file:
             return False
-        
-
-        return True
-        #If True, delete the PDF
+        from libraries.printnode import api_call
+        import base64
+        content = base64.b64encode(pdf_file)
+        data = {
+            "printerId": 49349, 
+            "title": "My Test PrintJob", 
+            "contentType": "pdf_base64",
+            "content": content,
+            "source": "api documentation!",
+            "options": {"copies":1, "paper":"A5", "bin":"Tray 1"},
+        }
+        if api_call('printjobs', data):
+            log.info("Printing success")
+            #Delete PDF
+            return True
+        log.error("Prinrt failed")
+        return False
     except Exception as e:
         log.error("Failed to print order." + e.message)
         return False
@@ -339,13 +355,13 @@ def save_pdf(order):
                         'order':order,
                         'cart_items':cart_items,
                         'date':order.delivery_time.strftime("%m-%d-%Y"),
-                        "time" : order.delivery_time.strftime("%I") + " - " +str(int(order.delivery_time.strftime("%I"))+1) + " " + order.delivery_time.strftime("%p"),
+                        "time" : str(int(order.delivery_time.strftime("%I"))) + " - " +str(int(order.delivery_time.strftime("%I"))+1) + " " + order.delivery_time.strftime("%p"),
                     },
                     path
             )
         if res:
             log.info("Saved PDF :"+path)
-            return path
+            return res
         log.error("Failed to save PDF for order #"+order.order_num)
         return False
     except Exception as e:
@@ -616,7 +632,7 @@ def get_cart_total(cart):
     except Exception as e:
         log.error("Error getting cart total: " + e.message)
     return (amount, tax)
-
+"""
 def send_sms_notification(dic):
     try:
         if not dic["mobile"]:
@@ -646,7 +662,7 @@ def send_sms_notification(dic):
     except Exception as e:
         log.error("Failed to send order SMS to : " + number + " : "+e.message)
         return False
-
+"""
 def print_pdf(request):
     try:
         from libraries.pdfcreator import render_to_pdf

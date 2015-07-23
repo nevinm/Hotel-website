@@ -32,7 +32,7 @@ def update_order(request, data, user, order_id):
             try:
               st = int(data['meal_status'])
               if st < 0 or st > 4:
-                log.error("Invalid order status: " + str(st))
+                log.error("Invalid meal status: " + str(st))
                 return custom_error("Invalid order status")
             except:
               return custom_error("Invalid order status.")
@@ -54,13 +54,13 @@ def update_order(request, data, user, order_id):
             order.status = status
             order.save()
         
-            if status >=1:
+            if status != 4:
                 order.cart.completed=True
                 order.cart.save()
             order.session_key = request.META.get('HTTP_SESSION_KEY', None)
-            if status == 3: #Dispatched
+            if status == 2: #Dispatched
                 need_boiling = CartItem.objects.filter(cart__order=order, meal__need_boiling_water=True).exists()
-                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.phone, "status":3, "need_boiling":need_boiling})
+                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.phone, "status":2, "need_boiling":need_boiling})
                 if not sent:
                     log.error("Failed to send order dispatched notification")
             
@@ -76,7 +76,7 @@ def get_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(is_deleted=False).exclude(status=0)
+        orders = Order.objects.filter(is_deleted=False)
         
         total_count = orders.count()
 
@@ -256,7 +256,7 @@ def get_order_details(request, data, user, order_id):
     except Exception as e:
         log.error("get order details." + e.message)
         return custom_error("Failed to list order details.")
-
+"""
 def send_order_confirmation_notification(order):
     try:
         meals = Meal.objects.filter(cartitem__cart__order=order).values_list('name', 'price', 'tax')
@@ -346,25 +346,21 @@ def send_order_complete_notification(order):
         
         #mail([to_email], sub, msg )
 
-        if user.need_sms_notification:
-            if not send_sms_notification(dic):
-                return False
+        #if user.need_sms_notification:
+        #    if not send_sms_notification(dic):
+        #        return False
         return True
     except Exception as e:
         log.error("Send order completion mail : " + e.message)
         return False
-
+"""
 def send_sms_notification(dic):
     try:
         if not dic["mobile"]:
             log.error("No mobile number available to send SMS.")
             return False
-        if dic["status"] == 2: #Confirmed
-            txt = render_to_string('order_confirmation_sms_template.html', dic)
-        if dic["status"] == 3: #Dispatched
+        if dic["status"] == 2: #Dispatched
             txt = render_to_string('order_dispatched_sms_template.html', dic)
-        else: #Complete
-            txt = render_to_string('order_complete_sms_template.html', dic)
         
         client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
 
