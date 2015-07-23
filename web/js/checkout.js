@@ -293,6 +293,7 @@ function setCurrentTime() {
                     $(this).addClass("checkout-time-button-active");
                     if(currentMintues >= minutesToCLose){
                         $(this).addClass("button-disabled");
+                        $(this).removeClass("checkout-time-button-active");
                     }
                 }
             }
