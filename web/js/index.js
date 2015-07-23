@@ -43,7 +43,7 @@ $(document).ready(function() {
 
     $("#meal-info").on("click", function() {
         mealId = $(this).attr('data-id');
-        window.location.href = 'meal-details.html?mealId=' + mealId;
+        window.location.href = 'views/meal-details.html?mealId=' + mealId;
     });
 
     $("#meal-add").on("click", function() {
@@ -101,7 +101,7 @@ function addToCart(meal_id, quantity) {
 //Get home page meal details.
 var getHomePageMealCallback = {
     success: function(data, textStatus) {
-        var mealDetails = JSON.parse(data);
+        var meal_detailstails = JSON.parse(data);
         if (mealDetails.status == 1) {
             populateHomePageMeal(mealDetails);
         } else {}
