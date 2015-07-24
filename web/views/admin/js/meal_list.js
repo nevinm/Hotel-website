@@ -248,6 +248,15 @@ function populateMealList(data) {
         onPageClick: function(pageNumber, event) {
             var searchParams = returnMealSearchParams();
             getmealList(searchParams.search_name, searchParams.category, searchParams.mealtype, pageNumber);
+        },
+        onInit: function() {
+            if (getStringAfterHash(location.href, "#")) {
+                var pageString = getStringAfterHash(location.href, "#");
+                pageNumber = getStringAfterHash(pageString, "-");
+                if ($(".pagination").pagination('getCurrentPage') == pageNumber) {} else {
+                    $(".pagination").pagination('selectPage', pageNumber);
+                }
+            } else {}
         }
     });
 

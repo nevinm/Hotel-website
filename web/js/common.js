@@ -210,7 +210,7 @@ function getCurrentDateMonth(days) {
 }
 
 function getStringAfterHash(url, symbol) {
-    if(url.indexOf(symbol)){
+    if(url.indexOf(symbol)!=-1){
         return url.substr(url.indexOf(symbol) + 1);
     }else{
         return false;
