@@ -12,22 +12,22 @@ $(document).ready(function() {
     $("#logout,.mobile-logout").on('click', function() {
         logingOut();
     });
-    $('.socialMedia').on("click",function(){
+    $('.socialMedia').on("click", function() {
         var clicked_id = $(this).attr('id');
-        if(clicked_id == 'facebook'){
-            window.open('http://www.facebook.com/meisterdish','_blank'); 
+        if (clicked_id == 'facebook') {
+            window.open('http://www.facebook.com/meisterdish', '_blank');
         }
-        if(clicked_id == 'twitter'){
-            window.open('https://twitter.com/meisterdish','_blank');
+        if (clicked_id == 'twitter') {
+            window.open('https://twitter.com/meisterdish', '_blank');
         }
-        if(clicked_id == 'instagram'){
-            window.open('http://instagram.com/meisterdish','_blank');
+        if (clicked_id == 'instagram') {
+            window.open('http://instagram.com/meisterdish', '_blank');
         }
-        if(clicked_id == 'pinterest'){
-            window.open('http://pinterest.com/meisterdish','_blank');
+        if (clicked_id == 'pinterest') {
+            window.open('http://pinterest.com/meisterdish', '_blank');
         }
     });
-    
+
     //hide social media icons
     // $(".footer-links").remove();
 
@@ -73,38 +73,39 @@ $(document).ready(function() {
             $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
         }, 600)
     });
-    $(document).on('keydown', function (e) {
+    $(document).on('keydown', function(e) {
         var key = e.which;
-        if(key == 13)  // the enter key code
-        {  
-            if($('.popup-container').is(':visible')){
-                if($('#ok-button').is(':visible')){
+        if (key == 13) // the enter key code
+        {
+            if ($('.popup-container').is(':visible')) {
+                if ($('#ok-button').is(':visible')) {
                     $('#ok-button').trigger('click');
-                }                            
-                if($('#no-button').is(":visible")){
+                }
+                if ($('#no-button').is(":visible")) {
                     $('#no-button').trigger('click');
                 }
-                if($('#ok').is(":visible")){
+                if ($('#ok').is(":visible")) {
                     window.location.href = $('#ok').attr('href');
                 }
                 if ($(".popup-container #see-menu").is(":visible")) {
                     $('.popup-container #see-menu')[0].click();
-                }          
-                if($('.popup-container').find('form').length === 0) {
+                }
+                if ($('.popup-container').find('form').length === 0) {
                     e.preventDefault();
                     $('#close').trigger('click');
-                }  
-            }else{ ///for gift card form submit
-                if($("#gift-place-order").is(":visible")){
-                    if($("#address").valid() && $("#pay-form").valid()){
+                }
+            } else { ///for gift card form submit
+                if ($("#gift-place-order").is(":visible")) {
+                    if ($("#address").valid() && $("#pay-form").valid()) {
                         $("#gift-place-order").trigger("click");
-                    } 
-                }if($(".resetsuccess-container ").is(":visible") && $("#done-button").is(":visible")) {
+                    }
+                }
+                if ($(".resetsuccess-container ").is(":visible") && $("#done-button").is(":visible")) {
                     $("#done-button")[0].click();
-                }  
+                }
             }
         }
-    });   
+    });
 
     verifyAccount();
 });
@@ -138,15 +139,54 @@ function dollarConvert(value) {
     return dollarValue;
 }
 
+function getHourCorrected(Hour){
+    return (("0"+Hour).slice(-2));
+}
+
 // delivery_time : 04-28-2015 20:15:20
 function getCurrentDateTime(days) {
     var currentdate = new Date();
     currentdate.setDate(currentdate.getDate() + days);
-    return datetime = ('0' + (currentdate.getMonth() + 1)).slice(-2) + "-" + ('0' + currentdate.getDate()).slice(-2) + "-" + currentdate.getFullYear();
+    return datetime = ('0' + (currentdate.getMonth() + 1)).slice(-2) + 
+    "-" + ('0' + currentdate.getDate()).slice(-2) + "-" + currentdate.getFullYear();
 }
 
 function getCurrentPageTitle() {
     return $("title").text();
+}
+
+function stringToDate(date,format,delimiter)
+{
+    var formatLowerCase=format.toLowerCase();
+    var formatItems=formatLowerCase.split(delimiter);
+    var dateItems=date.split(delimiter);
+    var monthIndex=formatItems.indexOf("mm");
+    var dayIndex=formatItems.indexOf("dd");
+    var yearIndex=formatItems.indexOf("yyyy");
+    var month=parseInt(dateItems[monthIndex]);
+    month-=1;
+    var formatedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]);
+    return formatedDate;
+}
+
+function convertToEST(timeRecieved) {
+    //EST
+    var offset = -4.0,
+    clientDate = new Date(timeRecieved);
+    utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
+    serverDate = new Date(utc + (3600000 * offset));
+    return serverDate;
+}
+
+function getEstFormattedForWebService(time){
+    var hours = time.getHours(),
+    day = time.getDate(),
+    months = time.getMonth()+1,
+    year = time.getFullYear();
+    var selectedDate = (('0' + (time.getMonth() + 1)).slice(-2) + 
+    "-" + ('0' + time.getDate()).slice(-2) + "-" + time.getFullYear()+ " "+
+    getHourCorrected(hours) + ":00:00").replace(/\-/g, "/");
+    return selectedDate;
 }
 
 function getCurrentDateMonth(days) {
@@ -173,7 +213,7 @@ function getCurrentDateMonth(days) {
 function getCurrentHourMin() {
     var currentdate = new Date();
     var hours = currentdate.getHours(),
-    minutes = ("0"+currentdate.getMinutes()).slice(-2);
+        minutes = ("0" + currentdate.getMinutes()).slice(-2);
     if (hours > 12) {
         meridiem = "pm";
     } else {
@@ -181,7 +221,7 @@ function getCurrentHourMin() {
     }
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    var strTime = hours+":"+minutes;
+    var strTime = hours + ":" + minutes;
     return strTime + meridiem;
 }
 
@@ -406,15 +446,15 @@ $("form").each(function() {
             },
             promocode: {
                 required: true,
-                maxlength : 8
+                maxlength: 8
             },
-            giftcard : {
+            giftcard: {
                 required: true,
-                maxlength : 8
+                maxlength: 8
             },
-            giftcardname :{
-                required :true,
-                maxlength :8
+            giftcardname: {
+                required: true,
+                maxlength: 8
             },
             zip: {
                 // required: true,
@@ -471,7 +511,7 @@ $("form").each(function() {
             url: {
                 youtube_url: true
             },
-            preperationtime:{
+            preperationtime: {
                 required: true
             },
             tips_details: {
@@ -482,13 +522,13 @@ $("form").each(function() {
                 required: true,
                 minAmount: 2
             },
-            credits:{
-                required:true,
-                number:true
+            credits: {
+                required: true,
+                number: true
             },
             giftcardcustomamount: {
                 required: true,
-                decimal:true,
+                decimal: true,
                 minlength: 2,
                 minAmount: 25
             },
@@ -500,30 +540,30 @@ $("form").each(function() {
                 minAmount: 0,
                 maxAmount: 10
             },
-            new_category:{
-               required: true,
-               minlength: 3 
-            },
-            update_category:{
+            new_category: {
                 required: true,
-                minlength: 3 
+                minlength: 3
             },
-            tip:{
-                required : true,
-                number : true,
+            update_category: {
+                required: true,
+                minlength: 3
+            },
+            tip: {
+                required: true,
+                number: true,
                 maxAmount: 10,
-                minAmount :0
+                minAmount: 0
             },
-            order:{
-                required : true,
-                number : true  
-            },
-            calories:{
+            order: {
                 required: true,
                 number: true
             },
-            dailyvalue:{
-                number:true
+            calories: {
+                required: true,
+                number: true
+            },
+            dailyvalue: {
+                number: true
             }
         },
         messages: {
@@ -550,9 +590,9 @@ $("form").each(function() {
                 required: "Please provide a password.",
                 minlength: "Password should be of minimum 6 characters."
             },
-            calories:{
-                required:"Please enter calories",
-                number:"Please enter a number"
+            calories: {
+                required: "Please enter calories",
+                number: "Please enter a number"
             },
             username: {
                 required: "Please enter username.",
@@ -589,16 +629,16 @@ $("form").each(function() {
                 required: "Please enter an amount",
                 number: "Enter a valid number"
             },
-            delivery_tip:{
+            delivery_tip: {
                 required: "Please enter a valid tip",
                 minAmount: "Enter amount between 1 and 10",
                 maxAmount: "Enter amount between 1 and 10"
             },
-            preperationtime:{
+            preperationtime: {
                 required: "Please enter prepared time"
             },
-            dailyvalue:{
-                number:"Should be a number"
+            dailyvalue: {
+                number: "Should be a number"
             },
             nameOnCard: "Enter valid name.",
             expiryMonth: "Enter exp month.",
@@ -622,13 +662,13 @@ $("form").each(function() {
             date: "Please enter date",
             promocode: "Please enter valid promocode.",
             giftcard: "Please enter valid code.",
-            tip:{
+            tip: {
                 required: "Please enter tip",
                 number: "Enter a number less than 10.",
                 maxAmount: "Enter a number less than 10.",
-                minAmount :"Enter a number greater than 0."
+                minAmount: "Enter a number greater than 0."
             },
-            giftcardname :"Enter valid giftcardname.",
+            giftcardname: "Enter valid giftcardname.",
             order: "Enter valid Order."
                 // image_upload:"Please select an image."
         }
@@ -654,7 +694,7 @@ if ($.validator) {
     $.validator.addMethod('decimal', function(value, element) {
         return this.optional(element) || /^[0-9,]+$/.test(value);
     });
-    $.validator.addMethod('positiveNumber',function (value) { 
+    $.validator.addMethod('positiveNumber', function(value) {
         return Number(value) > 0;
     });
 }
