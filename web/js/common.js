@@ -524,7 +524,8 @@ $("form").each(function() {
             },
             credits: {
                 required: true,
-                number: true
+                number: true,
+                maxlength:5
             },
             giftcardcustomamount: {
                 required: true,
