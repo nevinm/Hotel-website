@@ -139,53 +139,52 @@ function dollarConvert(value) {
     return dollarValue;
 }
 
-function getHourCorrected(Hour){
-    return (("0"+Hour).slice(-2));
+function getHourCorrected(Hour) {
+    return (("0" + Hour).slice(-2));
 }
 
 // delivery_time : 04-28-2015 20:15:20
 function getCurrentDateTime(days) {
     var currentdate = new Date();
     currentdate.setDate(currentdate.getDate() + days);
-    return datetime = ('0' + (currentdate.getMonth() + 1)).slice(-2) + 
-    "-" + ('0' + currentdate.getDate()).slice(-2) + "-" + currentdate.getFullYear();
+    return datetime = ('0' + (currentdate.getMonth() + 1)).slice(-2) +
+        "-" + ('0' + currentdate.getDate()).slice(-2) + "-" + currentdate.getFullYear();
 }
 
 function getCurrentPageTitle() {
     return $("title").text();
 }
 
-function stringToDate(date,format,delimiter)
-{
-    var formatLowerCase=format.toLowerCase();
-    var formatItems=formatLowerCase.split(delimiter);
-    var dateItems=date.split(delimiter);
-    var monthIndex=formatItems.indexOf("mm");
-    var dayIndex=formatItems.indexOf("dd");
-    var yearIndex=formatItems.indexOf("yyyy");
-    var month=parseInt(dateItems[monthIndex]);
-    month-=1;
-    var formatedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]);
+function stringToDate(date, format, delimiter) {
+    var formatLowerCase = format.toLowerCase();
+    var formatItems = formatLowerCase.split(delimiter);
+    var dateItems = date.split(delimiter);
+    var monthIndex = formatItems.indexOf("mm");
+    var dayIndex = formatItems.indexOf("dd");
+    var yearIndex = formatItems.indexOf("yyyy");
+    var month = parseInt(dateItems[monthIndex]);
+    month -= 1;
+    var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
     return formatedDate;
 }
 
 function convertToEST(timeRecieved) {
     //EST
     var offset = -4.0,
-    clientDate = new Date(timeRecieved);
+        clientDate = new Date(timeRecieved);
     utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
     serverDate = new Date(utc + (3600000 * offset));
     return serverDate;
 }
 
-function getEstFormattedForWebService(time){
+function getEstFormattedForWebService(time) {
     var hours = time.getHours(),
-    day = time.getDate(),
-    months = time.getMonth()+1,
-    year = time.getFullYear();
-    var selectedDate = (('0' + (time.getMonth() + 1)).slice(-2) + 
-    "-" + ('0' + time.getDate()).slice(-2) + "-" + time.getFullYear()+ " "+
-    getHourCorrected(hours) + ":00:00").replace(/\-/g, "/");
+        day = time.getDate(),
+        months = time.getMonth() + 1,
+        year = time.getFullYear();
+    var selectedDate = (('0' + (time.getMonth() + 1)).slice(-2) +
+        "-" + ('0' + time.getDate()).slice(-2) + "-" + time.getFullYear() + " " +
+        getHourCorrected(hours) + ":00:00").replace(/\-/g, "/");
     return selectedDate;
 }
 
@@ -208,6 +207,14 @@ function getCurrentDateMonth(days) {
     var monthName = month[currentdate.getMonth()];
 
     return dateMonth = ('0' + currentdate.getDate()).slice(-2) + " " + monthName;
+}
+
+function getStringAfterHash(url, symbol) {
+    if(url.indexOf(symbol)!=-1){
+        return url.substr(url.indexOf(symbol) + 1);
+    }else{
+        return false;
+    }
 }
 
 function getCurrentHourMin() {
@@ -524,7 +531,8 @@ $("form").each(function() {
             },
             credits: {
                 required: true,
-                number: true
+                number: true,
+                maxlength:5
             },
             giftcardcustomamount: {
                 required: true,

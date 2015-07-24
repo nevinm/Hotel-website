@@ -39,14 +39,14 @@ def get_cart_items(request, data, user):
               coupon = {
                 "code" : cart.promo_code.code,
                 "amount":cart.promo_code.amount,
-                "message":"Discount of $ "+str(cart.promo_code.amount) + " has been applied to your cart."
+                "message":"Discount of $"+"{0:.2f}".format(cart.promo_code.amount) + " has been applied to your cart."
               }
           elif cart.gift_cards.all().count():
               gc = cart.gift_cards.all()[0]
               coupon = {
                 "code" : gc.code,
                 "amount":gc.amount,
-                "message":"Discount of $ "+str(gc.amount) + " has been applied to your cart."
+                "message":"Discount of $"+"{0:.2f}".format(gc.amount) + " has been applied to your cart."
               }
 
       if not len(cart_list):
@@ -58,7 +58,6 @@ def get_cart_items(request, data, user):
                               "delivery_time" : "" if not cart_item.cart.delivery_time else cart_item.cart.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
                               "delivery_address" : False if not cart_item.cart.delivery_address else cart_item.cart.delivery_address.id,
                               "coupon" : coupon,
-                              #Arun
                               "credits" : get_user_credit(user),
                               })
     except Exception as e:
