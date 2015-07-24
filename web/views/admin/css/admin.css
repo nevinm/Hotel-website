@@ -327,7 +327,7 @@ table#userlist {
 .credits-edit,
 .mealtype-image-upload{
     display: none;
-    color: red;
+    color: #a9d77b;
     cursor: pointer;
 }
 .mealtype-image-upload-element{

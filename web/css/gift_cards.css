@@ -72,7 +72,10 @@
 }
 
 .giftcard-custom-amount span {
-    padding: 0 10px;
+    padding-top: 8px;
+    padding-right: 10px;
+    float: left !important;
+    text-align: left;
 }
 
 .giftcard-custom-amount input {

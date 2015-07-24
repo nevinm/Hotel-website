@@ -11,6 +11,7 @@ $(document).ready(function() {
         getAddress();
         getCartItems();
         savedCardDetails();
+        getStates();
         // CartItemCount();
     } else {
         $('.address-info-guest').show();
@@ -136,7 +137,6 @@ $(document).ready(function() {
     //add address
     $(document).on('click', '#add-address-popup', function() {
         getProfile();
-        getStates();
         $('#new-address-form').validate().resetForm();
         $('.address-payment-list-popup').hide();
         $('.addresspopup-wrapper').show();
@@ -786,7 +786,6 @@ function popuplateAddressList(data) {
             $('.address-info').hide();
             $('.address-info-guest').show();
             haveAccountCheck();
-            getStates();
         }
     } else {
         showErrorPopup(userDetails);
@@ -1239,7 +1238,7 @@ function validateOrder() {
     }
     if ($("#pickup-radio").is(":checked")) {
         if (!$("#guest-address-info").valid()) {
-            data.message = "Check your phonenumber and email";
+            data.message = "Check your phone number and email";
             showPopup(data);
             return false;
         }
