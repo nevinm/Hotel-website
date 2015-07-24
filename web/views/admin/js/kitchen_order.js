@@ -120,7 +120,7 @@ function populateOrderList(data) {
                 // "<option value='3'>Delivered</option>" +
                 // "<option value='4'>Cancelled</option>" +
                 // "</select>" + "</td>" +
-                "<td><b>"+orderStatus+"</b></td>"+
+                "<td><b>" + orderStatus + "</b></td>" +
                 "</tr>");
 
 
@@ -145,6 +145,15 @@ function populateOrderList(data) {
         cssStyle: 'light-theme',
         onPageClick: function(pageNumber, event) {
             getOrders(pageNumber);
+        },
+        onInit: function() {
+            if (getStringAfterHash(location.href, "#")) {
+                var pageString = getStringAfterHash(location.href, "#");
+                pageNumber = getStringAfterHash(pageString, "-");
+                if ($(".pagination").pagination('getCurrentPage') == pageNumber) {} else {
+                    $(".pagination").pagination('selectPage', pageNumber);
+                }
+            } else {}
         }
     });
 
