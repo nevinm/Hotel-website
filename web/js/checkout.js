@@ -1238,7 +1238,7 @@ function validateOrder() {
     }
     if ($("#pickup-radio").is(":checked")) {
         if (!$("#guest-address-info").valid()) {
-            data.message = "Check your phonenumber and email";
+            data.message = "Check your phone number and email";
             showPopup(data);
             return false;
         }
