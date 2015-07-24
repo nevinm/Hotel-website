@@ -286,6 +286,11 @@ span.body-text-small{
 	padding-left: 0px;
 	width: 357px;
 }
+.notify span.body-text-small{
+	margin: 0;
+	padding-left: 5px;
+	padding-top: 2px;
+}
 #change-email{
 	padding-top: 20px;
 }
@@ -2046,7 +2051,10 @@ a#add-address-popup :hover{
 		width: 25%;
 	}
 	form#guest-address-info #address-line-1-error{
-		bottom: 104px;
+		bottom: 88px;
+	}
+	form#guest-address-info #address-line-2-error{
+		bottom: 88px;
 	}
 	#add-payment-method-container,#manage-payment-method-container{
 		float: none;
@@ -2081,7 +2089,9 @@ a#add-address-popup :hover{
 		border:none;
 	}
 	.pickup-content {
-		float: none;padding-bottom: 45px;
+		float: none;
+		padding-bottom: 45px;
+		overflow: hidden;
 	}
 	.address-payment-list-popup .header{
 		letter-spacing: .2px;

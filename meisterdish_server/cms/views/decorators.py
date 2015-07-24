@@ -6,7 +6,7 @@ import logging
 from meisterdish_server.models import User
 import settings
 from libraries import json_request, json_response, custom_error, nvp_request
-log = logging.getLogger('cms')
+log = logging.getLogger(__name__)
 
 def check_input(method, role=False): # Allow all users by default
     def wrapper(func):

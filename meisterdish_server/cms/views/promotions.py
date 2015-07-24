@@ -5,7 +5,7 @@ from meisterdish_server.models import GiftCard, PromoCode
 from datetime import datetime
 import settings , logging
 from libraries import save_payment_data
-log = logging.getLogger('cms')
+log = logging.getLogger(__name__)
 
 @check_input('POST', True)
 def manage_gift_card(request, data, user):

@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from django.template.loader import render_to_string
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
-log = logging.getLogger('api_user')
+log = logging.getLogger(__name__)
 
 @check_input('POST')
 def add_address(request, data, user):
@@ -369,6 +369,9 @@ def get_user_reviews(request, data, user):
 @check_input('POST')
 def share_via_email(request, data, user):
     try:
+        if user.role.id != ROLE_USER:
+            return custom_error("Please Sign up to get free credits by sharing.")
+
         email = data["email"].strip()
         if not validate_email(email):
             return custom_error("The email is invalid.")

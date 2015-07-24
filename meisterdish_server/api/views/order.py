@@ -12,7 +12,7 @@ from twilio.rest import TwilioRestClient
 import stripe
 import sys
 stripe.api_key = settings.STRIPE_SECRET_KEY
-log = logging.getLogger('order')
+log = logging.getLogger(__name__)
 
 @check_input('POST')
 def get_orders(request, data, user):
@@ -293,6 +293,10 @@ def create_order(request, data, user):
         order.save()
         user.save()
 
+        for item in items:
+            item.status = 0 #Placed
+            item.save()
+
         if not order.cart.completed:
             order.cart.completed=True
             order.cart.save()
@@ -318,12 +322,13 @@ def create_order(request, data, user):
 
 def print_order(order):
     try:
-        pdf_file = save_pdf(order)
-        if not pdf_file:
+        return True #Nazz
+        pdf_content = save_pdf(order)
+        if not pdf_content:
             return False
         from libraries.printnode import api_call
         import base64
-        content = base64.b64encode(pdf_file)
+        content = base64.b64encode(pdf_content)
         data = {
             "printerId": 49349, 
             "title": "My Test PrintJob", 
@@ -334,7 +339,6 @@ def print_order(order):
         }
         if api_call('printjobs', data):
             log.info("Printing success")
-            #Delete PDF
             return True
         log.error("Prinrt failed")
         return False
@@ -529,7 +533,7 @@ def send_order_placed_notification(order):
         if order.delivery_type != "pickup":
             dic["delivery_name"] = order.delivery_address.first_name.title() + " "+order.delivery_address.last_name.title()
             dic["delivery_add1"] = order.delivery_address.building + ", "+order.delivery_address.street
-            dic["delivery_add2"] = order.delivery_address.city.title() + " "+ order.delivery_address.state.name + order.delivery_address.zip
+            dic["delivery_add2"] = order.delivery_address.city.title() + ", "+ order.delivery_address.state.name + ", " + order.delivery_address.zip
         
         msg = render_to_string('order_placed_email_template.html', dic)
         sub = 'Your order at Meisterdish is received'

@@ -9,7 +9,7 @@ from django.core.paginator import Paginator
 from django.core.files.uploadedfile import UploadedFile
 from libraries import get_request_user
 
-log = logging.getLogger('cms')
+log = logging.getLogger(__name__)
 
 @check_input('POST', settings.ROLE_ADMIN)
 def get_meals(request, data, user):

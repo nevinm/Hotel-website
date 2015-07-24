@@ -6,7 +6,7 @@ from api.views.decorators import *
 from django.core.paginator import Paginator
 from libraries import get_request_user
 
-log = logging.getLogger('api')
+log = logging.getLogger(__name__)
 
 @check_input('POST')
 def get_meals(request, data):

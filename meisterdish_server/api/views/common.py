@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 from api.views.decorators import *
 import sys, traceback
 from libraries import manage_image_upload, check_delivery_area, add_to_mailing_list, validate_email
-log = logging.getLogger('api')
+log = logging.getLogger(__name__)
 
 def home(request):
     return HttpResponse("Welcome to Meisterdish")
@@ -474,7 +474,7 @@ def get_profile(request, data, user):
                      "is_admin":True if user.role.id == 1 else False,
                      "meals_in_cart" : meals,
                      "meals_in_cart_count" : len(meals),
-                     "credits" : user.credits,
+                     "credits" : "{0:.2f}".format(user.credits),
                      "email_promotions" : user.need_email_promotions,#need_sms_notification,
                      "address_list" : address_list,
                      "first_name" : user.first_name.title(),
