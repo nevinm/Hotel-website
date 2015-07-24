@@ -588,6 +588,7 @@ label {
 }
 
 #menu {
+    display: none;
     margin: 0;
     height: 45px;
     padding-top: 10px
