@@ -125,6 +125,7 @@ function checkLoggedIn() {
         $('li#navbar-username').hide();
         $('.delivery-info .checkout-header span').text('GUEST CUSTOMER DETAILS');
     }
+    $("#menu").show();
 }
 checkLoggedIn();
 
@@ -287,6 +288,7 @@ function verifyAccount() {
 }
 
 function logingOut() {
+    $("#menu").hide();
     eraseCookie("SessionExpireTime");
     localStorage.removeItem('username');
     localStorage.removeItem('session_key');
