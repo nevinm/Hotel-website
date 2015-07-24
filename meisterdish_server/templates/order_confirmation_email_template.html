@@ -11,10 +11,10 @@
 </head>
 
 <body style="margin: 0; font-family: sans-serif; padding: 0;">
-    <table align="center" border="0" cellpadding="0" cellspacing="0" width="900" style="border-collapse: collapse;margin-top:30px;box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);margin-bottom: 30px;background-color:#F9FAF7">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="900" style="border-collapse: collapse;margin-top:30px;box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);margin-bottom: 30px; background-color:#F9FAF7">
         <tr>
             <td>
-                <table align="center" width="100%">
+                <table align="center" width="900">
                     <tr>
                         <td align="center" style="padding: 30px 0 0 0;">
                             <img src="cid:meisterdish_logo" width="262px" height="30" style="display: block; padding-bottom : 20px;" />
@@ -38,7 +38,7 @@
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="800" style='border:1px solid #d0d0d0;background-color:#fff'>
                     <tr>
                         <td>
-                            <table align="center" border="0" bordercolor="#9B9B9B" cellpadding="0" cellspacing="0" width="55%" style="border-collapse: collapse;margin-top:30px;float:left">
+                            <table align="left" border="0" bordercolor="#9B9B9B" cellpadding="0" cellspacing="0" width="400" style="border-collapse: collapse;">
                                 <tr>
                                     <td>
                                         <table style='padding-left: 40px;'>
@@ -103,7 +103,7 @@
                                     </td>
                                 </tr>
                             </table>
-                            <table align="left" border="1" bordercolor='#9B9B9B' cellpadding="0" cellspacing="0" width="35%" style="border-collapse: collapse;margin-top:30px;float:left;border: solid 1px #9B9B9B;text-align:left">
+                             <table align="left" border="1" bordercolor='#9B9B9B' cellpadding="0" cellspacing="0" width="370" style="border-collapse: collapse;margin-top:30px;text-align:left">
                                 <tr>
                                     <td>
                                         <table width="100%" style='color: #6B6B6B'>
@@ -165,22 +165,28 @@
                     </tr>
                     <tr>
                         <td align="left" style="padding: 10px 0;">
-                            <table width="55%" style='padding-left: 40px;border-collapse: separate;border-spacing: 0px 20px;'>
+                             <table cellpadding="0" cellspacing="0" width="500" style='padding-left: 40px;border-collapse: separate;border-spacing: 0px 20px;'>
                                 {% for ci in cart_items%}
                                     <tr>
-                                        <td>
+                                        <td width="30%">
                                             <img style='width: 100px;float: left;margin-right: 17px;border-radius: 3px;border: 1px solid #D8CFCF;' src="cid:img_{{ci.meal.id|slugify}}">
-                                            <table style='float: left;width: 70%;font-weight=normal;'>
+                                            </td>
+                                            <td width="70%">
+                                            <table width="100%" style='font-weight=normal;'>
                                                 <tr>
-                                                    <td style='float: left;width:100%'>
+                                                    <td>
                                                         <span style='font-weight:bold'>{{ci.meal.name|title}}</span>
                                                     </td>
-                                                    <th style='color:#9B9B9B;float: left;padding: 10px 10px 0 0;'>
+                                                </tr>
+                                                </table>
+                                                <table width="100%" style='font-weight=normal;'>
+                                                <tr>
+                                                    <td style='color:#9B9B9B;' width="20%">
                                                         <span style='font-weight: normal;'>${{ci.meal.price}}</span>
-                                                    </th>
-                                                    <th style='color:#9B9B9B;float: left;padding: 10px 10px 0 0;'>
+                                                    </td>
+                                                    <td style='color:#9B9B9B;'width="80%">
                                                         <span style='font-weight: normal;'>Quantity: {{ci.quantity}}</span>
-                                                    </th>
+                                                    </td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -194,7 +200,7 @@
         </tr>
         <tr>
             <td>
-                <table align="center" width="800" cellpadding="0" cellspacing="0" style="border-collapse: collapse;border:1px solid #d0d0d0; background-color:#fff;margin-top:20px;margin-bottom:30px">
+                <table align="center" width="800" cellpadding="0" cellspacing="0" style="border-collapse: collapse;margin-top:20px;margin-bottom:30px;border:1px solid #d0d0d0;background-color:#fff">
                     <tbody>
                         <tr style="padding:20px 0;float:left;width:100%;">
                             <td style="font-size:24px;text-align: center;width: 100%;float: left;"><span>SHARE FOR ${{referral_bonus}} FREE CREDIT</span></td>
@@ -202,12 +208,16 @@
                         <tr style="padding:20px 0;float:left;width:100%;">
                             <td style="font-size:16px;text-align: center;width: 100%;float: left;">http://meisterdish.com/backend/share/{{referral_code}}</td>
                         </tr>
-                        <tr style="padding:20px 0;float:left;width:100%;">
+                        <tr style="padding:20px 0;float:left;">
+                            <tr style="padding:20px 0;float:left;width:100%;">
                             <td style="text-align:center;width:100%;float:left;">
-                                <img src="cid:share_fb" style="padding:0 20px;max-height: 45px;padding-left:0px;">
+                                <a href="http://www.facebook.com/share.php?u=http://meisterdish.qburst.com/views/signup.html?ref=TEMP_44">
+                                    <img src="cid:share_fb" style="padding:0 20px;max-height: 45px;padding-left:0px;">
+                                </a>
                                 <!-- <img src="cid:share_tw" style="padding:0 20px;max-height: 45px;">
                                 <img src="cid:share_em" style="padding:0 20px;max-height: 45px;padding-right:0px;"> -->
                             </td>
+                        </tr>
                         </tr>
                     </tbody>
                 </table>
