@@ -286,6 +286,11 @@ span.body-text-small{
 	padding-left: 0px;
 	width: 357px;
 }
+.notify span.body-text-small{
+	margin: 0;
+	padding-left: 5px;
+	padding-top: 2px;
+}
 #change-email{
 	padding-top: 20px;
 }
