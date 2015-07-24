@@ -5,7 +5,7 @@ from django.db.models import Q
 from decorators import *
 from django.core.paginator import Paginator
 from libraries import export_csv, manage_image_upload
-log = logging.getLogger('cms')
+log = logging.getLogger(__name__)
 
 def home(request):
     return HttpResponse("Welcome to Meisterdish CMS")

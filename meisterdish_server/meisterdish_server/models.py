@@ -3,7 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
 from settings import PAYMENT_METHODS, ORDER_STATUS, SHIPPING_CHARGE, ROLE_USER, MEAL_STATUS
 import logging
-log = logging.getLogger('model')
+log = logging.getLogger(__name__)
 import sys, traceback
 from django.db.models import Sum
 import string, random
@@ -358,7 +358,7 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart)
     meal = models.ForeignKey(Meal, related_name="cartitem")
     quantity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
-    status = models.IntegerField(db_index=True, choices=MEAL_STATUS, default=0)
+    status = models.IntegerField(db_index=True, choices=MEAL_STATUS, default=4)
 
 delivery_types = (
         ("pickup", "Pick Up"),
@@ -393,7 +393,7 @@ class Order(models.Model):
     
     payment = models.ForeignKey(Payment, null=True, blank=True)
 
-    status = models.IntegerField(db_index=True, choices=ORDER_STATUS, default=0)
+    status = models.IntegerField(db_index=True, choices=ORDER_STATUS, default=4)
     is_deleted = models.BooleanField(db_index=True, default=False)
     
     created = models.DateTimeField(db_index=True, null=True)
@@ -402,7 +402,7 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         self.updated = datetime.datetime.now()
 
-        if self.status >= 1:
+        if self.status != 4:
             self.cart.completed = True
             self.cart.save()
 
