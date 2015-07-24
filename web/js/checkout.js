@@ -363,6 +363,9 @@ var getCartItemsCallback = {
             if (cartItems.coupon != null) {
                 populateCoupon(cartItems.coupon);
             }
+            if(cartItems.credits){
+                $(".discount-container .discount-amount").css('color', '#8EC657');
+            }
             $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
             $('#hidden-credit').val(cartItems.credits);
         } else {
