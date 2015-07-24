@@ -143,6 +143,15 @@ function populateCategories(categoriesData) {
         cssStyle: 'light-theme',
         onPageClick: function(pageNumber, event) {
             getCategories(pageNumber);
+        },
+        onInit: function() {
+            if (getStringAfterHash(location.href, "#")) {
+                var pageString = getStringAfterHash(location.href, "#");
+                pageNumber = getStringAfterHash(pageString, "-");
+                if ($(".pagination").pagination('getCurrentPage') == pageNumber) {} else {
+                    $(".pagination").pagination('selectPage', pageNumber);
+                }
+            } else {}
         }
     });
 

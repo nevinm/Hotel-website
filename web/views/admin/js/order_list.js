@@ -197,6 +197,15 @@ function populateOrderList(data) {
         onPageClick: function(pageNumber, event) {
             searchParams = returnSearchParams();
             getOrders(pageNumber, searchParams.userName, searchParams.orderNum, searchParams.status, searchParams.total, searchParams.phone_num, searchParams.date);
+        },
+        onInit: function() {
+            if (getStringAfterHash(location.href, "#")) {
+                var pageString = getStringAfterHash(location.href, "#");
+                pageNumber = getStringAfterHash(pageString, "-");
+                if ($(".pagination").pagination('getCurrentPage') == pageNumber) {} else {
+                    $(".pagination").pagination('selectPage', pageNumber);
+                }
+            } else {}
         }
     });
 }

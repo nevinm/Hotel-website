@@ -157,8 +157,6 @@ function populateOrderList(data) {
         }
     });
 
-    $('#order-list tbody').find("tr")[0].remove();
-
     $(".order-status").on("change", function() {
         var orderId = $(this).data('order-id'),
             mealId = $(this).data('meal-id'),
