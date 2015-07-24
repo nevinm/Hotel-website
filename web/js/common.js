@@ -210,26 +210,19 @@ function getCurrentDateMonth(days) {
 }
 
 function getStringAfterHash(url, symbol) {
-    if(url.indexOf(symbol)!=-1){
+    if (url.indexOf(symbol) != -1) {
         return url.substr(url.indexOf(symbol) + 1);
-    }else{
+    } else {
         return false;
     }
 }
 
 function getCurrentHourMin() {
-    var currentdate = new Date();
-    var hours = currentdate.getHours(),
-        minutes = ("0" + currentdate.getMinutes()).slice(-2);
-    if (hours > 12) {
-        meridiem = "pm";
-    } else {
-        meridiem = "am";
-    }
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    var strTime = hours + ":" + minutes;
-    return strTime + meridiem;
+    var currentdate = new Date(),
+        hours = currentdate.getHours(),
+        minutes = ("0" + currentdate.getMinutes()).slice(-2),
+        strTime = hours + ":" + minutes;
+    return strTime;
 }
 
 function getMonthDate(currentDate) {
@@ -532,7 +525,7 @@ $("form").each(function() {
             credits: {
                 required: true,
                 number: true,
-                maxlength:5
+                maxlength: 5
             },
             giftcardcustomamount: {
                 required: true,

@@ -276,17 +276,15 @@ function haveAccountCheck() {
 
 function setCurrentTime() {
     currentHourMin = getCurrentHourMin();
-    var closingTime = 9,
+    var closingTime = 21,
         minutesToCLose = 15;
     $(".today-content .checkout-time-button").each(function(key, value) {
-        meridiem = currentHourMin.substring(currentHourMin.length - 2);
-        if (meridiem == "pm") {
-            currentHour = currentHourMin.substring(0, currentHourMin.length - 5);
+            currentHour = currentHourMin.substring(0, currentHourMin.length - 3);
             if (currentHour >= closingTime) {
                 $(this).remove();
                 $(".shop-status").show();
             } else {
-                currentMintues = parseInt(currentHourMin.slice(-4,-2));
+                currentMintues = parseInt(currentHourMin.slice(-2));
                 if (parseInt(currentHour) == $(value).data().hr) {
                     $(this).prevAll('.set-time-button').remove();
                     $(this).val("NOW");
@@ -297,7 +295,6 @@ function setCurrentTime() {
                     }
                 }
             }
-        }
     });
 
     //Setting the correct date.

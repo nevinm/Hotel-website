@@ -64,7 +64,7 @@ def login(request, data):
             return json_response({"status":1, "message": "Logged in succesfully", "user":user_dic, "session_key":session.session_key, "role_name":user.role.name.upper()})
         else:
             log.error("Login failed")
-            raise Exception("Login failed. Please try again later.")
+            raise Exception("Invalid username or Password.")
     
     except Exception as e:
         log.error("Login : " + e.message)

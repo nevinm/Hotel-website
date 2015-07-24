@@ -50,7 +50,7 @@ def get_cart_items(request, data, user):
               }
 
       if not len(cart_list):
-          return custom_error("There are not items in cart.")
+          return custom_error("There are no items in cart.")
       else:
           return json_response({"status":1, 
                               "aaData":cart_list,
