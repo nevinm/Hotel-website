@@ -108,7 +108,7 @@
                                     </td>
                                 </tr>
                             </table>
-                            <table align="right" border="1" bordercolor='#9B9B9B' cellpadding="0" cellspacing="0" width="370" style="border-collapse: collapse;margin-top:30px;text-align:left">
+                            <table align="left" border="1" bordercolor='#9B9B9B' cellpadding="0" cellspacing="0" width="370" style="border-collapse: collapse;margin-top:30px;text-align:left">
                                 <tr>
                                     <td>
                                         <table width="100%" style='color: #6B6B6B'>
@@ -173,10 +173,10 @@
                             <table cellpadding="0" cellspacing="0" width="500" style='padding-left: 40px;border-collapse: separate;border-spacing: 0px 20px;'>
                                 {% for ci in cart_items%}
                                     <tr>
-                                        <td>
+                                        <td width="30%">
                                             <img style='width: 100px;float: left;margin-right: 17px;border-radius: 3px;border: 1px solid #D8CFCF;' src="cid:img_{{ci.meal.id|slugify}}">
                                             </td>
-                                            <td>
+                                            <td width="70%">
                                             <table width="100%" style='font-weight=normal;'>
                                                 <tr>
                                                     <td>
