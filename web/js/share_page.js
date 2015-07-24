@@ -26,8 +26,7 @@ $(document).ready(function() {
         e.preventDefault();
         var email = $('input[name="email"]').val();
         if($('form#email-form').valid()){
-            shareViaEmail(email);
-            $('.email-pupup-wrapper').hide();    
+            shareViaEmail(email);    
         }
     });
     
@@ -95,7 +94,8 @@ var shareViaEmailCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
-            showPopup(userDetails);
+            $('.email-pupup-wrapper').hide();
+            showPopup(userDetails);   
         } else {
             showPopup(userDetails);
         }

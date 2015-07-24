@@ -800,7 +800,8 @@ span.icon-menu {
     text-transform: uppercase;
 }
 .popup-container,
-.deliveryarea-popup-container{
+.deliveryarea-popup-container,
+.shareEmail-popup-container{
 	padding: 15px;
 }
 .popup .content{
