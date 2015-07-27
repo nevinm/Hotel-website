@@ -89,8 +89,7 @@ function populateDeliveryAreas(deliveryData) {
     });
 
     $(".pagination").pagination({
-        items: deliveryData.total_count,
-        itemsOnPage: deliveryData.per_page,
+        pages: deliveryData.num_pages,
         currentPage: deliveryData.current_page,
         cssStyle: 'light-theme',
         onPageClick: function(pageNumber, event) {
