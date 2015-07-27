@@ -1055,7 +1055,7 @@ span.icon-menu {
         overflow-x: hidden;
     }
     ul#menu {
-        display: none;
+        display: none !important;
     }
     #footer{
         display: none;
@@ -1239,7 +1239,7 @@ span.icon-menu {
     	width: 100%;
     }
     ul#menu {
-        display: none;
+        display: none !important;
     }
     span.icon-menu {
         display: block;
