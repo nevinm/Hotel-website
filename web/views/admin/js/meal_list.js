@@ -234,8 +234,12 @@ function populateMealList(data) {
             $(".meal-homepage:last").text("NO");
         }
 
-        if (value.meal_types[0]) {
-            $(".meal-type:last").text(value.meal_types[0].name);
+        if (value.meal_types.length) {
+            var mealTypes = "";
+            $.each(value.meal_types, function(key, value) {
+                mealTypes = mealTypes + value.name + ",";
+            });
+            $(".meal-type:last").text(mealTypes.slice(0, -1));
         } else {
             $(".meal-type:last").text("None");
         }
