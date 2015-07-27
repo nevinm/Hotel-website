@@ -248,7 +248,7 @@ DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
 DEFAULT_CHEF_IMAGE  = STATIC_URL + "default/chef_default.png"
 DEFAULT_INGREDIENTS_IMAGE  = STATIC_URL + "default/ingredients_default.png"
 DEFAULT_PRE_REQ_IMAGE  = STATIC_URL + "default/pre_requisites_default.png"
-DEFAULT_MEAL_TYPE_IMAGE  = STATIC_URL + "default/Vegetarian.png"
+DEFAULT_MEAL_TYPE_IMAGE  = STATIC_URL + "default/mealtype_default.png"
 
 
 CACHES = {
