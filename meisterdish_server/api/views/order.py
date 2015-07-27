@@ -83,7 +83,7 @@ def get_orders(request, data, user):
                   "description": cart_item.meal.description,
                   "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
                   "available": 1 if cart_item.meal.available else 0,
-                  "sold_out":1 if meal.sold_out else 0,
+                  "sold_out":1 if cart_item.meal.sold_out else 0,
                   "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
                   "price": cart_item.meal.price,
                   "tax": cart_item.meal.price * cart_item.meal.tax/100,
@@ -387,7 +387,7 @@ def get_order_cart_items(order):
               "description": cart_item.meal.description,
               "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
               "available": 1 if cart_item.meal.available else 0,
-              "sold_out":1 if meal.sold_out else 0,
+              "sold_out":1 if cart_item.meal.sold_out else 0,
               "category": cart_item.meal.category.name.title() if cart_item.meal.category else "Not Available",
               "price": cart_item.meal.price,
               "tax": cart_item.meal.price * cart_item.meal.tax/100,
@@ -533,6 +533,7 @@ def send_order_placed_notification(order):
                "referral_code":order.cart.user.referral_code,
                "referral_bonus":Configuration.objects.get(key="REFERRAL_BONUS").value,
                "cart_items":order.cart.cartitem_set.all(),
+               "guest" : not (user.role.id == settings.ROLE),
                }
         if order.delivery_type != "pickup":
             dic["delivery_name"] = order.delivery_address.first_name.title() + " "+order.delivery_address.last_name.title()
@@ -576,7 +577,7 @@ def get_order_details(request, data, user, order_id):
               "description": cart_item.meal.description,
               "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
               "available": 1 if cart_item.meal.available else 0,
-              "sold_out":1 if meal.sold_out else 0,
+              "sold_out":1 if cart_item.meal.sold_out else 0,
               "category": cart_item.meal.category.name.title(),
               "price": cart_item.meal.price,
               "tax": (cart_item.meal.price * cart_item.meal.tax/100),
