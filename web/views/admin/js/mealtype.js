@@ -5,6 +5,7 @@ $(document).ready(function() {
         $(".mealtype-image").attr("src", "");
         $("#new-mealtype").val("");
         $("#add-mealtype").show();
+        $(".mealtype-image").data().id="";
         $("#edit-mealtype").hide();
         $(".header").text("ADD NEW MEAL TYPE");
         $('.popup-wrapper').show();
@@ -26,6 +27,8 @@ $(document).ready(function() {
 
     $(document).on('click', '#delete-mealtype', function() {
         $('.popup-wrapper').hide();
+        $(".confirm-popup-wrapper .header").text("Delete");
+        $(".confirm-popup-wrapper .content span").text("Are you sure you want to delete?");
         var id = $(this).closest('tr').attr('data-id');
         $("#yes-button").attr('data-id', id)
         $(".confirm-popup-wrapper").show();
