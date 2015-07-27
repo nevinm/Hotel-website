@@ -343,7 +343,7 @@ img#cancel,img#close {
 label#username-error {
   bottom: 117px;
   left: 5px;
-  width: 60%;
+  width: 70%;
 }
 @media (min-width: 768px)and (max-width: 1024px) {
 	.contentWrapper .h0{
