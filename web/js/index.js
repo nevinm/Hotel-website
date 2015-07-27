@@ -168,8 +168,9 @@ function isSessionExpired() {
 function renderFullPageJS() {
     $('#fullpage').fullpage({
         scrollingSpeed: 1000,
-        // slidesNavigation: true,
+        slidesNavigation: false,
         // controlArrows: false,
+        navigation: false,
         autoScrolling: false,
         scrollBar: true,
         keyboardScrolling: false,

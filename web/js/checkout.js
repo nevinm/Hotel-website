@@ -185,7 +185,7 @@ $(document).ready(function() {
         if (button_value == "APPLY") {
             $('.promo-validation-message').css('color', '#ff7878');
             if (localStorage['loggedIn'] != 'true') {
-                $('.promo-validation-message').text("You must be LoggedIn to use coupons.");
+                $('.promo-validation-message').text("You must be logged in to use coupons.");
             } else if (code == "") {
                 $('.promo-validation-message').text("* " + "Please enter Giftcard/Promocode.");
             } else if (code_length > 8) {
