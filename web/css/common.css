@@ -847,7 +847,7 @@ span.icon-menu {
 #new-amount-error, #new-code-error, #new-date-error, #city-selector-error,#adminlogin-password-error,
 #new-credits-error,#new_category-error,#update_category-error,#tip-error,#new-mealtype-error,
 #new-order-error,#new-name-error, #meal-calories-error, #meal-prep-time-error, #nutrients-daily-value-error,
-#nutrients-per-serving-error
+#nutrients-per-serving-error, #meal-sub-name-error
 {
 	color: #ff7878;
 	background: white;
@@ -862,6 +862,10 @@ span.icon-menu {
 	border:1px hidden !important;
 	padding-left: 10px;
 	width: 100%;
+}
+#meal-sub-name-error{
+    top: 0;
+    height: 25px;
 }
 .error{
 	border: 2px solid #ff7878 !important;
