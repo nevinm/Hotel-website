@@ -274,14 +274,19 @@ function verifyAccount() {
     }
     if (search_verify != -1 && search_verify != undefined) {
         var trueMessage = {
-            'message': "Account is verified, proceed to login"
+            'message': "Account is verified, proceed to login."
         }
         var falseMessage = {
-            'message': "account is not verified"
+            'message': "account is not verified."
+        }
+        var alreadyVerifiedMessage = {
+            'message': "User is already verified."
         }
         if (verify_url.split("?")[1].split("=")[1] == "true") {
             showPopup(trueMessage);
-        } else {
+        } else if(verify_url.split("&")[1].split("=")[1] == "Invalid+token+or+the+user+is+already+verified."){
+            showPopup(alreadyVerifiedMessage);
+        }else{
             showPopup(falseMessage);
         }
     }
