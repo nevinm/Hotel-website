@@ -497,25 +497,6 @@ p.upper-content {
     padding: 6% 0 0 0;
     background-size: cover;
 }
-/*#section-zipcode .slide-description{
-    background-color: #fff;
-    overflow: hidden;
-}
-#section-zipcode .body-text-small,.zip-code-container, 
-#section-zipcode .slide-header{
-    text-align: center;
-    padding:20px 0;
-}
-
-#section-zipcode .body-text-small{
-    color: #6B6B6B;
-    font-family: 'BrandonGrotesque-Bold';
-}
-
-.check-delivery{
-    width: 145px;
-    margin-bottom: 4px;
-}*/
 
 #section-zipcode .outer-slide-description {
     margin-top: -50px;
@@ -613,7 +594,7 @@ label#zip-code-error {
 label#username-error {
     bottom: 120px;
     left: 5px;
-    width: 60%;
+    width: 70%;
 }
 
 #section-zipcode .header-hr {
@@ -684,12 +665,7 @@ label#username-error {
     .delivery-area-check-popup .popup-zip-fail {
         width: 300px;
     }
-/*    #section-what-to-expect .button-container a {
-        width: 100%;
-        margin: 10px 0px;
-        height: 40px !important;
-        max-width: 300px;
-    }*/
+
     .what-you-get-section p {
         font-size: 17px;
     }
@@ -738,14 +714,7 @@ label#username-error {
     #section-what-to-expect .slide-header {
         padding-bottom: 10px;
     }
-   /* #section-what-to-expect .slide-header {
-        font-size: 25px;
-        letter-spacing: 2.5px;
-        font-family: 'BrandonGrotesque-Medium';
-        color: #6B6B6B;
-        margin-top: 25px;
-        text-align: center
-    }*/
+
     #section-what-is-meisterdish .outer-slide-description,
     #section-what-to-expect .outer-slide-description {
             /*margin: 20px auto 0 auto;*/
