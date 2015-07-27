@@ -284,6 +284,7 @@ class Meal(models.Model):
     
     is_deleted = models.BooleanField(db_index=True, default=False)
     available = models.BooleanField(db_index=True, default=True)
+    sold_out = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
 
     def __unicode__(self):

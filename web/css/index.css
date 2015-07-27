@@ -681,6 +681,9 @@ label#username-error {
         width: 100%;
         text-align: center;
     }
+    .delivery-area-check-popup .popup-zip-fail {
+        width: 300px;
+    }
 /*    #section-what-to-expect .button-container a {
         width: 100%;
         margin: 10px 0px;
@@ -702,6 +705,10 @@ label#username-error {
     }
     #section-what-to-expect .slide-description {
         padding: 0;
+    }
+    .delivery-area-check-popup .popup-zip-fail {
+        max-width: 300px;
+        width: 80%;
     }
 }
 

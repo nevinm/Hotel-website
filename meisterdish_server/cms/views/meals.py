@@ -72,6 +72,7 @@ def get_meals(request, data, user):
                               #"images":meal_images,
                               "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.thumb.url,
                               "available":1 if meal.available else 0,
+                              "sold_out":1 if meal.sold_out else 0,
                               "category":"Not Available" if not meal.category else meal.category.name.title(),
                               "meal_types":meal_types,
                               "preparation_time":meal.preparation_time,
@@ -106,6 +107,7 @@ def create_meal(request, data, user):
         price = float(data['price'])
         tax = float(data['tax'])
         available = data['available']
+        sold_out = data['sold_out']
         
         if len(name) < 3 or len(desc)<5 or float(price) <=0 or float(tax) <0 :
             log.error("name, desc, price or tax invalid")
@@ -129,6 +131,7 @@ def create_meal(request, data, user):
         meal.price = price
         meal.tax = tax
         meal.available = True if str(available) == "1" else False
+        meal.sold_out = True if str(sold_out) == "1" else False
         
         if "main_image" not in data:
             if 'images' in data and len(data['images']) > 0:
@@ -190,18 +193,24 @@ def create_meal(request, data, user):
 
         if 'pre_requisites' in data and len(data['pre_requisites']) > 0:
             meal.pre_requisites = simplejson.dumps(data["pre_requisites"])
+        elif not 'pre_requisites' in data:
+            meal.pre_requisites = None
 
         if 'pre_requisites_image' in data:
             meal.pre_requisites_image = Image.objects.get(pk=int(data['pre_requisites_image']))
 
         if 'user_to_do' in data and len(data['user_to_do']) > 0:
             meal.user_to_do = simplejson.dumps(data["user_to_do"])
+        elif not 'user_to_do' in data:
+            meal.user_to_do = None
 
         if 'preparation_time' in data and data['preparation_time'].strip() != '':
             meal.preparation_time = data['preparation_time'].strip()
 
         if 'finished_preparation' in data and len(data['finished_preparation']) > 0:
-            meal.finished_preparation = simplejson.dumps(data["finished_preparation"])        
+            meal.finished_preparation = simplejson.dumps(data["finished_preparation"])
+        elif not 'finished_preparation' in data:
+            meal.finished_preparation = None
 
         if 'saved_time' in data and data['saved_time'].strip() != '':
             meal.saved_time = data['saved_time'].strip()
@@ -245,9 +254,13 @@ def create_meal(request, data, user):
 
         if 'ingredients' in data and len(data['ingredients']) > 0:
             meal.ingredients = simplejson.dumps(data['ingredients'])
+        elif not 'ingredients' in data:
+            meal.ingredients = None
 
         if 'nutrients' in data and len(data['nutrients']) > 0:
             meal.nutrients = simplejson.dumps(data['nutrients'])
+        elif not 'nutrients' in data:
+            meal.nutrients = None
 
         if 'ingredients_image' in data:
             meal.ingredients_image = Image.objects.get(pk=int(data['ingredients_image']))
@@ -328,6 +341,7 @@ def get_meal_details(request, data, user, meal_id):
             "need_boiling_water":meal.need_boiling_water,
             "tax_percentage" : meal.tax,
             "available" : 1 if meal.available else 0,
+            "sold_out":1 if meal.sold_out else 0,
             "calories" : meal.calories,
             "filters" : [{"id": ty.id, "image_id": ty.image.id, "image_url":ty.image.image.url, "meal_type_name":ty.name } for ty in meal.types.all()],
             "default_meal_type_image": settings.DEFAULT_MEAL_TYPE_IMAGE,

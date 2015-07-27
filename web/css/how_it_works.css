@@ -616,8 +616,8 @@ label#username-error {
     	text-align: left;
     }
     .delivery-area-check-popup .popup-zip-fail{
-    	width: 85%;
-    	max-width: 400px;
+    	width: 80% !important;
+    	max-width: 300px !important;
     }
 
 }
