@@ -107,19 +107,18 @@ $(document).ready(function() {
         uploadImage("ingredients-image-input", "ingredients-image");
     });
 
-    $('.forminput-wrapper').on("keydown",function(e){
-        if(e.keyCode == 13){
+    $('.forminput-wrapper').on("keydown", function(e) {
+        if (e.keyCode == 13) {
             var button_class = $(this).parent().find('input[type=button][value=add]'),
                 input_id = $(this).find('input').attr('id');
-            if(button_class.length){
+            if (button_class.length) {
                 e.preventDefault();
                 $(button_class).trigger('click');
-                if(input_id == "meal-saved-time" || input_id == "meal-prep-time"){}
-                else{
-                    $('#'+input_id).val('');
+                if (input_id == "meal-saved-time" || input_id == "meal-prep-time") {} else {
+                    $('#' + input_id).val('');
                 }
             }
-            
+
         }
     })
     addDynamicApiUrlUploadPicture("meal-image-input");
@@ -163,9 +162,11 @@ function addSubTipsTricks(parentElement, isEditingdescription) {
         $('#save-tips').unbind();
         $('#save-tips').on('click', function() {
             var newTipTrick = $("#tips_tricks_content").val();
-            parentElement.find('ul').append('<li>' + $('#tips_tricks_content').val() +
-                '<img class="remove" src="../../images/del.png">' + '</li>');
-            $(".tips-tricks-wrapper").hide();
+            if(newTipTrick.length){
+                parentElement.find('ul').append('<li>' + $('#tips_tricks_content').val() +
+                    '<img class="remove" src="../../images/del.png">' + '</li>');
+                $(".tips-tricks-wrapper").hide();
+            }else{}
         });
     }
 }
@@ -173,9 +174,12 @@ function addSubTipsTricks(parentElement, isEditingdescription) {
 function checkIfMealEdit() {
     mealId = getParameterFromUrl("mealId");
     if (mealId.length) {
-        getMeals(mealId);
-        createMealParams['edit_id'] = mealId;
-    } else {}
+            getMeals(mealId);
+            createMealParams['edit_id'] = mealId;
+            return true;
+    } else {
+        return false;
+    }
 }
 
 function extractNutrients() {
@@ -254,27 +258,31 @@ function extractTipsAndTricks(self) {
 }
 
 function uploadImage(imageElementSelect, imageElement) {
-        $('#' + imageElementSelect).fileupload({
-            dataType: 'json',
-            headers: {
-                "session-key": localStorage["session_key"]
-            },
-            formData: {
-                example: 'test'
-            },
-            done: function(e, data) {
-                $("#" + imageElement).attr('src', data.result.thumbnail_url);
-                $("#" + imageElement).attr('data-id', data.result.id);
-                $("#" + imageElement).show();
+    $('#' + imageElementSelect).fileupload({
+        dataType: 'json',
+        headers: {
+            "session-key": localStorage["session_key"]
+        },
+        formData: {
+            example: 'test'
+        },
+        done: function(e, data) {
+            $("#" + imageElement).attr('src', data.result.thumbnail_url);
+            $("#" + imageElement).attr('data-id', data.result.id);
+            $("#" + imageElement).show();
 
-            }
-        });
-    }
-    //CREATE MEAL API
+        }
+    });
+}
+
+//CREATE MEAL API
 var createMealCallback = {
     success: function(data, textStatus) {
         var meal_message = JSON.parse(data);
         showPopup(meal_message);
+        if(!checkIfMealEdit()){
+            $("#create-meal")[0].reset();
+        }else{}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -303,9 +311,10 @@ function createMeal() {
         toDo = [],
         prepared = [],
         tips = nutrients = [];
-        tips.length=0;nutrients.length=0;
-        tips = traverseTipsTricks();
-        nutrients = extractNutrients()
+    tips.length = 0;
+    nutrients.length = 0;
+    tips = traverseTipsTricks();
+    nutrients = extractNutrients()
     $('.ingredients-container .list-container ul').find('li').each(function() {
         temp = $(this).text();
         ingredients.push(temp);
@@ -425,7 +434,7 @@ function populateCreateMealFilter(meal_type, categories) {
         $('#create-meal-category').append("<option value='" + value.id + "'>" + value.name + "</option>");
     });
     //Check if its a meal editing ,only afer the filters and categories are populated.
-    checkIfMealEdit();
+    checkIfMealEdit("mealFilter");
 }
 
 //populate to Div 
@@ -501,7 +510,7 @@ function populateMealDetails(mealDetails) {
     $("#create-meal-available").val(mealDetails.available);
     $("#create-meal-category").val(mealDetails.cat_id.id);
     $.each(mealDetails.filters, function(key, value) {
-        $($("#create-meal-mealType option")[0]).attr("selected",false);
+        $($("#create-meal-mealType option")[0]).attr("selected", false);
         $("#create-meal-mealType option[value='" + value.id + "']").prop("selected", true);
     });
     $('#meal-prep-time').val(mealDetails.preparation_time);
@@ -513,7 +522,9 @@ function populateMealDetails(mealDetails) {
     populateListData('', "ingredients-container", mealDetails.ingredients);
     $("#ingredients-image").attr("src", mealDetails.ingredients_image.url);
     $.each(mealDetails.nutrients, function(key, value) {
-        populateNutrients(value.mainNutrient, value.perServing, value.dailyValue, value);
+        if(!(mealDetails.nutrients=='')){
+            populateNutrients(value.mainNutrient, value.perServing, value.dailyValue, value);
+        }else{}
     });
     $.each(mealDetails.tips, function(key, value) {
         addMainTipsTricks(value.video_url, value.title, value.description, value.id);
@@ -531,7 +542,7 @@ function emptyvalidation(value) {
     return (value.match(p)) ? true : false;
 }
 
-function imgValidation(img_url){
-   var result = (/\.(jpeg|jpg|gif|png)$/).test(img_url);
-   return result;  
+function imgValidation(img_url) {
+    var result = (/\.(jpeg|jpg|gif|png)$/).test(img_url);
+    return result;
 }

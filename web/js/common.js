@@ -522,6 +522,9 @@ $("form").each(function() {
             preperationtime: {
                 required: true
             },
+            savedtime:{
+                required: true
+            },
             tips_details: {
                 required: true,
                 minlength: 2
@@ -644,6 +647,9 @@ $("form").each(function() {
                 maxAmount: "Enter amount between 1 and 10"
             },
             preperationtime: {
+                required: "Please enter prepared time"
+            },
+            savedtime: {
                 required: "Please enter prepared time"
             },
             dailyvalue: {
