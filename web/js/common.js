@@ -273,21 +273,15 @@ function verifyAccount() {
         }
     }
     if (search_verify != -1 && search_verify != undefined) {
-        var error_message = getParameterFromUrl("error");
         var trueMessage = {
-                'message': "Account is verified, proceed to login."
-            }
+            'message': "Account is verified, proceed to login"
+        }
         var falseMessage = {
-                'message': "account is not verified."
-            }
-        var alreadyVerifiedMessage = {
-                'message': error_message
-            }
+            'message': "account is not verified"
+        }
         if (verify_url.split("?")[1].split("=")[1] == "true") {
             showPopup(trueMessage);
-        } else if(verify_url.split("&")[1].split("=")[0] == "error"){
-            showPopup(alreadyVerifiedMessage);
-        }else{
+        } else {
             showPopup(falseMessage);
         }
     }
