@@ -533,7 +533,6 @@ def send_order_placed_notification(order):
                "referral_code":order.cart.user.referral_code,
                "referral_bonus":Configuration.objects.get(key="REFERRAL_BONUS").value,
                "cart_items":order.cart.cartitem_set.all(),
-               "guest" : not (user.role.id == settings.ROLE),
                }
         if order.delivery_type != "pickup":
             dic["delivery_name"] = order.delivery_address.first_name.title() + " "+order.delivery_address.last_name.title()

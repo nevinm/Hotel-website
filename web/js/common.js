@@ -1,4 +1,4 @@
-var baseURL = 'http://10.7.2.51:86/backend/api/',
+var baseURL = 'http://meisterdish.com/backend/api/',
     homeUrl = "http://meisterdish.com",
     userDetails, currentPage = $("title").text(),
     currentPageTitle,
