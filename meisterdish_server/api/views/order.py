@@ -83,6 +83,7 @@ def get_orders(request, data, user):
                   "description": cart_item.meal.description,
                   "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
                   "available": 1 if cart_item.meal.available else 0,
+                  "sold_out":1 if meal.sold_out else 0,
                   "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
                   "price": cart_item.meal.price,
                   "tax": cart_item.meal.price * cart_item.meal.tax/100,
@@ -190,6 +191,8 @@ def create_order(request, data, user):
         
         for item in items:
             if not item.meal.available:
+                return custom_error("Sorry, The meal "+ item.meal.name.title() + " is not available.")
+            elif item.meal.sold_out:
                 return custom_error("Sorry, The meal "+ item.meal.name.title() + " has gone out of stock.")
             
             quantity += item.quantity
@@ -384,6 +387,7 @@ def get_order_cart_items(order):
               "description": cart_item.meal.description,
               "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
               "available": 1 if cart_item.meal.available else 0,
+              "sold_out":1 if meal.sold_out else 0,
               "category": cart_item.meal.category.name.title() if cart_item.meal.category else "Not Available",
               "price": cart_item.meal.price,
               "tax": cart_item.meal.price * cart_item.meal.tax/100,
@@ -572,6 +576,7 @@ def get_order_details(request, data, user, order_id):
               "description": cart_item.meal.description,
               "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
               "available": 1 if cart_item.meal.available else 0,
+              "sold_out":1 if meal.sold_out else 0,
               "category": cart_item.meal.category.name.title(),
               "price": cart_item.meal.price,
               "tax": (cart_item.meal.price * cart_item.meal.tax/100),

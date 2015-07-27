@@ -22,6 +22,7 @@ def get_cart_items(request, data, user):
               "description": cart_item.meal.description,
               "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
               "available": 1 if cart_item.meal.available else 0,
+              "sold_out":1 if meal.sold_out else 0,
               "category": cart_item.meal.category.name.title() if cart_item.meal.category else "Not Available",
               "price": cart_item.meal.price,
               "tax": cart_item.meal.price * cart_item.meal.tax/100,
@@ -84,6 +85,8 @@ def add_to_cart(request, data):
 
         try:
           meal = Meal.objects.get(pk=meal_id, available=True, is_deleted=False)
+          if meal.sold_out:
+            return custom_error("Sorry, this meal has been sold out.")
         except:
           log.error("Trying to add a deleted or non-existing meal?")
           return custom_error("Sorry, this meal is currently not available.")
@@ -134,6 +137,8 @@ def update_cart(request, data, user):
 
         try:
           meal = Meal.objects.get(pk=meal_id, available=True, is_deleted=False)
+          if meal.sold_out:
+            return custom_error("Sorry, this meal has been sold out.")
         except:
           return custom_error("Sorry, meal #" +str(meal_id)+ " is currently not available.")
 
@@ -169,6 +174,7 @@ def update_cart(request, data, user):
                 "description": cart_item.meal.description,
                 "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
                 "available": 1 if cart_item.meal.available else 0,
+                "sold_out":1 if meal.sold_out else 0,
                 "category": cart_item.meal.category.name.title(),
                 "price": cart_item.meal.price,
                 "tax": cart_item.meal.price * cart_item.meal.tax/100,

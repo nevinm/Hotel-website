@@ -222,6 +222,7 @@ function extractNutrientInnerDetails(parentElement, childElement) {
 }
 
 function traverseTipsTricks() {
+    tipsAndTricksData = [];
     $("#tips-and-tricks-table tbody tr").map(function() {
         var $row = $(this);
         $row.each(function() {
@@ -240,7 +241,7 @@ function extractTipsAndTricks(self) {
     $(self).find("ul li").each(function() {
         videoPointers.push($(this).text());
     });
-    tipsObject = {
+    var tipsObject = {
         "video_url": videoUrl,
         "title": videoHeading,
         "description": videoPointers
@@ -301,8 +302,9 @@ function createMeal() {
         meal_type = [],
         toDo = [],
         prepared = [],
-        tips = [],nutrients =[],
-        tips = traverseTipsTricks(),
+        tips = nutrients = [];
+        tips.length=0;nutrients.length=0;
+        tips = traverseTipsTricks();
         nutrients = extractNutrients()
     $('.ingredients-container .list-container ul').find('li').each(function() {
         temp = $(this).text();
