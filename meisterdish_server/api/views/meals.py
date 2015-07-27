@@ -69,6 +69,7 @@ def get_meals(request, data):
                               #"images":meal_images,
                               "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.image.url,
                               "available":1 if meal.available else 0,
+                              "sold_out":1 if meal.sold_out else 0,
                               "category":"Not Available" if not meal.category else meal.category.name.title(),
                               "meal_types":meal_types,
                               "preparation_time":meal.preparation_time,
@@ -161,6 +162,7 @@ def get_meal_details(request, data, meal_id):
             "need_boiling_water":meal.need_boiling_water,
             "tax":(meal.price * meal.tax) /100,
             "available" : 1 if meal.available else 0,
+            "sold_out":1 if meal.sold_out else 0,
             "calories" : meal.calories,
             "cat_id" : 'Not Available' if not meal.category else {
                 "id":meal.category.id,

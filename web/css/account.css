@@ -1404,6 +1404,7 @@ input.radio-button-payment {
 .pay-by-credit-container select{
 	font-size: 12px !important;
 	color: #b0b0b0;
+	width: 100%;
 }
 .pay-by-credit-container .button{
 	font-family: 'ProximaNova-Regular';

@@ -706,6 +706,10 @@ label#username-error {
     #section-what-to-expect .slide-description {
         padding: 0;
     }
+    .delivery-area-check-popup .popup-zip-fail {
+        max-width: 300px;
+        width: 80%;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 400px) {
