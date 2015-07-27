@@ -1150,18 +1150,15 @@ table#tips-and-tricks-table {
     float: right;
 }
 .popup-message {
-    position: absolute;
-    width: 89%;
+    position: relative;
+    width: 100%;
     top: 103px;
     padding: 10px 0px;
     text-align: center;
     background: #A9D77B;
     display: none;
-    /* margin: 0 auto; */
-    left: 50%;
-    margin-left: -43%;
-    max-width: 1100px;
 }
+
 .popup-message span {
     font-family: 'ProximaNova-semibold';
     color: #fff;

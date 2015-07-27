@@ -185,7 +185,7 @@ $(document).ready(function() {
         if (button_value == "APPLY") {
             $('.promo-validation-message').css('color', '#ff7878');
             if (localStorage['loggedIn'] != 'true') {
-                $('.promo-validation-message').text("You must be LoggedIn to use coupons.");
+                $('.promo-validation-message').text("You must be logged in to use coupons.");
             } else if (code == "") {
                 $('.promo-validation-message').text("* " + "Please enter Giftcard/Promocode.");
             } else if (code_length > 8) {
@@ -224,6 +224,8 @@ $(document).ready(function() {
         $('.pickup-content').show();
         $("#add-guest-address").hide();
         $(".state-selector-container").hide();
+        $(".instruction-container .content-heading").hide();
+        $(".instruction-container textarea").hide();
         updateReciept();
         if (!(localStorage.getItem('user_profile') === null)) {
             var userProfile = JSON.parse(localStorage['user_profile']);
@@ -244,6 +246,8 @@ $(document).ready(function() {
             $('.address-info').show();
             $('.address-info-guest').hide();
         }
+        $(".instruction-container .content-heading").show();
+        $(".instruction-container textarea").show();
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeAttr("disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeClass("button-disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeClass("autofillremove");
@@ -1212,7 +1216,7 @@ function validateOrder() {
     }
     if (typeof cartItems === 'undefined') {} else {
         if (cartItems.status == "-1") {
-            data.message = "Add Meals to cart and then proceed";
+            data.message = "Add meals to cart and then proceed";
             showPopup(data);
             return false;
         }

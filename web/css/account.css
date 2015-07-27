@@ -1635,11 +1635,9 @@ img.accepted-cards
 	float: left;
 	font-family:'ProximaNova-Regular';
 	font-size: 12px;
-	color: #ff7878;
 	word-break:break-word;
 	line-height: 15px;
 	letter-spacing: .6px;
-	float: left;
 	width: 100%;
 }
 .address-payment-list-popup .bk-overlay{
