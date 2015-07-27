@@ -136,7 +136,9 @@ $(document).ready(function() {
     });
     //add address
     $(document).on('click', '#add-address-popup', function() {
-        getProfile();
+        if (localStorage['loggedIn'] != 'true') {
+            getProfile();
+        }
         $('#new-address-form').validate().resetForm();
         $('.address-payment-list-popup').hide();
         $('.addresspopup-wrapper').show();
@@ -212,15 +214,12 @@ $(document).ready(function() {
     $('#pickup-radio').on("click", function() {
         $('.address-info-guest').show();
         $('.address-info').hide();
-        $("#guest-address-info").validate().resetForm();
         $("#guest-address-info input").removeClass('error');
-        $("#guest-address-info").find("input").not("#guest-email, #guest-phone,#add-guest-address").val("");
+        $("#guest-address-info").validate().resetForm();
+        $("#guest-address-info").find("input").not("#guest-email, #hidden-pickupPhone,#hidden-pickupEmail,#guest-phone,#add-guest-address").val("");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone,#add-guest-address").addClass("autofillremove");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").attr("disabled", "disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").addClass("button-disabled");
-        if (localStorage['loggedIn'] == 'true' ){
-            $(".have-account").hide()
-        }
         $('.pickup-content').show();
         $("#add-guest-address").hide();
         $(".state-selector-container").hide();
@@ -234,7 +233,12 @@ $(document).ready(function() {
         } else {
             getProfile();
         }
-
+        if (localStorage['loggedIn'] == 'true'){
+            $(".have-account").hide();
+        }else{ 
+            $("#guest-phone").val($("#hidden-pickupPhone").val());
+            $("#guest-email").val($("#hidden-pickupEmail").val());
+        }
     });
 
     $('#delivery-radio').on("click", function() {
@@ -261,6 +265,7 @@ $(document).ready(function() {
         $('.driver-tip').val(5);
         updateReciept();
         $('#tip-form').validate().resetForm();
+        $("#guest-address-info").validate().resetForm()
     });
 
     $('#is-gift-card').on('click', function() {
@@ -807,6 +812,8 @@ function populateAddresstoInfoContainer(userDetails) {
                     "<span>" + value.phone + "</span>" +
                     "<span class='change-address-payment' id='change-address'>" + "CHANGE ADDRESS" + "</span>" + "</div>");
             }
+        $("#hidden-pickupPhone").val(value.phone);
+        $("#hidden-pickupEmail").val(value.email);
         });
     }
     $('.address-info-guest').hide();
@@ -818,7 +825,7 @@ function populateAddressListPopup() {
     $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .button').remove();
     $('#save-delivery-address').addClass('button-disabled');
-    if (localStorage['delivery_addressess'] != undefined && localStorage['delivery_addressess'] != null) {
+    if (localStorage['delivery_addressess'] != undefined && localStorage['delivery_addressess'] != null && localStorage['loggedIn'] == "true") {
         var checkLocal = JSON.parse(localStorage['delivery_addressess']).address_list.length;
         addressList = JSON.parse(localStorage['delivery_addressess']);
         appendAddresscontent(addressList);
@@ -1339,7 +1346,9 @@ var getProfileCallback = {
             localStorage['user_profile'] = data;
             $(".address-info-guest").find("#guest-email").val(userDetails.email);
             $(".address-info-guest").find("#guest-phone").val(userDetails.mobile);
-            $('#new-address-form').find("input[name*='email']").val(userDetails.email);
+            if (localStorage['loggedIn'] == 'true') {
+                $('#new-address-form').find("input[name*='email']").val(userDetails.email);
+            }
         } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
