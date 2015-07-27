@@ -193,18 +193,24 @@ def create_meal(request, data, user):
 
         if 'pre_requisites' in data and len(data['pre_requisites']) > 0:
             meal.pre_requisites = simplejson.dumps(data["pre_requisites"])
+        elif not 'pre_requisites' in data:
+            meal.pre_requisites = None
 
         if 'pre_requisites_image' in data:
             meal.pre_requisites_image = Image.objects.get(pk=int(data['pre_requisites_image']))
 
         if 'user_to_do' in data and len(data['user_to_do']) > 0:
             meal.user_to_do = simplejson.dumps(data["user_to_do"])
+        elif not 'user_to_do' in data:
+            meal.user_to_do = None
 
         if 'preparation_time' in data and data['preparation_time'].strip() != '':
             meal.preparation_time = data['preparation_time'].strip()
 
         if 'finished_preparation' in data and len(data['finished_preparation']) > 0:
-            meal.finished_preparation = simplejson.dumps(data["finished_preparation"])        
+            meal.finished_preparation = simplejson.dumps(data["finished_preparation"])
+        elif not 'finished_preparation' in data:
+            meal.finished_preparation = None
 
         if 'saved_time' in data and data['saved_time'].strip() != '':
             meal.saved_time = data['saved_time'].strip()
@@ -248,9 +254,13 @@ def create_meal(request, data, user):
 
         if 'ingredients' in data and len(data['ingredients']) > 0:
             meal.ingredients = simplejson.dumps(data['ingredients'])
+        elif not 'ingredients' in data:
+            meal.ingredients = None
 
         if 'nutrients' in data and len(data['nutrients']) > 0:
             meal.nutrients = simplejson.dumps(data['nutrients'])
+        elif not 'nutrients' in data:
+            meal.nutrients = None
 
         if 'ingredients_image' in data:
             meal.ingredients_image = Image.objects.get(pk=int(data['ingredients_image']))
