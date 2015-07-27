@@ -290,15 +290,7 @@ function verifyAccount() {
 function logingOut() {
     $("#menu").hide();
     eraseCookie("SessionExpireTime");
-    localStorage.removeItem('username');
-    localStorage.removeItem('session_key');
-    localStorage.removeItem('cartItems');
-    localStorage.removeItem('fb-id');
-    localStorage.removeItem('user_profile');
-    localStorage.removeItem('delivery_addressess');
-    localStorage.removeItem('fb-image');
-    localStorage.removeItem('admin_role');
-    localStorage.removeItem('referral_code');
+    ClearLocalStorage();
     localStorage['loggedIn'] = false;
     localStorage['admin_loggedIn'] = false;
     $('#navbar-username a').text('');
@@ -313,6 +305,17 @@ function logingOut() {
     }
 }
 
+function ClearLocalStorage(){
+    localStorage.removeItem('username');
+    localStorage.removeItem('session_key');
+    localStorage.removeItem('cartItems');
+    localStorage.removeItem('fb-id');
+    localStorage.removeItem('user_profile');
+    localStorage.removeItem('delivery_addressess');
+    localStorage.removeItem('fb-image');
+    localStorage.removeItem('admin_role');
+    localStorage.removeItem('referral_code');
+}
 
 //SHOW POPUP
 function showPopup(data) {
@@ -516,6 +519,9 @@ $("form").each(function() {
             preperationtime: {
                 required: true
             },
+            savedtime:{
+                required: true
+            },
             tips_details: {
                 required: true,
                 minlength: 2
@@ -640,6 +646,9 @@ $("form").each(function() {
             preperationtime: {
                 required: "Please enter prepared time"
             },
+            savedtime: {
+                required: "Please enter prepared time"
+            },
             dailyvalue: {
                 number: "Should be a number"
             },
@@ -749,11 +758,12 @@ $(window).load(function() {
 function mobileResponsive() {
     if ($(window).width() <= 767 && $(window).width() >= 320) {
         if (clicked == 1) {
-            $('#page-container').css("margin-left", "60%");
-            $('#header').css("margin-left", "60%");
+            $('#page-container').css("margin-left", "80%");
+            $('#header').css("margin-left", "80%");
         }
     } else {
         $('#page-container').css("margin-left", "0px");
+        $('#page-container').show();
         $('#header').css("margin-left", "0px");
     }
 }
