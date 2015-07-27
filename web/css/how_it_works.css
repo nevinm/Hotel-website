@@ -311,7 +311,7 @@ img#cancel,img#close {
 }
 .delivery-area-check-popup .popup-zip-fail .button{
 	float: left;
-	position: initial;
+	position: relative;
 }
 .delivery-area-check-popup .username-wrapper {
   padding-bottom: 20px;

@@ -354,7 +354,7 @@ function foodSettings(meal_details){
 
 
 function imgValidation(img_url){
-   var result = (/^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:jpe?g|gif|png)$/).test(img_url);
+   var result = (/\.(jpeg|jpg|gif|png)$/).test(img_url);
    return result;  
 }
 
