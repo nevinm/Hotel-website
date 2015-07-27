@@ -24,6 +24,7 @@ var loginCallback = {
             showPopup(userDetails);
         } else {
             $("#login-form")[0].reset();
+            ClearLocalStorage();
             var user_name = userDetails.user.first_name;
             localStorage['username'] = user_name;
             localStorage['session_key'] = userDetails.session_key;

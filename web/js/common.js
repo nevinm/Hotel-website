@@ -273,21 +273,15 @@ function verifyAccount() {
         }
     }
     if (search_verify != -1 && search_verify != undefined) {
-        var error_message = getParameterFromUrl("error");
         var trueMessage = {
-                'message': "Account is verified, proceed to login."
-            }
+            'message': "Account is verified, proceed to login"
+        }
         var falseMessage = {
-                'message': "account is not verified."
-            }
-        var alreadyVerifiedMessage = {
-                'message': error_message
-            }
+            'message': "account is not verified"
+        }
         if (verify_url.split("?")[1].split("=")[1] == "true") {
             showPopup(trueMessage);
-        } else if(verify_url.split("&")[1].split("=")[0] == "error"){
-            showPopup(alreadyVerifiedMessage);
-        }else{
+        } else {
             showPopup(falseMessage);
         }
     }
@@ -296,15 +290,7 @@ function verifyAccount() {
 function logingOut() {
     $("#menu").hide();
     eraseCookie("SessionExpireTime");
-    localStorage.removeItem('username');
-    localStorage.removeItem('session_key');
-    localStorage.removeItem('cartItems');
-    localStorage.removeItem('fb-id');
-    localStorage.removeItem('user_profile');
-    localStorage.removeItem('delivery_addressess');
-    localStorage.removeItem('fb-image');
-    localStorage.removeItem('admin_role');
-    localStorage.removeItem('referral_code');
+    ClearLocalStorage();
     localStorage['loggedIn'] = false;
     localStorage['admin_loggedIn'] = false;
     $('#navbar-username a').text('');
@@ -319,6 +305,17 @@ function logingOut() {
     }
 }
 
+function ClearLocalStorage(){
+    localStorage.removeItem('username');
+    localStorage.removeItem('session_key');
+    localStorage.removeItem('cartItems');
+    localStorage.removeItem('fb-id');
+    localStorage.removeItem('user_profile');
+    localStorage.removeItem('delivery_addressess');
+    localStorage.removeItem('fb-image');
+    localStorage.removeItem('admin_role');
+    localStorage.removeItem('referral_code');
+}
 
 //SHOW POPUP
 function showPopup(data) {
@@ -761,11 +758,12 @@ $(window).load(function() {
 function mobileResponsive() {
     if ($(window).width() <= 767 && $(window).width() >= 320) {
         if (clicked == 1) {
-            $('#page-container').css("margin-left", "60%");
-            $('#header').css("margin-left", "60%");
+            $('#page-container').css("margin-left", "80%");
+            $('#header').css("margin-left", "80%");
         }
     } else {
         $('#page-container').css("margin-left", "0px");
+        $('#page-container').show();
         $('#header').css("margin-left", "0px");
     }
 }
