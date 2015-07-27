@@ -1212,7 +1212,7 @@ function validateOrder() {
     }
     if (typeof cartItems === 'undefined') {} else {
         if (cartItems.status == "-1") {
-            data.message = "Add Meals to cart and then proceed";
+            data.message = "Add meals to cart and then proceed";
             showPopup(data);
             return false;
         }
