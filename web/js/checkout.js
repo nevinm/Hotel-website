@@ -224,6 +224,8 @@ $(document).ready(function() {
         $('.pickup-content').show();
         $("#add-guest-address").hide();
         $(".state-selector-container").hide();
+        $(".instruction-container .content-heading").hide();
+        $(".instruction-container textarea").hide();
         updateReciept();
         if (!(localStorage.getItem('user_profile') === null)) {
             var userProfile = JSON.parse(localStorage['user_profile']);
@@ -244,6 +246,8 @@ $(document).ready(function() {
             $('.address-info').show();
             $('.address-info-guest').hide();
         }
+        $(".instruction-container .content-heading").show();
+        $(".instruction-container textarea").show();
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeAttr("disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeClass("button-disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeClass("autofillremove");
