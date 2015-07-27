@@ -379,7 +379,7 @@ def share_via_email(request, data, user):
         sub = "Start cooking with Meisterdish"
         dic = {
             "link" : settings.BASE_URL + 'share/'+user.referral_code+'/',
-            "amount" : Configuration.objects.get(key="REFERRAL_BONUS").value,
+            "amount" : Configuration.objects.get(key="REFERRAL_BONUS").value / 2,
             "to_email" : email,
             "site_url":settings.SITE_URL,
         }
