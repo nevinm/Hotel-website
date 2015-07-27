@@ -522,7 +522,9 @@ function populateMealDetails(mealDetails) {
     populateListData('', "ingredients-container", mealDetails.ingredients);
     $("#ingredients-image").attr("src", mealDetails.ingredients_image.url);
     $.each(mealDetails.nutrients, function(key, value) {
-        populateNutrients(value.mainNutrient, value.perServing, value.dailyValue, value);
+        if(!(mealDetails.nutrients=='')){
+            populateNutrients(value.mainNutrient, value.perServing, value.dailyValue, value);
+        }else{}
     });
     $.each(mealDetails.tips, function(key, value) {
         addMainTipsTricks(value.video_url, value.title, value.description, value.id);
