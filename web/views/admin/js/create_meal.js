@@ -162,9 +162,11 @@ function addSubTipsTricks(parentElement, isEditingdescription) {
         $('#save-tips').unbind();
         $('#save-tips').on('click', function() {
             var newTipTrick = $("#tips_tricks_content").val();
-            parentElement.find('ul').append('<li>' + $('#tips_tricks_content').val() +
-                '<img class="remove" src="../../images/del.png">' + '</li>');
-            $(".tips-tricks-wrapper").hide();
+            if(newTipTrick.length){
+                parentElement.find('ul').append('<li>' + $('#tips_tricks_content').val() +
+                    '<img class="remove" src="../../images/del.png">' + '</li>');
+                $(".tips-tricks-wrapper").hide();
+            }else{}
         });
     }
 }

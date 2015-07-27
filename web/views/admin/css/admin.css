@@ -994,7 +994,7 @@ input#create-meal-button {
 
 .nutrients-popup-wrapper .popup {
     height: 300px;
-    margin-top: -150px;
+    /*margin-top: -150px;*/
 }
 
 .tips-tricks-wrapper .popup {
