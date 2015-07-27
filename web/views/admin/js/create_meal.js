@@ -301,6 +301,7 @@ function createMeal() {
         meal_type = [],
         toDo = [],
         prepared = [],
+        tips = [],nutrients =[],
         tips = traverseTipsTricks(),
         nutrients = extractNutrients()
     $('.ingredients-container .list-container ul').find('li').each(function() {
@@ -367,7 +368,9 @@ function createMeal() {
 function createMealEmptyCheck(key, value) {
     if (value.length != 0) {
         createMealParams[key] = value;
-    } else {}
+    } else {
+        delete createMealParams[key];
+    }
 }
 
 // populate to do- list data 
@@ -527,6 +530,6 @@ function emptyvalidation(value) {
 }
 
 function imgValidation(img_url){
-   var result = (/^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:jpe?g|gif|png)$/).test(img_url);
+   var result = (/\.(jpeg|jpg|gif|png)$/).test(img_url);
    return result;  
 }
