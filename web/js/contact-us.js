@@ -15,7 +15,7 @@ $(document).ready(function() {
 	$("#send-message").on("click",function(e){
 		e.preventDefault();
 		if($("form").valid()){
-            $(".popup-wrapper").show();
+            sendMessage();
         }
 	});
     CartItemCount();
@@ -42,4 +42,36 @@ function getProfile(profileId) {
     data = JSON.stringify(userData);
     var getProfileInstance = new AjaxHttpSender();
     getProfileInstance.sendPost(url, header, data, getProfileCallback, profileId);
+}
+
+var sendMessageCallback = {
+    success: function(data, textStatus) {
+        var sendMessageDetails = JSON.parse(data);
+        if (sendMessageDetails.status == 1) {
+            $(".popup-wrapper").show();
+        } else {
+            showPopup(sendMessageDetails);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function sendMessage(){
+     var url = baseURL + "send_contactus_email/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        name = $("input[name='fullname']").val(),
+        email = $("input[name='email']").val(),
+        subject = $("input[name='subject']").val(),
+        message = $("textarea[name='message']").val(),
+        userData = {
+            "subject":subject,
+            "message": message,
+            "name": name, //optional, for guest
+            "email": email //optional, for guest
+        };
+    data = JSON.stringify(userData);
+    var sendMessageInstance = new AjaxHttpSender();
+    sendMessageInstance.sendPost(url, header, data, sendMessageCallback);
 }
