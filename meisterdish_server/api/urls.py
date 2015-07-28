@@ -61,5 +61,5 @@ urlpatterns = patterns('',
     url(r'^validate_session/$', views.validate_session, name='validate_session'),
 
     url(r'^save_email/$', views.save_email, name='save_email'),
-    
+    url(r'^send_contactus_email/$', views.send_contactus_email, name='send_contactus_email'),
 )
