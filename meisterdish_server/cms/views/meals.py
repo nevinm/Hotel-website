@@ -107,7 +107,10 @@ def create_meal(request, data, user):
         price = float(data['price'])
         tax = float(data['tax'])
         available = data['available']
-        sold_out = data['sold_out']
+        if len(data['sold_out']) > 0:
+            sold_out = data['sold_out']
+        else:
+            sold_out = "0"
         
         if len(name) < 3 or len(desc)<5 or float(price) <=0 or float(tax) <0 :
             log.error("name, desc, price or tax invalid")
