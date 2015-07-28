@@ -327,7 +327,6 @@ def create_order(request, data, user):
 
 def print_order(order):
     try:
-        return True #Nazz
         pdf_content = save_pdf(order)
         if not pdf_content:
             return False
