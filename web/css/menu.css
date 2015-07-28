@@ -59,8 +59,8 @@
     border-bottom: 1px solid #ededed;
 }
 .meal-area{
-    overflow: auto;
-    padding-bottom: 40px;
+    /*overflow: auto;*/
+    /*padding-bottom: 40px;*/
 }
 .menu-header{
     padding: 20px 0;
@@ -600,6 +600,7 @@ span.per-serving-text {
         background-color: #CDD5CE;
         background-image: none !important;
         border: none;
+        overflow: hidden !important;
     }
     .subMenuFilter {
         color: #A9D77B;
