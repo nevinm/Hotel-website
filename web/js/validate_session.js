@@ -1,4 +1,7 @@
-var sessionExpiryTime = 30;
+var sessionExpiryTime = 30,
+    baseURL = 'http://meisterdish.com/backend/api/',
+    homeUrl = "http://meisterdish.com";
+
 function getCurrentPage(firstChar, secondChar, url) {
     currentPage = url.substring(url.lastIndexOf(firstChar) + 1, url.lastIndexOf(secondChar));
     return currentPage;
@@ -19,7 +22,7 @@ function sessionCheckLogout() {
         localStorage['admin_loggedIn'] = false;
         if (currentPage == "login" || currentPage == "how-it-works" ||
             currentPage == "checkout" || currentPage == "forgot-password" ||
-            currentPage == "gift-cards-select" || currentPage == "giftcard-payment"     ||
+            currentPage == "gift-cards-select" || currentPage == "giftcard-payment" ||
             currentPage == "signup-fail" || currentPage == "meal-details" ||
             currentPage == "privacy-terms" || currentPage == "signup" ||
             currentPage == "menu" || currentPage == "reset-password" ||
@@ -62,4 +65,17 @@ function eraseCookie(name) {
     createCookie(name, "", -1);
 }
 
+function isLocalStorageNameSupported() {
+    var testKey = 'test',
+        storage = window.sessionStorage;
+    try {
+        storage.setItem(testKey, '1');
+        storage.removeItem(testKey);
+        return true;
+    } catch (error) {
+        location.href = homeUrl + '/web/views/incogneto-error.html';
+    }
+}
+
+isLocalStorageNameSupported();
 sessionCheckLogout();
