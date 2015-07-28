@@ -226,18 +226,8 @@ $(document).ready(function() {
         $(".instruction-container .content-heading").hide();
         $(".instruction-container textarea").hide();
         updateReciept();
-        if (!(localStorage.getItem('user_profile') === null)) {
-            var userProfile = JSON.parse(localStorage['user_profile']);
-            $(".address-info-guest").find("#guest-email").val(userProfile.email);
-            $(".address-info-guest").find("#guest-phone").val(userProfile.mobile);
-        } else {
-            getProfile();
-        }
         if (localStorage['loggedIn'] == 'true'){
             $(".have-account").hide();
-        }else{ 
-            $("#guest-phone").val($("#hidden-pickupPhone").val());
-            $("#guest-email").val($("#hidden-pickupEmail").val());
         }
     });
 
@@ -812,8 +802,8 @@ function populateAddresstoInfoContainer(userDetails) {
                     "<span>" + value.phone + "</span>" +
                     "<span class='change-address-payment' id='change-address'>" + "CHANGE ADDRESS" + "</span>" + "</div>");
             }
-        $("#hidden-pickupPhone").val(value.phone);
-        $("#hidden-pickupEmail").val(value.email);
+        $("#guest-email").val(value.email);
+        $("#guest-phone").val(value.phone);
         });
     }
     $('.address-info-guest').hide();
@@ -840,7 +830,7 @@ function appendAddresscontent(addressList) {
     $('.address-payment-list-popup .popup-container').append("<div class='delivery-adress-wrapper'>" + "</div>");
     $.each(addressList.address_list, function(key, value) {
         $('.address-payment-list-popup .popup-container .delivery-adress-wrapper').append("<div class='address-container'>" + "<input type='radio' name='address' id='" + value.id + 1 + "' data-id='" + value.id + "' class='checkbox-green radio-button'>" +
-            "<label class='list-address' for='" + value.id + 1 + "'>" +
+            "<label class='list-address' for='" + value.id + 1 + "' data-email = '"+value.email+"' data-phone='"+value.phone+"'>" +
             "<span>" + value.first_name + " " + value.last_name + "</span>" +
             "<span>" + value.street + "," + value.building + "</span>" +
             "<span>" + value.city + "," + value.state + " " + value.zip + "</span>" +
@@ -877,6 +867,8 @@ function changeDeliveryAddress(selectedId) {
         htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
     $('.address-info .contents').html(htmlContent);
+    $("#guest-email").val(selectedAddress.data("email"));
+    $("#guest-phone").val(selectedAddress.data("phone"));
 }
 var addAddressCallback = {
     success: function(data, textStatus, flag) {
