@@ -1,0 +1,10 @@
+#contact-us-main-wrapper{
+	width: 100%;
+	min-height: 100%;
+	float: left;
+	background-size: cover;
+}
+.contact-us-background{
+	background-image: url(../images/featured-meal-bg.jpg);
+	background-size: cover;
+}
