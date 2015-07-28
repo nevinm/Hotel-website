@@ -1,8 +1,7 @@
-var baseURL = 'http://meisterdish.com/backend/api/',
-    homeUrl = "http://meisterdish.com",
-    userDetails, currentPage = $("title").text(),
+var userDetails, currentPage = $("title").text(),
     currentPageTitle,
     clicked = 0;
+
 //If already logged in
 var $userentry = $('.login-signup');
 
