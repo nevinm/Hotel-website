@@ -14,7 +14,9 @@ $(document).ready(function() {
 	}
 	$("#send-message").on("click",function(e){
 		e.preventDefault();
-		if($("form").valid()){}
+		if($("form").valid()){
+            $(".popup-wrapper").show();
+        }
 	});
     CartItemCount();
 });
