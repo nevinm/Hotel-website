@@ -280,8 +280,10 @@ var createMealCallback = {
     success: function(data, textStatus) {
         var meal_message = JSON.parse(data);
         showPopup(meal_message);
-        if(!checkIfMealEdit()){
-            $("#create-meal")[0].reset();
+        if(meal_message.status ==1){
+            if(!checkIfMealEdit()){
+                $("#create-meal")[0].reset();
+            }else{}
         }else{}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
