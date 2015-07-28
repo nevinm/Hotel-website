@@ -2113,6 +2113,13 @@ a#add-address-popup :hover{
 		width: 85%;
 		max-width: 400px;
 	}
+	.profile-pic{
+		width: 100%;
+	}
+	.upload-image-container	{
+		width: 100%;
+		margin: 50px 0 0 0;
+	}
 }
   	@media (max-width:400px){
   		.address-content{
