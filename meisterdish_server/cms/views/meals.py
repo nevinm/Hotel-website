@@ -107,7 +107,7 @@ def create_meal(request, data, user):
         price = float(data['price'])
         tax = float(data['tax'])
         available = data['available']
-        if len(data['sold_out']) > 0:
+        if 'sold_out' in data:
             sold_out = data['sold_out']
         else:
             sold_out = "0"
