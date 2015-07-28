@@ -74,7 +74,7 @@ function isLocalStorageNameSupported() {
         return true;
     } catch (error) {
         debugger;
-        location.href = homeUrl + '/web/views/incogneto-error.html';
+        location.href = homeUrl + '/views/incogneto-error.html';
     }
 }
 
