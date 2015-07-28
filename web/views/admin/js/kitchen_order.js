@@ -105,7 +105,7 @@ function populateOrderList(data) {
 
             $('#order-list tbody').append("<tr class='row'" +
                 " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id + "'>" +
-                "<td>" + deliverytime + "</td>" +
+                "<td>" + deliverytime.split(" ")[0]+"<br>"+deliverytime.split(" ")[1] + "</td>" +
                 "<td>" + orderNum + "</td>" +
                 "<td>" + mealValue.name + "</td>" +
                 "<td>" + minTime + "</td>" +

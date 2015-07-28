@@ -362,7 +362,11 @@ var getCartItemsCallback = {
             if(cartItems.credits){
                 $(".discount-container .discount-amount").css('color', '#8EC657');
             }
-            $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
+            if(cartItems.credits > 0){
+                $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
+            }else{
+                $(".discount-container .discount-amount").text("$" + (cartItems.credits).toFixed(2));
+            }
             $('#hidden-credit').val(cartItems.credits);
         } else {
             $('.order-list-items').remove();
@@ -503,26 +507,13 @@ function updateReciept(GiftcardDetails, flag) {
         appliedUserCredit = grandTotal;
         grandTotal = 0;
     }else{}
+    
     appliedCredit = appliedUserCredit + appliedDiscount;
-    // if(totalDiscount > grandTotal){
-    //     appliedCredit = 0;
-    // }else{
-    //     if(totalCredits > 0){
-    //         appliedCredit = grandTotal - totalDiscount;
-    //     }
-    // }
-    // if(grandTotal > totalCredits){
-    //     appliedCredit = totalCredits;
-    //     $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
-    // }else{
-    //     appliedCredit = grandTotal;
-    //     $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
-    // }
-    // totalCost = grandTotal - totalDiscount - totalCredits;
-    // if (grandTotal <= 0) {
-    //     grandTotal = 0;
-    // }
-    $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
+    if(appliedCredit > 0){
+        $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
+    }else{
+        $(".discount-container .discount-amount").text("$" + (appliedCredit).toFixed(2));
+    }
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
     $(".total-cost").text("$" + (grandTotal).toFixed(2));
@@ -1293,7 +1284,10 @@ var removePromocodeCallback = {
             $('#apply-promo-gift').removeClass('btn-small-secondary').addClass('btn-small-primary medium-green');
             $('#apply-promo-gift').val('APPLY');
             $('.promo-validation-message').css('color', '#8EC657');
-            $('.discount-container .discount-amount').css('color', '#4A4A4A');
+            if(removeData.credits > 0){}
+            else{
+                $('.discount-container .discount-amount').css('color', '#4A4A4A');
+            }
             $('.promo-validation-message').text('* ' + removeData.message);
             updateReciept(removeData);
         } else {}

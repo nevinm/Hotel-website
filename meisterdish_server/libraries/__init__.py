@@ -13,16 +13,28 @@ from datetime import datetime
 log = logging.getLogger('libraries')
 import os
 
-def mail(to_list, subject, message, sender="Meisterdish<contact@meisterdish.com>", headers = {
-              'Reply-To': "Meisterdish<contact@meisterdish.com>",
-              'From':"Meisterdish<contact@meisterdish.com>",
-              }, design=True):
-    
+def mail(to_list, subject, message, sender=None, headers = None, design=True):
+    if not sender:
+      sender = "Meisterdish<contact@meisterdish.com>"
+    if not headers:
+      headers = {
+            'Reply-To': "Meisterdish<contact@meisterdish.com>",
+            'From':"Meisterdish<contact@meisterdish.com>",
+            }
     msg = EmailMessage(subject, message, sender, to_list, headers=headers)
     msg.content_subtype = "html"
     msg.mixed_subtype = 'related'
+    
     if design:
       for cid, img in settings.EMAIL_IMAGES.items():
+          fp = open(img, 'rb')
+          msgImage = MIMEImage(fp.read())
+          fp.close()
+          msgImage.add_header('Content-ID', '<'+cid+'>')
+          msg.attach(msgImage)
+    else:
+      imgs = {"meisterdish_logo" : os.path.join(settings.STATIC_ROOT, "default", "logo.png")}  
+      for cid, img in imgs.items():
           fp = open(img, 'rb')
           msgImage = MIMEImage(fp.read())
           fp.close()
