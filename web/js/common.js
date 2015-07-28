@@ -573,6 +573,10 @@ $("form").each(function() {
             },
             dailyvalue: {
                 number: true
+            },
+            subject : {
+                minlength:3,
+                required:true,
             }
         },
         messages: {
@@ -681,7 +685,8 @@ $("form").each(function() {
                 minAmount: "Enter a number greater than 0."
             },
             giftcardname: "Enter valid giftcardname.",
-            order: "Enter valid Order."
+            order: "Enter valid Order.",
+            subject: "Enter a valid subject." 
                 // image_upload:"Please select an image."
         }
     });

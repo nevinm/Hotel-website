@@ -71,7 +71,7 @@
                         <div class="footerContent">
                             <ul>
                                 <li>
-                                    <a href="">CONTACT</a>
+                                    <a href="contact-us.html">CONTACT</a>
                                 </li>
                                 <li>
                                     <a href="privacy-terms.html">PRIVACY & TERMS</a>
@@ -111,20 +111,21 @@
                 </ul>
             </div>
         </header>
-        <div id="page-container" class='contact-us-background'>
+        <div id="page-container" class="contact-us-background">
             <div class="contact-us-wrapper contentArea">
                 <div class="left-wrapper">
                     <div class="container">
                         <div class="content-heading">
                             <p>SEND US A MESSAGE</p>
                         </div>
-                        <span class="have-account">ALREADY HAVE AN ACCOUNT? <a href="login.html" class="green">LOGIN HERE</a></span>
+                        <span class="have-account guest">ALREADY HAVE AN ACCOUNT? <a href="login.html" class="green">LOGIN HERE</a></span>
+                        <span class="have-account user-account">YOUR ACCOUNT<span id="user-email">()</span></span>
                         <form id="contactUs-form">
-                            <div class="form-inputWrapper">
+                            <div class="form-inputWrapper guest">
                                 <label class="body-text-small">Name</label>
                                 <input type="text" class="form-input" name="fullname">
                             </div>
-                            <div class="form-inputWrapper">
+                            <div class="form-inputWrapper guest">
                                 <label class="body-text-small">Email Address</label>
                                 <input type="text" class="form-input" name="email">
                             </div>
@@ -134,10 +135,10 @@
                             </div>
                             <div class="form-inputWrapper">
                                 <label class="body-text-small">Your Message</label>
-                                <textarea id="your-message" class="textarea" maxlength="16380"></textarea>
+                                <textarea id="your-message" class="textarea" maxlength="16380" placeholder="Sample Text" name="message"></textarea>
                             </div>
                             <div class="button-wrapper">
-                                <input type="submit" class="btn btn-large-primary medim-green" value="Send Message">
+                                <input type="submit" class="btn btn-small-primary medium-green" value="Send Message" id="send-message">
                             </div>
                         </form>
                     </div>
@@ -147,6 +148,26 @@
                         <div class="content-heading">
                             <p>CONTACT DETAILS</p>
                         </div>
+                        <ul class="contact-details">
+                            <li class="details-list">
+                                <span class="list-header">EMAIL</span>
+                                <span>Send us any feedback, press enquiries,</span>
+                                <span>job applications, or just say hi, at:</span>
+                                <span>contact@meisterdish.com</span>
+                            </li>
+                            <li class="details-list">
+                                <span class="list-header">CALL US</span>
+                                <span class="bold">917 (388)-3566</span>
+                                <span>Mon-Fri 10AM-6PM EST</span>
+                            </li>
+                            <li class="details-list">
+                                <span class="list-header">FOR PICKUP</span>
+                                <span>Meisterdish Upper East Side</span>
+                                <span>218 East 81st Street</span>
+                                <span>New York, NY</span>
+                                <span>10028</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
