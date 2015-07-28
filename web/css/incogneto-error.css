@@ -1,3 +1,7 @@
+body{
+  min-height: 100$;
+}
+
 .incogneto-error-container {
     position: relative;
 }
