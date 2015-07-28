@@ -50,6 +50,8 @@ function checkReferredPage() {
         window.location.href = 'checkout.html';
     } else if (referredPage == "giftcard-payment") {
         window.location.href = 'giftcard-payment.html';
+    } else if(referredPage == "contact-us"){
+        window.location.href = 'contact-us.html';
     } else {
         window.location.href = 'menu.html';
     }
