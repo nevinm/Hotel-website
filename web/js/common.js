@@ -259,29 +259,21 @@ function verifyAccount() {
     var search_ve = verify_url.indexOf("email_verify");
 
     //email verification
-    if (search_ve != -1 && search_ve != undefined) {
-        var truemessage = {
-            'message': "Your email is verified"
-        }
-        var falsemessage = {
-            'message': "email is not verified"
-        }
-        if (verify_url.split("?")[1].split("=")[1] == "true") {
-            showPopup(truemessage);
-        } else {
-            showPopup(falsemessage);
-        }
-    }
     if (search_verify != -1 && search_verify != undefined) {
         var trueMessage = {
-            'message': "Account is verified, proceed to login"
-        }
+                'message': "Account is verified, proceed to login."
+            }
         var falseMessage = {
-            'message': "account is not verified"
-        }
+                'message': "account is not verified."
+            }
+        var alreadyVerifiedMessage = {
+                'message': "Account Already verified."
+            }
         if (verify_url.split("?")[1].split("=")[1] == "true") {
             showPopup(trueMessage);
-        } else {
+        } else if(verify_url.split("&")[1].split("=")[0] == "error"){
+            showPopup(alreadyVerifiedMessage);
+        }else{
             showPopup(falseMessage);
         }
     }
