@@ -688,3 +688,40 @@ def validate_session(request, data):
         return custom_error("Invalid session")
     else:
         return custom_error("Invalid session")
+
+@check_input('POST')
+def send_contactus_email(request, data):
+    try:
+        subject = data['subject'].strip()
+        message = data['message'].strip()
+
+        session_key = request.META.get('HTTP_SESSION_KEY', None)
+        if session_key :
+            session = SessionStore(session_key=session_key)
+            if session and 'user' in session :
+                user = User.objects.get(pk=session['user']['id'])
+                name = user.first_name + " " + user.last_name
+                email = user.email
+            else:
+                name = data['name'].strip()
+                email = data['email'].strip()
+
+        import string, random
+        from libraries import mail
+
+        dic = {
+                "from_email": email,
+                "name" : name,
+                "subject" : subject,
+                "message" : message,
+               }
+        msg = render_to_string('contact_us_email_template.html', dic)
+        email_sub = 'Inquiry from '+ name
+        mail(['contact@meisterdish.com'], email_sub, msg, None, None, False)
+    except Exception as e:
+        log.error("Failed to send the contact us email : "+e.message)
+        return custom_error("Failed to send the contact us email.")
+    else:
+        log.info("Contact us mail sent to : contact@meisterdish.com , from "+email)
+        return json_response({"status":1, "message":"Email sent successfully"})
+
