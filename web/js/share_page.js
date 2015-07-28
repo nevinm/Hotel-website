@@ -93,8 +93,8 @@ clientTarget.on("load", function(clientTarget) {
 var shareViaEmailCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);
+        $('.email-pupup-wrapper').hide();
         if (userDetails.status == 1) {
-            $('.email-pupup-wrapper').hide();
             showPopup(userDetails);   
         } else {
             showPopup(userDetails);
