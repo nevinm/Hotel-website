@@ -73,7 +73,8 @@ function isLocalStorageNameSupported() {
         storage.removeItem(testKey);
         return true;
     } catch (error) {
-        location.href = homeUrl + '/web/views/incogneto-error.html';
+        debugger;
+        location.href = homeUrl + '/views/incogneto-error.html';
     }
 }
 
