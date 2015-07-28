@@ -38,12 +38,22 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
         msg = EmailMessage(subject, message, sender, to_list, headers=headers)
         msg.content_subtype = "html"
         msg.mixed_subtype = 'related'
-        share_images = {
-          "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
-          #"share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
-          #"share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
-          "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo.png"),
-        }
+        user = order.cart.user
+        first_name = user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest"
+        if "Guest" not in first_name:
+            share_images = {
+              "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
+              #"share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
+              #"share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
+              "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo.png"),
+            }
+        else:
+            share_images = {
+              #"share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
+              #"share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
+              #"share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
+              "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo.png"),
+            }
 
         for ci in order.cart.cartitem_set.all():
             share_images["img_"+str(ci.meal.id)] = ci.meal.main_image.image.path if ci.meal.main_image else os.path.join(settings.STATIC_ROOT,"default", "meal_default.jpg")
