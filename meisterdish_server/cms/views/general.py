@@ -168,7 +168,7 @@ def remove_category(request, data, user):
         elif "id" in data:
             cat = Category.objects.get(id=str(data['id']).strip())
         
-        for meal in Meals.objects.filter(category=cat):
+        for meal in Meal.objects.filter(category=cat):
             meal.category = None
             meal.save()
         cat.delete()
