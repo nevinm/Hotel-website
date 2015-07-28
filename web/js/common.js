@@ -30,6 +30,7 @@ $(document).ready(function() {
 
     //hide social media icons
     // $(".footer-links").remove();
+    $("ul.social-media-icons").find(".sml_sprite").not(".facebook").hide();
 
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
@@ -42,16 +43,19 @@ $(document).ready(function() {
             // $("#page-container").css("position","fixed")
         $('#page-container').animate({
             marginLeft: "80%"
-        })
+        });
         setTimeout(function() {
             $('#page-container').hide();
-        })
+        });
         $('.navMenu').animate({
             marginLeft: "0"
         });
         setTimeout(function() {
             $('.icon-menu').addClass('icon-cancel').removeClass('icon-menu');
-        }, 100)
+        }, 100);
+        if(currentPage == "menu"){
+            $(".menu-offer").hide();
+        }
     });
     $(document).on('click', '.icon-cancel', function() {
         clicked = 0;
@@ -61,17 +65,22 @@ $(document).ready(function() {
         // $("#page-container").css("position","relative");
         $('#page-container').animate({
             marginLeft: "0px"
-        })
+        });
         setTimeout(function() {
             $('#page-container').show();
         }, 700)
 
         $('#header').animate({
             marginLeft: "0px"
-        })
+        });
         setTimeout(function() {
             $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
-        }, 600)
+        }, 600);
+        if(currentPage == "menu"){
+            setTimeout(function() {
+                $(".menu-offer").show();
+            }, 700);  
+        }
     });
     $(document).on('keydown', function(e) {
         var key = e.which;
