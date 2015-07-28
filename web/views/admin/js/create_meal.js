@@ -528,6 +528,7 @@ function populateMealDetails(mealDetails) {
             populateNutrients(value.mainNutrient, value.perServing, value.dailyValue, value);
         }else{}
     });
+    $('#tips-and-tricks-table').find("tbody").empty();
     $.each(mealDetails.tips, function(key, value) {
         addMainTipsTricks(value.video_url, value.title, value.description, value.id);
     });
