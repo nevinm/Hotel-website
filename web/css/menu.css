@@ -600,6 +600,7 @@ span.per-serving-text {
         background-color: #CDD5CE;
         background-image: none !important;
         border: none;
+        overflow: hidden !important;
     }
     .subMenuFilter {
         color: #A9D77B;
