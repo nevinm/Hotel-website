@@ -492,23 +492,31 @@ function updateReciept(GiftcardDetails, flag) {
     if (flag == "coupon-applied") {
         totalDiscount = GiftcardDetails.discount;
     }
-    if(totalDiscount && grandTotal > totalDiscount){
-        grandTotal = grandTotal - totalDiscount;
-        appliedDiscount = totalDiscount;
-    }else if (grandTotal < totalDiscount){
+    totalCredits = totalCredits + totalDiscount;
+    if(totalCredits > grandTotal){
+        appliedCredit = grandTotal;
         grandTotal = 0;
-        appliedDiscount =  totalDiscount ; 
-    }else{}
-    
-    if(totalCredits && grandTotal > totalCredits){
+    }else{
+        appliedCredit = totalCredits;
         grandTotal = grandTotal - totalCredits;
-        appliedUserCredit = totalCredits;
-    }else if(grandTotal < totalCredits){
-        appliedUserCredit = grandTotal;
-        grandTotal = 0;
-    }else{}
+    }
+    // if(totalDiscount && grandTotal > totalDiscount){
+    //     grandTotal = grandTotal - totalDiscount;
+    //     appliedDiscount = totalDiscount;
+    // }else if (grandTotal < totalDiscount){
+    //     grandTotal = 0;
+    //     appliedDiscount =  totalDiscount ; 
+    // }else{}
     
-    appliedCredit = appliedUserCredit + appliedDiscount;
+    // if(totalCredits && grandTotal > totalCredits){
+    //     grandTotal = grandTotal - totalCredits;
+    //     appliedUserCredit = totalCredits;
+    // }else if(grandTotal < totalCredits){
+    //     appliedUserCredit = grandTotal;
+    //     grandTotal = 0;
+    // }else{}
+    
+    // appliedCredit = appliedUserCredit + appliedDiscount;
     if(appliedCredit > 0){
         $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
     }else{
@@ -1065,11 +1073,7 @@ function createOrderParams() {
         selected_hour = $today_content.attr("data-hr");
         selected_time = getHourCorrected(selected_hour) + ":" + "00" + ":" + "00";
         //Convert to EST
-        
-        // selectedDayDateFormat = stringToDate(selected_day,"mm/dd/yyyy","/");
-        // selectedDayDateFormatWithHour = selectedDayDateFormat.setHours(selected_hour);
-        // selectedDateEst = convertToEST(selectedDayDateFormatWithHour);
-        // deliveryTime = getEstFormattedForWebService(selectedDateEst)+ " "+ selected_time;
+      
         deliveryTime = convertToEstInit(selected_day,selected_hour,selected_time);
     } else {
         selected_day = $weekTimecontent.attr("data-date");

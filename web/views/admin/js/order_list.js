@@ -170,11 +170,16 @@ function deleteOrder(orderId) {
 function populateOrderList(data) {
     var fullMealList = JSON.parse(data);
     $.each(fullMealList.aaData, function(key, value) {
+        var deliverytime = value.delivery_time,
+            date = deliverytime.split(" ")[0],
+            time = deliverytime.split(" ")[1],
+            hours = parseInt(deliverytime.split(" ")[1].slice(0, -3)),
+            hours12Hr = ((hours + 11) % 12 + 1);
         $('#order-list tbody').append("<tr data-id='" + value.id + "'>" +
             "<td>" + value.order_num + "</td>" +
             "<td>" + value.user_first_name + " " + value.user_last_name + "</td>" +
             "<td>" + value.phone + "</td>" +
-            "<td>" + value.delivery_time + "</td>" +
+            "<td>" + deliverytime.split(" ")[0] +"<br>" + hours + ":00</td>" +  
             "<td>" + value.delivery_type + "</td>" +
             "<td>" + dollarConvert(parseFloat(value.grand_total).toFixed(2)) + "</td>" +
             "<td class='no-popup'><select data-id='" + value.id + "'class='order-status' name='status'>" +
