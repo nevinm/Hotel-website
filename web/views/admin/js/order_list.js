@@ -179,7 +179,7 @@ function populateOrderList(data) {
             "<td>" + value.order_num + "</td>" +
             "<td>" + value.user_first_name + " " + value.user_last_name + "</td>" +
             "<td>" + value.phone + "</td>" +
-            "<td>" + deliverytime.split(" ")[0] +"<br>" + hours + ":00</td>" +
+            "<td>" + deliverytime.split(" ")[0] +"<br>" + hours + ":00</td>" +  
             "<td>" + value.delivery_type + "</td>" +
             "<td>" + dollarConvert(parseFloat(value.grand_total).toFixed(2)) + "</td>" +
             "<td class='no-popup'><select data-id='" + value.id + "'class='order-status' name='status'>" +

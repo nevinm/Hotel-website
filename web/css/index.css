@@ -625,12 +625,6 @@ label#username-error {
     text-align: center;
 }
 
-#section-what-is,
-#section-what-is .fp-slide,
-#section-what-is .fp-tableCell{
-    height: 489.6px !important;
-}
-
 @media (min-width: 320px) and (max-width: 767px) {
     #section-what-is .slide-description, #section-zipcode .slide-description{
         background: rgba(244, 244, 244 ,1);
