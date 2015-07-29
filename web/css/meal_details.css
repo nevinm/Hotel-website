@@ -410,6 +410,7 @@ span.sub-header {
   border-bottom: 1px solid #d0d0d0;
   text-align: left;
   padding: 5px 0;
+  letter-spacing: .7px;
 }
 #nutrient-table td {
     padding: 5px 0;
