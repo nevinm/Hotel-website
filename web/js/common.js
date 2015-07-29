@@ -88,6 +88,7 @@ $(document).ready(function() {
             if ($('.popup-container').is(':visible')) {
                 if ($('#ok-button').is(':visible')) {
                     $('#ok-button').trigger('click');
+                    $('#ok-button')[0].click();
                 }
                 if ($('#no-button').is(":visible")) {
                     $('#no-button').trigger('click');

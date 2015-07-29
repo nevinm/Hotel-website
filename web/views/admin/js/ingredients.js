@@ -18,7 +18,7 @@ function listIngredients(ingredientSearch) {
             "session-key": localStorage['session_key']
         },
         params = {
-            "search" : 
+            "search" : ingredientSearch
         };
     if (mealTypeId) {
         params['attribute_id'] = mealTypeId;
