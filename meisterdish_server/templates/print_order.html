@@ -73,10 +73,10 @@
                                </td>
                             </tr>
                             <tr>
-                                <td>{{order.email}}</td>
+                                <td>Pick up</td>
                             </tr>
                             <tr>
-                                <td>Pick up</td>
+                                <td>{{order.email}}</td>
                             </tr>
                             <tr>
                                 <td>{{order.phone}}</td>
@@ -88,21 +88,11 @@
                        </td> 
                        <td>
                            <table>
-                                <tr>
-                                   <td style="height:10px;"></td>
-                                </tr>
-                                <tr>
-                                    <td>1 Herb chicken</td>
-                                </tr>
-                                <tr>
-                                    <td>1 Herb chicken</td>
-                                </tr>
-                                <tr>
-                                    <td>1 Herb chicken</td>
-                                </tr>
-                                <tr>
-                                    <td>1 Herb chicken</td>
-                                </tr>
+                                {% for ci in cart_items %}
+                                    <tr>
+                                        <td>{{ci.quantity}} {{ci.meal.name|title}}</td>
+                                    </tr>
+                                {% endfor %}
                             </table>
                        </td> 
                     </tr>
