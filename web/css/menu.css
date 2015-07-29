@@ -389,7 +389,7 @@ hr.mealList-hr {
     word-wrap: break-word;
     display: inline-block;
     overflow: hidden;
-    width: 100%;
+    width: 350px;
     white-space: nowrap;
     text-overflow: ellipsis;
     line-height: 20px;
@@ -639,5 +639,10 @@ span.per-serving-text {
     }
     .menu-offer{
         font-size: 10px;
+    }
+}
+@media (max-width: 350px) {
+    .menuItemName{
+        width: 300px;
     }
 }
