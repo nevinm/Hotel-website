@@ -88,7 +88,11 @@ function populateDeliveryOrderList(order_data) {
             state = delivery_address.state,
             address_phone = delivery_address.phone,
             address_zip = delivery_address.zip,
-            meals = value.meals;
+            meals = value.meals,
+            date = deliverytime.split(" ")[0],
+            time = deliverytime.split(" ")[1],
+            hours = parseInt(deliverytime.split(" ")[1].slice(0, -3)),
+            hours12Hr = ((hours + 11) % 12 + 1);
 
         if (value.driver_instructions.length) {
             instructions = value.driver_instructions;
@@ -98,7 +102,8 @@ function populateDeliveryOrderList(order_data) {
 
 
 
-        $('table#delivery-order tbody').append("<tr data-id='" + value.id + "'><td>" + deliverytime + "</td>" +
+        $('table#delivery-order tbody').append("<tr data-id='" + value.id + "'><td>" +
+            deliverytime.split(" ")[0] + "<br>" + hours + ":00</td>" +
             "<td>" + value.order_num + "</td>" +
             "<td>" + zip + "</td>" +
             "<td>" + "<span>" + building + ", " + street + "</span>" + "</td>" +
