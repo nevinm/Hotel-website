@@ -106,6 +106,7 @@ span.or{
 }
 img.share-button {
   height: auto;
+  max-width: 400px;
   width: 22%;
   padding: 0 15px;
   cursor: pointer;

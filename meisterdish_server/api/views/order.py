@@ -240,6 +240,7 @@ def create_order(request, data, user):
                 if order.cart.promo_code.amount > order.total_payable:
                     order.total_payable = 0
                     order.discount = order.total_payable
+                    user.credits += order.cart.promo_code.amount - order.total_payable
                 else:
                     order.total_payable -= order.cart.promo_code.amount
                     order.discount = order.cart.promo_code.amount
@@ -249,6 +250,7 @@ def create_order(request, data, user):
                 if gc_amount > order.total_payable:
                     order.discount = order.total_payable
                     order.total_payable = 0
+                    user.credits += gc_amount - order.total_payable
                 else:
                     order.discount = gc_amount
                     order.total_payable -=  gc_amount
@@ -325,7 +327,6 @@ def create_order(request, data, user):
 
 def print_order(order):
     try:
-        return True #Nazz
         pdf_content = save_pdf(order)
         if not pdf_content:
             return False
@@ -333,7 +334,7 @@ def print_order(order):
         import base64
         content = base64.b64encode(pdf_content)
         data = {
-            "printerId": 49349, 
+            "printerId": settings.PRINTNODE_PRINTER_ID,
             "title": "My Test PrintJob", 
             "contentType": "pdf_base64",
             "content": content,
@@ -379,7 +380,7 @@ def get_order_cart_items(order):
     try:
       cart_list = []
       items_count = 0
-      for cart_item in CartItem.objects.filter(cart__order=order):
+      for cart_item in CartItem.objects.filter(cart__order=order).order_by('id'):
             cart_list.append(
             {
               "id" : cart_item.meal.id,
@@ -518,7 +519,7 @@ def send_order_placed_notification(order):
                "delivery_time" : order.delivery_time.strftime("%A, %B %d"+suffix+", %Y"),
                "total_amount":"{0:.2f}".format(order.total_amount),
                "discount" : "{0:.2f}".format(order.discount),
-               "credit" : "{0:.2f}".format(credit),
+               "credit" : ("-$" if credit >0 else "$") + "{0:.2f}".format(credit),
                "tax" : "{0:.2f}".format(order.total_tax),
                "shipping" : '0.00' if order.delivery_type == 'pickup' else "{0:.2f}".format(settings.SHIPPING_CHARGE),
                "tip":"{0:.2f}".format(order.tip),
@@ -529,10 +530,10 @@ def send_order_placed_notification(order):
                "delivery_type":order.delivery_type,
                "to_email":to_email,
                "site_url":settings.SITE_URL,
-               "delivery_hr": str(order.delivery_time.hour) + "-" + str(order.delivery_time.hour +1)+"PM",
+               "delivery_hr": str(order.delivery_time.hour % 12) + "-" + str((order.delivery_time.hour % 12) +1)+"PM",
                "referral_code":order.cart.user.referral_code,
                "referral_bonus":Configuration.objects.get(key="REFERRAL_BONUS").value,
-               "cart_items":order.cart.cartitem_set.all(),
+               "cart_items":order.cart.cartitem_set.all().order_by('id'),
                }
         if order.delivery_type != "pickup":
             dic["delivery_name"] = order.delivery_address.first_name.title() + " "+order.delivery_address.last_name.title()

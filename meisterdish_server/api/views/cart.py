@@ -14,7 +14,7 @@ def get_cart_items(request, data, user):
     try:
       cart_list = []
       items_count = 0
-      for cart_item in CartItem.objects.filter(cart__user=user, cart__completed=False):
+      for cart_item in CartItem.objects.filter(cart__user=user, cart__completed=False).order_by('id'):
             cart_list.append(
             {
               "id" : cart_item.meal.id,

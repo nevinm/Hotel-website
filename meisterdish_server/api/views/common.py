@@ -369,8 +369,8 @@ def forgot_password(request, data):
                }
         msg = render_to_string('forgot_password_email_template.html', dic)
 
-        mail([email], 'Reset your password for Meisterdish', msg )
-        
+        res = mail([email], 'Reset your password for Meisterdish', msg )
+        log.info(res)
     except KeyError as field:
         log.error("Forgot password request missing "+field.message)
         return custom_error("Invalid input.")
@@ -694,7 +694,8 @@ def send_contactus_email(request, data):
     try:
         subject = data['subject'].strip()
         message = data['message'].strip()
-
+        if subject == '' or message == '':
+            return custom_error("Please enter valid subject and message.")
         session_key = request.META.get('HTTP_SESSION_KEY', None)
         if session_key :
             session = SessionStore(session_key=session_key)
@@ -705,6 +706,10 @@ def send_contactus_email(request, data):
             else:
                 name = data['name'].strip()
                 email = data['email'].strip()
+                if name == '':
+                    return custom_error("Please enter valid name.")
+                elif not validate_email(email):
+                    return custom_error("Please enter valid email.")
 
         import string, random
         from libraries import mail

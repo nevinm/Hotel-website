@@ -502,7 +502,7 @@ input.popup-input {
 
 .styled-select select {
     background: transparent !important;
-    width: 268px !important;
+    width: 100%;
     padding: 5px !important;
     line-height: 1;
     border: 0 !important;
