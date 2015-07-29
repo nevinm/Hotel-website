@@ -48,7 +48,7 @@ var sendMessageCallback = {
     success: function(data, textStatus) {
         var sendMessageDetails = JSON.parse(data);
         if (sendMessageDetails.status == 1) {
-            $(".popup-wrapper").show();
+            $(".contact-us-popup").show();
         } else {
             showPopup(sendMessageDetails);
         }
