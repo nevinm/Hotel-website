@@ -47,22 +47,24 @@ $(document).ready(function() {
     });
 
     $("#meal-add").on("click", function() {
-       var mealId = $(this).attr('data-id'),count = 0;
+        var mealId = $(this).attr('data-id'),
+            count = 0;
         count = parseInt($("#hidden-count").val()) + 2;
-        if(count <= 10){
+        if (count <= 10) {
             $("#hidden-count").val(count);
             addToCart(mealId);
         }
     });
 
     $(".removeItemButton").on("click", function() {
-        var quantity = -2 , count = 0,
-        mealId = $(this).attr('data-id');
+        var quantity = -2,
+            count = 0,
+            mealId = $(this).attr('data-id');
         count = parseInt($("#hidden-count").val()) - 2;
-        if(count >=0){
-           $("#hidden-count").val(count); 
-           addToCart(mealId,quantity);
-        }else{}
+        if (count >= 0) {
+            $("#hidden-count").val(count);
+            addToCart(mealId, quantity);
+        } else {}
     });
 });
 
@@ -73,13 +75,13 @@ var addToCartCallback = {
     success: function(data, textStatus, mealId) {
         var meal_details = JSON.parse(data),
             status = meal_details.status;
-            if (status == -1) {
-               showPopup(meal_details); 
-           }else{
-               populateOverlayDetails(meal_details);
-               CartItemCount();
-           }
-            
+        if (status == -1) {
+            showPopup(meal_details);
+        } else {
+            populateOverlayDetails(meal_details);
+            CartItemCount();
+        }
+
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -128,15 +130,14 @@ function populateHomePageMeal(mealDetails) {
     $sectionWhatToExpect.find(".meal-sub-description p").text(mealDetails.sub);
     $sectionWhatToExpect.find(".meal-properties .preparation-time").text(mealDetails.preparation_time);
     $sectionWhatToExpect.find(".meal-properties .calories").text(mealDetails.calories);
-    if(mealDetails.meal_types.length){
+    if (mealDetails.meal_types.length) {
         $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src", mealDetails.meal_types[0].image_url);
-    }
-    else{
-        $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src",  mealDetails.default_meal_type_image.image_url);
+    } else {
+        $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src", mealDetails.default_meal_type_image.image_url);
     }
     $("#meal-info").attr("data-id", mealDetails.id);
     $("#meal-add").attr("data-id", mealDetails.id);
-    $(".removeItemButton").attr("data-id",mealDetails.id);
+    $(".removeItemButton").attr("data-id", mealDetails.id);
     $(".meal-overlay").attr("data-id", mealDetails.id);
     $(".meal-overlay .upper-line span").text(mealDetails.quantity);
     $("#hidden-count").val(mealDetails.quantity);
@@ -144,16 +145,30 @@ function populateHomePageMeal(mealDetails) {
         $(".meal-overlay").hide();
         $('.removeItemButton').hide();
         $("#meal-add").removeClass("width-adjust");
-    }else{
+    } else {
         $(".meal-overlay").show();
         $('.removeItemButton').show();
         $("#meal-add").addClass("width-adjust");
     }
     if (mealDetails.quantity >= 10) {
         $("#meal-add").addClass("button-disabled");
-    }else{
+    } else {
         $("#meal-add").removeClass("button-disabled");
     }
+}
+
+function updateHeight() {
+    var currentHeight = window.innerHeight,
+        updatedHeight = 0.80 * currentHeight;
+    $("#section-what-is").css({
+        "height": updatedHeight
+    });
+    $("#section-what-is .fp-slide").css({
+        "height": updatedHeight
+    });
+    $("#section-what-is .fp-tableCell").css({
+        "height": updatedHeight
+    });
 }
 
 function isSessionExpired() {
@@ -178,6 +193,9 @@ function renderFullPageJS() {
         navigation: true,
         afterResize: function() {
             destroyFullPageJS();
+        },
+        afterRender: function() {
+            updateHeight();
         }
     });
     mobileRendered = false;
@@ -200,6 +218,7 @@ function renderMobileFullPageJs() {
         afterRender: function() {
             $("#slide2").remove();
             $("#slide4").remove();
+            updateHeight();
         }
     });
     mobileRendered = true;
@@ -287,20 +306,20 @@ function saveEmail(email, zipcode) {
     saveEmailInstance.sendPost(url, header, data, saveEmailCallback);
 }
 
-function  populateOverlayDetails(mealDetails){
+function populateOverlayDetails(mealDetails) {
     $(".meal-overlay .upper-line span").text(mealDetails.quantity);
-    if(mealDetails.quantity == 0){
+    if (mealDetails.quantity == 0) {
         $(".removeItemButton").hide();
         $(".meal-overlay").hide();
         $("#meal-add").removeClass("width-adjust");
-    }else{
+    } else {
         $(".removeItemButton").fadeIn();
         $("#meal-add").addClass("width-adjust");
         $(".meal-overlay").show();
     }
-    if(mealDetails.quantity >= 10){
+    if (mealDetails.quantity >= 10) {
         $("#meal-add").addClass("button-disabled");
-    }else{
+    } else {
         $("#meal-add").removeClass("button-disabled");
     }
     if (mealDetails.session_key && (mealDetails.session_key).length) {
