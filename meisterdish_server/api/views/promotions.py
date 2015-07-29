@@ -210,7 +210,8 @@ def apply_promocode(request, data, user):
 
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
         
-        return json_response({"status":1, "message":code_type + code + " has been applied. You will get a discount of $"+"{0:.2f}".format(amt), 
+        # return json_response({"status":1, "message":code_type + code + " has been applied. You will get a discount of $"+"{0:.2f}".format(amt), 
+        return json_response({"status":1, "message":"A credit of $"+"{0:.2f}".format(amt)+" has is added.", 
             "amount":total_price,
             "tax":total_tax,
             "discount":discount,

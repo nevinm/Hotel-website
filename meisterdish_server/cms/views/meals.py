@@ -124,8 +124,8 @@ def create_meal(request, data, user):
             log.info("CREATING MEAL : "+e.message)
             meal = Meal()
         
-        meal.name = name.title()
-        meal.sub = sub.title()
+        meal.name = name
+        meal.sub = sub
         meal.description = desc
         
         if "need_boiling_water" in data and data['need_boiling_water'] != '':
