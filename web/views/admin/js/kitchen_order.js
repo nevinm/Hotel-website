@@ -90,7 +90,12 @@ function populateOrderList(data) {
             minTime = undefinedCheck(value.time),
             orderNum = undefinedCheck(value.id),
             minTime = undefinedCheck(value.minutes),
-            orderStatus = undefinedCheck(value.status);
+            orderStatus = undefinedCheck(value.status),
+            date = deliverytime.split(" ")[0],
+            time = deliverytime.split(" ")[1],
+            hours = parseInt(deliverytime.split(" ")[1].slice(0, -3)),
+            hours12Hr = ((hours + 11) % 12 + 1);
+
 
         $.each(value.meals, function(mealKey, mealValue) {
             var prevOrderNum = $($("#order-list tbody .row:nth-last-child(2)")[0]).data("order-id");
@@ -105,37 +110,15 @@ function populateOrderList(data) {
 
             $('#order-list tbody').append("<tr class='row'" +
                 " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id + "'>" +
-                "<td>" + deliverytime.split(" ")[0]+"<br>"+deliverytime.split(" ")[1] + "</td>" +
+                "<td>" + deliverytime.split(" ")[0] +"<br>" + hours + ":00</td>" +
                 "<td>" + orderNum + "</td>" +
                 "<td>" + mealValue.name + "</td>" +
                 "<td>" + minTime + "</td>" +
                 "<td>" + zip + "</td>" +
                 "<td>" + name + "</td>" +
                 "<td>" + phone + "</td>" +
-                // "<td><select data-id='" + value.id + "' data-order-id='" + orderNum + "'" +
-                // "data-meal-id='" + mealValue.id + "'class='order-status' name='status'>" +
-                // "<option value='0'>Placed</option>" +
-                // "<option value='1'>Packed</option>" +
-                // "<option value='2'>Dispatched</option>" +
-                // "<option value='3'>Delivered</option>" +
-                // "<option value='4'>Cancelled</option>" +
-                // "</select>" + "</td>" +
                 "<td><b>" + orderStatus + "</b></td>" +
                 "</tr>");
-
-
-            // if (mealValue.produced) {
-            //     $("#order-list tbody .row:last").addClass("produced-meal");
-            //     $("#order-list tbody .row:last").append("<td><input checked type='checkbox'" +
-            //         "data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id +
-            //         "' class='status down'/></td>");
-            // } else {
-            //     $("#order-list tbody .row:last").append("<td><input type='checkbox'" +
-            //         " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id +
-            //         "' class='status'/></td>");
-            // }
-            // currentStatus = mealValue.status_id;
-            // $(".order-status:last").val(orderStatus);
         });
     });
 

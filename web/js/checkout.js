@@ -1065,11 +1065,7 @@ function createOrderParams() {
         selected_hour = $today_content.attr("data-hr");
         selected_time = getHourCorrected(selected_hour) + ":" + "00" + ":" + "00";
         //Convert to EST
-        
-        // selectedDayDateFormat = stringToDate(selected_day,"mm/dd/yyyy","/");
-        // selectedDayDateFormatWithHour = selectedDayDateFormat.setHours(selected_hour);
-        // selectedDateEst = convertToEST(selectedDayDateFormatWithHour);
-        // deliveryTime = getEstFormattedForWebService(selectedDateEst)+ " "+ selected_time;
+      
         deliveryTime = convertToEstInit(selected_day,selected_hour,selected_time);
     } else {
         selected_day = $weekTimecontent.attr("data-date");
