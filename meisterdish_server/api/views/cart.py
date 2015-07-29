@@ -44,11 +44,12 @@ def get_cart_items(request, data, user):
               }
           elif cart.gift_cards.all().count():
               gc = cart.gift_cards.all()[0]
-              coupon = {
-                "code" : gc.code,
-                "amount":gc.amount,
-                "message":"Discount of $"+"{0:.2f}".format(gc.amount) + " has been applied to your cart."
-              }
+              if gc:
+                coupon = {
+                  "code" : gc.code,
+                  "amount":gc.amount,
+                  "message":"Discount of $"+"{0:.2f}".format(gc.amount) + " has been applied to your cart."
+                }
 
       if not len(cart_list):
           return custom_error("There are no items in cart.")

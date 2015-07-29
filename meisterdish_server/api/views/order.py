@@ -238,9 +238,9 @@ def create_order(request, data, user):
         else:
             if order.cart.promo_code:
                 if order.cart.promo_code.amount > order.total_payable:
-                    order.total_payable = 0
                     order.discount = order.total_payable
                     user.credits += order.cart.promo_code.amount - order.total_payable
+                    order.total_payable = 0
                 else:
                     order.total_payable -= order.cart.promo_code.amount
                     order.discount = order.cart.promo_code.amount
@@ -249,8 +249,8 @@ def create_order(request, data, user):
                 gc_amount = order.cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
                 if gc_amount > order.total_payable:
                     order.discount = order.total_payable
-                    order.total_payable = 0
                     user.credits += gc_amount - order.total_payable
+                    order.total_payable = 0
                 else:
                     order.discount = gc_amount
                     order.total_payable -=  gc_amount
