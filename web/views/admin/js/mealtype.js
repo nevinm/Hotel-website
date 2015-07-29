@@ -20,7 +20,7 @@ $(document).ready(function() {
         if ($(".popup-container").valid()) {
             $('.popup-wrapper').hide();
             var mealtype = $('#new-mealtype').val(),
-                imageId = $(".mealtype-image").data("id");
+                imageId = $(".mealtype-image").attr("data-id");
             manageMealtype("", mealtype, imageId);
         }
     });
