@@ -133,7 +133,8 @@ li#navbar-username {
 #categories,#categories th,#categories td,
 #meal-list,#meal-list th,#meal-list td,
 #delivery-area,#delivery-area th,#delivery-area td,
-#mealtype-area,#mealtype-area th,#mealtype-area td
+#mealtype-area,#mealtype-area th,#mealtype-area td,
+#ingredients-area,#ingredients-area th,#ingredients-area td
  {
     border: 1px solid #d0d0d0;
     padding: 10px;
@@ -600,7 +601,7 @@ img#cancel {
 }
 
 table#promocodes-list, table#meal-list,table#delivery-area,table#giftcards-list,
-table#mealtype-area {
+table#mealtype-area, table#ingredients-area {
     width: 100%;
     /*float: right;*/
     margin: 20px auto;
@@ -1229,3 +1230,7 @@ form.edit-gift-card #update{
 form.edit-gift-card #new-name-error{
     bottom: 26px;
 }
+
+/*=======================*\
+       &INGREDIENTS
+\*=======================*/
