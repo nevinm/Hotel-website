@@ -308,6 +308,7 @@ p.lower-line {
 
 #section-what-is-meisterdish .inner-details {
     font-family: 'ProximaNova-regular';
+    line-height: 20px;
     font-size: 15px;
     letter-spacing: 1px;
     color: #9B9B9B;
