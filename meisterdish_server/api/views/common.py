@@ -697,19 +697,20 @@ def send_contactus_email(request, data):
         if subject == '' or message == '':
             return custom_error("Please enter valid subject and message.")
         session_key = request.META.get('HTTP_SESSION_KEY', None)
+        session = ""
         if session_key :
             session = SessionStore(session_key=session_key)
-            if session and 'user' in session :
-                user = User.objects.get(pk=session['user']['id'])
-                name = user.first_name + " " + user.last_name
-                email = user.email
-            else:
-                name = data['name'].strip()
-                email = data['email'].strip()
-                if name == '':
-                    return custom_error("Please enter valid name.")
-                elif not validate_email(email):
-                    return custom_error("Please enter valid email.")
+        if session and 'user' in session :
+            user = User.objects.get(pk=session['user']['id'])
+            name = user.first_name + " " + user.last_name
+            email = user.email
+        else:
+            name = data['name'].strip()
+            email = data['email'].strip()
+            if name == '':
+                return custom_error("Please enter valid name.")
+            elif not validate_email(email):
+                return custom_error("Please enter valid email.")
 
         import string, random
         from libraries import mail
