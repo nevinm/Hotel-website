@@ -127,7 +127,7 @@ def send_gift_card(gc):
             "message":gc.message,
             "first_name" : gc.user.first_name.title(),
             "last_name" : gc.user.last_name.title(),
-            "amount" : "{0:.2f}".format(gc.amount),
+            "amount" : "{0:.0f}".format(gc.amount),
             "url" : settings.SITE_URL,
             "email":gc.email,
         }
@@ -211,7 +211,7 @@ def apply_promocode(request, data, user):
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
         
         # return json_response({"status":1, "message":code_type + code + " has been applied. You will get a discount of $"+"{0:.2f}".format(amt), 
-        return json_response({"status":1, "message":"A credit of $"+"{0:.2f}".format(amt)+" is added.", 
+        return json_response({"status":1, "message":"A credit of $"+"{0:.0f}".format(amt)+" is added.", 
             "amount":total_price,
             "tax":total_tax,
             "discount":discount,

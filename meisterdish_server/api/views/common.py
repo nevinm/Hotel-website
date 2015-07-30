@@ -358,7 +358,7 @@ def forgot_password(request, data):
         link = settings.SITE_URL+"views/reset-password.html?token="+token
         user.password_reset_token = token
         user.save()
-        
+        log.info(settings.SITE_URL)
         dic = {
                "to_email" : email,
                "link" : link,
