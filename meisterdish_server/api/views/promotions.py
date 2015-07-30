@@ -128,7 +128,7 @@ def send_gift_card(gc):
             "first_name" : gc.user.first_name.title(),
             "last_name" : gc.user.last_name.title(),
             "amount" : "{0:.0f}".format(gc.amount),
-            "url" : settings.SITE_URL,
+            "site_url" : settings.SITE_URL,
             "email":gc.email,
         }
 
