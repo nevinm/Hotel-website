@@ -113,11 +113,7 @@ $(document).ready(function() {
 
     //share with friends
     $('#share-now').on('click',function(){
-        if ($(window).width() <= 767 && $(window).width() >= 320) {
-            $('.share-popup-wrapper').show();
-        }else{
-            window.location.href = "share-page.html";
-        }
+        window.location.href = "share-page.html";
 
     });
 

@@ -42,6 +42,9 @@ $(document).ready(function() {
     });
 
     $(".giftcard-custom-amount input").on("click", function() {
+        if($(".giftcard-selected").length){
+            $(this).val("");
+        }
         $(".checkbox-image").attr("src", "../images/unchecked.png");
         $(".giftcard-selected").removeClass("giftcard-selected");
     });

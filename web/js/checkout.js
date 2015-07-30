@@ -525,6 +525,7 @@ function updateReciept(GiftcardDetails, flag) {
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
     $(".total-cost").text("$" + (grandTotal).toFixed(2));
+    $(".total-cost").val(grandTotal);
 }
 
 //Remove cart items call back
@@ -1203,11 +1204,14 @@ function showSelectedPaymentMethod(selectedId) {
 function validateOrder() {
     var data = {};
     data.message = "";
-    if ($(".saved-card-list").length && !$(".payment-checked:checked").length) {
-        data.message = "Add a method of payment and then proceed";
-        showPopup(data);
-        return false;
+    if($(".total-cost").val() > 0){
+        if ($(".saved-card-list").length && !$(".payment-checked:checked").length) {
+            data.message = "Add a method of payment and then proceed";
+            showPopup(data);
+            return false;
+        }
     }
+    
     if (typeof cartItems === 'undefined') {} else {
         if (cartItems.status == "-1") {
             data.message = "Add meals to cart and then proceed";
