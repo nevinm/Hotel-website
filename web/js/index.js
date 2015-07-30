@@ -159,7 +159,7 @@ function populateHomePageMeal(mealDetails) {
 
 function updateHeight() {
     var currentHeight = window.innerHeight,
-        updatedHeight = 0.80 * currentHeight;
+        updatedHeight = 0.70 * currentHeight;
     $("#section-what-is").css({
         "height": updatedHeight
     });
