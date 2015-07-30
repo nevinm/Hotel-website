@@ -80,27 +80,26 @@ function populateDeliveryOrderList(order_data) {
             email = undefinedCheck(value.email),
             grand_total = undefinedCheck(value.grand_total),
             delivery_address = {},
-            delivery_address = value.delivery_address,
-            address_name = delivery_address.first_name + " " + delivery_address.last_name,
-            building = delivery_address.building,
-            street = delivery_address.street,
-            city = delivery_address.city,
-            state = delivery_address.state,
-            address_phone = delivery_address.phone,
-            address_zip = delivery_address.zip,
-            meals = value.meals,
+            delivery_address = undefinedCheck(value.delivery_address),
+            address_name = undefinedCheck(delivery_address.first_name) + " " +
+             undefinedCheck(delivery_address.last_name),
+            building = undefinedCheck(delivery_address.building),
+            street = undefinedCheck(delivery_address.street),
+            city = undefinedCheck(delivery_address.city),
+            state = undefinedCheck(delivery_address.state),
+            address_phone = undefinedCheck(delivery_address.phone),
+            address_zip = undefinedCheck(delivery_address.zip),
+            meals = undefinedCheck(value.meals),
             date = deliverytime.split(" ")[0],
             time = deliverytime.split(" ")[1],
             hours = parseInt(deliverytime.split(" ")[1].slice(0, -3)),
             hours12Hr = ((hours + 11) % 12 + 1);
 
-        if (value.driver_instructions.length) {
+        if ((!value.driver_instructions === null) && value.driver_instructions.length) {
             instructions = value.driver_instructions;
         } else {
             instructions = "None";
         }
-
-
 
         $('table#delivery-order tbody').append("<tr data-id='" + value.id + "'><td>" +
             deliverytime.split(" ")[0] + "<br>" + hours + ":00</td>" +
@@ -156,17 +155,10 @@ function populateDeliveryOrderList(order_data) {
     $(".order-status").on("change", function() {
         var orderId = $(this).data('id'),
             mealStatus = $(this).val();
-        //     producedMealsElements = $("input[data-order-id='" + orderId + "']"),
-        //     producedMeals = [];
-        // $.each(producedMealsElements, function(key, value) {
-        //     if ($(value).is(":checked")) {
-        //         producedMeals.push($(value).data("meal-id"));
-        //     } else {}
-        // });
         updateOrders(orderId, mealStatus, this);
     });
 }
 
 function undefinedCheck(param) {
-    return (typeof param === 'undefined') ? "NULL" : param;
+    return (typeof param === 'undefined') ? "NONE" : param;
 }
