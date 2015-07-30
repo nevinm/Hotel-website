@@ -1,7 +1,7 @@
 var sessionExpiryTime = 30,
-    baseURL = 'http://10.7.2.51:86/backend/api/',
+    baseURL = 'http://meisterdish.com/backend/api/',
     homeUrl = "http://meisterdish.com";
-
+ 
 function getCurrentPage(firstChar, secondChar, url) {
     currentPage = url.substring(url.lastIndexOf(firstChar) + 1, url.lastIndexOf(secondChar));
     return currentPage;
