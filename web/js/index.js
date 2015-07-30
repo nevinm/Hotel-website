@@ -159,7 +159,8 @@ function populateHomePageMeal(mealDetails) {
 
 function updateHeight() {
     var currentHeight = window.innerHeight,
-        updatedHeight = 0.70 * currentHeight;
+        updatedHeight = 0.70 * currentHeight,
+        updatedMargintop = -(0.20 * currentHeight);
     $("#section-what-is").css({
         "height": updatedHeight
     });
@@ -168,6 +169,9 @@ function updateHeight() {
     });
     $("#section-what-is .fp-tableCell").css({
         "height": updatedHeight
+    });
+    $("#section-what-is-meisterdish").css({
+        "margin-top": updatedMargintop
     });
 }
 
