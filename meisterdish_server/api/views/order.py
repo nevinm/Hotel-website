@@ -364,6 +364,7 @@ def save_pdf(order):
                         'cart_items':cart_items,
                         'date':order.delivery_time.strftime("%m-%d-%Y"),
                         "time" : str(int(order.delivery_time.strftime("%I"))) + " - " +str(int(order.delivery_time.strftime("%I"))+1) + " " + order.delivery_time.strftime("%p"),
+                        "static_url":settings.STATIC_URL +'/default/',
                     },
                     path
             )
