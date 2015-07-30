@@ -685,7 +685,7 @@ def print_pdf(request):
         return render_to_pdf(
                     'print_order.html',
                     {
-                        'pagesize':'A7',
+                        'pagesize':'A5',
                         'order':order,
                         'cart_items':cart_items,
                         'date':order.delivery_time.strftime("%m-%d-%Y"),
