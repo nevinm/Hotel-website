@@ -16,7 +16,7 @@
     </style>
     </head>
     <body style="margin: 0; font-family: sans-serif; font-size:16px;padding: 0;">
-         {% if order.delivery_address%}
+        {% if order.delivery_type == 'delivery'%}
         <table style="padding:20px;margin:0 auto;" width="500">
             <thead></thead>
 
@@ -77,7 +77,9 @@
                        </td> 
                     </tr>
                 </tbody>
+            </table>
             {% else %}
+            <table>
                 <tbody>
                     <tr>
                        <td style="border-right:2px solid;width:40%;">
