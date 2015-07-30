@@ -193,6 +193,7 @@ function renderFullPageJS() {
         navigation: true,
         afterResize: function() {
             destroyFullPageJS();
+            updateHeight();
         },
         afterRender: function() {
             updateHeight();
@@ -214,6 +215,7 @@ function renderMobileFullPageJs() {
         fitToSection: false,
         afterResize: function() {
             destroyFullPageJS();
+            updateHeight();
         },
         afterRender: function() {
             $("#slide2").remove();

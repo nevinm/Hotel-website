@@ -361,7 +361,7 @@ def send_sms_notification(dic):
             return False
         if dic["status"] == 2: #Dispatched
             txt = render_to_string('order_dispatched_sms_template.html', dic)
-            log.info(txt)
+            
         client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
 
         country_code = "+1" if settings.Live else "+1"
@@ -372,7 +372,7 @@ def send_sms_notification(dic):
         message = client.messages.create(body=txt,
                 to= number,
                 from_=settings.TWILIO_NUMBER)
-        log.info(message)
+        
         if message:
             log.info("Sent SMS to " + number)
             return True

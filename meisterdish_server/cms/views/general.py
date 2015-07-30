@@ -336,15 +336,27 @@ def export_users(request, data):
                     "Role",
                     'Email',
                     'Mobile',
+                    'Zip Code',
+                    'Is Facebook User',
+                    'Facebook User ID',
+                    'Joined Date',
+                    'Need Email Promotions',
+                    'Referral Code',
                     'Credits',
                     'Activation Status',
                 ]]
                 for user in users:
                     users_list.append([
-                        (user.first_name + " "+ user.last_name).title(),
+                        user.full_name.title(),
                         settings.ROLE_DIC[user.role.pk],
                         user.email,
                         "Not Available" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
+                        user.zipcode,
+                        "Yes" if user.facebook_login else "No",
+                        user.fb_user_id,
+                        user.created.strftime('%m-%d-%Y %H:%M:%S'),
+                        "Yes" if user.need_email_promotions else "No",
+                        user.referral_code,
                         "$ "+"{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
                     ])
@@ -367,16 +379,32 @@ def export_users_for_promotion(request, data):
                 users = users.order_by('first_name')
                 users_list = [[
                     'Name',
+                    "Role",
                     'Email',
                     'Mobile',
                     'Zip Code',
+                    'Is Facebook User',
+                    'Facebook User ID',
+                    'Joined Date',
+                    'Need Email Promotions',
+                    'Referral Code',
+                    'Credits',
+                    'Activation Status',
                 ]]
                 for user in users:
                     users_list.append([
-                        (user.first_name + " "+ user.last_name).title(),
+                        user.full_name.title(),
+                        settings.ROLE_DIC[user.role.pk],
                         user.email,
-                        "" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
-                        user.zipcode
+                        "Not Available" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
+                        user.zipcode,
+                        "Yes" if user.facebook_login else "No",
+                        user.fb_user_id,
+                        user.created.strftime('%m-%d-%Y %H:%M:%S'),
+                        "Yes" if user.need_email_promotions else "No",
+                        user.referral_code,
+                        "$ "+"{0:.2f}".format(user.credits),
+                        "Active" if user.is_active else "Inactive",
                     ])
                 return export_csv(users_list, "users_promotions_list.csv")
         log.error("Export User promotions list : Invalid session key")
