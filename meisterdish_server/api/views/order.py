@@ -676,12 +676,15 @@ def send_sms_notification(dic):
 def print_pdf(request):
     try:
         from libraries.pdfcreator import render_to_pdf
-        order = Order.objects.get(pk=451)
+        try:
+            order = Order.objects.get(pk=451)
+        except:
+            order = Order.objects.get(pk=39)
         cart_items = CartItem.objects.filter(cart__order=order)
         return render_to_pdf(
                     'print_order.html',
                     {
-                        'pagesize':'A5',
+                        'pagesize':'A7',
                         'order':order,
                         'cart_items':cart_items,
                         'date':order.delivery_time.strftime("%m-%d-%Y"),

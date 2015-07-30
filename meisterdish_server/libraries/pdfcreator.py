@@ -1,7 +1,7 @@
 from django.template.loader import get_template
 from django.template.context import Context
 from django.http import HttpResponse
-from django.conf import settings
+import settings
 import xhtml2pdf.pisa as pisa
 import cStringIO as StringIO
 import cgi
@@ -16,8 +16,8 @@ def render_to_pdf( template_src, context_dict):
         context = Context(context_dict)
         html  = template.render(context)
         result = StringIO.StringIO()
-        #return HttpResponse(html)
-        pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), dest=result, link_callback=fetch_resources)
+        pdf_css_path = os.path.join(settings.STATIC_ROOT, 'default', "pdf.css")
+        pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), dest=result, link_callback=fetch_resources, default_css=open(pdf_css_path,'r').read())
         name = "print"
         if not pdf.err:
             response = HttpResponse(result.getvalue())
@@ -31,7 +31,8 @@ def save_to_pdf( template_src, context_dict, path):
     context = Context(context_dict)
     html  = template.render(context)
     result = StringIO.StringIO()
-    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), dest=result, link_callback=fetch_resources)
+    pdf_css_path = os.path.join(settings.STATIC_ROOT, 'default', "pdf.css")
+    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), dest=result, link_callback=fetch_resources, default_css=open(pdf_css_path,'r').read())
     if not pdf.err:
         # Save PDF?
         #file = open (path, 'ab+')
