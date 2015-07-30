@@ -23,7 +23,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <img src="../../web/images/logo.png" width="400px;">
+                        <img src="../../web/images/logo.png" width="400px;" />
                     </td>
                     <td>
                         <p style="font-size:32px;font-weight:bolder;margin:0;text-align:right;padding-top:23px;">DELIVERY</p>
@@ -60,19 +60,16 @@
                                 <tr>
                                     <td>{{order.order_num}}</td>
                                 </tr>
-                            <tbody>
+                            </tbody>
                         </table>
                        </td> 
                        <td>
                            <table>
-                                <thead></thead>
-                                <tbody>
-                                    {% for ci in cart_items %}
-                                        <tr>
-                                            <td>{{ci.quantity}} {{ci.meal.name|title}}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
+                                {% for ci in cart_items %}
+                                    <tr>
+                                        <td>{{ci.quantity}} {{ci.meal.name|title}}</td>
+                                    </tr>
+                                {% endfor %}
                            </table>
                        </td> 
                     </tr>
