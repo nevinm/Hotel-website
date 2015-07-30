@@ -719,6 +719,7 @@ def send_contactus_email(request, data):
                 "name" : name,
                 "subject" : subject,
                 "message" : message,
+                "site_url":settings.SITE_URL,
                }
         msg = render_to_string('contact_us_email_template.html', dic)
         email_sub = 'Inquiry from '+ name

@@ -2,7 +2,7 @@ $(document).ready(function() {
     CartItemCount();
     $('#copy-to-clipboard').on("click",function(){
         if (navigator.mimeTypes ["application/x-shockwave-flash"].enabledPlugin == undefined){
-            $('#copied-text').text('This feature is not available in your browser.Please install flash player.');
+            $('#copied-text').text('Please copy using CTRL + C.');
             $('#copied-text').css('color','#ff7878');
             $("#copied-text").fadeIn();
         }else{    
@@ -121,9 +121,11 @@ var getProfileCallback = {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
             $('#clipboard-text').text(userDetails.referral_code);
+            $('#copy-to-clipboard').show();
             localStorage['referral_code'] = userDetails.referral_code;
         } else {
             $('#clipboard-text').text(userDetails.message);
+             $('#copy-to-clipboard').hide();
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}

@@ -12,12 +12,15 @@
 	top: 50%;
 	text-align: center;
 	left: 50%;
-	height: 285px;
+	height: auto;
 	background-color: rgb(255, 255, 255);
 	width: 44%;
-	margin-left: -22%;
-	margin-top: -142.5px;
+	-ms-transform: translate(-50%,-50%);
+    -moz-transform:translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
 	padding: 0 20px;
+	padding-bottom: 20px;
 }
 .meisterdish-logo{
 	height: 60px;
@@ -45,23 +48,32 @@
 .copy-share-link {
 	border: 1px solid #d0d0d0;
 	border-radius: 2px;
-	height: 48px;
+	height: 100%;
+	overflow: auto;
 	margin-top: 20px;
-	padding-top: 8px;
+	padding: 8px 0;
+	min-height: 50px;
 }
 .copy-share-link span:first-child{
 	font-family: 'BrandonGrotesque-Medium';
 	color: #394543;
 	font-size: 20px;
+	overflow: hidden;
+	padding: 0 10px;
+	width: 88%;
+	margin-right: 2%;
+	float: left;
+	word-break:break-all;
 }
 .copy-share-link span:nth-child(2){
 	font-family: 'BrandonGrotesque-Regular';
 	color: #9b9b9b;
 	font-size: 16px;
-	float: right;
 	padding-top: 5px;
 	padding-right: 6px;
 	cursor: pointer;
+	width: 10%;
+	float: left;
 }
 span.or{
     width: 100%;
@@ -128,6 +140,9 @@ img.share-button {
 	display: none;
 	color: #ff7878;
 	font-size: 14px;
+	word-break: break-word;
+  	width: 93%;
+  	margin: 0 auto;
 }
 .email-pupup-wrapper{
 	display: none;
@@ -179,3 +194,80 @@ input.popup-input {
 	bottom: 0;
 	left: 0;
 }
+#copy-to-clipboard{
+	display: none;
+}
+@media (min-width: 768px)and (max-width: 1024px) {
+	.logo-banner {
+		width: 60%;
+	}
+	img.share-button{
+		width: 250px;
+	}
+
+}
+@media (min-width: 768px)and (max-width: 900px) {
+	.logo-banner {
+		width: 68%;
+	}
+	img.share-button{
+		width: 220px;
+	}
+}
+@media (min-width: 320px)and (max-width: 767px) {
+	.logo-banner {
+		width: 80%;
+	}
+	img.share-button{
+		width: 100%;
+		padding-bottom: 20px;
+		text-align: center;
+	}
+	.share-button-container{
+		float: none;
+		max-width: 300px;
+		margin: 0 auto;
+	}
+	.logo-banner .h0{
+		font-size: 22px;
+	}
+	.logo-banner .body-text-small, .share-label{
+		font-size: 14px;
+	}
+	.copy-share-link span:first-child{
+		font-size: 16px;
+		width: 100%;
+	}
+	.copy-share-link span:nth-child(2){
+		float: none;
+		margin: 0 auto;
+	}
+	.share-label{
+		font-size: 18px;
+	}
+	.share-banner{
+		height: 400px;
+	}
+	.copy-share-link{
+		height: 100%;
+		overflow: auto;
+	}
+}
+
+@media (min-width: 320px)and (max-width: 470px) {
+	.logo-banner {
+		width: 90%;
+	}
+	.share-banner{
+		height: 450px
+	}
+
+}
+/*@media (min-width: 320px)and (max-width: 350px) {
+
+}*/
+/*@media (min-width: 320px)and (max-width: 450px) {
+	.share-button-container{
+		max-width: 300px;
+	}
+}*/

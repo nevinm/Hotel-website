@@ -60,7 +60,7 @@ def update_order(request, data, user, order_id):
             order.session_key = request.META.get('HTTP_SESSION_KEY', None)
             if status == 2: #Dispatched
                 need_boiling = CartItem.objects.filter(cart__order=order, meal__need_boiling_water=True).exists()
-                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.phone, "status":status, "need_boiling":need_boiling})
+                sent = send_sms_notification({"order_num":order.order_num, "mobile":order.phone, "status":status, "need_boiling":need_boiling, "delivery_type":order.delivery_type})
                 if not sent:
                     log.error("Failed to send order dispatched notification")
             
@@ -361,7 +361,7 @@ def send_sms_notification(dic):
             return False
         if dic["status"] == 2: #Dispatched
             txt = render_to_string('order_dispatched_sms_template.html', dic)
-        
+            
         client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
 
         country_code = "+1" if settings.Live else "+1"
@@ -372,7 +372,7 @@ def send_sms_notification(dic):
         message = client.messages.create(body=txt,
                 to= number,
                 from_=settings.TWILIO_NUMBER)
-        log.info(message)
+        
         if message:
             log.info("Sent SMS to " + number)
             return True
@@ -580,7 +580,7 @@ def get_delivery_orders(request, data, user):
         page = data.get("nextPage",1)
                     
         order_list = []
-        orders = Order.objects.filter(delivery_type__iexact='delivery', status__lte=3, is_deleted=False)
+        orders = Order.objects.filter(status__lte=3, is_deleted=False)
         
         total_count = orders.count()
 
