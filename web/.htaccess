@@ -1,4 +1,4 @@
-Enable mod rewrite
+#Enable mod rewrite
 RewriteEngine On
 ErrorDocument 404 http://meisterdish.com
 ErrorDocument 403 http://meisterdish.com

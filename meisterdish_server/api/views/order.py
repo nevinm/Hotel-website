@@ -355,14 +355,20 @@ def save_pdf(order):
         from libraries.pdfcreator import save_to_pdf
         path = settings.MEDIA_ROOT+"/prints/order_"+order.order_num+".pdf"
         cart_items = CartItem.objects.filter(cart__order=order)
-        
+        if order.delivery_address:
+            name = (order.delivery_address.first_name + ' ' + order.delivery_address.last_name).upper()
+        elif order.cart.user.role.id == settings.ROLE_USER:
+            name = order.cart.user.full_name.upper()
+        else:
+            name = 'Guest User'
         res = save_to_pdf(
                     'print_order.html',
                     {
                         'pagesize':'A5',
                         'order':order,
                         'cart_items':cart_items,
-                        'date':order.delivery_time.strftime("%m-%d-%Y"),
+                        'name' : name,
+                        'date':order.delivery_time.strftime('%A, %B %d %Y'),
                         "time" : str(int(order.delivery_time.strftime("%I"))) + " - " +str(int(order.delivery_time.strftime("%I"))+1) + " " + order.delivery_time.strftime("%p"),
                         "static_url":settings.STATIC_URL +'/default/',
                     },

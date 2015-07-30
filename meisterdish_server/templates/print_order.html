@@ -29,12 +29,12 @@
                         <img src="{{static_url}}logo.png" width="400px">
                     </td>
                     <td width="30%" style="padding-right:20px">
-                        <p style="font-size:22px;text-align:right;font-weight:bolder;margin:0">DELIVERY</p>
+                        <p style="font-size:22px;text-align:right;font-weight:bolder;margin:0">{{delivery_type|upper}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td style=""></td>
-                    <td style="padding-right:24px;"><p style="font-size:20px;text-align:right;margin:0">#000981</p></td>
+                    <td style="padding-right:24px;"><p style="font-size:20px;text-align:right;margin:0">{{order_num}}</p></td>
                 </tr>
             </tbody>
         </table>
@@ -47,10 +47,10 @@
                             <thead></thead>
                             <tbody>
                                 <tr>
-                                    <td><span style="font-size:32px;font-weight:bolder">7-8pm</span></td>
+                                    <td><span style="font-size:32px;font-weight:bolder">{{time}}</span></td>
                                 </tr>
                                 <tr>
-                                    <td><span style="font-size:20px">Tuesday, July 28 2015</span></td>
+                                    <td><span style="font-size:20px">{{date}}</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -62,51 +62,44 @@
                                 <th style="text-align:left" width="70%">MEAL</th>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td align="left" style="padding-left:0">
-                                        1x
-                                    </td>
-                                    <td align="left" style="padding-left:0">Shrimp Okra Skewers</td>
-                                </tr>
-                                <tr>
-                                    <td align="left" style="padding-left:0">
-                                        1x
-                                    </td>
-                                    <td align="left" style="padding-left:0">Shrimp Okra Skewers</td>
-                                </tr>
-                                <tr>
-                                    <td align="left" style="padding-left:0">
-                                        1x
-                                    </td>
-                                    <td align="left" style="padding-left:0">Shrimp Okra Skewers</td>
-                                </tr>
+                                {% for ci in cart_items %}
+                                    <tr>
+                                        <td align="left" style="padding-left:0">
+                                            {{ci.quantity}}x
+                                        </td>
+                                        <td align="left" style="padding-left:0">{{ci.meal.name}}</td>
+                                    </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </td>
                 </tr>
-                <tr style="padding-bottom:10px;">
-                    <td width="50%" style="border-right:2px solid;padding-bottom:20px">
-                        <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">JOHN SMITH</p>
-                        <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">BUSINESS INC.</p>
-                        <p style="margin:0;width:100%;text-align:left;padding-bottom:5px;">53 EAST 84TH STREET</p>
-                        <p style="margin:0;width:100%;text-align:left;padding-bottom:5px;">(917)-251-6543</p>
-                    </td>
-                    <td width="50%" style="padding-bottom:20px;">
-                        <span>
-                            "Please leave with the doorman and
-                            ask him to place it in the fridge. Mary
-                            will pick it up"
-                        </span>
-                    </td>
-                </tr>
-                <tr style="padding-bottom:10px;">
-                    <td width="50%" style="border-right:2px solid;padding-bottom:20px">
-                        <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">JOHN SMITH</p>
-                        <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">johnsmith@meisterdish.com</p>
-                        <p style="margin:0;width:100%;text-align:left;padding-bottom:5px;">(917)-251-6543</p>
-                    </td>
-                    <td width="50%" style="padding-bottom:20px;padding-left:20px"></td>
-                </tr>
+                {% if order.delivery_address%}
+                    <tr style="padding-bottom:10px;">
+                        <td width="50%" style="border-right:2px solid;padding-bottom:20px">
+                            <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">{{name}}</p>
+                            <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">{{order.delivery_address.building|upper}}</p>
+                            <p style="margin:0;width:100%;text-align:left;padding-bottom:5px;">{{order.delivery_address.street|upper}}</p>
+                            <p style="margin:0;width:100%;text-align:left;padding-bottom:5px;">{{order.phone}}</p>
+                        </td>
+                        <td width="50%" style="padding-bottom:20px;">
+                            <span>
+                                {%if order.driver_instructions != "" %}
+                                    "{{order.driver_instructions}}"
+                                {% endif%}
+                            </span>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr style="padding-bottom:10px;">
+                        <td width="50%" style="border-right:2px solid;padding-bottom:20px">
+                            <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">{{name}}</p>
+                            <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">{{order.email}}</p>
+                            <p style="margin:0;width:100%;text-align:left;padding-bottom:5px;">{{order.phone}}</p>
+                        </td>
+                        <td width="50%" style="padding-bottom:20px;padding-left:20px"></td>
+                    </tr>
+                {% endif %}
             </tbody>
         </table>
     </body>
