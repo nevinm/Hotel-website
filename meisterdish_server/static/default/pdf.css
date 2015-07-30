@@ -203,4 +203,8 @@ blockquote {
 noscript {
     display: none;
 }
-@page { size: A5 }
+
+@page {
+  size: a5 landscape;
+  margin: 1cm;
+} 
