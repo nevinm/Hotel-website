@@ -336,7 +336,7 @@ def get_meal_details(request, data, user, meal_id):
         return json_response({
             "status":1,
             "id" : meal.id,
-            "name" : meal.name.title(),
+            "name" : meal.name,
             "sub":meal.sub,
             "description" : meal.description,
             "price":meal.price,
