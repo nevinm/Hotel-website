@@ -75,11 +75,13 @@ SLIDER
     height: 35px;
     cursor: pointer;
 }
-.social-media-icons a{
+
+.social-media-icons a {
     height: 100%;
     width: 100%;
-    display: block; 
+    display: block;
 }
+
 #slider-footer .social-media-icons .facebook {
     background-position: 3px 0px;
 }
@@ -156,7 +158,7 @@ SLIDER
 
 #section-what-is .slide-description,
 #section-zipcode .slide-description {
-    background: rgba(244, 244, 244 ,0.8);
+    background: rgba(244, 244, 244, 0.8);
     max-width: 700px;
     border-radius: 5px;
     margin: 0 auto;
@@ -164,7 +166,7 @@ SLIDER
 
 .outer-slide-description {
     padding: 10px;
-    background: rgba(244, 244, 244 ,0.6);
+    background: rgba(244, 244, 244, 0.6);
     max-width: 720px;
     margin: 0 auto;
     border-radius: 5px;
@@ -181,67 +183,74 @@ SLIDER
 }
 
 .meal-overlay {
-  position: absolute;
-  height: 99%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(142, 198, 87, 0.65);
-  display: none;
-  border-radius: 4px;
-  cursor: pointer;
+    position: absolute;
+    height: 99%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(142, 198, 87, 0.65);
+    display: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
+
 p.upper-line {
-  font-family: 'BrandonGrotesque-bold';
-  font-size: 40px;
-  color: #fff;
-  text-align: center;
-  position: absolute;
-  top: 30%;
-  width: 100%;
-  left: 0;
+    font-family: 'BrandonGrotesque-bold';
+    font-size: 40px;
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    left: 0;
 }
+
 p.lower-line {
-  font-family: 'BrandonGrotesque-Medium';
-  text-transform: uppercase;
-  color: #fff;
-  font-size: 18px;
-  text-align: center;
-  width: 100%;
-  top: 55%;
-  position: absolute;
-  left: 0;
+    font-family: 'BrandonGrotesque-Medium';
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    width: 100%;
+    top: 55%;
+    position: absolute;
+    left: 0;
 }
-.meal-image-container{
+
+.meal-image-container {
     position: relative;
 }
+
 .removeItemButton {
-  height: 35px;
-  width: 35px;
-  text-align: center;
-  border: 1px solid #A9D77B;
-  line-height: 28px;
-  float: left;
-  padding: 0 0px;
-  margin-bottom: 6.5px;
-  min-width: 30px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 25px;
-  display: none;
-  background-color: #a9d77b;
-  border-radius: 3px;
-  color: #fff;
-  -webkit-transition: color .4s, background-color .4s, border .4s;
-  transition: color .4s, background-color .4s, border .4s;
-  -moz-transition: color .4s, background-color .4s, border .4s;
-  -ms-transition: color .4s, background-color .4s, border .4s;
-  -webkit-appearance: none;
-  appearance: none;
+    height: 35px;
+    width: 35px;
+    text-align: center;
+    border: 1px solid #A9D77B;
+    line-height: 28px;
+    float: left;
+    padding: 0 0px;
+    margin-bottom: 6.5px;
+    min-width: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 25px;
+    display: none;
+    background-color: #a9d77b;
+    border-radius: 3px;
+    color: #fff;
+    -webkit-transition: color .4s, background-color .4s, border .4s;
+    transition: color .4s, background-color .4s, border .4s;
+    -moz-transition: color .4s, background-color .4s, border .4s;
+    -ms-transition: color .4s, background-color .4s, border .4s;
+    -webkit-appearance: none;
+    appearance: none;
 }
-.removeItemButton:hover{
+
+.removeItemButton:hover {
     background-color: #8EC657;
 }
+
+
 /*====================================*\
     &Section what is meisterdish
 \*====================================*/
@@ -264,13 +273,13 @@ p.lower-line {
     color: #6B6B6B;
 }
 
-#section-what-is-meisterdish .you-cook{
+#section-what-is-meisterdish .you-cook {
     font-family: 'BrandonGrotesque-Bold';
-
 }
 
 #section-what-is-meisterdish .slide-description {
     background-color: white;
+    border: 1px solid #EDEDED;
     width: 100%;
     overflow: hidden;
 }
@@ -283,7 +292,7 @@ p.lower-line {
 #section-what-is-meisterdish .outer-slide-description,
 #section-what-to-expect .outer-slide-description {
     max-width: 1100px;
-    margin: 40px auto 0 auto;
+    margin: 60px auto 0 auto;
 }
 
 #section-what-is-meisterdish .meisterdish-details {
@@ -312,16 +321,18 @@ p.lower-line {
     background-color: #A9D77B;
 }
 
-#section-what-is-meisterdish .outer-slide-description{
-    webkit-box-shadow: 0 0 5px 3px #DADADA;
-    -moz-box-shadow: 0 0 5px 3px #DADADA;
-    box-shadow: 0 0 5px 3px #DADADA;
+#section-what-is-meisterdish .outer-slide-description {
+    webkit-box-shadow: 0 0 5px 3px #EDEDED;
+    -moz-box-shadow: 0 0 5px 3px #EDEDED;
+    box-shadow: 0 0 5px 3px #EDEDED;
     margin-bottom: 5px;
 }
 
-#section-what-is-meisterdish .fp-tableCell{
+#section-what-is-meisterdish .fp-tableCell {
     background-color: transparent;
 }
+
+
 /*====================================*\
         &Section what to expect
 \*====================================*/
@@ -334,8 +345,10 @@ p.lower-line {
     padding: 50px 10px;
 }
 
-#section-what-to-expect,#section-what-is-meisterdish, #section-zipcode {
-    box-shadow: inset 0 7px 9px -7px rgba(211,207,207, 0.8);
+#section-what-to-expect,
+#section-what-is-meisterdish,
+#section-zipcode {
+    box-shadow: inset 0 7px 9px -7px rgba(211, 207, 207, 0.8);
 }
 
 .slide-header {
@@ -345,12 +358,15 @@ p.lower-line {
     color: #6B6B6B;
     text-align: center;
 }
+
+
 /*#section-what-to-expect .slide-header{
     padding-bottom: 30px;
 }
 .meal-properties{
     padding-top: 20px;
 }*/
+
 .header-hr {
     height: 1px;
     border: 0;
@@ -389,13 +405,16 @@ p.upper-content,
     width: 40%;
     float: left;
 }
-.meal-name{
+
+.meal-name {
     padding-left: 22px;
     text-transform: uppercase;
 }
-.meal-sub-description{
+
+.meal-sub-description {
     padding-left: 22px;
 }
+
 .meal-description-wrapper {
     width: 60%;
     padding: 20px 30px;
@@ -461,6 +480,7 @@ p.upper-content {
 .what-you-get-section .upper-content img {
     height: 40px;
 }
+
 #section-what-to-expect .ingredients-wrapper {
     padding: 25px 0;
 }
@@ -476,23 +496,26 @@ p.upper-content {
     float: none;
 }
 
-#section-what-to-expect .button-container a{
+#section-what-to-expect .button-container a {
     width: 150px;
 }
-.cart-button-container{
+
+.cart-button-container {
     width: 33.33%;
     float: left;
     text-align: center;
 }
-.cart-button-container .btn{
+
+.cart-button-container .btn {
     cursor: pointer;
     width: 150px;
 }
 
-.meal-type-description-icon{
+.meal-type-description-icon {
     max-width: 30px;
     max-height: 30px;
 }
+
 
 /*==============================*\
         &Section zip code
@@ -569,8 +592,9 @@ img#close {
     width: 100%;
     float: left;
 }
- .deliveryarea-popup-container .content span,
- .deliveryarea-popup-container .content p{
+
+.deliveryarea-popup-container .content span,
+.deliveryarea-popup-container .content p {
     width: 100%;
     float: left;
     text-align: center;
@@ -578,10 +602,10 @@ img#close {
     font-size: 16px;
     padding: 20px 0;
     color: #5C5C5C;
-    word-break:break-word;
+    word-break: break-word;
 }
 
-.deliveryarea-popup-container .button{
+.deliveryarea-popup-container .button {
     width: 100%;
     text-align: center;
     padding: 10px 0px;
@@ -626,8 +650,9 @@ label#username-error {
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
-    #section-what-is .slide-description, #section-zipcode .slide-description{
-        background: rgba(244, 244, 244 ,1);
+    #section-what-is .slide-description,
+    #section-zipcode .slide-description {
+        background: rgba(244, 244, 244, 1);
     }
     #section-what-is-meisterdish .meisterdish-details {
         width: 100%;
@@ -675,7 +700,6 @@ label#username-error {
     .delivery-area-check-popup .popup-zip-fail {
         width: 300px;
     }
-
     .what-you-get-section p {
         font-size: 17px;
     }
@@ -708,7 +732,7 @@ label#username-error {
     p.lower-content {
         font-size: 12px;
     }
-    p.upper-line{
+    p.upper-line {
         font-size: 35px;
     }
 }
@@ -724,10 +748,9 @@ label#username-error {
     #section-what-to-expect .slide-header {
         padding-bottom: 10px;
     }
-
     #section-what-is-meisterdish .outer-slide-description,
     #section-what-to-expect .outer-slide-description {
-            /*margin: 20px auto 0 auto;*/
+        /*margin: 20px auto 0 auto;*/
     }
     .meal-name p {
         /*font-size: 25px;*/
@@ -750,25 +773,26 @@ label#username-error {
         padding-top: 2%;
     }
 }
+
 @media (min-width: 320px) and (max-width: 1024px) {
     #section-what-to-expect .button-container {
         text-align: center;
         width: 80%;
         margin: 0 auto;
     }
-    .cart-button-container{
+    .cart-button-container {
         width: 100%;
         padding: 10px 0;
         max-width: 350px;
         float: none;
-        margin:0 auto;
+        margin: 0 auto;
     }
-    #section-what-to-expect .button-container a{
+    #section-what-to-expect .button-container a {
         width: 100%;
         height: 40px !important;
         line-height: 36px;
     }
-    .cart-button-container .btn{
+    .cart-button-container .btn {
         width: 100%;
         height: 40px !important;
         line-height: 36px;
@@ -780,12 +804,13 @@ label#username-error {
         margin-right: 4%;
         min-width: 0px;
     }
-    .width-adjust{
+    .width-adjust {
         width: 83% !important;
     }
 }
+
 @media (min-width: 1024px) and (max-width: 1100px) {
-    .cart-button-container .btn{
+    .cart-button-container .btn {
         width: 140px;
     }
 }
