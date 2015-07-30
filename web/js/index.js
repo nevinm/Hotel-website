@@ -170,9 +170,11 @@ function updateHeight() {
     $("#section-what-is .fp-tableCell").css({
         "height": updatedHeight
     });
-    $("#section-what-is-meisterdish").css({
-        "margin-top": updatedMargintop
-    });
+    if(window.innerWidth>1900){
+        $("#section-what-is-meisterdish").css({
+            "margin-top": updatedMargintop
+        });
+    }
 }
 
 function isSessionExpired() {
