@@ -11,6 +11,8 @@ $(document).ready(function() {
     $("#logout,.mobile-logout").on('click', function() {
         logingOut();
     });
+    
+    //FOOTER UPDATIONS /****START****/
     $('.socialMedia').on("click", function() {
         var clicked_id = $(this).attr('id');
         if (clicked_id == 'facebook') {
@@ -27,9 +29,14 @@ $(document).ready(function() {
         }
     });
 
+    //hide help link
+    $(".footer-list li.footer-non-social:nth-child(3)").hide();
+    $("#footer-navMenu ul").not('.social-media-icons').find('li:nth-child(3)').hide();
+
     //hide social media icons
-    // $(".footer-links").remove();
     $("ul.social-media-icons").find(".sml_sprite").not(".facebook").hide();
+
+    //FOOTER UPDATIONS /****END****/
 
     // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {

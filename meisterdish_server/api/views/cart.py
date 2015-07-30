@@ -119,7 +119,7 @@ def add_to_cart(request, data):
            cart_item.save()
            qty = cart_item.quantity
 
-        response = {"status":1, "message":meal.name.title() + " has been added to the cart.", "quantity":qty}
+        response = {"status":1, "message":meal.name + " has been added to the cart.", "quantity":qty}
         if session_key:
           response["session_key"] = session_key
         return json_response(response)
@@ -200,7 +200,7 @@ def remove_from_cart(request, data, user):
         meal_id = data['meal_id']
         meal = Meal.objects.get(pk=meal_id)
         CartItem.objects.filter(cart__user=user, cart__completed=False, meal__pk=meal_id).delete()
-        return json_response({"status":1, "message": meal.name.title() + " has been successfully removed from cart."})
+        return json_response({"status":1, "message": meal.name + " has been successfully removed from cart."})
     except Exception as e:
         log.error("Remove from cart : "+e.message)
         return custom_error("Failed to remove meal from cart. Please try again later.")
