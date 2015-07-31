@@ -1,9 +1,8 @@
 $(document).ready(function() {
     ipadWidth = 767;
-    isMobileRendered();
-    destroyFullPageJS();
     CartItemCount();
     getHomePageMeal();
+    shouldFullpageRender();
 
     $(".check-delivery").on('click', function(e) {
         e.preventDefault();
@@ -27,19 +26,6 @@ $(document).ready(function() {
     $('.delivery-area-check-popup img#cancel').on("click", function() {
         $('.delivery-area-check-popup').fadeOut();
     });
-
-    // //popup re-direction on enter
-    // $(document).on('keypress', function(e) {
-    //     var key = e.which;
-    //     if (key == 13) // the enter key code
-    //     {
-    //         if ($('.popup-container').is(':visible')) {
-    //             if ($("#see-menu").is(":visible")) {
-    //                 $('#see-menu')[0].click();
-    //             }
-    //         }
-    //     }
-    // });
 
     $("#meal-info").on("click", function() {
         mealId = $(this).attr('data-id');
@@ -66,9 +52,36 @@ $(document).ready(function() {
             addToCart(mealId, quantity);
         } else {}
     });
+
+    $(window).resize(function() {
+        shouldFullpageRender();
+    });
 });
 
-var mobileRendered;
+function shouldFullpageRender() {
+    if ($("#section-what-is .fp-tableCell").innerHeight() > window.innerHeight) {} else {
+        fullPageRender();
+    }
+}
+
+function fullPageRender() {
+    var headerHeight = $("#header").innerHeight(),
+    screenHeight = (window.innerHeight - headerHeight),
+    section1Height = $("#section-what-is").innerHeight(),
+    section2HeadingHeight = $("#section-what-is-meisterdish .slider-header-containter").innerHeight(),
+    section2Padding = parseInt($("#section-what-is-meisterdish").css('padding-top').split("px")[0]),
+    footerHeight = $("#slider-footer").innerHeight(),
+    reqOffset = screenHeight - section1Height - section2HeadingHeight;
+    
+    $("#section-what-is").css({
+        "height": section1Height + reqOffset - section2Padding
+    });
+
+    $("#section-zipcode").css({
+        "height": screenHeight - footerHeight
+    });
+
+}
 
 //add to cart call back
 var addToCartCallback = {
@@ -123,7 +136,6 @@ function getHomePageMeal() {
 }
 
 function populateHomePageMeal(mealDetails) {
-
     var $sectionWhatToExpect = $("#section-what-to-expect");
     $sectionWhatToExpect.find(".meal-name p").text(mealDetails.name);
     $sectionWhatToExpect.find(".meal-image img").attr("src", mealDetails.main_image.url);
@@ -170,9 +182,20 @@ function updateHeight() {
     $("#section-what-is .fp-tableCell").css({
         "height": updatedHeight
     });
-    if(window.innerWidth>1800){
+}
+
+function correctMarginTop() {
+    var currentHeight = window.innerHeight,
+        updatedMargintop = -(0.15 * currentHeight);
+    console.log(window.innerWidth);
+    if (window.innerHeight > 700) {
+        console.log("Margin corrected");
         $("#section-what-is-meisterdish").css({
             "margin-top": updatedMargintop
+        });
+    } else {
+        $("#section-what-is-meisterdish").css({
+            "margin-top": 0
         });
     }
 }
@@ -183,74 +206,6 @@ function isSessionExpired() {
         data.message = "Your session has expired, please login.";
         showPopup(data);
         localStorage.removeItem('session-expired');
-    }
-}
-
-function renderFullPageJS() {
-    $('#fullpage').fullpage({
-        scrollingSpeed: 1000,
-        slidesNavigation: false,
-        // controlArrows: false,
-        navigation: false,
-        autoScrolling: false,
-        scrollBar: true,
-        keyboardScrolling: false,
-        fitToSection: false,
-        navigation: true,
-        afterResize: function() {
-            destroyFullPageJS();
-            updateHeight();
-        },
-        afterRender: function() {
-            updateHeight();
-        }
-    });
-    mobileRendered = false;
-}
-
-function renderMobileFullPageJs() {
-    $('#fullpage').fullpage({
-        scrollingSpeed: 1000,
-        slidesNavigation: false,
-        controlArrows: false,
-        keyboardScrolling: false,
-        navigation: false,
-        paddingTop: '70px',
-        autoScrolling: false,
-        scrollBar: true,
-        fitToSection: false,
-        afterResize: function() {
-            destroyFullPageJS();
-            updateHeight();
-        },
-        afterRender: function() {
-            $("#slide2").remove();
-            $("#slide4").remove();
-            updateHeight();
-        }
-    });
-    mobileRendered = true;
-}
-
-function isMobileRendered() {
-    if (window.innerWidth <= ipadWidth) {
-        mobileRendered = false;
-    } else {
-        mobileRendered = true;
-    }
-}
-
-function destroyFullPageJS() {
-    if (window.innerWidth < ipadWidth && mobileRendered == false) {
-        if ($.fn.fullpage.destroy) {
-            $.fn.fullpage.destroy('all');
-        } else {}
-        renderMobileFullPageJs();
-    } else if (window.innerWidth >= ipadWidth && mobileRendered == true) {
-        if ($.fn.fullpage.destroy) {
-            $.fn.fullpage.destroy('all');
-        } else {}
-        renderFullPageJS();
     }
 }
 
