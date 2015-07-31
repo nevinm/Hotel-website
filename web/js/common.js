@@ -401,6 +401,10 @@ $("form").each(function() {
                 required: true,
                 minlength: 3,
             },
+            mealsubHeader:{
+                required : true,
+                minlength : 3,
+            },
             chef_name: {
                 required: true,
                 minlength: 3,
@@ -676,6 +680,7 @@ $("form").each(function() {
             mealprice: "Enter a valid meal price.",
             mealtax: "Enter a valid meal tax.",
             mealname: "Enter a valid meal name.",
+            mealsubHeader: "Enter valid meal sub header.",
             message: "Enter a message.",
             chef_name: "Enter a valid chef name.",
             mealdescription: "Meal description is not valid.",
