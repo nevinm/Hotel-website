@@ -247,10 +247,10 @@ def send_user_verification_mail(user, change_email=False, email=""):
     
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
         if change_email:
-            link = settings.BASE_URL + 'verify-email/'+token+"/"
+            link = settings.SITE_URL + 'verify-email/'+token+"/"
             token = token + "-"+email
         else:
-            link = settings.BASE_URL + 'verify-user/'+token+"/"
+            link = settings.SITE_URL + 'verify-user/'+token+"/"
         
         user.user_verify_token = token
         user.save()
@@ -358,7 +358,7 @@ def forgot_password(request, data):
         link = settings.SITE_URL+"views/reset-password.html?token="+token
         user.password_reset_token = token
         user.save()
-        
+        log.info(settings.SITE_URL)
         dic = {
                "to_email" : email,
                "link" : link,
@@ -480,7 +480,7 @@ def get_profile(request, data, user):
                      "first_name" : user.first_name.title(),
                      "last_name" : user.last_name.title(),
                      "stripe_id":user.stripe_customer_id if user.stripe_customer_id else "",
-                     "referral_code" : settings.BASE_URL + 'share/'+user.referral_code+'/',
+                     "referral_code" : settings.SITE_URL + 'share/'+user.referral_code+'/',
                      }
         return json_response(user_data)
     except KeyError as e:
