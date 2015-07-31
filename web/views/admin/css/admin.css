@@ -28,6 +28,9 @@ input[type="password"] {
     height: 89px;
     width: 270px;
 }
+#meal-sub-name-error{
+    top: 7px;
+}
 
 .adminlogin-wrapper {
     width: 400px;
