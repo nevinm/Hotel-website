@@ -13,9 +13,15 @@
             padding:2px 0;
             padding-left:10px;
             border:none;
+            margin:0;
         }
         table, th, td {
             border-collapse: collapse;
+        }
+        p{
+            margin: 0 !important;
+            padding: 0 !important;
+            text-align: left; 
         }
         @page { size: A5 }
     </style>
@@ -24,25 +30,25 @@
         <table width="700" align="center" style="margin-bottom:20px;margin-top:20px;" border="0">
             <thead></thead>
             <tbody>
-                <tr style="border-bottom-color:white;">
+                <tr>
                     <td width="70%">
                         <img src="{{static_url}}logo.png" width="400">
                     </td>
                     <td width="30%" style="padding-right:20px;padding-bottom:10px">
-                        <p style="font-size:22px;text-align:right;font-weight:bolder;margin:0">{{delivery_type|upper}}</p>
+                        <p style="font-size:22px;text-align:right;font-weight:bolder;margin:0">{{order.delivery_type|upper}}</p>
                     </td>
                 </tr>
                 <tr>
                     <td style=""></td>
-                    <td style="padding-right:24px;"><p style="font-size:20px;text-align:right;margin:0">{{order_num}}</p></td>
+                    <td style="padding-right:24px;"><p style="font-size:20px;text-align:right;margin:0">#{{order.order_num}}</p></td>
                 </tr>
             </tbody>
         </table>
-        <table width="700"  align="center" style="border-color:#fff" border="1">
+        <table width="700"  align="center" style="" border="0">
             <thead></thead>
             <tbody>
                 <tr>
-                    <td style="border-right:2px solid black;padding-top:0;vertical-align:top;"width="50%">
+                    <td style="border-right:2px solid black !important;padding-top:0;vertical-align:top;"width="50%">
                         <table> 
                             <thead></thead>
                             <tbody>
@@ -58,8 +64,8 @@
                     <td width="50%" style="">
                         <table width="100%">
                             <thead>
-                                <th width="30%"><p style="font-weight:bold;font-size:18px;margin:0;text-align:left;margin-top:5px;">QTY</p></th>
-                                <th width="70%"><p style="font-weight:bold;font-size:18px;margin:0;text-align:left;margin-top:5px;">MEAL</p></th>
+                                <th width="30%"><p style="font-weight:bold;font-size:18px;margin:0;text-align:left !important;margin-top:5px;">QTY</p></th>
+                                <th width="70%"><p style="font-weight:bold;font-size:18px;margin:0;text-align:left !important;margin-top:5px;">MEAL</p></th>
                             </thead>
                             <tbody>
                                 {% for ci in cart_items %}
@@ -76,7 +82,7 @@
                 </tr>
                 {% if order.delivery_address%}
                     <tr style="padding-bottom:10px;">
-                        <td width="50%" style="border-right:2px solid black;padding-bottom:20px">
+                        <td width="50%" style="border-right:2px solid black !important;padding-bottom:20px">
                             <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">{{name}}</p>
                             <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">{{order.delivery_address.building|upper}}</p>
                             <p style="margin:0;width:100%;text-align:left;padding-bottom:5px;">{{order.delivery_address.street|upper}}</p>
@@ -92,7 +98,7 @@
                     </tr>
                 {% else %}
                     <tr style="padding-bottom:10px;">
-                        <td width="50%" style="border-right:2px solid black;padding-bottom:20px">
+                        <td width="50%" style="border-right:2px solid black !important;padding-bottom:20px">
                             <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">{{name}}</p>
                             <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">{{order.email}}</p>
                             <p style="margin:0;width:100%;text-align:left;padding-bottom:5px;">{{order.phone}}</p>
