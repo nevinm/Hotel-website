@@ -13,44 +13,60 @@
             padding:2px 0;
             padding-left:10px;
             border:none;
+            margin:0;
         }
         table, th, td {
             border-collapse: collapse;
         }
+        th{
+            text-align: left;
+        }
+        p{
+            margin: 0;
+            padding: 0;
+            text-align: left; 
+        }
+        span{
+            margin: 0;
+            padding: 0;
+        }
         @page { size: A5 }
+        @media print{
+
+        }
     </style>
     </head>
     <body style="margin: 0; font-family: sans-serif; font-size:16px;padding: 0;">
-        <table width="700" align="center" style="margin-bottom:20px;margin-top:20px;border:2px hidden" >
+        <table width="700" align="center" style="margin-bottom:20px;margin-top:20px;" border="0">
             <thead></thead>
             <tbody>
-                <tr style="border-bottom-color:white;">
+                <tr>
                     <td width="70%">
                         <img src="{{static_url}}logo.png" width="400">
                     </td>
-                    <td width="30%" style="padding-right:20px;padding-bottom:10px">
-                        <p style="font-size:22px;text-align:right;font-weight:bolder;margin:0">{{delivery_type|upper}}</p>
+                    <td width="30%" style="padding:0;padding-right:20px;text-align:right">
+                        <span style="font-size:22px;text-align:right;font-weight:bolder;margin:0">{{order.delivery_type|upper}}</span>
                     </td>
                 </tr>
                 <tr>
                     <td style=""></td>
-                    <td style="padding-right:24px;"><p style="font-size:20px;text-align:right;margin:0">{{order_num}}</p></td>
+                    <td style="padding-right:24px;text-align:right"><span style="font-size:20px;text-align:right;margin:0">#{{order.order_num}}</span></td>
                 </tr>
             </tbody>
         </table>
-        <table width="700"  align="center" style="border:2px hidden">
+        <table width="700"  align="center" style="" border="0">
             <thead></thead>
             <tbody>
                 <tr>
-                    <td style="border-right:2px solid black;padding-top:0;vertical-align:top;"width="50%">
+                    <td style="border-right:2px solid black ;padding-bottom:20px;padding-top:0;vertical-align:top;"width="50%">
                         <table> 
                             <thead></thead>
                             <tbody>
                                 <tr>
-                                    <td style="padding-left:0;padding:0"><p style="margin:0;font-size:32px;font-weight:bolder;">{{time}}</p></td>
+                                    <td style="padding-left:0;padding:0"><span style="margin:0;font-size:32px;font-weight:bolder;">{{time}}</span></td>
                                 </tr>
                                 <tr>
-                                    <td style="padding-left:0"><p style="margin:0;font-size:20px">{{date}}</p></td>
+                                    <td style="padding-left:0"><span style="margin:0;font-size:20px">{{date}}</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -59,15 +75,15 @@
                         <table width="100%">
                             <thead>
                                 <th width="30%"><p style="font-weight:bold;font-size:18px;margin:0;text-align:left;margin-top:5px;">QTY</p></th>
-                                <th width="70%"><p style="font-weight:bold;font-size:18px;margin:0;text-align:left;margin-top:5px;">MEAL</p></th>
+                                <th width="70%"><p style="font-weight:bold;font-size:18px;margin:0;text-align:left ;margin-top:5px;">MEAL</p></th>
                             </thead>
                             <tbody>
                                 {% for ci in cart_items %}
                                     <tr>
-                                        <td align="left" style="padding-left:0;padding-top:5px;p">
+                                        <td align="left" style="padding-left:5px;padding-top:5px;p">
                                             {{ci.quantity}}x
                                         </td>
-                                        <td align="left" style="padding-left:0;padding-top:5px;p">{{ci.meal.name}}</td>
+                                        <td align="left" style="padding-left:5px;padding-top:5px;p">{{ci.meal.name}}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -76,7 +92,7 @@
                 </tr>
                 {% if order.delivery_address%}
                     <tr style="padding-bottom:10px;">
-                        <td width="50%" style="border-right:2px solid;padding-bottom:20px">
+                        <td width="50%" style="border-right:2px solid black ;padding-bottom:20px">
                             <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">{{name}}</p>
                             <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">{{order.delivery_address.building|upper}}</p>
                             <p style="margin:0;width:100%;text-align:left;padding-bottom:5px;">{{order.delivery_address.street|upper}}</p>
@@ -92,7 +108,7 @@
                     </tr>
                 {% else %}
                     <tr style="padding-bottom:10px;">
-                        <td width="50%" style="border-right:2px solid;padding-bottom:20px">
+                        <td width="50%" style="border-right:2px solid black ;padding-bottom:20px">
                             <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">{{name}}</p>
                             <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:5px;">{{order.email}}</p>
                             <p style="margin:0;width:100%;text-align:left;padding-bottom:5px;">{{order.phone}}</p>

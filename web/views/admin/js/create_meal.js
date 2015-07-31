@@ -7,7 +7,7 @@ var nutrient_sub_category = 0,
 $(document).ready(function() {
     $('#create-meal-button').on("click", function(e) {
         e.preventDefault();
-        if ($('form').valid()) {
+        if ($('form#create-meal').valid()) {
             createMeal();
         }
     });
