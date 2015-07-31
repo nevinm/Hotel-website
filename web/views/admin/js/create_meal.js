@@ -389,6 +389,7 @@ function createMealEmptyCheck(key, value) {
 // populate to do- list data 
 function populateListData(element_id, container, dataFromApi) {
     if (dataFromApi) {
+        $('.' + container).find('.list-container ul').empty();
         $.each(dataFromApi, function(key, value) {
             $('.' + container).find('.list-container ul').append('<li>' + value +
                 '<img class="remove" src="../../images/del.png">' + '</li>');
@@ -422,7 +423,7 @@ function getFilterContent() {
     }
     params = {
         "get": "1"
-    }
+    } 
     data = JSON.stringify(params);
     var getFilterContentInstance = new AjaxHttpSender();
     getFilterContentInstance.sendPost(url, header, data, getFilterContentCallback);
