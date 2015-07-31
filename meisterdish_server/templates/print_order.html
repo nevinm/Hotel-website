@@ -18,12 +18,18 @@
         table, th, td {
             border-collapse: collapse;
         }
+        th{
+            text-align: left;
+        }
         p{
             margin: 0;
             padding: 0;
             text-align: left; 
         }
         @page { size: A5 }
+        @media print{
+
+        }
     </style>
     </head>
     <body style="margin: 0; font-family: sans-serif; font-size:16px;padding: 0;">
@@ -35,7 +41,7 @@
                         <img src="{{static_url}}logo.png" width="400">
                     </td>
                     <td width="30%" style="padding-right:20px;padding-bottom:10px">
-                        <p style="font-size:22px;text-align:right;font-weight:bolder;margin:0">{{order.delivery_type|upper}}</p>
+                        <span style="font-size:22px;text-align:right;font-weight:bolder;margin:0">{{order.delivery_type|upper}}</span>
                     </td>
                 </tr>
                 <tr>
@@ -53,10 +59,10 @@
                             <thead></thead>
                             <tbody>
                                 <tr>
-                                    <td style="padding-left:0;padding:0"><p style="margin:0;font-size:32px;font-weight:bolder;">{{time}}</p></td>
+                                    <td style="padding-left:0;padding:0"><span style="margin:0;font-size:32px;font-weight:bolder;">{{time}}</span></td>
                                 </tr>
                                 <tr>
-                                    <td style="padding-left:0"><p style="margin:0;font-size:20px">{{date}}</p></td>
+                                    <td style="padding-left:0"><span style="margin:0;font-size:20px">{{date}}</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -70,10 +76,10 @@
                             <tbody>
                                 {% for ci in cart_items %}
                                     <tr>
-                                        <td align="left" style="padding-left:0;padding-top:5px;p">
+                                        <td align="left" style="padding-left:10px;padding-top:5px;p">
                                             {{ci.quantity}}x
                                         </td>
-                                        <td align="left" style="padding-left:0;padding-top:5px;p">{{ci.meal.name}}</td>
+                                        <td align="left" style="padding-left:10px;padding-top:5px;p">{{ci.meal.name}}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
