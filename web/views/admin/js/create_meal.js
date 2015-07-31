@@ -24,7 +24,7 @@ $(document).ready(function() {
             per_serving = $('#nutrients-per-serving').val(),
             daily_value = $('#nutrients-daily-value').val(),
             numberOnly = /^\d+$/;
-        if (nutrients != undefined && nutrients != "" && numberOnly.test(daily_value)) {
+        if (nutrients != undefined && nutrients != "" ) {
             populateNutrients(nutrients, per_serving, daily_value);
             $("#nutrients").val("");
             $("#nutrients-per-serving").val("");
