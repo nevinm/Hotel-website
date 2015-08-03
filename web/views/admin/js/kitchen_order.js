@@ -91,11 +91,7 @@ function populateOrderList(data) {
             orderNum = undefinedCheck(value.id),
             minTime = undefinedCheck(value.minutes),
             orderStatus = undefinedCheck(value.status),
-            date = deliverytime.split(" ")[0],
-            time = deliverytime.split(" ")[1],
-            hours = parseInt(deliverytime.split(" ")[1].slice(0, -3)),
-            hours12Hr = ((hours + 11) % 12 + 1);
-
+            meridianDeliveryTime = convertToMeridianTime(deliverytime);
 
         $.each(value.meals, function(mealKey, mealValue) {
             var prevOrderNum = $($("#order-list tbody .row:nth-last-child(2)")[0]).data("order-id");
@@ -110,7 +106,7 @@ function populateOrderList(data) {
 
             $('#order-list tbody').append("<tr class='row'" +
                 " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id + "'>" +
-                "<td>" + deliverytime.split(" ")[0] +"<br>" + hours + ":00</td>" +
+                "<td>" + meridianDeliveryTime + "</td>" +
                 "<td>" + orderNum + "</td>" +
                 "<td>" + mealValue.name + "</td>" +
                 "<td>" + minTime + "</td>" +

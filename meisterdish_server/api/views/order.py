@@ -335,10 +335,10 @@ def print_order(order):
         content = base64.b64encode(pdf_content)
         data = {
             "printerId": settings.PRINTNODE_PRINTER_ID,
-            "title": "My Test PrintJob", 
+            "title": order.order_num, 
             "contentType": "pdf_base64",
             "content": content,
-            "source": "api documentation!",
+            "source": "Meisterdish",
             "options": {"copies":1, "paper":"A5", "bin":"Tray 1"},
         }
         if api_call('printjobs', data):
