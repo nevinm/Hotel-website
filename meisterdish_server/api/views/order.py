@@ -11,6 +11,8 @@ from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
 import stripe
 import sys
+import base64
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
 log = logging.getLogger(__name__)
 
@@ -331,7 +333,6 @@ def print_order(order):
         if not pdf_content:
             return False
         from libraries.printnode import api_call
-        import base64
         content = base64.b64encode(pdf_content)
         data = {
             "printerId": settings.PRINTNODE_PRINTER_ID,
@@ -516,7 +517,9 @@ def send_order_placed_notification(order):
         gt = order.total_amount + order.total_tax + order.tip + shipping
         if credit > gt:
             credit = gt
-
+        
+        unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/'+base64.b64encode(order.email)+"/"
+        
         dic = {
                "order_num" : order.order_num,
                "mobile" : order.phone,
@@ -537,6 +540,7 @@ def send_order_placed_notification(order):
                "delivery_type":order.delivery_type,
                "to_email":to_email,
                "site_url":settings.SITE_URL,
+               "unsubscribe_url": unsubscribe_url,
                "delivery_hr": str(order.delivery_time.hour % 12) + "-" + str((order.delivery_time.hour % 12) +1)+"PM",
                "referral_code":order.cart.user.referral_code,
                "referral_bonus":Configuration.objects.get(key="REFERRAL_BONUS").value,
