@@ -212,8 +212,6 @@ function populateOrderList(data) {
     });
 }
 
-
-
 function populateOrderDetails(orderDetails) {
     var $orderAddress = $('.order-detail-popup').find(".order-address"),
         $orderPopup = $('.order-detail-popup');
