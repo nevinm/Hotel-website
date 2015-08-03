@@ -713,6 +713,7 @@ def unsubscribe_from_emails(request, data, token):
         log.error("Could not unsuscribe.", error.message)
         return HttpResponseRedirect(unsub_return_url+"error")
 
+@check_input('POST')
 def send_contactus_email(request, data):
     try:
         subject = data['subject'].strip()
