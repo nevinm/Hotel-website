@@ -838,8 +838,3 @@ label#username-error {
     }
 }
 
-@media (min-width: 1024px) and (max-width: 1100px) {
-    .cart-button-container .btn {
-        width: 140px;
-    }
-}
