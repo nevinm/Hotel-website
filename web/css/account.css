@@ -1262,6 +1262,7 @@ textarea::-webkit-input-placeholder {
 	font-size: 12px; 
 	text-align: center;
 	font-family: 'ProximaNova-regular';
+	text-align: left;
 }
 .left-wrapper {
   width: 80%;
