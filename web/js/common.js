@@ -205,6 +205,17 @@ function getEstFormattedForWebService(time) {
     return selectedDate;
 }
 
+function convertToMeridianTime(deliverytime) {
+    var date = deliverytime.split(" ")[0],
+        time = deliverytime.split(" ")[1],
+        hours = parseInt(deliverytime.split(" ")[1].slice(0, -3)),
+        meridian = hours > 12 ? "PM" : "AM",
+        hours12Hr = ((hours + 11) % 12 + 1),
+        formattedDate = deliverytime.split(" ")[0] + " " + hours12Hr + ":00" + meridian;
+
+    return formattedDate;
+}
+
 function getCurrentDateMonth(days) {
     var currentdate = new Date(),
         month = [];
