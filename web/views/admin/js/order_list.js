@@ -220,15 +220,19 @@ function populateOrderDetails(orderDetails) {
     $(".order-list-items").remove();
     var deliverytime = orderDetails.order.delivery_time,
         meridianDeliveryTime = convertToMeridianTime(deliverytime),
-        paymentdate = orderDetails.order.payment_date,
+        paymentdate = orderDetails.order.payment_date;
+    if (paymentdate !== "Not Available") {
         medidianPaymentTime = convertToMeridianTime(paymentdate);
+        $orderPopup.find(".order-payment_date").text(medidianPaymentTime);
+    } else {
+        $orderPopup.find(".order-payment_date").text(paymentdate);
+    }
     $orderPopup.find(".order-num").text("#" + orderDetails.order.order_num);
     $orderPopup.find(".order-status-message").text(orderDetails.order.status);
     $orderPopup.find(".order-name").text(orderDetails.order.user_first_name + " " + orderDetails.order.user_last_name);
     $orderPopup.find(".order-total").text(dollarConvert(orderDetails.order.grand_total));
     $orderPopup.find(".order-date").text(meridianDeliveryTime);
     $orderPopup.find(".order-payment_type").text(orderDetails.order.delivery_type);
-    $orderPopup.find(".order-payment_date").text(medidianPaymentTime);
     $orderPopup.find(".order-transaction_id").text(orderDetails.order.transaction_id);
     if (orderDetails.order.delivery_type == "Pickup") {
         $orderAddress.find('.building').text("Pickup");
