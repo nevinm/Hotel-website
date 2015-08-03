@@ -94,6 +94,7 @@ function populateOrderList(data) {
             date = deliverytime.split(" ")[0],
             time = deliverytime.split(" ")[1],
             hours = parseInt(deliverytime.split(" ")[1].slice(0, -3)),
+            meridian = hours > 12 ? "PM" : "AM",
             hours12Hr = ((hours + 11) % 12 + 1);
 
 
@@ -110,7 +111,7 @@ function populateOrderList(data) {
 
             $('#order-list tbody').append("<tr class='row'" +
                 " data-order-id='" + orderNum + "' data-meal-id='" + mealValue.id + "'>" +
-                "<td>" + deliverytime.split(" ")[0] +"<br>" + hours + ":00</td>" +
+                "<td>" + deliverytime.split(" ")[0] +"<br>" + hours12Hr + ":00" + meridian + "</td>" +
                 "<td>" + orderNum + "</td>" +
                 "<td>" + mealValue.name + "</td>" +
                 "<td>" + minTime + "</td>" +
