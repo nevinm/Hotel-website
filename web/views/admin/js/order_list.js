@@ -176,7 +176,7 @@ function populateOrderList(data) {
             "<td>" + value.order_num + "</td>" +
             "<td>" + value.user_first_name + " " + value.user_last_name + "</td>" +
             "<td>" + value.phone + "</td>" +
-            "<td>" + meridianDeliveryTime + "</td>" +
+            "<td>" + meridianDeliveryTime.date +"<br>"+ meridianDeliveryTime.time+ "</td>" +
             "<td>" + value.delivery_type + "</td>" +
             "<td>" + dollarConvert(parseFloat(value.grand_total).toFixed(2)) + "</td>" +
             "<td class='no-popup'><select data-id='" + value.id + "'class='order-status' name='status'>" +
@@ -212,6 +212,8 @@ function populateOrderList(data) {
     });
 }
 
+
+
 function populateOrderDetails(orderDetails) {
     var $orderAddress = $('.order-detail-popup').find(".order-address"),
         $orderPopup = $('.order-detail-popup');
@@ -221,7 +223,7 @@ function populateOrderDetails(orderDetails) {
         paymentdate = orderDetails.order.payment_date;
     if (paymentdate !== "Not Available") {
         medidianPaymentTime = convertToMeridianTime(paymentdate);
-        $orderPopup.find(".order-payment_date").text(medidianPaymentTime);
+        $orderPopup.find(".order-payment_date").text(medidianPaymentTime.date+ " "+ medidianPaymentTime.time);
     } else {
         $orderPopup.find(".order-payment_date").text(paymentdate);
     }
@@ -229,7 +231,7 @@ function populateOrderDetails(orderDetails) {
     $orderPopup.find(".order-status-message").text(orderDetails.order.status);
     $orderPopup.find(".order-name").text(orderDetails.order.user_first_name + " " + orderDetails.order.user_last_name);
     $orderPopup.find(".order-total").text(dollarConvert(orderDetails.order.grand_total));
-    $orderPopup.find(".order-date").text(meridianDeliveryTime);
+    $orderPopup.find(".order-date").text(meridianDeliveryTime.date+ " "+ meridianDeliveryTime.time);
     $orderPopup.find(".order-payment_type").text(orderDetails.order.delivery_type);
     $orderPopup.find(".order-transaction_id").text(orderDetails.order.transaction_id);
     if (orderDetails.order.delivery_type == "Pickup") {
