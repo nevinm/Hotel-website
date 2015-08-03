@@ -75,7 +75,7 @@ function populateDeliveryOrderList(order_data) {
 
         var phone = undefinedCheck(value.phone),
             name = undefinedCheck(value.user_first_name + " " + value.user_last_name),
-            deliverytime = (undefinedCheck(value.delivery_time)).slice(0, -3),
+            deliverytime = (undefinedCheck(value.delivery_time))    ,
             zip = undefinedCheck(value.delivery_address.zip),
             email = undefinedCheck(value.email),
             grand_total = undefinedCheck(value.grand_total),
@@ -98,8 +98,8 @@ function populateDeliveryOrderList(order_data) {
             instructions = "None";
         }
 
-        $('table#delivery-order tbody').append("<tr data-id='" + value.id + "'><td>" +
-            meridianDeliveryTime + "</td>" +
+        $('table#delivery-order tbody').append("<tr data-id='" + value.id + "'><td class='driver-time'>" +
+            meridianDeliveryTime.date +"<br>"+ meridianDeliveryTime.time+ "</td>" +
             "<td>" + value.order_num + "</td>" +
             "<td>" + zip + "</td>" +
             "<td>" + "<span>" + building + ", " + street + "</span>" + "</td>" +
