@@ -75,7 +75,7 @@ function populateDeliveryOrderList(order_data) {
 
         var phone = undefinedCheck(value.phone),
             name = undefinedCheck(value.user_first_name + " " + value.user_last_name),
-            deliverytime = (undefinedCheck(value.delivery_time)).slice(0, -3),
+            deliverytime = (undefinedCheck(value.delivery_time))    ,
             zip = undefinedCheck(value.delivery_address.zip),
             email = undefinedCheck(value.email),
             grand_total = undefinedCheck(value.grand_total),
@@ -90,11 +90,7 @@ function populateDeliveryOrderList(order_data) {
             address_phone = undefinedCheck(delivery_address.phone),
             address_zip = undefinedCheck(delivery_address.zip),
             meals = undefinedCheck(value.meals),
-            date = deliverytime.split(" ")[0],
-            time = deliverytime.split(" ")[1],
-            hours = parseInt(deliverytime.split(" ")[1].slice(0, -3)),
-            meridian = hours > 12 ? "PM" : "AM",
-            hours12Hr = ((hours + 11) % 12 + 1);
+            meridianDeliveryTime = convertToMeridianTime(deliverytime);
 
         if ((!value.driver_instructions === null) && value.driver_instructions.length) {
             instructions = value.driver_instructions;
@@ -102,8 +98,8 @@ function populateDeliveryOrderList(order_data) {
             instructions = "None";
         }
 
-        $('table#delivery-order tbody').append("<tr data-id='" + value.id + "'><td>" +
-            deliverytime.split(" ")[0] + "<br>" + hours12Hr + ":00" + meridian + "</td>" +
+        $('table#delivery-order tbody').append("<tr data-id='" + value.id + "'><td class='driver-time'>" +
+            meridianDeliveryTime.date +"<br>"+ meridianDeliveryTime.time+ "</td>" +
             "<td>" + value.order_num + "</td>" +
             "<td>" + zip + "</td>" +
             "<td>" + "<span>" + building + ", " + street + "</span>" + "</td>" +

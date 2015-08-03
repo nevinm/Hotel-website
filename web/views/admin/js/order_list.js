@@ -171,16 +171,12 @@ function populateOrderList(data) {
     var fullMealList = JSON.parse(data);
     $.each(fullMealList.aaData, function(key, value) {
         var deliverytime = value.delivery_time,
-            date = deliverytime.split(" ")[0],
-            time = deliverytime.split(" ")[1],
-            hours = parseInt(deliverytime.split(" ")[1].slice(0, -3)),
-            meridian = hours > 12 ? "PM" : "AM",
-            hours12Hr = ((hours + 11) % 12 + 1);
+            meridianDeliveryTime = convertToMeridianTime(deliverytime);
         $('#order-list tbody').append("<tr data-id='" + value.id + "'>" +
             "<td>" + value.order_num + "</td>" +
             "<td>" + value.user_first_name + " " + value.user_last_name + "</td>" +
             "<td>" + value.phone + "</td>" +
-            "<td>" + deliverytime.split(" ")[0] + "<br>" + hours12Hr + ":00" + meridian + "</td>" +
+            "<td>" + meridianDeliveryTime.date +"<br>"+ meridianDeliveryTime.time+ "</td>" +
             "<td>" + value.delivery_type + "</td>" +
             "<td>" + dollarConvert(parseFloat(value.grand_total).toFixed(2)) + "</td>" +
             "<td class='no-popup'><select data-id='" + value.id + "'class='order-status' name='status'>" +
@@ -216,24 +212,37 @@ function populateOrderList(data) {
     });
 }
 
+
+
 function populateOrderDetails(orderDetails) {
     var $orderAddress = $('.order-detail-popup').find(".order-address"),
         $orderPopup = $('.order-detail-popup');
     $(".order-list-items").remove();
+    var deliverytime = orderDetails.order.delivery_time,
+        meridianDeliveryTime = convertToMeridianTime(deliverytime),
+        paymentdate = orderDetails.order.payment_date;
+    if (paymentdate !== "Not Available") {
+        medidianPaymentTime = convertToMeridianTime(paymentdate);
+        $orderPopup.find(".order-payment_date").text(medidianPaymentTime.date+ " "+ medidianPaymentTime.time);
+    } else {
+        $orderPopup.find(".order-payment_date").text(paymentdate);
+    }
     $orderPopup.find(".order-num").text("#" + orderDetails.order.order_num);
     $orderPopup.find(".order-status-message").text(orderDetails.order.status);
     $orderPopup.find(".order-name").text(orderDetails.order.user_first_name + " " + orderDetails.order.user_last_name);
     $orderPopup.find(".order-total").text(dollarConvert(orderDetails.order.grand_total));
-    $orderPopup.find(".order-date").text(orderDetails.order.delivery_time);
+    $orderPopup.find(".order-date").text(meridianDeliveryTime.date+ " "+ meridianDeliveryTime.time);
     $orderPopup.find(".order-payment_type").text(orderDetails.order.delivery_type);
-    $orderPopup.find(".order-payment_date").text(orderDetails.order.payment_date);
     $orderPopup.find(".order-transaction_id").text(orderDetails.order.transaction_id);
-    $orderAddress.find('.building').text(orderDetails.order.delivery_address.building);
-    $orderAddress.find('.building').text(orderDetails.order.delivery_address.building);
-    $orderAddress.find('.street').text(orderDetails.order.delivery_address.street);
-    $orderAddress.find('.city-state').text(orderDetails.order.delivery_address.city + " " +
-        orderDetails.order.delivery_address.state);
-    $orderAddress.find('.zip').text(orderDetails.order.delivery_address.zip);
+    if (orderDetails.order.delivery_type == "Pickup") {
+        $orderAddress.find('.building').text("Pickup");
+    } else {
+        $orderAddress.find('.building').text(orderDetails.order.delivery_address.building);
+        $orderAddress.find('.street').text(orderDetails.order.delivery_address.street);
+        $orderAddress.find('.city-state').text(orderDetails.order.delivery_address.city + " " +
+            orderDetails.order.delivery_address.state);
+        $orderAddress.find('.zip').text(orderDetails.order.delivery_address.zip);
+    }
     $.each(orderDetails.order.meals, function(key, value) {
         $(".order-meal").append("<div class='order-list-items' data-id='" + value.id + "'>" +
             "<img src='" + value.image + "'>" + "<span class='body-text-small'>" + value.name + "</span>" +

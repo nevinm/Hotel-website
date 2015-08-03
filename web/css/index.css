@@ -545,26 +545,31 @@ p.upper-content {
     text-align: center;
     padding: 30px 0;
     position: relative;
+    width: 40%;
+    margin: 0 auto;
 }
 
 #zip-code {
-    width: 145px;
+    width: 100%;
     height: 45px;
-    /*border-radius: 3px;*/
     text-align: center;
-    margin-top: -7px;
-    /*padding-top: 8px;*/
-    margin-right: 20px;
     color: #9B9B9B;
     line-height: 31px;
 }
-
+.formInput-wrapper{
+    float: left;
+    margin-right: 4%;
+    position: relative;
+    width: 46%;
+}
 input#zip-code[type="text"] {
     font-size: 16px;
     font-family: 'BrandonGrotesque-Light';
     text-transform: uppercase;
 }
-
+#zip-check{
+    width: 50%;
+}
 img#cancel,
 img#close {
     float: right;
@@ -626,9 +631,10 @@ img#close {
 
 label#zip-code-error {
     background: none;
-    top: 0;
+    top: -26px;
     left: 0;
-    width: 68%;
+    text-align: left;
+    padding-left: 0;
 }
 
 label#username-error {
@@ -725,16 +731,21 @@ label#username-error {
     #section-what-to-expect .slide-description {
         padding: 0;
     }
-    .delivery-area-check-popup .popup-zip-fail {
+    .delivery-area-check-popup .popup-zip-fail, .zip-code-container {
         max-width: 300px;
         width: 80%;
+    }
+    #zip-check{
+        min-width: 0;
+    }
+    input#zip-code[type="text"]{
+        font-size: 14px;
     }
 }
 
 @media (min-width: 320px) and (max-width: 400px) {
     #zip-code,
     #zip-check {
-        width: 100px;
         margin: 0;
     }
     .meal-sub-description p,
@@ -743,6 +754,15 @@ label#username-error {
     }
     p.upper-line {
         font-size: 35px;
+    }
+    label#zip-code-error{
+        top: -33px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 340px) {
+    label#zip-code-error{
+        top: -33px;
     }
 }
 
@@ -818,8 +838,3 @@ label#username-error {
     }
 }
 
-@media (min-width: 1024px) and (max-width: 1100px) {
-    .cart-button-container .btn {
-        width: 140px;
-    }
-}
