@@ -1244,6 +1244,8 @@ textarea#driver-description {
 	border-radius: 4px;
 	width: 100%;
 	resize : none;
+	font-family: 'ProximaNova-regular';
+
 }
 .instruction-container .btn{
 	margin-top: 20px;
@@ -1257,8 +1259,9 @@ textarea#driver-description {
 }
 textarea::-webkit-input-placeholder { 
 	color:#b0b0b0;
-	font-size: 13px; 
+	font-size: 12px; 
 	text-align: center;
+	font-family: 'ProximaNova-regular';
 }
 .left-wrapper {
   width: 80%;

@@ -548,7 +548,7 @@ def send_order_placed_notification(order):
             dic["delivery_add2"] = order.delivery_address.city.title() + ", "+ order.delivery_address.state.name + ", " + order.delivery_address.zip
         
         msg = render_to_string('order_placed_email_template.html', dic)
-        sub = 'Your order at Meisterdish has been received'
+        sub = 'Your Meisterdish order has been received'
         
         if not to_email or to_email.strip() == "":
             log.error("No email address to send order placed email")
