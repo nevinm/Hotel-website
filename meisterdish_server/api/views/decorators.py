@@ -32,6 +32,7 @@ def check_input(method):
                                              "validate_session",
                                              "save_email",
                                              "send_contactus_email",
+                                             "unsubscribe_from_emails",
                                              ]:
 
                         session_key = request.META.get('HTTP_SESSION_KEY', None)

@@ -857,8 +857,9 @@ form.addaddress-popup,#new-address-form {
 }
 .receipt-container .caption{
 	position: absolute;
+	color: #6B6B6B;
 	bottom: -46px;
-	font-size: 10px;
+	font-size: 12px;
 	line-height: 16px;
 }
 .delivery-info-guest-container{
@@ -1259,7 +1260,7 @@ textarea#driver-description {
 }
 textarea::-webkit-input-placeholder { 
 	color:#b0b0b0;
-	font-size: 12px; 
+	font-size: 11px; 
 	text-align: center;
 	font-family: 'ProximaNova-regular';
 	text-align: left;
