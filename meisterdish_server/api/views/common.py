@@ -601,7 +601,7 @@ def change_email(request, data, user):
             user.need_email_promotions = bool(promo)
             user.save()
 
-        return json_response({"status":1, "message":"Updated email address", "email_promotion":user.need_email_promotions})
+        return json_response({"status":1, "message":"Updated successfully.", "email_promotion":user.need_email_promotions})
     except Exception as e:
         log.error("Failed to change email : " + e.message)
         return custom_error("Failed to change email.")
@@ -690,6 +690,26 @@ def validate_session(request, data):
         return custom_error("Invalid session")
 
 @check_input('POST')
+def unsubscribe_from_emails(request, data):
+    try:
+        email = data['email'].strip()
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return custom_error("User not registered.")
+        else:
+            if user and user.email not in "":
+                user.need_email_promotions = False
+                user.save()
+                return json_response({"status":1, "message":"Unsubscribed from emails."})
+            else:   
+                log.error("Could not unsuscribe.", error.message)
+                return custom_error("Could not unsuscribe.")
+    except Exception as error:
+        log.error("Could not unsuscribe.", error.message)
+        return custom_error("Could not unsuscribe." , error.message)
+
+@check_input('POST')
 def send_contactus_email(request, data):
     try:
         subject = data['subject'].strip()
@@ -730,5 +750,4 @@ def send_contactus_email(request, data):
         return custom_error("Failed to send the contact us email.")
     else:
         log.info("Contact us mail sent to : contact@meisterdish.com , from "+email)
-        return json_response({"status":1, "message":"Email sent successfully"})
-
+        return json_response({"status":1, "message":"Email sent successfully"})   
