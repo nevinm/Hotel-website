@@ -661,7 +661,7 @@ label#username-error {
 @media (min-width: 320px) and (max-width: 767px) {
     #section-what-is .slide-description,
     #section-zipcode .slide-description {
-        background: rgba(244, 244, 244, 1);
+        background: rgba(255, 255, 255, 1);
     }
     #section-what-is-meisterdish .meisterdish-details {
         width: 100%;
