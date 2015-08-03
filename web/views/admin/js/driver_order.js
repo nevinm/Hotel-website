@@ -82,7 +82,7 @@ function populateDeliveryOrderList(order_data) {
             delivery_address = {},
             delivery_address = undefinedCheck(value.delivery_address),
             address_name = undefinedCheck(delivery_address.first_name) + " " +
-             undefinedCheck(delivery_address.last_name),
+            undefinedCheck(delivery_address.last_name),
             building = undefinedCheck(delivery_address.building),
             street = undefinedCheck(delivery_address.street),
             city = undefinedCheck(delivery_address.city),
@@ -93,6 +93,7 @@ function populateDeliveryOrderList(order_data) {
             date = deliverytime.split(" ")[0],
             time = deliverytime.split(" ")[1],
             hours = parseInt(deliverytime.split(" ")[1].slice(0, -3)),
+            meridian = hours > 12 ? "PM" : "AM",
             hours12Hr = ((hours + 11) % 12 + 1);
 
         if ((!value.driver_instructions === null) && value.driver_instructions.length) {
@@ -102,7 +103,7 @@ function populateDeliveryOrderList(order_data) {
         }
 
         $('table#delivery-order tbody').append("<tr data-id='" + value.id + "'><td>" +
-            deliverytime.split(" ")[0] + "<br>" + hours + ":00</td>" +
+            deliverytime.split(" ")[0] + "<br>" + hours12Hr + ":00" + meridian + "</td>" +
             "<td>" + value.order_num + "</td>" +
             "<td>" + zip + "</td>" +
             "<td>" + "<span>" + building + ", " + street + "</span>" + "</td>" +
