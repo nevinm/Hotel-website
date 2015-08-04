@@ -42,8 +42,7 @@
 	height: 100%;
 	top: 0;
 	left: 0;
-	background-size: cover;
-	/*background-position: 50% 50%;*/
+	background-size: cover !important;
 }
 #you-cook .image-wrapper{
 	background-image: url('../images/how_it_works/banner1.jpg');
@@ -77,6 +76,7 @@
 	-moz-transform: translate (-50%,-20%);
 	-o-transform: translate (-50%,-20%);
 	transform: translate(-50%,-20%);
+	display: block;
 }
 #what-you-get .contentWrapper {
 	left: 50%;
@@ -307,6 +307,7 @@ img#cancel,img#close {
 	-ms-transform: translate(-50%,-40%);
 	-moz-transform: translate(-50%,-40%);
 	-webkit-transform: translate(-50%,-40%);
+	-o-transform: translate(-50%,-40%);
 	transform: translate(-50%,-40%);
 }
 .delivery-area-check-popup .popup-zip-fail .button{
@@ -400,6 +401,9 @@ label#username-error {
 	.tab-header-drop-down .subactiveli{
 		padding: 20px 20px !important;
 		background-color: #d0d0d0;
+	}
+	.image-wrapper{
+		background-position: 50% 50%;
 	}
 
 }
