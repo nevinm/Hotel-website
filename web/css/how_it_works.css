@@ -145,7 +145,8 @@ img.image-small{
 	width: 100%;
 	height: 100%;
 }
-#we-source,#you-cook{
+#we-source,#you-cook,
+#we-prep,#we-deliver{
 	left: 0%;
 	position: absolute;
 	width: 100%;
@@ -351,7 +352,12 @@ label#username-error {
 		font-size: 40px;
 	}
 	.contentWrapper {
-  		width: 60%;
+		margin: 0 auto;
+		position: relative;
+		top:25%;
+		left: inherit;
+		transform:none;
+		width: 70%;
 	}
 	.box-contentWrapper,.tab-header-drop-down ul,
 	.tab-header-drop-down ul li,.tab-header-drop-down ul li a{
