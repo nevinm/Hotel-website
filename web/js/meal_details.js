@@ -37,7 +37,7 @@ function tabRendering() {
             jQuery(this).css('overflow', 'visible');
         }
     });
-
+    
     $('.next-tab').click(function(e) {
         e.preventDefault();
         $tabs.tabs('option', 'hide', {
@@ -248,7 +248,7 @@ function tipsTricksTab(mealDetails) {
             }
         
             else if(ytVidId(value.video_url)){
-                $("#tips-and-tricks .video-container[data-id = '"+value.id+"']").append("<iframe height='280' src='//www.youtube.com/embed/" + 
+                $("#tips-and-tricks .video-container[data-id = '"+value.id+"']").append("<iframe height='280' id='tips-video' type='application/x-shockwave-flash'src='https://youtube.com/embed/" + 
                 convertToEmbedded(value.video_url) + 
                 "' frameborder='0' allowfullscreen=''></iframe>");  
             }else{}
