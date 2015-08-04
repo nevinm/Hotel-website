@@ -9,6 +9,7 @@ import string, random
 from libraries import get_request_user, create_guest_user, validate_email
 from django.template.loader import render_to_string
 import stripe
+import base64
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 log = logging.getLogger(__name__)
@@ -120,6 +121,7 @@ def gift_card_order(request, data, user=None):
         return custom_error(e.message)
 
 def send_gift_card(gc):
+    unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/'+base64.b64encode(email)+"/"
     try:
         dic = {
             "code" : gc.code,
@@ -130,6 +132,7 @@ def send_gift_card(gc):
             "amount" : "{0:.0f}".format(gc.amount),
             "site_url" : settings.SITE_URL,
             "email":gc.email,
+            "unsubscribe_url" :unsubscribe_url,
         }
 
         msg = render_to_string('gift_card_email.html', dic)

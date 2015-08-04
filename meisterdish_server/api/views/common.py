@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from django.contrib.sessions.backends.db import SessionStore
 from meisterdish_server.models import *
-import md5
+import md5, base64
 import logging 
 import settings
 from datetime import datetime
@@ -254,7 +254,7 @@ def send_user_verification_mail(user, change_email=False, email=""):
         
         user.user_verify_token = token
         user.save()
-        
+        unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/'+base64.b64encode(user.email)+"/"
         dic = {
                "email" : user.email,
                "link" : link,
@@ -262,6 +262,7 @@ def send_user_verification_mail(user, change_email=False, email=""):
                "last_name" : user.last_name.title(),
                "username" : user.email,
                "site_url":settings.SITE_URL,
+               "unsubscribe_url": unsubscribe_url,
                }
         if change_email:
             msg = render_to_string('verify_email_email_template.html', dic)
@@ -358,7 +359,7 @@ def forgot_password(request, data):
         link = settings.SITE_URL+"views/reset-password.html?token="+token
         user.password_reset_token = token
         user.save()
-        log.info(settings.SITE_URL)
+        unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/'+base64.b64encode(user.email)+"/"
         dic = {
                "to_email" : email,
                "link" : link,
@@ -366,6 +367,7 @@ def forgot_password(request, data):
                "last_name" : user.last_name.title(),
                "username" : user.email,
                "site_url":settings.SITE_URL,
+               "unsubscribe_url": unsubscribe_url,
                }
         msg = render_to_string('forgot_password_email_template.html', dic)
 
@@ -689,25 +691,27 @@ def validate_session(request, data):
     else:
         return custom_error("Invalid session")
 
-@check_input('POST')
-def unsubscribe_from_emails(request, data):
+@check_input('GET')
+def unsubscribe_from_emails(request, data, token):
     try:
-        email = data['email'].strip()
+        unsub_return_url = settings.SITE_URL + 'views/login.html?subscribe='
+        email = base64.b64decode(token)
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            return custom_error("User not registered.")
+            log.error("Ubsubscribe : email:"+str(email) + " does not exist.")
+            return HttpResponseRedirect(unsub_return_url+"error")
         else:
-            if user and user.email not in "":
+            if user and user.email and user.email != '':
                 user.need_email_promotions = False
                 user.save()
-                return json_response({"status":1, "message":"Unsubscribed from emails."})
+                return HttpResponseRedirect(unsub_return_url+"success")
             else:   
                 log.error("Could not unsuscribe.", error.message)
-                return custom_error("Could not unsuscribe.")
+                return HttpResponseRedirect(unsub_return_url+"error")
     except Exception as error:
         log.error("Could not unsuscribe.", error.message)
-        return custom_error("Could not unsuscribe." , error.message)
+        return HttpResponseRedirect(unsub_return_url+"error")
 
 @check_input('POST')
 def send_contactus_email(request, data):
