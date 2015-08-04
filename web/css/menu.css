@@ -234,8 +234,8 @@
 	width: 32%;
 	margin: 0 0 60px 2%;
 	float: left;
-    overflow: hidden;
-    height: 376px;
+    overflow: auto;
+    height: auto;
 }
 .meal-image-wrapper{
     margin-bottom: 5px;
