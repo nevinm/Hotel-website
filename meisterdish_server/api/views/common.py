@@ -694,7 +694,7 @@ def validate_session(request, data):
 @check_input('GET')
 def unsubscribe_from_emails(request, data, token):
     try:
-        unsub_return_url = settings.SITE_URL + 'views/login.html?subscribe='
+        unsub_return_url = settings.SITE_URL + 'views/unsubscribed.html?subscribe='
         email = base64.b64decode(token)
         try:
             user = User.objects.get(email=email)
