@@ -86,6 +86,8 @@
     -moz-appearance:textfield;
     -webkit-appearance: none;
     color: #6B6B6B;
+    font-family: 'BrandonGrotesque-medium';
+    font-size: 14px;
 }
 
 .giftcard-selected {
@@ -176,8 +178,9 @@
     margin-left: 0px;
     margin-right: 0px;
     resize: none;
-    font-family: 'ProximaNova-regular';
-    color: #9B9B9B;
+    font-size: 16px !important;
+    color: #6B6B6B;
+    font-family: 'BrandonGrotesque-medium';
     border-radius: 3px;
     padding: 20px;
     border: 1px solid #D0D0D0;
@@ -345,6 +348,32 @@ input.popup-input {
     border: 1px solid #ddd;
     background: #FFF;
     height: 35px;
+    font-size: 16px !important;
+    color: #6B6B6B;
+    font-family: 'BrandonGrotesque-medium';
+}
+::-webkit-input-placeholder {
+    font-family: 'BrandonGrotesque-medium';
+    color: #9B9B9B;
+}
+
+:-moz-placeholder {
+    /* Firefox 18- */
+    
+    font-family: 'BrandonGrotesque-medium';
+    color: #9B9B9B;
+}
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    
+    font-family: 'BrandonGrotesque-medium';
+    color: #9B9B9B;
+}
+
+:-ms-input-placeholder {
+    font-family: 'BrandonGrotesque-medium';
+    color: #9B9B9B;
 }
 
 .giftcard-form-container {
@@ -504,11 +533,12 @@ input.popup-input {
     background: transparent !important;
     width: 100%;
     padding: 5px !important;
-    line-height: 1;
     border: 0 !important;
     border-radius: 0 !important;
     height: 34px;
     -webkit-appearance: none !important;
+    color: #6B6B6B;
+    font-family: 'BrandonGrotesque-medium';
 }
 
 .styled-select {
@@ -717,7 +747,6 @@ form#edit-recipient-details input.popup-input{
         border: none;
         overflow-x: hidden;
     }
-
     .details-main-header{
         font-size: 16px;
     }

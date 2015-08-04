@@ -524,9 +524,9 @@ function populateMealDetails(mealDetails) {
     $("#kitchen-image").attr("src", mealDetails.pre_requisites_image.url);
     populateListData('', "ingredients-container", mealDetails.ingredients);
     $("#ingredients-image").attr("src", mealDetails.ingredients_image.url);
+    $(".nutrients-total").empty();            
     $.each(mealDetails.nutrients, function(key, value) {
         if(!(mealDetails.nutrients=='')){
-            $(".nutrients-total").empty();            
             populateNutrients(value.mainNutrient, value.perServing, value.dailyValue, value);
         }else{}
     });
