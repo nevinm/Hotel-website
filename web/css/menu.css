@@ -234,6 +234,7 @@
 	width: 32%;
 	margin: 0 0 60px 2%;
 	float: left;
+    overflow: hidden;
     height: 376px;
 }
 .meal-image-wrapper{
@@ -390,8 +391,8 @@ hr.mealList-hr {
     word-wrap: break-word;
     display: inline-block;
     overflow: hidden;
-    width: 350px;
-    white-space: nowrap;
+    width: 100%;
+    /*white-space: nowrap;*/
     text-overflow: ellipsis;
     line-height: 20px;
 }
