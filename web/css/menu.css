@@ -55,7 +55,6 @@
     text-decoration: underline;
 }
 #header{
-    position: relative !important;
     border-bottom: 1px solid #ededed;
 }
 .meal-area{
@@ -65,7 +64,9 @@
 .menu-header{
     padding: 20px 0;
 }
-
+#page-container{
+    margin-top: 100px;
+}
 .menu-header h1{
     color: #6B6B6B;
     font-size: 24px;
@@ -517,6 +518,9 @@ span.per-serving-text {
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
+    #page-container{
+        margin-top: 75px;
+    }
     .listItems {
         max-width: 430px;
         background-color: white;
