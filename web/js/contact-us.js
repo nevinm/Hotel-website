@@ -1,23 +1,23 @@
 $(document).ready(function() {
-	
-    if (localStorage['loggedIn'] == 'true'){
-		$(".guest").hide();
-		if(localStorage['user_profile']){
-			var userDetails = JSON.parse(localStorage['user_profile']);
-			$("#user-email").text("  ("+userDetails.email+")");
-		}else{
-			getProfile();
-		}
-	}else{
-		$(".guest").show();
-		$(".user-account").hide();
-	}
-	$("#send-message").on("click",function(e){
-		e.preventDefault();
-		if($("form").valid()){
+
+    if (localStorage['loggedIn'] == 'true') {
+        $(".guest").hide();
+        if (localStorage['user_profile']) {
+            var userDetails = JSON.parse(localStorage['user_profile']);
+            $("#user-email").text("  (" + userDetails.email + ")");
+        } else {
+            getProfile();
+        }
+    } else {
+        $(".guest").show();
+        $(".user-account").hide();
+    }
+    $("#send-message").on("click", function(e) {
+        e.preventDefault();
+        if ($("form").valid()) {
             sendMessage();
         }
-	});
+    });
     CartItemCount();
 });
 //Get profile API process
@@ -25,7 +25,7 @@ var getProfileCallback = {
     success: function(data, textStatus, profileId) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
-        	$("#user-email").text("  ("+userDetails.email+")");
+            $("#user-email").text("  (" + userDetails.email + ")");
         } else {}
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -44,20 +44,28 @@ function getProfile(profileId) {
     getProfileInstance.sendPost(url, header, data, getProfileCallback, profileId);
 }
 
+function showSuccessMessageContact() {
+    var content = $(".contact-us-popup").find(".content span");
+    $(content[0]).text("Thanks for contacting us.");
+    $(content[1]).show();
+    $(".contact-us-popup").show();
+}
+
 var sendMessageCallback = {
     success: function(data, textStatus) {
         var sendMessageDetails = JSON.parse(data);
         if (sendMessageDetails.status == 1) {
-            $(".contact-us-popup").show();
+            showSuccessMessageContact();
         } else {
+            content[1].hide();
             showPopup(sendMessageDetails);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function sendMessage(){
-     var url = baseURL + "send_contactus_email/",
+function sendMessage() {
+    var url = baseURL + "send_contactus_email/",
         header = {
             "session-key": localStorage["session_key"]
         },
@@ -66,7 +74,7 @@ function sendMessage(){
         subject = $("input[name='subject']").val(),
         message = $("textarea[name='message']").val(),
         userData = {
-            "subject":subject,
+            "subject": subject,
             "message": message,
             "name": name, //optional, for guest
             "email": email //optional, for guest
