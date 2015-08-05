@@ -9,6 +9,8 @@ $(document).ready(function() {
         $('.menu-offer').show();
      }else{
         $('.menu-offer').hide();
+        $("#header").css("margin-top","0px");
+        $("#page-container").css("margin-top","100px");
      }
 
     $(document).on("click", '.subMenu .menu-categories-list', function() {
