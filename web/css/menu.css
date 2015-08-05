@@ -48,6 +48,11 @@
     padding-top: 10px;
     letter-spacing: 1px;
     display: none;
+    width: 100%;
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 #share-now{
     padding-left: 30px;  
@@ -56,6 +61,7 @@
 }
 #header{
     border-bottom: 1px solid #ededed;
+    margin-top: 40px;
 }
 .meal-area{
     /*overflow: auto;*/
@@ -65,7 +71,7 @@
     padding: 20px 0;
 }
 #page-container{
-    margin-top: 100px;
+    margin-top: 140px;
 }
 .menu-header h1{
     color: #6B6B6B;
