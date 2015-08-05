@@ -44,7 +44,7 @@
                                         <table style='padding-left: 40px;'>
                                             <tr>
                                                 <td>
-                                                <h2 style="margin:0">
+                                                <h2 style="margin:0;font-weight:bold;padding-bottom:30px">
                                                     {% if delivery_type == "pickup" %}
                                                         PICKUP ADDRESS
                                                     {% else %}
@@ -94,7 +94,7 @@
                                         <table style='padding-left: 40px;'>
                                             <tr>
                                                 <td>
-                                                    <h2>{{delivery_time}}.</h2></td>
+                                                    <h2 style="margin:0;font-weight:bold;padding-top:30px;padding-bottom:10px;">{{delivery_time}}.</h2></td>
                                             </tr>
                                             <tr>
                                                 <td><span style='color: #6B6B6B;font-weight:bold'>Deliver between {{delivery_hr}}.</span></td>
@@ -151,10 +151,10 @@
                                             </tr>
                                             <tr>
                                                 <th style='font-weight: normal;color: #000;padding-left:30px'>
-                                                    <h2>Total</h2>
+                                                    <h2 style="padding:20px 0;margin:0;font-weight:bold">Total</h2>
                                                 </th>
                                                 <th style='font-weight: normal;color: #000;padding-left:10px'>
-                                                    <h2>${{grand_total}}</h2>
+                                                    <h2 style="padding:20px 0;margin:0;font-weight:bold">${{grand_total}}</h2>
                                                 </th>
                                             </tr>
                                         </table>
