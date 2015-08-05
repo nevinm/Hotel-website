@@ -527,12 +527,15 @@ span.upper-content,span.lower-content,
 .meal-type-icon{
   max-width: 45px;
   max-height: 45px;
+  height: 45px;
+  line-height: 100%;
+  display: inline-block;
 }
 span.upper-content {
   font-family: 'BrandonGrotesque-Regular';
   color: #8DC56A;
   font-size: 24px;
-  min-height: 40px;
+  min-height: 54px;
   text-align: center;
   word-break:break-word;
 }
