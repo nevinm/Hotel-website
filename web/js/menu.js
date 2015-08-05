@@ -10,7 +10,11 @@ $(document).ready(function() {
      }else{
         $('.menu-offer').hide();
         $("#header").css("margin-top","0px");
-        $("#page-container").css("margin-top","100px");
+        if ($(window).width() <= 767 && $(window).width() >= 320) {
+            $("#page-container").css("margin-top","75px");
+        }else{
+            $("#page-container").css("margin-top","100px");
+        }
      }
 
     $(document).on("click", '.subMenu .menu-categories-list', function() {
