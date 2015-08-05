@@ -20,6 +20,7 @@ def gift_card_order(request, data, user=None):
     try:
         name = data["name"].strip()
         email = data["email"].strip()
+        log.info(email)
         message = data["message"].strip()
         amount = data["amount"]
         if name == "" or email == "" or message == "":
@@ -121,7 +122,7 @@ def gift_card_order(request, data, user=None):
         return custom_error(e.message)
 
 def send_gift_card(gc):
-    unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/'+base64.b64encode(email)+"/"
+    unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/'+base64.b64encode(gc.email)+"/"
     try:
         dic = {
             "code" : gc.code,
