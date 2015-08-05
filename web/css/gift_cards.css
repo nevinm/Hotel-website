@@ -178,7 +178,6 @@
     margin-left: 0px;
     margin-right: 0px;
     resize: none;
-    font-family: 'ProximaNova-regular';
     font-size: 16px !important;
     color: #6B6B6B;
     font-family: 'BrandonGrotesque-medium';
@@ -534,11 +533,12 @@ input.popup-input {
     background: transparent !important;
     width: 100%;
     padding: 5px !important;
-    line-height: 1;
     border: 0 !important;
     border-radius: 0 !important;
     height: 34px;
     -webkit-appearance: none !important;
+    color: #6B6B6B;
+    font-family: 'BrandonGrotesque-medium';
 }
 
 .styled-select {

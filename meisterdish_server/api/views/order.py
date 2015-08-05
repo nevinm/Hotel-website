@@ -519,7 +519,12 @@ def send_order_placed_notification(order):
             credit = gt
         
         unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/'+base64.b64encode(order.email)+"/"
-        
+        delivery_hr = str(order.delivery_time.hour % 12) + "-" + str((order.delivery_time.hour % 12) +1)
+        if order.delivery_time.hour >= 12 :
+            delivery_hr += " PM"
+        else:
+            delivery_hr += " AM"
+
         dic = {
                "order_num" : order.order_num,
                "mobile" : order.phone,
@@ -541,7 +546,7 @@ def send_order_placed_notification(order):
                "to_email":to_email,
                "site_url":settings.SITE_URL,
                "unsubscribe_url": unsubscribe_url,
-               "delivery_hr": str(order.delivery_time.hour % 12) + "-" + str((order.delivery_time.hour % 12) +1)+"PM",
+               "delivery_hr": delivery_hr,
                "referral_code":order.cart.user.referral_code,
                "referral_bonus":Configuration.objects.get(key="REFERRAL_BONUS").value,
                "cart_items":order.cart.cartitem_set.all().order_by('id'),
