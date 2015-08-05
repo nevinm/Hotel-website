@@ -687,6 +687,9 @@ label#username-error {
     #section-what-is .main-header {
         font-size: 25px;
     }
+    #section-what-is{
+        margin-top: 75px;
+    }
     .mobile-menu-button {
         display: block;
         margin: 30px auto 0 auto !important;

@@ -512,6 +512,9 @@ span.per-serving-text {
     .menuItemDetails{
         padding-left: 0 !important;
     }
+    .listItemDetails{
+        padding-right: 2%;
+    }
 
 }
 
@@ -530,6 +533,9 @@ span.per-serving-text {
 @media (min-width: 320px) and (max-width: 767px) {
     #page-container{
         margin-top: 75px;
+    }
+    #header{
+        margin-top: 50px;
     }
     .listItems {
         max-width: 430px;
