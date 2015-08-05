@@ -533,13 +533,14 @@ span.per-serving-text {
         -webkit-box-shadow: 0px 2px 5px 0px  #b0b0b0;
         -moz-box-shadow: 0px 2px 5px 0px  #b0b0b0;
         box-shadow: 0px 2px 5px 0px  #b0b0b0;
-        height: 467px;
+        height: auto;
     }
     .listItemDetails {
         padding: 0 10px;
     }
     .listContainer {
         margin: 0px;
+        padding: 0 4px;
     }
     .subMenu{
         height: 35px;
