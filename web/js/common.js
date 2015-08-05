@@ -805,8 +805,10 @@ function mobileResponsive() {
         if(currentPage == "menu"){
             if(localStorage["loggedIn"] == "true"){
                 $('#page-container').css("margin-top", "125px");
+                $('#header').css("margin-top", "50px");
             }else{
                 $('#page-container').css("margin-top", "75px");
+                $('#header').css("margin-top", "0px");
             }
         }
     } else {
@@ -816,8 +818,10 @@ function mobileResponsive() {
         if(currentPage == "menu"){
             if(localStorage["loggedIn"] == "true"){
                 $('#page-container').css("margin-top", "140px");
+                $('#header').css("margin-top", "40px");
             }else{
                 $('#page-container').css("margin-top", "100px");
+                $('#header').css("margin-top", "0px");
             }
         }
     }
