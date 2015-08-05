@@ -22,17 +22,17 @@
                     </tr>
                     <tr>
                         <td align="center" style="padding-top: 15px;">
-                            <h3>Thanks, {{first_name|title}}! We've received your order.</h3>
+                            <h3 style="font-weight:bold">Thanks, {{first_name|title}}! We've received your order.</h3>
                         </td>
                     </tr>
                     <tr>
                         <td align="center" style="padding: 10px 0 5px 0;" ;>
-                            <h4 style='margin: 0'>ORDER NO: {{order_num|upper}}</h4>
+                            <h4 style='margin: 0;font-weight:bold'>ORDER NO: {{order_num|upper}}</h4>
                         </td>
                     </tr>
                     <tr>
                         <td align="center" style="padding: 10px 0 5px 0;" ;>
-                            <h4 style='margin: 0'>Please wait for your order to be confirmed.</h4>
+                            <h4 style='margin: 0;font-weight:bold'>Please wait for your order to be confirmed.</h4>
                         </td>
                     </tr>
                 </table>
@@ -49,7 +49,7 @@
                                         <table style='padding-left: 40px;'>
                                             <tr>
                                                 <td>
-                                                <h2 style="padding-bottom:30px;margin:0;font-weight:bold">
+                                                <h2 style="font-weight:bold">
                                                     {% if delivery_type == "pickup" %}
                                                         PICKUP ADDRESS
                                                     {% else %}
@@ -99,7 +99,7 @@
                                         <table style='padding-left: 40px;'>
                                             <tr>
                                                 <td>
-                                                    <h2 style="padding-top:30px;margin:0;font-weight:bold;padding-bottom:10px;">{{delivery_time}}.</h2></td>
+                                                    <h2 style="padding-top:30px;font-weight:bold;">{{delivery_time}}.</h2></td>
                                             </tr>
                                             <tr>
                                                 <td><span style='color: #6B6B6B;font-weight:bold'>Deliver between {{delivery_hr}}.</span></td>
