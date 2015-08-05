@@ -46,6 +46,9 @@ function getProfile(profileId) {
 
 function showSuccessMessageContact() {
     var content = $(".contact-us-popup").find(".content span");
+    $(".popup").find(".header").text("Thank you");
+    $("#close").hide();
+    $("#ok-button").show();
     $(content[0]).text("Thanks for contacting us.");
     $(content[1]).show();
     $(".contact-us-popup").show();
@@ -57,7 +60,11 @@ var sendMessageCallback = {
         if (sendMessageDetails.status == 1) {
             showSuccessMessageContact();
         } else {
-            content[1].hide();
+            var content = $(".contact-us-popup").find(".content span");
+            $(".popup").find(".header").text("Please check");
+            $("#close").show();
+            $("#ok-button").hide();
+            $(content[1]).hide();
             showPopup(sendMessageDetails);
         }
     },
