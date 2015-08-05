@@ -258,7 +258,7 @@ CACHES = {
 }
 
 EMAIL_IMAGES = {
-    "meisterdish_logo" : os.path.join(STATIC_ROOT, "default", "logo.png"),
+    "meisterdish_logo" : os.path.join(STATIC_ROOT, "default", "logo_email.png"),
     #"social_sprite" : os.path.join(STATIC_ROOT, "default", "social_icon_sprite.png"),
     "fb" : os.path.join(STATIC_ROOT, "default", "Facebook.png"),
     #"pt" : os.path.join(STATIC_ROOT, "default", "Pinterest.png"),
