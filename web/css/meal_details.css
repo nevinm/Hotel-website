@@ -547,9 +547,10 @@ span.upper-content {
   font-family: 'BrandonGrotesque-Regular';
   color: #8DC56A;
   font-size: 24px;
-  min-height: 54px;
+  /*min-height: 54px;*/
   text-align: center;
   word-break:break-word;
+  max-height: 45px;
 }
 .icons-container1{
     padding-bottom: 30px;
