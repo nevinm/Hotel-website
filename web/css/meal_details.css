@@ -236,13 +236,20 @@ p.lower-line {
 }
 
 .details-part-1 {
-    padding-right: 50px;
+    padding: 10px 50px 10px 10px;
 }
 
 .details-part-1 img {
-    max-height: 280px;
+    /*max-height: 280px;*/
+    border: 1px hidden;
+    border-radius: 4px;
+    height: auto;
+    width: 100%;
 }
-
+.details-part-2 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 .details-part-1,
 .details-part-2 {
     width: 50%;
@@ -250,7 +257,7 @@ p.lower-line {
 }
 
 .details-description {
-    margin-bottom: 51px;
+    word-break:break-word;
 }
 
 .details-chef img {
@@ -485,7 +492,7 @@ iframe{
     background-color: #fff;
     margin: 0;
     margin-bottom: 20px;
-    min-height: 400px;
+    min-height: 250px;
 }
 #details,#preparation,#allYouNeed,#tips-and-tricks,#review,#ingredients,#nutrients{
     width: 100%;
@@ -554,6 +561,7 @@ span.lower-content{
     color: #6B6B6B;
     text-align: center;
     word-break:break-word;
+    text-transform: capitalize;
 }
 .icons-container1 .details-content{
     width: 25%;
