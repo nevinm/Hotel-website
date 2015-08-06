@@ -9,8 +9,7 @@ $(document).ready(function() {
         var giftcardDetails = fetchLocalGiftCardData();
         populateGiftcardDetails(giftcardDetails);
     }
-    if (localStorage['loggedIn'] == 'false')
-    {
+    if (localStorage['loggedIn'] == 'false') {
         $('.backToAccount').hide();
     }
     populateYear();
@@ -29,7 +28,7 @@ $(document).ready(function() {
     }
 
     $(".giftcard-selector").on("click", function() {
-        
+
         var giftcardAmount = 0;
         $(".giftcard-selector").removeClass("giftcard-selected");
         $(this).addClass("giftcard-selected");
@@ -42,7 +41,7 @@ $(document).ready(function() {
     });
 
     $(".giftcard-custom-amount input").on("click", function() {
-        if($(".giftcard-selected").length){
+        if ($(".giftcard-selected").length) {
             $(this).val("");
         }
         $(".checkbox-image").attr("src", "../images/unchecked.png");
@@ -63,8 +62,8 @@ $(document).ready(function() {
     });
 
     $(".proceed-checkout").on("click", function(e) {
-        e.preventDefault(); 
-        if($('form').valid()){
+        e.preventDefault();
+        if ($('form').valid()) {
             getGiftCardData();
             window.location.href = 'giftcard-payment.html';
         } else {}
@@ -83,23 +82,23 @@ $(document).ready(function() {
     });
 
     //To prevent refresh
-    $('#address').on("submit",function(e){
+    $('#address').on("submit", function(e) {
         e.preventDefault();
         return false;
     })
-    
+
     $("#gift-place-order").on("click", function(e) {
         e.preventDefault();
         if (validateGiftOrder()) {
             placeGiftOrder();
         };
-    });  
+    });
 });
 
 function placeGiftOrder() {
     //Saved card is present.
-    if(localStorage['loggedIn'] == 'false'){
-        if($('#address').valid()){
+    if (localStorage['loggedIn'] == 'false') {
+        if ($('#address').valid()) {
             $('#address').submit();
         }
     }
@@ -107,8 +106,8 @@ function placeGiftOrder() {
         var cardId = $('.saved-cards .added-card:checked').attr("id");
         fetchGiftCardData('', cardId);
     } else {
-        if($("#pay-form").valid()) {
-            $("#pay-form").submit();    
+        if ($("#pay-form").valid()) {
+            $("#pay-form").submit();
         }
     }
 }
@@ -193,19 +192,19 @@ function fetchGiftCardData(token, cardId) {
             "stripeToken": token,
             "card_id": cardId
         };
-         if(localStorage['loggedIn'] == 'false'){
-          var first_name = $('input[name="firstname"]').val(),
+    if (localStorage['loggedIn'] == 'false') {
+        var first_name = $('input[name="firstname"]').val(),
             last_name = $('input[name="lastname"]').val(),
             email = $('input[name="email"]').val(),
             zip = $('input[name="zip"]').val()
-            guestParams = {
-                "guest_first_name":first_name, 
-                "guest_last_name":last_name, 
-                "guest_email":email, 
-                "guest_zip":zip
-            }
-            $.extend(giftCardOrderParams,guestParams);
-         }
+        guestParams = {
+            "guest_first_name": first_name,
+            "guest_last_name": last_name,
+            "guest_email": email,
+            "guest_zip": zip
+        }
+        $.extend(giftCardOrderParams, guestParams);
+    }
     saveCreditCardGiftCard(giftCardOrderParams);
 }
 
@@ -343,7 +342,7 @@ function populateCardDetailsInPopup() {
     var cards = cardDetails.cards;
     $('.address-payment-list-popup .button').remove();
     $('.address-payment-list-popup .popup-container').empty();
-    $('.address-payment-list-popup .popup-container').append("<div class='popup-sub-wrapper'>"+"</div>");
+    $('.address-payment-list-popup .popup-container').append("<div class='popup-sub-wrapper'>" + "</div>");
     $.each(cards, function(key, value) {
         $('.address-payment-list-popup .popup-container .popup-sub-wrapper').append("<div class='payment-popup-sub-container'>" +
             "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' id='" + value.id + "'>" +
