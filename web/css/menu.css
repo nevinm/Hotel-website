@@ -240,7 +240,7 @@
 	width: 32%;
 	margin: 0 0 60px 2%;
 	float: left;
-    overflow: auto;
+    overflow: hidden;
     height: auto;
 }
 .meal-image-wrapper{
