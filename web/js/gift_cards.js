@@ -38,7 +38,7 @@ $(document).ready(function() {
         $("#giftcard-custom-amount").val("");
         giftcardAmount = $(this).find('.giftcard-amount').attr('data-amount');
         $("#giftcard-custom-amount").val(giftcardAmount);
-        $("#custom-amount").validate().resetForm();
+        $("#giftcard-form").validate().resetForm();
     });
 
     $(".giftcard-custom-amount input").on("click", function() {
