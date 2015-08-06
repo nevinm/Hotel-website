@@ -291,6 +291,7 @@ input.popup-input {
         font-size: 18px;
     }
     .share-banner {
+        margin-top: 75px;
         height: 400px;
     }
     .copy-share-link {
