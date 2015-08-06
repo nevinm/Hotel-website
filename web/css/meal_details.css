@@ -303,7 +303,7 @@ p.lower-line {
   width: 50%;
   float: left;
   color: #b0b0b0;
-  padding: 0 20px;
+  padding: 10px 20px;
 }
 .list-container ul{
     padding-left: 15px;
@@ -405,7 +405,7 @@ span.sub-header {
 .table-container,.text-container {
   width: 50%;
   float: left;
-  padding: 0 20px;
+  padding: 10px 20px;
 }
 #nutrient-table {
   font-family: 'BrandonGrotesque-Regular';
@@ -479,8 +479,10 @@ iframe{
 .meal-tab-container ul li a{
     padding: 21px 18px;
     display: inline-block;
+    width: 100%;
+    height: 100%;
 }
-.meal-tab-container ul li:hover{
+.meal-tab-container ul li a:hover{
     border-bottom: 4px solid #A9D77B;
 }
 #meal-tabs {
@@ -678,6 +680,7 @@ span.lower-content{
         float: left;
         width: 20%;
         text-align: center;
+        padding-left: 25px;
     }
     .right-arrow{
         float: left;
@@ -687,14 +690,21 @@ span.lower-content{
         -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
         transform: rotate(180deg);
         margin-top: -5px;
+        padding-left: 25px;
+    }
+    .next-tab,.prev-tab{
+        width: 25px;
+        height: 25px;
+        float:left;
     }
     .meal-tab-container ul{
-        width: 154px;
+        width: 200px;
         margin: 0 auto;
+        overflow: hidden;
     }
-     .meal-tab-container ul li{
+ /*    .meal-tab-container ul li{
         margin: 0;
-     }
+     }*/
   
     .meal-tab-container{
         border: none;
@@ -747,5 +757,17 @@ span.lower-content{
     .ui-state-active a:after{
         color:black;
     }
-    
+    .meal-tab-container ul li a{
+        padding: 21px 0px;
+        width: 100%;
+        height: 100%;
+    }
+    .meal-tab-container ul li a:hover{
+        border-bottom: 0px;
+    }
   }
+@media (max-width: 550px) {
+    .meal-full-details{
+        margin-left: 0%;
+    }
+}

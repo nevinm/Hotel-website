@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    tabRendering();
     CartItemCount();
     var mealId = getParameterFromUrl("mealId");
     getMealDetails(mealId);
@@ -23,19 +22,21 @@ $(document).ready(function() {
             addToCart(mealId,quantity);
         }
     });
+    tabRendering();
+
 });
 
 
 function tabRendering() {
     var $tabs = $("#meal-tabs").tabs({
-        select: function(event, ui) {
-            jQuery(this).css('height', jQuery(this).height());
-            jQuery(this).css('overflow', 'hidden');
-        },
-        show: function(event, ui) {
-            jQuery(this).css('height', 'auto');
-            jQuery(this).css('overflow', 'visible');
-        }
+        // activate: function(event, ui) {
+        //     jQuery(this).css('height', jQuery(this).height());
+        //     jQuery(this).css('overflow', 'hidden');
+        // },
+        // show: function(event, ui) {
+        //     jQuery(this).css('height', 'auto');
+        //     jQuery(this).css('overflow', 'visible');
+        // }
     });
     
     $('.next-tab').click(function(e) {
@@ -71,10 +72,11 @@ function tabRendering() {
     });
 }
 
-$('.meal-tab-container ul li').on("click", function() {
-    $('.meal-tab-container ul li').removeClass('activeli');
+$('.meal-tab-container ul li a').on("click", function() {
+    $('.meal-tab-container ul li a').removeClass('activeli');
     $(this).addClass('activeli');
 });
+
 
 //STAR RATING
 $(document).on('click', '.rating-star', function() {
@@ -154,6 +156,8 @@ function populateMealDetails(mealDetails) {
     reviewsTab(mealDetails);
     $("#meal-tabs").tabs({
         activate: function(event,ui){
+            // $('.meal-tab-container ul li a').removeClass('activeli');
+            // ui.newTab.find('a').addClass('activeli');
             if((ui.newTab.context.id)=="ui-id-7"){
                 if (!$('#reviews .container').find('.list-review').length > 0) {
                     $('.review-message').fadeIn();
