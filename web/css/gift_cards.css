@@ -865,6 +865,13 @@ form#edit-recipient-details input.popup-input{
         float: left;
         margin: 0;
     }
+    .giftcard-custom-amount span.body-text-small{
+        text-align: center;
+        padding-right: 0px;
+    }
+    .giftcard-custom-amount .forminput-wrapper{
+        float: none;
+    }
     .giftcard-message-inner{
         position: initial;
         padding:0;
@@ -884,8 +891,10 @@ form#edit-recipient-details input.popup-input{
     .giftcard-amount span:nth-child(2),.body-text-small,.details-content{
         font-size: 10px !important;
     }
-    .giftcard-custom-amount input{
+    .giftcard-custom-amount input {
         font-size: 12px;
+        height: 40px;
+        width: 132px;
     }
     .proceed-checkout-container{
         padding-top: 20px;
