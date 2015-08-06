@@ -61,6 +61,7 @@ $(document).ready(function() {
         }, 100);
         if(currentPage == "menu"){
             $(".menu-offer").hide();
+            $("#header").css("margin-top","0px");
         }
     });
     $(document).on('click', '.icon-cancel', function() {
@@ -85,6 +86,13 @@ $(document).ready(function() {
         if(currentPage == "menu"){
             setTimeout(function() {
                 $(".menu-offer").show();
+                if(localStorage["loggedIn"] == "true"){
+                    if ($(window).width() <= 767 && $(window).width() >= 320) {
+                        $("#header").css("margin-top","50px");
+                    }else{
+                        $("#header").css("margin-top","40px");
+                    }
+                }
             }, 700);  
         }
     });
@@ -794,10 +802,28 @@ function mobileResponsive() {
             $('#page-container').css("margin-left", "80%");
             $('#header').css("margin-left", "80%");
         }
+        if(currentPage == "menu"){
+            if(localStorage["loggedIn"] == "true"){
+                $('#page-container').css("margin-top", "125px");
+                $('#header').css("margin-top", "50px");
+            }else{
+                $('#page-container').css("margin-top", "75px");
+                $('#header').css("margin-top", "0px");
+            }
+        }
     } else {
         $('#page-container').css("margin-left", "0px");
         $('#page-container').show();
         $('#header').css("margin-left", "0px");
+        if(currentPage == "menu"){
+            if(localStorage["loggedIn"] == "true"){
+                $('#page-container').css("margin-top", "140px");
+                $('#header').css("margin-top", "40px");
+            }else{
+                $('#page-container').css("margin-top", "100px");
+                $('#header').css("margin-top", "0px");
+            }
+        }
     }
 }
 

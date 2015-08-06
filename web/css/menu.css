@@ -397,8 +397,8 @@ hr.mealList-hr {
     word-wrap: break-word;
     display: inline-block;
     overflow: hidden;
-    width: 100%;
-    /*white-space: nowrap;*/
+    width: 349px;
+    white-space: nowrap;
     text-overflow: ellipsis;
     line-height: 20px;
 }
@@ -489,6 +489,7 @@ span.per-serving-text {
         width: 49%;
         margin: 0 0 60px 2%;
         float: left;
+        overflow: hidden;
     }
     .listContainer div:nth-child(2n+1) {
         margin-left: 0;
@@ -512,6 +513,12 @@ span.per-serving-text {
     .menuItemDetails{
         padding-left: 0 !important;
     }
+    .listItemDetails{
+        padding-right: 2%;
+    }
+    .menuItemName{
+        width: 338px;
+    }
 
 }
 
@@ -530,6 +537,9 @@ span.per-serving-text {
 @media (min-width: 320px) and (max-width: 767px) {
     #page-container{
         margin-top: 75px;
+    }
+    #header{
+        margin-top: 50px;
     }
     .listItems {
         max-width: 430px;

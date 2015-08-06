@@ -180,7 +180,7 @@ function mealDetailsTab(mealDetails) {
     $(".chef-comments").text(mealDetails.chef_comments);
     if(mealDetails.quantity >= 2){
         $('.removeItemButton').show();
-        $('.add-meal-message').show();
+        $('.add-meal-message').addClass('visible').removeClass('invisible');
         $('.meal-overlay').show();
     }
     if(mealDetails.description){
@@ -316,7 +316,7 @@ function addMultipleMeal(meal_details){
     var $removeButton = $('.removeItemButton');
         $addButton = $('.add-meal');
     
-    $('.add-meal-message').fadeIn();
+    $('.add-meal-message').addClass('visible').removeClass('invisible');
     $('.add-meal-message span').text(meal_details.quantity);
     $('.meal-overlay .upper-line span').text(meal_details.quantity);
     if(meal_details.quantity >= 10){
@@ -330,11 +330,11 @@ function addMultipleMeal(meal_details){
     if(meal_details.quantity == 0){
         $removeButton.hide();
         $('.meal-overlay').hide();
-        $('.add-meal-message').hide();
+        $('.add-meal-message').addClass('invisible').removeClass('visible');
     }else{
        $removeButton.fadeIn();
        $('.meal-overlay').show(); 
-       $('.add-meal-message').show();
+       $('.add-meal-message').addClass('visible').removeClass('invisible');
     }
 }
 

@@ -484,21 +484,23 @@ label#username-error {
 	.left-arrow-mobile {
         position: absolute;
         top: 50%;
-        margin-top: -6px;
+        margin-top: -12px;
         left: 10%;
-        height: 16px;
+        height: 25px;
         display: block;
+        width: 25px;
     }
     .right-arrow-mobile{
         position: absolute;
         top: 50%;
-        margin-top: -6px;
+        margin-top: -12px;
         -ms-transform: rotate(180deg); /* IE 9 */
         -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
         transform: rotate(180deg);
         right: 10%;
-        height: 16px;
+        height: 25px;
         display: block;
+        width: 25px;
     }
     .right-arrow,.sub-imageWrapper,.left-arrow{
     	display: none;
@@ -628,6 +630,12 @@ label#username-error {
     .delivery-area-check-popup .popup-zip-fail{
     	width: 80% !important;
     	max-width: 300px !important;
+    }
+    a.next-tab,a.prev-tab{
+    	height: 25px;
+    	width: 25px;
+    	background:url(../images/back_arrowMobile.png) no-repeat center;
+    	float: left; 
     }
 
 }
