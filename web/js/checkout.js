@@ -184,6 +184,7 @@ $(document).ready(function() {
         var button_value = $('#apply-promo-gift').val(),
             code = $('#promo-gift-input').val(),
             code_length = code.length;
+            $(".promo-validation-message").empty();
         if (button_value == "APPLY") {
             $('.promo-validation-message').css('color', '#ff7878');
             if (localStorage['loggedIn'] != 'true') {
@@ -197,6 +198,7 @@ $(document).ready(function() {
             }
         }
         if (button_value == "DELETE") {
+            $("#promo-gift-input").val("");
             removePromocode();
         }
     });
