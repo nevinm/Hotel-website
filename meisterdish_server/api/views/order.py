@@ -414,14 +414,14 @@ def get_order_cart_items(order):
               coupon = {
                 "code" : cart.promo_code.code,
                 "amount":cart.promo_code.amount,
-                "message":"Discount of $"+"{0:.2f}".format(cart.promo_code.amount) + " has been applied to your cart."
+                "message":"A credit of $"+"{0:.2f}".format(cart.promo_code.amount) + " has been added."
               }
           elif cart.gift_cards.all().count():
               gc = cart.gift_cards.all()[0]
               coupon = {
                 "code" : gc.code,
                 "amount":gc.amount,
-                "message":"Discount of $"+"{0:.2f}".format(gc.amount) + " has been applied to your cart."
+                "message":"A credit of $"+"{0:.2f}".format(gc.amount) + " has been added."
               }
 
       if not len(cart_list):
