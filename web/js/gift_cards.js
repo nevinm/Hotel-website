@@ -211,6 +211,7 @@ function fetchGiftCardData(token, cardId) {
 //save credit card details call back
 var saveCreditCardGiftCardCallback = {
     success: function(data, textStatus) {
+    $('.loading-indicator').hide();
         var response = JSON.parse(data);
         if (response.status == 1) {
             $("#pay-form")[0].reset();
@@ -235,6 +236,7 @@ function saveCreditCardGiftCard(giftCardOrderParams) {
     data = JSON.stringify(params);
     var saveCreditCardGiftCardInstance = new AjaxHttpSender();
     saveCreditCardGiftCardInstance.sendPost(url, header, data, saveCreditCardGiftCardCallback);
+    $('.loading-indicator').show();
 }
 
 function populateEditCardDetails() {
