@@ -121,9 +121,9 @@ function validateGiftOrder() {
     }
     return true;
 }
+
 //Old giftcard page
 //Redeem Gift Card API.
-
 var redeemGiftCardCallback = {
     success: function(data, textStatus) {
         userDetails = JSON.parse(data);
