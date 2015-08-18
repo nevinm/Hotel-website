@@ -16,7 +16,7 @@ class Command(BaseCommand):
         try:
             now = datetime.now()
             a = now.hour
-            orders = Order.objects.filter(delivery_type="delivery", delivery_time__year=now.year, delivery_time__month=now.month, delivery_time__day=now.day, delivery_time__hour=now.hour+2)
+            orders = Order.objects.filter(status__lt=3, delivery_type="delivery", delivery_time__year=now.year, delivery_time__month=now.month, delivery_time__day=now.day, delivery_time__hour=now.hour+2)
             if not orders.exists():
                 self.stdout.write('There are no notifications to send.')
                 return False
