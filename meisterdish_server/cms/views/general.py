@@ -344,8 +344,27 @@ def export_users(request, data):
                     'Referral Code',
                     'Credits',
                     'Activation Status',
+                    'Primary Address',
                 ]]
                 for user in users:
+                    primary_address = Address.objects.filter(user=user, is_primary=True)
+                    if primary_address :
+                        primary_address = primary_address[0]
+                        company = primary_address.company if primary_address.company else ""
+                        business = "No" if not primary_address.is_business else "Yes"
+                        address = '''Name          : %s %s
+Is Business ? :%s
+Company       :%s
+Building      :%s
+Street        :%s
+City          :%s
+State         :%s
+Zip code      :%s
+Phone         :%s
+Email         :%s
+''' %(primary_address.first_name, primary_address.last_name, business, company, primary_address.building, primary_address.street, primary_address.city, primary_address.state.name, primary_address.zip, primary_address.phone, primary_address.email)
+                    else:
+                        address = ""
                     users_list.append([
                         user.full_name.title(),
                         settings.ROLE_DIC[user.role.pk],
@@ -359,6 +378,7 @@ def export_users(request, data):
                         user.referral_code,
                         "$ "+"{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
+                        address,
                     ])
                 return export_csv(users_list, "users_list.csv")
         log.error("Export User list :Invalid session")
@@ -390,8 +410,26 @@ def export_users_for_promotion(request, data):
                     'Referral Code',
                     'Credits',
                     'Activation Status',
+                    'Primary Address',
                 ]]
                 for user in users:
+                    primary_address = Address.objects.filter(user=user, is_primary=True)
+                    if primary_address :
+                        primary_address = primary_address[0]
+                        company = primary_address.company if primary_address.company else ""
+                        address = '''Name          : %s %s
+Is Business ? :%s
+Company       :%s
+Building      :%s
+Street        :%s
+City          :%s
+State         :%s
+Zip code      :%s
+Phone         :%s
+Email         :%s
+''' %(primary_address.first_name, primary_address.last_name, company, primary_address.building, primary_address.street, primary_address.city, primary_address.state.name, primary_address.zip, primary_address.phone, primary_address.email)
+                    else:
+                        address = ""
                     users_list.append([
                         user.full_name.title(),
                         settings.ROLE_DIC[user.role.pk],
@@ -405,6 +443,7 @@ def export_users_for_promotion(request, data):
                         user.referral_code,
                         "$ "+"{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
+                        address
                     ])
                 return export_csv(users_list, "users_promotions_list.csv")
         log.error("Export User promotions list : Invalid session key")
