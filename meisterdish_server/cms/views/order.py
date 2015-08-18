@@ -653,6 +653,7 @@ def get_delivery_orders(request, data, user):
                 "status":dict(settings.ORDER_STATUS)[order.status],
                 "status_id" : order.status,
                 "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
+                "delivery_type" : order.delivery_type,
                 "phone": order.phone,
                 "email":order.email,
                 "driver_instructions":order.driver_instructions,

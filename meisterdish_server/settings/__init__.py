@@ -207,7 +207,7 @@ LOGGING = {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },
-        'cart': {
+        'meisterdish_server': {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },
