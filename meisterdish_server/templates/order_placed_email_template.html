@@ -30,11 +30,11 @@
                             <h4 style='margin: 0;font-weight:bold'>ORDER NO: {{order_num|upper}}</h4>
                         </td>
                     </tr>
-                    <tr>
+                    <!--<tr>
                         <td align="center" style="padding: 10px 0 5px 0;" ;>
                             <h4 style='margin: 0;font-weight:bold'>Please wait for your order to be confirmed.</h4>
                         </td>
-                    </tr>
+                    </tr>-->
                 </table>
             </td>
         </tr>
@@ -187,7 +187,7 @@
                                                 <table width="100%" style='font-weight=normal;'>
                                                 <tr>
                                                     <td style='color:#9B9B9B;' width="20%">
-                                                        <span style='font-weight: normal;'>${{ci.meal.price}}</span>
+                                                        <span style='font-weight: normal;'>${{ci.meal.price|floatformat:2}}</span>
                                                     </td>
                                                     <td style='color:#9B9B9B;'width="80%">
                                                         <span style='font-weight: normal;'>Quantity: {{ci.quantity}}</span>
