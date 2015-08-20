@@ -73,6 +73,7 @@ def get_meals(request, data, user):
                               "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.thumb.url,
                               "available":1 if meal.available else 0,
                               "sold_out":1 if meal.sold_out else 0,
+                              "locked" : 1 if meal.locked else 0,
                               "category":"Not Available" if not meal.category else meal.category.name.title(),
                               "meal_types":meal_types,
                               "preparation_time":meal.preparation_time,
@@ -112,6 +113,11 @@ def create_meal(request, data, user):
         else:
             sold_out = "0"
         
+        if 'locked' in data:
+            locked = data['locked']
+        else:
+            locked = "0"
+
         if len(name) < 3 or len(desc)<5 or float(price) <=0 or float(tax) <0 :
             log.error("name, desc, price or tax invalid")
             return custom_error("Please enter valid details.")
@@ -120,6 +126,8 @@ def create_meal(request, data, user):
             meal = Meal.objects.get(is_deleted=False, pk=data["edit_id"])
             log.info("EDITING MEAL :"+str(data['edit_id']))
             edit=True
+            if meal.locked:
+                return custom_error("Sorry, this meal is locked. Please unlock the meal to edit.")
         except Exception as e:
             log.info("CREATING MEAL : "+e.message)
             meal = Meal()
@@ -135,6 +143,7 @@ def create_meal(request, data, user):
         meal.tax = tax
         meal.available = True if str(available) == "1" else False
         meal.sold_out = True if str(sold_out) == "1" else False
+        meal.locked = True if str(locked) == "1" else False
         
         if "main_image" not in data:
             if 'images' in data and len(data['images']) > 0:
@@ -345,6 +354,7 @@ def get_meal_details(request, data, user, meal_id):
             "tax_percentage" : meal.tax,
             "available" : 1 if meal.available else 0,
             "sold_out":1 if meal.sold_out else 0,
+            "locked":1 if meal.locked else 0,
             "calories" : meal.calories,
             "filters" : [{"id": ty.id, "image_id": ty.image.id, "image_url":ty.image.image.url, "meal_type_name":ty.name } for ty in meal.types.all()],
             "default_meal_type_image": settings.DEFAULT_MEAL_TYPE_IMAGE,
