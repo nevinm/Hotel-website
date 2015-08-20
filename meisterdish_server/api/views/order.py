@@ -340,7 +340,7 @@ def print_order(order):
             "contentType": "pdf_base64",
             "content": content,
             "source": "Meisterdish",
-            "options": {"copies":1, "paper":"A5", "bin":"Tray 1"},
+            "options": {"copies":1, "paper":"A6", "bin":"Tray 1"},
         }
         if api_call('printjobs', data):
             log.info("Printing success")
