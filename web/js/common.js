@@ -574,7 +574,8 @@ $("form").each(function() {
                 required: true,
                 decimal: true,
                 minlength: 2,
-                minAmount: 25
+                minAmount: 25,
+                maxAmount: 1000000
             },
             invitecode: {
                 required: true
@@ -667,7 +668,8 @@ $("form").each(function() {
             giftcardcustomamount: {
                 required: "Please enter an amount.",
                 minAmount: "Enter a min amount of 25",
-                decimal: "Please enter a whole number."
+                decimal: "Please enter a whole number.",
+                maxAmount: "Please enter a lower amount"
             },
             amount: {
                 required: "Please enter an amount.",
