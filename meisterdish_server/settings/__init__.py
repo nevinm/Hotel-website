@@ -265,3 +265,5 @@ EMAIL_IMAGES = {
     #"tw" : os.path.join(STATIC_ROOT, "default", "Twitter.png"),
     #"in" : os.path.join(STATIC_ROOT, "default", "Instagram.png"),
 }
+
+INDIAN_NUMBERS = ["7034088806", '9961963746', '9995381338']
