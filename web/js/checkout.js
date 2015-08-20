@@ -868,6 +868,7 @@ function changeDeliveryAddress(selectedId) {
     var selectedAddress = $('.address-payment-list-popup .popup-container').find("[data-id='" + selectedId + "']").parent().find('label'),
         htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
+    $(".address-added").attr("data-id",selectedId);
     $('.address-info .contents').html(htmlContent);
     $("#guest-email").val(selectedAddress.data("email"));
     $("#guest-phone").val(selectedAddress.data("phone"));
