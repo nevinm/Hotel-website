@@ -365,7 +365,7 @@ def send_sms_notification(dic):
         client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
 
         country_code = "+1" if settings.Live else "+1"
-        if str(dic["mobile"]).strip() in ["7034088806", '9961963746']:
+        if str(dic["mobile"]).strip() in settings.INDIAN_NUMBERS:
             country_code = "+91"
         number = country_code + str(dic["mobile"]).strip()
 
@@ -653,6 +653,7 @@ def get_delivery_orders(request, data, user):
                 "status":dict(settings.ORDER_STATUS)[order.status],
                 "status_id" : order.status,
                 "delivery_time" : order.delivery_time.strftime("%m-%d-%Y %H:%M:%S"),
+                "delivery_type" : order.delivery_type,
                 "phone": order.phone,
                 "email":order.email,
                 "driver_instructions":order.driver_instructions,

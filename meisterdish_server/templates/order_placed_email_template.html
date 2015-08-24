@@ -17,7 +17,7 @@
                 <table align="center" width="900">
                     <tr>
                         <td align="center" style="padding: 30px 0 0 0;">
-                            <img src="cid:meisterdish_logo" width="262px" height="30" style="display: block; padding-bottom : 20px;" />
+                            <img src="cid:meisterdish_logo" width="262" height="30" style="display: block; padding-bottom : 20px;" />
                         </td>
                     </tr>
                     <tr>
@@ -30,11 +30,11 @@
                             <h4 style='margin: 0;font-weight:bold'>ORDER NO: {{order_num|upper}}</h4>
                         </td>
                     </tr>
-                    <tr>
+                    <!--<tr>
                         <td align="center" style="padding: 10px 0 5px 0;" ;>
                             <h4 style='margin: 0;font-weight:bold'>Please wait for your order to be confirmed.</h4>
                         </td>
-                    </tr>
+                    </tr>-->
                 </table>
             </td>
         </tr>
@@ -120,14 +120,6 @@
                                                     <span style='font-weight:bold'>${{total_amount}}</span>
                                                 </th>
                                             </tr>
-                                            <tr>
-                                                <th style='font-weight: normal;padding-left:30px'>
-                                                    <span style='font-weight:bold'>Applied Credit</span>
-                                                </th>
-                                                <th style='font-weight: normal;padding-left:10px'>
-                                                    <span style='font-weight:bold'>{{credit}}</span>
-                                                </th>
-                                            </tr>
                                             {% if delivery_type != "pickup" %}
                                             <tr>
                                                 <th style='font-weight: normal;padding-left:30px'>
@@ -152,6 +144,14 @@
                                                 </th>
                                                 <th style='font-weight: normal;padding-left:10px'>
                                                     <span style='font-weight:bold'>${{tip}}</span>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th style='font-weight: normal;padding-left:30px'>
+                                                    <span style='font-weight:bold'>Applied Credit</span>
+                                                </th>
+                                                <th style='font-weight: normal;padding-left:10px'>
+                                                    <span style='font-weight:bold'>{{credit}}</span>
                                                 </th>
                                             </tr>
                                             <tr>
@@ -187,7 +187,7 @@
                                                 <table width="100%" style='font-weight=normal;'>
                                                 <tr>
                                                     <td style='color:#9B9B9B;' width="20%">
-                                                        <span style='font-weight: normal;'>${{ci.meal.price}}</span>
+                                                        <span style='font-weight: normal;'>${{ci.meal.price|floatformat:2}}</span>
                                                     </td>
                                                     <td style='color:#9B9B9B;'width="80%">
                                                         <span style='font-weight: normal;'>Quantity: {{ci.quantity}}</span>
@@ -208,22 +208,22 @@
                 {% if first_name != 'Guest' %}
                 <table align="center" width="800" cellpadding="0" cellspacing="0" style="border-collapse: collapse;border:1px solid #d0d0d0;background-color:#fff">
                     <tbody>
-                        <tr style="float:left;width:100%;">
-                            <td style="padding:20px 0;font-size:24px;text-align: center;width: 100%;float: left;"><span>SHARE FOR ${{referral_bonus}} FREE CREDIT</span></td>
+                        <tr style="width:100%;">
+                            <td align='center' style="padding:20px 0;font-size:24px;text-align: center;width: 100%;"><span>SHARE FOR ${{referral_bonus}} FREE CREDIT</span></td>
                         </tr>
-                        <tr style="float:left;width:100%;">
-                            <td style="padding:10px 0;font-size:16px;text-align: center;width: 100%;float: left;">{{site_url}}share/{{referral_code}}</td>
+                        <tr style="width:100%;">
+                            <td align='center' style="padding:10px 0;font-size:16px;text-align: center;width: 100%;">{{site_url}}share/{{referral_code}}</td>
                         </tr>
-                        <tr style="float:left;">
-                            <tr style="float:left;width:100%;">
-                            <td style="padding:10px 0;padding-bottom:20px;text-align:center;width:100%;float:left;">
+                        <tr style="">
+                            
+                            <td align='center' style="padding:10px 0;padding-bottom:20px;text-align:center;width:100%;">
                                  <a href="http://www.facebook.com/share.php?u=http://meisterdish.qburst.com/views/signup.html?ref=TEMP_44">
                                     <img src="cid:share_fb" style="padding:0 20px;max-height: 45px;padding-left:0px;">
                                 </a>
                                 <!-- <img src="cid:share_tw" style="padding:0 20px;max-height: 45px;">
                                 <img src="cid:share_em" style="padding:0 20px;max-height: 45px;padding-right:0px;"> -->
                             </td>
-                        </tr>
+                        
                         </tr>
                     </tbody>
                 </table>

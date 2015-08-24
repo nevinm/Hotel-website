@@ -389,9 +389,9 @@ hr.mealList-hr {
 
 .menuItemName {
     color: #6B6B6B;
-    font-family: 'BrandonGrotesque-Medium';
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 16px;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
     margin-bottom: 0px;
     word-break: break-all;
     word-wrap: break-word;

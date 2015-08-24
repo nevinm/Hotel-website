@@ -1829,7 +1829,8 @@ a#add-address-popup :hover{
 	span.icon-menu{
 		display: none;
 	}
-	.account-main-page span.icon-menu{
+	.account-main-page span.icon-menu,
+	.checkout-container .icon-menu{
 		display: block;
 	}
 	.backNav{

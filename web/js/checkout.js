@@ -184,6 +184,7 @@ $(document).ready(function() {
         var button_value = $('#apply-promo-gift').val(),
             code = $('#promo-gift-input').val(),
             code_length = code.length;
+            $(".promo-validation-message").empty();
         if (button_value == "APPLY") {
             $('.promo-validation-message').css('color', '#ff7878');
             if (localStorage['loggedIn'] != 'true') {
@@ -197,6 +198,7 @@ $(document).ready(function() {
             }
         }
         if (button_value == "DELETE") {
+            $("#promo-gift-input").val("");
             removePromocode();
         }
     });
@@ -866,6 +868,7 @@ function changeDeliveryAddress(selectedId) {
     var selectedAddress = $('.address-payment-list-popup .popup-container').find("[data-id='" + selectedId + "']").parent().find('label'),
         htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
+    $(".address-added").attr("data-id",selectedId);
     $('.address-info .contents').html(htmlContent);
     $("#guest-email").val(selectedAddress.data("email"));
     $("#guest-phone").val(selectedAddress.data("phone"));
