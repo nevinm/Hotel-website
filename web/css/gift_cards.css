@@ -13,11 +13,15 @@
     padding-left: 30px;
 }
 .giftcard-selector-checkbox {
-    width: 25%;
+    width: 30%;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .giftcard-amount {
-    width: 75%;
+    width: 70%;
+    display: table-cell;
+    vertical-align: middle;
     text-align: center;
     font-family: 'BrandonGrotesque-Regular';
     letter-spacing: 1px;
@@ -39,6 +43,7 @@
 
 .giftcard-selector {
     cursor: pointer;
+    display: table;
     overflow: hidden;
     float: left;
     border: 1px solid #ddd;
@@ -190,17 +195,22 @@
 
 .giftcard-banner {
     max-height: 300px;
+    background: url(../images/giftcard_bg.jpg) no-repeat center center;
+    background-size: cover;
     overflow: hidden;
     margin-top: 100px;
     height: 250px;
     position: relative;
+    background-image: url(../images/giftcard_bg.jpg);
+    background-size: cover;
+    background-position: 50% 50%;
 }
 
-.giftcard-banner img {
+/*.giftcard-banner img {
     height: auto;
     width: 100%;
     margin-top: -70px;
-}
+}*/
 
 .giftcard-select-amount {
     padding: 50px 0;

@@ -33,7 +33,7 @@ def mail(to_list, subject, message, sender=None, headers = None, design=True):
           msgImage.add_header('Content-ID', '<'+cid+'>')
           msg.attach(msgImage)
     else:
-      imgs = {"meisterdish_logo" : os.path.join(settings.STATIC_ROOT, "default", "logo.png")}  
+      imgs = {"meisterdish_logo" : os.path.join(settings.STATIC_ROOT, "default", "logo_email.png")}  
       for cid, img in imgs.items():
           fp = open(img, 'rb')
           msgImage = MIMEImage(fp.read())
@@ -57,14 +57,14 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
               "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
               #"share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
               #"share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
-              "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo.png"),
+              "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo_email.png"),
             }
         else:
             share_images = {
               #"share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
               #"share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
               #"share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
-              "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo.png"),
+              "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo_email.png"),
             }
 
         for ci in order.cart.cartitem_set.all():
