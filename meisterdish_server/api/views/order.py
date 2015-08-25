@@ -340,7 +340,7 @@ def print_order(order):
             "contentType": "pdf_base64",
             "content": content,
             "source": "Meisterdish",
-            "options": {"copies":1, "paper":"A5", "bin":"Tray 1"},
+            "options": {"copies":1, "paper":"A6", "bin":"Tray 1"},
         }
         if api_call('printjobs', data):
             log.info("Printing success")
@@ -460,7 +460,7 @@ def make_payment(order, user):
                 source=order.token,
                 description="meisterdish_user_"+str(user.id)
             )
-
+            
             #Save customer id to user table, for future use
             user.stripe_customer_id = customer.id
             user.save()
@@ -481,7 +481,9 @@ def make_payment(order, user):
                 c_card.expire_month = card.exp_month
                 c_card.card_type = card.brand
                 c_card.save()
-
+        else:
+            # No customer token, but saved card exists.
+            raise Exception('The saved card details does not belong to this user. Please add a new card to make payment.')
 
         response = stripe.Charge.create(
             amount=int(order.total_payable * 100), #Cents
@@ -493,7 +495,6 @@ def make_payment(order, user):
             #receipt_email = order.email
         )
 
-        log.info(response)
         payment = save_payment_data(response)
         return payment
     except Exception as e:
@@ -700,7 +701,7 @@ def print_pdf(request):
         return render_to_pdf(
                     'print_order.html',
                     {
-                        'pagesize':'A5',
+                        'pagesize':'A6',
                         'order':order,
                         'cart_items':cart_items,
                         'date':order.delivery_time.strftime("%m-%d-%Y"),
