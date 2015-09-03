@@ -243,11 +243,11 @@ MEAL_STATUS =  (
     (4, "Cancelled"),
     )
 
-DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
+DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal-default.jpg"
 DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
-DEFAULT_CHEF_IMAGE  = STATIC_URL + "default/chef_default.png"
-DEFAULT_INGREDIENTS_IMAGE  = STATIC_URL + "default/ingredients_default.png"
-DEFAULT_PRE_REQ_IMAGE  = STATIC_URL + "default/pre_requisites_default.png"
+DEFAULT_CHEF_IMAGE  = STATIC_URL + "default/chef-default.png"
+DEFAULT_INGREDIENTS_IMAGE  = STATIC_URL + "default/ingredients-default.png"
+DEFAULT_PRE_REQ_IMAGE  = STATIC_URL + "default/pre-requisites-default.png"
 DEFAULT_MEAL_TYPE_IMAGE  = STATIC_URL + "default/mealtype_default.png"
 
 
@@ -259,11 +259,11 @@ CACHES = {
 
 EMAIL_IMAGES = {
     "meisterdish_logo" : os.path.join(STATIC_ROOT, "default", "logo_email.png"),
-    #"social_sprite" : os.path.join(STATIC_ROOT, "default", "social_icon_sprite.png"),
-    "fb" : os.path.join(STATIC_ROOT, "default", "Facebook.png"),
-    #"pt" : os.path.join(STATIC_ROOT, "default", "Pinterest.png"),
-    #"tw" : os.path.join(STATIC_ROOT, "default", "Twitter.png"),
-    #"in" : os.path.join(STATIC_ROOT, "default", "Instagram.png"),
+    #"social_sprite" : os.path.join(STATIC_ROOT, "default", "social-icon-sprite.png"),
+    "fb" : os.path.join(STATIC_ROOT, "default", "facebook.png"),
+    #"pt" : os.path.join(STATIC_ROOT, "default", "pinterest.png"),
+    #"tw" : os.path.join(STATIC_ROOT, "default", "twitter.png"),
+    #"in" : os.path.join(STATIC_ROOT, "default", "instagram.png"),
 }
 
 INDIAN_NUMBERS = ["7034088806", '9961963746', '9995381338']

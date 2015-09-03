@@ -70,7 +70,7 @@ SLIDER
 }
 
 .sml_sprite {
-    background: url('../images/footer_sml_sprite.png') no-repeat;
+    background: url('../images/footer-sml-sprite.png') no-repeat;
     width: 38px;
     height: 35px;
     cursor: pointer;

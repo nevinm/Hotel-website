@@ -691,7 +691,7 @@ form.addaddress-popup,#new-address-form {
 	width: 100%;
 	height: 30px;
 	overflow: hidden;
-	background: url(../images/selector_arrow.png) no-repeat 157px 6px #f7f7f7;
+	background: url(../images/selector-arrow.png) no-repeat 157px 6px #f7f7f7;
 	border: 1px solid #ddd;
 	border-radius: 4px;
 }
@@ -703,7 +703,7 @@ form.addaddress-popup,#new-address-form {
 	width: 134px;
 	height: 30px;
 	overflow: hidden;
-	background: url(../images/selector_arrow.png) no-repeat 111px 6px #f7f7f7;
+	background: url(../images/selector-arrow.png) no-repeat 111px 6px #f7f7f7;
 	border: 1px solid #ddd;
 	border-radius: 4px;
 }
@@ -1100,7 +1100,7 @@ form.addaddress-popup,#new-address-form {
 }
 #guest-address-info .section3 .forminput-wrapper .styled-select{
 	width: 100%;
-  	background: url(../images/selector_arrow.png) no-repeat 97% 50% #f7f7f7;
+  	background: url(../images/selector-arrow.png) no-repeat 97% 50% #f7f7f7;
 }
 #guest-address-info .section1 .forminput-wrapper{
 	width: 48%;
@@ -1697,7 +1697,7 @@ a#add-address-popup :hover{
 	bottom: 74px;
 }
 #new-address-form .styled-select{
-	background: url(../images/selector_arrow.png) no-repeat 113px 6px #f7f7f7;
+	background: url(../images/selector-arrow.png) no-repeat 113px 6px #f7f7f7;
 }
 .delivery-adress-wrapper{
   overflow-y: auto;

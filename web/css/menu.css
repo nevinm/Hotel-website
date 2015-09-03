@@ -31,7 +31,7 @@
     color: #f3f3f3;
     text-align: center;
     line-height: 15px;
-    background: center url(../images/checkbox_tick.png) no-repeat;
+    background: center url(../images/checkbox-tick.png) no-repeat;
     background-color: #969696;
     color: #F7EBEB;
 }
@@ -91,7 +91,7 @@
 }
 .menu-wrapper{
 	background-color: #E7E7E7;
-	background-image: url(../images/inner_bg.jpg);
+	background-image: url(../images/inner-bg.jpg);
 	background-size: cover;
 }
 .subMenu.body-text-bold{

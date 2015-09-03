@@ -448,7 +448,7 @@ function populateNutrients(nutrients, per_serving, daily_value, isEditingMealDet
         "<div><span>Per Serving</span><span class='serving-value'>" + per_serving + "</span></div>" +
         "<div><span>Daily Value</span><span class='daily-value'>" + daily_value + "</span></div>" +
         "<img class='add-nutrient-sublist' src='../../images/add-button-md.png'>" +
-        "</div><img class='remove remove-main-nutrients remove-nutrients' src='../../images/cross_black.png'></div>");
+        "</div><img class='remove remove-main-nutrients remove-nutrients' src='../../images/cross-black.png'></div>");
     if (isEditingMealDetails) {
         parentElement = $(".nutrient-main-container:last");
         $.each(isEditingMealDetails.subNutrients, function(key, value) {
@@ -462,7 +462,7 @@ function populateSubNutrients(subNutrientName, subPerServing, subDailyValue, par
         "<div><span>Nutrients</span><span class='nutrients-value'>" + subNutrientName + "</span></div>" +
         "<div><span>Per Serving</span><span class='serving-value'>" + subPerServing + "</span></div>" +
         "<div><span>Daily Value</span><span class='daily-value'>" + subDailyValue + "</span></div>" +
-        "<img class='remove remove-sub-nutrients remove-nutrients' src='../../images/cross_black.png'></div></div>");
+        "<img class='remove remove-sub-nutrients remove-nutrients' src='../../images/cross-black.png'></div></div>");
     $('.nutrients-popup-wrapper').hide();
 }
 

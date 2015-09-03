@@ -728,7 +728,7 @@ span.icon-menu {
 }
 
 .sml_sprite {
-    background: url('../images/footer_sml_sprite.png') no-repeat;
+    background: url('../images/footer-sml-sprite.png') no-repeat;
     width: 38px;
     height: 35px;
     cursor: pointer;
@@ -973,7 +973,7 @@ span.icon-menu {
     height: 18px;
     margin-top: 1px;
     margin-left: 4px;
-    background: url(../images/star_sprite.png) -20px 0px
+    background: url(../images/star-sprite.png) -20px 0px
 }
 
 .rating-star:hover,
@@ -1301,7 +1301,7 @@ span.icon-menu {
 	}
 
     .socialMedia{
-        background-image: url(../images/social_sprite_green.png);
+        background-image: url(../images/social-sprite-green.png);
         background-size: cover;
     }
     #facebook {
