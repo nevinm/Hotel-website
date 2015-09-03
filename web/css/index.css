@@ -144,7 +144,7 @@ SLIDER
 \*==============================*/
 
 #section-what-is {
-    background: url(../images/homepageslider/homepage_1.jpg) 0% 50% no-repeat;
+    background: url(../images/homepageslider/homepage-main.jpg) 0% 50% no-repeat;
     background-position: fixed;
     margin-top: 100px;
     background-size: cover;
@@ -531,7 +531,7 @@ p.upper-content {
 \*==============================*/
 
 #section-zipcode {
-    background: url(../images/homepageslider/Map_UpperEastSide.png) center top no-repeat;
+    background: url(../images/homepageslider/map-uppereast-side.png) center top no-repeat;
     background-position: fixed;
     padding: 6% 0 0 0;
     background-size: cover;
