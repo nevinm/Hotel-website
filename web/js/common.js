@@ -37,8 +37,6 @@ $(document).ready(function() {
     $("ul.social-media-icons").find(".sml_sprite").not(".facebook").hide();
 
     //FOOTER UPDATIONS /****END****/
-
-    // &NAVMENU - RESPONSIVE
     $('.icon-menu').on("click", function() {
         clicked = 1;
         $('.navMenu').show();
@@ -46,7 +44,6 @@ $(document).ready(function() {
                 marginLeft: "80%"
 
             })
-            // $("#page-container").css("position","fixed")
         $('#page-container').animate({
             marginLeft: "80%"
         });
@@ -69,7 +66,6 @@ $(document).ready(function() {
         $('.navMenu').animate({
             marginLeft: "-80%"
         });
-        // $("#page-container").css("position","relative");
         $('#page-container').animate({
             marginLeft: "0px"
         });
@@ -497,10 +493,6 @@ $("form").each(function() {
                 maxlength: 8
             },
             zip: {
-                // required: true,
-                // number: true,
-                // minlength: 4,
-                // maxlength: 6,
                 zipcode: true
             },
             state: {

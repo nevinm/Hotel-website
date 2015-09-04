@@ -29,7 +29,6 @@
        });
    });
 
-
    function populateOrdersList(ordersList) {
        $.each(ordersList.aaData, function(key, value) {
            deliveryAddress = value.delivery_address;

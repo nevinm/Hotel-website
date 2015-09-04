@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 	CartItemCount();
 	savedCardDetails();
@@ -30,8 +29,6 @@ var savedCardDetailsCallback = {
             if (cardDetails.cards.length != 0) {
             	$('#manage-payment-method-container .message').hide();
                 populateCardDetails(cardDetails.cards);
-                // $('.payment-method-container').show();
-                // $('.payment-method-guest-container').hide();
             } else {
                 $('#manage-payment-method-container .message').show();
                 $('#update-payment').hide();
