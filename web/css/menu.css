@@ -63,10 +63,6 @@
     border-bottom: 1px solid #ededed;
     margin-top: 40px;
 }
-.meal-area{
-    /*overflow: auto;*/
-    /*padding-bottom: 40px;*/
-}
 .menu-header{
     padding: 20px 0;
 }
@@ -96,7 +92,6 @@
 }
 .subMenu.body-text-bold{
 	font-size: 12pt;
-    /*margin-top: 101px;*/
 	font-family: 'BrandonGrotesque-Regular';
 }
 
@@ -346,7 +341,6 @@ hr.mealList-hr {
 	width: 100%;
 	overflow: hidden;
 	text-align: center;
-	/*display: none;*/
 }
 .subMenu .category-header{
 	display: none;
@@ -480,10 +474,6 @@ span.per-serving-text {
         &MENU - MOBILE
 \*==============================*/
 
-/*#header h3 {
-    display: none;
-}*/
-
 @media (min-width: 768px)and (max-width: 1024px) {
     .listItems {
         width: 49%;
@@ -502,9 +492,6 @@ span.per-serving-text {
         margin: 0px auto 10px auto;
         display: block;
         width: 100%;
-    }
-    .meal-area{
-        /*padding: 0 3.5em;*/
     }
     .meal-overlay {
         height: 100%;
@@ -615,7 +602,6 @@ span.per-serving-text {
     }
     .category-wrapper {
         position: relative;
-        /*box-shadow: 0 0 2px #1A1A1A;*/
     }
     .filter-container:hover .filter-drop-down {
         display: none;
@@ -655,9 +641,6 @@ span.per-serving-text {
     }
 }
 
-
-/*@media (min-width: 1302px) {*/
-/*}*/
 @media (max-width: 440px) {
 	.subMenu .category-header{
 		float: left;

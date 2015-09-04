@@ -99,12 +99,6 @@ SLIDER
 #slider-footer .social-media-icons .pintrest {
     background-position: -105px 0px;
 }
-
-.social-media-icons-parent {
-    /*    margin-top: -12px;
-    position: absolute;*/
-}
-
 .footer-non-social {
     margin-top: 12px;
 }
@@ -475,7 +469,6 @@ p.upper-content {
     letter-spacing: 1px;
     color: #6B6B6B;
     text-align: center;
-    /*padding-bottom: 30px;*/
 }
 
 .what-you-get-section .sub-heading {
@@ -780,13 +773,6 @@ label#username-error {
     #section-what-to-expect .slide-header {
         padding-bottom: 10px;
     }
-    #section-what-is-meisterdish .outer-slide-description,
-    #section-what-to-expect .outer-slide-description {
-        /*margin: 20px auto 0 auto;*/
-    }
-    .meal-name p {
-        /*font-size: 25px;*/
-    }
     .meal-sub-description p,
     p.lower-content {
         font-size: 18px;
@@ -797,11 +783,7 @@ label#username-error {
     #section-what-to-expect .slide-description {
         padding: 10px;
     }
-    .what-you-get-section .sub-heading {
-        /*font-size: 20px;*/
-    }
     .meal-image {
-        /*padding-left: 10%;*/
         padding-top: 2%;
     }
 }

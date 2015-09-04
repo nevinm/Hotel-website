@@ -354,7 +354,6 @@ body {
     width: 100%;
     float: left;
     min-height: 100%;
-    /*margin-bottom: -143px;*/
     background-color: #F9FAF7;
     background-size: cover;
 }
@@ -1134,9 +1133,6 @@ span.icon-menu {
 	.footer-links{
 		padding: 30px 0;
 	}
-    /*#footer-navMenu.navMenu ul li:first-child {
-    	padding-top: 30px;
-    }*/
     .navMenu ul:first-child{
         border-top: 2px solid #A9D77B;
         border-bottom: 2px solid #A9D77B;
