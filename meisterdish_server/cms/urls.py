@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     #url(r'^export_meals/$', meals.export_meals, name='export_meals'),
     url(r'^update_meal_order/(?P<meal_id>[0-9]+)/$', meals.update_meal_order, name='update_meal_order'),
     
+     
 
     url(r'^delete_order/(?P<order_id>[0-9]+)/$', order.delete_order, name='delete_order'),
     url(r'^update_order/(?P<order_id>[0-9]+)/$', order.update_order, name='update_order'),
@@ -62,6 +63,7 @@ urlpatterns = patterns('',
     url(r'^get_home_meal/$', meals.get_home_meal, name='get_home_meal'),
     
     url(r'^add_ingredient/$', meals.add_ingredient, name='add_ingredient'),
+    url(r'^list_ingredients/$', meals.list_ingredients, name='list_ingredients'),
     url(r'^update_ingredient/(?P<ing_id>[0-9]+)/$', meals.update_ingredient, name='update_ingredient'),
     url(r'^delete_ingredient/(?P<ing_id>[0-9]+)/$', meals.delete_ingredient, name='delete_ingredient'),
 )

@@ -59,8 +59,18 @@ def get_meals(request, data, user):
                                     "url":img.image.url,
                                     "thumb_url" : settings.DEFAULT_MEAL_IMAGE if not img.thumb else img.thumb.url,
                                     })
+
+                                    
             """
-            ingredients = simplejson.loads(meal.ingredients) if meal.ingredients is not None and len(meal.ingredients) > 0 else []
+            ings = [ingredient for ingredient in meal.ingredients.all() if len(meal.ingredients.all()) > 0]
+            ing_list = []
+            for ingredient in ings:
+                ing_list.append({
+                    "id":ingredient.id,
+                    "name":ingredient.name,
+                    "image_id":ingredient.image_id,
+                    })
+
             
             meal_types = [{"id":ty.id, "name":ty.name.title()} for ty in meal.types.all()]
 
@@ -79,7 +89,7 @@ def get_meals(request, data, user):
                               "preparation_time":meal.preparation_time,
                               "price":meal.price,
                               "tax":meal.price * meal.tax/100,
-                              "ingredients":ingredients,
+                              "ingredients":ing_list,
                               "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, cart__completed=False, meal__pk=meal.id).exists() else 0,
                               "order":meal.order,
                               "primary_meal" : 1 if str(meal.id) == str(home_meal) else 0,
@@ -265,7 +275,8 @@ def create_meal(request, data, user):
             log.error("Cannot delete meal tips : "+e.message)
 
         if 'ingredients' in data and len(data['ingredients']) > 0:
-            meal.ingredients = simplejson.dumps(data['ingredients'])
+            for ing in data['ingredients']:
+                meal.ingredients.add(Ingredient.objects.get(pk=int(ing)))
         elif not 'ingredients' in data:
             meal.ingredients = None
 
@@ -274,8 +285,9 @@ def create_meal(request, data, user):
         elif not 'nutrients' in data:
             meal.nutrients = None
 
-        if 'ingredients_image' in data:
-            meal.ingredients_image = Image.objects.get(pk=int(data['ingredients_image']))
+#         if 'ingredients_image' in data:
+#             meal.ingredients_image = Image.objects.get(pk=int(data['ingredients_image']))
+        
 
         if 'allergy_notice' in data and data['allergy_notice'].strip() != '':
             meal.allergy_notice = data['allergy_notice'].strip()
@@ -382,11 +394,12 @@ def get_meal_details(request, data, user, meal_id):
                     },
 
             "nutrients" : "" if not meal.nutrients or meal.nutrients == ""  else simplejson.loads(meal.nutrients),
-            "ingredients" : "" if not meal.ingredients or meal.ingredients == "" else simplejson.loads(meal.ingredients),
-            "ingredients_image" : settings.DEFAULT_INGREDIENTS_IMAGE if meal.ingredients_image is None else {
-                                                        "id" : meal.ingredients_image.id,
-                                                        "url" : meal.ingredients_image.image.url
-                                                        },
+            "ingredients" : [{"id":ing.id, "name":ing.name,"image_id":ing.image_id} for ing in meal.ingredients.all()],
+            #"" if not meal.ingredients else simplejson.loads(meal.ingredients),
+#            #Edit here "ingredients_image" : settings.DEFAULT_INGREDIENTS_IMAGE if meal.ingredients_image is None else {
+#                                                         "id" : meal.ingredients_image.id,
+#                                                         "url" : meal.ingredients_image.image.url
+#                                                         },
             "tips" : tips_list,
             "allergy_notice" : meal.allergy_notice,
             "images" : image_list,
@@ -550,7 +563,7 @@ def update_ingredient(request, data, user, ing_id):
             ing.name = name
         
         if "image_id" in data:
-            ing.image = Image.objects.get(pk=img)
+            ing.image = Image.objects.get(pk=int(data["image_id"]))
         
         ing.save()
         return json_response({"status":1, "message" :"Updated Ingredient", "id":ing.id, "name":ing.name, "image_id":ing.image.id, "image_url":ing.image.image.url})
@@ -562,13 +575,14 @@ def update_ingredient(request, data, user, ing_id):
 def delete_ingredient(request, data, user, ing_id):
     try:
         ing = Ingredient.objects.get(pk=ing_id).delete()
-        return json_response({"status":1, "message" :"Deleted Ingredient", "id":ing.id})
+         
+        return json_response({"status":1, "message" :"Deleted Ingredient", "id":ing_id})
     except Exception as e:
         log.error("Failed to delete ingredient. : "+e.message)
         return custom_error("Failed to delete ingredient.")
 
 @check_input('POST', settings.ROLE_ADMIN)
-def list_ingredients(request, data, user, ing_id):
+def list_ingredients(request, data, user):
     try:
         limit = settings.PER_PAGE
         page = 1
