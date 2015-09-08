@@ -502,23 +502,7 @@ function updateReciept(GiftcardDetails, flag) {
         appliedCredit = totalCredits;
         grandTotal = grandTotal - totalCredits;
     }
-    // if(totalDiscount && grandTotal > totalDiscount){
-    //     grandTotal = grandTotal - totalDiscount;
-    //     appliedDiscount = totalDiscount;
-    // }else if (grandTotal < totalDiscount){
-    //     grandTotal = 0;
-    //     appliedDiscount =  totalDiscount ; 
-    // }else{}
     
-    // if(totalCredits && grandTotal > totalCredits){
-    //     grandTotal = grandTotal - totalCredits;
-    //     appliedUserCredit = totalCredits;
-    // }else if(grandTotal < totalCredits){
-    //     appliedUserCredit = grandTotal;
-    //     grandTotal = 0;
-    // }else{}
-    
-    // appliedCredit = appliedUserCredit + appliedDiscount;
     if(appliedCredit > 0){
         $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
     }else{

@@ -68,7 +68,7 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
             }
 
         for ci in order.cart.cartitem_set.all():
-            share_images["img_"+str(ci.meal.id)] = ci.meal.main_image.image.path if ci.meal.main_image else os.path.join(settings.STATIC_ROOT,"default", "meal_default.jpg")
+            share_images["img_"+str(ci.meal.id)] = ci.meal.main_image.image.path if ci.meal.main_image else os.path.join(settings.STATIC_ROOT,"default", "meal-default.jpg")
 
         for cid, img in share_images.items():
             fp = open(img, 'rb')

@@ -188,16 +188,6 @@ function populateMealtypes(mealTypeList) {
         $(this).parent().find(".mealtype-image-upload-element").click();
     });
 
-    // $(".pagination").pagination({
-    //     items: mealTypeList.total_count,
-    //     itemsOnPage: mealTypeList.per_page,
-    //     currentPage: mealTypeList.current_page,
-    //     cssStyle: 'light-theme',
-    //     onPageClick: function(pageNumber, event) {
-    //         getMealtypes(pageNumber);
-    //     }
-    // });
-
     $(".mealtype-image-upload-element").on('click', function() {
         var inputElement = $(this),
             imageElement = $(this).parent().find(".mealtype-icon");

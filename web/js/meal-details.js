@@ -28,16 +28,7 @@ $(document).ready(function() {
 
 
 function tabRendering() {
-    var $tabs = $("#meal-tabs").tabs({
-        // activate: function(event, ui) {
-        //     jQuery(this).css('height', jQuery(this).height());
-        //     jQuery(this).css('overflow', 'hidden');
-        // },
-        // show: function(event, ui) {
-        //     jQuery(this).css('height', 'auto');
-        //     jQuery(this).css('overflow', 'visible');
-        // }
-    });
+    var $tabs = $("#meal-tabs").tabs();
     
     $('.next-tab').click(function(e) {
         e.preventDefault();
@@ -156,8 +147,6 @@ function populateMealDetails(mealDetails) {
     reviewsTab(mealDetails);
     $("#meal-tabs").tabs({
         activate: function(event,ui){
-            // $('.meal-tab-container ul li a').removeClass('activeli');
-            // ui.newTab.find('a').addClass('activeli');
             if((ui.newTab.context.id)=="ui-id-7"){
                 if (!$('#reviews .container').find('.list-review').length > 0) {
                     $('.review-message').fadeIn();
@@ -191,9 +180,6 @@ function mealDetailsTab(mealDetails) {
         $(".details-description span").text(mealDetails.description);
     }
     $(".chef-name").text("CHEF " + mealDetails.chef_name);
-    // if (mealDetails.in_cart == 1) {
-    //     $(".add-meal").addClass("button-disabled");
-    // }
     $(".rating-count").text("("+mealDetails.ratings_count+")")
     $(".meal-ingredients").text(mealDetails.sub);
 

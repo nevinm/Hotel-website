@@ -79,9 +79,6 @@
 .meal-price-rating>* {
     float: right;
 }
-/*.meal-price-rating .add-meal {
-    margin-top: 35px;
-}*/
 span.per-serving-text {
     font-family: 'BrandonGrotesque-Regular';
     color: #6b6b6b;
@@ -240,7 +237,6 @@ p.lower-line {
 }
 
 .details-part-1 img {
-    /*max-height: 280px;*/
     border: 1px hidden;
     border-radius: 4px;
     height: auto;
@@ -549,7 +545,6 @@ span.upper-content {
   font-family: 'BrandonGrotesque-Regular';
   color: #8DC56A;
   font-size: 24px;
-  /*min-height: 54px;*/
   text-align: center;
   word-break:break-word;
   max-height: 45px;
@@ -702,10 +697,6 @@ span.lower-content{
         margin: 0 auto;
         overflow: hidden;
     }
- /*    .meal-tab-container ul li{
-        margin: 0;
-     }*/
-  
     .meal-tab-container{
         border: none;
         box-shadow: none;

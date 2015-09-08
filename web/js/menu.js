@@ -24,6 +24,7 @@ $(document).ready(function() {
             $(".category-menu").slideToggle();
         }
     });
+
     //Add to cart
     $(document).on("click", '.addItemButton', function(e) {
         e.preventDefault();
@@ -42,8 +43,8 @@ $(document).ready(function() {
         }else{
             // $(this).hide();
         }
-        
     });
+
     $(document).on("click", '.removeItemButton', function(e) {
         var quantity = -2,count = 0,
             mealId = $(this).attr('data-id');
@@ -61,6 +62,7 @@ $(document).ready(function() {
         mealId = this.dataset.id;
         window.location.href = 'meal-details.html?mealId=' + mealId;
     });
+
     //Categories
     $(document).on('click', '.menu-categories-list', function() {
         nextPage = 1;
@@ -283,8 +285,6 @@ var addToCartCallback = {
         if (status == -1) {
             showPopup(meal_details);
         } else {
-            // $('*[data-id="' + mealId + '"]').addClass("button-disabled");
-            // showPopup(meal_details);
         var $removeButton = $('a[data-id="' + mealId + '"]').closest('.listItems').find('.removeItemButton'),
             $addButton = $('a[data-id="' + mealId + '"]').closest('.listItems').find('.addItemButton'),
             $showOverlay = $('.meal-overlay[data-id="'+ mealId +'"]');
@@ -326,30 +326,3 @@ function addToCart(meal_id,quantity) {
     var addToCartInstance = new AjaxHttpSender();
     addToCartInstance.sendPost(url, header, data, addToCartCallback, meal_id);
 }
-
-//Remove cart items call back
-// var removeCartItemsCallback = {
-//     success: function(data, textStatus) {
-//         removeData = JSON.parse(data);
-//         if (removeData.status == 1) {
-//             showPopup(removeData);
-//         } else {
-//             showPopup(removeData);
-//         }
-//     },
-//     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-// }
-
-// //Remove cart items
-// function removeCartItems(meal_id) {
-//     var url = baseURL + "remove_from_cart/",
-//         header = {
-//             "session-key": localStorage["session_key"]
-//         },
-//         params = {
-//             "meal_id": meal_id
-//         };
-//     data = JSON.stringify(params);
-//     var removeCartItemsInstance = new AjaxHttpSender();
-//     removeCartItemsInstance.sendPost(url, header, data, removeCartItemsCallback);
-// }

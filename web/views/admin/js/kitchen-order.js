@@ -142,11 +142,7 @@ function populateOrderList(data) {
             mealStatus = $(this).val(),
             producedMealsElements = $("select[data-order-id='" + orderId + "']"),
             producedMeals = [];
-        // $.each(producedMealsElements, function(key, value) {
-        // if ($(value).val()==1) {
         producedMeals.push($(this).data("meal-id"));
-        // } else {}
-        // });
         updateOrders(producedMeals, orderId, mealStatus, this);
     });
 }

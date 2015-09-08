@@ -354,7 +354,6 @@ body {
     width: 100%;
     float: left;
     min-height: 100%;
-    /*margin-bottom: -143px;*/
     background-color: #F9FAF7;
     background-size: cover;
 }
@@ -728,7 +727,7 @@ span.icon-menu {
 }
 
 .sml_sprite {
-    background: url('../images/footer_sml_sprite.png') no-repeat;
+    background: url('../images/footer-sml-sprite.png') no-repeat;
     width: 38px;
     height: 35px;
     cursor: pointer;
@@ -973,7 +972,7 @@ span.icon-menu {
     height: 18px;
     margin-top: 1px;
     margin-left: 4px;
-    background: url(../images/star_sprite.png) -20px 0px
+    background: url(../images/star-sprite.png) -20px 0px
 }
 
 .rating-star:hover,
@@ -1134,9 +1133,6 @@ span.icon-menu {
 	.footer-links{
 		padding: 30px 0;
 	}
-    /*#footer-navMenu.navMenu ul li:first-child {
-    	padding-top: 30px;
-    }*/
     .navMenu ul:first-child{
         border-top: 2px solid #A9D77B;
         border-bottom: 2px solid #A9D77B;
@@ -1301,7 +1297,7 @@ span.icon-menu {
 	}
 
     .socialMedia{
-        background-image: url(../images/social_sprite_green.png);
+        background-image: url(../images/social-sprite-green.png);
         background-size: cover;
     }
     #facebook {

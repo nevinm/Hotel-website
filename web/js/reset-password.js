@@ -1,9 +1,10 @@
 $(document).ready(function() {
     CartItemCount();    
     var token = window.location.href.split("=")[1],
-                                        password,
-                                        newpassword ,
-                                        confirmpassword;
+                password,
+                newpassword ,
+                confirmpassword;
+                
     //reset password process
     var resetPasswordCallback = {
         success: function(data,textStatus){
@@ -46,5 +47,4 @@ $(document).ready(function() {
          var resetpasswordInstance = new AjaxHttpSender();
          resetpasswordInstance.sendPost(url,header,data,resetPasswordCallback);
     }
-
 });

@@ -54,7 +54,7 @@ function popitup(url) {
 }
 
 function facebookShare(site_url, accessToken) {
-    var imgURL = homeUrl + "/images/fb_sharing.png", //change with your external photo url
+    var imgURL = homeUrl + "/images/fb-sharing.png", //change with your external photo url
     referralCode = localStorage['referral_code'];
     FB.api('me/photos', 'post', {
         message: 'Ready to cook meals, delivered on demand.' +

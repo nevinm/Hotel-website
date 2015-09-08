@@ -14,7 +14,7 @@ body {
     margin-top: 100px;
     height: 350px;
     position: relative;
-    background-image: url(../images/share_banner.jpg);
+    background-image: url(../images/share-banner.jpg);
     background-size: cover;
     background-position: 50%;
 }
@@ -308,15 +308,3 @@ input.popup-input {
         height: 450px
     }
 }
-
-
-/*@media (min-width: 320px)and (max-width: 350px) {
-
-}*/
-
-
-/*@media (min-width: 320px)and (max-width: 450px) {
-	.share-button-container{
-		max-width: 300px;
-	}
-}*/

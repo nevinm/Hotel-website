@@ -37,8 +37,6 @@ $(document).ready(function() {
         formData: {
             example: 'test'
         },
-        // maxFileSize: 2000000,
-        // acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
         done: function(e, data) {
             $("#display-pic").attr('src', data.result.thumbnail_url);
         },
