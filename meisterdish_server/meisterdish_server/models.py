@@ -59,6 +59,9 @@ class Image(models.Model):
     created = models.DateTimeField(null=True)
     updated = models.DateTimeField(null=True)
     
+    def __unicode__(self):
+        return self.title
+    
     def create_thumbnail(self):
         if not self.image:
             return
@@ -270,9 +273,11 @@ class Meal(models.Model):
     nutrients = models.TextField(max_length=1024, null=True, blank=True, default="")
     calories =  models.CharField(max_length=30, null=True, blank=True, default="")
 
-    #ingredients = models.ManyToManyField(Ingredient, through="MealIngredient", null=True, blank=True)
-    ingredients = models.TextField(max_length=1024, null=True, blank=True, default="")
-    ingredients_image = models.ForeignKey(Image, null=True, blank=True, related_name="ingredients")
+    ingredients = models.ManyToManyField(Ingredient, null=True, blank=True)
+    #===========================================================================
+    #ingredients = models.TextField(max_length=1024, null=True, blank=True, default="")
+    #ingredients_image = models.ForeignKey(Image, null=True, blank=True, related_name="ingredients")
+    #===========================================================================
     
     tips = models.ManyToManyField(Tips, null=True, blank=True)
 
@@ -316,16 +321,14 @@ class MealNutrient(models.Model):
     def __unicode__(self):
         return self.meal.name + " - " + self.nutrient.name
 
-"""    
-class MealIngredient(models.Model):
-    meal = models.ForeignKey(Meal)
-    ingredient = models.ForeignKey(Ingredient)
-    content = models.CharField(max_length=1024, null=True, blank=True)
-    
-    
-    def __unicode__(self):
-        return self.meal.name + " - " + self.ingredient.name
-"""
+# # class MealIngredient(models.Model):
+# #     meal = models.ForeignKey(Meal)
+# #     ingredient = models.ForeignKey(Ingredient)
+# #          
+#       
+#     def __unicode__(self):
+#         return self.meal.name + " - " + self.ingredient.name
+
 
 class Payment(models.Model):
     methods = PAYMENT_METHODS
