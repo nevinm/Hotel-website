@@ -68,7 +68,7 @@ var Ingredients = (function() {
                 var id = $("#editIngredient").attr("data-id"),
                     ingredient = $('#newIngredient').val(),
                     imageId = $(".popup .ingredient-icon").data("id");
-                updateIngredient(ingredient, imageId);
+                updateIngredient(ingredient, imageId, id);
             }
         });
         $("input[id^=deleteIngredient-]").off().on("click", function() {
@@ -84,7 +84,6 @@ var Ingredients = (function() {
             $(".confirm-popup-wrapper").hide();
             deleteIngredient(id);
         });
-
     }
 
     function showIngredientPopup() {
@@ -102,25 +101,21 @@ var Ingredients = (function() {
                 "ingredient": ingredientName,
                 "image_id": ingredientIcon
             };
-
         data = JSON.stringify(params);
         var api = new AjaxHttpSender();
         api.sendPost(url, header, data, Ingredients.addIngredientCallback);
     }
-
     var addIngredientCallback = {
         success: function(data, textStatus) {
-            var deleteMealTypeData = JSON.parse(data);
-            if (deleteMealTypeData.status == -1) {
+            var responseData = JSON.parse(data);
+            if (responseData.status == -1) {
                 showCallBackStatusPre();
-                showPopup(deleteMealTypeData);
+                showPopup(responseData);
             } else {
-                getMealtypes(1);
+                loadIngredientsList("");
             }
         },
-        failure: function(XMLHttpRequest, textStatus, errorThrown) {
-
-        }
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
 
     function uploadImage(imageElementSelect, imageElement) {
@@ -189,7 +184,6 @@ var Ingredients = (function() {
                 "search": ingredientName
             },
             data = JSON.stringify(params);
-
         var getIngredientsList = new AjaxHttpSender();
         getIngredientsList.sendPost(url, header, data, Ingredients.getIngredientsListCallback);
     }
@@ -203,30 +197,20 @@ var Ingredients = (function() {
                 showPopup(ingredientsList);
             }
         },
-        failure: function(XMLHttpRequest, textStatus, errorThrown) {
-
-        }
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
 
     function populateIngredients(ingredientsList) {
         $('#ingredientsArea tbody tr').remove();
         $.each(ingredientsList.aaData, function(key, value) {
-            $('#ingredientsArea tbody').append("<tr class='row' data-id='" + value.id + "'>" +
-                "<td class='ingredient-name mealtype-name-value'>" + value.name + "</td>" +
-                "<td>" + "<input type='button' data-url='" + value.image_url + "' class='btn btn-small-primary medium-green'" +
-                " id='editIngredientName-" + value.image_id + "' data-imageid='" + value.image_id + "' value='EDIT'>" + "</td>" +
-                "<td>" + "<input type='button' class='btn btn-small-primary medium-green'" +
-                " id='deleteIngredient-" + value.image_id + "' value='DELETE'>" + "</td>" +
-                "<td><img class='mealtype-icon ingredient-icon' src='" + value.image_url + "'/>" +
-                "<input class='ingredient-image-upload-element' value='' type='file' name='image_upload'/></td>" +
-                "</tr>");
+            $('#ingredientsArea tbody').append("<tr class='row' data-id='" + value.id + "'>" + "<td class='ingredient-name mealtype-name-value'>" + value.name + "</td>" + "<td>" + "<input type='button' data-url='" + value.image_url + "' class='btn btn-small-primary medium-green'" + " id='editIngredientName-" + value.image_id + "' data-imageid='" + value.image_id + "' value='EDIT'>" + "</td>" + "<td>" + "<input type='button' class='btn btn-small-primary medium-green'" + " id='deleteIngredient-" + value.image_id + "' value='DELETE'>" + "</td>" + "<td><img class='mealtype-icon ingredient-icon' src='" + value.image_url + "'/>" + "<input class='ingredient-image-upload-element' value='' type='file' name='image_upload'/></td>" + "</tr>");
         });
         bindEvents();
         setUploadUrl('ingredient-image-upload-element');
     }
 
-    function updateIngredient(ingredient, imageId) {
-        var url = baseURL + 'cms/update_ingredient/12/';
+    function updateIngredient(ingredient, imageId, id) {
+        var url = baseURL + 'cms/update_ingredient/' + id + '/';
         header = {
                 "session-key": localStorage['session_key']
             },
@@ -248,9 +232,7 @@ var Ingredients = (function() {
                 loadIngredientsList("");
             }
         },
-        failure: function(XMLHttpRequest, textStatus, errorThrown) {
-
-        }
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
     }
 
     function deleteIngredient(id) {
@@ -262,7 +244,6 @@ var Ingredients = (function() {
             data = JSON.stringify(params);
         var deleteMealtype = new AjaxHttpSender();
         deleteMealtype.sendPost(url, header, data, Ingredients.deleteIngredientCallback);
-
     }
     var deleteIngredientCallback = {
         success: function(data, textStatus) {
@@ -284,33 +265,3 @@ var Ingredients = (function() {
         deleteIngredientCallback: deleteIngredientCallback
     };
 })();
-
-// Ingredients add
-var listIngredientsCallback = {
-    success: function(data, textStatus) {
-        var mealManageData = JSON.parse(data);
-        if (mealManageData.status == -1) {
-            showCallBackStatusPre();
-            showPopup(mealManageData);
-        } else {
-            getMealtypes(1);
-        }
-    },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-}
-
-function listIngredients(ingredientSearch) {
-    var url = baseURL + 'cms/list_ingredients/';
-    header = {
-            "session-key": localStorage['session_key']
-        },
-        params = {
-            "search": ingredientSearch
-        };
-    if (mealTypeId) {
-        params['attribute_id'] = mealTypeId;
-    }
-    data = JSON.stringify(params);
-    var listIngredients = new AjaxHttpSender();
-    listIngredients.sendPost(url, header, data, listIngredientsCallback);
-}
