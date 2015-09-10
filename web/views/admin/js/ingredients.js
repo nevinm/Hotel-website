@@ -1,3 +1,290 @@
+$(document).ready(function() {
+    Ingredients.initView();
+});
+var Ingredients = (function() {
+    function initView() {
+        bindEvents();
+        loadDefaults();
+    }
+
+    function loadDefaults() {
+        setUploadUrl('ingredient-image-upload-element');
+        loadIngredientsList("");
+    }
+
+    function bindEvents() {
+        $("#addNewIngredients").on("click", function() {
+            showIngredientPopup();
+            $(".ingredient-icon").attr("src", "");
+            $("#newIngredient").val("");
+            $("#addIngredient").show();
+            $(".ingredient-icon").data().id = "";
+            $("#editIngredient").hide();
+            $(".header").text("ADD NEW INGREDIENT");
+            $('.popup-wrapper').show();
+            if ($("#newIngredient").hasClass("error")) {
+                $('form.popup-container').valid();
+            }
+            $("form").data('validator').resetForm();
+        });
+        $("#addIngredient").off().on("click", function(e) {
+            e.preventDefault();
+            if ($(".popup-container").valid()) {
+                $('.popup-wrapper').hide();
+                var ingredientName = $('#newIngredient').val(),
+                    imageId = $(".ingredient-icon").attr("data-id");
+                addIngredient(ingredientName, imageId);
+            }
+        });
+        $("#ingredientChangeIcon").off().on("click", function() {
+            $(this).next(".ingredient-image-upload-element").trigger("click");
+        });
+        $(".ingredient-image-upload-element").off().on('click', function() {
+            var inputElement = $(this),
+                imageElement = $(this).parent().find(".ingredient-icon");
+            uploadImage(inputElement, imageElement);
+        });
+        $("input[id^=editIngredientName-]").off().on("click", function() {
+            var mealtype = $(this).closest('tr').find('.ingredient-name').text(),
+                imageUrl = $(this).data("url"),
+                imageId = $(this).data("imageid");
+            showIngredientPopup();
+            $("#addIngredient").hide();
+            $("#editIngredient").show();
+            $(".header").text("EDIT MEAL TYPE");
+            $("#newIngredient").val(mealtype);
+            $(".popup .ingredient-icon").attr("data-id", imageId);
+            $('.popup-wrapper').show();
+            if ($("#newIngredient").hasClass("error")) {
+                $('form.popup-container').valid();
+            }
+            $(".popup .ingredient-icon").attr("src", imageUrl);
+            $("#editIngredient").attr("data-id", $(this).closest('tr').attr("data-id"));
+        });
+        $("#editIngredient").off().on("click", function(e) {
+            e.preventDefault();
+            if ($(".popup-container").valid()) {
+                $('.popup-wrapper').hide();
+                var id = $("#editIngredient").attr("data-id"),
+                    ingredient = $('#newIngredient').val(),
+                    imageId = $(".popup .ingredient-icon").data("id");
+                updateIngredient(ingredient, imageId);
+            }
+        });
+        $("input[id^=deleteIngredient-]").off().on("click", function() {
+            $('.popup-wrapper').hide();
+            $(".confirm-popup-wrapper .header").text("Delete");
+            $(".confirm-popup-wrapper .content span").text("Are you sure you want to delete?");
+            var id = $(this).closest('tr').attr('data-id');
+            $("#yes-button").attr('data-id', id)
+            $(".confirm-popup-wrapper").show();
+        });
+        $("#yes-button").off().on("click", function() {
+            var id = $(this).attr('data-id');
+            $(".confirm-popup-wrapper").hide();
+            deleteIngredient(id);
+        });
+
+    }
+
+    function showIngredientPopup() {
+        $("#close").removeClass("clear");
+        $(".popup-input-wrapper").show();
+        $(".callback-status").hide();
+    }
+
+    function addIngredient(ingredientName, ingredientIcon) {
+        var url = baseURL + 'cms/add_ingredient/';
+        header = {
+                "session-key": localStorage['session_key']
+            },
+            params = {
+                "ingredient": ingredientName,
+                "image_id": ingredientIcon
+            };
+
+        data = JSON.stringify(params);
+        var api = new AjaxHttpSender();
+        api.sendPost(url, header, data, Ingredients.addIngredientCallback);
+    }
+
+    var addIngredientCallback = {
+        success: function(data, textStatus) {
+            var deleteMealTypeData = JSON.parse(data);
+            if (deleteMealTypeData.status == -1) {
+                showCallBackStatusPre();
+                showPopup(deleteMealTypeData);
+            } else {
+                getMealtypes(1);
+            }
+        },
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {
+
+        }
+    }
+
+    function uploadImage(imageElementSelect, imageElement) {
+        $(imageElementSelect).fileupload({
+            add: function(e, data) {
+                var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i,
+                    error = [];
+                if (data.originalFiles[0]['type'] && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+                    error.message = 'Not an accepted file type';
+                    showCallBackStatusPre();
+                    showPopup(error);
+                    return;
+                }
+                if (data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > 2000000) {
+                    error.message = 'Filesize is too big';
+                    showCallBackStatusPre();
+                    showPopup(error);
+                    return;
+                } else {
+                    data.submit();
+                }
+            },
+            dataType: 'json',
+            headers: {
+                "session-key": localStorage["session_key"]
+            },
+            formData: {
+                example: 'test'
+            },
+            start: function(e) {
+                $(".upload-gif").show();
+            },
+            done: function(e, data) {
+                $(".upload-gif").hide();
+                if (data.result.status == 1) {
+                    $(imageElement).attr('src', data.result.thumbnail_url);
+                    $(imageElement).attr('data-id', data.result.id);
+                    $(imageElement).show();
+                } else {
+                    showCallBackStatusPre();
+                    showPopup(data.result);
+                }
+            }
+        });
+    }
+
+    function showCallBackStatusPre() {
+        $(".popup-input-wrapper").hide();
+        $("#add-mealtype, #edit-mealtype").hide();
+        $(".callback-status").show();
+        $(".header").text("MESSAGE");
+        $("#close").addClass("clear");
+    }
+
+    function setUploadUrl(element) {
+        $("." + element).attr("data-url", baseURL + "cms/upload_image/");
+    }
+
+    function loadIngredientsList(ingredientName) {
+        var url = baseURL + 'cms/list_ingredients/';
+        // var url = baseURL + 'cms/list_attributes/';
+        header = {
+                "session-key": localStorage['session_key']
+            },
+            params = {
+                "search": ingredientName
+            },
+            data = JSON.stringify(params);
+
+        var getIngredientsList = new AjaxHttpSender();
+        getIngredientsList.sendPost(url, header, data, Ingredients.getIngredientsListCallback);
+    }
+    var getIngredientsListCallback = {
+        success: function(data, textStatus) {
+            var ingredientsList = JSON.parse(data);
+            if (ingredientsList.status == 1) {
+                populateIngredients(ingredientsList);
+            } else {
+                showCallBackStatusPre();
+                showPopup(ingredientsList);
+            }
+        },
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {
+
+        }
+    }
+
+    function populateIngredients(ingredientsList) {
+        $('#ingredientsArea tbody tr').remove();
+        $.each(ingredientsList.aaData, function(key, value) {
+            $('#ingredientsArea tbody').append("<tr class='row' data-id='" + value.id + "'>" +
+                "<td class='ingredient-name mealtype-name-value'>" + value.name + "</td>" +
+                "<td>" + "<input type='button' data-url='" + value.image_url + "' class='btn btn-small-primary medium-green'" +
+                " id='editIngredientName-" + value.image_id + "' data-imageid='" + value.image_id + "' value='EDIT'>" + "</td>" +
+                "<td>" + "<input type='button' class='btn btn-small-primary medium-green'" +
+                " id='deleteIngredient-" + value.image_id + "' value='DELETE'>" + "</td>" +
+                "<td><img class='mealtype-icon ingredient-icon' src='" + value.image_url + "'/>" +
+                "<input class='ingredient-image-upload-element' value='' type='file' name='image_upload'/></td>" +
+                "</tr>");
+        });
+        bindEvents();
+        setUploadUrl('ingredient-image-upload-element');
+    }
+
+    function updateIngredient(ingredient, imageId) {
+        var url = baseURL + 'cms/update_ingredient/12/';
+        header = {
+                "session-key": localStorage['session_key']
+            },
+            params = {
+                "ingredient": ingredient,
+                "image_id": imageId
+            };
+        data = JSON.stringify(params);
+        var api = new AjaxHttpSender();
+        api.sendPost(url, header, data, Ingredients.updateIngredientCallback);
+    }
+    var updateIngredientCallback = {
+        success: function(data, textStatus) {
+            var responseData = JSON.parse(data);
+            if (responseData.status == -1) {
+                showCallBackStatusPre();
+                showPopup(responseData);
+            } else {
+                loadIngredientsList("");
+            }
+        },
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {
+
+        }
+    }
+
+    function deleteIngredient(id) {
+        var url = baseURL + 'cms/delete_ingredient/' + id + '/';
+        header = {
+                "session-key": localStorage['session_key']
+            },
+            params = {},
+            data = JSON.stringify(params);
+        var deleteMealtype = new AjaxHttpSender();
+        deleteMealtype.sendPost(url, header, data, Ingredients.deleteIngredientCallback);
+
+    }
+    var deleteIngredientCallback = {
+        success: function(data, textStatus) {
+            var responseData = JSON.parse(data);
+            if (responseData.status == -1) {
+                showCallBackStatusPre();
+                showPopup(responseData);
+            } else {
+                loadIngredientsList("");
+            }
+        },
+        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    }
+    return {
+        initView: initView,
+        addIngredientCallback: addIngredientCallback,
+        getIngredientsListCallback: getIngredientsListCallback,
+        updateIngredientCallback: updateIngredientCallback,
+        deleteIngredientCallback: deleteIngredientCallback
+    };
+})();
+
 // Ingredients add
 var listIngredientsCallback = {
     success: function(data, textStatus) {
@@ -18,7 +305,7 @@ function listIngredients(ingredientSearch) {
             "session-key": localStorage['session_key']
         },
         params = {
-            "search" : ingredientSearch
+            "search": ingredientSearch
         };
     if (mealTypeId) {
         params['attribute_id'] = mealTypeId;
