@@ -341,26 +341,27 @@ def get_user_reviews(request, data, user):
                 except Exception as e:
                     log.error("Rating list error :"+e.message)
                     rating = False
-                if rating :    
-                    rating_list.append({
-                        "rating":rating.rating,
-                        "review":rating.comment,
-                        "date" : rating.created.strftime("%m-%d-%Y %H:%M:%S"),
-                        "meal_name" : rating.meal.name,
-                        "meal_image":rating.meal.main_image.image.url if meal.main_image else settings.DEFAULT_MEAL_IMAGE,
-                        "meal_id":rating.meal.id,
-                        "order_id":rating.order.id,
-                    })
-                else:
-                    rating_list.append({
-                        "rating":0,
-                        "review":"",
-                        "date" : "",
-                        "meal_name" : meal.name,
-                        "meal_image":meal.main_image.image.url if meal.main_image else settings.DEFAULT_MEAL_IMAGE,
-                        "meal_id":meal.id,
-                        "order_id":order.id,
-                    })
+                if meal.id not in [i['meal_id'] for i in rating_list]:
+                    if rating :    
+                        rating_list.append({
+                            "rating":rating.rating,
+                            "review":rating.comment,
+                            "date" : rating.created.strftime("%m-%d-%Y %H:%M:%S"),
+                            "meal_name" : rating.meal.name,
+                            "meal_image":rating.meal.main_image.image.url if meal.main_image else settings.DEFAULT_MEAL_IMAGE,
+                            "meal_id":rating.meal.id,
+                            "order_id":rating.order.id,
+                        })
+                    else:
+                        rating_list.append({
+                            "rating":0,
+                            "review":"",
+                            "date" : "",
+                            "meal_name" : meal.name,
+                            "meal_image":meal.main_image.image.url if meal.main_image else settings.DEFAULT_MEAL_IMAGE,
+                            "meal_id":meal.id,
+                            "order_id":order.id,
+                        })
         return json_response({"status":1, "reviews":rating_list})
     except Exception as e:
         log.error("List user reviews: user "+str(user.id) + " : "+ e.message)
