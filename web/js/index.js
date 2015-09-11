@@ -1,8 +1,8 @@
 $(document).ready(function() {
     ipadWidth = 767;
     CartItemCount();
-    // getMainMealId();
-    getHomePageMeal();
+    getMainMealId();
+    // getHomePageMeal();
     shouldFullpageRender();
 
     $(".check-delivery").on('click', function(e) {
@@ -154,7 +154,7 @@ var getMainMealIdCallback = {
     success: function(data, textStatus) {
         var mealIdDetails = JSON.parse(data);
         if (mealIdDetails.status == 1) {
-            getHomePageMeal(mealId);
+            getHomePageMeal(mealIdDetails.meal_id);
         } else {
             showPopup(mealIdDetails);
         }
@@ -181,6 +181,7 @@ function populateHomePageMeal(mealDetails) {
     
     if (mealDetails.meal_types.length) {
         $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src", mealDetails.meal_types[0].image_url);
+        $sectionWhatToExpect.find(".meal-properties .meal-type").text(mealDetails.meal_types[0].meal_type_name);
     } else {
         $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src", mealDetails.default_meal_type_image.image_url);
     }
