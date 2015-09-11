@@ -59,7 +59,7 @@ def get_meals(request, data):
                 ing_list.append({
                     "id":ingredient.id,
                     "name":ingredient.name,
-                    "image_id":ingredient.image_id,
+                    "image_url":ingredient.image.image.url,
                     })
 
             
@@ -197,7 +197,7 @@ def get_meal_details(request, data, meal_id):
                     },
 
             "nutrients" : "" if not meal.nutrients or meal.nutrients == ""  else simplejson.loads(meal.nutrients),
-            "ingredients" : [{"id":ing.id, "name":ing.name,"image_id":ing.image_id} for ing in meal.ingredients.all()],
+            "ingredients" : [{"id":ing.id, "name":ing.name,"image_url":ing.image.image.url} for ing in meal.ingredients.all()],
         # "" if not meal.ingredients or meal.ingredients == "" else simplejson.loads(meal.ingredients),
 #             "ingredients_image" : settings.DEFAULT_INGREDIENTS_IMAGE if meal.ingredients_image is None else {
 #                                                         "id" : meal.ingredients_image.id,
