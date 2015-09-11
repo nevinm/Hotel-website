@@ -81,6 +81,7 @@ function populateDeliveryOrderList(order_data) {
             grand_total = undefinedCheck(value.grand_total),
             delivery_address = {},
             delivery_address = undefinedCheck(value.delivery_address),
+            delivery_type = undefinedCheck(value.delivery_type),
             address_name = undefinedCheck(delivery_address.first_name) + " " +
             undefinedCheck(delivery_address.last_name),
             building = undefinedCheck(delivery_address.building),
@@ -97,7 +98,6 @@ function populateDeliveryOrderList(order_data) {
         } else {
             instructions = "None";
         }
-
         $('table#delivery-order tbody').append("<tr data-id='" + value.id + "'><td class='driver-time'>" +
             meridianDeliveryTime.date +"<br>"+ meridianDeliveryTime.time+ "</td>" +
             "<td>" + value.order_num + "</td>" +
@@ -107,6 +107,7 @@ function populateDeliveryOrderList(order_data) {
             "<td>" + name + "</td>" +
             "<td>" + phone + "</td>" +
             "<td class='meals'>" + "</td>" +
+            "<td>" + delivery_type + "</td>" +
             "<td>" + instructions + "</td>" +
             "<td>" + "<select data-id='" + value.id + "'class='order-status' name='status'>" +
             "<option value='0'>Placed</option>" +

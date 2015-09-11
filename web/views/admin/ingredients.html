@@ -27,11 +27,11 @@
                         <a href="manage-delivery-areas.html">DELIVERY AREA</a>
                     </li>
                     <li class='admin-links'>
-                       <a href="promocode.html">PROMOCODES</a>
-                   </li>
-                   <li class='admin-links'>
-                       <a href="giftcards.html">GIFTCARDS</a>
-                   </li>
+                        <a href="promocode.html">PROMOCODES</a>
+                    </li>
+                    <li class='admin-links'>
+                        <a href="giftcards.html">GIFTCARDS</a>
+                    </li>
                     <li class='admin-links'>
                         <a href="orderlist.html">ORDERS</a>
                     </li>
@@ -41,7 +41,7 @@
                     <li class='admin-links'>
                         <a href="meallist.html">MEALS</a>
                     </li>
-                    <li class='bold admin-links'>
+                    <li class='admin-links'>
                         <a href="mealtype.html">MEAL TYPE</a>
                     </li>
                     <li class='admin-links'>
@@ -49,6 +49,9 @@
                     </li>
                     <li class='admin-links'>
                         <a href="categories.html">CATEGORIES</a>
+                    </li>
+                    <li class='bold admin-links'>
+                        <a href="ingredients.html">INGREDIENTS</a>
                     </li>
                     <li id="navbar-username_hidden" class="bold green">
                         <a href='../account.html'></a>
@@ -65,13 +68,13 @@
                 </div>
                 <div class="admin-page-container">
                     <div class="admin-header">
-                        <h2>INGREDIENTS LIST</h2>
+                        <h2>MANAGE INGREDIENTS</h2>
                     </div>
-                    <div class="manage-area-container" id='mealtype-container'>
+                    <div class="manage-area-container" id='ingredientContainer'>
                         <div class="add-deliveryarea-wrapper">
-                            <input type="button" class="btn btn-small-primary medium-green" value="Add meal type" id="add-new-ingredients">
+                            <input type="button" class="btn btn-small-primary medium-green" value="Add ingredient" id="addNewIngredients">
                         </div>
-                        <table id="ingredients-area" class="display" cellspacing="0" width="100%">
+                        <table id="ingredientsArea" class="display" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th>Ingredients</th>
@@ -92,20 +95,20 @@
                                 <form class="popup-container">
                                     <div class="content">
                                         <div class="popup-input-wrapper">
-                                            <label class="body-text-small">New Meal Type:</label>
-                                            <input type="text" class="popup-input" name="meal_type" id="new-mealtype">
+                                            <label class="body-text-small">New Ingredient:</label>
+                                            <input type="text" class="popup-input" name="meal_type" id="newIngredient">
                                         </div>
                                         <div class="popup-input-wrapper">
-                                            <img src='' class='mealtype-image mealtype-icon '/>
-                                            <p class='mealtype-change-icon'>Edit Icon</p>
-                                            <input class='mealtype-image-upload-element' value='' type='file' name='image_upload'/>
-                                            <img class='upload-gif' src='../../images/ajax-loader.gif'/>
+                                            <img src='' class='ingredient-icon mealtype-image mealtype-icon ' />
+                                            <p class='mealtype-change-icon' id="ingredientChangeIcon">Edit Icon</p>
+                                            <input class='ingredient-image-upload-element' value='' type='file' name='image_upload' />
+                                            <img class='upload-gif' src='../../images/ajax-loader.gif' />
                                         </div>
                                         <span class='callback-status'></span>
                                     </div>
                                     <div class="button">
-                                        <input type="submit" class="btn btn-small-secondary" id="edit-mealtype" value="SUBMIT">
-                                        <input type="submit" class="btn btn-small-secondary" id="add-mealtype" value="SUBMIT">
+                                        <input type="submit" class="btn btn-small-secondary" id="editIngredient" value="SUBMIT">
+                                        <input type="submit" class="btn btn-small-secondary" id="addIngredient" value="SUBMIT">
                                         <a href="#!" class="btn btn-small-secondary" id="close">CLOSE</a>
                                     </div>
                                 </form>
