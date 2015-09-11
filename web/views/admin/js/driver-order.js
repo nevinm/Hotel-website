@@ -102,8 +102,8 @@ function populateDeliveryOrderList(order_data) {
             meridianDeliveryTime.date +"<br>"+ meridianDeliveryTime.time+ "</td>" +
             "<td>" + value.order_num + "</td>" +
             "<td>" + zip + "</td>" +
-            "<td>" + "<span>" + building + ", " + street + "</span>" + "</td>" +
-            "<td>" + "<span>" + city + ", " + state + "</span>" + "</td>" +
+            "<td>" + "<span class='address'>" + building + ", " + street + "</span>" + "</td>" +
+            "<td>" + "<span class='address'>" + city + ", " + state + "</span>" + "</td>" +
             "<td>" + name + "</td>" +
             "<td>" + phone + "</td>" +
             "<td class='meals'>" + "</td>" +
@@ -117,6 +117,13 @@ function populateDeliveryOrderList(order_data) {
             "<option value='4'>Cancelled</option>" +
             "</select></td>" +
             +"</tr>");
+        
+        if(delivery_type == 'pickup'){
+            addressElements = $(".address").slice(-2);
+            $.each(addressElements,function(key, value){
+                $(value).text("NONE");
+            });
+        }
 
         mealLength = meals.length;
         $.each(meals, function(key, value) {
