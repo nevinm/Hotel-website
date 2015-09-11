@@ -241,7 +241,8 @@ function populateMealList(mealList, isInfinteScrolling) {
                 "</section><section class='listItemDetails tableDisplay'>" +
                 "<input type='hidden' class='hidden-field' value='"+ value.quantity +"'>" +
                 "<h3 class='pullLeft itemCost'>" + dollarConvert(parseFloat(value.tax+value.price).toFixed(2)) + "</h3>" +
-                "<span class='per-serving-text'>"+"PER SERVING"+"</span>"+
+                "<div class='serveBox'><span class='per-serving-text'>" + "PER SERVING" + "</span>" +
+                "<span class='per-serving-box'>" + "(2x SERVINGS PER BOX)" + "</span></div>" +
                 "<div class='removeItemButton' data-id='"+ value.id +"'>"+"&#8211"+"</div>"+
                 "<span><a class='btn btn-small-primary medium-green addItemButton' " +
                 "data-id='" + value.id + "'>ADD</a></span>" +

@@ -137,7 +137,7 @@ li#navbar-username {
 #meal-list,#meal-list th,#meal-list td,
 #delivery-area,#delivery-area th,#delivery-area td,
 #mealtype-area,#mealtype-area th,#mealtype-area td,
-#ingredients-area,#ingredients-area th,#ingredients-area td
+#ingredients-area,#ingredientsArea th,#ingredientsArea td
  {
     border: 1px solid #d0d0d0;
     padding: 10px;
@@ -1228,6 +1228,17 @@ form.edit-gift-card #new-name-error{
     bottom: 26px;
 }
 
+/*CR1*/
+
+
 /*=======================*\
        &INGREDIENTS
 \*=======================*/
+
+#ingredientContainer .popup {
+    height: 230px;
+}
+
+.ingredient-image-upload-element {
+    display: none !important;
+}

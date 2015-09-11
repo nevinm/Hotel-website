@@ -1,58 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Meisterdish Home Page</title>
-    <link rel="stylesheet" type="text/css" href="css/reset.css">
-    <link rel="stylesheet" type="text/css" href="css/fontello.css">
-    <link rel="stylesheet" type="text/css" href="css/common.css">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <script type="text/javascript" src='js/validate-session.js'></script>
-    <script>
-    (function(i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function() {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-    ga('create', 'UA-63283790-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-</head>
-
-<body>
-    <div id="home-page-main-wrapper">
-        <header id="header">
-            <div class="contentArea">
-                <a href="index.html"><img class="pullLeft logo" src="images/logo.png" alt="MeisterDish"></a>
-                <div class="cart pullRight">
-                    <a href="views/checkout.html">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Meisterdish Home Page</title>
+        <link rel="stylesheet" type="text/css" href="css/reset.css">
+        <link rel="stylesheet" type="text/css" href="css/fontello.css">
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <script type="text/javascript" src='js/validate-session.js'></script>
+        <script>
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-63283790-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </head>
+    <body>
+        <div id="home-page-main-wrapper">
+            <header id="header">
+                <div class="contentArea">
+                    <a href="index.html"><img class="pullLeft logo" src="images/logo.png" alt="MeisterDish"></a>
+                    <div class="cart pullRight">
+                        <a href="views/checkout.html">
                         <span class="count">0</span>
                         <img src="images/cart-icon.png">
-                    </a>
-                </div>
-                <span class="icon-menu pullRight"></span>
-                <div class="logo-mobile-container">
-                    <a href="index.html">
+                        </a>
+                    </div>
+                    <span class="icon-menu pullRight"></span>
+                    <div class="logo-mobile-container">
+                        <a href="index.html">
                         <img class="pullLeft logo-mobile" src="images/logo.png" alt="MeisterDish">
-                    </a>
-                </div>
-                <div class="navMenu" style="display:none">
-                    <ul>
-                        <li>
-                            <a href="index.html">HOME</a>
-                        </li>
+                        </a>
+                    </div>
+                    <div class="navMenu" style="display:none">
+                        <ul>
+                            <li>
+                                <a href="index.html">HOME</a>
+                            </li>
+                            <li>
+                                <a href="views/menu.html">MENU</a>
+                            </li>
+                            <li>
+                                <a href="views/how-it-works.html">HOW IT WORKS</a>
+                            </li>
+                            <li>
+                                <a href="views/gift-cards-select.html">GIFTS</a>
+                            </li>
+                            <li class="login-signup">
+                                <a href="views/login.html">LOG IN</a>
+                            </li>
+                            <li class='login-signup'>
+                                <a href="views/signup.html">SIGN UP</a>
+                            </li>
+                            <li id="navbar-username" class="bold green">
+                                <a href='views/account.html'></a>
+                            </li>
+                        </ul>
+                        <footer id="footer-navMenu">
+                            <div class="footerContent">
+                                <ul>
+                                    <li>
+                                        <a href="views/contact-us.html">CONTACT US</a>
+                                    </li>
+                                    <li>
+                                        <a href="views/privacy-terms.html">PRIVACY & TERMS</a>
+                                    </li>
+                                    <li>
+                                        <a href="">HELP</a>
+                                    </li>
+                                </ul>
+                                <ul class='social-media-icons'>
+                                    <li class='sml_sprite facebook'>
+                                        <a href='http://www.facebook.com/meisterdish' target="_blank"></a>
+                                    </li>
+                                    <li class='sml_sprite twitter'></li>
+                                    <li class='sml_sprite instagram'></li>
+                                    <li class='sml_sprite pintrest'></li>
+                                </ul>
+                            </div>
+                        </footer>
+                    </div>
+                    <ul id="menu" class="pullRight">
                         <li>
                             <a href="views/menu.html">MENU</a>
                         </li>
@@ -66,330 +107,287 @@
                             <a href="views/login.html">LOG IN</a>
                         </li>
                         <li class='login-signup'>
-                            <a href="views/signup.html">SIGN UP</a>
+                            <a href="views/signup.html" class="btn btn-small-secondary">SIGN UP</a>
                         </li>
                         <li id="navbar-username" class="bold green">
                             <a href='views/account.html'></a>
                         </li>
                     </ul>
-                    <footer id="footer-navMenu">
+                </div>
+            </header>
+            <div id="page-container">
+                <div id="fullpage">
+                    <div class="section fp-table" id='section-what-is'>
+                        <div class="fp-tableCell">
+                            <div class='outer-slide-description'>
+                                <div class='slide-description'>
+                                    <div class='section-logo'>
+                                        <a href="index.html">
+                                        <img src="images/logo.png" alt="MeisterDish">
+                                        </a>
+                                    </div>
+                                    <div class='main-header-container'>
+                                        <p class='main-header'>COOKING THAT FITS THE </p>
+                                        <p class='main-header'>NEW YORK LIFESTYLE</p>
+                                    </div>
+                                    <div class='sub-header-container'>
+                                        <p class='sub-header'>Quick and delicious recipes delivered on demand.</p>
+                                        <p class='sub-header'>You cook. We do the rest.</p>
+                                    </div>
+                                    <a href="views/menu.html" class="btn btn-large-primary medium-green menu-button">SEE THE MENU</a>
+                                </div>
+                            </div>
+                            <a href="views/menu.html" class="btn btn-large-primary mobile-menu-button medium-green">SEE THE MENU</a>
+                        </div>
+                    </div>
+                    <div class="section fp-table" id='section-what-is-meisterdish'>
+                        <div class="fp-tableCell">
+                            <div class='slider-header-containter'>
+                                <p class="slide-header">WHAT IS MEISTERDISH?</p>
+                                <hr class="header-hr">
+                            </div>
+                            <div class='outer-slide-description'>
+                                <div class='slide-description'>
+                                    <div class='meisterdish-details'>
+                                        <img class='meisterdish-details-icon' src='images/homepageslider/icon-we-source.png' />
+                                        <p class='inner-header'>WE SOURCE</p>
+                                        <hr class="inner-header-hr">
+                                        <p class='inner-details'>Our ingredients are sourced</p>
+                                        <p class='inner-details'>every day from local farmers,</p>
+                                        <p class='inner-details'>with a varied seasonal</p>
+                                        <p class='inner-details'>selection for the best taste.</p>
+                                    </div>
+                                    <div class='meisterdish-details'>
+                                        <img class='meisterdish-details-icon' src='images/homepageslider/icon-we-prep.png' />
+                                        <p class='inner-header'>WE PREP</p>
+                                        <hr class="inner-header-hr">
+                                        <p class='inner-details'>We thoroughly clean and </p>
+                                        <p class='inner-details'>perfectly portion all</p>
+                                        <p class='inner-details'>ingredients for your convenience.</p>
+                                        <p class='inner-details'>Yup. We are taking the</p>
+                                        <p class='inner-details'>work out of cooking.</p>
+                                    </div>
+                                    <div class='meisterdish-details'>
+                                        <img class='meisterdish-details-icon' src='images/homepageslider/icon-we-deliver.png' />
+                                        <p class='inner-header'>WE DELIVER</p>
+                                        <hr class="inner-header-hr">
+                                        <p class='inner-details'>We are located</p>
+                                        <p class='inner-details'> in the heart of your</p>
+                                        <p class='inner-details'>neighbourhood, ready to</p>
+                                        <p class='inner-details'>deliver straight to your</p>
+                                        <p class='inner-details'>door, on demand.</p>
+                                    </div>
+                                    <div class='meisterdish-details'>
+                                        <img class='meisterdish-details-icon' src='images/homepageslider/icon-you-cook.png' />
+                                        <p class='inner-header you-cook'>YOU COOK</p>
+                                        <hr class="inner-header-hr">
+                                        <p class='inner-details'>Believe it. Meisterdish is</p>
+                                        <p class='inner-details'>bringing back the best part</p>
+                                        <p class='inner-details'>of cooking to your kitchen -</p>
+                                        <p class='inner-details'>Cooking.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section fp-table" id='section-what-to-expect'>
+                        <div class="fp-tableCell">
+                            <p class="slide-header">A LITTLE TASTE OF WHAT TO EXPECT</p>
+                            <hr class="header-hr">
+                            <div class='outer-slide-description'>
+                                <div class='slide-description'>
+                                    <div class="meal-details">
+                                        <div class="meal-image">
+                                            <div class="meal-image-container">
+                                                <img src="images/homepageslider/pappardelle-hero-web.png">
+                                                <input type="hidden" id="hidden-count" value="">
+                                                <div class="meal-overlay">
+                                                    <p class="upper-line"><span></span> SERVINGS</p>
+                                                    <p class="lower-line">Added to cart</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="meal-description-wrapper">
+                                            <div class="meal-name">
+                                                <p>PAPPARDELLE AL POMODORO</p>
+                                            </div>
+                                            <div class="meal-sub-description">
+                                                <p>with garlic, basil, parmesan cheese</p>
+                                            </div>
+                                            <div class="meal-properties">
+                                                <div class="details-content">
+                                                    <p class='upper-content preparation-time'>15-20</p>
+                                                    <p class='lower-content'>Minutes</p>
+                                                </div>
+                                                <div class="details-content">
+                                                    <p class='upper-content calories'>451</p>
+                                                    <p class='lower-content'>Calories</p>
+                                                    <p class="lower-content" style="font-size:11px;text-transform: none;">per serving</p>
+                                                </div>
+                                                <div class="details-content">
+                                                    <p class='upper-content'>
+                                                    <img class='meal-type-description-icon' src="images/serves-two.png"></p>
+                                                    <p class='lower-content'>Serves 2</p>
+                                                </div>
+                                                <div class="details-content">
+                                                    <p class='upper-content'>
+                                                    <img class='meal-type-description-icon meal-type-icon' src="images/vegetarian.png">
+                                                    </p>
+                                                    <p class='lower-content'>Vegetarian</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="what-you-get-section">
+                                        <p class='sub-heading'>WHAT YOU GET</p>
+                                        <div class="ingredients-wrapper">
+                                            <div class="details-content">
+                                                <p class='upper-content'>
+                                                <img src="images/homepageslider/pappardelle.png">
+                                                </p>
+                                                <p class='lower-content'>Pappardelle</p>
+                                            </div>
+                                            <div class="details-content">
+                                                <p class='upper-content'>
+                                                <img src="images/homepageslider/tomato.png">
+                                                </p>
+                                                <p class='lower-content'>Tomato</p>
+                                            </div>
+                                            <div class="details-content">
+                                                <p class='upper-content'>
+                                                <img src="images/homepageslider/parmesan.png">
+                                                </p>
+                                                <p class='lower-content'>Parmesan</p>
+                                            </div>
+                                            <div class="details-content">
+                                                <p class='upper-content'>
+                                                <img src="images/homepageslider/garlic.png">
+                                                </p>
+                                                <p class='lower-content'>Garlic</p>
+                                            </div>
+                                            <div class="details-content">
+                                                <p class='upper-content'>
+                                                <img src="images/homepageslider/onion.png">
+                                                </p>
+                                                <p class='lower-content'>Onion</p>
+                                            </div>
+                                            <div class="details-content">
+                                                <p class='upper-content'>
+                                                <img src="images/homepageslider/basil-leaf.png">
+                                                </p>
+                                                <p class='lower-content'>Basil</p>
+                                            </div>
+                                            <div class="details-content">
+                                                <p class='upper-content'>
+                                                <img src="images/homepageslider/lemonwedge.png">
+                                                </p>
+                                                <p class='lower-content'>Lemon</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="button-container">
+                                        <div class="cart-button-container">
+                                            <a href="#!" class="btn btn-small-secondary" id='meal-info'>MEAL INFO</a>
+                                        </div>
+                                        <div class="cart-button-container">
+                                            <div class="removeItemButton">&#8211</div>
+                                            <div class="btn btn-small-primary medium-green" id='meal-add'>ADD TO CART</div>
+                                        </div>
+                                        <div class="cart-button-container">
+                                            <a href="views/menu.html" class="btn btn-small-secondary">SEE FULL MENU</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section fp-table" id='section-zipcode'>
+                        <div class="fp-tableCell">
+                            <div class='outer-slide-description'>
+                                <div class='slide-description'>
+                                    <p class="slide-header">DELIVERY AREAS</p>
+                                    <hr class="header-hr">
+                                    <div class='zip-text'>
+                                        <p>FIND OUT IF WE DELIVER IN YOUR AREA BY ENTERING YOUR ZIP CODE BELOW</p>
+                                    </div>
+                                    <form class="zip-code-container" novalidate="novalidate">
+                                        <div class="formInput-wrapper">
+                                            <input type="text" name="zip" id="zip-code" placeholder="ENTER ZIP">
+                                        </div>
+                                        <input type="submit" class="btn btn-large-primary medium-green check-delivery" value="CHECK" id='zip-check'>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer id="slider-footer">
                         <div class="footerContent">
-                            <ul>
-                                <li>
-                                    <a href="views/contact-us.html">CONTACT US</a>
+                            <ul class='footer-list'>
+                                <li class='footer-non-social'>
+                                    <a href="views/contact-us.html">Contact us</a>
                                 </li>
-                                <li>
-                                    <a href="views/privacy-terms.html">PRIVACY & TERMS</a>
+                                <li class='footer-non-social'>
+                                    <a href="views/privacy-terms.html">Privacy & Terms</a>
                                 </li>
-                                <li>
-                                    <a href="">HELP</a>
+                                <li class='footer-non-social'>
+                                    <a href="">Help</a>
                                 </li>
-                            </ul>
-                            <ul class='social-media-icons'>
-                                <li class='sml_sprite facebook'>
-                                    <a href='http://www.facebook.com/meisterdish' target="_blank"></a>
+                                <li class='footer-non-social'>
+                                    <a href="" class='meisterdish-copyright'>&#169 2015 MEISTERDISH</a>
                                 </li>
-                                <li class='sml_sprite twitter'></li>
-                                <li class='sml_sprite instagram'></li>
-                                <li class='sml_sprite pintrest'></li>
+                                <li class='social-media-icons-parent'>
+                                    <ul class='social-media-icons'>
+                                        <li class='sml_sprite facebook'>
+                                            <a href='http://www.facebook.com/meisterdish' target="_blank"></a>
+                                        </li>
+                                        <li class='sml_sprite twitter'></li>
+                                        <li class='sml_sprite instagram'></li>
+                                        <li class='sml_sprite pintrest'></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                     </footer>
                 </div>
-                <ul id="menu" class="pullRight">
-                    <li>
-                        <a href="views/menu.html">MENU</a>
-                    </li>
-                    <li>
-                        <a href="views/how-it-works.html">HOW IT WORKS</a>
-                    </li>
-                    <li>
-                        <a href="views/gift-cards-select.html">GIFTS</a>
-                    </li>
-                    <li class="login-signup">
-                        <a href="views/login.html">LOG IN</a>
-                    </li>
-                    <li class='login-signup'>
-                        <a href="views/signup.html" class="btn btn-small-secondary">SIGN UP</a>
-                    </li>
-                    <li id="navbar-username" class="bold green">
-                        <a href='views/account.html'></a>
-                    </li>
-                </ul>
-            </div>
-        </header>
-        <div id="page-container">
-            <div id="fullpage">
-                <div class="section fp-table" id='section-what-is'>
-                    <div class="fp-tableCell">
-                        <div class='outer-slide-description'>
-                            <div class='slide-description'>
-                                <div class='section-logo'>
-                                    <a href="index.html">
-                                        <img src="images/logo.png" alt="MeisterDish">
-                                    </a>
-                                </div>
-                                <div class='main-header-container'>
-                                    <p class='main-header'>COOKING THAT FITS THE </p>
-                                    <p class='main-header'>NEW YORK LIFESTYLE</p>
-                                </div>
-                                <div class='sub-header-container'>
-                                    <p class='sub-header'>Quick and delicious recipes delivered on demand.</p>
-                                    <p class='sub-header'>You cook. We do the rest.</p>
-                                </div>
-                                <a href="views/menu.html" class="btn btn-large-primary medium-green menu-button">SEE THE MENU</a>
-                            </div>
-                        </div>
-                        <a href="views/menu.html" class="btn btn-large-primary mobile-menu-button medium-green">SEE THE MENU</a>
-                    </div>
-                </div>
-                <div class="section fp-table" id='section-what-is-meisterdish'>
-                    <div class="fp-tableCell">
-                        <div class='slider-header-containter'>
-                            <p class="slide-header">WHAT IS MEISTERDISH?</p>
-                            <hr class="header-hr">
-                        </div>
-                        <div class='outer-slide-description'>
-                            <div class='slide-description'>
-                                <div class='meisterdish-details'>
-                                    <img class='meisterdish-details-icon' src='images/homepageslider/icon-we-source.png' />
-                                    <p class='inner-header'>WE SOURCE</p>
-                                    <hr class="inner-header-hr">
-                                    <p class='inner-details'>Our ingredients are sourced</p>
-                                    <p class='inner-details'>every day from local farmers,</p>
-                                    <p class='inner-details'>with a varied seasonal</p>
-                                    <p class='inner-details'>selection for the best taste.</p>
-                                </div>
-                                <div class='meisterdish-details'>
-                                    <img class='meisterdish-details-icon' src='images/homepageslider/icon-we-prep.png' />
-                                    <p class='inner-header'>WE PREP</p>
-                                    <hr class="inner-header-hr">
-                                    <p class='inner-details'>We thoroughly clean and </p>
-                                    <p class='inner-details'>perfectly portion all</p>
-                                    <p class='inner-details'>ingredients for your convenience.</p>
-                                    <p class='inner-details'>Yup. We are taking the</p>
-                                    <p class='inner-details'>work out of cooking.</p>
-                                </div>
-                                <div class='meisterdish-details'>
-                                    <img class='meisterdish-details-icon' src='images/homepageslider/icon-we-deliver.png' />
-                                    <p class='inner-header'>WE DELIVER</p>
-                                    <hr class="inner-header-hr">
-                                    <p class='inner-details'>We are located</p>
-                                    <p class='inner-details'> in the heart of your</p>
-                                    <p class='inner-details'>neighbourhood, ready to</p>
-                                    <p class='inner-details'>deliver straight to your</p>
-                                    <p class='inner-details'>door, on demand.</p>
-                                </div>
-                                <div class='meisterdish-details'>
-                                    <img class='meisterdish-details-icon' src='images/homepageslider/icon-you-cook.png' />
-                                    <p class='inner-header you-cook'>YOU COOK</p>
-                                    <hr class="inner-header-hr">
-                                    <p class='inner-details'>Believe it. Meisterdish is</p>
-                                    <p class='inner-details'>bringing back the best part</p>
-                                    <p class='inner-details'>of cooking to your kitchen -</p>
-                                    <p class='inner-details'>Cooking.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="section fp-table" id='section-what-to-expect'>
-                    <div class="fp-tableCell">
-                        <p class="slide-header">A LITTLE TASTE OF WHAT TO EXPECT</p>
-                        <hr class="header-hr">
-                        <div class='outer-slide-description'>
-                            <div class='slide-description'>
-                                <div class="meal-details">
-                                    <div class="meal-image">
-                                        <div class="meal-image-container">
-                                            <img src="images/homepageslider/pappardelle-hero-web.png">
-                                            <input type="hidden" id="hidden-count" value="">
-                                            <div class="meal-overlay">
-                                                <p class="upper-line"><span></span> SERVINGS</p>
-                                                <p class="lower-line">Added to cart</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="meal-description-wrapper">
-                                        <div class="meal-name">
-                                            <p>PAPPARDELLE AL POMODORO</p>
-                                        </div>
-                                        <div class="meal-sub-description">
-                                            <p>with garlic, basil, parmesan cheese</p>
-                                        </div>
-                                        <div class="meal-properties">
-                                            <div class="details-content">
-                                                <p class='upper-content preparation-time'>15-20</p>
-                                                <p class='lower-content'>Minutes</p>
-                                            </div>
-                                            <div class="details-content">
-                                                <p class='upper-content calories'>451</p>
-                                                <p class='lower-content'>Calories</p>
-                                            </div>
-                                            <div class="details-content">
-                                                <p class='upper-content'>
-                                                    <img class='meal-type-description-icon' src="images/serves-two.png"></p>
-                                                <p class='lower-content'>Serves 2</p>
-                                            </div>
-                                            <div class="details-content">
-                                                <p class='upper-content'>
-                                                    <img class='meal-type-description-icon meal-type-icon' src="images/vegetarian.png">
-                                                </p>
-                                                <p class='lower-content'>Vegetarian</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="what-you-get-section">
-                                    <p class='sub-heading'>WHAT YOU GET</p>
-                                    <div class="ingredients-wrapper">
-                                        <div class="details-content">
-                                            <p class='upper-content'>
-                                                <img src="images/homepageslider/pappardelle.png">
-                                            </p>
-                                            <p class='lower-content'>Pappardelle</p>
-                                        </div>
-                                        <div class="details-content">
-                                            <p class='upper-content'>
-                                                <img src="images/homepageslider/tomato.png">
-                                            </p>
-                                            <p class='lower-content'>Tomato</p>
-                                        </div>
-                                        <div class="details-content">
-                                            <p class='upper-content'>
-                                                <img src="images/homepageslider/parmesan.png">
-                                            </p>
-                                            <p class='lower-content'>Parmesan</p>
-                                        </div>
-                                        <div class="details-content">
-                                            <p class='upper-content'>
-                                                <img src="images/homepageslider/garlic.png">
-                                            </p>
-                                            <p class='lower-content'>Garlic</p>
-                                        </div>
-                                        <div class="details-content">
-                                            <p class='upper-content'>
-                                                <img src="images/homepageslider/onion.png">
-                                            </p>
-                                            <p class='lower-content'>Onion</p>
-                                        </div>
-                                        <div class="details-content">
-                                            <p class='upper-content'>
-                                                <img src="images/homepageslider/basil-leaf.png">
-                                            </p>
-                                            <p class='lower-content'>Basil</p>
-                                        </div>
-                                        <div class="details-content">
-                                            <p class='upper-content'>
-                                                <img src="images/homepageslider/lemonwedge.png">
-                                            </p>
-                                            <p class='lower-content'>Lemon</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="button-container">
-                                    <div class="cart-button-container">
-                                        <a href="#!" class="btn btn-small-secondary" id='meal-info'>MEAL INFO</a>
-                                    </div>
-                                    <div class="cart-button-container">
-                                        <div class="removeItemButton">&#8211</div>
-                                        <div class="btn btn-small-primary medium-green" id='meal-add'>ADD TO CART</div>
-                                    </div>
-                                    <div class="cart-button-container">
-                                        <a href="views/menu.html" class="btn btn-small-secondary">SEE FULL MENU</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="section fp-table" id='section-zipcode'>
-                    <div class="fp-tableCell">
-                        <div class='outer-slide-description'>
-                            <div class='slide-description'>
-                                <p class="slide-header">DELIVERY AREAS</p>
-                                <hr class="header-hr">
-                                <div class='zip-text'>
-                                    <p>FIND OUT IF WE DELIVER IN YOUR AREA BY ENTERING YOUR ZIP CODE BELOW</p>
-                                </div>
-                                <form class="zip-code-container" novalidate="novalidate">
-                                    <div class="formInput-wrapper">
-                                        <input type="text" name="zip" id="zip-code" placeholder="ENTER ZIP">
-                                    </div>
-                                    <input type="submit" class="btn btn-large-primary medium-green check-delivery" value="CHECK" id='zip-check'>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <footer id="slider-footer">
-                    <div class="footerContent">
-                        <ul class='footer-list'>
-                            <li class='footer-non-social'>
-                                <a href="views/contact-us.html">Contact us</a>
-                            </li>
-                            <li class='footer-non-social'>
-                                <a href="views/privacy-terms.html">Privacy & Terms</a>
-                            </li>
-                            <li class='footer-non-social'>
-                                <a href="">Help</a>
-                            </li>
-                            <li class='footer-non-social'>
-                                <a href="" class='meisterdish-copyright'>&#169 2015 MEISTERDISH</a>
-                            </li>
-                            <li class='social-media-icons-parent'>
-                                <ul class='social-media-icons'>
-                                    <li class='sml_sprite facebook'>
-                                        <a href='http://www.facebook.com/meisterdish' target="_blank"></a>
-                                    </li>
-                                    <li class='sml_sprite twitter'></li>
-                                    <li class='sml_sprite instagram'></li>
-                                    <li class='sml_sprite pintrest'></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </footer>
             </div>
         </div>
-    </div>
-    <div class="popup-wrapper">
-        <div class="bk-overlay"></div>
-        <div class="popup">
-            <div class="header"></div>
-            <div class="popup-container">
-                <div class="content deliver-message">
-                    <span>SOMTHING WENT WRONG</span>
-                </div>
-                <div class="button">
-                    <a class="btn btn-small-secondary" id="close">CLOSE</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="delivery-area-check-popup">
-        <div class="bk-overlay"></div>
-        <div class="popup-zip-fail">
-            <div class="header">
-                <img src="images/cross-black.png" id="cancel">
-            </div>
-            <div class="deliveryarea-popup-container">
-                <div class="content deliver-message">
-                    <span></span>
-                </div>
-                <form id="validate-email">
-                    <div class="username-wrapper">
-                        <label class="body-text-small" for="username">Drop your email here
-                        </label>
-                        <input class="arrange" value="" type="email" name="email" id="username" maxlength="50" autofocus>
+        <div class="popup-wrapper">
+            <div class="bk-overlay"></div>
+            <div class="popup">
+                <div class="header"></div>
+                <div class="popup-container">
+                    <div class="content deliver-message">
+                        <span>SOMTHING WENT WRONG</span>
                     </div>
                     <div class="button">
-                        <input type="submit" class="btn btn-small-secondary" id="submit-email" value="submit">
+                        <a class="btn btn-small-secondary" id="close">CLOSE</a>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="delivery-area-check-popup">
+            <div class="bk-overlay"></div>
+            <div class="popup-zip-fail">
+                <div class="header">
+                    <img src="images/cross-black.png" id="cancel">
+                </div>
+                <div class="deliveryarea-popup-container">
+                    <div class="content deliver-message">
+                        <span></span>
+                    </div>
+                    <form id="validate-email">
+                        <div class="username-wrapper">
+                            <label class="body-text-small" for="username">Drop your email here
+                            </label>
+                            <input class="arrange" value="" type="email" name="email" id="username" maxlength="50" autofocus>
+                        </div>
+                        <div class="button">
+                            <input type="submit" class="btn btn-small-secondary" id="submit-email" value="submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     <script type="text/javascript" src='js/jquery.min.js'></script>
     <script type="text/javascript" src='js/jquery.fullPage.min.js'></script>
@@ -398,5 +396,4 @@
     <script type="text/javascript" src='js/common.js'></script>
     <script type="text/javascript" src='js/index.js'></script>
 </body>
-
 </html>
