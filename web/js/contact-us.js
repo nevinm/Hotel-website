@@ -67,11 +67,13 @@ var sendMessageCallback = {
             $(content[1]).hide();
             showPopup(sendMessageDetails);
         }
+        $('.loading-indicator').hide();
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
 function sendMessage() {
+    $('.loading-indicator').show();
     var url = baseURL + "send_contactus_email/",
         header = {
             "session-key": localStorage["session_key"]
