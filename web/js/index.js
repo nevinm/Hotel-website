@@ -1,6 +1,7 @@
 $(document).ready(function() {
     ipadWidth = 767;
     CartItemCount();
+    // getMainMealId();
     getHomePageMeal();
     shouldFullpageRender();
 
@@ -66,13 +67,13 @@ function shouldFullpageRender() {
 
 function fullPageRender() {
     var headerHeight = $("#header").innerHeight(),
-    screenHeight = (window.innerHeight - headerHeight),
-    section1Height = $("#section-what-is").innerHeight(),
-    section2HeadingHeight = $("#section-what-is-meisterdish .slider-header-containter").innerHeight(),
-    section2Padding = parseInt($("#section-what-is-meisterdish").css('padding-top').split("px")[0]),
-    footerHeight = $("#slider-footer").innerHeight(),
-    reqOffset = screenHeight - section1Height - section2HeadingHeight;
-    
+        screenHeight = (window.innerHeight - headerHeight),
+        section1Height = $("#section-what-is").innerHeight(),
+        section2HeadingHeight = $("#section-what-is-meisterdish .slider-header-containter").innerHeight(),
+        section2Padding = parseInt($("#section-what-is-meisterdish").css('padding-top').split("px")[0]),
+        footerHeight = $("#slider-footer").innerHeight(),
+        reqOffset = screenHeight - section1Height - section2HeadingHeight;
+
     $("#section-what-is").css({
         "height": section1Height + reqOffset - section2Padding
     });
@@ -113,6 +114,19 @@ function addToCart(meal_id, quantity) {
     addToCartInstance.sendPost(url, header, data, addToCartCallback, meal_id);
 }
 
+
+function getHomePageMeal(mealId) {
+    // var url = baseURL + "get_meal_details/" + mealId + "/",
+    var url = baseURL + "get_meal_details/0/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        userData = {};
+    data = JSON.stringify(userData);
+    var getHomePageMealInstance = new AjaxHttpSender();
+    getHomePageMealInstance.sendPost(url, header, data, getHomePageMealCallback);
+}
+
 //Get home page meal details.
 var getHomePageMealCallback = {
     success: function(data, textStatus) {
@@ -124,16 +138,31 @@ var getHomePageMealCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function getHomePageMeal() {
-    var url = baseURL + "get_meal_details/0/",
+function getMainMealId() {
+    var url = baseURL + "get_home_meal/",
         header = {
             "session-key": localStorage["session_key"]
         },
         userData = {};
     data = JSON.stringify(userData);
-    var getHomePageMealInstance = new AjaxHttpSender();
-    getHomePageMealInstance.sendPost(url, header, data, getHomePageMealCallback);
+    var getMainMealIdInstance = new AjaxHttpSender();
+    getMainMealIdInstance.sendPost(url, header, data, getMainMealIdCallback);
 }
+
+//Get home page meal details.
+var getMainMealIdCallback = {
+    success: function(data, textStatus) {
+        var mealIdDetails = JSON.parse(data);
+        if (mealIdDetails.status == 1) {
+            getHomePageMeal(mealId);
+        } else {
+            showPopup(mealIdDetails);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+
 
 function populateHomePageMeal(mealDetails) {
     var $sectionWhatToExpect = $("#section-what-to-expect");
@@ -142,6 +171,14 @@ function populateHomePageMeal(mealDetails) {
     $sectionWhatToExpect.find(".meal-sub-description p").text(mealDetails.sub);
     $sectionWhatToExpect.find(".meal-properties .preparation-time").text(mealDetails.preparation_time);
     $sectionWhatToExpect.find(".meal-properties .calories").text(mealDetails.calories);
+    $.each(mealDetails.ingredients,function(key, value){
+        $sectionWhatToExpect.find(".ingredients-wrapper").append("<div class='details-content'>"+
+            "<p class='upper-content'>"+
+            "<img src='"+value.image_url+"'></p>"+
+            "<p class='lower-content'>"+value.name+"</p>"+
+        "</div>");
+    });
+    
     if (mealDetails.meal_types.length) {
         $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src", mealDetails.meal_types[0].image_url);
     } else {

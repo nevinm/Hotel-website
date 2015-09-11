@@ -477,6 +477,8 @@ p.upper-content {
 
 .what-you-get-section .details-content {
     width: 14.28%;
+    display: inline-block;
+    float: none;
 }
 
 .what-you-get-section .upper-content img {
@@ -485,6 +487,8 @@ p.upper-content {
 
 #section-what-to-expect .ingredients-wrapper {
     padding: 25px 0;
+    text-align: center;
+    width: 100%;
 }
 
 #section-what-to-expect .meal-properties {
@@ -664,6 +668,15 @@ label#username-error {
     }
     #section-what-is-meisterdish .meisterdish-details {
         width: 100%;
+    }
+    .meal-name, .meal-sub-description{
+        padding-left: 0px;
+    }
+    .meal-description-wrapper{
+        padding: 20px 10px;
+    }
+    .what-you-get-section{
+        width: 90%;
     }
     #section-what-is .section-logo img {
         display: block;
