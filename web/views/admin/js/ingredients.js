@@ -15,10 +15,10 @@ var Ingredients = (function() {
     function bindEvents() {
         $("#addNewIngredients").on("click", function() {
             showIngredientPopup();
-            $(".ingredient-icon").attr("src", "");
+            $(".popup-input-wrapper .ingredient-icon").attr("src", "");
             $("#newIngredient").val("");
             $("#addIngredient").show();
-            $(".ingredient-icon").data().id = "";
+            $(".popup-input-wrapper .ingredient-icon").attr("data-id","");
             $("#editIngredient").hide();
             $(".header").text("ADD NEW INGREDIENT");
             $('.popup-wrapper').show();
@@ -32,7 +32,7 @@ var Ingredients = (function() {
             if ($(".popup-container").valid()) {
                 $('.popup-wrapper').hide();
                 var ingredientName = $('#newIngredient').val(),
-                    imageId = $(".ingredient-icon").attr("data-id");
+                    imageId = $(".popup-input-wrapper .ingredient-icon").attr("data-id");
                 addIngredient(ingredientName, imageId);
             }
         });
@@ -45,14 +45,14 @@ var Ingredients = (function() {
             uploadImage(inputElement, imageElement);
         });
         $("input[id^=editIngredientName-]").off().on("click", function() {
-            var mealtype = $(this).closest('tr').find('.ingredient-name').text(),
+            var ingredientName = $(this).closest('tr').find('.ingredient-name').text(),
                 imageUrl = $(this).data("url"),
                 imageId = $(this).data("imageid");
             showIngredientPopup();
             $("#addIngredient").hide();
             $("#editIngredient").show();
-            $(".header").text("EDIT MEAL TYPE");
-            $("#newIngredient").val(mealtype);
+            $(".header").text("EDIT INGREDIENT");
+            $("#newIngredient").val(ingredientName);
             $(".popup .ingredient-icon").attr("data-id", imageId);
             $('.popup-wrapper').show();
             if ($("#newIngredient").hasClass("error")) {
@@ -67,7 +67,7 @@ var Ingredients = (function() {
                 $('.popup-wrapper').hide();
                 var id = $("#editIngredient").attr("data-id"),
                     ingredient = $('#newIngredient').val(),
-                    imageId = $(".popup .ingredient-icon").data("id");
+                    imageId = $(".popup-input-wrapper .ingredient-icon").attr("data-id");
                 updateIngredient(ingredient, imageId, id);
             }
         });
@@ -164,7 +164,7 @@ var Ingredients = (function() {
 
     function showCallBackStatusPre() {
         $(".popup-input-wrapper").hide();
-        $("#add-mealtype, #edit-mealtype").hide();
+        $("#addIngredient, #editIngredient").hide();
         $(".callback-status").show();
         $(".header").text("MESSAGE");
         $("#close").addClass("clear");
@@ -242,8 +242,8 @@ var Ingredients = (function() {
             },
             params = {},
             data = JSON.stringify(params);
-        var deleteMealtype = new AjaxHttpSender();
-        deleteMealtype.sendPost(url, header, data, Ingredients.deleteIngredientCallback);
+        var api = new AjaxHttpSender();
+        api.sendPost(url, header, data, Ingredients.deleteIngredientCallback);
     }
     var deleteIngredientCallback = {
         success: function(data, textStatus) {
