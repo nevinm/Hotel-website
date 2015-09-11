@@ -755,3 +755,18 @@ def send_contactus_email(request, data):
     else:
         log.info("Contact us mail sent to : contact@meisterdish.com , from "+email)
         return json_response({"status":1, "message":"Email sent successfully"})   
+
+
+@check_input('POST')
+def get_home_meal(request, data):
+    try:
+        try:
+            conf = Configuration.objects.get(key='home_meal_id')
+            return json_response({"status":1, "meal_id":conf.value})
+        except Configuration.DoesNotExist:
+            return custom_error("No home meal is set.")
+
+    except Exception as e:
+        log.error("Failed to get home meal. : "+e.message)
+        return custom_error("Failed to get the home meal.")
+

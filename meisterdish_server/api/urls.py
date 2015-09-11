@@ -63,4 +63,7 @@ urlpatterns = patterns('',
     url(r'^save_email/$', views.save_email, name='save_email'),
     url(r'^send_contactus_email/$', views.send_contactus_email, name='send_contactus_email'),
     url(r'^unsubscribe_from_emails/$', views.unsubscribe_from_emails, name='unsubscribe_from_emails'),
+    
+    url(r'get_home_meal/$', views.get_home_meal, name="get_home_meal"),
+    
 )
