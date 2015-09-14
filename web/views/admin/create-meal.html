@@ -210,26 +210,31 @@
                 </div>
                 <div class="section-4">
                     <div class="section-header">INGREDIENTS</div>
-                    <div class="content-1">
+                    <div class="content-1" id="ingredientsContent">
                         <div class="ingredients-container">
                             <div class="forminput-wrapper">
                                 <label class="body-text-small">Ingredients</label>
-                                <input type="text" class="create-meal-input" id="ingredients">
+                                <select name="ingredient" id="selectIngredients">
+                                    <option value='0' selected>Select</option>
+                                </select>
+                                <!-- <input type="text" class="create-meal-input" id="ingredients"> -->
                             </div>
-                            <input type="button" class="add-list-button" id="add-ingredients" value="add">
+                            <input type="button" class="add-ingredients-list-button" id="add-ingredients" value="add">
                             <span><h3>IN THE BOX :</h3></span>
                             <div class="list-container">
                             <ul></ul>
                         </div>
                     </div>
                     <div class='img-container'>
-                        <img data-id='' id='ingredients-image' src='../../images/ingredients-default.png' />
+                        <ul id="ingredientImageHolder"></ul>
+                        <!-- <img data-id='' id='ingredients-image' src='../../images/ingredients-default.png' /> -->
                     </div>
-                    <div class="fileUpload">
-                        <span class='upload-button'>UPLOAD IMAGE</span>
-                        <input id="ingredients-image-input" type="file" name=
-                        "image_upload" multiple>
-                    </div>
+
+                    <!--  <div class="fileUpload">
+                                                                        <span class='upload-button'>UPLOAD IMAGE</span>
+                                                                        <input id="ingredients-image-input" type="file" name=
+                                                                        "image_upload" multiple>
+                    </div> -->
                 </div>
             </div>
             <div class="section-5">
