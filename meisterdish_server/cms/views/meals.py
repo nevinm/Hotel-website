@@ -585,10 +585,12 @@ def delete_ingredient(request, data, user, ing_id):
 @check_input('POST', settings.ROLE_ADMIN)
 def list_ingredients(request, data, user):
     try:
+        listAll = False
         limit = settings.PER_PAGE
         page = 1
         if "nextPage" in data and int(data["nextPage"]) >0:
             page = data["nextPage"]
+        else: listAll = True
             
         ings = Ingredient.objects.all().order_by("name")
         total_count = ings.count()
@@ -601,6 +603,7 @@ def list_ingredients(request, data, user):
         if actual_count == 0:
             return custom_error("There are no ingredients to list.")
         
+        ings_all = ings
         try:
             paginator = Paginator(ings, limit)
             if page <1 or page > paginator.page_range:
@@ -610,9 +613,20 @@ def list_ingredients(request, data, user):
             log.error("ingredients list pagination : " + e.message)
             custom_error("There was an error listing ingredients.")
         
-        ing_list = [{"id":ing.id, "name":ing.name, "image_id":ing.image.id, "image_url":ing.image.image.url} for ing in ings.object_list]
         
-        return json_response({
+        if listAll:
+            ing_list = [{"id":ing.id, "name":ing.name, "image_id":ing.image.id, "image_url":ing.image.image.url} for ing in ings_all]
+            return json_response({
+                              "status":1,
+                              "aaData": ing_list,
+                              "total_count":total_count,
+                              "actual_count":actual_count,
+                              "num_pages" : 1,
+                              "current_page":page,
+                              })
+        else:
+            ing_list = [{"id":ing.id, "name":ing.name, "image_id":ing.image.id, "image_url":ing.image.image.url} for ing in ings.object_list]
+            return json_response({
                               "status":1,
                               "aaData": ing_list,
                               "total_count":total_count,

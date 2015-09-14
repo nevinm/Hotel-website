@@ -13,7 +13,7 @@ var Ingredients = (function() {
     }
 
     function bindEvents() {
-        $("#addNewIngredients").on("click", function() {
+        $("#addNewIngredients").off().on("click", function() {
             showIngredientPopup();
             $(".popup-input-wrapper .ingredient-icon").attr("src", "");
             $("#newIngredient").val("");
@@ -39,7 +39,7 @@ var Ingredients = (function() {
         $("#ingredientChangeIcon").off().on("click", function() {
             $(this).next(".ingredient-image-upload-element").trigger("click");
         });
-        $(".ingredient-image-upload-element").off().on('click', function() {
+        $(".ingredient-image-upload-element").on('click', function() {
             var inputElement = $(this),
                 imageElement = $(this).parent().find(".ingredient-icon");
             uploadImage(inputElement, imageElement);
