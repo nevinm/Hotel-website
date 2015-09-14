@@ -726,6 +726,9 @@ if ($.validator) {
     $.validator.addMethod('letters', function(value) {
         return value.match(/^[- a-zA-Z]+$/);
     });
+    $.validator.addMethod('email', function(value) {
+        return value.match(/(^[a-zA-Z0-9]+[\._-]{0,1})+([a-zA-Z0-9]+[_]{0,1})*@([a-zA-Z0-9]+[-]{0,1})+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,3})$/);
+    });
     $.validator.addMethod('youtube_url', function(value) {
         return value.match(/^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/);
     });
