@@ -327,7 +327,7 @@ def get_saved_cards(request, data, user):
 @check_input('POST')
 def get_user_reviews(request, data, user):
     try:
-        orders = Order.objects.filter(cart__user__pk=user.pk, status__gte=1, created__gte=datetime.now()-timedelta(days=30))
+        orders = Order.objects.filter(cart__user__pk=user.pk, status=3, created__gte=datetime.now()-timedelta(days=30)).order_by('created')
         if 'order_id' in data:
             orders = orders.filter(pk=data['order_id'])
 
@@ -341,18 +341,18 @@ def get_user_reviews(request, data, user):
                 except Exception as e:
                     log.error("Rating list error :"+e.message)
                     rating = False
-                if meal.id not in [i['meal_id'] for i in rating_list]:
-                    if rating :    
-                        rating_list.append({
-                            "rating":rating.rating,
-                            "review":rating.comment,
-                            "date" : rating.created.strftime("%m-%d-%Y %H:%M:%S"),
-                            "meal_name" : rating.meal.name,
-                            "meal_image":rating.meal.main_image.image.url if meal.main_image else settings.DEFAULT_MEAL_IMAGE,
-                            "meal_id":rating.meal.id,
-                            "order_id":rating.order.id,
-                        })
-                    else:
+                if rating :    
+                    rating_list.append({
+                        "rating":rating.rating,
+                        "review":rating.comment,
+                        "date" : rating.created.strftime("%m-%d-%Y %H:%M:%S"),
+                        "meal_name" : rating.meal.name,
+                        "meal_image":rating.meal.main_image.image.url if meal.main_image else settings.DEFAULT_MEAL_IMAGE,
+                        "meal_id":rating.meal.id,
+                        "order_id":rating.order.id,
+                    })
+                else:
+                    if meal.id not in [i['meal_id'] for i in rating_list]:
                         rating_list.append({
                             "rating":0,
                             "review":"",
