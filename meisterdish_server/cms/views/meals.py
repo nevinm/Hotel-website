@@ -613,7 +613,7 @@ def list_ingredients(request, data, user):
             log.error("ingredients list pagination : " + e.message)
             custom_error("There was an error listing ingredients.")
         
-        ing_list = [{"id":ing.id, "name":ing.name, "image_id":ing.image.id, "image_url":ing.image.image.url} for ing in ings.object_list]
+        
         if listAll:
             ing_list = [{"id":ing.id, "name":ing.name, "image_id":ing.image.id, "image_url":ing.image.image.url} for ing in ings_all]
             return json_response({
@@ -625,7 +625,7 @@ def list_ingredients(request, data, user):
                               "current_page":page,
                               })
         else:
-            
+            ing_list = [{"id":ing.id, "name":ing.name, "image_id":ing.image.id, "image_url":ing.image.image.url} for ing in ings.object_list]
             return json_response({
                               "status":1,
                               "aaData": ing_list,
