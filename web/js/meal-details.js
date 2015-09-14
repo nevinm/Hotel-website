@@ -184,7 +184,7 @@ function mealDetailsTab(mealDetails) {
     $(".meal-ingredients").text(mealDetails.sub);
 
     $($("#meal-rating").find(".rating-star").get().reverse()).each(function(key, value) {
-        if (mealDetails.avg_rating == (key + 1)) {
+        if (Math.round(mealDetails.avg_rating) == (key + 1)) {
             $(this).trigger("click");
         }
         $("#meal-rating").find(".rating-star").each(function(key, value) {
