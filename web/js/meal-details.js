@@ -216,8 +216,8 @@ function allYouNeedTab(mealDetails) {
 function ingredientsTab(mealDetails) {
     if(mealDetails.ingredients.length){
         $.each(mealDetails.ingredients, function(key, value) {
-            // $(".ingredients").append("<li>" + value + "</li>");
-            $(".ingredients").append("<div class='details-content'>"+
+            $(".ingredients").append("<li>" + value.name + "</li>");
+            $(".image-container").append("<div class='details-content'>"+
                 "<p class='upper-content'>"+
                 "<img class='ingredients-image' src='"+ value.image_url+"'></p>"+
                 "<p class='lower-content'>"+value.name+"</p>"+
@@ -228,8 +228,6 @@ function ingredientsTab(mealDetails) {
         $(".ingredients").append("<div class='ingredients-message review-message'>No ingredients present.</div>");
         $(".ingredients-message").show();
     }
-    // $(".ingredients-image").attr("src", mealDetails.ingredients_image.url);
-    // $(".ingredients-image").attr("data-id", mealDetails.ingredients_image.id);
 }
 
 function tipsTricksTab(mealDetails) {
