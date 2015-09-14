@@ -208,6 +208,7 @@ def create_meal(request, data, user):
 
         if edit:
             meal.images = []
+            meal.ingredients = []
 
         if 'images' in data and len(data['images']) > 0:
             for img in data['images']:
