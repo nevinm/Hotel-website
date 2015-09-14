@@ -58,7 +58,7 @@ USE_L10N = True
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL =BASE_URL+'/media/'
+MEDIA_URL =BASE_URL+'media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
@@ -243,7 +243,7 @@ MEAL_STATUS =  (
     (4, "Cancelled"),
     )
 
-DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal-default.jpg"
+DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
 DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
 DEFAULT_CHEF_IMAGE  = STATIC_URL + "default/chef-default.png"
 DEFAULT_INGREDIENTS_IMAGE  = STATIC_URL + "default/ingredients-default.png"
