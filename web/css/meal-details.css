@@ -311,6 +311,30 @@ p.lower-line {
     overflow: hidden;
 }
 
+.image-container p.lower-content{
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: #6B6B6B;
+    text-align: center
+}
+
+.ingredients{
+    padding: 20px 0;
+}
+
+.image-container .details-content {
+    width: 25%;
+    padding: 10px 0;
+    text-align: center;
+    display: inline-block;
+    float: none;
+}
+
+.ingredients-image{
+    height: 45px;
+}
+
 .image-container, .list-container, .video-container {
     width: 50%;
     float: left;
@@ -643,6 +667,12 @@ span.lower-content {
         Media Query
 \*==============================*/
 
+@media (min-width: 767px) and (max-width: 1400px) {
+    .image-container p.lower-content{
+        font-size: 18px;
+    }
+}
+
 @media (min-width: 768px)and (max-width: 1024px) {
     .contentArea {
         max-width: 768px;
@@ -657,6 +687,10 @@ span.lower-content {
 @media (min-width: 320px)and (max-width: 767px) {
     .mobile-tab, .left-arrow, .right-arrow {
         display: block;
+    }
+    
+    .image-container p.lower-content {
+        font-size: 17px;
     }
     .selected-menu {
         display: block;
@@ -815,6 +849,12 @@ span.lower-content {
     }
     .meal-tab-container ul li a:hover {
         border-bottom: 0px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 400px) {
+    .image-container .details-content {
+        width: 33%;
     }
 }
 

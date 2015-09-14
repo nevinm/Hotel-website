@@ -14,19 +14,19 @@
         <script type="text/javascript" src='../js/validate-session.js'></script>
         <script type="text/javascript" src="https://youtube.com/player_api"></script>
         <script>
-                    (function(i, s, o, g, r, a, m) {
-                        i['GoogleAnalyticsObject'] = r;
-                        i[r] = i[r] || function() {
-                            (i[r].q = i[r].q || []).push(arguments)
-                        }, i[r].l = 1 * new Date();
-                        a = s.createElement(o),
-                            m = s.getElementsByTagName(o)[0];
-                        a.async = 1;
-                        a.src = g;
-                        m.parentNode.insertBefore(a, m)
-                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-                    ga('create', 'UA-63283790-1', 'auto');
-                    ga('send', 'pageview');
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-63283790-1', 'auto');
+            ga('send', 'pageview');
         </script>
     </head>
     <body>
@@ -84,8 +84,7 @@
                             <img src="" class="thumbnail">
                             <div class="meal-overlay">
                                 <p class="upper-line">
-                                <span></span>
-                                SERVINGS
+                                <span></span> SERVINGS
                                 </p>
                                 <p class="lower-line">
                                 ADDED TO CART
@@ -139,7 +138,7 @@
                                         <div class="details-content">
                                             <span class='upper-content' id="calories"></span>
                                             <span class='lower-content'>Calories</span>
-                                            <span class="lower-content" style='font-size:12px;text-transform: none;'>per serving</span>
+                                            <span class="lower-content" style='font-size:10px;text-transform: none;'>per serving</span>
                                         </div>
                                         <div class="details-content">
                                             <span class='upper-content'><img src="../images/serves-two.png"></span>
@@ -167,140 +166,177 @@
                                         <a class="next-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
                                     </div>
                                 </div>
+                                <div class='details-part-1'>
+                                    <img class='thumbnail' src='' />
+                                </div>
+                                <div class='details-part-2'>
+                                    <div class="meal-full-details">
+                                        <div class="icons-container1">
+                                            <div class="details-content">
+                                                <span class='upper-content' id="saved-time"></span>
+                                                <span class='lower-content'>Minutes</span>
+                                            </div>
+                                            <div class="details-content">
+                                                <span class='upper-content' id="calories"></span>
+                                                <span class='lower-content'>Calories</span>
+                                                <span class="lower-content" style='font-size:12px;text-transform: none;'>per serving</span>
+                                            </div>
+                                            <div class="details-content">
+                                                <span class='upper-content'><img src="../images/serves-two.png"></span>
+                                                <span class='lower-content'>Serves 2</span>
+                                            </div>
+                                        </div>
+                                        <div class="icons-container2"></div>
+                                    </div>
+                                    <hr class="meal-details-hr">
+                                    <div class='details-description'>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="currentpage " id="preparation">
+                                <div class="container">
+                                    <div class="mobile-tab-header-container">
+                                        <div class="left-arrow">
+                                            <a class="prev-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
+                                        </div>
+                                        <div class="mobile-tab-header">
+                                            <span>PREPARATION</span>
+                                        </div>
+                                        <div class="right-arrow">
+                                            <a class="next-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
+                                        </div>
+                                    </div>
+                                    <div class="list-container">
+                                        <span class="list-header">
+                                        ALL YOU'LL BE DOING:
+                                        </span>
+                                        <span class="sub-header preparation-time">
+                                        </span>
+                                    <ul class='user-to-do'></ul>
+                                </div>
                                 <div class="list-container">
                                     <span class="list-header">
-                                    ALL YOU'LL BE DOING:
+                                    WHAT WE'VE PREPPED:
                                     </span>
-                                    <span class="sub-header preparation-time">
+                                    <span class="sub-header saved-time">
                                     </span>
-                                <ul class='user-to-do'></ul>
+                                <ul class='finished-preparation'></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="currentpage" id="allYouNeed">
+                        <div class="container">
+                            <div class="mobile-tab-header-container">
+                                <div class="left-arrow">
+                                    <a class="prev-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
+                                </div>
+                                <div class="mobile-tab-header">
+                                    <span>ALL YOU NEED</span>
+                                </div>
+                                <div class="right-arrow">
+                                    <a class="next-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
+                                </div>
+                            </div>
+                            <div class="image-container">
+                                <img class='pre-requisities-image' src="">
                             </div>
                             <div class="list-container">
                                 <span class="list-header">
-                                WHAT WE'VE PREPPED:
+                                FROM YOUR KITCHEN:
                                 </span>
-                                <span class="sub-header saved-time">
-                                </span>
-                            <ul class='finished-preparation'></ul>
+                            <ul class='pre-requisities'></ul>
                         </div>
                     </div>
                 </div>
-                <div class="currentpage" id="allYouNeed">
+                <div class="currentpage" id="ingredients">
                     <div class="container">
                         <div class="mobile-tab-header-container">
                             <div class="left-arrow">
                                 <a class="prev-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
                             </div>
                             <div class="mobile-tab-header">
-                                <span>ALL YOU NEED</span>
+                                <span>INGREDIENTS</span>
                             </div>
                             <div class="right-arrow">
                                 <a class="next-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
                             </div>
                         </div>
-                        <div class="image-container">
-                            <img class='pre-requisities-image' src="">
-                        </div>
-                        <div class="list-container">
-                            <span class="list-header">
-                            FROM YOUR KITCHEN:
-                            </span>
-                        <ul class='pre-requisities'></ul>
+                        <div class="image-container"></div>
+                        <div class='list-container'>
+                            <span class="list-header">IN THE BOX:</span>
+                        <ul class='ingredients'></ul>
                     </div>
                 </div>
             </div>
-            <div class="currentpage" id="ingredients">
+            <div class="currentpage" id="tips-and-tricks">
+                <div class="mobile-tab-header-container">
+                    <div class="left-arrow">
+                        <a class="prev-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
+                    </div>
+                    <div class="mobile-tab-header">
+                        <span>TIPS & TRICKS</span>
+                    </div>
+                    <div class="right-arrow">
+                        <a class="next-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
+                    </div>
+                </div>
+            </div>
+            <div class="currentpage" id="nutrients">
                 <div class="container">
                     <div class="mobile-tab-header-container">
                         <div class="left-arrow">
                             <a class="prev-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
                         </div>
                         <div class="mobile-tab-header">
-                            <span>INGREDIENTS</span>
+                            <span>NUTRITION</span>
                         </div>
                         <div class="right-arrow">
                             <a class="next-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
                         </div>
                     </div>
-                    <div class="image-container">
-                        <img class='ingredients-image' src="">
-                    </div>
-                    <div class="list-container">
-                        <span class="list-header">
-                        IN THE BOX:
-                        </span>
-                    <ul class='ingredients'></ul>
+                    <div class="table-container">
+                        <table id="nutrient-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>PER SERVING</th>
+                                    <th>% DAILY VALUE</th>
+                                </tr>
+                            </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="text-container">
+                    <span class="sub-header">
+                    FOOD ALLERGY NOTICE:
+                    </span>
+                    <span class="description">
+                    Our meals are prepared in kitchen whose environment contains nuts and gulton.Though best practices are used when preparing the meal, In advertent cross-contamination may occur.We cannot guarantee the complete absence of allergens.
+                    </span>
+                    <span class="sub-description">
+                    We strive to serve generous portion sizes and each meal is packed by hand. Actual serving size may vary. Percent Daily Values are based on a 2000 calorie diet. Your daily values may be higher or lower depending on your calorie needs.
+                    </span>
                 </div>
             </div>
         </div>
-        <div class="currentpage" id="tips-and-tricks">
-            <div class="mobile-tab-header-container">
-                <div class="left-arrow">
-                    <a class="prev-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
-                </div>
-                <div class="mobile-tab-header">
-                    <span>TIPS & TRICKS</span>
-                </div>
-                <div class="right-arrow">
-                    <a class="next-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
-                </div>
-            </div>
-        </div>
-        <div class="currentpage" id="nutrients">
+        <div id="reviews">
             <div class="container">
                 <div class="mobile-tab-header-container">
                     <div class="left-arrow">
                         <a class="prev-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
                     </div>
                     <div class="mobile-tab-header">
-                        <span>NUTRITION</span>
+                        <span>REVIEWS</span>
                     </div>
                     <div class="right-arrow">
                         <a class="next-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
                     </div>
                 </div>
-                <div class="table-container">
-                    <table id="nutrient-table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>PER SERVING</th>
-                                <th>% DAILY VALUE</th>
-                            </tr>
-                        </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            <div class="text-container">
-                <span class="sub-header">
-                FOOD ALLERGY NOTICE:
-                </span>
-                <span class="description">
-                Our meals are prepared in kitchen whose environment contains nuts and gulton.Though best practices are used when preparing the meal, In advertent cross-contamination may occur.We cannot guarantee the complete absence of allergens.
-                </span>
-                <span class="sub-description">
-                We strive to serve generous portion sizes and each meal is packed by hand. Actual serving size may vary. Percent Daily Values are based on a 2000 calorie diet. Your daily values may be higher or lower depending on your calorie needs.
-                </span>
+                <div class="review-message">No one's reviewed this meal yet.</div>
             </div>
         </div>
     </div>
-    <div id="reviews">
-        <div class="container">
-            <div class="mobile-tab-header-container">
-                <div class="left-arrow">
-                    <a class="prev-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
-                </div>
-                <div class="mobile-tab-header">
-                    <span>REVIEWS</span>
-                </div>
-                <div class="right-arrow">
-                    <a class="next-tab" href="#"><img src="../images/back-arrow-mobile.png" /></a>
-                </div>
-            </div>
-            <div class="review-message">No one's reviewed this meal yet.</div>
-        </div>
-    </div>
-</div>
 </div>
 </div>
 </div>
@@ -309,12 +345,12 @@
 <div class="popup">
 <div class="header"></div>
 <div class="popup-container">
-<div class="content">
-    <span>SOMTHING WENT WRONG</span>
-</div>
-<div class="button">
-    <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
-</div>
+    <div class="content">
+        <span>SOMTHING WENT WRONG</span>
+    </div>
+    <div class="button">
+        <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
+    </div>
 </div>
 </div>
 </div>
