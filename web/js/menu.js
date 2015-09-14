@@ -127,12 +127,14 @@ $(document).ready(function() {
 
     CartItemCount();
     getCategory();
-    getmealList('', '', '', perPage, nextPage);
-    infiniteScrolling();
+    getmealList('', '', '', '', '');
+    //Removed for showing all data initially
+    // infiniteScrolling();
 });
 
 //Infinite Scrolling
 function infiniteScrolling() {
+    console.log("infiniteScrolling")
     var stickyMenuOffset = $('.subMenu').offset().top;
     $(document).unbind('scroll');
     $(document).on('scroll', function(e) {
@@ -208,11 +210,11 @@ function getmealList(search_name, category, mealtype, perPage, nextPage, isInfin
         "session-key": localStorage['session_key']
     }
     params = {
-        "search": search_name,
-        "category_id": category,
-        "type_ids": mealtype,
-        "perPage": perPage,
-        "nextPage": nextPage
+        // "search": search_name,
+        // "category_id": category,
+        // "type_ids": mealtype,
+        // "perPage": perPage,
+        // "nextPage": nextPage
     }
     data = JSON.stringify(params);
     localStorage['meal_details'] = data;
@@ -264,7 +266,8 @@ function populateMealList(mealList, isInfinteScrolling) {
         }
     });
     if (endOfList) {} else {
-        infiniteScrolling();
+        //Removed for showing all data initially
+        // infiniteScrolling();
     }
 }
 
