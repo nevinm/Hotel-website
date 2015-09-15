@@ -2,13 +2,21 @@ from cms.views.decorators import *
 from meisterdish_server.models import *
 import logging 
 import settings
+import json
+from cms.views.decorators import *
 from django.core.paginator import Paginator
-from libraries import validate_zipcode
+from libraries import validate_zipcode, validate_date
+# from wsgiref.validate import check_input 
+
+from datetime import timedelta
+
+from meisterdish_server.models import DeliveryTimeSlot
+from calendar import calendar
 
 log = logging.getLogger(__name__)
 
 
-@check_input('POST', True)
+@check_input('POST', settings.ROLE_ADMIN)
 def get_delivery_areas(request, data, user):
     try:
         limit = data.get('perPage', settings.PER_PAGE)
@@ -44,7 +52,7 @@ def get_delivery_areas(request, data, user):
         log.error("Get Delivery areas : " + e.message)
         return custom_error("An error has occurred. Please try again later.")
 
-@check_input('POST', True)
+@check_input('POST', settings.ROLE_ADMIN)
 def manage_delivery_area(request, data, user):
     try:
         
@@ -79,3 +87,138 @@ def manage_delivery_area(request, data, user):
     except Exception as e:
         log.error("Manage delivery area error : " + e.message)
         return custom_error("An error has occurred. Please try again later.")
+    
+
+@check_input('POST', settings.ROLE_ADMIN)
+def manage_delivery_slots(request,data,user):
+    try:
+        single = False
+        if "from_date" in data and str(data["from_date"]).strip() != "":
+            from_date = data['from_date'].strip()
+            if not validate_date(from_date):
+                return custom_error("Please enter a valid from_date.")
+        if "to_date" in data and str(data["to_date"]).strip() != "":
+            to_date = data['to_date'].strip()
+            if not validate_date(to_date):
+                return custorm_error('Please enter a valid to date')
+        else :
+            single = True
+          
+        try:
+            if "slots_list" in data:
+                slots_list = data["slots_list"]
+        except ValueError:
+            return custom_error('Please enter valid slot data')
+          
+          
+           
+        start_date = datetime.datetime.strptime(from_date,'%m-%d-%Y').date()
+          
+
+              
+        if not single:
+            end_date = datetime.datetime.strptime(to_date,'%m-%d-%Y').date()
+        else:
+            end_date = start_date
+              
+        day_count = (end_date - start_date).days + 1
+        dates = [d for d in (start_date + timedelta(n) for n in range(day_count)) if d.weekday() < 5]
+        log.info("Dates in range are" + " ".join(map(lambda i:datetime.datetime.strftime(i,format='%m-%d-%Y'),dates)))
+        for slot_data in slots_list:
+            if datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y').date() not in dates and datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y').date().weekday() <5:
+                return custom_error("Date not in the given Range")
+            time_slots = DeliveryTimeSlot.objects.filter(date = datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y'))
+            
+            if len(time_slots) == 0:
+                time_slots = DeliveryTimeSlot(date=datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y'))
+#                 time_slots = DeliveryTimeSlot.objects.create(date=datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y'),slot1=0,slot2=0,slot3=0,slot4=0,slot5=0)
+            else:
+                time_slots = time_slots[0]
+              
+            time_slots.slot1 = slot_data["slot1"]
+            time_slots.slot2 = slot_data["slot2"]
+            time_slots.slot3 = slot_data["slot3"]
+            time_slots.slot4 = slot_data["slot4"]
+            time_slots.slot5 = slot_data["slot5"]
+             
+            time_slots.save() 
+            log.info("Time slots saved ") 
+                  
+        return json_response({"status":1,
+                                
+                               "message":"value form "+from_date + " to " + to_date + " saved successfully",
+                               }
+                              
+                            )
+              
+              
+              
+          
+    except Exception as e:
+        log.error("Manage delivery slot error : " + e.message)
+        return custom_error("An error has occurred. Please try again later.")
+  
+@check_input('POST', settings.ROLE_ADMIN)
+def get_delivery_slots(request,data,user):
+    try:
+        single = False
+        if "from_date" in data and str(data["from_date"]).strip() != "":
+            from_date = data['from_date'].strip()
+            if not validate_date(from_date):
+                return custom_error("Please enter a valid from_date.")
+        if "to_date" in data and str(data["to_date"]).strip() != "":
+            to_date = data['to_date'].strip()
+            if not validate_date(to_date):
+                return custorm_error('Please enter a valid to date')
+        else :
+            single = True
+        log.info("Date validated")
+        start_date = datetime.datetime.strptime(from_date,'%m-%d-%Y').date()
+        log.info("Strp ed start date") 
+        slots_list = []
+              
+        if not single:
+            end_date = datetime.datetime.strptime(to_date,'%m-%d-%Y').date()
+        else:
+            end_date = start_date
+              
+        day_count = (end_date - start_date).days + 1
+        dates = [d for d in (start_date + timedelta(n) for n in range(day_count)) if d.weekday()< 5]
+        for d in dates:
+            time_slots = DeliveryTimeSlot.objects.filter(date = d)
+            if len(time_slots) == 0:
+                tmp = DeliveryTimeSlot.objects.filter(date = (d- timedelta(days= 7)))
+                if tmp:
+                    time_slots = DeliveryTimeSlot.objects.create(date=d,slot1=tmp[0].slot1,slot2=tmp[0].slot2,slot3=tmp[0].slot3,slot4=tmp[0].slot4
+,slot5=tmp[0].slot5)
+                else:
+                          
+                    time_slots = DeliveryTimeSlot.objects.create(date=d,slot1=0,slot2=0,slot3=0,slot4=0,slot5=0)
+            else:
+                time_slots = time_slots[0]
+            slots = {
+                    "date":time_slots.date.strftime('%m-%d-%Y'),
+                    "slot1":time_slots.slot1,
+                    "slot2":time_slots.slot2,
+                    "slot3":time_slots.slot3,
+                    "slot4":time_slots.slot4,
+                    "slot5":time_slots.slot5,
+                    }
+            slots_list.append(slots)
+            time_slots.save()
+              
+                  
+        return json_response({"status":1,
+                              "aaData":slots_list,
+                              "total_count":len(slots_list)
+                               }
+                              
+                            )
+              
+              
+              
+          
+    except Exception as e:
+        log.error("List delivery slot error : " + e.message)
+        return custom_error("An error has occurred. Please try again later.")
+      

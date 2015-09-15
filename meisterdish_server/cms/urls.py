@@ -41,6 +41,8 @@ urlpatterns = patterns('',
 
     url(r'^get_delivery_areas/$', delivery.get_delivery_areas, name='get_delivery_areas'),
     url(r'^manage_delivery_area/$', delivery.manage_delivery_area, name='manage_delivery_area'),
+    url(r'^manage_delivery_slots/$', delivery.manage_delivery_slots, name='manage_delivery_slots'),
+    url(r'^get_delivery_slots/$', delivery.get_delivery_slots, name='get_delivery_slots'),
 
     url(r'^upload_image/$', general.upload_image, name='upload_image'),
 

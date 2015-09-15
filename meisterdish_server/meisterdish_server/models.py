@@ -462,7 +462,17 @@ class PromoCode(models.Model):
 
     def __unicode__(self):
         return self.code
-
+class DeliveryTimeSlot(models.Model):
+    date = models.DateField(unique=True)
+    slot1 = models.IntegerField(default= 0)
+    slot2 = models.IntegerField(default= 0)
+    slot3 = models.IntegerField(default= 0)
+    slot4 = models.IntegerField(default= 0)
+    slot5 = models.IntegerField(default= 0)
+    
+    def __unicode__(self):
+        return self.date.strftime('%m-%d-%Y')
+    
 class DeliveryArea(models.Model):
     zip = models.CharField(max_length=10)
     

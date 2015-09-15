@@ -119,6 +119,14 @@ def validate_zipcode(zip):
     return False
   return True
 
+def validate_date(date_str):
+    correctDate = None
+    try:
+        correctDate = datetime.strptime(date_str,'%m-%d-%Y')
+        return True
+    except ValueError:
+        return False
+    
 def validate_email(email):
   regex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
   if re.match(regex, str(email)) is None:
