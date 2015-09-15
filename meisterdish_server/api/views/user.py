@@ -198,13 +198,16 @@ def add_rating(request, data, user, meal_id):
             rating = MealRating.objects.get(order=order, meal__pk=meal_id)
             return custom_error("You have already added rating for this meal")
         except MealRating.DoesNotExist:
-            rating = MealRating()
-            rating.meal = Meal.objects.get(pk=meal_id)
-            rating.order = order
-            rating.rating = data['rating']
-            rating.comment = data['comment'].strip()
-            rating.save()
-            return json_response({"status":1, "message":"Successfully added rating.", "order_id":data['order_id'], "meal_id":meal_id})
+            if data.has_key('rating'):                
+                rating = MealRating()
+                rating.meal = Meal.objects.get(pk=meal_id)
+                rating.order = order
+                rating.rating = data['rating']
+                rating.comment = data['comment'].strip()
+                rating.save()
+                return json_response({"status":1, "message":"Successfully added rating.", "order_id":data['order_id'], "meal_id":meal_id})
+            else:
+                return custom_error("Please rate this meal from 1 to 5 stars")
     except Exception as e:
         log.error("Add rating " + e.message)
         return custom_error("You are not authorized rate this meal/order.")
