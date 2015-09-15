@@ -24,6 +24,7 @@ $(document).ready(function() {
     stripeIntegration();
     setCurrentTime();
     populateYear();
+    fixGoogleMapLink();
     var cartItems;
 
     //Remove cart items
@@ -174,17 +175,17 @@ $(document).ready(function() {
     $('#change-payment-method').on("click", function() {
         populateCreditCardDetails();
     })
-    $('#promo-gift-input').on("keydown",function(e){
-         if(e.keyCode == 13){
+    $('#promo-gift-input').on("keydown", function(e) {
+        if (e.keyCode == 13) {
             $("#apply-promo-gift").trigger("click");
-         }
+        }
     });
 
     $('#apply-promo-gift').on("click", function() {
         var button_value = $('#apply-promo-gift').val(),
             code = $('#promo-gift-input').val(),
             code_length = code.length;
-            $(".promo-validation-message").empty();
+        $(".promo-validation-message").empty();
         if (button_value == "APPLY") {
             $('.promo-validation-message').css('color', '#ff7878');
             if (localStorage['loggedIn'] != 'true') {
@@ -228,7 +229,7 @@ $(document).ready(function() {
         $(".instruction-container .content-heading").hide();
         $(".instruction-container textarea").hide();
         updateReciept();
-        if (localStorage['loggedIn'] == 'true'){
+        if (localStorage['loggedIn'] == 'true') {
             $(".have-account").hide();
         }
     });
@@ -247,8 +248,8 @@ $(document).ready(function() {
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeAttr("disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeClass("button-disabled");
         $("#guest-address-info").find("input").not("#guest-email, #guest-phone").removeClass("autofillremove");
-        if (!localStorage['loggedIn'] == 'true' ){
-            $(".have-account").show()    
+        if (!localStorage['loggedIn'] == 'true') {
+            $(".have-account").show()
         }
         $('.pickup-content').hide();
         $("#add-guest-address").show();
@@ -280,22 +281,22 @@ function setCurrentTime() {
     var closingTime = 21,
         minutesToCLose = 15;
     $(".today-content .checkout-time-button").each(function(key, value) {
-            currentHour = currentHourMin.substring(0, currentHourMin.length - 3);
-            if (currentHour >= closingTime) {
-                $(this).remove();
-                $(".shop-status").show();
-            } else {
-                currentMintues = parseInt(currentHourMin.slice(-2));
-                if (parseInt(currentHour) == $(value).data().hr) {
-                    $(this).prevAll('.set-time-button').remove();
-                    $(this).val("NOW");
-                    $(this).addClass("checkout-time-button-active");
-                    if(currentMintues >= minutesToCLose){
-                        $(this).addClass("button-disabled");
-                        $(this).removeClass("checkout-time-button-active");
-                    }
+        currentHour = currentHourMin.substring(0, currentHourMin.length - 3);
+        if (currentHour >= closingTime) {
+            $(this).remove();
+            $(".shop-status").show();
+        } else {
+            currentMintues = parseInt(currentHourMin.slice(-2));
+            if (parseInt(currentHour) == $(value).data().hr) {
+                $(this).prevAll('.set-time-button').remove();
+                $(this).val("NOW");
+                $(this).addClass("checkout-time-button-active");
+                if (currentMintues >= minutesToCLose) {
+                    $(this).addClass("button-disabled");
+                    $(this).removeClass("checkout-time-button-active");
                 }
             }
+        }
     });
 
     //Setting the correct date.
@@ -361,12 +362,12 @@ var getCartItemsCallback = {
             if (cartItems.coupon != null) {
                 populateCoupon(cartItems.coupon);
             }
-            if(cartItems.credits){
+            if (cartItems.credits) {
                 $(".discount-container .discount-amount").css('color', '#8EC657');
             }
-            if(cartItems.credits > 0){
+            if (cartItems.credits > 0) {
                 $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
-            }else{
+            } else {
                 $(".discount-container .discount-amount").text("$" + (cartItems.credits).toFixed(2));
             }
             $('#hidden-credit').val(cartItems.credits);
@@ -456,8 +457,11 @@ function updateQuantity() {
 
 function updateReciept(GiftcardDetails, flag) {
     var totalItemCost = totalDeliveryCost = totalTaxCost = totalCost = 0,
-        totalCredits = 0,appliedCredit = 0, grandTotal = 0,
-        appliedUserCredit = 0,appliedDiscount = 0,
+        totalCredits = 0,
+        appliedCredit = 0,
+        grandTotal = 0,
+        appliedUserCredit = 0,
+        appliedDiscount = 0,
         totalDriverTip = parseFloat($('.driver-tip').val()),
         totalDeliveryCost = 2.95;
     totalCredits = parseFloat($('#hidden-credit').val());
@@ -489,23 +493,23 @@ function updateReciept(GiftcardDetails, flag) {
         totalItemCost = GiftcardDetails.amount;
         totalTaxCost = GiftcardDetails.tax;
         totalDiscount = GiftcardDetails.discount;
-        totalCredits = GiftcardDetails.credits;    
+        totalCredits = GiftcardDetails.credits;
     }
     if (flag == "coupon-applied") {
         totalDiscount = GiftcardDetails.discount;
     }
     totalCredits = totalCredits + totalDiscount;
-    if(totalCredits > grandTotal){
+    if (totalCredits > grandTotal) {
         appliedCredit = grandTotal;
         grandTotal = 0;
-    }else{
+    } else {
         appliedCredit = totalCredits;
         grandTotal = grandTotal - totalCredits;
     }
-    
-    if(appliedCredit > 0){
+
+    if (appliedCredit > 0) {
         $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
-    }else{
+    } else {
         $(".discount-container .discount-amount").text("$" + (appliedCredit).toFixed(2));
     }
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
@@ -788,8 +792,8 @@ function populateAddresstoInfoContainer(userDetails) {
                     "<span>" + value.phone + "</span>" +
                     "<span class='change-address-payment' id='change-address'>" + "CHANGE ADDRESS" + "</span>" + "</div>");
             }
-        $("#guest-email").val(value.email);
-        $("#guest-phone").val(value.phone);
+            $("#guest-email").val(value.email);
+            $("#guest-phone").val(value.phone);
         });
     }
     $('.address-info-guest').hide();
@@ -816,7 +820,7 @@ function appendAddresscontent(addressList) {
     $('.address-payment-list-popup .popup-container').append("<div class='delivery-adress-wrapper'>" + "</div>");
     $.each(addressList.address_list, function(key, value) {
         $('.address-payment-list-popup .popup-container .delivery-adress-wrapper').append("<div class='address-container'>" + "<input type='radio' name='address' id='" + value.id + 1 + "' data-id='" + value.id + "' class='checkbox-green radio-button'>" +
-            "<label class='list-address' for='" + value.id + 1 + "' data-email = '"+value.email+"' data-phone='"+value.phone+"'>" +
+            "<label class='list-address' for='" + value.id + 1 + "' data-email = '" + value.email + "' data-phone='" + value.phone + "'>" +
             "<span>" + value.first_name + " " + value.last_name + "</span>" +
             "<span>" + value.street + ", " + value.building + "</span>" +
             "<span>" + value.city + ", " + value.state + " " + value.zip + "</span>" +
@@ -852,7 +856,7 @@ function changeDeliveryAddress(selectedId) {
     var selectedAddress = $('.address-payment-list-popup .popup-container').find("[data-id='" + selectedId + "']").parent().find('label'),
         htmlContent = '<span class="content-heading" id="' + selectedId + '">DELIVERY ADDRESS</span>' + selectedAddress.html() +
         '<span class="change-address-payment" id="change-address">CHANGE ADDRESS</span>';
-    $(".address-added").attr("data-id",selectedId);
+    $(".address-added").attr("data-id", selectedId);
     $('.address-info .contents').html(htmlContent);
     $("#guest-email").val(selectedAddress.data("email"));
     $("#guest-phone").val(selectedAddress.data("phone"));
@@ -973,7 +977,7 @@ function populateAddedAddress(delivery_address, flag) {
             "address_list": addedAddress,
             "delivery_address": delivery_address
         },
-    populateAddresstoInfoContainer(data);
+        populateAddresstoInfoContainer(data);
 }
 
 function setEcommerceOrderConfirm(response) {
@@ -1027,8 +1031,8 @@ var placeOrderCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function convertToEstInit(selected_day,selected_hour,selected_time){
-    selectedDayDateFormat = stringToDate(selected_day,"mm/dd/yyyy","/");
+function convertToEstInit(selected_day, selected_hour, selected_time) {
+    selectedDayDateFormat = stringToDate(selected_day, "mm/dd/yyyy", "/");
     selectedDayDateFormatWithHour = selectedDayDateFormat.setHours(selected_hour);
     selectedDateEst = convertToEST(selectedDayDateFormatWithHour);
     return (getEstFormattedForWebService(selectedDateEst));
@@ -1061,13 +1065,13 @@ function createOrderParams() {
         selected_hour = $today_content.attr("data-hr");
         selected_time = getHourCorrected(selected_hour) + ":" + "00" + ":" + "00";
         //Convert to EST
-      
-        deliveryTime = convertToEstInit(selected_day,selected_hour,selected_time);
+
+        deliveryTime = convertToEstInit(selected_day, selected_hour, selected_time);
     } else {
         selected_day = $weekTimecontent.attr("data-date");
         selected_hour = $weekTimecontent.attr("data-hr");
         selected_time = getHourCorrected($weekTimecontent.attr("data-hr")) + ":" + "00" + ":" + "00";
-        deliveryTime = convertToEstInit(selected_day,selected_hour,selected_time);
+        deliveryTime = convertToEstInit(selected_day, selected_hour, selected_time);
     }
     if ($('input:checkbox[name=save-card-details]').prop('checked')) {
         saveParam = 1;
@@ -1191,14 +1195,14 @@ function showSelectedPaymentMethod(selectedId) {
 function validateOrder() {
     var data = {};
     data.message = "";
-    if($(".total-cost").val() > 0){
+    if ($(".total-cost").val() > 0) {
         if ($(".saved-card-list").length && !$(".payment-checked:checked").length) {
             data.message = "Add a method of payment and then proceed";
             showPopup(data);
             return false;
         }
     }
-    
+
     if (typeof cartItems === 'undefined') {} else {
         if (cartItems.status == "-1") {
             data.message = "Add meals to cart and then proceed";
@@ -1279,8 +1283,7 @@ var removePromocodeCallback = {
             $('#apply-promo-gift').removeClass('btn-small-secondary').addClass('btn-small-primary medium-green');
             $('#apply-promo-gift').val('APPLY');
             $('.promo-validation-message').css('color', '#8EC657');
-            if(removeData.credits > 0){}
-            else{
+            if (removeData.credits > 0) {} else {
                 $('.discount-container .discount-amount').css('color', '#4A4A4A');
             }
             $('.promo-validation-message').text('* ' + removeData.message);
@@ -1346,4 +1349,31 @@ function getProfile() {
     data = JSON.stringify(userData);
     var getProfileInstance = new AjaxHttpSender();
     getProfileInstance.sendPost(url, header, data, getProfileCallback);
+}
+
+function detectDevice() {
+    var userAgent = navigator.userAgent.toString().toLowerCase();
+
+    var isMobile = {
+        Android: function() {
+            return /android/i.test(userAgent);
+        },
+        iOS: function() {
+            return /iphone|ipad|ipod/i.test(userAgent);
+        },
+        Desktop: function() {
+            return /windows|linux|macintosh/i.test(userAgent);
+        }
+    };
+    return isMobile;
+}
+
+function fixGoogleMapLink(){
+    var currentDeviceSet = detectDevice();
+    if(currentDeviceSet.iOS()) {
+        $("#google-maps-link").attr("href","http://maps.google.com/maps?daddr=Kochi+Kerala+India");
+    } 
+    else{
+        $("#google-maps-link").attr("href","http://maps.google.com/maps?saddr=Current+Location&daddr=Kochi+Kerala+India");
+    }
 }
