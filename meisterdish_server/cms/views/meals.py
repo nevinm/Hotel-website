@@ -5,7 +5,7 @@ import logging, settings
 from django.db.models import Q
 from django.template.loader import render_to_string
 from cms.views.decorators import *
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage
 from django.core.files.uploadedfile import UploadedFile
 from libraries import get_request_user
 
@@ -639,3 +639,55 @@ def list_ingredients(request, data, user):
     except Exception as e:
         log.error("Failed to list ingredients : "+e.message)
         return custom_error("Failed to retrieve ingredients")
+
+@check_input('POST', settings.ROLE_ADMIN)
+def get_meal_ratings(request, data, user, meal_id):
+    try:
+        page = 0
+        limit = settings.PER_PAGE
+        if "nextPage" in data:
+            page = int(data['nextPage'])
+            
+        meal_ratings = MealRating.objects.filter(meal_id=meal_id)
+        count = meal_ratings.count()
+        
+        if page:
+            rev_paginator = Paginator(meal_ratings  , limit)
+            if page > rev_paginator.page_range[-1]: page = 1
+            try:
+                meal_ratings = rev_paginator.page(page)
+            except EmptyPage:
+                meal_ratings = []
+            
+        ratings = [{"id":i.id, "meal_id":i.meal_id, "order_id":i.order_id, "rating":i.rating, "comment":i.comment} for i in meal_ratings]
+        response = {
+                    "status": 1,
+                    "aaData": ratings,
+                    "total_count": count,
+        }
+        if page:
+            response["num_pages"] = rev_paginator.num_pages
+            response["page_range"] = rev_paginator.page_range
+            response["current_page"] = page
+            response["per_page"] = limit
+        
+        return json_response(response)
+    except Exception as e:
+        log.error("Failed to get rating list: " + str(type(e)) + " " + e.message)
+        return custom_error("Failed to retrieve meal ratings")
+
+@check_input('POST', settings.ROLE_ADMIN)
+def delete_meal_rating(request, data, user, pk):
+    try:
+        rating = MealRating.objects.get(pk=pk)
+        rating.delete()
+        return json_response({"status":1,"message":"Rating deleted successfully."})
+        
+    except MealRating.DoesNotExist:
+        log.error("Rating object not found")
+        return custom_error("Ratings not found!")
+    
+    except Exception as e:
+        log.error("Failed to delete rating " + e.message )
+        return custom_error("Failed to delete rating!")
+    
