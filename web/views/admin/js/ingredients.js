@@ -9,7 +9,7 @@ var Ingredients = (function() {
 
     function loadDefaults() {
         setUploadUrl('ingredient-image-upload-element');
-        loadIngredientsList("");
+        loadIngredientsList("", 1);
     }
 
     function bindEvents() {
@@ -18,7 +18,7 @@ var Ingredients = (function() {
             $(".popup-input-wrapper .ingredient-icon").attr("src", "");
             $("#newIngredient").val("");
             $("#addIngredient").show();
-            $(".popup-input-wrapper .ingredient-icon").attr("data-id","");
+            $(".popup-input-wrapper .ingredient-icon").attr("data-id", "");
             $("#editIngredient").hide();
             $(".header").text("ADD NEW INGREDIENT");
             $('.popup-wrapper').show();
@@ -112,7 +112,7 @@ var Ingredients = (function() {
                 showCallBackStatusPre();
                 showPopup(responseData);
             } else {
-                loadIngredientsList("");
+                loadIngredientsList("", $(".pagination").pagination('getCurrentPage'));
             }
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -174,16 +174,22 @@ var Ingredients = (function() {
         $("." + element).attr("data-url", baseURL + "cms/upload_image/");
     }
 
-    function loadIngredientsList(ingredientName) {
+    function loadIngredientsList(ingredientName, pageNumber) {
         var url = baseURL + 'cms/list_ingredients/';
         // var url = baseURL + 'cms/list_attributes/';
-        header = {
-                "session-key": localStorage['session_key']
-            },
+        var header = {
+            "session-key": localStorage['session_key']
+        };
+        var params = {
+            "search": ingredientName
+        };
+        if (pageNumber !== undefined) {
             params = {
-                "search": ingredientName
-            },
-            data = JSON.stringify(params);
+                "search": ingredientName,
+                "nextPage": pageNumber
+            }
+        }
+        var data = JSON.stringify(params);
         var getIngredientsList = new AjaxHttpSender();
         getIngredientsList.sendPost(url, header, data, Ingredients.getIngredientsListCallback);
     }
@@ -204,6 +210,24 @@ var Ingredients = (function() {
         $('#ingredientsArea tbody tr').remove();
         $.each(ingredientsList.aaData, function(key, value) {
             $('#ingredientsArea tbody').append("<tr class='row' data-id='" + value.id + "'>" + "<td class='ingredient-name mealtype-name-value'>" + value.name + "</td>" + "<td>" + "<input type='button' data-url='" + value.image_url + "' class='btn btn-small-primary medium-green'" + " id='editIngredientName-" + value.image_id + "' data-imageid='" + value.image_id + "' value='EDIT'>" + "</td>" + "<td>" + "<input type='button' class='btn btn-small-primary medium-green'" + " id='deleteIngredient-" + value.image_id + "' value='DELETE'>" + "</td>" + "<td><img class='mealtype-icon ingredient-icon' src='" + value.image_url + "'/>" + "<input class='ingredient-image-upload-element' value='' type='file' name='image_upload'/></td>" + "</tr>");
+        });
+        $(".pagination").pagination({
+            pages: ingredientsList.num_pages,
+            currentPage: ingredientsList.current_page,
+            cssStyle: 'light-theme',
+            onPageClick: function(pageNumber, event) {
+                loadIngredientsList("", pageNumber);
+            },
+            onInit: function() {
+                if (getStringAfterHash(location.href, "#")) {
+                    var pageString = getStringAfterHash(location.href, "#");
+                    pageNumber = getStringAfterHash(pageString, "-");
+                    if ($(".pagination").pagination('getCurrentPage') == pageNumber) {} else
+                    if (pageNumber > 0) {
+                        $(".pagination").pagination('selectPage', pageNumber);
+                    }
+                } else {}
+            }
         });
         bindEvents();
         setUploadUrl('ingredient-image-upload-element');
@@ -229,7 +253,7 @@ var Ingredients = (function() {
                 showCallBackStatusPre();
                 showPopup(responseData);
             } else {
-                loadIngredientsList("");
+                loadIngredientsList("", $(".pagination").pagination('getCurrentPage'));
             }
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -252,7 +276,7 @@ var Ingredients = (function() {
                 showCallBackStatusPre();
                 showPopup(responseData);
             } else {
-                loadIngredientsList("");
+                loadIngredientsList("", 1);
             }
         },
         failure: function(XMLHttpRequest, textStatus, errorThrown) {}
