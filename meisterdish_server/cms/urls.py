@@ -66,4 +66,8 @@ urlpatterns = patterns('',
     url(r'^list_ingredients/$', meals.list_ingredients, name='list_ingredients'),
     url(r'^update_ingredient/(?P<ing_id>[0-9]+)/$', meals.update_ingredient, name='update_ingredient'),
     url(r'^delete_ingredient/(?P<ing_id>[0-9]+)/$', meals.delete_ingredient, name='delete_ingredient'),
+    
+    url(r'^get_meal_ratings/(?P<meal_id>[0-9]+)/', meals.get_meal_ratings, name='get_meal_ratings'),
+    url(r'^delete_meal_rating/(?P<pk>[0-9]+)/$', meals.delete_meal_rating, name='delete_meal_rating'),
+    
 )
