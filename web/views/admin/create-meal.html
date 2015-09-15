@@ -51,6 +51,9 @@
                         <li class='admin-links'>
                             <a href="ingredients.html">INGREDIENTS</a>
                         </li>
+                       <!--  <li class='admin-links'>
+                            <a href="delivery-slots.html">DELIVERY SLOTS</a>
+                        </li> -->
                         <li id="navbar-username_hidden" class="bold green">
                             <a href='../account.html'></a>
                         </li>
@@ -226,129 +229,128 @@
                         </div>
                     </div>
                     <div class='img-container'>
-                        <ul id="ingredientImageHolder"></ul>
-                        <!-- <img data-id='' id='ingredients-image' src='../../images/ingredients-default.png' /> -->
+                    <ul id="ingredientImageHolder"></ul>
+                    <!-- <img data-id='' id='ingredients-image' src='../../images/ingredients-default.png' /> -->
+                </div>
+                <!--  <div class="fileUpload">
+                                                                                                                <span class='upload-button'>UPLOAD IMAGE</span>
+                                                                                                                <input id="ingredients-image-input" type="file" name=
+                                                                                                                "image_upload" multiple>
+                </div> -->
+            </div>
+        </div>
+        <div class="section-5">
+            <div class="section-header">NUTRITION</div>
+            <div class="content-1">
+                <div class="input-feild-container">
+                    <div class="forminput-wrapper">
+                        <label class="body-text-small">Nutrients</label>
+                        <input type="text"class="create-meal-input" id="nutrients">
                     </div>
-
-                    <!--  <div class="fileUpload">
-                                                                        <span class='upload-button'>UPLOAD IMAGE</span>
-                                                                        <input id="ingredients-image-input" type="file" name=
-                                                                        "image_upload" multiple>
-                    </div> -->
-                </div>
-            </div>
-            <div class="section-5">
-                <div class="section-header">NUTRITION</div>
-                <div class="content-1">
-                    <div class="input-feild-container">
-                        <div class="forminput-wrapper">
-                            <label class="body-text-small">Nutrients</label>
-                            <input type="text"class="create-meal-input" id="nutrients">
-                        </div>
-                        <div class="forminput-wrapper">
-                            <label class="body-text-small">Per serving</label>
-                            <input type="text"class="create-meal-input" id="nutrients-per-serving">
-                        </div>
-                        <div class="forminput-wrapper">
-                            <label class="body-text-small">%Daily value</label>
-                            <input type="text"class="create-meal-input" id="nutrients-daily-value">
-                        </div>
-                        <input type="button" class="add-nutrition-content" value="add">
+                    <div class="forminput-wrapper">
+                        <label class="body-text-small">Per serving</label>
+                        <input type="text"class="create-meal-input" id="nutrients-per-serving">
                     </div>
-                </div>
-                <div class="content-1 nutrients-total"></div>
-            </div>
-            <div class="section-6">
-                <div class="section-header">TIPS & TRICKS</div>
-                <div class="content-1">
-                    <div class="tips-container">
-                        <div class="forminput-wrapper">
-                            <label class="body-text-small">Video/Image URL</label>
-                            <input type="text" class="create-meal-input tips-enter-submit" id="tips-video-url">
-                            <label id="tips-video-url-label-error">Enter valid image/video URL</label>
-                        </div>
-                        <div class="forminput-wrapper">
-                            <label class="body-text-small">Title</label>
-                            <input type="text" class="create-meal-input tips-enter-submit" id="tips-and-tricks">
-                            <label id="tips-and-tricks-label-error">Invalid title</label>
-                        </div>
-                        <input type="button" id="add-tips-main" value="add">
+                    <div class="forminput-wrapper">
+                        <label class="body-text-small">%Daily value</label>
+                        <input type="text"class="create-meal-input" id="nutrients-daily-value">
                     </div>
-                </div>
-                <div class="content-1">
-                    <table id="tips-and-tricks-table">
-                        <thead>
-                            <tr>
-                                <th>VIDEO/IMAGE URL</th>
-                                <th>TIPS & TRICKS</th>
-                            </tr>
-                        </thead>
-                    </table>
+                    <input type="button" class="add-nutrition-content" value="add">
                 </div>
             </div>
-            <div class="create-button-container">
-                <input type="submit" class="btn btn-large-primary medium-green" id="create-meal-button" value="SAVE">
+            <div class="content-1 nutrients-total"></div>
+        </div>
+        <div class="section-6">
+            <div class="section-header">TIPS & TRICKS</div>
+            <div class="content-1">
+                <div class="tips-container">
+                    <div class="forminput-wrapper">
+                        <label class="body-text-small">Video/Image URL</label>
+                        <input type="text" class="create-meal-input tips-enter-submit" id="tips-video-url">
+                        <label id="tips-video-url-label-error">Enter valid image/video URL</label>
+                    </div>
+                    <div class="forminput-wrapper">
+                        <label class="body-text-small">Title</label>
+                        <input type="text" class="create-meal-input tips-enter-submit" id="tips-and-tricks">
+                        <label id="tips-and-tricks-label-error">Invalid title</label>
+                    </div>
+                    <input type="button" id="add-tips-main" value="add">
+                </div>
             </div>
-        </form>
-    </div>
+            <div class="content-1">
+                <table id="tips-and-tricks-table">
+                    <thead>
+                        <tr>
+                            <th>VIDEO/IMAGE URL</th>
+                            <th>TIPS & TRICKS</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="create-button-container">
+            <input type="submit" class="btn btn-large-primary medium-green" id="create-meal-button" value="SAVE">
+        </div>
+    </form>
+</div>
 </div>
 <div class="nutrients-popup-wrapper">
-    <div class="bk-overlay"></div>
-    <div class="popup">
-        <div class="header"></div>
-        <div class="popup-container">
-            <div class="content">
-                <div class="input-wrapper">
-                    <label class="body-text-small">Nutrients</label>
-                    <input class="popup-input" type="text" id="sub-nutrients">
-                </div>
-                <div class="input-wrapper">
-                    <label class="body-text-small">Per Serving</label>
-                    <input class="popup-input" type="text" id="sub-per-serving">
-                </div>
-                <div class="input-wrapper">
-                    <label class="body-text-small">%Daily Value</label>
-                    <input class="popup-input" type="text" id="sub-daily-value">
-                </div>
+<div class="bk-overlay"></div>
+<div class="popup">
+    <div class="header"></div>
+    <div class="popup-container">
+        <div class="content">
+            <div class="input-wrapper">
+                <label class="body-text-small">Nutrients</label>
+                <input class="popup-input" type="text" id="sub-nutrients">
             </div>
-            <div class="button">
-                <a href="#!" class="btn btn-small-secondary" id="save-nutrients">SAVE</a>
-                <a href="#!" class="btn btn-small-secondary" id="cancel-nurient-popup">CANCEL</a>
+            <div class="input-wrapper">
+                <label class="body-text-small">Per Serving</label>
+                <input class="popup-input" type="text" id="sub-per-serving">
+            </div>
+            <div class="input-wrapper">
+                <label class="body-text-small">%Daily Value</label>
+                <input class="popup-input" type="text" id="sub-daily-value">
             </div>
         </div>
+        <div class="button">
+            <a href="#!" class="btn btn-small-secondary" id="save-nutrients">SAVE</a>
+            <a href="#!" class="btn btn-small-secondary" id="cancel-nurient-popup">CANCEL</a>
+        </div>
     </div>
+</div>
 </div>
 <div class='tips-tricks-wrapper'>
-    <div class="bk-overlay"></div>
-    <div class="popup">
-        <div class="header"></div>
-        <div class="popup-container">
-            <div class="content">
-                <div class="input-wrapper">
-                    <label class="body-text-small">Tips and Tricks</label>
-                    <input class="popup-input" type="text" id="tips_tricks_content">
-                </div>
+<div class="bk-overlay"></div>
+<div class="popup">
+    <div class="header"></div>
+    <div class="popup-container">
+        <div class="content">
+            <div class="input-wrapper">
+                <label class="body-text-small">Tips and Tricks</label>
+                <input class="popup-input" type="text" id="tips_tricks_content">
             </div>
-            <div class="button">
-                <a href="#!" class="btn btn-small-secondary" id="save-tips">SAVE</a>
-                <a href="#!" class="btn btn-small-secondary" id="cancel-tips-popup">CANCEL</a>
-            </div>
+        </div>
+        <div class="button">
+            <a href="#!" class="btn btn-small-secondary" id="save-tips">SAVE</a>
+            <a href="#!" class="btn btn-small-secondary" id="cancel-tips-popup">CANCEL</a>
         </div>
     </div>
 </div>
+</div>
 <div class="popup-wrapper">
-    <div class="bk-overlay"></div>
-    <div class="popup">
-        <div class="header"></div>
-        <div class="popup-container">
-            <div class="content">
-                <span>SOMTHING WENT WRONG</span>
-            </div>
-            <div class="button">
-                <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
-            </div>
+<div class="bk-overlay"></div>
+<div class="popup">
+    <div class="header"></div>
+    <div class="popup-container">
+        <div class="content">
+            <span>SOMTHING WENT WRONG</span>
+        </div>
+        <div class="button">
+            <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
         </div>
     </div>
+</div>
 </div>
 </div>
 </div>
