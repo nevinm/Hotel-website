@@ -364,6 +364,7 @@ function populateDeliverySlotData(deliverySlotData) {
                     currentDateButton = $(".checkout-time-button[data-date='" + dateCorrected + "'][data-slot='"+key+"']");
                     currentDateButton[0].value='N/A';
                     currentDateButton.addClass("time-slot-disabled");
+                    currentDateButton.removeClass("checkout-time-button-active");
                 }
             }
         }
@@ -1080,11 +1081,11 @@ var placeOrderCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function convertToEstInit(selected_day, selected_hour, selected_time) {
+function convertDateFormat(selected_day, selected_hour, selected_time) {
     selectedDayDateFormat = stringToDate(selected_day, "mm/dd/yyyy", "/");
-    selectedDayDateFormatWithHour = selectedDayDateFormat.setHours(selected_hour);
-    selectedDateEst = convertToEST(selectedDayDateFormatWithHour);
-    return (getEstFormattedForWebService(selectedDateEst));
+    selectedDayDateFormatWithHour = new Date(selectedDayDateFormat.setHours(selected_hour));
+    // selectedDateEst = convertToEST(selectedDayDateFormatWithHour);
+    return (getEstFormattedForWebService(selectedDayDateFormatWithHour));
 }
 
 function createOrderParams() {
@@ -1115,12 +1116,12 @@ function createOrderParams() {
         selected_time = getHourCorrected(selected_hour) + ":" + "00" + ":" + "00";
         //Convert to EST
 
-        deliveryTime = convertToEstInit(selected_day, selected_hour, selected_time);
+        deliveryTime = convertDateFormat(selected_day, selected_hour, selected_time);
     } else {
         selected_day = $weekTimecontent.attr("data-date");
         selected_hour = $weekTimecontent.attr("data-hr");
         selected_time = getHourCorrected($weekTimecontent.attr("data-hr")) + ":" + "00" + ":" + "00";
-        deliveryTime = convertToEstInit(selected_day, selected_hour, selected_time);
+        deliveryTime = convertDateFormat(selected_day, selected_hour, selected_time);
     }
     if ($('input:checkbox[name=save-card-details]').prop('checked')) {
         saveParam = 1;

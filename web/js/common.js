@@ -191,7 +191,7 @@ function stringToDate(date, format, delimiter) {
 
 function convertToEST(timeRecieved) {
     //EST
-    var offset = -4.0,
+    var offset = 0,
         clientDate = new Date(timeRecieved);
     utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
     serverDate = new Date(utc + (3600000 * offset));
