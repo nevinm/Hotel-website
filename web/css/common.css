@@ -943,6 +943,13 @@ span.icon-menu {
     background-color: #d0d0d0 !important;
     border-color: #D0D0D0 !important;
 }
+
+.time-slot-disabled {
+    cursor: default !important;
+    pointer-events: none !important;
+    border-color: #D0D0D0 !important;
+}
+
 .show-mobile{
 	display: block;
 }
