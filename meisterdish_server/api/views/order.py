@@ -3,15 +3,16 @@ import json as simplejson
 import logging 
 import settings
 from api.views.decorators import *
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.core.paginator import Paginator
-from libraries import mail, mail_order_confirmation, check_delivery_area, validate_phone, validate_email, save_payment_data
+from libraries import mail, mail_order_confirmation, check_delivery_area, validate_phone, validate_email, save_payment_data, validate_date
 from django.db.models import Q
 from django.template.loader import render_to_string
 from twilio.rest import TwilioRestClient
 import stripe
 import sys
 import base64
+
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 log = logging.getLogger(__name__)
@@ -154,6 +155,7 @@ def create_order(request, data, user):
         try:
             del_time = data['delivery_time'].strip()
             delivery_time = datetime.strptime(del_time,"%m/%d/%Y %H:%M:%S")
+            
         except Exception as e:
             log.error("Invalid delivery time : "+e.message)
             return custom_error("Please provide a valid delivery time.")
@@ -712,3 +714,72 @@ def print_pdf(request):
     except Exception as e:
         log.error("Failed to save pdf." + e.message)
         return False
+    
+    
+    
+@check_input('POST')
+def get_delivery_slots(request,data,user):
+    try:
+        single = False
+        if "from_date" in data and str(data["from_date"]).strip() != "":
+            from_date = data['from_date'].strip()
+            if not validate_date(from_date):
+                return custom_error("Please enter a valid from_date.")
+        if "to_date" in data and str(data["to_date"]).strip() != "":
+            to_date = data['to_date'].strip()
+            if not validate_date(to_date):
+                return custorm_error('Please enter a valid to date')
+        else :
+            single = True
+        log.info("Date validated")
+        start_date = datetime.strptime(from_date,'%m-%d-%Y').date()
+        log.info("Strp ed start date") 
+        slots_list = []
+              
+        if not single:
+            end_date = datetime.strptime(to_date,'%m-%d-%Y').date()
+        else:
+            end_date = start_date
+              
+        day_count = (end_date - start_date).days + 1
+        dates = [d for d in (start_date + timedelta(n) for n in range(day_count)) if d.weekday()< 5]
+        for d in dates:
+            time_slots = DeliveryTimeSlot.objects.filter(date = d)
+            if len(time_slots) == 0:
+                tmp = DeliveryTimeSlot.objects.filter(date = (d- timedelta(days= 7)))
+                if tmp:
+                    time_slots = DeliveryTimeSlot.objects.create(date=d,slot1=tmp[0].slot1,slot2=tmp[0].slot2,slot3=tmp[0].slot3,slot4=tmp[0].slot4
+,slot5=tmp[0].slot5)
+                else:
+                          
+                    time_slots = DeliveryTimeSlot.objects.create(date=d,slot1=0,slot2=0,slot3=0,slot4=0,slot5=0)
+            else:
+                time_slots = time_slots[0]
+            slots = {
+                    "date":time_slots.date.strftime('%m-%d-%Y'),
+                    "slot1":time_slots.slot1,
+                    "slot2":time_slots.slot2,
+                    "slot3":time_slots.slot3,
+                    "slot4":time_slots.slot4,
+                    "slot5":time_slots.slot5,
+                    }
+            slots_list.append(slots)
+            time_slots.save()
+              
+                  
+        return json_response({"status":1,
+                              "aaData":slots_list,
+                              "total_count":len(slots_list)
+                               }
+                              
+                            )
+              
+              
+              
+          
+    except Exception as e:
+        log.error("List delivery slot error : " + e.message)
+        return custom_error("An error has occurred. Please try again later.")
+      
+
+
