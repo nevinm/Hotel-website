@@ -11,7 +11,7 @@ from libraries import validate_zipcode, validate_date
 from datetime import timedelta
 
 from meisterdish_server.models import DeliveryTimeSlot
-from calendar import calendar
+
 
 log = logging.getLogger(__name__)
 

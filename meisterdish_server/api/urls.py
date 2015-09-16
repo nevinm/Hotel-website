@@ -42,7 +42,7 @@ urlpatterns = patterns('',
     url(r'^get_order_details/(?P<order_id>[0-9]+)/$', views.get_order_details, name='get_order_details'),
     url(r'^create_order/$', views.create_order, name='create_order'),
     url(r'^save_delivery_time/$', views.save_delivery_time, name='save_delivery_time'),
-    
+    url(r'^get_delivery_slots/$', views.get_delivery_slots, name='get_delivery_slots'),
 
     url(r'^get_saved_cards/$', views.get_saved_cards, name='get_saved_cards'),
     url(r'^save_credit_card/$', views.save_credit_card, name='save_credit_card'),
