@@ -8,9 +8,20 @@ var nutrient_sub_category = 0,
 $(document).ready(function() {
     $('#create-meal-button').on("click", function(e) {
         e.preventDefault();
-        if ($('form#create-meal').valid()) {
+        var ingredientElements = $("#ingredientsContent .list-container li[id^=list-]");
+        if ($('form#create-meal').valid() && ingredientElements !== undefined && ingredientElements.length > 0) {
             createMeal();
         }
+        if (ingredientElements !== undefined && ingredientElements.length === 0) {
+            $("#selectIngredients").addClass("error");
+            $("#selectIngredientsError").show();
+        } else {
+            $("#selectIngredients").removeClass("error");
+            $("#selectIngredientsError").hide();
+        }
+    });
+    $("#selectIngredients").on("change",function(){
+        $("#selectIngredientsError").attr("style","display:none !important;");
     });
     $('.add-list-button,.add-preparation-button').on("click", function() {
         var element_id = $(this).prev().find('.create-meal-input').attr('id');
@@ -283,8 +294,8 @@ function createMeal() {
         chef_image = $('#chef-image').attr("data-id"),
         ingredients_image = $('#ingredients-image').attr("data-id"),
         chef_comments = $("#chef-comments").val(),
-        chef_name = $("#chef-name").val();
-    meal_sub = $("#meal-sub-name").val();
+        chef_name = $("#chef-name").val(),
+        meal_sub = $("#meal-sub-name").val();
     var ingredients = [], // ingredient array
         temp = '',
         pre_requesties = [],
@@ -558,7 +569,7 @@ function addIngredient(savedIngredients) {
                 $('.ingredients-container').closest('.content-1').find('.img-container ul').append('<li id="for-list-' + value.id + '"><div><img src="' + value.image_url + '"><span>' + value.name + '</span></div></li>');
             }
         });
-    } else {
+    } else if ($("#selectIngredients :selected").text().toLowerCase() !== "select") {
         var listId = $('.ingredients-container .list-container ul li').length + 1;
         var data = ingredientsList[id];
         if (addTo_list != undefined && addTo_list != "" && $("#list-" + id).length == 0) {

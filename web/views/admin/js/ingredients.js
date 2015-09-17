@@ -19,6 +19,7 @@ var Ingredients = (function() {
             $("#newIngredient").val("");
             $("#addIngredient").show();
             $(".popup-input-wrapper .ingredient-icon").attr("data-id", "");
+            setIngredientsImageLoader();
             $("#editIngredient").hide();
             $(".header").text("ADD NEW INGREDIENT");
             $('.popup-wrapper').show();
@@ -27,7 +28,7 @@ var Ingredients = (function() {
             }
             $("form").data('validator').resetForm();
         });
-        $("#no-button").off().on("click",function(e){
+        $("#no-button").off().on("click", function(e) {
             e.preventDefault();
             $(".confirm-popup-wrapper").removeAttr("style");
         });
@@ -64,6 +65,7 @@ var Ingredients = (function() {
             }
             $(".popup .ingredient-icon").attr("src", imageUrl);
             $("#editIngredient").attr("data-id", $(this).closest('tr').attr("data-id"));
+            setIngredientsImageLoader();
         });
         $("#editIngredient").off().on("click", function(e) {
             e.preventDefault();
@@ -249,6 +251,14 @@ var Ingredients = (function() {
         data = JSON.stringify(params);
         var api = new AjaxHttpSender();
         api.sendPost(url, header, data, Ingredients.updateIngredientCallback);
+    }
+
+    function setIngredientsImageLoader() {
+        if ($(".popup-input-wrapper .ingredient-icon").attr("data-id") === "") {
+            $(".popup-input-wrapper .ingredient-icon").hide();
+        } else {
+            $(".popup-input-wrapper .ingredient-icon").show();
+        }
     }
     var updateIngredientCallback = {
         success: function(data, textStatus) {

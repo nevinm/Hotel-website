@@ -680,7 +680,7 @@ $("form").each(function() {
                 required: "Please enter prepared time"
             },
             savedtime: {
-                required: "Please enter prepared time"
+                required: "Please enter saved time"
             },
             dailyvalue: {
                 number: "Should be a number"
