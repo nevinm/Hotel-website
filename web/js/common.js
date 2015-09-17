@@ -583,7 +583,7 @@ $("form").each(function() {
             },
             update_category: {
                 required: true,
-                minlength: 3
+                minlength: 5
             },
             tip: {
                 required: true,

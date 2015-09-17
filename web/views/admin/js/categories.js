@@ -1,6 +1,6 @@
 $(document).ready(function() {
     //By deafault call 1 as starting.
-    getCategories(1);
+    getCategories(0);
 
     $("#add-category").on('click', function() {
         $(".add-category-container, .update-category-container").hide();
@@ -137,8 +137,7 @@ function populateCategories(categoriesData) {
             "</tr>");
     })
     $(".pagination").pagination({
-        items: categoriesData.total_count,
-        itemsOnPage: categoriesData.per_page,
+        pages: categoriesData.num_pages,
         currentPage: categoriesData.current_page,
         cssStyle: 'light-theme',
         onPageClick: function(pageNumber, event) {
