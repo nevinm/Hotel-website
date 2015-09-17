@@ -34,6 +34,7 @@ def check_input(method):
                                              "send_contactus_email",
                                              "unsubscribe_from_emails",
                                              "get_home_meal",
+                                             "get_delivery_slots",
                                              ]:
 
                         session_key = request.META.get('HTTP_SESSION_KEY', None)
