@@ -105,7 +105,7 @@ var updateCategoriesCallback = {
             $(".new-category").val("");
             $(".update-category-container").hide();
         } else {
-            alert("Something went wrong")
+            showPopup(categoriesData);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
