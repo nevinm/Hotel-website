@@ -68,85 +68,84 @@
                         </div>
                     </div>
                     <div class="admin-page-container">
-                        <div class="admin-header">
-                            <h2>MANAGE INGREDIENTS</h2>
-                        </div>
-                        <div class="manage-area-container" id='ingredientContainer'>
-                            <div class="add-deliveryarea-wrapper">
-                                <input type="button" class="btn btn-small-primary medium-green" value="Add ingredient" id="addNewIngredients">
+                        <section class="slot-section-header">
+                            <h2>DELIVERY SLOTS</h2>
+                        </section>
+                        <div class="manage-area-container" id='deliverySlotContainer'>
+                            <div class="week-section-wrapper">
+                                <section class="week-section">
+                                    <div class="week-header">THIS WEEK</div>
+                                    <table id="thisWeek">
+                                        <thead>
+                                            <tr><th></th><th>4PM</th><th>5PM</th><th>6PM</th><th>7PM</th><th>8PM</th></tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    <tfooter></tfooter></table>
+                                </section>
+                                <section class="week-section" id="nextWeekSection">
+                                    <div class="week-header">NEXT WEEK</div>
+                                    <table id="nextWeek">
+                                        <thead>
+                                            <tr><th></th><th>4PM</th><th>5PM</th><th>6PM</th><th>7PM</th><th>8PM</th></tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    <tfooter></tfooter></table>
+                                </section>
                             </div>
-                            <table id="ingredientsArea" class="display" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Ingredients</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
-                                        <th>Icon</th>
-                                    </tr>
-                                </thead>
-                            <tbody></tbody>
-                        </table>
-                        <div class="admin-nav">
-                            <div class='pagination'></div>
-                        </div>
-                        <div class="popup-wrapper">
-                            <div class="bk-overlay"></div>
-                            <div class="popup">
-                                <div class="header"></div>
-                                <form class="popup-container">
-                                    <div class="content">
-                                        <div class="popup-input-wrapper">
-                                            <label class="body-text-small">New Ingredient:</label>
-                                            <input type="text" class="popup-input" name="meal_type" id="newIngredient">
-                                        </div>
-                                        <div class="popup-input-wrapper">
-                                            <img src='' class='ingredient-icon mealtype-image mealtype-icon ' />
-                                            <p class='mealtype-change-icon' id="ingredientChangeIcon">Edit Icon</p>
-                                            <input class='ingredient-image-upload-element' value='' type='file' name='image_upload' />
-                                            <img class='upload-gif' src='../../images/ajax-loader.gif' />
-                                        </div>
-                                        <span class='callback-status'></span>
-                                    </div>
-                                    <div class="button">
-                                        <input type="submit" class="btn btn-small-secondary" id="editIngredient" value="SUBMIT">
-                                        <input type="submit" class="btn btn-small-secondary" id="addIngredient" value="SUBMIT">
-                                        <a href="#!" class="btn btn-small-secondary" id="close">CLOSE</a>
-                                    </div>
-                                </form>
+                            <section class="apply-slot-section">
+                                <input class="btn btn-large-primary medium-green" type="submit" id="applySlots" value="APPLY">
+                            </section>
+                            <div class="admin-nav">
+                                <div class='pagination'></div>
                             </div>
-                        </div>
-                        <div class="confirm-popup-wrapper">
-                            <div class="bk-overlay"></div>
-                            <div class="popup">
-                                <div class="header">CONFIRM</div>
-                                <div class="popup-container">
-                                    <div class="content">
-                                        <span>Are you sure want to delete this?</span>
-                                    </div>
-                                    <div class="button">
-                                        <a href="#!" class="btn btn-small-secondary" id="yes-button">YES
-                                        </a>
-                                        <a href="#!" class="btn btn-small-secondary" id="no-button">NO</a>
+                            <div class="popup-wrapper">
+                                <div class="bk-overlay"></div>
+                                <div class="popup">
+                                    <div class="header"></div>
+                                    <form class="popup-container">
+                                        <div class="content">
+                                            <span class='callback-status'></span>
+                                        </div>
+                                        <div class="button">
+                                            <a href="#!" class="btn btn-small-secondary" id="close">CLOSE</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="confirm-popup-wrapper">
+                                <div class="bk-overlay"></div>
+                                <div class="popup">
+                                    <div class="header">CONFIRM</div>
+                                    <div class="popup-container">
+                                        <div class="content">
+                                            <span>Are you sure want to delete this?</span>
+                                        </div>
+                                        <div class="button">
+                                            <a href="#!" class="btn btn-small-secondary" id="yes-button">YES
+                                            </a>
+                                            <a href="#!" class="btn btn-small-secondary" id="no-button">NO</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="popup-message">
-                <span></span>
+                <div class="popup-message">
+                    <span></span>
+                </div>
             </div>
         </div>
-    </div>
-    <script type="text/javascript" src='../../js/jquery.min.js'></script>
-    <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
-    <script type="text/javascript" src='../../js/jquery.validate.min.js'></script>
-    <script type="text/javascript" src='../../js/jquery-ui.min.js'></script>
-    <script type="text/javascript" src='../../js/jquery.fileupload.js'></script>
-    <script type="text/javascript" src='../../js/ajax-reusable.js'></script>
-    <script type="text/javascript" src='../../js/common.js'></script>
-    <script type="text/javascript" src='js/admin.js'></script>
-    <script type="text/javascript" src='js/deliverySlots.js'></script>
-</body>
+        <script type="text/javascript" src='../../js/jquery.min.js'></script>
+        <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
+        <script type="text/javascript" src='../../js/jquery.validate.min.js'></script>
+        <script type="text/javascript" src='../../js/jquery-ui.min.js'></script>
+        <script type="text/javascript" src='../../js/jquery.fileupload.js'></script>
+        <script type="text/javascript" src='../../js/ajax-reusable.js'></script>
+        <script type="text/javascript" src='../../js/common.js'></script>
+        <script type="text/javascript" src='js/admin.js'></script>
+        <script type="text/javascript" src='js/deliverySlots.js'></script>
+    </body>
 </html>

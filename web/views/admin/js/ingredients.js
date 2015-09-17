@@ -27,6 +27,10 @@ var Ingredients = (function() {
             }
             $("form").data('validator').resetForm();
         });
+        $("#no-button").off().on("click",function(e){
+            e.preventDefault();
+            $(".confirm-popup-wrapper").removeAttr("style");
+        });
         $("#addIngredient").off().on("click", function(e) {
             e.preventDefault();
             if ($(".popup-container").valid()) {
