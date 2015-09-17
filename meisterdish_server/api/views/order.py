@@ -742,7 +742,7 @@ def print_pdf(request):
     
     
 @check_input('POST')
-def get_delivery_slots(request,data,user):
+def get_delivery_slots(request,data):
     try:
         single = False
         if "from_date" in data and str(data["from_date"]).strip() != "":
