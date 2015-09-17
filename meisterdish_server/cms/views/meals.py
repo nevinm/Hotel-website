@@ -540,6 +540,8 @@ def add_ingredient(request, data, user):
     try:
         name = data['ingredient']
         img = data['image_id']
+        if img == "":
+            return custom_error("Please upload a valid image.")
         try:
             ing = Ingredient.objects.get(name__iexact=name)
             return custom_error(name + " Already exists.")

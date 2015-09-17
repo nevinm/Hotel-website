@@ -1345,3 +1345,97 @@ form.edit-gift-card #new-name-error {
     text-align: center;
     padding: 0;
 }
+
+
+/*=======================*\
+       &DELIVERY SLOTS
+\*=======================*/
+
+.slot-section-header {
+    padding: 15px;
+    border-bottom: 2px solid #8EC657;
+    margin: 0px 31px;
+}
+
+.slot-section-header h2 {
+    text-align: left;
+    font-size: 27px;
+    font-family: 'BrandonGrotesque-Regular';
+    margin: 0;
+}
+
+.week-section {
+    max-width: 49%;
+    padding: 10px;
+    width: 49%;
+    position: absolute;
+    clear: both;
+}
+
+.week-section thead th {
+    vertical-align: bottom;
+    ;
+}
+
+.week-section th {
+    padding: 0px 4px;
+    vertical-align: middle;
+    font-family: BrandonGrotesque-Bold;
+}
+
+.week-section td, .week-section th {
+    height: 50px;
+    color: #000;
+}
+
+.week-section td {
+    font-family: 'BrandonGrotesque-Regular';
+    padding: 8px;
+}
+
+.week-section tbody th {
+    text-align: right;
+}
+
+.week-section input[type=text] {
+    width: 63px;
+    height: 33px;
+    border: 1px solid #d0d0d0;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 20px;
+    color: #656464;
+    font-family: 'BrandonGrotesque-Regular';
+}
+
+.week-header {
+    background: #8EC657;
+    padding: 7px;
+    text-align: center;
+    font-family: BrandonGrotesque-Bold;
+    color: #F9F3F3;
+}
+
+.week-section-wrapper {
+    position: relative;
+    min-height: 500px;
+    margin: 22px 0px;
+}
+
+#nextWeekSection {
+    right: 0;
+}
+
+#nextWeekSection .week-header {
+    background: #FFFFFF;
+    border: 1px solid #000;
+    color: #000;
+}
+
+.week-section table {
+    width: 100%;
+}
+
+.apply-slot-section {
+    text-align: center;
+}

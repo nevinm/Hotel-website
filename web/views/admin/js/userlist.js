@@ -90,9 +90,11 @@ function populateUserlist(userListData) {
         onInit: function() {
             if (getStringAfterHash(location.href, "#")) {
                 var pageString = getStringAfterHash(location.href, "#");
-                pageNumber = getStringAfterHash(pageString, "-");
-                if ($(".pagination").pagination('getCurrentPage') == pageNumber) {} else {
-                    $(".pagination").pagination('selectPage', pageNumber);
+                if(pageString.indexOf('page') != -1){
+                    pageNumber = getStringAfterHash(pageString, "-");
+                    if ($(".pagination").pagination('getCurrentPage') == pageNumber) {} else {
+                        $(".pagination").pagination('selectPage', pageNumber);
+                    }
                 }
             } else {}
         }

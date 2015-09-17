@@ -25,6 +25,7 @@ $(document).ready(function() {
     setCurrentTime();
     populateYear();
     fixGoogleMapLink();
+    getDeliverySlots();
     var cartItems;
 
     //Remove cart items
@@ -302,6 +303,7 @@ function setCurrentTime() {
     //Setting the correct date.
     var currentDate = getCurrentDateMonth(0);
     $(".today-content .content-heading").text("TODAY - " + currentDate);
+    $(".today-content .content-heading").attr("data-date", getMonthDate(getCurrentDateTime(0)) + "/" + getCurrentYear());
     $('.today-content').find('.checkout-time-button').each(function(key, value) {
         $(value).attr("data-date", getMonthDate(getCurrentDateTime(0)) + "/" + getCurrentYear());
     });
@@ -309,6 +311,7 @@ function setCurrentTime() {
     //Setting the future dates and blocking the dates other than tomorrow.
     var tomorrowDate = getCurrentDateMonth(1);
     $(".week-content .content-heading").text("TOMORROW - " + tomorrowDate);
+    $(".week-content .content-heading").attr("data-date", getMonthDate(getCurrentDateTime(1)) + "/" + getCurrentYear());
     $(".week-content .checkout-time-button").each(function(key, value) {
         $(value).attr("data-date", getMonthDate(getCurrentDateTime(1)) + "/" + getCurrentYear());
     });
@@ -348,6 +351,53 @@ function populateDate(cartItems) {
             }
         });
     }
+}
+
+function populateDeliverySlotData(deliverySlotData) {
+    $.each(deliverySlotData.aaData, function(key, value) {
+        var dateCorrected = value.date.replace(/\-/g, "/"),
+            currentDateButtons;
+        //Traversing through object.
+        for (var key in value) {
+            if (value.hasOwnProperty(key)) {
+                if(value[key] == 0){
+                    currentDateButton = $(".checkout-time-button[data-date='" + dateCorrected + "'][data-slot='"+key+"']");
+                    currentDateButton[0].value='N/A';
+                    currentDateButton.addClass("time-slot-disabled");
+                    currentDateButton.removeClass("checkout-time-button-active");
+                }
+            }
+        }
+    });
+}
+
+//Get Delivery slots call back
+var getDeliverySlotsCallback = {
+    success: function(data, textStatus) {
+        deliverySlotData = JSON.parse(data);
+        if (deliverySlotData.status == 1) {
+            populateDeliverySlotData(deliverySlotData);
+        } else {
+            showPopup(deliverySlotData);
+        }
+    },
+    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+}
+
+function getDeliverySlots() {
+    var startDate = getDateTimeRequiredFormat($(".today-content .content-heading").attr("data-date")),
+        endData = getDateTimeRequiredFormat($(".week-content .content-heading").attr("data-date")),
+        url = baseURL + "get_delivery_slots/",
+        header = {
+            "session-key": localStorage["session_key"]
+        },
+        params = {
+            "from_date": startDate,
+            "to_date": endData
+        };
+    data = JSON.stringify(params);
+    var getDeliverySlotsInstance = new AjaxHttpSender();
+    getDeliverySlotsInstance.sendPost(url, header, data, getDeliverySlotsCallback);
 }
 
 //Get Cart items
@@ -1031,11 +1081,11 @@ var placeOrderCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-function convertToEstInit(selected_day, selected_hour, selected_time) {
+function convertDateFormat(selected_day, selected_hour, selected_time) {
     selectedDayDateFormat = stringToDate(selected_day, "mm/dd/yyyy", "/");
-    selectedDayDateFormatWithHour = selectedDayDateFormat.setHours(selected_hour);
-    selectedDateEst = convertToEST(selectedDayDateFormatWithHour);
-    return (getEstFormattedForWebService(selectedDateEst));
+    selectedDayDateFormatWithHour = new Date(selectedDayDateFormat.setHours(selected_hour));
+    // selectedDateEst = convertToEST(selectedDayDateFormatWithHour);
+    return (getEstFormattedForWebService(selectedDayDateFormatWithHour));
 }
 
 function createOrderParams() {
@@ -1066,12 +1116,12 @@ function createOrderParams() {
         selected_time = getHourCorrected(selected_hour) + ":" + "00" + ":" + "00";
         //Convert to EST
 
-        deliveryTime = convertToEstInit(selected_day, selected_hour, selected_time);
+        deliveryTime = convertDateFormat(selected_day, selected_hour, selected_time);
     } else {
         selected_day = $weekTimecontent.attr("data-date");
         selected_hour = $weekTimecontent.attr("data-hr");
         selected_time = getHourCorrected($weekTimecontent.attr("data-hr")) + ":" + "00" + ":" + "00";
-        deliveryTime = convertToEstInit(selected_day, selected_hour, selected_time);
+        deliveryTime = convertDateFormat(selected_day, selected_hour, selected_time);
     }
     if ($('input:checkbox[name=save-card-details]').prop('checked')) {
         saveParam = 1;
@@ -1368,12 +1418,11 @@ function detectDevice() {
     return isMobile;
 }
 
-function fixGoogleMapLink(){
+function fixGoogleMapLink() {
     var currentDeviceSet = detectDevice();
-    if(currentDeviceSet.iOS()) {
-        $("#google-maps-link").attr("href","http://maps.google.com/maps?daddr=Kochi+Kerala+India");
-    } 
-    else{
-        $("#google-maps-link").attr("href","http://maps.google.com/maps?saddr=Current+Location&daddr=Kochi+Kerala+India");
+    if (currentDeviceSet.iOS()) {
+        $("#google-maps-link").attr("href", "http://maps.google.com/maps?daddr=Kochi+Kerala+India");
+    } else {
+        $("#google-maps-link").attr("href", "http://maps.google.com/maps?saddr=Current+Location&daddr=Kochi+Kerala+India");
     }
 }
