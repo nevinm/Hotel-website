@@ -881,7 +881,7 @@ span.icon-menu {
 #new-credits-error,#new_category-error,#update_category-error,#tip-error,#new-mealtype-error,
 #new-order-error,#new-name-error, #meal-calories-error, #meal-prep-time-error, #nutrients-daily-value-error,
 #nutrients-per-serving-error, #meal-sub-name-error, #meal-saved-time-error,#subject-error,
-#your-message-error
+#your-message-error,#selectIngredientsError
 {
 	color: #ff7878;
 	background: white;

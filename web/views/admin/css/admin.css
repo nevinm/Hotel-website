@@ -25,6 +25,7 @@ input[type="text"], input[type="email"], input[type="password"] {
     margin: 0px;
     height: 89px;
     width: 270px;
+    resize: none;
 }
 
 #meal-sub-name-error {
@@ -1438,4 +1439,8 @@ form.edit-gift-card #new-name-error {
 
 .apply-slot-section {
     text-align: center;
+}
+
+#selectIngredientsError {
+    display: none;
 }

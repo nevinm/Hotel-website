@@ -5,7 +5,7 @@ $(document).ready(function() {
         $(".mealtype-image").attr("src", "");
         $("#new-mealtype").val("");
         $("#add-mealtype").show();
-        $(".mealtype-image").data().id="";
+        $(".mealtype-image").data().id = "";
         $("#edit-mealtype").hide();
         $(".header").text("ADD NEW MEAL TYPE");
         $('.popup-wrapper').show();
@@ -13,8 +13,8 @@ $(document).ready(function() {
             $('form.popup-container').valid();
         }
         $("form").data('validator').resetForm();
+        setMealTypeImageLoader();
     });
-
     $("#add-mealtype").on("click", function(e) {
         e.preventDefault();
         if ($(".popup-container").valid()) {
@@ -24,7 +24,6 @@ $(document).ready(function() {
             manageMealtype("", mealtype, imageId);
         }
     });
-
     $(document).on('click', '#delete-mealtype', function() {
         $('.popup-wrapper').hide();
         $(".confirm-popup-wrapper .header").text("Delete");
@@ -33,17 +32,14 @@ $(document).ready(function() {
         $("#yes-button").attr('data-id', id)
         $(".confirm-popup-wrapper").show();
     });
-
     $("#yes-button").on("click", function() {
         var mealtypeId = $(this).attr('data-id');
         $(".confirm-popup-wrapper").hide();
         deleteMealtype(mealtypeId);
     });
-
     $("#no-button").on("click", function() {
         $(".confirm-popup-wrapper").hide();
     });
-
     $(document).on('click', '#edit-mealtype-name', function() {
         var mealtype = $(this).closest('tr').find('.mealtype-name-value').text(),
             imageUrl = $(this).data("url"),
@@ -60,8 +56,8 @@ $(document).ready(function() {
         }
         $(".mealtype-image").attr("src", imageUrl)
         current_tr = $(this).closest('tr');
+        setMealTypeImageLoader();
     });
-
     $("#edit-mealtype").on("click", function(e) {
         e.preventDefault();
         if ($(".popup-container").valid()) {
@@ -72,11 +68,9 @@ $(document).ready(function() {
             manageMealtype(id, mealtype, imageId);
         }
     });
-
     $(".mealtype-change-icon").on("click", function() {
         $(this).next(".mealtype-image-upload-element").trigger("click");
     });
-
     getMealtypes(1);
 });
 
@@ -125,7 +119,7 @@ function uploadImage(imageElementSelect, imageElement) {
         formData: {
             example: 'test'
         },
-        start: function(e){
+        start: function(e) {
             $(".upload-gif").show();
         },
         done: function(e, data) {
@@ -141,7 +135,6 @@ function uploadImage(imageElementSelect, imageElement) {
         }
     });
 }
-
 // get Mealtypes callback
 var getMealtypesCallback = {
     success: function(data, textStatus) {
@@ -165,7 +158,6 @@ function getMealtypes(nextPage, attributeId) {
             "nextPage": nextPage
         },
         data = JSON.stringify(params);
-
     var getMealtypes = new AjaxHttpSender();
     getMealtypes.sendPost(url, header, data, getMealtypesCallback);
 }
@@ -173,30 +165,18 @@ function getMealtypes(nextPage, attributeId) {
 function populateMealtypes(mealTypeList) {
     $('#mealtype-area tbody tr').remove();
     $.each(mealTypeList.aaData, function(key, value) {
-        $('#mealtype-area tbody').append("<tr class='row' data-id='" + value.id + "'>" +
-            "<td class='mealtype-name-value'>" + value.name + "</td>" +
-            "<td>" + "<input type='button' data-url='" + value.image + "' class='btn btn-small-primary medium-green'" +
-            " id='edit-mealtype-name' data-imageid='" + value.image_id + "' value='EDIT'>" + "</td>" +
-            "<td>" + "<input type='button' class='btn btn-small-primary medium-green'" +
-            " id='delete-mealtype' value='DELETE'>" + "</td>" +
-            "<td><img class='mealtype-icon' src='" + value.image + "'/>" +
-            "<input class='mealtype-image-upload-element' value='' type='file' name='image_upload'/></td>" +
-            "</tr>");
+        $('#mealtype-area tbody').append("<tr class='row' data-id='" + value.id + "'>" + "<td class='mealtype-name-value'>" + value.name + "</td>" + "<td>" + "<input type='button' data-url='" + value.image + "' class='btn btn-small-primary medium-green'" + " id='edit-mealtype-name' data-imageid='" + value.image_id + "' value='EDIT'>" + "</td>" + "<td>" + "<input type='button' class='btn btn-small-primary medium-green'" + " id='delete-mealtype' value='DELETE'>" + "</td>" + "<td><img class='mealtype-icon' src='" + value.image + "'/>" + "<input class='mealtype-image-upload-element' value='' type='file' name='image_upload'/></td>" + "</tr>");
     });
-
     $(".mealtype-image-upload").on("click", function() {
         $(this).parent().find(".mealtype-image-upload-element").click();
     });
-
     $(".mealtype-image-upload-element").on('click', function() {
         var inputElement = $(this),
             imageElement = $(this).parent().find(".mealtype-icon");
         uploadImage(inputElement, imageElement);
     });
-
     addDynamicApiUrlUploadPicture("mealtype-image-upload-element");
 }
-
 //add/edit mealtypes.
 var manageMealtypeCallback = {
     success: function(data, textStatus) {
@@ -227,7 +207,6 @@ function manageMealtype(mealTypeId, mealTypeName, mealTypeIcon) {
     var manageMealtype = new AjaxHttpSender();
     manageMealtype.sendPost(url, header, data, manageMealtypeCallback);
 }
-
 //delete meal types
 var deleteMealtypeCallback = {
     success: function(data, textStatus) {
@@ -263,4 +242,12 @@ function showPopupMessage(data) {
 
 function deleteZip(delete_id) {
     $("tr[data-id='" + delete_id + "']").remove();
+}
+
+function setMealTypeImageLoader() {
+    if ($(".mealtype-image").attr("src") === "") {
+        $(".mealtype-image").hide();
+    } else {
+        $(".mealtype-image").show();
+    }
 }

@@ -97,26 +97,26 @@ var DeliverySlots = (function() {
                 html += '<tr><th>' + dayArray[date.getDay()] + ' ' + date.getDate() + '</th>';
             }
             if (date.valueOf() < currentDate) {
-                html += '<td><input type="text" value="' + value.slot1 + '" disabled></td>' + '<td><input type="text" value="' + value.slot2 + '" disabled></td>' + '<td><input type="text" value="' + value.slot3 + '" disabled></td>' + '<td><input type="text" value="' + value.slot4 + '" disabled></td>' + '<td><input type="text" value="' + value.slot5 + '" disabled></td></tr>';
+                html += '<td><input type="text" value="' + value.slot1 + '" maxlength="3" disabled></td>' + '<td><input maxlength="3" type="text" value="' + value.slot2 + '" disabled></td>' + '<td><input  maxlength="3" type="text" value="' + value.slot3 + '" disabled></td>' + '<td><input  maxlength="3" type="text" value="' + value.slot4 + '" disabled></td>' + '<td><input  maxlength="3" type="text" value="' + value.slot5 + '" disabled></td></tr>';
             } else {
                 html += isZeroSlot(value.slot1) + isZeroSlot(value.slot2) + isZeroSlot(value.slot3) + isZeroSlot(value.slot4) + isZeroSlot(value.slot5) + '</tr>';
             }
         });
-        html += addHolday(getNthDate(date, 1), dayArray);
-        html += addHolday(getNthDate(date, 2), dayArray);
+        // html += addHolday(getNthDate(date, 1), dayArray);
+        // html += addHolday(getNthDate(date, 2), dayArray);
         $(table + " tbody").html(html);
         bindEvents();
     }
     //Add Holiday disabled slots
     function addHolday(date, dayArray) {
-        return '<tr class="holidays"><th>' + dayArray[date.getDay()] + ' ' + date.getDate() + '</th>' + '<td><input type="text" disabled></td>' + '<td><input type="text" disabled></td>' + '<td><input type="text" disabled></td>' + '<td><input type="text" disabled></td>' + '<td><input type="text" disabled></td></tr>';
+        return '<tr class="holidays"><th>' + dayArray[date.getDay()] + ' ' + date.getDate() + '</th>' + '<td><input  maxlength="3" type="text" disabled></td>' + '<td><input  maxlength="3" type="text" disabled></td>' + '<td><input maxlength="3" type="text" disabled></td>' + '<td><input maxlength="3" type="text" disabled></td>' + '<td><input type="text"  maxlength="3" disabled></td></tr>';
     }
     //Add slot values according to priority
     function isZeroSlot(slot) {
         if (slot !== undefined && parseInt(slot) === 0) {
-            return '<td><input type="text" value="' + slot + '" style="color:#E86565;"></td>';
+            return '<td><input type="text" value="' + slot + '" style="color:#E86565;" maxlength="3"></td>';
         } else {
-            return '<td><input type="text" value="' + slot + '"></td>';
+            return '<td><input type="text" value="' + slot + '" maxlength="3"></td>';
         }
     }
     //Apply slots on Apply button click
@@ -144,11 +144,11 @@ var DeliverySlots = (function() {
             var tdArray = $(rowValue).find('td input[type=text]');
             var object = {
                 "date": getFormattedDate(getNthDate(startDate, rowKey), "MM-DD-YYYY"),
-                "slot1": $(tdArray[0]).val(),
-                "slot2": $(tdArray[1]).val(),
-                "slot3": $(tdArray[2]).val(),
-                "slot4": $(tdArray[3]).val(),
-                "slot5": $(tdArray[4]).val()
+                "slot1": $(tdArray[0]).val() !== "" ? $(tdArray[0]).val() : 0,
+                "slot2": $(tdArray[1]).val() !== "" ? $(tdArray[1]).val() : 0,
+                "slot3": $(tdArray[2]).val() !== "" ? $(tdArray[2]).val() : 0,
+                "slot4": $(tdArray[3]).val() !== "" ? $(tdArray[3]).val() : 0,
+                "slot5": $(tdArray[4]).val() !== "" ? $(tdArray[4]).val() : 0
             };
             requestObject["slots_list"].push(object);
         });
@@ -161,26 +161,24 @@ var DeliverySlots = (function() {
                 if (responseData.status == 1) {
                     populateWeeklyData(responseData, "#thisWeek");
                 } else {
-                    showCallBackStatusPre();
                     showPopup(responseData);
                 }
             },
             failure: function(XMLHttpRequest, textStatus, errorThrown) {}
         }
-    //callback to 'Next Week Slot data'
+        //callback to 'Next Week Slot data'
     var getNextWeekCallback = {
-        success: function(data, textStatus) {
-            var responseData = JSON.parse(data);
-            if (responseData.status == 1) {
-                populateWeeklyData(responseData, "#nextWeek");
-            } else {
-                showCallBackStatusPre();
-                showPopup(responseData);
-            }
-        },
-        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
-    }
-    //callback to apply slots callback
+            success: function(data, textStatus) {
+                var responseData = JSON.parse(data);
+                if (responseData.status == 1) {
+                    populateWeeklyData(responseData, "#nextWeek");
+                } else {
+                    showPopup(responseData);
+                }
+            },
+            failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+        }
+        //callback to apply slots callback
     var getApplySlotsCallback = {
         success: function(data, textStatus) {
             var responseData = JSON.parse(data);
@@ -189,7 +187,7 @@ var DeliverySlots = (function() {
                 responseData.message = "Delivery slots are updated successfully.";
                 showPopup(responseData);
             } else {
-                showCallBackStatusPre();
+                
                 showPopup(responseData);
             }
         },
