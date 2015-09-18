@@ -102,8 +102,8 @@ var DeliverySlots = (function() {
                 html += isZeroSlot(value.slot1) + isZeroSlot(value.slot2) + isZeroSlot(value.slot3) + isZeroSlot(value.slot4) + isZeroSlot(value.slot5) + '</tr>';
             }
         });
-        html += addHolday(getNthDate(date, 1), dayArray);
-        html += addHolday(getNthDate(date, 2), dayArray);
+        // html += addHolday(getNthDate(date, 1), dayArray);
+        // html += addHolday(getNthDate(date, 2), dayArray);
         $(table + " tbody").html(html);
         bindEvents();
     }

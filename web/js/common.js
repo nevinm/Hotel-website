@@ -748,6 +748,10 @@ if ($.validator) {
     $.validator.addMethod('positiveNumber', function(value) {
         return Number(value) > 0;
     });
+    $.validator.addMethod('minlength', function(value,element,minlength) {
+        return this.optional(element)|| value.trim().length>=minlength;
+    });
+    
 }
 
 //CartItemCount
