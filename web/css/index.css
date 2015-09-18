@@ -441,6 +441,10 @@ p.lower-content {
 
 p.lower-content {
     text-align: center;
+        width: 143px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 p.upper-content {
@@ -736,6 +740,10 @@ label#username-error {
     .meal-sub-description p,
     p.lower-content {
         font-size: 17px;
+    }
+    p.lower-content {
+        width: 104px;
+        
     }
     #section-what-to-expect .slide-description {
         padding: 0;
