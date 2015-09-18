@@ -8,6 +8,7 @@ from libraries import validate_zipcode, validate_phone, check_delivery_area, val
 import stripe
 from datetime import datetime, timedelta
 from django.template.loader import render_to_string
+from django.utils.html import escape
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 log = logging.getLogger(__name__)
@@ -15,10 +16,10 @@ log = logging.getLogger(__name__)
 @check_input('POST')
 def add_address(request, data, user):
     try:
-        fname = data["first_name"].strip()
-        lname = data["last_name"].strip()
-        street = data["street"].strip()
-        building = data["building"].strip()
+        fname = escape(data["first_name"]).strip()
+        lname = escape(data["last_name"]).strip()
+        street = escape(data["street"]).strip()
+        building = escape(data["building"]).strip()
         city_id = data["city_id"]
         state_id = data["state_id"]
         zip = data["zip"].strip()
@@ -203,7 +204,7 @@ def add_rating(request, data, user, meal_id):
                 rating.meal = Meal.objects.get(pk=meal_id)
                 rating.order = order
                 rating.rating = data['rating']
-                rating.comment = data['comment'].strip()
+                rating.comment = escape(data['comment']).strip()
                 rating.save()
                 return json_response({"status":1, "message":"Successfully added rating.", "order_id":data['order_id'], "meal_id":meal_id})
             else:
