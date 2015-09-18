@@ -333,7 +333,7 @@ function populateDate(cartItems) {
     tomorrowDate = getCurrentDateTime(1).replace(/\//g, "-");
     if (dateTime == currentDate) {
         $('.today-content .checkout-time-button').each(function(key, value) {
-            if ($(value).data().hr == parseInt(hour)) {
+            if ($(value).data().hr == parseInt(hour) && !($(value).val()=="N/A")) {
                 $('.checkout-time-button-active').removeClass('checkout-time-button-active');
                 $(value).addClass("checkout-time-button-active");
             }
@@ -345,7 +345,7 @@ function populateDate(cartItems) {
 
         //Setting the future time.
         $('.week-content .set-time-button').each(function(key, value) {
-            if ($(value).data().hr == parseInt(hour)) {
+            if ($(value).data().hr == parseInt(hour)  && !($(value).val()=="N/A")) {
                 $('.week-content .set-time-button').removeClass("checkout-time-button-active");
                 $(value).addClass("checkout-time-button-active");
             }
@@ -362,9 +362,12 @@ function populateDeliverySlotData(deliverySlotData) {
             if (value.hasOwnProperty(key)) {
                 if(value[key] == 0){
                     currentDateButton = $(".checkout-time-button[data-date='" + dateCorrected + "'][data-slot='"+key+"']");
-                    currentDateButton[0].value='N/A';
-                    currentDateButton.addClass("time-slot-disabled");
-                    currentDateButton.removeClass("checkout-time-button-active");
+                    if(currentDateButton.length){
+                        currentDateButton[0].value='N/A';
+                        currentDateButton.addClass("time-slot-disabled");
+                        currentDateButton.removeClass("checkout-time-button-active");
+                        currentDateButton.removeClass("button-disabled");
+                    }else{}
                 }
             }
         }
