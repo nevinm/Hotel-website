@@ -766,7 +766,7 @@ def get_delivery_slots(request,data):
             end_date = start_date
               
         day_count = (end_date - start_date).days + 1
-        dates = [d for d in (start_date + timedelta(n) for n in range(day_count)) if d.weekday()< 5]
+        dates = [d for d in (start_date + timedelta(n) for n in range(day_count))]# if d.weekday()< 5]
         for d in dates:
             time_slots = DeliveryTimeSlot.objects.filter(date = d)
             if len(time_slots) == 0:

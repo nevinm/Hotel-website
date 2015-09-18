@@ -122,10 +122,10 @@ def manage_delivery_slots(request,data,user):
             end_date = start_date
               
         day_count = (end_date - start_date).days + 1
-        dates = [d for d in (start_date + timedelta(n) for n in range(day_count)) if d.weekday() < 5]
+        dates = [d for d in (start_date + timedelta(n) for n in range(day_count)) ]#if d.weekday() < 5]
         log.info("Dates in range are" + " ".join(map(lambda i:datetime.datetime.strftime(i,format='%m-%d-%Y'),dates)))
         for slot_data in slots_list:
-            if datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y').date() not in dates and datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y').date().weekday() <5:
+            if datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y').date() not in dates:# and datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y').date().weekday() <5:
                 return custom_error("Date not in the given Range")
             time_slots = DeliveryTimeSlot.objects.filter(date = datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y'))
             
@@ -183,7 +183,7 @@ def get_delivery_slots(request,data,user):
             end_date = start_date
               
         day_count = (end_date - start_date).days + 1
-        dates = [d for d in (start_date + timedelta(n) for n in range(day_count)) if d.weekday()< 5]
+        dates = [d for d in (start_date + timedelta(n) for n in range(day_count)) ]#if d.weekday()< 5]
         for d in dates:
             time_slots = DeliveryTimeSlot.objects.filter(date = d)
             if len(time_slots) == 0:
