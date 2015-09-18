@@ -1424,8 +1424,8 @@ function detectDevice() {
 function fixGoogleMapLink() {
     var currentDeviceSet = detectDevice();
     if (currentDeviceSet.iOS()) {
-        $("#google-maps-link").attr("href", "http://maps.google.com/maps?daddr=Kochi+Kerala+India");
+        $("#google-maps-link").attr("href", "http://maps.google.com/maps?daddr=Meisterdish+218+E+81st+St+New+York+NY+10028+United+States");
     } else {
-        $("#google-maps-link").attr("href", "http://maps.google.com/maps?saddr=Current+Location&daddr=Kochi+Kerala+India");
+        $("#google-maps-link").attr("href", "http://maps.google.com/maps?saddr=Current+Location&daddr=Meisterdish+218+E+81st+St+New+York+NY+10028+United+States");
     }
 }
