@@ -152,11 +152,51 @@ function dollarConvert(value) {
 function getHourCorrected(Hour) {
     return (("0" + Hour).slice(-2));
 }
+
+function returnDay(weekdaynumber){
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[weekdaynumber];
+}
+
+//Number of iterations for the days required according to the date provided.
+function weekendRestrictionDayCount(date) {
+        dateCount={
+            "firstDateCount" :0,
+            "secondDateCount" : 0
+        };
+    if (date == '6') {
+        dateCount={
+            "firstDateCount" :2,
+            "secondDateCount" : 3
+        }
+    } 
+    else if(date =='0'){
+        dateCount={
+            "firstDateCount" :1,
+            "secondDateCount" : 2
+        }
+    }else if(date == '5') {
+        dateCount={
+            "firstDateCount" :0,
+            "secondDateCount" : 3
+        }
+    }
+    else{
+        dateCount={
+            "firstDateCount" :0,
+            "secondDateCount" : 1
+        }
+    }
+    return dateCount;
+}
+
+
 // delivery_time : 04-28-2015 20:15:20
 function getCurrentDateTime(days) {
     var currentdate = new Date();
     currentdate.setDate(currentdate.getDate() + days);
-    return datetime = ('0' + (currentdate.getMonth() + 1)).slice(-2) + "-" + ('0' + currentdate.getDate()).slice(-2) + "-" + currentdate.getFullYear();
+    return datetime = ('0' + (currentdate.getMonth() + 1)).slice(-2) +
+     "-" + ('0' + currentdate.getDate()).slice(-2) + "-" + currentdate.getFullYear();
 }
 
 function getCurrentPageTitle() {
@@ -212,20 +252,11 @@ function getCurrentDateMonth(days) {
     var currentdate = new Date(),
         month = [];
     currentdate.setDate(currentdate.getDate() + days);
-    month[0] = "January";
-    month[1] = "February";
-    month[2] = "March";
-    month[3] = "April";
-    month[4] = "May";
-    month[5] = "June";
-    month[6] = "July";
-    month[7] = "August";
-    month[8] = "September";
-    month[9] = "October";
-    month[10] = "November";
-    month[11] = "December";
-    var monthName = month[currentdate.getMonth()];
-    return dateMonth = ('0' + currentdate.getDate()).slice(-2) + " " + monthName;
+    month = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+    var monthName = month[currentdate.getMonth()],
+        dayName = returnDay(currentdate.getDay());
+    return dateMonth = dayName + ", " + monthName + " " +('0' + currentdate.getDate()).slice(-2);
 }
 
 function getStringAfterHash(url, symbol) {
@@ -701,7 +732,7 @@ if ($.validator) {
         return value.match(/^[- a-zA-Z]+$/);
     });
     $.validator.addMethod('email', function(value) {
-        return value.match(/(^[a-zA-Z0-9]+[\._-]{0,1})+([a-zA-Z0-9]+[_]{0,1})*@([a-zA-Z0-9]+[-]{0,1})+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,3})$/);
+        return value.match(/^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/);
     });
     $.validator.addMethod('youtube_url', function(value) {
         return value.match(/^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/);

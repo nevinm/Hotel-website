@@ -267,7 +267,6 @@ $(document).ready(function() {
     });
 });
 
-
 function haveAccountCheck() {
     var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
         adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null;
@@ -300,20 +299,32 @@ function setCurrentTime() {
         }
     });
 
+    var currentdate = new Date(),
+    days = weekendRestrictionDayCount(currentdate.getDay()),
+    currentDateNum = days.firstDateCount, tomorrowDateNum = days.secondDateCount;
+
     //Setting the correct date.
-    var currentDate = getCurrentDateMonth(0);
-    $(".today-content .content-heading").text("TODAY - " + currentDate);
-    $(".today-content .content-heading").attr("data-date", getMonthDate(getCurrentDateTime(0)) + "/" + getCurrentYear());
+    var currentDate = getCurrentDateMonth(currentDateNum);
+    if(currentDateNum == 0){
+        $(".today-content .content-heading").text("TODAY");
+    }else{
+        $(".today-content .content-heading").text(currentDate);
+    }
+    $(".today-content .content-heading").attr("data-date", 
+        getMonthDate(getCurrentDateTime(currentDateNum)) + "/" + getCurrentYear());
     $('.today-content').find('.checkout-time-button').each(function(key, value) {
-        $(value).attr("data-date", getMonthDate(getCurrentDateTime(0)) + "/" + getCurrentYear());
+        $(value).attr("data-date", getMonthDate(getCurrentDateTime(currentDateNum)) +
+         "/" + getCurrentYear());
     });
 
     //Setting the future dates and blocking the dates other than tomorrow.
-    var tomorrowDate = getCurrentDateMonth(1);
-    $(".week-content .content-heading").text("TOMORROW - " + tomorrowDate);
-    $(".week-content .content-heading").attr("data-date", getMonthDate(getCurrentDateTime(1)) + "/" + getCurrentYear());
+    var tomorrowDate = getCurrentDateMonth(tomorrowDateNum);
+    $(".week-content .content-heading").text(tomorrowDate);
+    $(".week-content .content-heading").attr("data-date", 
+        getMonthDate(getCurrentDateTime(tomorrowDateNum)) + "/" + getCurrentYear());
     $(".week-content .checkout-time-button").each(function(key, value) {
-        $(value).attr("data-date", getMonthDate(getCurrentDateTime(1)) + "/" + getCurrentYear());
+        $(value).attr("data-date", getMonthDate(getCurrentDateTime(tomorrowDateNum)) +
+         "/" + getCurrentYear());
     });
 }
 
@@ -326,11 +337,13 @@ function timeActiveRestriction(buttonSelector, activeClass, oppositeSelector) {
 }
 
 function populateDate(cartItems) {
+    var currentdate = new Date();
+    days = weekendRestrictionDayCount(currentdate.getDay());
     dateTime = cartItems.delivery_time.split(" ")[0];
     dateMonth = cartItems.delivery_time.substring(0, 5).replace('-', '/');
     hour = cartItems.delivery_time.substring(11, 13);
-    currentDate = getCurrentDateTime(0).replace(/\//, "-");
-    tomorrowDate = getCurrentDateTime(1).replace(/\//g, "-");
+    currentDate = getCurrentDateTime(days.firstDateCount).replace(/\//, "-");
+    tomorrowDate = getCurrentDateTime(days.secondDateCount).replace(/\//g, "-");
     if (dateTime == currentDate) {
         $('.today-content .checkout-time-button').each(function(key, value) {
             if ($(value).data().hr == parseInt(hour) && !($(value).val()=="N/A")) {
@@ -872,8 +885,11 @@ function populateAddressListPopup() {
 function appendAddresscontent(addressList) {
     $('.address-payment-list-popup .popup-container').append("<div class='delivery-adress-wrapper'>" + "</div>");
     $.each(addressList.address_list, function(key, value) {
-        $('.address-payment-list-popup .popup-container .delivery-adress-wrapper').append("<div class='address-container'>" + "<input type='radio' name='address' id='" + value.id + 1 + "' data-id='" + value.id + "' class='checkbox-green radio-button'>" +
-            "<label class='list-address' for='" + value.id + 1 + "' data-email = '" + value.email + "' data-phone='" + value.phone + "'>" +
+        $('.address-payment-list-popup .popup-container .delivery-adress-wrapper').append("<div class='address-container'>" + 
+            "<input type='radio' name='address' id='"+ value.id + 1 + "' data-id='" 
+            + value.id + "' class='checkbox-green radio-button'>" +
+            "<label class='list-address' for='" + value.id + 1 + "' data-email = '"
+             + value.email + "' data-phone='" + value.phone + "'>" +
             "<span>" + value.first_name + " " + value.last_name + "</span>" +
             "<span>" + value.street + ", " + value.building + "</span>" +
             "<span>" + value.city + ", " + value.state + " " + value.zip + "</span>" +
