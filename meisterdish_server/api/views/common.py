@@ -265,6 +265,8 @@ def send_user_verification_mail(user, change_email=False, email=""):
                "unsubscribe_url": unsubscribe_url,
                }
         if change_email:
+            dic["email"] = email
+            dic["username"] = email
             msg = render_to_string('verify_email_email_template.html', dic)
             sub = 'Verify your email for Meisterdish'
             to_email = email
