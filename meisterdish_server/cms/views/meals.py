@@ -650,7 +650,7 @@ def get_meal_ratings(request, data, user, meal_id):
         if "nextPage" in data:
             page = int(data['nextPage'])
             
-        meal_ratings = MealRating.objects.filter(meal_id=meal_id)
+        meal_ratings = MealRating.objects.filter(meal_id=meal_id, is_deleted=False)
         count = meal_ratings.count()
         
         if page:
@@ -693,3 +693,50 @@ def delete_meal_rating(request, data, user, pk):
         log.error("Failed to delete rating " + e.message )
         return custom_error("Failed to delete rating!")
     
+@check_input('POST', settings.ROLE_ADMIN)
+def get_all_ratings(request, data, user):
+    try:
+        page = 0
+        limit = settings.PER_PAGE
+        if "nextPage" in data:
+            page = int(data['nextPage'])
+
+        ratings = MealRating.objects.filter(is_deleted=False).distinct().order_by('-created')
+        count = ratings.count()
+        
+        if page:
+            paginator = Paginator(ratings, limit)
+            if page > paginator.page_range[-1]: page = 1
+            try:
+                meal_ratings = paginator.page(page)
+            except EmptyPage:
+                meal_ratings = []
+            
+        rating_data = [{"id":i.id,
+                 "meal_id":i.meal.id,
+                 "order_id":i.order_id,
+                 "rating":i.rating,
+                 "comment":i.comment,
+                 "user":{
+                         "id": i.order.cart.user.id,
+                         "name": i.order.cart.user.last_name + " " + i.order.cart.user.first_name,
+                         "email": i.order.cart.user.email,
+                         "profile_image": settings.DEFAULT_USER_IMAGE if i.order.cart.user.profile_image is None else i.order.cart.user.profile_image,                            
+                         }
+                 } for i in ratings]
+        
+        data = {}
+        data["status"] = 1
+        data["aaData"] = rating_data
+        data["total_count"] = count
+        
+        if page:
+            data["num_pages"] = paginator.num_pages
+            data["page_range"] = paginator.page_range
+            data["current_page"] = page
+            data["per_page"] = limit
+        return json_response(data)
+        
+    except Exception as e:
+        log.error("Failed to get data." + e.message)
+        return custom_error("Failed to get ratings.")

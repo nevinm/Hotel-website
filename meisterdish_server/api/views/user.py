@@ -341,7 +341,7 @@ def get_user_reviews(request, data, user):
             meals = Meal.objects.filter(cartitem__cart__order=order)
             for meal in meals:
                 try:
-                    rating = MealRating.objects.get(meal=meal, order=order)
+                    rating = MealRating.objects.get(meal=meal, order=order, is_deleted=False)
                 except Exception as e:
                     log.error("Rating list error :"+e.message)
                     rating = False
