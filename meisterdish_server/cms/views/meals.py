@@ -673,7 +673,7 @@ def get_meal_ratings(request, data, user, meal_id):
                     "user": {"id": i.order.cart.user.id,
                              "name": i.order.cart.user.last_name + " " + i.order.cart.user.first_name,
                              "email": i.order.cart.user.email,
-                             "profile_image": settings.DEFAULT_USER_IMAGE if i.order.cart.user.profile_image is None else i.order.cart.user.profile_image,
+                             "profile_image": settings.DEFAULT_USER_IMAGE if i.order.cart.user.profile_image is None else i.order.cart.user.profile_image.image.url,
                              },
                     "comment": i.comment} for i in meal_ratings]
         response = {
@@ -741,7 +741,7 @@ def get_all_ratings(request, data, user):
                                 "name": i.order.cart.user.last_name +
                                 " " + i.order.cart.user.first_name,
                                 "email": i.order.cart.user.email,
-                                "profile_image": settings.DEFAULT_USER_IMAGE if i.order.cart.user.profile_image is None else i.order.cart.user.profile_image,
+                                "profile_image": settings.DEFAULT_USER_IMAGE if i.order.cart.user.profile_image is None else i.order.cart.user.profile_image.image.url,
                                 }
                         } for i in ratings]
 
