@@ -984,7 +984,7 @@ input#meal-price {
     text-transform: uppercase;
 }
 
-.add-preparation-button, .add-list-button, add-ingredients-list-button {
+.add-preparation-button, .add-list-button, .add-ingredients-list-button {
     margin-top: 33px;
 }
 
@@ -1322,7 +1322,7 @@ form.edit-gift-card #new-name-error {
 }
 
 .create-meal-container .ingredients-container select {
-    padding: 4px 35px;
+    padding: 4px 4px;
     border: 1px solid rgb(221, 221, 221);
     background: #fff;
     font-family: 'BrandonGrotesque-Regular';

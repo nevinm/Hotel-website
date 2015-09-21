@@ -442,6 +442,11 @@ p.lower-content {
 p.lower-content {
     text-align: center;
 }
+.ingredients-wrapper p.lower-content{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
 
 p.upper-content {
     font-family: 'BrandonGrotesque-Regular';

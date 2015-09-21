@@ -228,7 +228,7 @@ class Nutrient(models.Model):
         return self.name
     
 class Ingredient(models.Model):
-    name = models.CharField(db_index=True, max_length=20)
+    name = models.CharField(db_index=True, max_length=40)
     image = models.ForeignKey(Image)
     def __unicode__(self):
         return self.name
