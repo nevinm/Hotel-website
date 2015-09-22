@@ -743,7 +743,7 @@ def get_all_ratings(request, data, user):
                                 "email": i.order.cart.user.email,
                                 "profile_image": settings.DEFAULT_USER_IMAGE if i.order.cart.user.profile_image is None else i.order.cart.user.profile_image.image.url,
                                 }
-                        } for i in ratings]
+                        } for i in meal_ratings]
 
         data = {}
         data["status"] = 1
