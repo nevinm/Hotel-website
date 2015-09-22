@@ -250,7 +250,7 @@ function populateMealList(mealList, isInfinteScrolling) {
                 "data-id='" + value.id + "'>ADD</a></span>" +
                 "</section></div>");
         }
-       
+        
         if(value.quantity < 2){
             $('.removeItemButton[data-id="'+ value.id +'"]').hide();
             $('.meal-overlay[data-id="'+ value.id +'"]').hide();
@@ -263,6 +263,12 @@ function populateMealList(mealList, isInfinteScrolling) {
              $('.addItemButton[data-id="'+ value.id +'"]').hide();            
         }else{
              $('.addItemButton[data-id="'+ value.id +'"]').show();
+        }
+
+        //Sold Out
+        if(value.sold_out == 0){}
+        else{
+            $(".addItemButton:last").addClass("button-disabled");
         }
     });
     if (endOfList) {} else {
