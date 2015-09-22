@@ -182,7 +182,10 @@ function mealDetailsTab(mealDetails) {
     $(".chef-name").text("CHEF " + mealDetails.chef_name);
     $(".rating-count").text("("+mealDetails.ratings_count+")")
     $(".meal-ingredients").text(mealDetails.sub);
-
+    if(mealDetails.sold_out == 0){}
+    else{
+        $('.add-meal').addClass("button-disabled");
+    }
     $($("#meal-rating").find(".rating-star").get().reverse()).each(function(key, value) {
         if (Math.round(mealDetails.avg_rating) == (key + 1)) {
             $(this).trigger("click");

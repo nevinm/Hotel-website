@@ -205,6 +205,10 @@ function populateHomePageMeal(mealDetails) {
     } else {
         $("#meal-add").removeClass("button-disabled");
     }
+    if(mealDetails.sold_out == 0){}
+        else{
+        $("#meal-add").addClass("button-disabled");
+    }
 }
 
 function updateHeight() {
