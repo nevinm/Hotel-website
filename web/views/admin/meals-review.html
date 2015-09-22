@@ -9,10 +9,8 @@
         <title>Meisterdish - Admin</title>
         <script type="text/javascript" src='js/redirect-admin.js'></script>
         <link rel="stylesheet" type="text/css" href="../../css/reset.css">
-        <link rel="stylesheet" type="text/css" href="../../css/fontello.css">
         <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
         <link rel="stylesheet" type="text/css" href="../../css/common.css">
-        <link rel="stylesheet" type="text/css" href="../../css/jquery-ui.min.css">
         <link rel="stylesheet" type="text/css" href="css/admin.css">
         <script type="text/javascript" src='../../js/validate-session.js'></script>
     </head>
@@ -23,7 +21,7 @@
                     <a href="#"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
                     </a>
                     <ul id="menu" class="pullRight">
-                        <li class='admin-links'>
+                        <li class="admin-links">
                             <a href="manage-delivery-areas.html">DELIVERY AREA</a>
                         </li>
                         <li class='admin-links'>
@@ -35,7 +33,7 @@
                         <li class='admin-links'>
                             <a href="orderlist.html">ORDERS</a>
                         </li>
-                        <li class="bold kitchen-links">
+                        <li class="kitchen-links">
                             <a href="#">KITCHEN</a>
                         </li>
                         <li class='admin-links'>
@@ -56,7 +54,7 @@
                         <li class='admin-links'>
                             <a href="delivery-slots.html">DELIVERY SLOTS</a>
                         </li>
-                        <li class='admin-links'>
+                        <li class='bold admin-links'>
                             <a href="meals-review.html">REVIEWS</a>
                         </li>
                         <li id="navbar-username_hidden" class="bold green">
@@ -72,59 +70,74 @@
                             <a id='logout'>LOG OUT</a>
                         </div>
                     </div>
-                    <div class="admin-page-container">
+                    <div class="admin-page-container" style="min-height: 600px;">
                         <div class="admin-header">
-                            <h2>ORDER LIST</h2>
+                            <h2>MANAGE REVIEWS</h2>
                         </div>
-                        <div class="order-list-container" id='kitchen-order-container'>
-                            <div class='kitchen-filter'></div>
-                            <table id="order-list" class="display" cellspacing="0" width="100%">
+                        <div class="manage-area-container" id='reviewsContainer'>
+                            <table id="reviewsArea" class="display" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
-                                        <th>Delivery Time</th>
-                                        <th>Order Number</th>
                                         <th>Meal</th>
-                                        <th>Min Time</th>
-                                        <th>Zip</th>
-                                        <th>Name</th>
-                                        <th>Phone</th>
-                                        <th>Status</th>
+                                        <th>UserName</th>
+                                        <th style="width:130px;">Rating</th>
+                                        <th style="width:350px;">Review</th>
+                                        <th>Delete</th>
                                     </tr>
                                 </thead>
-                            <tbody></tbody>
-                        </table>
-                        <div class='order-list-empty'>Order List is Empty</div>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                            <div class="admin-nav">
+                                <div class='pagination'></div>
+                            </div>
+                            <div class="popup-wrapper">
+                                <div class="bk-overlay"></div>
+                                <div class="popup">
+                                    <div class="header"></div>
+                                    <form class="popup-container">
+                                        <div class="content">
+                                            <span class='callback-status'></span>
+                                        </div>
+                                        <div class="button">
+                                            <a href="#!" class="btn btn-small-secondary" id="close">CLOSE</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="confirm-popup-wrapper">
+                                <div class="bk-overlay"></div>
+                                <div class="popup">
+                                    <div class="header">CONFIRM</div>
+                                    <div class="popup-container">
+                                        <div class="content">
+                                            <span>Are you sure want to delete this?</span>
+                                        </div>
+                                        <div class="button">
+                                            <a href="#!" class="btn btn-small-secondary" id="yes-button">YES
+                                            </a>
+                                            <a href="#!" class="btn btn-small-secondary" id="no-button">NO</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="admin-nav">
-                        <div class='pagination'></div>
-                        <div class='add-status'></div>
-                    </div>
+                </div>
+                <div class="popup-message">
+                    <span></span>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="popup-wrapper">
-        <div class="bk-overlay"></div>
-        <div class="popup">
-            <div class="header"></div>
-            <div class="popup-container">
-                <div class="content">
-                    <span>SOMTHING WENT WRONG</span>
-                </div>
-                <div class="button">
-                    <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script type="text/javascript" src='../../js/jquery.min.js'></script>
-<script type="text/javascript" src='js/jquery.simplePagination.js'></script>
-<script type="text/javascript" src='../../js/jquery.validate.min.js'></script>
-<script type="text/javascript" src='../../js/ajax-reusable.js'></script>
-<script type="text/javascript" src='../../js/jquery-ui.min.js'></script>
-<script type="text/javascript" src='../../js/common.js'></script>
-<script type="text/javascript" src='js/admin.js'></script>
-<script type="text/javascript" src='js/kitchen-order.js'></script>
-</body>
+        <script type="text/javascript" src='../../js/jquery.min.js'></script>
+        <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
+        <script type="text/javascript" src='../../js/jquery.validate.min.js'></script>
+        <script type="text/javascript" src='../../js/jquery-ui.min.js'></script>
+        <script type="text/javascript" src='../../js/jquery.fileupload.js'></script>
+        <script type="text/javascript" src='../../js/ajax-reusable.js'></script>
+        <script type="text/javascript" src='../../js/common.js'></script>
+        <script type="text/javascript" src='js/admin.js'></script>
+        <script type="text/javascript" src='js/mealsReview.js'></script>
+    </body>
 </html>
