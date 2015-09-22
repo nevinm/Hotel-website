@@ -302,7 +302,7 @@ class MealRating(models.Model):
     rating = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     comment = models.TextField(max_length=200)
     created = models.DateTimeField(null=True)
-    
+    is_deleted = models.BooleanField(default=False)
     
     def save(self, *args, **kwargs):
         if not self.id:
@@ -311,6 +311,10 @@ class MealRating(models.Model):
 
     def __unicode__(self):
         return str(self.rating)
+    
+    def delete(self, using=None):
+        self.is_deleted = True
+        super(MealRating, self).save()
     
 class MealNutrient(models.Model):
     meal = models.ForeignKey(Meal)
