@@ -45,20 +45,20 @@ def gift_card_order(request, data, user=None):
         if user.stripe_customer_id and str(user.stripe_customer_id).strip() != "":
             customer = stripe.Customer.retrieve(user.stripe_customer_id)
             if card_id:
-                #Using pre-saved card
+                # Using pre-saved card
                 card_id = CreditCardDetails.objects.get(pk=card_id).card_id
                 card = customer.sources.retrieve(card_id)
             else:
-                #Add the entered card to the exising customer
+                # Add the entered card to the exising customer
                 card = customer.sources.create(source=token)
         elif not card_id:
-            #Create new customer
+            # Create new customer
             customer = stripe.Customer.create(
                 source=token,
-                description="meisterdish_user_"+str(user.id)
+                description="meisterdish_user_" + str(user.id)
             )
 
-            #Save customer id to user table, for future use
+            # Save customer id to user table, for future use
             user.stripe_customer_id = customer.id
             user.save()
 
@@ -72,7 +72,7 @@ def gift_card_order(request, data, user=None):
                 c_card = CreditCardDetails()
                 c_card.user = user
                 c_card.card_id = card.id
-                c_card.number = '#### #### #### '+str(card.last4)
+                c_card.number = '#### #### #### ' + str(card.last4)
                 c_card.funding = card.funding
                 c_card.expire_year = card.exp_year
                 c_card.expire_month = card.exp_month
@@ -81,17 +81,17 @@ def gift_card_order(request, data, user=None):
 
 
         response = stripe.Charge.create(
-            amount=int(amount) * 100, #Cents
+            amount=int(amount) * 100,  # Cents
             currency="usd",
             customer=customer.id,
-            source = card.id,
-            description = "Gift Card order at meisterdish.com",
-            #receipt_number = user.email,
-            #receipt_email = user.email
+            source=card.id,
+            description="Gift Card order at meisterdish.com",
+            # receipt_number = user.email,
+            # receipt_email = user.email
         )
 
         log.info(response)
-        payment =  save_payment_data(response)
+        payment = save_payment_data(response)
         if not payment:
             return custom_error("Failed to make payment. Please try again later.")
         
@@ -105,7 +105,7 @@ def gift_card_order(request, data, user=None):
         gc.message = message
         gc.amount = amount
         gc.payment = payment
-        gc.used=False
+        gc.used = False
         gc.save()
         
         if not gc.id:
@@ -122,7 +122,7 @@ def gift_card_order(request, data, user=None):
         return custom_error(e.message)
 
 def send_gift_card(gc):
-    unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/'+base64.b64encode(gc.email)+"/"
+    unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/' + base64.b64encode(gc.email) + "/"
     try:
         dic = {
             "code" : gc.code,
@@ -139,10 +139,10 @@ def send_gift_card(gc):
         msg = render_to_string('gift_card_email.html', dic)
         sub = 'Your Gift Card for Meisterdish'    
             
-        mail([gc.email], sub, msg )
+        mail([gc.email], sub, msg)
         return True
     except Exception as e:
-        log.error("Failed to send gift card mail : "+e.message)
+        log.error("Failed to send gift card mail : " + e.message)
         return False
 
 def get_cart_total(cart):
@@ -160,7 +160,7 @@ def get_cart_total(cart):
         referral_bonus = float(Configuration.objects.get(key="REFERRAL_BONUS").value)
         referred = Referral.objects.filter(referree=cart.user).exists() and cart.user.credits >= referral_bonus
         if not Order.objects.filter(cart__user=cart.user, cart__user__role__pk=settings.ROLE_USER).exists() and referred:
-            credits = referral_bonus/2
+            credits = referral_bonus / 2
         else:
             credits = cart.user.credits
             if cart.promo_code:
@@ -170,13 +170,13 @@ def get_cart_total(cart):
                     discount += gc.amount
         return (total_price, total_tax, discount, credits)
     except Exception as e:
-        log.error("Cart total method :"+e.message)
+        log.error("Cart total method :" + e.message)
         return (0, 0, 0, 0)
 
 @check_input('POST')
 def apply_promocode(request, data, user):
     try:
-        #First order and referral bonus available        
+        # First order and referral bonus available        
         if not Order.objects.filter(cart__user=user).exists() and Referral.objects.filter(referree=user).exists() and user.credits > 0:
             return custom_error("Sorry, you can not apply further promotional codes to this order")
 
@@ -189,7 +189,7 @@ def apply_promocode(request, data, user):
         try:
             code_obj = PromoCode.objects.get(code__iexact=code, deleted=False, active=True)
             if code_obj.expiry_date < datetime.now():
-                return custom_error("Sorry, the promo code ("+ code +") has expired.")
+                return custom_error("Sorry, the promo code (" + code + ") has expired.")
             cart.promo_code = code_obj
             code_type = "Promocode "
             amt = code_obj.amount
@@ -202,20 +202,20 @@ def apply_promocode(request, data, user):
                     return custom_error("You cannot add more than one gift card for a single transaction.")
                 else:
                     cart.gift_cards.add(gift_card)
-                    gift_card.used=True
+                    gift_card.used = True
                     gift_card.save()
                     code_type = "Gift card "
                     amt = gift_card.amount
             except Exception as e:
                 log.error(e.message)
-                return custom_error("Sorry, the code("+ code +") is invalid.")
+                return custom_error("Sorry, the code(" + code + ") is invalid.")
 
         cart.save()
 
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
         
         # return json_response({"status":1, "message":code_type + code + " has been applied. You will get a discount of $"+"{0:.2f}".format(amt), 
-        return json_response({"status":1, "message":"A credit of $"+"{0:.0f}".format(amt)+" has been added.", 
+        return json_response({"status":1, "message":"A credit of $" + "{0:.0f}".format(amt) + " has been added.",
             "amount":total_price,
             "tax":total_tax,
             "discount":discount,
@@ -247,7 +247,7 @@ def remove_promocode(request, data, user):
 
         (total_price, total_tax, discount, credits) = get_cart_total(cart)
 
-        return json_response({"status":1, "message":"Removed "+code_type, 
+        return json_response({"status":1, "message":"Removed " + code_type,
             "amount":total_price,
             "tax":total_tax,
             "discount":discount,

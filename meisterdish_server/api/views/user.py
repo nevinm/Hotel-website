@@ -76,12 +76,12 @@ def add_address(request, data, user):
             except:
                 pass
             else:
-                primary.is_primary=False
+                primary.is_primary = False
                 primary.save()
         return json_response({"status":1, "message":"Added Address", "id":add.id})
     except Exception as e:
-        log.error("Add address failed: "+e.message)
-        return custom_error("Failed to add address : "+e.message)
+        log.error("Add address failed: " + e.message)
+        return custom_error("Failed to add address : " + e.message)
 
 @check_input('POST')
 def update_address(request, data, user, address_id):
@@ -89,7 +89,7 @@ def update_address(request, data, user, address_id):
         try:
             add = Address.objects.get(id=address_id, user=user)
         except Exception as e:
-            log.error("Updated address "+e.message)
+            log.error("Updated address " + e.message)
             return custom_error("You are not authorized to modify this address.")
         
         if 'first_name' in data:
@@ -141,16 +141,16 @@ def update_address(request, data, user, address_id):
             except:
                 pass
             else:
-                primary.is_primary=False
+                primary.is_primary = False
                 primary.save()
                 
         return json_response({"status":1, "message":"Updated Address", "id":add.id})
     except Exception as e:
-        log.error("update address failed : "+e.message)
+        log.error("update address failed : " + e.message)
         return custom_error("Failed to update address. ")
     except Exception as e:
-        log.error("update address failed: "+e.message)
-        return custom_error("Failed to update address : "+e.message)
+        log.error("update address failed: " + e.message)
+        return custom_error("Failed to update address : " + e.message)
 
 @check_input('POST')
 def remove_address(request, data, user):
@@ -167,7 +167,7 @@ def remove_address(request, data, user):
             adds[0].save()
         return json_response({"status":1, "message":"Successfully Deleted Address.", "id":address_id})
     except Exception as e:
-        log.error("Failed to delete Address : "+e.message)
+        log.error("Failed to delete Address : " + e.message)
         return custom_error("Failed to remove address")
 
 @check_input('POST')
@@ -176,7 +176,7 @@ def get_categories(request, data):
         cats = Category.objects.filter(is_hidden=False, is_deleted=False).order_by("name")
         cat_list = [{"id":cat.id, "name":cat.name.title()} for cat in cats]
         
-        #Meal Types / Filters
+        # Meal Types / Filters
         types = MealType.objects.filter(is_hidden=False, is_deleted=False)
         type_list = [{"id":type.id, "name":type.name.title()} for type in types]
         
@@ -190,7 +190,7 @@ def add_rating(request, data, user, meal_id):
     try:
         order = Order.objects.get(id=data['order_id'], cart__cartitem__meal__pk=meal_id, cart__user=user)
         
-        if order.created < datetime.now()-timedelta(days=30):
+        if order.created < datetime.now() - timedelta(days=30):
             custom_error("You cannot add reviews after 30 days from the date of order.")
 
         if not order.cart.completed or order.status < 4:
@@ -224,7 +224,7 @@ def save_credit_card(request, data, user):
         else:
             customer = stripe.Customer.create(
                 source=token,
-                description="meisterdish_user_"+str(user.id)
+                description="meisterdish_user_" + str(user.id)
             )
             user.stripe_customer_id = customer.id
             user.save()
@@ -238,7 +238,7 @@ def save_credit_card(request, data, user):
     	    c_card = CreditCardDetails()
             c_card.user = user
             c_card.card_id = card.id
-            c_card.number = '#### #### #### '+str(card.last4)
+            c_card.number = '#### #### #### ' + str(card.last4)
             c_card.funding = card.funding
             c_card.expire_year = card.exp_year
             c_card.expire_month = card.exp_month
@@ -248,7 +248,7 @@ def save_credit_card(request, data, user):
         else:
             return custom_error("Failed to save card details.")
     except Exception as e:
-        log.error("Save CC: user"+str(user.id) + " : "+ e.message)
+        log.error("Save CC: user" + str(user.id) + " : " + e.message)
         return custom_error("Failed to save credit card details.")
 
          
@@ -280,7 +280,7 @@ def update_credit_card(request, data, user, card_id):
         else:
             return custom_error("Failed to update card details.")
     except Exception as e:
-        log.error("Save CC: user"+str(user.id) + " : "+ e.message)
+        log.error("Save CC: user" + str(user.id) + " : " + e.message)
         return custom_error("Failed to save credit card details.")
 
 @check_input('POST')
@@ -301,7 +301,7 @@ def delete_credit_card(request, data, user, card_id):
         else:
             return custom_error("Failed to delete card details. Please try again later.")
     except Exception as e:
-        log.error("Delete CC: user "+str(user.id) + " : "+ e.message)
+        log.error("Delete CC: user " + str(user.id) + " : " + e.message)
         return custom_error("Failed to delete credit card details.")
 
 @check_input('POST')
@@ -321,17 +321,17 @@ def get_saved_cards(request, data, user):
                 "expire_month" : card.expire_month,
                 "expire_year" : card.expire_year,
                 "type" : card.card_type,
-                "logo" : settings.STATIC_URL + "default/"+card.card_type.lower().replace(" ", "_")+".png",
+                "logo" : settings.STATIC_URL + "default/" + card.card_type.lower().replace(" ", "_") + ".png",
                 })
         return json_response({"cards":cards_list, "status":1})
     except Exception as e:
-        log.error("List CC: user "+str(user.id) + " : "+ e.message)
+        log.error("List CC: user " + str(user.id) + " : " + e.message)
         return custom_error("Failed to list saved cards.")
 
 @check_input('POST')
 def get_user_reviews(request, data, user):
     try:
-        orders = Order.objects.filter(cart__user__pk=user.pk, status=3, created__gte=datetime.now()-timedelta(days=30)).order_by('created')
+        orders = Order.objects.filter(cart__user__pk=user.pk, status=3, created__gte=datetime.now() - timedelta(days=30)).order_by('created')
         if 'order_id' in data:
             orders = orders.filter(pk=data['order_id'])
 
@@ -343,7 +343,7 @@ def get_user_reviews(request, data, user):
                 try:
                     rating = MealRating.objects.get(meal=meal, order=order, is_deleted=False)
                 except Exception as e:
-                    log.error("Rating list error :"+e.message)
+                    log.error("Rating list error :" + e.message)
                     rating = False
                 if rating :    
                     rating_list.append({
@@ -368,7 +368,7 @@ def get_user_reviews(request, data, user):
                         })
         return json_response({"status":1, "reviews":rating_list})
     except Exception as e:
-        log.error("List user reviews: user "+str(user.id) + " : "+ e.message)
+        log.error("List user reviews: user " + str(user.id) + " : " + e.message)
         return custom_error("Failed to list user reviews.")
 
 @check_input('POST')
@@ -383,7 +383,7 @@ def share_via_email(request, data, user):
 
         sub = "Start cooking with Meisterdish"
         dic = {
-            "link" : settings.SITE_URL + 'share/'+user.referral_code+'/',
+            "link" : settings.SITE_URL + 'share/' + user.referral_code + '/',
             "amount" : int(Configuration.objects.get(key="REFERRAL_BONUS").value) / 2,
             "to_email" : email,
             "site_url":settings.SITE_URL,
@@ -391,9 +391,9 @@ def share_via_email(request, data, user):
         msg = render_to_string('referral_email.html', dic)
         mail([email], sub, msg)
 
-        return json_response({"status":1, "message":"Email has been sent to "+email})
+        return json_response({"status":1, "message":"Email has been sent to " + email})
     except Exception as e:
-        log.error("Share via email "+str(user.id) + " : "+ e.message)
+        log.error("Share via email " + str(user.id) + " : " + e.message)
         return custom_error("An error has occurred while sending e-mail. Please try again later.")        
 
 
@@ -416,7 +416,7 @@ def save_email(request, data):
         log.info("Email already added to list")
         return json_response({"status":1, "message":"Your email has already been recorded. You will be notified when delivery becomes available at your location."})
     except KeyError as e:
-        log.error("Save email :"+ e.message)
+        log.error("Save email :" + e.message)
         return custom_error("An error has occurred. Please try again later.")
     except Exception as e:        
         return custom_error(e.message)

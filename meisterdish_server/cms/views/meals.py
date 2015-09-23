@@ -17,7 +17,7 @@ def get_meals(request, data, user):
         user = get_request_user(request)
 
         limit = data.get('perPage', settings.PER_PAGE)
-        page = data.get("nextPage",1)
+        page = data.get("nextPage", 1)
                     
         meal_list = []
         meals = Meal.objects.filter(is_deleted=False)
@@ -25,12 +25,12 @@ def get_meals(request, data, user):
          
         if "search" in data and data['search'].strip() != '':
             search = data["search"]
-            meals = meals.filter(Q(name__istartswith=search)| Q(description__istartswith=search))
+            meals = meals.filter(Q(name__istartswith=search) | Q(description__istartswith=search))
         
         if "category_id" in data and str(data['category_id']) != '':
             meals = meals.filter(category__id=data["category_id"])
             
-        if "type_ids" in data and len(data['type_ids']) >0 and str(data['type_ids']) != '':
+        if "type_ids" in data and len(data['type_ids']) > 0 and str(data['type_ids']) != '':
             meals = meals.filter(types__id__in=data['type_ids'])
         
         meals = meals.order_by("order", 'name')
@@ -38,7 +38,7 @@ def get_meals(request, data, user):
         actual_count = meals.count()
         try:
             paginator = Paginator(meals, limit)
-            if page <1 or page > paginator.page_range:
+            if page < 1 or page > paginator.page_range:
                 page = 1
             meals = paginator.page(page)
         except Exception as e:
@@ -79,7 +79,7 @@ def get_meals(request, data, user):
                               "name":meal.name,
                               "sub":meal.sub,
                               "description":meal.description,
-                              #"images":meal_images,
+                              # "images":meal_images,
                               "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.thumb.url,
                               "available":1 if meal.available else 0,
                               "sold_out":1 if meal.sold_out else 0,
@@ -88,13 +88,13 @@ def get_meals(request, data, user):
                               "meal_types":meal_types,
                               "preparation_time":meal.preparation_time,
                               "price":meal.price,
-                              "tax":meal.price * meal.tax/100,
+                              "tax":meal.price * meal.tax / 100,
                               "ingredients":ing_list,
                               "in_cart" : 1 if user and CartItem.objects.filter(cart__user=user, cart__completed=False, meal__pk=meal.id).exists() else 0,
                               "order":meal.order,
                               "primary_meal" : 1 if str(meal.id) == str(home_meal) else 0,
                               })
-        return json_response({"status":1, 
+        return json_response({"status":1,
                               "aaData":meal_list,
                               "total_count":total_count,
                               "actual_count":actual_count,
@@ -104,13 +104,13 @@ def get_meals(request, data, user):
                               "per_page" : limit,
                               })
     except Exception as e:
-        log.error("Failed to list meals : "+e.message)
+        log.error("Failed to list meals : " + e.message)
         return custom_error("Failed to list meals")
     
 @check_input('POST', settings.ROLE_ADMIN)
 def create_meal(request, data, user):
     try:
-        edit=False
+        edit = False
         name = data['name'].strip()
         sub = data['sub'].strip()
         desc = data['description'].strip()
@@ -128,18 +128,18 @@ def create_meal(request, data, user):
         else:
             locked = "0"
 
-        if len(name) < 3 or len(desc)<5 or float(price) <=0 or float(tax) <0 :
+        if len(name) < 3 or len(desc) < 5 or float(price) <= 0 or float(tax) < 0 :
             log.error("name, desc, price or tax invalid")
             return custom_error("Please enter valid details.")
         
         try:
             meal = Meal.objects.get(is_deleted=False, pk=data["edit_id"])
-            log.info("EDITING MEAL :"+str(data['edit_id']))
-            edit=True
+            log.info("EDITING MEAL :" + str(data['edit_id']))
+            edit = True
             if meal.locked:
                 return custom_error("Sorry, this meal is locked. Please unlock the meal to edit.")
         except Exception as e:
-            log.info("CREATING MEAL : "+e.message)
+            log.info("CREATING MEAL : " + e.message)
             meal = Meal()
         
         meal.name = name
@@ -182,7 +182,7 @@ def create_meal(request, data, user):
             meal.chef_comments = data["chef_comments"].strip()
         if 'cat_id' in data:
             try:
-                meal.category=Category.objects.get(is_hidden=False, is_deleted=False, pk=data['cat_id'])
+                meal.category = Category.objects.get(is_hidden=False, is_deleted=False, pk=data['cat_id'])
             except:
                 return custom_error("The selected category does not exist, or is not available.")
         
@@ -273,7 +273,7 @@ def create_meal(request, data, user):
             meal.tips.exclude(id__in=my_tip_ids).delete()
             
         except Exception as e:
-            log.error("Cannot delete meal tips : "+e.message)
+            log.error("Cannot delete meal tips : " + e.message)
 
         if 'ingredients' in data and len(data['ingredients']) > 0:
             for ing in data['ingredients']:
@@ -295,23 +295,23 @@ def create_meal(request, data, user):
         
         meal.save()
         action = "update" if edit else "create"
-        return json_response({"status":1, "message":"The meal has been successfully "+action+"d.", "id":meal.id})
+        return json_response({"status":1, "message":"The meal has been successfully " + action + "d.", "id":meal.id})
     except Exception as e:
-        #if not edit and meal.id:
+        # if not edit and meal.id:
         #    meal.delete()
-        log.error("Failed to create meals : "+e.message)
+        log.error("Failed to create meals : " + e.message)
         action = "update" if edit else "create"
-        return custom_error("Failed to "+action+" meal. Please try again later.")
+        return custom_error("Failed to " + action + " meal. Please try again later.")
     
 @check_input('POST', settings.ROLE_ADMIN)
 def delete_meal(request, data, user, meal_id):
     try:
         meal = Meal.objects.get(is_deleted=False, pk=meal_id)
-        meal.is_deleted=True
+        meal.is_deleted = True
         meal.save()
         return json_response({"status":1, "message":"Deleted Meal", "id":meal_id})
     except Exception as e:
-        log.error("Failed to delete meal : "+e.message)
+        log.error("Failed to delete meal : " + e.message)
         return json_response({"status":-1, "message":"Failed to delete meal. Does that exist?"})
 
 @check_input('POST')
@@ -362,7 +362,7 @@ def get_meal_details(request, data, user, meal_id):
             "sub":meal.sub,
             "description" : meal.description,
             "price":meal.price,
-            "tax":meal.price* meal.tax/100,
+            "tax":meal.price * meal.tax / 100,
             "need_boiling_water":meal.need_boiling_water,
             "tax_percentage" : meal.tax,
             "available" : 1 if meal.available else 0,
@@ -395,8 +395,8 @@ def get_meal_details(request, data, user, meal_id):
                     },
 
             "nutrients" : "" if not meal.nutrients or meal.nutrients == ""  else simplejson.loads(meal.nutrients),
-            "ingredients" : [{"id":ing.id, "name":ing.name,"image_url":ing.image.image.url} for ing in meal.ingredients.all()],
-            #"" if not meal.ingredients else simplejson.loads(meal.ingredients),
+            "ingredients" : [{"id":ing.id, "name":ing.name, "image_url":ing.image.image.url} for ing in meal.ingredients.all()],
+            # "" if not meal.ingredients else simplejson.loads(meal.ingredients),
 #            #Edit here "ingredients_image" : settings.DEFAULT_INGREDIENTS_IMAGE if meal.ingredients_image is None else {
 #                                                         "id" : meal.ingredients_image.id,
 #                                                         "url" : meal.ingredients_image.image.url
@@ -405,7 +405,7 @@ def get_meal_details(request, data, user, meal_id):
             "allergy_notice" : meal.allergy_notice,
             "images" : image_list,
             "ratings" : rating_list,
-            "avg_rating" : rating_sum/rating_count if int(rating_count) != 0 else 0,
+            "avg_rating" : rating_sum / rating_count if int(rating_count) != 0 else 0,
             "ratings_count" : rating_count,
             "main_image" : {"url":settings.DEFAULT_MEAL_IMAGE, "id":""} if not meal.main_image else {
                 "id":meal.main_image.id,
@@ -457,7 +457,7 @@ def list_attributes(request, data, user):
             attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url, "image_id": attr.image.id} for attr in MealType.objects.get(pk=int(data['attribute_id']))]
         else:
             attributes = [{"id":attr.id, "name":attr.name.title(), "image": attr.image.image.url, "image_id":attr.image.id} for attr in MealType.objects.all()]
-        return json_response({"status":1, 
+        return json_response({"status":1,
                               "aaData":attributes,
                               })
     except Exception as e:
@@ -468,7 +468,7 @@ def list_attributes(request, data, user):
 def get_attribute_details(request, data, user, attribute_id):
     try:
         attribute = MealType.objects.get(is_deleted=False, pk=attribute_id)
-        return json_response({"status":1, 
+        return json_response({"status":1,
                               "id":attribute.id,
                               "name":attribute.name,
                               "image":attribute.image,
@@ -486,14 +486,14 @@ def delete_attribute(request, data, user, attribute_id):
 
         return json_response({"status":1, "message":"Deleted Attribute", "id":attribute_id})
     except Exception as e:
-        log.error("Failed to delete attribute : "+e.message)
+        log.error("Failed to delete attribute : " + e.message)
         return custom_error("Failed to delete attribute. Does that exist?")
 
 @check_input('POST', settings.ROLE_ADMIN)
 def update_meal_order(request, data, user, meal_id):
     try:
         order = int(str(data['order']).strip())
-        if order <1 or order > 999999:
+        if order < 1 or order > 999999:
             return custom_error("Invalid Order.")
         meal = Meal.objects.get(is_deleted=False, pk=meal_id)
         meal.order = order
@@ -501,7 +501,7 @@ def update_meal_order(request, data, user, meal_id):
 
         return json_response({"status":1, "message":"Updated meal order", "order":order})
     except Exception as e:
-        log.error("Failed to update meal order : "+e.message)
+        log.error("Failed to update meal order : " + e.message)
         return custom_error("Failed to save meal order.")
 
 @check_input('POST', settings.ROLE_ADMIN)
@@ -514,12 +514,12 @@ def update_home_meal(request, data, user):
         except Configuration.DoesNotExist:
             conf = Configuration()
             conf.key = 'home_meal_id'
-        conf.value= meal_id
+        conf.value = meal_id
         conf.save()
 
         return json_response({"status":1, "message":"Updated home meal"})
     except Exception as e:
-        log.error("Failed to update home meal. : "+e.message)
+        log.error("Failed to update home meal. : " + e.message)
         return custom_error("Failed to update home meal. Please make sure whether the meal is available and not deleted.")
 
 @check_input('POST', settings.ROLE_ADMIN)
@@ -532,7 +532,7 @@ def get_home_meal(request, data, user):
             return custom_error("No home meal is set.")
 
     except Exception as e:
-        log.error("Failed to get home meal. : "+e.message)
+        log.error("Failed to get home meal. : " + e.message)
         return custom_error("Failed to get the home meal.")
 
 @check_input('POST', settings.ROLE_ADMIN)
@@ -550,9 +550,9 @@ def add_ingredient(request, data, user):
             ing.name = name
             ing.image = Image.objects.get(pk=img)
             ing.save()
-            return json_response({"status":1, "message" :"Added "+name, "id":ing.id, "name":ing.name, "image_id":ing.image.id, "image_url":ing.image.image.url})
+            return json_response({"status":1, "message" :"Added " + name, "id":ing.id, "name":ing.name, "image_id":ing.image.id, "image_url":ing.image.image.url})
     except Exception as e:
-        log.error("Failed to add ingredient. : "+e.message)
+        log.error("Failed to add ingredient. : " + e.message)
         return custom_error("Failed to add ingredient.")
 
 @check_input('POST', settings.ROLE_ADMIN)
@@ -562,7 +562,7 @@ def update_ingredient(request, data, user, ing_id):
         if "ingredient" in data and data["ingredient"].strip() != "":
             name = data['ingredient']
             if Ingredient.objects.exclude(pk=ing_id).filter(name__iexact=name).exists():
-                return custom_error("Another ingredient exists with name : "+name)
+                return custom_error("Another ingredient exists with name : " + name)
             ing.name = name
         
         if "image_id" in data:
@@ -571,7 +571,7 @@ def update_ingredient(request, data, user, ing_id):
         ing.save()
         return json_response({"status":1, "message" :"Updated Ingredient", "id":ing.id, "name":ing.name, "image_id":ing.image.id, "image_url":ing.image.image.url})
     except Exception as e:
-        log.error("Failed to update ingredient. : "+e.message)
+        log.error("Failed to update ingredient. : " + e.message)
         return custom_error("Failed to update ingredient.")
 
 @check_input('POST', settings.ROLE_ADMIN)
@@ -581,7 +581,7 @@ def delete_ingredient(request, data, user, ing_id):
          
         return json_response({"status":1, "message" :"Deleted Ingredient", "id":ing_id})
     except Exception as e:
-        log.error("Failed to delete ingredient. : "+e.message)
+        log.error("Failed to delete ingredient. : " + e.message)
         return custom_error("Failed to delete ingredient.")
 
 @check_input('POST', settings.ROLE_ADMIN)
@@ -590,7 +590,7 @@ def list_ingredients(request, data, user):
         listAll = False
         limit = settings.PER_PAGE
         page = 1
-        if "nextPage" in data and int(data["nextPage"]) >0:
+        if "nextPage" in data and int(data["nextPage"]) > 0:
             page = data["nextPage"]
         else: listAll = True
             
@@ -608,7 +608,7 @@ def list_ingredients(request, data, user):
         ings_all = ings
         try:
             paginator = Paginator(ings, limit)
-            if page <1 or page > paginator.page_range:
+            if page < 1 or page > paginator.page_range:
                 page = 1
             ings = paginator.page(page)
         except Exception as e:
@@ -639,7 +639,7 @@ def list_ingredients(request, data, user):
                               "per_page" : limit,
                               })
     except Exception as e:
-        log.error("Failed to list ingredients : "+e.message)
+        log.error("Failed to list ingredients : " + e.message)
         return custom_error("Failed to retrieve ingredients")
 
 
@@ -738,7 +738,7 @@ def get_all_ratings(request, data, user):
                         "comment": i.comment,
                         "user": {
                                 "id": i.order.cart.user.id,
-                                "name": i.order.cart.user.last_name +
+                                "name": i.order.cart.user.last_name + 
                                 " " + i.order.cart.user.first_name,
                                 "email": i.order.cart.user.email,
                                 "profile_image": settings.DEFAULT_USER_IMAGE if i.order.cart.user.profile_image is None else i.order.cart.user.profile_image.image.url,

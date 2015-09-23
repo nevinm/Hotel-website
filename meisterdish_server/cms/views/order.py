@@ -19,7 +19,7 @@ def delete_order(request, data, user, order_id):
         order = Order.objects.get(pk=order_id, is_deleted=False)
         order.is_deleted = True
         order.save()
-        return json_response({"status":1, "message":"The order has been deleted", "id":order_id+"."})
+        return json_response({"status":1, "message":"The order has been deleted", "id":order_id + "."})
     except Exception as e:
         log.error("Delete order." + e.message)
         return custom_error("Failed to delete the order.")
@@ -36,7 +36,7 @@ def update_order(request, data, user, order_id):
                 return custom_error("Invalid order status")
             except:
               return custom_error("Invalid order status.")
-            #if user.role.id != settings.ROLE_KITCHEN:
+            # if user.role.id != settings.ROLE_KITCHEN:
             #    return custom_error("Only the kitchen staff is authorized to do this operation.")
 
             for cart_item in order.cart.cartitem_set.all():
@@ -55,16 +55,16 @@ def update_order(request, data, user, order_id):
             order.save()
         
             if status != 4:
-                order.cart.completed=True
+                order.cart.completed = True
                 order.cart.save()
             order.session_key = request.META.get('HTTP_SESSION_KEY', None)
-            if status == 2: #Dispatched
+            if status == 2:  # Dispatched
                 need_boiling = CartItem.objects.filter(cart__order=order, meal__need_boiling_water=True).exists()
                 sent = send_sms_notification({"order_num":order.order_num, "mobile":order.phone, "status":status, "need_boiling":need_boiling, "delivery_type":order.delivery_type})
                 if not sent:
                     log.error("Failed to send order dispatched notification")
             
-        return json_response({"status":1, "message":"The order has been updated", "id":str(order_id)+"."})
+        return json_response({"status":1, "message":"The order has been updated", "id":str(order_id) + "."})
     except Exception as e:
         log.error("Update order status : " + e.message)
         return custom_error("Failed to update the order.")
@@ -73,7 +73,7 @@ def update_order(request, data, user, order_id):
 def get_orders(request, data, user):
     try:
         limit = data.get('perPage', settings.PER_PAGE)
-        page = data.get("nextPage",1)
+        page = data.get("nextPage", 1)
                     
         order_list = []
         orders = Order.objects.filter(is_deleted=False)
@@ -81,7 +81,7 @@ def get_orders(request, data, user):
         total_count = orders.count()
 
         q = Q()
-        #Filter
+        # Filter
         if "num" in data and str(data['num']).strip() != "":
             q &= Q(order_num=str(data['num']))
         
@@ -107,7 +107,7 @@ def get_orders(request, data, user):
                 return custom_error("Please search with a valid order amount")
 
         if "date" in data and str(data["date"]).strip() != "":
-            date_obj = datetime.strptime(data['date'], "%m/%d/%Y")# %H:%M:%S")
+            date_obj = datetime.strptime(data['date'], "%m/%d/%Y")  # %H:%M:%S")
             q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
 
         orders = orders.filter(q)
@@ -119,14 +119,14 @@ def get_orders(request, data, user):
 
         try:
             paginator = Paginator(orders, limit)
-            if page <1 or page > paginator.page_range:
+            if page < 1 or page > paginator.page_range:
                 page = 1
             orders = paginator.page(page)
         except Exception as e:
             log.error("order list pagination : " + e.message)
             custom_error("There was an error listing orders.")
 
-        #Format response
+        # Format response
         for order in orders:
             meals = []
             for cart_item in CartItem.objects.filter(cart__order=order, cart__completed=True):
@@ -139,7 +139,7 @@ def get_orders(request, data, user):
                   "available": 1 if cart_item.meal.available else 0,
                   "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
                   "price": cart_item.meal.price,
-                  "tax": cart_item.meal.price * cart_item.meal.tax/100,
+                  "tax": cart_item.meal.price * cart_item.meal.tax / 100,
                   "quantity":cart_item.quantity,
                 })
 
@@ -147,7 +147,7 @@ def get_orders(request, data, user):
                 "id":order.id,
                 "minutes":get_time_past(order.created),
                 "grand_total" : order.grand_total,
-                "user_first_name" : order.cart.user.first_name  if order.cart.user.role.pk == settings.ROLE_USER else 'Guest('+ str(order.email)+')',
+                "user_first_name" : order.cart.user.first_name  if order.cart.user.role.pk == settings.ROLE_USER else 'Guest(' + str(order.email) + ')',
                 "user_last_name" : order.cart.user.last_name,
                 "status":dict(settings.ORDER_STATUS)[order.status],
                 "status_id" : order.status,
@@ -166,7 +166,7 @@ def get_orders(request, data, user):
                      "city":order.delivery_address.city.title(),
                      "state":order.delivery_address.state.name,
                      "zip":order.delivery_address.zip,
-                     "phone":order.delivery_address.phone,  
+                     "phone":order.delivery_address.phone,
                     } if order.delivery_address else "",
                 "billing_address" : {
                      "id":order.billing_address.id,
@@ -181,8 +181,8 @@ def get_orders(request, data, user):
                     } if order.billing_address else "",
                 })
 
-        #End format response
-        return json_response({"status":1, 
+        # End format response
+        return json_response({"status":1,
                               "aaData":order_list,
                               "total_count":total_count,
                               "actual_count":actual_count,
@@ -213,7 +213,7 @@ def get_order_details(request, data, user, order_id):
               "available": 1 if cart_item.meal.available else 0,
               "category": cart_item.meal.category.name.title(),
               "price": cart_item.meal.price,
-              "tax": cart_item.meal.price * cart_item.meal.tax /100,
+              "tax": cart_item.meal.price * cart_item.meal.tax / 100,
               "quantity":cart_item.quantity,
             })
         order_details = {
@@ -359,7 +359,7 @@ def send_sms_notification(dic):
         if not dic["mobile"]:
             log.error("No mobile number available to send SMS.")
             return False
-        if dic["status"] == 2: #Dispatched
+        if dic["status"] == 2:  # Dispatched
             txt = render_to_string('order_dispatched_sms_template.html', dic)
             
         client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
@@ -370,7 +370,7 @@ def send_sms_notification(dic):
         number = country_code + str(dic["mobile"]).strip()
 
         message = client.messages.create(body=txt,
-                to= number,
+                to=number,
                 from_=settings.TWILIO_NUMBER)
         
         if message:
@@ -381,7 +381,7 @@ def send_sms_notification(dic):
             return False
 
     except Exception as e:
-        log.error("Failed to send order SMS to : " + number + " : "+e.message)
+        log.error("Failed to send order SMS to : " + number + " : " + e.message)
         return False
 
 @check_input('POST')
@@ -394,7 +394,7 @@ def export_orders(request, data):
               orders = Order.objects.filter(is_deleted=False).exclude(status=4)
               
               q = Q()
-              #Filter
+              # Filter
               
               if "user_id" in data and str(data['user_id']).strip() != "":
                   q &= Q(cart__user__pk=data['user_id'])
@@ -403,14 +403,14 @@ def export_orders(request, data):
                    q |= Q(status=int(data['status']))
 
               if "date" in data and str(data["date"]).strip() != "":
-                  date_obj = datetime.strptime(data['date'], "%Y-%m-%d")# %H:%M:%S")
+                  date_obj = datetime.strptime(data['date'], "%Y-%m-%d")  # %H:%M:%S")
                   q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
 
               orders = orders.filter(q)
               # End filter
               orders = orders.order_by("-id")
               export_list = [[
-                      'Order Number', 
+                      'Order Number',
                       'Order Date',
                       'Name',
                       "Email",
@@ -460,7 +460,7 @@ def export_orders(request, data):
 def get_kitchen_orders(request, data, user):
     try:
         limit = data.get('perPage', settings.PER_PAGE)
-        page = data.get("nextPage",1)
+        page = data.get("nextPage", 1)
                     
         order_list = []
         orders = Order.objects.filter(is_deleted=False, status__lt=4)
@@ -468,7 +468,7 @@ def get_kitchen_orders(request, data, user):
         total_count = orders.count()
 
         q = Q()
-        #Filter
+        # Filter
         if "num" in data and str(data['num']).strip() != "":
             q &= Q(order_num=str(data['num']))
         
@@ -494,7 +494,7 @@ def get_kitchen_orders(request, data, user):
                 return custom_error("Please search with a valid order amount")
 
         if "date" in data and str(data["date"]).strip() != "":
-            date_obj = datetime.strptime(data['date'], "%m/%d/%Y")# %H:%M:%S")
+            date_obj = datetime.strptime(data['date'], "%m/%d/%Y")  # %H:%M:%S")
             q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
 
         orders = orders.filter(q)
@@ -506,14 +506,14 @@ def get_kitchen_orders(request, data, user):
 
         try:
             paginator = Paginator(orders, limit)
-            if page <1 or page > paginator.page_range:
+            if page < 1 or page > paginator.page_range:
                 page = 1
             orders = paginator.page(page)
         except Exception as e:
             log.error("order list pagination : " + e.message)
             custom_error("There was an error listing orders.")
 
-        #Format response
+        # Format response
         for order in orders:
             meals = []
             for cart_item in CartItem.objects.filter(cart__order=order, cart__completed=True):
@@ -526,7 +526,7 @@ def get_kitchen_orders(request, data, user):
                   "available": 1 if cart_item.meal.available else 0,
                   "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
                   "price": cart_item.meal.price,
-                  "tax": cart_item.meal.price * cart_item.meal.tax/100,
+                  "tax": cart_item.meal.price * cart_item.meal.tax / 100,
                   "quantity":cart_item.quantity,
                   "status_id" : int(cart_item.status),
                 })
@@ -537,7 +537,7 @@ def get_kitchen_orders(request, data, user):
                 "minutes":get_time_past(order.created),
                 "zip" : order.delivery_address.zip  if order.delivery_address else "",
                 "grand_total" : order.grand_total,
-                "user_first_name" : order.cart.user.first_name  if order.cart.user.role.pk == settings.ROLE_USER else 'Guest('+ str(order.email)+')',
+                "user_first_name" : order.cart.user.first_name  if order.cart.user.role.pk == settings.ROLE_USER else 'Guest(' + str(order.email) + ')',
                 "user_last_name" : order.cart.user.last_name,
                 "status":dict(settings.ORDER_STATUS)[order.status],
                 "status_id" : order.status,
@@ -555,12 +555,12 @@ def get_kitchen_orders(request, data, user):
                      "city":order.delivery_address.city.title(),
                      "state":order.delivery_address.state.name,
                      "zip":order.delivery_address.zip,
-                     "phone":order.delivery_address.phone,  
+                     "phone":order.delivery_address.phone,
                     } if order.delivery_address else "",
                 })
 
-        #End format response
-        return json_response({"status":1, 
+        # End format response
+        return json_response({"status":1,
                               "aaData":order_list,
                               "total_count":total_count,
                               "actual_count":actual_count,
@@ -577,7 +577,7 @@ def get_kitchen_orders(request, data, user):
 def get_delivery_orders(request, data, user):
     try:
         limit = data.get('perPage', settings.PER_PAGE)
-        page = data.get("nextPage",1)
+        page = data.get("nextPage", 1)
                     
         order_list = []
         orders = Order.objects.filter(status__lte=3, is_deleted=False)
@@ -585,7 +585,7 @@ def get_delivery_orders(request, data, user):
         total_count = orders.count()
 
         q = Q()
-        #Filter
+        # Filter
         if "num" in data and str(data['num']).strip() != "":
             q &= Q(order_num=str(data['num']))
         
@@ -606,7 +606,7 @@ def get_delivery_orders(request, data, user):
                 return custom_error("Please search with a valid order amount")
 
         if "date" in data and str(data["date"]).strip() != "":
-            date_obj = datetime.strptime(data['date'], "%m/%d/%Y")# %H:%M:%S")
+            date_obj = datetime.strptime(data['date'], "%m/%d/%Y")  # %H:%M:%S")
             q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
 
         orders = orders.filter(q)
@@ -618,14 +618,14 @@ def get_delivery_orders(request, data, user):
 
         try:
             paginator = Paginator(orders, limit)
-            if page <1 or page > paginator.page_range:
+            if page < 1 or page > paginator.page_range:
                 page = 1
             orders = paginator.page(page)
         except Exception as e:
             log.error("order list pagination : " + e.message)
             custom_error("There was an error listing orders.")
 
-        #Format response
+        # Format response
         for order in orders:
             meals = []
             for cart_item in CartItem.objects.filter(cart__order=order, cart__completed=True):
@@ -638,7 +638,7 @@ def get_delivery_orders(request, data, user):
                   "available": 1 if cart_item.meal.available else 0,
                   "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
                   "price": cart_item.meal.price,
-                  "tax": cart_item.meal.price * cart_item.meal.tax/100,
+                  "tax": cart_item.meal.price * cart_item.meal.tax / 100,
                   "quantity":cart_item.quantity,
                   "status_id" : cart_item.status,
                 })
@@ -648,7 +648,7 @@ def get_delivery_orders(request, data, user):
                 "minutes":get_time_past(order.created),
                 "zip" : order.delivery_address.zip  if order.delivery_address else "",
                 "grand_total" : order.grand_total,
-                "user_first_name" : order.cart.user.first_name  if order.cart.user.role.pk == settings.ROLE_USER else 'Guest('+ str(order.email)+')',
+                "user_first_name" : order.cart.user.first_name  if order.cart.user.role.pk == settings.ROLE_USER else 'Guest(' + str(order.email) + ')',
                 "user_last_name" : order.cart.user.last_name,
                 "status":dict(settings.ORDER_STATUS)[order.status],
                 "status_id" : order.status,
@@ -667,12 +667,12 @@ def get_delivery_orders(request, data, user):
                      "city":order.delivery_address.city.title(),
                      "state":order.delivery_address.state.name,
                      "zip":order.delivery_address.zip,
-                     "phone":order.delivery_address.phone,  
+                     "phone":order.delivery_address.phone,
                     } if order.delivery_address else "",
                 })
 
-        #End format response
-        return json_response({"status":1, 
+        # End format response
+        return json_response({"status":1,
                               "aaData":order_list,
                               "total_count":total_count,
                               "actual_count":actual_count,

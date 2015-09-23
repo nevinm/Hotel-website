@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 def get_orders(request, data, user):
     try:
         limit = data.get('perPage', settings.PER_PAGE)
-        page = data.get("nextPage",1)
+        page = data.get("nextPage", 1)
                     
         order_list = []
         orders = Order.objects.filter(is_deleted=False, cart__user=user)
@@ -29,7 +29,7 @@ def get_orders(request, data, user):
         total_count = orders.count()
 
         q = Q()
-        #Filter
+        # Filter
         if "num" in data and str(data['num']).strip() != "":
             q &= Q(order_num=str(data['num']))
         
@@ -57,7 +57,7 @@ def get_orders(request, data, user):
                 return custom_error("Please search with a valid order amount")
 
         if "date" in data and str(data["date"]).strip() != "":
-            date_obj = datetime.strptime(data['date'], "%m/%d/%Y")# %H:%M:%S")
+            date_obj = datetime.strptime(data['date'], "%m/%d/%Y")  # %H:%M:%S")
             q &= Q(delivery_time__year=date_obj.year) & Q(delivery_time__month=date_obj.month) & Q(delivery_time__day=date_obj.day)            
 
         orders = orders.filter(q)
@@ -68,14 +68,14 @@ def get_orders(request, data, user):
 
         try:
             paginator = Paginator(orders, limit)
-            if page <1 or page > paginator.page_range:
+            if page < 1 or page > paginator.page_range:
                 page = 1
             orders = paginator.page(page)
         except Exception as e:
             log.error("order list pagination : " + e.message)
             custom_error("There was an error listing orders.")
 
-        #Format response
+        # Format response
         for order in orders:
             meals = []
             for cart_item in CartItem.objects.filter(cart__order=order, cart__completed=True):
@@ -89,7 +89,7 @@ def get_orders(request, data, user):
                   "sold_out":1 if cart_item.meal.sold_out else 0,
                   "category": cart_item.meal.category.name.title() if cart_item.meal.category else "",
                   "price": cart_item.meal.price,
-                  "tax": cart_item.meal.price * cart_item.meal.tax/100,
+                  "tax": cart_item.meal.price * cart_item.meal.tax / 100,
                   "quantity":cart_item.quantity,
                 })
             
@@ -130,8 +130,8 @@ def get_orders(request, data, user):
                     } if order.billing_address else "",
                 })
 
-        #End format response
-        return json_response({"status":1, 
+        # End format response
+        return json_response({"status":1,
                               "aaData":order_list,
                               "total_count":total_count,
                               "actual_count":actual_count,
@@ -154,7 +154,7 @@ def create_order(request, data, user):
         
         try:
             del_time = data['delivery_time'].strip()
-            delivery_time = datetime.strptime(del_time,"%m/%d/%Y %H:%M:%S")
+            delivery_time = datetime.strptime(del_time, "%m/%d/%Y %H:%M:%S")
             
             slot = DeliveryTimeSlot.objects.get(date=delivery_time.date())
             slot_dict = {"16": slot.slot1,
@@ -168,14 +168,14 @@ def create_order(request, data, user):
             
             
         except Exception as e:
-            log.error("Invalid delivery time : "+e.message)
+            log.error("Invalid delivery time : " + e.message)
             return custom_error("Please provide a valid delivery time.")
 
-        #if delivery_time < datetime.now():# - timedelta(hours=settings.ORDER_DELIVERY_WINDOW):
+        # if delivery_time < datetime.now():# - timedelta(hours=settings.ORDER_DELIVERY_WINDOW):
         #    return custom_error("Sorry, you cannot choose a past time as delivery time.")
 
         tip = int(data.get('tip', 5))
-        #if tip < 5:
+        # if tip < 5:
         #    return custom_error("Miniumum tip amount is $5.") 
         
         del_type = data["delivery_type"].strip()
@@ -186,7 +186,7 @@ def create_order(request, data, user):
                 return custom_error("Please enter a valid email.")
             elif not validate_phone(phone):
                 return custom_error("Please enter a valid phone number.")
-        else: #Delivery
+        else:  # Delivery
             driver_instructions = data.get('driver_instructions', "")
             if 'delivery_address' in data:
                 del_address = Address.objects.get(user=user, pk=data['delivery_address'])
@@ -198,7 +198,7 @@ def create_order(request, data, user):
                     log.error("Delivery order but no address. No Primary address. Aborting.")
                     return custom_error("Please choose a valid delivery address.")
             if not check_delivery_area(del_address.zip):
-                return custom_error("Delivery is not available at the selected location ("+str(del_address.zip)+")")
+                return custom_error("Delivery is not available at the selected location (" + str(del_address.zip) + ")")
 
         items = CartItem.objects.filter(cart__user=user, cart__completed=False)
         if not items.exists():
@@ -206,9 +206,9 @@ def create_order(request, data, user):
         
         for item in items:
             if not item.meal.available:
-                return custom_error("Sorry, The meal "+ item.meal.name + " is not available.")
+                return custom_error("Sorry, The meal " + item.meal.name + " is not available.")
             elif item.meal.sold_out:
-                return custom_error("Sorry, The meal "+ item.meal.name + " has gone out of stock.")
+                return custom_error("Sorry, The meal " + item.meal.name + " has gone out of stock.")
             
             quantity += item.quantity
             total_price += item.meal.price * item.quantity
@@ -219,7 +219,7 @@ def create_order(request, data, user):
         order.delivery_type = "pickup" if del_type.lower() == "pickup" else "delivery"
         if del_type.lower() == "delivery":
             order.delivery_address = del_address
-            #order.billing_address = bil_address
+            # order.billing_address = bil_address
             order.driver_instructions = driver_instructions
             email = order.delivery_address.email
             phone = order.delivery_address.phone
@@ -245,10 +245,10 @@ def create_order(request, data, user):
         referred_user_first_order = False
 
         if not Order.objects.filter(cart__user=user).exists() and referred:
-            #First Order
-            user.credits -= referral_bonus/2 # Half of referral bonus
-            order.credits = referral_bonus/2
-            order.total_payable -= referral_bonus/2
+            # First Order
+            user.credits -= referral_bonus / 2  # Half of referral bonus
+            order.credits = referral_bonus / 2
+            order.total_payable -= referral_bonus / 2
             referred_user_first_order = True
         else:
             if order.cart.promo_code:
@@ -268,12 +268,12 @@ def create_order(request, data, user):
                     order.total_payable = 0
                 else:
                     order.discount = gc_amount
-                    order.total_payable -=  gc_amount
+                    order.total_payable -= gc_amount
             if user.credits > 0:
-                log.info("User has credits : "+str(user.credits))
+                log.info("User has credits : " + str(user.credits))
                 # Is there a need to do a check for second transaction?
                 # If yes, pls comment this and do the flow.
-                #if not Order.objects.filter(cart__user=user).count() == 1 and referred:
+                # if not Order.objects.filter(cart__user=user).count() == 1 and referred:
                 #    log.info("Referred user - 2nd txn")
 
                 if user.credits > order.total_payable:
@@ -289,7 +289,7 @@ def create_order(request, data, user):
         log.info("Payable : " + str(order.total_payable))
 
         if float(order.total_payable) > 0.0:
-            #Payment
+            # Payment
             order.save_card = bool(data.get("save_card", 0))
             order.card_id = data.get("card_id", False)
             
@@ -301,10 +301,10 @@ def create_order(request, data, user):
             
             if not payment:
                 return custom_error("An error has occurred while paying with Credit Card. Please try agian.")
-        else: #amount = 0
+        else:  # amount = 0
             payment = None
         if payment:
-            log.info("Order payment success.Payment id :"+str(payment.id))
+            log.info("Order payment success.Payment id :" + str(payment.id))
         else:
             log.info("Order success - Amount = 0..")
 
@@ -327,25 +327,25 @@ def create_order(request, data, user):
         slot.save()
 
         for item in items:
-            item.status = 0 #Placed
+            item.status = 0  # Placed
             item.save()
 
         if not order.cart.completed:
-            order.cart.completed=True
+            order.cart.completed = True
             order.cart.save()
 
         if referred_user_first_order:
             referrer = Referral.objects.get(referree=user).referrer
             referrer.credits += referral_bonus
             referrer.save()
-            log.info("Added referral bonus to referrer: "+str(referrer.id))
+            log.info("Added referral bonus to referrer: " + str(referrer.id))
 
         if not send_order_placed_notification(order):
             log.error("Failed to send order notification")
         cart_items = get_order_cart_items(order)
         
         if not print_order(order):
-            log.error("Failed to print order #"+str(order.order_num))
+            log.error("Failed to print order #" + str(order.order_num))
 
         return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way.", "cart_items":cart_items})
         
@@ -362,7 +362,7 @@ def print_order(order):
         content = base64.b64encode(pdf_content)
         data = {
             "printerId": settings.PRINTNODE_PRINTER_ID,
-            "title": order.order_num, 
+            "title": order.order_num,
             "contentType": "pdf_base64",
             "content": content,
             "source": "Meisterdish",
@@ -380,7 +380,7 @@ def print_order(order):
 def save_pdf(order):
     try:
         from libraries.pdfcreator import save_to_pdf
-        path = settings.MEDIA_ROOT+"/prints/order_"+order.order_num+".pdf"
+        path = settings.MEDIA_ROOT + "/prints/order_" + order.order_num + ".pdf"
         cart_items = CartItem.objects.filter(cart__order=order)
         if order.delivery_address:
             name = (order.delivery_address.first_name + ' ' + order.delivery_address.last_name).upper()
@@ -396,15 +396,15 @@ def save_pdf(order):
                         'cart_items':cart_items,
                         'name' : name,
                         'date':order.delivery_time.strftime('%A, %B %d %Y'),
-                        "time" : str(int(order.delivery_time.strftime("%I"))) + " - " +str(int(order.delivery_time.strftime("%I"))+1) + " " + order.delivery_time.strftime("%p"),
-                        "static_url":settings.STATIC_URL +'/default/',
+                        "time" : str(int(order.delivery_time.strftime("%I"))) + " - " + str(int(order.delivery_time.strftime("%I")) + 1) + " " + order.delivery_time.strftime("%p"),
+                        "static_url":settings.STATIC_URL + '/default/',
                     },
                     path
             )
         if res:
-            log.info("Saved PDF :"+path)
+            log.info("Saved PDF :" + path)
             return res
-        log.error("Failed to save PDF for order #"+order.order_num)
+        log.error("Failed to save PDF for order #" + order.order_num)
         return False
     except Exception as e:
         log.error("Failed to save pdf." + e.message)
@@ -425,7 +425,7 @@ def get_order_cart_items(order):
               "sold_out":1 if cart_item.meal.sold_out else 0,
               "category": cart_item.meal.category.name.title() if cart_item.meal.category else "Not Available",
               "price": cart_item.meal.price,
-              "tax": cart_item.meal.price * cart_item.meal.tax/100,
+              "tax": cart_item.meal.price * cart_item.meal.tax / 100,
               "quantity":cart_item.quantity,
             })
             items_count += cart_item.quantity
@@ -440,14 +440,14 @@ def get_order_cart_items(order):
               coupon = {
                 "code" : cart.promo_code.code,
                 "amount":cart.promo_code.amount,
-                "message":"A credit of $"+"{0:.2f}".format(cart.promo_code.amount) + " has been added."
+                "message":"A credit of $" + "{0:.2f}".format(cart.promo_code.amount) + " has been added."
               }
           elif cart.gift_cards.all().count():
               gc = cart.gift_cards.all()[0]
               coupon = {
                 "code" : gc.code,
                 "amount":gc.amount,
-                "message":"A credit of $"+"{0:.2f}".format(gc.amount) + " has been added."
+                "message":"A credit of $" + "{0:.2f}".format(gc.amount) + " has been added."
               }
 
       if not len(cart_list):
@@ -474,20 +474,20 @@ def make_payment(order, user):
         if user.stripe_customer_id and str(user.stripe_customer_id).strip() != "":
             customer = stripe.Customer.retrieve(user.stripe_customer_id)
             if order.card_id:
-                #Using pre-saved card
+                # Using pre-saved card
                 card_id = CreditCardDetails.objects.get(pk=order.card_id).card_id
                 card = customer.sources.retrieve(card_id)
             else:
-                #Add the entered card to the exising customer
+                # Add the entered card to the exising customer
                 card = customer.sources.create(source=order.token)
         elif not order.card_id:
-            #Create new customer
+            # Create new customer
             customer = stripe.Customer.create(
                 source=order.token,
-                description="meisterdish_user_"+str(user.id)
+                description="meisterdish_user_" + str(user.id)
             )
             
-            #Save customer id to user table, for future use
+            # Save customer id to user table, for future use
             user.stripe_customer_id = customer.id
             user.save()
 
@@ -501,7 +501,7 @@ def make_payment(order, user):
                 c_card = CreditCardDetails()
                 c_card.user = user
                 c_card.card_id = card.id
-                c_card.number = '#### #### #### '+str(card.last4)
+                c_card.number = '#### #### #### ' + str(card.last4)
                 c_card.funding = card.funding
                 c_card.expire_year = card.exp_year
                 c_card.expire_month = card.exp_month
@@ -512,13 +512,13 @@ def make_payment(order, user):
             raise Exception('The saved card details does not belong to this user. Please add a new card to make payment.')
 
         response = stripe.Charge.create(
-            amount=int(order.total_payable * 100), #Cents
+            amount=int(order.total_payable * 100),  # Cents
             currency="usd",
             customer=customer.id,
-            source = card.id,
-            description = "Meal order at meisterdish.com",
-            #receipt_number = order.order_num,
-            #receipt_email = order.email
+            source=card.id,
+            description="Meal order at meisterdish.com",
+            # receipt_number = order.order_num,
+            # receipt_email = order.email
         )
 
         payment = save_payment_data(response)
@@ -540,13 +540,13 @@ def send_order_placed_notification(order):
             suffix = ["st", "nd", "rd"][day % 10 - 1]
         
         credit = order.credits + order.discount
-        shipping  = 0 if order.delivery_type == 'pickup' else settings.SHIPPING_CHARGE
+        shipping = 0 if order.delivery_type == 'pickup' else settings.SHIPPING_CHARGE
         gt = order.total_amount + order.total_tax + order.tip + shipping
         if credit > gt:
             credit = gt
         
-        unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/'+base64.b64encode(order.email)+"/"
-        delivery_hr = str(order.delivery_time.hour % 12) + "-" + str((order.delivery_time.hour % 12) +1)
+        unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/' + base64.b64encode(order.email) + "/"
+        delivery_hr = str(order.delivery_time.hour % 12) + "-" + str((order.delivery_time.hour % 12) + 1)
         if order.delivery_time.hour >= 12 :
             delivery_hr += " PM"
         else:
@@ -558,10 +558,10 @@ def send_order_placed_notification(order):
                "transaction_id" : order.payment.transaction_id if order.payment else "Not Available",
                "date": order.updated.strftime("%B %d, %Y"),
                "time" : order.updated.strftime("%I %M %p"),
-               "delivery_time" : order.delivery_time.strftime("%A, %B %d"+suffix+", %Y"),
+               "delivery_time" : order.delivery_time.strftime("%A, %B %d" + suffix + ", %Y"),
                "total_amount":"{0:.2f}".format(order.total_amount),
                "discount" : "{0:.2f}".format(order.discount),
-               "credit" : ("-$" if credit >0 else "$") + "{0:.2f}".format(credit),
+               "credit" : ("-$" if credit > 0 else "$") + "{0:.2f}".format(credit),
                "tax" : "{0:.2f}".format(order.total_tax),
                "shipping" : '0.00' if order.delivery_type == 'pickup' else "{0:.2f}".format(settings.SHIPPING_CHARGE),
                "tip":"{0:.2f}".format(order.tip),
@@ -579,9 +579,9 @@ def send_order_placed_notification(order):
                "cart_items":order.cart.cartitem_set.all().order_by('id'),
                }
         if order.delivery_type != "pickup":
-            dic["delivery_name"] = order.delivery_address.first_name.title() + " "+order.delivery_address.last_name.title()
-            dic["delivery_add1"] = order.delivery_address.building + ", "+order.delivery_address.street
-            dic["delivery_add2"] = order.delivery_address.city.title() + ", "+ order.delivery_address.state.name + ", " + order.delivery_address.zip
+            dic["delivery_name"] = order.delivery_address.first_name.title() + " " + order.delivery_address.last_name.title()
+            dic["delivery_add1"] = order.delivery_address.building + ", " + order.delivery_address.street
+            dic["delivery_add2"] = order.delivery_address.city.title() + ", " + order.delivery_address.state.name + ", " + order.delivery_address.zip
         
         msg = render_to_string('order_placed_email_template.html', dic)
         sub = 'Your Meisterdish order has been received'
@@ -590,12 +590,12 @@ def send_order_placed_notification(order):
             log.error("No email address to send order placed email")
             return custom_error("Order has been updated, but failed to send email.")
         if mail_order_confirmation([to_email], sub, msg, order):
-            log.info("Send order placed mail to "+to_email)
+            log.info("Send order placed mail to " + to_email)
         else:
-            log.error("Failed to send order placed mail to "+to_email)
+            log.error("Failed to send order placed mail to " + to_email)
 
         # Not needed here
-        #if user.need_sms_notification:
+        # if user.need_sms_notification:
         #    if not send_sms_notification(dic):
         #        return False
         return True
@@ -623,7 +623,7 @@ def get_order_details(request, data, user, order_id):
               "sold_out":1 if cart_item.meal.sold_out else 0,
               "category": cart_item.meal.category.name.title(),
               "price": cart_item.meal.price,
-              "tax": (cart_item.meal.price * cart_item.meal.tax/100),
+              "tax": (cart_item.meal.price * cart_item.meal.tax / 100),
               "quantity":cart_item.quantity,
             })
         order_details = {
@@ -731,8 +731,8 @@ def print_pdf(request):
                         'order':order,
                         'cart_items':cart_items,
                         'date':order.delivery_time.strftime("%m-%d-%Y"),
-                        "time" : str(int(order.delivery_time.strftime("%I"))) + " - " +str(int(order.delivery_time.strftime("%I"))+1) + " " + order.delivery_time.strftime("%p"),
-                        "static_url":settings.STATIC_URL +'/default/',
+                        "time" : str(int(order.delivery_time.strftime("%I"))) + " - " + str(int(order.delivery_time.strftime("%I")) + 1) + " " + order.delivery_time.strftime("%p"),
+                        "static_url":settings.STATIC_URL + '/default/',
                     }
                 )
     except Exception as e:
@@ -742,7 +742,7 @@ def print_pdf(request):
     
     
 @check_input('POST')
-def get_delivery_slots(request,data):
+def get_delivery_slots(request, data):
     try:
         single = False
         if "from_date" in data and str(data["from_date"]).strip() != "":
@@ -756,27 +756,27 @@ def get_delivery_slots(request,data):
         else :
             single = True
         log.info("Date validated")
-        start_date = datetime.strptime(from_date,'%m-%d-%Y').date()
+        start_date = datetime.strptime(from_date, '%m-%d-%Y').date()
         log.info("Strp ed start date") 
         slots_list = []
               
         if not single:
-            end_date = datetime.strptime(to_date,'%m-%d-%Y').date()
+            end_date = datetime.strptime(to_date, '%m-%d-%Y').date()
         else:
             end_date = start_date
               
         day_count = (end_date - start_date).days + 1
-        dates = [d for d in (start_date + timedelta(n) for n in range(day_count)) if d.weekday()< 5]
+        dates = [d for d in (start_date + timedelta(n) for n in range(day_count)) if d.weekday() < 5]
         for d in dates:
-            time_slots = DeliveryTimeSlot.objects.filter(date = d)
+            time_slots = DeliveryTimeSlot.objects.filter(date=d)
             if len(time_slots) == 0:
-                tmp = DeliveryTimeSlot.objects.filter(date = (d- timedelta(days= 7)))
+                tmp = DeliveryTimeSlot.objects.filter(date=(d - timedelta(days=7)))
                 if tmp:
-                    time_slots = DeliveryTimeSlot.objects.create(date=d,slot1=tmp[0].slot1,slot2=tmp[0].slot2,slot3=tmp[0].slot3,slot4=tmp[0].slot4
-,slot5=tmp[0].slot5)
+                    time_slots = DeliveryTimeSlot.objects.create(date=d, slot1=tmp[0].slot1, slot2=tmp[0].slot2, slot3=tmp[0].slot3, slot4=tmp[0].slot4
+, slot5=tmp[0].slot5)
                 else:
                           
-                    time_slots = DeliveryTimeSlot.objects.create(date=d,slot1=0,slot2=0,slot3=0,slot4=0,slot5=0)
+                    time_slots = DeliveryTimeSlot.objects.create(date=d, slot1=0, slot2=0, slot3=0, slot4=0, slot5=0)
             else:
                 time_slots = time_slots[0]
             slots = {

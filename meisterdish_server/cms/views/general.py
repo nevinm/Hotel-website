@@ -60,7 +60,7 @@ def login(request, data):
                 session.set_expiry = settings.SESSION_EXPIRY
             session.save()
 
-            log.info(email+" logged in ..")
+            log.info(email + " logged in ..")
             return json_response({"status":1, "message": "Logged in succesfully", "user":user_dic, "session_key":session.session_key, "role_name":user.role.name.upper()})
         else:
             log.error("Login failed")
@@ -74,7 +74,7 @@ def login(request, data):
 def logout(request, data):
     if 'HTTP_SESSION_KEY' not in request.META:
         log.error("API:logout, Invalid session.")
-        response = {'status': -1, "message": "Invalid session."}
+        response = {'status':-1, "message": "Invalid session."}
     else:
         session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
         if 'user' in session:
@@ -89,7 +89,7 @@ def get_categories(request, data, user):
     try:
         limit = settings.PER_PAGE
         page = 1
-        if "nextPage" in data and int(data["nextPage"]) >0:
+        if "nextPage" in data and int(data["nextPage"]) > 0:
             page = data["nextPage"]
             
         cats = Category.objects.filter(is_deleted=False).order_by("name")
@@ -105,7 +105,7 @@ def get_categories(request, data, user):
         
         try:
             paginator = Paginator(cats, limit)
-            if page <1 or page > paginator.page_range:
+            if page < 1 or page > paginator.page_range:
                 page = 1
             cats = paginator.page(page)
         except Exception as e:
@@ -125,7 +125,7 @@ def get_categories(request, data, user):
                               "per_page" : limit,
                               })
     except Exception as e:
-        log.error("Failed to return category list : "+e.message)
+        log.error("Failed to return category list : " + e.message)
         return custom_error("Failed to retrieve category list")
 
 @check_input('POST')
@@ -134,7 +134,7 @@ def get_categories_filters(request, data, user):
         cats = Category.objects.filter(is_hidden=False, is_deleted=False).order_by("name")
         cat_list = [{"id":cat.id, "name":cat.name.title()} for cat in cats]
         
-        #Meal Types / Filters
+        # Meal Types / Filters
         types = MealType.objects.filter(is_hidden=False, is_deleted=False)
         type_list = [{"id":type.id, "name":type.name.title()} for type in types]
         
@@ -149,7 +149,7 @@ def add_category(request, data, user):
         cat_name = data['category'].strip()
         try:
             cat = Category.objects.get(name__iexact=cat_name)
-            return custom_error("Catergory "+cat_name+" already exists.")
+            return custom_error("Catergory " + cat_name + " already exists.")
         except Category.DoesNotExist:
             cat = Category()
             cat.name = cat_name
@@ -157,7 +157,7 @@ def add_category(request, data, user):
 
         return json_response({"status":1, "message":"Added Category", "id":cat.id})
     except Exception as e:
-        log.error("Failed to add category : "+e.message)
+        log.error("Failed to add category : " + e.message)
         return json_response({"status":-1, "message":"Failed to add category"})
 
 @check_input('POST', True)
@@ -175,7 +175,7 @@ def remove_category(request, data, user):
 
         return json_response({"status":1, "message":"Removed Category"})
     except Exception as e:
-        log.error("Failed to remove category : "+e.message)
+        log.error("Failed to remove category : " + e.message)
         return json_response({"status":-1, "message":"Failed to remove category"})
 
 @check_input('POST', True)
@@ -192,7 +192,7 @@ def update_category(request, data, user):
             cat.save()
             return json_response({"status":1, "message":"Updated Category"})
     except Exception as e:
-        log.error("Failed to update category : "+e.message)
+        log.error("Failed to update category : " + e.message)
         return json_response({"status":-1, "message":"Failed to update category"})
     
 @check_input('POST', True)
@@ -207,13 +207,13 @@ def get_users(request, data, user):
          
         if "search" in data:
             search = data["search"]
-            users = users.filter(Q(first_name__istartswith=search)| Q(last_name__istartswith=search))
+            users = users.filter(Q(first_name__istartswith=search) | Q(last_name__istartswith=search))
         
         users = users.order_by('-id')
         actual_count = users.count()
         try:
             paginator = Paginator(users, limit)
-            if page <1 or page > paginator.page_range:
+            if page < 1 or page > paginator.page_range:
                 page = 1
             users = paginator.page(page)
         except Exception as e:
@@ -223,13 +223,13 @@ def get_users(request, data, user):
         for user in users.object_list:
             user_list.append({
                               "id" : user.id,
-                              "name" : (user.last_name + " "+ user.first_name).title(),
+                              "name" : (user.last_name + " " + user.first_name).title(),
                               "email" : user.email,
                               "mobile" : "Not Available" if not user.mobile or str(user.mobile).strip() == "" else user.mobile,
                               "profile_image" : settings.DEFAULT_USER_IMAGE if user.profile_image is None else user.profile_image.image.url,
                               "profile_image_thumb" : settings.DEFAULT_USER_IMAGE if user.profile_image is None else user.profile_image.thumb.url,
                               "is_admin": "Yes" if user.role.id == 1 else "No",
-                              "credits" : "$ "+"{0:.2f}".format(user.credits),
+                              "credits" : "$ " + "{0:.2f}".format(user.credits),
                               "is_active": user.is_active,
                               })
         
@@ -245,19 +245,19 @@ def get_users(request, data, user):
                               })
         
     except Exception as e:
-        log.error("User list "+ e.message)
+        log.error("User list " + e.message)
         return custom_error("Failed to retrieve users list.")
 
 @check_input('POST', True)
 def delete_user(request, data, session_user):
     try:
         user = User.objects.get(id=str(data['id']).strip())
-        #user.deleted = True
-        #user.save()
+        # user.deleted = True
+        # user.save()
         user.delete()
         return json_response({"status":1, "message":"Deleted user"})
     except Exception as e:
-        log.error("Failed to remove user : "+e.message)
+        log.error("Failed to remove user : " + e.message)
         return custom_error("Failed to delete user")
     
 @check_input('POST', True)
@@ -275,7 +275,7 @@ def update_user(request, data, session_user):
         user.save()
         return json_response({"status":1, "message":"Updated user"})
     except Exception as e:
-        log.error("Failed to update user : "+e.message)
+        log.error("Failed to update user : " + e.message)
         return custom_error("Failed to update user")
 
 @check_input('POST', True)
@@ -290,7 +290,7 @@ def change_user_status(request, data, session_user):
         msg = "Activated user" if user.is_active else "Deactivated user."
         return json_response({"status":1, "is_active":user.is_active, "message" : msg})
     except Exception as e:
-        log.error("Failed to change user status : "+e.message)
+        log.error("Failed to change user status : " + e.message)
         return custom_error("Failed to change user status")
 
 @check_input('POST', settings.ROLE_ADMIN)
@@ -323,13 +323,13 @@ def export_users(request, data):
             if session and 'user' in session :
                 users = User.objects.exclude(role__pk=settings.ROLE_GUEST).filter(deleted=False)
                 
-                if "new" in data and data["new"]==1:
+                if "new" in data and data["new"] == 1:
                     today = dt.today()
                     users = users.filter(created__year=today.year, created__month=today.month, created__day=today.day)
 
                 if "search" in data:
                     search = data["search"]
-                    users = users.filter(Q(first_name__istartswith=search)| Q(last_name__istartswith=search))
+                    users = users.filter(Q(first_name__istartswith=search) | Q(last_name__istartswith=search))
                 users = users.order_by('-id')
                 users_list = [[
                     'Name',
@@ -362,7 +362,7 @@ State         :%s
 Zip code      :%s
 Phone         :%s
 Email         :%s
-''' %(primary_address.first_name, primary_address.last_name, business, company, primary_address.building, primary_address.street, primary_address.city, primary_address.state.name, primary_address.zip, primary_address.phone, primary_address.email)
+''' % (primary_address.first_name, primary_address.last_name, business, company, primary_address.building, primary_address.street, primary_address.city, primary_address.state.name, primary_address.zip, primary_address.phone, primary_address.email)
                     else:
                         address = ""
                     users_list.append([
@@ -376,7 +376,7 @@ Email         :%s
                         user.created.strftime('%m-%d-%Y %H:%M:%S'),
                         "Yes" if user.need_email_promotions else "No",
                         user.referral_code,
-                        "$ "+"{0:.2f}".format(user.credits),
+                        "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
                         address,
                     ])
@@ -384,7 +384,7 @@ Email         :%s
         log.error("Export User list :Invalid session")
         return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
     except Exception as e:
-        log.error("Export User list "+ e.message)
+        log.error("Export User list " + e.message)
         return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
 
 @check_input('POST', settings.ROLE_ADMIN)
@@ -427,7 +427,7 @@ State         :%s
 Zip code      :%s
 Phone         :%s
 Email         :%s
-''' %(primary_address.first_name, primary_address.last_name, company, primary_address.building, primary_address.street, primary_address.city, primary_address.state.name, primary_address.zip, primary_address.phone, primary_address.email)
+''' % (primary_address.first_name, primary_address.last_name, company, primary_address.building, primary_address.street, primary_address.city, primary_address.state.name, primary_address.zip, primary_address.phone, primary_address.email)
                     else:
                         address = ""
                     users_list.append([
@@ -441,7 +441,7 @@ Email         :%s
                         user.created.strftime('%m-%d-%Y %H:%M:%S'),
                         "Yes" if user.need_email_promotions else "No",
                         user.referral_code,
-                        "$ "+"{0:.2f}".format(user.credits),
+                        "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
                         address
                     ])
@@ -449,7 +449,7 @@ Email         :%s
         log.error("Export User promotions list : Invalid session key")
         return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
     except Exception as e:
-        log.error("Export User promotions list "+ e.message)
+        log.error("Export User promotions list " + e.message)
         return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
 
 @check_input('POST', settings.ROLE_ADMIN)
@@ -460,10 +460,10 @@ def export_zips_unsupported(request, data):
             session = SessionStore(session_key=session_key)
             if session and 'user' in session :
                 email_list = [[zu.email, zu.zipcode]for zu in ZipUnavailable.objects.all()]
-                email_list.insert(0,['Email','Zip Code'])
+                email_list.insert(0, ['Email', 'Zip Code'])
                 return export_csv(email_list, "zip_unsupported_users_list.csv")
         log.error("Export zips zip_unsupported_users : Invalid session key")
         return HttpResponseRedirect(settings.SITE_URL + "views/admin/userlist.html")
     except Exception as e:
-        log.error("Export zips zip_unsupported_users : "+ e.message)
+        log.error("Export zips zip_unsupported_users : " + e.message)
         return HttpResponseRedirect(settings.SITE_URL + "views/admin/manage-delivery-areas.html")

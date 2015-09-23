@@ -58,12 +58,12 @@ USE_L10N = True
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL =BASE_URL+'media/'
+MEDIA_URL = BASE_URL + 'media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = BASE_URL+'static/'
+STATIC_URL = BASE_URL + 'static/'
 
 STATIC_ROOT = BASE_DIR + '/static/'
 
@@ -103,7 +103,7 @@ MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -123,13 +123,13 @@ CORS_ALLOW_HEADERS = (
 
 ROOT_URLCONF = 'meisterdish_server.urls'
 
-#WSGI_APPLICATION = 'rounding_app.wsgi.application'
+# WSGI_APPLICATION = 'rounding_app.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    BASE_DIR+"/templates",
+    BASE_DIR + "/templates",
 
 )
 
@@ -219,14 +219,14 @@ PAYMENT_METHODS = (
                    ('PP', 'PayPal'),
                    )
 
-#ORDER_STATUS =  (
+# ORDER_STATUS =  (
 #    (0, "Cancelled"),
 #    (1, "Placed"),
 #    (2, "Packed"),
 #    (3, "Dispatched"),
 #    (4, "Delivered"),
 #    )
-ORDER_STATUS =  (
+ORDER_STATUS = (
     (0, "Placed"),
     (1, "Packed"),
     (2, "Dispatched"),
@@ -235,7 +235,7 @@ ORDER_STATUS =  (
     )
 
 
-MEAL_STATUS =  (
+MEAL_STATUS = (
     (0, "Placed"),
     (1, "Packed"),
     (2, "Dispatched"),
@@ -243,12 +243,12 @@ MEAL_STATUS =  (
     (4, "Cancelled"),
     )
 
-DEFAULT_MEAL_IMAGE  = STATIC_URL + "default/meal_default.jpg"
-DEFAULT_USER_IMAGE  = STATIC_URL + "default/user_default.jpg"
-DEFAULT_CHEF_IMAGE  = STATIC_URL + "default/chef-default.png"
-DEFAULT_INGREDIENTS_IMAGE  = STATIC_URL + "default/ingredients-default.png"
-DEFAULT_PRE_REQ_IMAGE  = STATIC_URL + "default/pre-requisites-default.png"
-DEFAULT_MEAL_TYPE_IMAGE  = STATIC_URL + "default/mealtype_default.png"
+DEFAULT_MEAL_IMAGE = STATIC_URL + "default/meal_default.jpg"
+DEFAULT_USER_IMAGE = STATIC_URL + "default/user_default.jpg"
+DEFAULT_CHEF_IMAGE = STATIC_URL + "default/chef-default.png"
+DEFAULT_INGREDIENTS_IMAGE = STATIC_URL + "default/ingredients-default.png"
+DEFAULT_PRE_REQ_IMAGE = STATIC_URL + "default/pre-requisites-default.png"
+DEFAULT_MEAL_TYPE_IMAGE = STATIC_URL + "default/mealtype_default.png"
 
 
 CACHES = {
@@ -259,11 +259,11 @@ CACHES = {
 
 EMAIL_IMAGES = {
     "meisterdish_logo" : os.path.join(STATIC_ROOT, "default", "logo_email.png"),
-    #"social_sprite" : os.path.join(STATIC_ROOT, "default", "social-icon-sprite.png"),
+    # "social_sprite" : os.path.join(STATIC_ROOT, "default", "social-icon-sprite.png"),
     "fb" : os.path.join(STATIC_ROOT, "default", "facebook.png"),
-    #"pt" : os.path.join(STATIC_ROOT, "default", "pinterest.png"),
-    #"tw" : os.path.join(STATIC_ROOT, "default", "twitter.png"),
-    #"in" : os.path.join(STATIC_ROOT, "default", "instagram.png"),
+    # "pt" : os.path.join(STATIC_ROOT, "default", "pinterest.png"),
+    # "tw" : os.path.join(STATIC_ROOT, "default", "twitter.png"),
+    # "in" : os.path.join(STATIC_ROOT, "default", "instagram.png"),
 }
 
 INDIAN_NUMBERS = ["7034088806", '9961963746', '9995381338']
