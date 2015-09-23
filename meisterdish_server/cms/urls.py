@@ -73,4 +73,6 @@ urlpatterns = patterns('',
     url(r'^delete_meal_rating/(?P<pk>[0-9]+)/$', meals.delete_meal_rating, name='delete_meal_rating'),
     url(r'^get_all_ratings/$', meals.get_all_ratings, name="get_all_ratings"),
     
+    url(r'^update_meal_soldout/$', meals.update_meal_soldout, name="update_meal_soldout"),
+    
 )

@@ -760,3 +760,24 @@ def get_all_ratings(request, data, user):
     except Exception as e:
         log.error("Failed to get data." + e.message)
         return custom_error("Failed to get ratings.")
+    
+    
+@check_input("POST", settings.ROLE_ADMIN)
+def update_meal_soldout(request, data, user):
+    try:
+        meal_id = data["meal_id"]
+        sold_out = data["sold_out"]
+        try:
+            meal = Meal.objects.get(pk=int(meal_id))
+        except Meal.DoesNotExist:
+            return custom_error("Meal not found")
+        meal.sold_out = sold_out
+        meal.save()
+        return json_response({"status":1, "message":"Updated successfully."})
+    except Exception as e:
+        log.error("Failed to update sold out for meal! " + e.message)
+        return custom_error("Error occurred! Please try again.")
+
+
+
+
