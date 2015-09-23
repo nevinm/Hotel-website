@@ -4,7 +4,6 @@ $(document).ready(function() {
     getMainMealId();
     // getHomePageMeal();
     shouldFullpageRender();
-
     $(".check-delivery").on('click', function(e) {
         e.preventDefault();
         var zipcode = $("#zip-code").val();
@@ -12,9 +11,7 @@ $(document).ready(function() {
             locationCheck(zipcode);
         }
     });
-
     $("body").on("load", isSessionExpired);
-
     $('#submit-email').on("click", function(e) {
         e.preventDefault();
         var email = $('input[type=email]').val(),
@@ -23,16 +20,13 @@ $(document).ready(function() {
             saveEmail(email, zipcode);
         }
     });
-
     $('.delivery-area-check-popup img#cancel').on("click", function() {
         $('.delivery-area-check-popup').fadeOut();
     });
-
     $("#meal-info").on("click", function() {
         mealId = $(this).attr('data-id');
         window.location.href = 'views/meal-details.html?mealId=' + mealId;
     });
-
     $("#meal-add").on("click", function() {
         var mealId = $(this).attr('data-id'),
             count = 0;
@@ -42,7 +36,6 @@ $(document).ready(function() {
             addToCart(mealId);
         }
     });
-
     $(".removeItemButton").on("click", function() {
         var quantity = -2,
             count = 0,
@@ -53,7 +46,6 @@ $(document).ready(function() {
             addToCart(mealId, quantity);
         } else {}
     });
-
     $(window).resize(function() {
         shouldFullpageRender();
     });
@@ -73,17 +65,13 @@ function fullPageRender() {
         section2Padding = parseInt($("#section-what-is-meisterdish").css('padding-top').split("px")[0]),
         footerHeight = $("#slider-footer").innerHeight(),
         reqOffset = screenHeight - section1Height - section2HeadingHeight;
-
     $("#section-what-is").css({
         "height": section1Height + reqOffset - section2Padding
     });
-
     $("#section-zipcode").css({
         "height": screenHeight - footerHeight
     });
-
 }
-
 //add to cart call back
 var addToCartCallback = {
     success: function(data, textStatus, mealId) {
@@ -95,7 +83,6 @@ var addToCartCallback = {
             populateOverlayDetails(meal_details);
             CartItemCount();
         }
-
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
@@ -114,7 +101,6 @@ function addToCart(meal_id, quantity) {
     addToCartInstance.sendPost(url, header, data, addToCartCallback, meal_id);
 }
 
-
 function getHomePageMeal(mealId) {
     // var url = baseURL + "get_meal_details/" + mealId + "/",
     var url = baseURL + "get_meal_details/0/",
@@ -126,7 +112,6 @@ function getHomePageMeal(mealId) {
     var getHomePageMealInstance = new AjaxHttpSender();
     getHomePageMealInstance.sendPost(url, header, data, getHomePageMealCallback);
 }
-
 //Get home page meal details.
 var getHomePageMealCallback = {
     success: function(data, textStatus) {
@@ -148,7 +133,6 @@ function getMainMealId() {
     var getMainMealIdInstance = new AjaxHttpSender();
     getMainMealIdInstance.sendPost(url, header, data, getMainMealIdCallback);
 }
-
 //Get home page meal details.
 var getMainMealIdCallback = {
     success: function(data, textStatus) {
@@ -162,8 +146,6 @@ var getMainMealIdCallback = {
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
 
-
-
 function populateHomePageMeal(mealDetails) {
     var $sectionWhatToExpect = $("#section-what-to-expect");
     $sectionWhatToExpect.find(".meal-name p").text(mealDetails.name);
@@ -171,14 +153,9 @@ function populateHomePageMeal(mealDetails) {
     $sectionWhatToExpect.find(".meal-sub-description p").text(mealDetails.sub);
     $sectionWhatToExpect.find(".meal-properties .preparation-time").text(mealDetails.preparation_time);
     $sectionWhatToExpect.find(".meal-properties .calories").text(mealDetails.calories);
-    $.each(mealDetails.ingredients,function(key, value){
-        $sectionWhatToExpect.find(".ingredients-wrapper").append("<div class='details-content'>"+
-            "<p class='upper-content'>"+
-            "<img src='"+value.image_url+"'></p>"+
-            "<p class='lower-content'>"+value.name+"</p>"+
-        "</div>");
+    $.each(mealDetails.ingredients, function(key, value) {
+        $sectionWhatToExpect.find(".ingredients-wrapper").append("<div class='details-content'>" + "<p class='upper-content'>" + "<img src='" + value.image_url + "'></p>" + "<p class='lower-content'>" + value.name + "</p>" + "</div>");
     });
-    
     if (mealDetails.meal_types.length) {
         $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src", mealDetails.meal_types[0].image_url);
         $sectionWhatToExpect.find(".meal-properties .meal-type").text(mealDetails.meal_types[0].meal_type_name);
@@ -205,8 +182,8 @@ function populateHomePageMeal(mealDetails) {
     } else {
         $("#meal-add").removeClass("button-disabled");
     }
-    if(mealDetails.sold_out == 0){}
-        else{
+    if (mealDetails.sold_out == 0) {} else {
+        $(".sold-overlay").show();
         $("#meal-add").addClass("button-disabled");
     }
 }
@@ -250,7 +227,6 @@ function isSessionExpired() {
         localStorage.removeItem('session-expired');
     }
 }
-
 //Get reviews API process
 var locationCheckCallback = {
     success: function(data, textStatus) {
@@ -287,7 +263,6 @@ function showLocationCheckPopup(userDetails) {
     $('.delivery-area-check-popup').show();
     $('form#validate-email').validate().resetForm();
 }
-
 var saveEmailCallback = {
     success: function(data, textStatus) {
         var userDetails = JSON.parse(data);

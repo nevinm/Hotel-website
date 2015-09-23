@@ -20,8 +20,8 @@ $(document).ready(function() {
             $("#selectIngredientsError").hide();
         }
     });
-    $("#selectIngredients").on("change",function(){
-        $("#selectIngredientsError").attr("style","display:none !important;");
+    $("#selectIngredients").on("change", function() {
+        $("#selectIngredientsError").attr("style", "display:none !important;");
     });
     $('.add-list-button,.add-preparation-button').on("click", function() {
         var element_id = $(this).prev().find('.create-meal-input').attr('id');
@@ -313,7 +313,8 @@ function createMeal() {
         ingredients_image = $('#ingredients-image').attr("data-id"),
         chef_comments = $("#chef-comments").val(),
         chef_name = $("#chef-name").val(),
-        meal_sub = $("#meal-sub-name").val();
+        sold_out = $('#soldOut option:selected').attr('value');
+    meal_sub = $("#meal-sub-name").val();
     var ingredients = [], // ingredient array
         temp = '',
         pre_requesties = [],
@@ -374,7 +375,8 @@ function createMeal() {
         "saved_time": saved_time,
         "tips": tips,
         "sub": meal_sub,
-        "nutrients": nutrients
+        "nutrients": nutrients,
+        "sold_out": sold_out
     }
     $.each(createMealFields, function(key, value) {
         createMealEmptyCheck(key, value);
@@ -506,6 +508,8 @@ function populateMealDetails(mealDetails) {
         $($("#create-meal-mealType option")[0]).attr("selected", false);
         $("#create-meal-mealType option[value='" + value.id + "']").prop("selected", true);
     });
+    $('#soldOut option').removeAttr("selected");
+    $("#soldOut option[value='" + mealDetails.sold_out + "']").prop("selected", true);
     $('#meal-prep-time').val(mealDetails.preparation_time);
     $('#meal-saved-time').val(mealDetails.saved_time);
     populateListData('', "preperation-container-1", mealDetails.user_to_do);
