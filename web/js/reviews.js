@@ -92,7 +92,7 @@ function populateReviews(userDetails) {
                 "<input type='radio' class='rating-input' id='rating-input-1-1' name='rating-input-1' data-id='1'>" +
                 "<label for='rating-input-1-1' class='rating-star'></label></span>" +
                 "</div><div class='meal-review-textarea meal-review-cell'>" +
-                "<textarea maxlength='250' class='user-reviews' placeholder='Leave a reivew (Optional) '>"+value.review+"</textarea>" +
+                "<textarea maxlength='250' class='user-reviews' placeholder='Leave a review (Optional) '>"+value.review+"</textarea>" +
                 "</div><div class='meal-review-submit meal-review-cell'>" +
                 "<a href='#' class='btn btn-medium-primary medium-green add-review' id='add-review' data-meal-id='"+value.meal_id+"'"+
                 "data-order-id='"+value.order_id+"' >Submit</a></div></div>");

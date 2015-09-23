@@ -225,16 +225,16 @@ var Ingredients = (function() {
                 loadIngredientsList("", pageNumber);
             },
             onInit: function() {
-            if (getStringAfterHash(location.href, "#")) {
-                var pageString = getStringAfterHash(location.href, "#");
-                if(pageString.indexOf('page') != -1){
-                    pageNumber = getStringAfterHash(pageString, "-");
-                    if ($(".pagination").pagination('getCurrentPage') == pageNumber) {} else {
-                        $(".pagination").pagination('selectPage', pageNumber);
+                if (getStringAfterHash(location.href, "#")) {
+                    var pageString = getStringAfterHash(location.href, "#");
+                    if (pageString.indexOf('page') != -1) {
+                        pageNumber = getStringAfterHash(pageString, "-");
+                        if ($(".pagination").pagination('getCurrentPage') == pageNumber) {} else {
+                            $(".pagination").pagination('selectPage', pageNumber);
+                        }
                     }
-                }
-            } else {}
-        }
+                } else {}
+            }
         });
         bindEvents();
         setUploadUrl('ingredient-image-upload-element');
