@@ -645,31 +645,32 @@ span.icon-menu {
 	margin: 0 auto;
 }
 .navMenu {
-		background: rgba(255, 255, 255, 1);
-		position: fixed;
-		height: 100%;
-		width: 80%;
-		left: 0;
-		top: 0;
-		overflow-y:auto; 
-		border-right: 1px solid #d0d0d0;
-		box-shadow: 0 0 6px #d0d0d0;
-	}
-	.icon-cancel{
-    	display: none;
-    	background-image: url(../images/hamburger-menu-close.png);
-    	height:20px;
-    	width: 19px;
-    	background-size: contain;
-    	float: left;
-    	cursor: pointer;
-    	background-repeat: no-repeat;
-    	border:none;
-    }
-	span.icon-cancel {
-		margin-left: 20px;
-		margin-top: 27px;
-	}
+	background: rgba(255, 255, 255, 1);
+	position: fixed;
+	height: 100%;
+	width: 300px;
+	left: 0;
+	top: 0;
+	overflow-y:auto; 
+	border-right: 1px solid #d0d0d0;
+	box-shadow: 0 0 6px #d0d0d0;
+}
+
+.icon-cancel{
+	display: none;
+	background-image: url(../images/hamburger-menu-close.png);
+	height:20px;
+	width: 19px;
+	background-size: contain;
+	float: left;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	border:none;
+}
+span.icon-cancel {
+	margin-left: 20px;
+	margin-top: 27px;
+}
 /*==============================*\
             &FOOTER
 \*==============================*/
@@ -1110,6 +1111,7 @@ span.icon-menu {
 }
 
 @media (min-width: 768px)and (max-width: 1024px) {
+
     #account-mainWrapper,
     #mainWrapper {
         overflow-x: hidden;
@@ -1125,7 +1127,7 @@ span.icon-menu {
         float: left;
     }
     .logo-mobile{
-    	display: block !important;
+    	display: block;
     }
     .logo {
         display: none;
@@ -1193,6 +1195,9 @@ span.icon-menu {
 
 @media (min-width: 1025px) {
     .navMenu {
+        display: none !important;
+    }
+    .logo-mobile{
         display: none !important;
     }
 }
@@ -1271,6 +1276,7 @@ span.icon-menu {
     }
     .logo-mobile{
         margin-top: 22px !important;
+        display: none !important;
     }
     .cart {
         margin-top: 27px;
@@ -1368,6 +1374,9 @@ span.icon-menu {
         padding: 30px 0;
     }
 @media (max-width: 380px) {
+    .navMenu{
+        width: 80%;
+    }
 	.navMenu ul li a{
 		font-size: 14px;
 	}

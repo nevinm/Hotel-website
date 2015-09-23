@@ -31,10 +31,15 @@ $(document).ready(function() {
     $("ul.social-media-icons").find(".sml_sprite").not(".facebook").hide();
     //FOOTER UPDATIONS /****END****/
     $('.icon-menu').on("click", function() {
-        clicked = 1;
+        clicked = 1, leftMargin = 0;
         $('.navMenu').show();
+        if(window.innerWidth < 380 ){
+            leftMargin = "80%";
+        }else{
+            leftMargin = "300px";
+        }       
         $('#header').animate({
-            marginLeft: "80%"
+            marginLeft: leftMargin
         })
         $('#page-container').animate({
             marginLeft: "80%"
@@ -48,6 +53,7 @@ $(document).ready(function() {
         setTimeout(function() {
             $('.icon-menu').addClass('icon-cancel').removeClass('icon-menu');
         }, 100);
+        $(".logo-mobile").hide();
         if (currentPage == "menu") {
             $(".menu-offer").hide();
             $("#header").css("margin-top", "0px");
@@ -63,13 +69,16 @@ $(document).ready(function() {
         });
         setTimeout(function() {
             $('#page-container').show();
+            $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
         }, 700)
         $('#header').animate({
             marginLeft: "0px"
         });
-        setTimeout(function() {
-            $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
-        }, 600);
+        setTimeout(function(){
+            if(window.innerWidth < 1024 && window.innerWidth > 768){
+                $(".logo-mobile").show();
+            }
+        },600);
         if (currentPage == "menu") {
             setTimeout(function() {
                 $(".menu-offer").show();
@@ -804,8 +813,12 @@ $(window).load(function() {
 function mobileResponsive() {
     if ($(window).width() <= 767 && $(window).width() >= 320) {
         if (clicked == 1) {
-            $('#page-container').css("margin-left", "80%");
-            $('#header').css("margin-left", "80%");
+            $('#page-container').css("margin-left", "300px");
+            $('#header').css("margin-left", "300px");
+            if ($(window).width() <= 380 && $(window).width() >= 320) {
+                $('#page-container').css("margin-left", "80%");
+                $('#header').css("margin-left", "80%");
+            }
         }
         if (currentPage == "menu") {
             if (localStorage["loggedIn"] == "true") {
