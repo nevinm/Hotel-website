@@ -272,7 +272,7 @@
     cursor: pointer;
 }
 
-.meal-overlay {
+.meal-overlay,.sold-overlay {
     position: absolute;
     height: 99%;
     width: 100%;
@@ -541,7 +541,7 @@ span.per-serving-text {
         display: block;
         width: 100%;
     }
-    .meal-overlay {
+    .meal-overlay,.sold-overlay {
         height: 100%;
         width: 98%;
     }

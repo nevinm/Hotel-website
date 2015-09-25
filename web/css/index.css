@@ -193,7 +193,7 @@ SLIDER
     display: none;
 }
 
-.meal-overlay {
+.meal-overlay,.sold-overlay {
     position: absolute;
     height: 99%;
     width: 100%;

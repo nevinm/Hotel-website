@@ -184,6 +184,7 @@ function mealDetailsTab(mealDetails) {
     $(".meal-ingredients").text(mealDetails.sub);
     if(mealDetails.sold_out == 0){}
     else{
+        $(".sold-overlay").show();
         $('.add-meal').addClass("button-disabled");
     }
     $($("#meal-rating").find(".rating-star").get().reverse()).each(function(key, value) {
