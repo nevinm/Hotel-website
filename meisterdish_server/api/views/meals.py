@@ -30,7 +30,7 @@ def get_meals(request, data):
         if "type_ids" in data and len(data['type_ids']) >0 and str(data['type_ids']) != '':
             meals = meals.filter(types__id__in=data['type_ids'])
         
-        meals = meals.order_by("order")
+        meals = meals.order_by("order", "pk")
 
         actual_count = meals.count()
         try:
