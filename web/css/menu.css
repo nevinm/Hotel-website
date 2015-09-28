@@ -151,6 +151,7 @@
 #addMenuButton{
     position: absolute;
     right: 4px;
+    width:auto;
 }
 
 .removeItemButton:hover {
