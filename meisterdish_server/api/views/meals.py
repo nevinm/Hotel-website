@@ -126,7 +126,7 @@ def get_meal_details(request, data, meal_id):
         rating_list = []
         rating_sum = 0.0
         rating_count = 0
-        for rating in  meal.mealrating.all():
+        for rating in  meal.mealrating.filter(is_deleted=False):
             rating_sum += rating.rating
             rating_count += 1
             rating_list.append({
