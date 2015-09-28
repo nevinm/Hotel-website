@@ -1465,5 +1465,5 @@ form.edit-gift-card #new-name-error {
 }
 #ingredientImageHolder img{
     width: 100px;
-    height: 100px;
+    /*height: 100px;*/
 }
