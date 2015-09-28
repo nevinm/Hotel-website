@@ -1,5 +1,5 @@
 /*==============================*\
-		      &LOGIN
+                      &LOGIN
 \*==============================*/
 
 #login-container{
@@ -21,7 +21,7 @@
     max-width: 470px;
 }
 .login-wrapper h3{
-	color: #6B6B6B;
+    color: #6B6B6B;
 }
 .header-small{
     border-bottom: 1px solid #D0D0D0;
@@ -189,6 +189,7 @@ form.signup-formcontainer {
     text-align: center;
     width: 80%;
     margin: 0 auto;
+    padding: 4px;
 }
 /*==================================*\
       &RESET PASSWORD
@@ -378,14 +379,14 @@ hr{
     span.facebook-login-text{
         font-size: 14px;
     }
-  }
+}
 
 @media (max-width:500px){
-  .btn-wrapper{
+    .btn-wrapper{
         width: 85%;
-  }
-  .span.facebook-login-text{
+    }
+    .span.facebook-login-text{
         font-size: 15px;
         letter-spacing: .3px;
-  }
+    }
 }
