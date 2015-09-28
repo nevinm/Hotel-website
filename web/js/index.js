@@ -166,6 +166,7 @@ function populateHomePageMeal(mealDetails) {
     $("#meal-add").attr("data-id", mealDetails.id);
     $(".removeItemButton").attr("data-id", mealDetails.id);
     $(".meal-overlay").attr("data-id", mealDetails.id);
+    $(".sold-overlay").attr("data-id", mealDetails.id);
     $(".meal-overlay .upper-line span").text(mealDetails.quantity);
     $("#hidden-count").val(mealDetails.quantity);
     if (mealDetails.quantity < 2) {
@@ -182,7 +183,11 @@ function populateHomePageMeal(mealDetails) {
     } else {
         $("#meal-add").removeClass("button-disabled");
     }
-    if (mealDetails.sold_out == 0) {} else {
+    if (mealDetails.sold_out == 0) {
+        $(".sold-overlay").hide();
+    } else {
+        $(".meal-overlay").hide();
+        $(".removeItemButton").hide();
         $(".sold-overlay").show();
         $("#meal-add").addClass("button-disabled");
     }
