@@ -203,6 +203,9 @@ span.per-serving-text {
     border-radius: 4px;
     cursor: pointer;
 }
+.sold-overlay{
+    background-color: rgba(199, 199, 199, 0.72)
+}
 
 p.upper-line {
     font-family: 'BrandonGrotesque-bold';
