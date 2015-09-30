@@ -14,7 +14,7 @@ def get_meals(request, data):
         user = get_request_user(request)
 
         limit = data.get('perPage', settings.PER_PAGE)
-        page = data.get("nextPage",1)
+        page = data.get("nextPage", None)
                     
         meal_list = []
         meals = Meal.objects.filter(is_deleted=False, available=True)
@@ -34,10 +34,11 @@ def get_meals(request, data):
 
         actual_count = meals.count()
         try:
-            paginator = Paginator(meals, limit)
-            if page <1 or page > paginator.page_range:
-                page = 1
-            meals = paginator.page(page)
+            if page:
+                paginator = Paginator(meals, limit)
+                if page <1 or page > paginator.page_range:
+                    page = 1
+                meals = paginator.page(page)
         except Exception as e:
             log.error("meal list pagination : " + e.message)
             custom_error("There was an error listing meals.")
@@ -89,15 +90,19 @@ def get_meals(request, data):
                               "quantity" : qty,
                               "order":meal.order,
                               })
-        return json_response({"status":1, 
-                              "aaData":meal_list,
-                              "total_count":total_count,
-                              "actual_count":actual_count,
-                              "num_pages" : paginator.num_pages,
-                              "page_range" : paginator.page_range,
-                              "current_page":page,
-                              "per_page" : limit,
-                              })
+        res = {"status":1, 
+              "aaData":meal_list,
+              "total_count":total_count,
+              "actual_count":actual_count,
+              "page_range": paginator.page_range if page else 1,
+        }
+        if page:
+            res["num_pages"] = paginator.num_pages
+#             res["page_range"] = paginator.page_range
+            res["current_page"] = page
+            res["per_page"] = limit
+        
+        return json_response(res)
     except Exception as e:
         log.error("Failed to list meals : "+e.message)
         return custom_error("Failed to list meals")
