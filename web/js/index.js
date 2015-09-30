@@ -172,11 +172,11 @@ function populateHomePageMeal(mealDetails) {
     if (mealDetails.quantity < 2) {
         $(".meal-overlay").hide();
         $('.removeItemButton').hide();
-        $("#meal-add").removeClass("width-adjust");
+//        $("#meal-add").removeClass("width-adjust");
     } else {
         $(".meal-overlay").show();
-        $('.removeItemButton').show();
-        $("#meal-add").addClass("width-adjust");
+        $('.removeItemButton').css("display","inline-block");
+//        $("#meal-add").addClass("width-adjust");
     }
     if (mealDetails.quantity >= 10) {
         $("#meal-add").addClass("button-disabled");
@@ -296,10 +296,11 @@ function populateOverlayDetails(mealDetails) {
     if (mealDetails.quantity == 0) {
         $(".removeItemButton").hide();
         $(".meal-overlay").hide();
-        $("#meal-add").removeClass("width-adjust");
+//        $("#meal-add").removeClass("width-adjust");
     } else {
         $(".removeItemButton").fadeIn();
-        $("#meal-add").addClass("width-adjust");
+        $('.removeItemButton').css("display","inline-block");
+//        $("#meal-add").addClass("width-adjust");
         $(".meal-overlay").show();
     }
     if (mealDetails.quantity >= 10) {
