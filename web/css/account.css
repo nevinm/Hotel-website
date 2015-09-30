@@ -109,6 +109,9 @@ input.autofillremove:-webkit-autofill {
 .account-settings li {
     margin-bottom: 10px;
 }
+.mandatory{
+    color: #a9d77b;
+}
 
 
 /*==================================*\
