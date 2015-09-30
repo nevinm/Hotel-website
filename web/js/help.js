@@ -7,7 +7,7 @@ var HelpController = (function () {
         bindEvents();
     }
     function loadViewDefaults() {
-
+        CartItemCount();
     }
     function bindEvents() {
         $(".question").on("click", function (e) {
