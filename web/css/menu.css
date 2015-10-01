@@ -732,14 +732,15 @@ span.per-serving-box {
     font-size: 11px;
     float: left;
     clear: both;
-    margin: -17px 0px;
+    margin: 16px 0px;
     width: auto;
     white-space: nowrap;
 }
 
 div.serveBox {
     position: relative;
-    margin: 0px 0px 0px 91px;
+    float: left;
+    margin: 0px 2px;
 }
 
 @media (max-width: 1024px) and (min-width: 768px) {

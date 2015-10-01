@@ -164,8 +164,12 @@ function populateHomePageMeal(mealDetails) {
     });
 
     if (mealDetails.meal_types.length) {
-        $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src", mealDetails.meal_types[0].image_url);
-        $sectionWhatToExpect.find(".meal-properties .meal-type").text(mealDetails.meal_types[0].meal_type_name);
+        $.each(mealDetails.meal_types, function (key, value) {
+            var html = '<div class="details-content"><p class="upper-content">' +
+                    '<img class="meal-type-description-icon meal-type-icon" src="' + value.image_url + '"></p>' +
+                    '<p class="lower-content meal-type">' + value.meal_type_name + '</p></div>';
+            $(".meal-properties-section").append(html);
+        });
     }
     else {
         $sectionWhatToExpect.find(".meal-properties .meal-type-icon").css("display", "none");

@@ -486,6 +486,7 @@ p.upper-content {
 .details-content {
     width: 20%;
     float: left;
+    height: 85px;
 }
 
 .what-you-get-section {
@@ -514,7 +515,7 @@ p.upper-content {
     display: inline-block;
     float: none;
     padding: 10px 0px;
-
+    height: auto;
 }
 
 .what-you-get-section .upper-content img {
