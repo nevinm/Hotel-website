@@ -10,14 +10,13 @@ $(document).ready(function () {
 
     $(".how-it-works-tab").tabs({
         activate: function (event, ui) {
-//            if ((ui.newTab.context.id) == "ui-id-4")
-//                $(".next-tab").hide();
-//            else {
+            if ((ui.newTab.context.id) == "ui-id-4")
+                $(".next-tab").hide();
+            else {
+                $(".next-tab").show();
+            }
             $('.tab-container ul li a').removeClass('activeli');
             $(ui.newTab).find('a').addClass('activeli');
-            $(".next-tab").show();
-
-//            }
         }
     });
 
