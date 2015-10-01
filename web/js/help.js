@@ -11,7 +11,7 @@ var HelpController = (function () {
     }
     function bindEvents() {
         $(".question").on("click", function (e) {
-            e.preventDefault();
+//            e.preventDefault();
             var $element = $(e.target).next('.answer-block');
             $('.answer-block').not($element).hide();
             $(".question div").not($(e.target)).removeClass("bold");

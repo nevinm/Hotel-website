@@ -644,7 +644,9 @@ span.lower-content {
     word-break: break-word;
     text-transform: capitalize;
 }
-
+span.ingredients-text{
+    font-size: 18px;
+}
 .icons-container1 .details-content {
     width: 25%;
     float: left;
@@ -692,7 +694,7 @@ span.lower-content {
         display: block;
     }
 
-    .image-container p.lower-content {
+    .image-container p.lower-content,span.ingredients-text {
         font-size: 17px;
     }
     .selected-menu {

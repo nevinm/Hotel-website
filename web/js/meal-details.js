@@ -228,9 +228,11 @@ function ingredientsTab(mealDetails) {
         $.each(mealDetails.ingredients, function (key, value) {
             $(".ingredients").append("<li>" + value.name + "</li>");
             $("#ingredients").find(".image-container").append("<div class='details-content'>" +
-                    "<p class='upper-content'>" +
-                    "<img class='ingredients-image' src='" + value.image_url + "'></p>" +
-                    "<p class='lower-content'>" + value.name + "</p>" +
+//                    "<p class='upper-content'>" +
+                    "<img class='ingredients-image' src='" + value.image_url + "'>" +
+//                            "</p>" +
+//                    "<p class='lower-content'>" + value.name + "</p>" +
+                    "<span class='lower-content ingredients-text'>" + value.name + "</span>" +
                     "</div>");
         });
     }

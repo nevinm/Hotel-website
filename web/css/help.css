@@ -6,14 +6,13 @@
 .help-banner {
     max-height: 300px;
     background: url(../images/help_center_banner.jpg) no-repeat center center;
-    background-size: cover;
     overflow: hidden;
     margin-top: 100px;
-    height: 200px;
+    height: 220px;
     position: relative;
     background-image: url(../images/help_center_banner.jpg);
     background-size: cover;
-    background-position: 50% 50%;
+    background-position: 50% 46%;
 }
 .help-banner .h0{
     color: #fff;
