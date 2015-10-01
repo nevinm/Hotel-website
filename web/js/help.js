@@ -21,6 +21,7 @@ var HelpController = (function () {
             } else {
                 $(e.target).addClass("bold");
             }
+            $(window).scrollTop($element.position().top - 200);
         });
     }
     return {
