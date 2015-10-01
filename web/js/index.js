@@ -159,14 +159,16 @@ function populateHomePageMeal(mealDetails) {
     $sectionWhatToExpect.find(".meal-sub-description p").text(mealDetails.sub);
     $sectionWhatToExpect.find(".meal-properties .preparation-time").text(mealDetails.preparation_time);
     $sectionWhatToExpect.find(".meal-properties .calories").text(mealDetails.calories);
-    $.each(mealDetails.ingredients, function(key, value) {
+    $.each(mealDetails.ingredients, function (key, value) {
         $sectionWhatToExpect.find(".ingredients-wrapper").append("<div class='details-content'>" + "<p class='upper-content'>" + "<img src='" + value.image_url + "'></p>" + "<p class='lower-content'>" + value.name + "</p>" + "</div>");
     });
+
     if (mealDetails.meal_types.length) {
         $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src", mealDetails.meal_types[0].image_url);
         $sectionWhatToExpect.find(".meal-properties .meal-type").text(mealDetails.meal_types[0].meal_type_name);
-    } else {
-        $sectionWhatToExpect.find(".meal-properties .meal-type-icon").attr("src", mealDetails.default_meal_type_image.image_url);
+    }
+    else {
+        $sectionWhatToExpect.find(".meal-properties .meal-type-icon").css("display", "none");
     }
     $("#meal-info").attr("data-id", mealDetails.id);
     $("#meal-add").attr("data-id", mealDetails.id);
