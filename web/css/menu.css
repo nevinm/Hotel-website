@@ -743,8 +743,3 @@ div.serveBox {
     margin: 0px 2px;
 }
 
-@media (max-width: 1024px) and (min-width: 768px) {
-    div.serveBox {
-        margin-left: 91px !important;
-    }
-}
