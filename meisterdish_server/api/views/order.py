@@ -391,7 +391,7 @@ def save_pdf(order):
         res = save_to_pdf(
                     'print_order.html',
                     {
-                        'pagesize':'A5',
+                        'pagesize':'A7',
                         'order':order,
                         'cart_items':cart_items,
                         'name' : name,
@@ -727,7 +727,7 @@ def print_pdf(request):
         return render_to_pdf(
                     'print_order.html',
                     {
-                        'pagesize':'A6',
+                        'pagesize':'A7',
                         'order':order,
                         'cart_items':cart_items,
                         'date':order.delivery_time.strftime("%m-%d-%Y"),
