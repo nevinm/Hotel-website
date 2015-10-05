@@ -234,9 +234,9 @@ function populateMealList(data) {
         if (value.meal_types.length) {
             var mealTypes = "";
             $.each(value.meal_types, function (key, value) {
-                mealTypes = mealTypes + value.name + ",";
+                mealTypes = mealTypes + value.name + ", ";
             });
-            $(".meal-type:last").text(mealTypes.slice(0, -1));
+            $(".meal-type:last").text(mealTypes.trim().slice(0, -1));
         } else {
             $(".meal-type:last").text("None");
         }
