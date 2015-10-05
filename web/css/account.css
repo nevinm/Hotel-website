@@ -1,5 +1,5 @@
 /*==============================*\
-		  &PAGE-CONTAINER
+                  &PAGE-CONTAINER
 \*==============================*/
 
 #page-container {
@@ -109,10 +109,13 @@ input.autofillremove:-webkit-autofill {
 .account-settings li {
     margin-bottom: 10px;
 }
+.mandatory{
+    color: #a9d77b;
+}
 
 
 /*==================================*\
-			&ACCORDION
+                        &ACCORDION
 \*==================================*/
 
 ul.accordion-content li {
@@ -191,7 +194,7 @@ ul.accordion-content li {
 
 
 /*==================================*\
-			&FORM
+                        &FORM
 \*==================================*/
 
 .account-wrapper {
@@ -259,7 +262,7 @@ form.gift-cardform .redeem {
 
 
 /*==================================*\
-			&email-form
+                        &email-form
 \*==================================*/
 
 .new-email, .retype-email, .password {
@@ -300,7 +303,7 @@ span.body-text-small {
 
 
 /*==================================*\
-			&GIFTCARD PAGE
+                        &GIFTCARD PAGE
 \*==================================*/
 
 .giftcard-buttons {
@@ -315,7 +318,7 @@ span.body-text-small {
 
 
 /*==================================*\
-			&EDIT-CONTACT
+                        &EDIT-CONTACT
 \*==================================*/
 
 #change-contact {
@@ -338,7 +341,7 @@ span.body-text-small {
 
 
 /*==================================*\
-			&CHANGE-EMAIL
+                        &CHANGE-EMAIL
 \*==================================*/
 
 #change-email span.body-text-small {
@@ -362,7 +365,7 @@ span.body-text-small {
 
 
 /*============================================*\
-			&CHANGE-ADDRESS & REVIEW ADD
+                        &CHANGE-ADDRESS & REVIEW ADD
 \*============================================*/
 
 div#editaddress-container, #review-container {
@@ -478,7 +481,7 @@ ol {
 
 
 /*==================================*\
-			&PROFILE-PICTURE
+                        &PROFILE-PICTURE
 \*==================================*/
 
 .profile-pic-container {
@@ -614,7 +617,7 @@ img.popup-close {
 
 
 /*==================================*\
-			$ADDRESS-POPUP
+                        $ADDRESS-POPUP
 \*==================================*/
 
 .addresspopup .header {
@@ -819,7 +822,7 @@ form.addaddress-popup, #new-address-form {
 
 
 /*==================================*\
-			&REVIEWS
+                        &REVIEWS
 \*==================================*/
 
 .meal-rewiew-wrapper {
@@ -895,7 +898,7 @@ form.addaddress-popup, #new-address-form {
 
 
 /*==================================*\
-			&CHECHOUT PAGE
+                        &CHECHOUT PAGE
 \*==================================*/
 
 .checkout-wrapper {
@@ -982,7 +985,7 @@ form.addaddress-popup, #new-address-form {
 }
 
 .checkout-header span {
-    padding-left: 2%;
+    padding-left: 10px;
 }
 
 .checkout-header span:nth-child(2) {
@@ -1932,7 +1935,7 @@ a#add-address-popup:hover {
 }
 
 /*==================================*\
-			&TABLET
+                        &TABLET
 \*==================================*/
 
 @media (min-width: 320px)and (max-width:1024px) {
@@ -2035,7 +2038,7 @@ a#add-address-popup:hover {
 
 
 /*==================================*\
-			&MOBILE
+                        &MOBILE
 \*==================================*/
 
 @media (min-width: 320px)and (max-width:767px) {
@@ -2165,20 +2168,16 @@ a#add-address-popup:hover {
     }
     .checkout-wrapper {
         display: block;
+        padding: 0px 10px;
+        width: 100%;
     }
     .left-wrapper {
         display: block;
-        width: 400px;
-        max-width: 90%;
         float: none;
-        margin: 0 auto;
     }
     .right-wrapper {
         display: block;
-        width: 100%;
-        max-width: 320px;
         float: none;
-        margin: 0 auto;
     }
     .time-container {
         width: 100%;
@@ -2187,7 +2186,7 @@ a#add-address-popup:hover {
     }
     .delivery-order-container {
         width: 100%;
-        border: 1px solid #9B9B9B;
+        border: 1px solid #C7C7C7;
         border-radius: 4px;
         background-color: #fff;
         margin-bottom: 20px;
@@ -2444,7 +2443,12 @@ a#add-address-popup:hover {
         width: 100%;
     }
     .right-wrapper {
-        max-width: 90%;
-        width: auto;
+        width: 100%;
+    }
+    .order-list-items img{
+        width:auto;
+    }
+    .order-list-container{
+        height:auto;
     }
 }

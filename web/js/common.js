@@ -25,8 +25,8 @@ $(document).ready(function() {
         }
     });
     //hide help link
-    $(".footer-list li.footer-non-social:nth-child(3)").hide();
-    $("#footer-navMenu ul").not('.social-media-icons').find('li:nth-child(3)').hide();
+//    $(".footer-list li.footer-non-social:nth-child(3)").hide();
+//    $("#footer-navMenu ul").not('.social-media-icons').find('li:nth-child(3)').hide();
     //hide social media icons
     $("ul.social-media-icons").find(".sml_sprite").not(".facebook").hide();
     //FOOTER UPDATIONS /****END****/

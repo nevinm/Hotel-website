@@ -194,14 +194,16 @@ span.per-serving-text {
 
 .meal-overlay,.sold-overlay {
     position: absolute;
-    height: 99%;
-    width: 100%;
-    top: 0;
-    left: 0;
+    top: 10px;
+    left: 10px;
+    right: 50px;
+    bottom: 14px;
     background-color: rgba(142, 198, 87, 0.65);
     display: none;
     border-radius: 4px;
-    cursor: pointer;
+}
+.sold-overlay{
+    background-color: rgba(199, 199, 199, 0.72)
 }
 
 p.upper-line {
@@ -250,6 +252,7 @@ p.lower-line {
 
 .details-part-1 {
     padding: 10px 50px 10px 10px;
+    position: relative;
 }
 
 .details-part-1 img {
@@ -641,7 +644,9 @@ span.lower-content {
     word-break: break-word;
     text-transform: capitalize;
 }
-
+span.ingredients-text{
+    font-size: 18px;
+}
 .icons-container1 .details-content {
     width: 25%;
     float: left;
@@ -688,8 +693,8 @@ span.lower-content {
     .mobile-tab, .left-arrow, .right-arrow {
         display: block;
     }
-    
-    .image-container p.lower-content {
+
+    .image-container p.lower-content,span.ingredients-text {
         font-size: 17px;
     }
     .selected-menu {
@@ -850,6 +855,17 @@ span.lower-content {
     .meal-tab-container ul li a:hover {
         border-bottom: 0px;
     }
+    .meal-overlay,.sold-overlay {
+        height: 99%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    .details-part-1 .sold-overlay{
+        display:none !important;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 400px) {
@@ -861,6 +877,11 @@ span.lower-content {
 @media (max-width: 550px) {
     .meal-full-details {
         margin-left: 0%;
+    }
+}
+@media (min-width:768px){
+    .meal-image-wrapper .sold-overlay{
+        display: none !important;
     }
 }
 

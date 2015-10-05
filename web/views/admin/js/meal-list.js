@@ -1,36 +1,37 @@
-$(document).ready(function() {
-    $('#searchinMeal').on("click", function() {
+$(document).ready(function () {
+    $('#searchinMeal').on("click", function () {
         var searchParams = returnMealSearchParams();
         getmealList(searchParams.search_name, searchParams.category, searchParams.mealtype);
     });
-    $(document).on('click', '.meal-edit', function() {
+    $(document).on('click', '.meal-edit', function () {
         mealId = $(this).data().id;
         window.location.href = 'create-meal.html?mealId=' + mealId;
     });
-    $(document).on('click', '.meal-delete', function() {
+    $(document).on('click', '.meal-delete', function () {
         var confirmDelete = confirm("Are you sure you want to delete this meal?");
         if (confirmDelete) {
             currentMealId = $(this).data().id;
             deleteMeal(currentMealId);
-        } else {}
+        } else {
+        }
     });
-    $(document).on('click', '.edit-meal-order', function() {
+    $(document).on('click', '.edit-meal-order', function () {
         var mealId = $(this).data().id,
-            mealOrder = $(this).parent().find('.each-meal-order').text();
+                mealOrder = $(this).parent().find('.each-meal-order').text();
         $("#hidden-meal-id").val(mealId);
         $('#new-order').val(mealOrder);
         $('.edit-meal-order-popup').show();
         $('form#change-meal-order-form').validate().resetForm();
     });
-    $('#change-order').on('click', function(e) {
+    $('#change-order').on('click', function (e) {
         e.preventDefault();
         var new_order = $('#new-order').val(),
-            mealId = $("#hidden-meal-id").val();
+                mealId = $("#hidden-meal-id").val();
         if ($('form#change-meal-order-form').valid()) {
             updateMealOrder(mealId, new_order);
         }
     });
-    $('#cancel').on('click', function() {
+    $('#cancel').on('click', function () {
         $('.edit-meal-order-popup').hide();
     });
     getmealList('', '', '', 0);
@@ -39,9 +40,9 @@ $(document).ready(function() {
 
 function returnMealSearchParams() {
     var search_name = $('#searchBy-name').val(),
-        category = $('#category option:selected').attr('value'),
-        mealtype = [];
-    $('#meal-type option:selected').each(function() {
+            category = $('#category option:selected').attr('value'),
+            mealtype = [];
+    $('#meal-type option:selected').each(function () {
         mealtype.push($(this).attr('value'));
     });
     $("#meal-list tr td").detach();
@@ -53,13 +54,14 @@ function returnMealSearchParams() {
 }
 //Delete Meals
 var deleteMealCallback = {
-    success: function(data, textStatus) {
+    success: function (data, textStatus) {
         var deleteMealResponse = JSON.parse(data);
         var searchParams = returnMealSearchParams();
         currentPage = $('.pagination').pagination('getCurrentPage');
         getmealList(searchParams.search_name, searchParams.category, searchParams.mealtype, currentPage);
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
 }
 
 function deleteMeal(currentMealId) {
@@ -74,7 +76,7 @@ function deleteMeal(currentMealId) {
 }
 //get meal list
 var getmealListCallback = {
-    success: function(data, textStatus) {
+    success: function (data, textStatus) {
         var mealLIst = JSON.parse(data);
         if (mealLIst.aaData.length > 0) {
             $(".meal-list-empty").hide();
@@ -87,7 +89,8 @@ var getmealListCallback = {
             });
         }
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
 }
 
 function getmealList(search_name, category, mealtype, pageNumber) {
@@ -110,12 +113,13 @@ function getmealList(search_name, category, mealtype, pageNumber) {
 }
 //populate category & meal type
 var getFilterContentCallback = {
-    success: function(data, textStatus) {
+    success: function (data, textStatus) {
         var filterContent = JSON.parse(data);
         // console.log(filterContent);
         populateFilterData(filterContent);
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
 }
 
 function getFilterContent() {
@@ -133,17 +137,17 @@ function getFilterContent() {
 
 function populateFilterData(data) {
     var meal_type = data.meal_types,
-        categories = data.categories;
-    $.each(meal_type, function(k, v) {
+            categories = data.categories;
+    $.each(meal_type, function (k, v) {
         $('.filter-container #meal-type').append('<option value="' + v.id + '">' + v.name + '</option');
     });
-    $.each(categories, function(k, v) {
+    $.each(categories, function (k, v) {
         $('.filter-container #category').append("<option value='" + v.id + "'>" + v.name + "</option>");
     });
 }
 //Update meal order
 var updateMealOrderCallback = {
-    success: function(data, textStatus) {
+    success: function (data, textStatus) {
         var updateMealResponse = JSON.parse(data);
         if (updateMealResponse.status == 1) {
             currentPage = $('.pagination').pagination('getCurrentPage');
@@ -153,7 +157,8 @@ var updateMealOrderCallback = {
         }
         $('.edit-meal-order-popup').hide();
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
 }
 
 function updateMealOrder(currentMealId, order) {
@@ -169,7 +174,7 @@ function updateMealOrder(currentMealId, order) {
     updateMealOrderInstance.sendPost(url, header, data, updateMealOrderCallback);
 }
 var updatePrimaryMealOrderCallback = {
-    success: function(data, textStatus, currentElement) {
+    success: function (data, textStatus, currentElement) {
         var updateMealResponse = JSON.parse(data);
         if (updateMealResponse.status == 1) {
             $(".primary-meal").addClass("non-primary-meal");
@@ -182,7 +187,8 @@ var updatePrimaryMealOrderCallback = {
             showPopup(updateMealResponse);
         }
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
 }
 
 function updatePrimaryMeal(currentMealId, currentElement) {
@@ -201,8 +207,18 @@ function updatePrimaryMeal(currentMealId, currentElement) {
 function populateMealList(data) {
     $('#meal-list tbody').empty();
     var fullMealList = data;
-    $.each(fullMealList.aaData, function(key, value) {
-        $('#meal-list tbody').append("<tr>" + "<td>" + "<img class='meal-list-img'src = '" + value.main_image + "'>" + "</td>" + "<td>" + value.name + "</td>" + "<td>" + value.description + "</td>" + "<td>" + "<span class = 'each-meal-order'>" + value.order + "</span>" + "<span  data-id = '" + value.id + "' class = 'edit-meal-order'>" + "EDIT" + "</span>" + "</td>" + "<td>" + value.available + "</td>" + "<td>" + value.category + "</td>" + "<td class='meal-type'></td>" + "<td>" + dollarConvert(parseFloat(value.price).toFixed(2)) + "</td>" + "<td>" + "<a href='#!' data-id = '" + value.id + "' class='meal-homepage primary-meal'></a>" + "</td>" + "<td>" + "<a href='#' data-id = '" + value.id + "' class='' id='soldOut-" + value.id + "'>" + (value.sold_out == 1 ? "YES" : "NO") + "</a>" + "</td>" + "<td><button type='button' class='meal-delete btn btn-small-primary medium-green' data-id='" + value.id + "'>Delete</button></td>" + "<td><button type='button' class='meal-edit btn btn-small-primary medium-green' data-id='" + value.id + "'>Edit</button></td>" + "</tr>");
+    $.each(fullMealList.aaData, function (key, value) {
+        $('#meal-list tbody').append("<tr>" +
+                "<td>" + "<img class='meal-list-img'src = '" + value.main_image + "'>" + "</td>" +
+                "<td>" + value.name + "</td>" + "<td>" + value.description + "</td>" +
+                "<td>" + "<span class = 'each-meal-order'>" + value.order + "</span>" + "<span  data-id = '" + value.id + "' class = 'edit-meal-order'>" + "EDIT" + "</span>" + "</td>" +
+                "<td>" + (value.available == 1 ? "YES" : "NO") + "</td>" + "<td>" + value.category + "</td>" +
+                "<td class='meal-type'></td>" + "<td>" + dollarConvert(parseFloat(value.price).toFixed(2)) + "</td>" +
+                "<td>" + "<a href='#!' data-id = '" + value.id + "' class='meal-homepage primary-meal'></a>" + "</td>" +
+                "<td>" + "<a href='#' data-id = '" + value.id + "' class='' id='soldOut-" + value.id + "'>" + (value.sold_out == 1 ? "YES" : "NO") + "</a>" + "</td>" +
+                "<td><button type='button' class='meal-delete btn btn-small-primary medium-green' data-id='" + value.id + "'>Delete</button></td>" +
+                "<td><button type='button' class='meal-edit btn btn-small-primary medium-green' data-id='" + value.id + "'>Edit</button></td>" +
+                "</tr>");
         if (value.primary_meal) {
             $(".meal-homepage:last").addClass("primary-meal");
             $(".meal-homepage:last").text("YES");
@@ -217,14 +233,14 @@ function populateMealList(data) {
         }
         if (value.meal_types.length) {
             var mealTypes = "";
-            $.each(value.meal_types, function(key, value) {
-                mealTypes = mealTypes + value.name + ",";
+            $.each(value.meal_types, function (key, value) {
+                mealTypes = mealTypes + value.name + ", ";
             });
-            $(".meal-type:last").text(mealTypes.slice(0, -1));
+            $(".meal-type:last").text(mealTypes.trim().slice(0, -1));
         } else {
             $(".meal-type:last").text("None");
         }
-        $("a[id^=soldOut-]").off().on("click", function(e) {
+        $("a[id^=soldOut-]").off().on("click", function (e) {
             e.preventDefault();
             updateSoldOut(this);
         });
@@ -233,23 +249,25 @@ function populateMealList(data) {
         pages: fullMealList.num_pages,
         currentPage: fullMealList.current_page,
         cssStyle: 'light-theme',
-        onPageClick: function(pageNumber, event) {
+        onPageClick: function (pageNumber, event) {
             var searchParams = returnMealSearchParams();
             getmealList(searchParams.search_name, searchParams.category, searchParams.mealtype, pageNumber);
         },
-        onInit: function() {
+        onInit: function () {
             if (getStringAfterHash(location.href, "#")) {
                 var pageString = getStringAfterHash(location.href, "#");
                 if (pageString.indexOf('page') != -1) {
                     pageNumber = getStringAfterHash(pageString, "-");
-                    if ($(".pagination").pagination('getCurrentPage') == pageNumber) {} else {
+                    if ($(".pagination").pagination('getCurrentPage') == pageNumber) {
+                    } else {
                         $(".pagination").pagination('selectPage', pageNumber);
                     }
                 }
-            } else {}
+            } else {
+            }
         }
     });
-    $(".non-primary-meal").on("click", function() {
+    $(".non-primary-meal").on("click", function () {
         currentMealId = $(this).data("id");
         updatePrimaryMeal(currentMealId, $(this));
     });
@@ -270,7 +288,7 @@ function updateSoldOut(element) {
     deleteMealInstance.sendPost(url, header, data, updateSoldOutCallback, mealId);
 }
 var updateSoldOutCallback = {
-    success: function(data, textStatus, mealId) {
+    success: function (data, textStatus, mealId) {
         var responseData = JSON.parse(data);
         if (responseData.status == 1) {
             if ($("#soldOut-" + mealId).text() === "YES") {
@@ -285,5 +303,6 @@ var updateSoldOutCallback = {
             $(".popup-wrapper:first").show();
         }
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
 }

@@ -144,6 +144,14 @@
     -ms-transition: color .4s, background-color .4s, border .4s;
     -webkit-appearance: none;
     appearance: none;
+    position: absolute;
+    right: 88px;
+    padding: 0px !important;
+}
+#addMenuButton{
+    position: absolute;
+    right: 4px;
+    width:auto;
 }
 
 .removeItemButton:hover {
@@ -283,6 +291,9 @@
     border-radius: 4px;
     cursor: pointer;
 }
+.sold-overlay{
+    background-color: rgba(199, 199, 199, 0.72)
+}
 
 p.upper-line {
     font-family: 'BrandonGrotesque-bold';
@@ -312,6 +323,7 @@ p.lower-line {
     width: 100%;
     display: table;
     margin-bottom: 2px;
+    position: relative;
 }
 
 .listItemDetails span {
@@ -414,7 +426,7 @@ hr.mealList-hr {
     padding: 0 0px;
     border-radius: 4px;
     float: right;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
 }
 
 .menuItemName {
@@ -450,7 +462,7 @@ span.per-serving-text {
     font-size: 12px;
     vertical-align: middle;
     letter-spacing: 1px;
-    padding-left: 5px;
+    /*padding-left: 5px;*/
 }
 
 .menu-pagination {
@@ -718,20 +730,16 @@ span.per-serving-box {
     font-family: 'BrandonGrotesque-Regular';
     color: #6B6B6B;
     font-size: 11px;
-    width: 173px;
     float: left;
     clear: both;
-    margin: -17px 0px;
+    margin: 16px 0px;
+    width: auto;
+    white-space: nowrap;
 }
 
 div.serveBox {
     position: relative;
-    width: 92px;
-    margin: 0px 0px 0px 82px;
+    float: left;
+    margin: 0px 2px;
 }
 
-@media (max-width: 1024px) and (min-width: 768px) {
-    div.serveBox {
-        margin-left: 91px !important;
-    }
-}

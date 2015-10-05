@@ -1337,15 +1337,15 @@ form.edit-gift-card #new-name-error {
     color: #909090;
     width: 100px;
     clear: both;
-    height: 100px;
+    /*height: 100px;*/
     list-style: none;
     display: inline-block;
-    margin: 22px;
+    margin: 10px;
     text-transform: capitalize;
 }
 
 #ingredientImageHolder span {
-    text-align: center;
+    /*text-align: center;*/
     padding: 0;
 }
 
@@ -1464,6 +1464,9 @@ form.edit-gift-card #new-name-error {
     text-align: left;
 }
 #ingredientImageHolder img{
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    max-width: 50px;
+}
+#ingredientImageHolder li div{
+    text-align: center;
 }

@@ -206,9 +206,9 @@ def create_order(request, data, user):
         
         for item in items:
             if not item.meal.available:
-                return custom_error("Sorry, The meal " + item.meal.name + " is not available.")
+                return custom_error("Sorry, the meal "+ item.meal.name + " is not available.")
             elif item.meal.sold_out:
-                return custom_error("Sorry, The meal " + item.meal.name + " has gone out of stock.")
+                return custom_error("Sorry, the meal "+ item.meal.name + " has gone out of stock.")
             
             quantity += item.quantity
             total_price += item.meal.price * item.quantity

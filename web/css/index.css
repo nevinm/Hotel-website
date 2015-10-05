@@ -202,7 +202,9 @@ SLIDER
     background-color: rgba(142, 198, 87, 0.65);
     display: none;
     border-radius: 4px;
-    cursor: pointer;
+}
+.sold-overlay{
+    background-color: rgba(199, 199, 199, 0.72)
 }
 
 p.upper-line {
@@ -260,7 +262,25 @@ p.lower-line {
 .removeItemButton:hover {
     background-color: #8EC657;
 }
-
+.meal-sub-description p{
+    border-bottom: 2px solid #A9D77B;
+    padding-bottom: 10px;
+}
+.meal-properties .cart-button-container{
+    width: 100%;
+    padding: 23px 0px;
+}
+.meal-properties .cart-button-container .btn{
+    width: 230px;
+    font-size: 16px;
+}
+.meal-properties .removeItemButton{
+    float:none;
+}
+#section-what-to-expect .button-container a:hover{
+    color: #A9D77B;
+    border:1px solid #A9D77B;
+}
 
 /*====================================*\
     &Section what is meisterdish
@@ -407,6 +427,7 @@ p.upper-content,
 .meal-image {
     width: 40%;
     float: left;
+    min-height: 200px;
 }
 
 .meal-name {
@@ -420,8 +441,8 @@ p.upper-content,
 
 .meal-description-wrapper {
     width: 60%;
-    padding: 20px 30px;
-    float: left;
+    padding: 10px 30px;
+    float: right;
 }
 
 .meal-name p,
@@ -431,6 +452,11 @@ p.lower-content {
     font-family: 'BrandonGrotesque-Regular';
     font-size: 30px;
     color: #6B6B6B;
+}
+.meal-name p{
+    font-size: 34px;
+    letter-spacing: 1px;
+    font-family: 'BrandonGrotesque-Medium';
 }
 
 .meal-sub-description p,
@@ -460,12 +486,14 @@ p.upper-content {
 .details-content {
     width: 20%;
     float: left;
+    height: 85px;
 }
 
 .what-you-get-section {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     overflow: hidden;
+    padding-left: 22px;
 }
 
 .what-you-get-section p {
@@ -473,17 +501,21 @@ p.upper-content {
     font-size: 24px;
     letter-spacing: 1px;
     color: #6B6B6B;
-    text-align: center;
+    /*text-align: center;*/
 }
 
 .what-you-get-section .sub-heading {
     font-family: 'BrandonGrotesque-Medium';
+    font-size: 18px;
+    border-bottom: 1px solid #A9D77B;
 }
 
 .what-you-get-section .details-content {
-    width: 14.28%;
+    width: 25%;
     display: inline-block;
     float: none;
+    padding: 10px 0px;
+    height: auto;
 }
 
 .what-you-get-section .upper-content img {
@@ -502,19 +534,21 @@ p.upper-content {
 
 #section-what-to-expect .button-container {
     text-align: center;
-    width: 55%;
-    margin: 0 auto;
-    float: none;
+    width: 40%;
+    padding: 16px 0px;
 }
 
 #section-what-to-expect .button-container a {
-    width: 150px;
+    width: 100%;
+    border: 1px solid #CCC7C7;
+    background: #F1EDED;
 }
 
 .cart-button-container {
-    width: 33.33%;
+    width: 100%;
     float: left;
     text-align: center;
+    padding: 8px 0px;
 }
 
 .cart-button-container .btn {
@@ -678,10 +712,27 @@ label#username-error {
         padding-left: 0px;
     }
     .meal-description-wrapper{
-        padding: 20px 10px;
+        padding: 20px;
     }
-    .what-you-get-section{
-        width: 90%;
+    .meal-name p {
+        font-size: 30px;
+    }
+    .meal-properties .cart-button-container{
+        padding: 10px 0px;
+    }
+    .what-you-get-section .sub-heading{
+        text-align: left;
+    }
+    .what-you-get-section,#section-what-to-expect .button-container {
+        /* width: 90%; */
+        padding: 0;
+    }
+    #section-what-to-expect .button-container{
+        width: 100% !important;
+        overflow: hidden;
+    }
+    #section-what-to-expect .ingredients-wrapper{
+        padding: 25px 0px 0px 0px;
     }
     #section-what-is .section-logo img {
         display: block;
@@ -718,6 +769,9 @@ label#username-error {
     }
     .details-content {
         width: 25%;
+    }
+    .meal-properties .details-content{
+        padding: 0px 0px 10px 0px;
     }
     .what-you-get-section .details-content {
         width: 25%;
@@ -795,6 +849,9 @@ label#username-error {
     p.lower-content {
         font-size: 18px;
     }
+    p.lower-content {
+        font-size: 16px;
+    }
     p.upper-content {
         font-size: 25px;
     }
@@ -809,15 +866,17 @@ label#username-error {
 @media (min-width: 320px) and (max-width: 1024px) {
     #section-what-to-expect .button-container {
         text-align: center;
-        width: 80%;
+        /*width: 80%;*/
         margin: 0 auto;
     }
     .cart-button-container {
         width: 100%;
         padding: 10px 0;
-        max-width: 350px;
-        float: none;
         margin: 0 auto;
+    }
+    .button-container .cart-button-container{
+        max-width: 350px;
+        float: none; 
     }
     #section-what-to-expect .button-container a {
         width: 100%;
@@ -831,13 +890,15 @@ label#username-error {
     }
     .removeItemButton {
         height: 40px;
-        width: 13%;
-        float: left;
-        margin-right: 4%;
+        width: 44px;
+        margin-right: 1%;
         min-width: 0px;
+        line-height: 1.3;
     }
     .width-adjust {
         width: 83% !important;
     }
+    .details-content {
+        padding: 0px 0px 10px 0px;
+    }
 }
-
