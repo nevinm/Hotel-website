@@ -366,7 +366,7 @@ def print_order(order):
             "contentType": "pdf_base64",
             "content": content,
             "source": "Meisterdish",
-            "options": {"copies":1, "paper":"A6", "bin":"Tray 1"},
+            "options": {"copies":1, "paper":"A8", "bin":"Tray 1"},
         }
         if api_call('printjobs', data):
             log.info("Printing success")
@@ -391,7 +391,7 @@ def save_pdf(order):
         res = save_to_pdf(
                     'print_order.html',
                     {
-                        'pagesize':'A7',
+                        'pagesize':'A8',
                         'order':order,
                         'cart_items':cart_items,
                         'name' : name,
