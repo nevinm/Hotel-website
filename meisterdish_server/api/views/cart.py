@@ -21,7 +21,7 @@ def get_cart_items(request, data, user):
               "name": cart_item.meal.name,
               "description": cart_item.meal.description,
               "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
-              "available": 1 if cart_item.meal.available else 0,
+              "available": cart_item.meal.available ,
               "sold_out":1 if cart_item.meal.sold_out else 0,
               "category": cart_item.meal.category.name.title() if cart_item.meal.category else "Not Available",
               "price": cart_item.meal.price,
@@ -85,7 +85,7 @@ def add_to_cart(request, data):
             return custom_error("Invalid quantity.")
 
         try:
-          meal = Meal.objects.get(pk=meal_id, available=True, is_deleted=False)
+          meal = Meal.objects.get(pk=meal_id, available__gt=0, is_deleted=False)
           if meal.sold_out:
             return custom_error("Sorry, this meal has been sold out.")
         except:
@@ -137,7 +137,7 @@ def update_cart(request, data, user):
             return custom_error("Please provide a valid quantity for each meal.")
 
         try:
-          meal = Meal.objects.get(pk=meal_id, available=True, is_deleted=False)
+          meal = Meal.objects.get(pk=meal_id, available__gt=0, is_deleted=False)
           if meal.sold_out:
             return custom_error("Sorry, this meal has been sold out.")
         except:
@@ -174,7 +174,7 @@ def update_cart(request, data, user):
                 "name": cart_item.meal.name,
                 "description": cart_item.meal.description,
                 "image": settings.DEFAULT_MEAL_IMAGE if cart_item.meal.main_image is None else cart_item.meal.main_image.thumb.url,
-                "available": 1 if cart_item.meal.available else 0,
+                "available": cart_item.meal.available, 
                 "sold_out":1 if cart_item.meal.sold_out else 0,
                 "category": cart_item.meal.category.name.title(),
                 "price": cart_item.meal.price,

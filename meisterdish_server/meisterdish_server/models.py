@@ -288,7 +288,8 @@ class Meal(models.Model):
     tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     
     is_deleted = models.BooleanField(db_index=True, default=False)
-    available = models.BooleanField(db_index=True, default=True)
+    #available = models.BooleanField(db_index=True, default=True)
+    available = models.IntegerField(default=0)
     sold_out = models.BooleanField(default=False)
     locked = models.BooleanField(default=False)
     order = models.IntegerField(default=0)

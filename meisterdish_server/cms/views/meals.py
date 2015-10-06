@@ -81,7 +81,7 @@ def get_meals(request, data, user):
                               "description":meal.description,
                               # "images":meal_images,
                               "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.thumb.url,
-                              "available":1 if meal.available else 0,
+                              "available": meal.available,
                               "sold_out":1 if meal.sold_out else 0,
                               "locked" : 1 if meal.locked else 0,
                               "category":"Not Available" if not meal.category else meal.category.name.title(),
@@ -151,7 +151,7 @@ def create_meal(request, data, user):
 
         meal.price = price
         meal.tax = tax
-        meal.available = True if str(available) == "1" else False
+        meal.available = available 
         meal.sold_out = True if str(sold_out) == "1" else False
         meal.locked = True if str(locked) == "1" else False
         
@@ -365,7 +365,7 @@ def get_meal_details(request, data, user, meal_id):
             "tax":meal.price * meal.tax / 100,
             "need_boiling_water":meal.need_boiling_water,
             "tax_percentage" : meal.tax,
-            "available" : 1 if meal.available else 0,
+            "available" : meal.available,
             "sold_out":1 if meal.sold_out else 0,
             "locked":1 if meal.locked else 0,
             "calories" : meal.calories,
@@ -508,7 +508,7 @@ def update_meal_order(request, data, user, meal_id):
 def update_home_meal(request, data, user):
     try:
         meal_id = data['meal_id']
-        meal = Meal.objects.get(pk=int(meal_id), is_deleted=False, available=True)
+        meal = Meal.objects.get(pk=int(meal_id), is_deleted=False, available__gt=0)
         try:
             conf = Configuration.objects.get(key='home_meal_id')
         except Configuration.DoesNotExist:

@@ -17,7 +17,7 @@ def get_meals(request, data):
         page = data.get("nextPage", None)
        
         meal_list = []
-        meals = Meal.objects.filter(is_deleted=False, available=True)
+        meals = Meal.objects.filter(is_deleted=False, available__gt=0)
         total_count = meals.count()
          
         if "search" in data and data['search'].strip() != '':
@@ -78,7 +78,7 @@ def get_meals(request, data):
                               "description":meal.description,
                               # "images":meal_images,
                               "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.image.url,
-                              "available":1 if meal.available else 0,
+                              "available": meal.available,
                               "sold_out":1 if meal.sold_out else 0,
                               "category":"Not Available" if not meal.category else meal.category.name.title(),
                               "meal_types":meal_types,
@@ -127,7 +127,7 @@ def get_meal_details(request, data, meal_id):
             else:
                 meal_id = int(meal_id[0].value)
         
-        meal = Meal.objects.get(pk=meal_id, is_deleted=False, available=True)
+        meal = Meal.objects.get(pk=meal_id, is_deleted=False, available__gt=0)
         rating_list = []
         rating_sum = 0.0
         rating_count = 0
@@ -175,7 +175,7 @@ def get_meal_details(request, data, meal_id):
             "price":meal.price,
             "need_boiling_water":meal.need_boiling_water,
             "tax":(meal.price * meal.tax) / 100,
-            "available" : 1 if meal.available else 0,
+            "available" : meal.available,
             "sold_out":1 if meal.sold_out else 0,
             "calories" : meal.calories,
             "cat_id" : 'Not Available' if not meal.category else {
