@@ -340,11 +340,12 @@ def create_order(request, data, user):
             referrer.save()
             log.info("Added referral bonus to referrer: " + str(referrer.id))
         for item in items:
-            try:
-                home_meal = int(Configuration.objects.get(key="home_meal_id").value)
-            except Exception:
-                home_meal = 0
-            if item.meal.id == home_meal and item.meal.available - item.quantity < 2:
+#             try:
+#                 home_meal = int(Configuration.objects.get(key="home_meal_id").value)
+#             except Exception:
+#                 home_meal = 0
+#             if item.meal.id == home_meal and item.meal.available - item.quantity < 2:
+            if item.meal.available - item.quantity < 2:
                 item.meal.sold_out = True
                 item.meal.available = 1
             else:
