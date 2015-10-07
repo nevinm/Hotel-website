@@ -736,7 +736,7 @@ $("form").each(function () {
                 minAmount: "Enter a number greater than 0."
             },
             available: {
-                required: "Enter valid data.",
+                required: "Enter a valid number.",
                 number: "Enter a valid number.",
                 minAmount: "Enter a valid number.",
                 maxlength: "Count should not contain more than 10 digits.",
