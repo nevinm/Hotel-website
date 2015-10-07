@@ -31,8 +31,28 @@ $(document).ready(function () {
             updateMealOrder(mealId, new_order);
         }
     });
+    $(document).on('click', '.edit-meal-available', function () {
+        var mealId = $(this).data().id;
+        var available = $(this).parent().find('.each-meal-available').text();
+        $("#hiddenMealId").val(mealId);
+        $('#newAvailable').val(available);
+        $('.edit-meal-available-popup').show();
+        $('form#changeAvailableForm').validate().resetForm();
+    });
+    $("#updateAvailable").on("click", function (e) {
+        e.preventDefault();
+        var availableUpdate = $('#newAvailable').val();
+        var mealId = $("#hiddenMealId").val();
+        if ($('form#changeAvailableForm').valid()) {
+            updateAvailableMeals(mealId, availableUpdate);
+        }
+    });
+
     $('#cancel').on('click', function () {
         $('.edit-meal-order-popup').hide();
+    });
+    $(".edit-meal-available-popup .cancel").on("click", function () {
+        $(".edit-meal-available-popup").hide();
     });
     getmealList('', '', '', 0);
     getFilterContent();
@@ -190,7 +210,31 @@ var updatePrimaryMealOrderCallback = {
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
     }
 }
-
+function updateAvailableMeals(mealId, availableUpdate) {
+    var url = baseURL + "cms/update_meal_availablity/" + mealId + "/";
+    var header = {
+        "session-key": localStorage['session_key']
+    };
+    var params = {
+        "available": availableUpdate
+    };
+    var data = JSON.stringify(params);
+    new AjaxHttpSender().sendPost(url, header, data, updateAvailableMealsCallback);
+}
+var updateAvailableMealsCallback = {
+    success: function (data, textStatus) {
+        var updateMealResponse = JSON.parse(data);
+        if (updateMealResponse.status == 1) {
+            currentPage = $('.pagination').pagination('getCurrentPage');
+            getmealList();
+        } else {
+            showPopup(updateMealResponse);
+        }
+        $(".edit-meal-available-popup").hide();
+    },
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
+};
 function updatePrimaryMeal(currentMealId, currentElement) {
     var url = baseURL + "cms/update_home_meal/";
     header = {
@@ -211,11 +255,12 @@ function populateMealList(data) {
         $('#meal-list tbody').append("<tr>" +
                 "<td>" + "<img class='meal-list-img'src = '" + value.main_image + "'>" + "</td>" +
                 "<td>" + value.name + "</td>" + "<td>" + value.description + "</td>" +
-                "<td>" + "<span class = 'each-meal-order'>" + value.order + "</span>" + "<span  data-id = '" + value.id + "' class = 'edit-meal-order'>" + "EDIT" + "</span>" + "</td>" +
-                "<td>" + (value.available == 1 ? "YES" : "NO") + "</td>" + "<td>" + value.category + "</td>" +
+                "<td><span class = 'each-meal-order'>" + value.order + "</span>" + "<span  data-id = '" + value.id + "' class = 'edit-meal-order'>" + "EDIT" + "</span>" + "</td>" +
+                "<td><span class = 'each-meal-available'>" + value.available + "</span>" + "<span  data-id = '" + value.id + "' class = 'edit-meal-available'>" + "EDIT" + "</span>" + "</td>" +
+                "<td>" + value.category + "</td>" +
                 "<td class='meal-type'></td>" + "<td>" + dollarConvert(parseFloat(value.price).toFixed(2)) + "</td>" +
-                "<td>" + "<a href='#!' data-id = '" + value.id + "' class='meal-homepage primary-meal'></a>" + "</td>" +
-                "<td>" + "<a href='#' data-id = '" + value.id + "' class='' id='soldOut-" + value.id + "'>" + (value.sold_out == 1 ? "YES" : "NO") + "</a>" + "</td>" +
+                "<td><a href='#!' data-id = '" + value.id + "' class='meal-homepage primary-meal'></a>" + "</td>" +
+                "<td><a href='#' data-id = '" + value.id + "' class='' id='soldOut-" + value.id + "'>" + (value.sold_out == 1 ? "YES" : "NO") + "</a>" + "</td>" +
                 "<td><button type='button' class='meal-delete btn btn-small-primary medium-green' data-id='" + value.id + "'>Delete</button></td>" +
                 "<td><button type='button' class='meal-edit btn btn-small-primary medium-green' data-id='" + value.id + "'>Edit</button></td>" +
                 "</tr>");

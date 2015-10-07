@@ -193,7 +193,7 @@ $(document).ready(function () {
                 $('.promo-validation-message').text("You must be logged in to use coupons.");
             } else if (code == "") {
                 $('.promo-validation-message').text("* " + "Please enter Giftcard/Promocode.");
-            } else if (code_length > 8) {
+            } else if (code_length > 9) {
                 $('.promo-validation-message').text("* " + "Please enter valid Giftcard/Promocode.");
             } else {
                 checkPromoCode(code);
