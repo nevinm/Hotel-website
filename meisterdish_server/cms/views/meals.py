@@ -514,7 +514,7 @@ def update_meal_availablity(request, data, user, meal_id):
         meal.available = available
         meal.save()
 
-        return json_response({"status":1, "message":"Updated meal availability", "order":available})
+        return json_response({"status":1, "message":"Updated meal availability", "availablity":available})
     except Exception as e:
         log.error("Failed to update meal availablity : " + e.message)
         return custom_error("Failed to save meal availablity.")
