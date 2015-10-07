@@ -1,47 +1,47 @@
-$(document).ready(function() {
+$(document).ready(function () {
     CartItemCount();
-    $('#copy-to-clipboard').on("click",function(){
-        if (navigator.mimeTypes ["application/x-shockwave-flash"].enabledPlugin == undefined){
+    $('#copy-to-clipboard').on("click", function () {
+        if (navigator.mimeTypes ["application/x-shockwave-flash"].enabledPlugin == undefined) {
             $('#copied-text').text('Please copy using CTRL + C.');
-            $('#copied-text').css('color','#ff7878');
+            $('#copied-text').css('color', '#ff7878');
             $("#copied-text").fadeIn();
-        }else{    
-            $('#clipboard-text').css('color','#A9D77B');
-            $('#copied-text').css('color','#6b6b6b');
+        } else {
+            $('#clipboard-text').css('color', '#A9D77B');
+            $('#copied-text').css('color', '#6b6b6b');
             $("#copied-text").fadeIn();
         }
     });
-    
-    $('#email-share').on("click",function(){
-        if(localStorage['user_profile']){
+
+    $('#email-share').on("click", function () {
+        if (localStorage['user_profile']) {
             var email = JSON.parse(localStorage['user_profile']).email;
             $('input[name="email"]').val(email);
-        }else{
+        } else {
             $('input[name="email"]').val("");
         }
         $('.email-pupup-wrapper').show();
     });
-    
-    $('#send').on('click',function(e){
+
+    $('#send').on('click', function (e) {
         e.preventDefault();
         var email = $('input[name="email"]').val();
-        if($('form#email-form').valid()){
-            shareViaEmail(email);    
+        if ($('form#email-form').valid()) {
+            shareViaEmail(email);
         }
     });
-    
-    $('#cancel').on('click', function() {
+
+    $('#cancel').on('click', function () {
         $('.email-pupup-wrapper').hide();
     });
-    
-    $('#facebook-share').on('click', function() {
+
+    $('#facebook-share').on('click', function () {
         checkLoginState();
     })
 
-    $('#twitter-share').on('click', function() {
+    $('#twitter-share').on('click', function () {
         twitterShare(homeUrl);
     })
-    
+
     getProfile();
 });
 
@@ -55,27 +55,27 @@ function popitup(url) {
 
 function facebookShare(site_url, accessToken) {
     var imgURL = homeUrl + "/images/fb-sharing.png", //change with your external photo url
-    referralCode = localStorage['referral_code'];
+            referralCode = localStorage['referral_code'];
     FB.api('me/photos', 'post', {
         message: 'Ready to cook meals, delivered on demand.' +
-            'Start cooking today for $20 off your first order!' +
-            'Fresh ingredients washed and prepped by us,' +
-            'cooked to perfection by you. '+referralCode ,
+                'Start cooking today for $20 off your first order!' +
+                'Fresh ingredients washed and prepped by us,' +
+                'cooked to perfection by you. ' + referralCode,
         status: 'success',
         access_token: accessToken,
         url: imgURL
-    }, function(response) {
+    }, function (response) {
         console.log(response);
     });
 }
 
 function twitterShare(site_url) {
-    site_url = homeUrl+ "/views/share-page.html", 
-    referralCode = localStorage['referral_code'];
-    referralCode = referralCode.split("share/")[1].slice(0,-1);
-    var subjText = "Start cooking today with $20 off your first order!" + site_url;
-    site_url = site_url + '?refferalCode='+ referralCode;
-    popitup('http://twitter.com/share?url=' + site_url);
+    site_url = homeUrl + "/views/share-page.html",
+            referralCode = localStorage['referral_code'];
+    referralCode = referralCode.split("share/")[1].slice(0, -1);
+    var subjText = "I love @Meisterdish! Sign up with my promo code and get $20 credit for your first two orders! ";
+    site_url = site_url + '?refferalCode=' + referralCode;
+    popitup('http://twitter.com/share?text=' + subjText + '&url=' + site_url);
 }
 
 //copy to clipboard
@@ -84,40 +84,41 @@ var clientTarget = new ZeroClipboard($("#copy-to-clipboard"), {
     debug: false
 });
 
-clientTarget.on("load", function(clientTarget) {
-    clientTarget.on("complete", function(clientTarget, args) {
+clientTarget.on("load", function (clientTarget) {
+    clientTarget.on("complete", function (clientTarget, args) {
         clientTarget.setText(args.text);
     });
 });
 
 var shareViaEmailCallback = {
-    success: function(data, textStatus) {
+    success: function (data, textStatus) {
         var userDetails = JSON.parse(data);
         $('.email-pupup-wrapper').hide();
         if (userDetails.status == 1) {
-            showPopup(userDetails);   
+            showPopup(userDetails);
         } else {
             showPopup(userDetails);
         }
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
 }
 
 function shareViaEmail(email) {
     var url = baseURL + "share_email/",
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        userData = {
-            "email": email
-        },
-        data = JSON.stringify(userData);
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    userData = {
+        "email": email
+    },
+    data = JSON.stringify(userData);
     var shareViaEmailInstance = new AjaxHttpSender();
     shareViaEmailInstance.sendPost(url, header, data, shareViaEmailCallback);
 }
 //Get profile API process
 var getProfileCallback = {
-    success: function(data, textStatus, profileId) {
+    success: function (data, textStatus, profileId) {
         var userDetails = JSON.parse(data);
         if (userDetails.status == 1) {
             $('#clipboard-text').text(userDetails.referral_code);
@@ -125,20 +126,21 @@ var getProfileCallback = {
             localStorage['referral_code'] = userDetails.referral_code;
         } else {
             $('#clipboard-text').text(userDetails.message);
-             $('#copy-to-clipboard').hide();
+            $('#copy-to-clipboard').hide();
         }
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
 }
 
 function getProfile(profileId) {
     var url = baseURL + "get_profile/",
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        userData = {
-            "get": 1
-        };
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    userData = {
+        "get": 1
+    };
     data = JSON.stringify(userData);
     var getProfileInstance = new AjaxHttpSender();
     getProfileInstance.sendPost(url, header, data, getProfileCallback, profileId);
