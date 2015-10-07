@@ -79,7 +79,7 @@ body {
     font-size: 20px;
     overflow: hidden;
     padding: 0 10px;
-    width: 88%;
+    width: 100%;
     margin-right: 2%;
     float: left;
     word-break: break-all;
@@ -89,11 +89,7 @@ body {
     font-family: 'BrandonGrotesque-Regular';
     color: #9b9b9b;
     font-size: 16px;
-    padding-top: 5px;
-    padding-right: 6px;
     cursor: pointer;
-    width: 10%;
-    float: left;
 }
 
 span.or {
@@ -238,6 +234,7 @@ input.popup-input {
 
 #copy-to-clipboard {
     display: none;
+    clear: both;
 }
 
 @media (min-width: 768px)and (max-width: 1024px) {
