@@ -10,6 +10,7 @@ import stripe
 from datetime import datetime, timedelta
 from django.template.loader import render_to_string
 from django.utils.html import escape
+import base64
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 log = logging.getLogger(__name__)
@@ -383,11 +384,13 @@ def share_via_email(request, data, user):
             return custom_error("The email is invalid.")
 
         sub = "Start cooking with Meisterdish"
+        unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/' + base64.b64encode(email) + "/"
         dic = {
             "link" : settings.SITE_URL + 'share/' + user.referral_code + '/',
             "amount" : int(Configuration.objects.get(key="REFERRAL_BONUS").value) / 2,
             "to_email" : email,
             "site_url":settings.SITE_URL,
+            "unsubscribe_url": unsubscribe_url,
         }
         msg = render_to_string('referral_email.html', dic)
         send_referel_mail([email], sub, msg)
