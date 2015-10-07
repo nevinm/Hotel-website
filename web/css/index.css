@@ -472,6 +472,7 @@ p.lower-content {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    letter-spacing: 1.5px;
 }
 
 p.upper-content {
