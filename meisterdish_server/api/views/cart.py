@@ -88,6 +88,7 @@ def add_to_cart(request, data):
           meal = Meal.objects.get(pk=meal_id, available__gt=0, is_deleted=False)
           if meal.sold_out:
             return custom_error("Sorry, this meal has been sold out.")
+          
         except:
           log.error("Trying to add a deleted or non-existing meal?")
           return custom_error("Sorry, this meal is currently not available.")
@@ -102,6 +103,8 @@ def add_to_cart(request, data):
         log.info(quantity == 0)
         try:
            cart_item = CartItem.objects.get(cart=cart, meal=meal)
+           if meal.available < quantity + cart_item.quantity:
+              return custom_error("Sorry, the required quantity is not available")
            cart_item.quantity += quantity
            if cart_item.quantity <= 0:
               cart_item.delete()
@@ -110,6 +113,8 @@ def add_to_cart(request, data):
               cart_item.save()
               qty = cart_item.quantity
         except CartItem.DoesNotExist:
+           if meal.available < quantity:
+              return custom_error("Sorry, the required quantity is not available")
            if quantity < 2:
               return custom_error("Invalid quantity")
            cart_item = CartItem()
