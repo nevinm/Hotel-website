@@ -173,7 +173,8 @@ var updateMealOrderCallback = {
             currentPage = $('.pagination').pagination('getCurrentPage');
             getmealList();
         } else {
-            showPopup(updateMealResponse);
+            $("#viewPopup .content span").text(updateMealResponse.message);
+            $("#viewPopup").show();
         }
         $('.edit-meal-order-popup').hide();
     },
@@ -204,7 +205,8 @@ var updatePrimaryMealOrderCallback = {
             $(currentElement).addClass("primary-meal");
             $(currentElement).text("YES");
         } else {
-            showPopup(updateMealResponse);
+            $("#viewPopup .content span").text(updateMealResponse.message);
+            $("#viewPopup").show();
         }
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -228,7 +230,8 @@ var updateAvailableMealsCallback = {
             currentPage = $('.pagination').pagination('getCurrentPage');
             getmealList();
         } else {
-            showPopup(updateMealResponse);
+            $("#viewPopup .content span").text(updateMealResponse.message);
+            $("#viewPopup").show();
         }
         $(".edit-meal-available-popup").hide();
     },
