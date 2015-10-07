@@ -4,7 +4,8 @@ import json as simplejson
 import logging 
 import settings
 from api.views.decorators import *
-from libraries import validate_zipcode, validate_phone, check_delivery_area, validate_email, mail, add_to_mailing_list
+from libraries import validate_zipcode, validate_phone, check_delivery_area, validate_email, mail, add_to_mailing_list,\
+    send_referel_mail
 import stripe
 from datetime import datetime, timedelta
 from django.template.loader import render_to_string
@@ -389,7 +390,7 @@ def share_via_email(request, data, user):
             "site_url":settings.SITE_URL,
         }
         msg = render_to_string('referral_email.html', dic)
-        mail([email], sub, msg)
+        send_referel_mail([email], sub, msg)
 
         return json_response({"status":1, "message":"Email has been sent to " + email})
     except Exception as e:

@@ -505,6 +505,23 @@ def update_meal_order(request, data, user, meal_id):
         return custom_error("Failed to save meal order.")
 
 @check_input('POST', settings.ROLE_ADMIN)
+def update_meal_availablity(request, data, user, meal_id):
+    try:
+        available = int(str(data['available']).strip())
+        if  available < 0:
+            return custom_error("Invalid Input .Please enter a value greater than or equal to 0")
+        meal = Meal.objects.get(is_deleted=False, pk=meal_id)
+        meal.available = available
+        meal.save()
+
+        return json_response({"status":1, "message":"Updated meal availability", "availablity":available})
+    except Exception as e:
+        log.error("Failed to update meal availablity : " + e.message)
+        return custom_error("Failed to save meal availablity.")
+
+
+
+@check_input('POST', settings.ROLE_ADMIN)
 def update_home_meal(request, data, user):
     try:
         meal_id = data['meal_id']

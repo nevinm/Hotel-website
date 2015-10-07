@@ -42,6 +42,40 @@ def mail(to_list, subject, message, sender=None, headers=None, design=True):
           msg.attach(msgImage)
     return msg.send()
 
+def send_referel_mail(to_list, subject, message, sender=None, headers=None, design=True):
+    if not sender:
+        sender = "Meisterdish<contact@meisterdish.com>"
+    if not headers:
+        headers = {
+            'Reply-To': "Meisterdish<contact@meisterdish.com>",
+            'From':"Meisterdish<contact@meisterdish.com>",
+            }
+    msg = EmailMessage(subject, message, sender, to_list, headers=headers)
+    msg.content_subtype = "html"
+    msg.mixed_subtype = 'related'
+    share_images = {
+        "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo_email.png"),
+        "deliver": os.path.join(settings.STATIC_ROOT, "default", "deliver.png"),
+        "recepies": os.path.join(settings.STATIC_ROOT, "default", "recepies.png"),
+        "cook": os.path.join(settings.STATIC_ROOT, "default", "cook.png"),
+                    }
+    if design:
+        for cid, img in share_images.items():
+            fp = open(img, 'rb')
+            msgImage = MIMEImage(fp.read())
+            fp.close()
+            msgImage.add_header('Content-ID', '<' + cid + '>')
+            msg.attach(msgImage)
+    else:
+        imgs = {"meisterdish_logo" : os.path.join(settings.STATIC_ROOT, "default", "logo_email.png")}  
+        for cid, img in imgs.items():
+            fp = open(img, 'rb')
+            msgImage = MIMEImage(fp.read())
+            fp.close()
+            msgImage.add_header('Content-ID', '<' + cid + '>')
+            msg.attach(msgImage)
+    return msg.send()
+
 def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdish<contact@meisterdish.com>", headers={
               'Reply-To': "Meisterdish<contact@meisterdish.com>",
               'From':"Meisterdish<contact@meisterdish.com>",
@@ -54,7 +88,7 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
         first_name = user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest"
         if "Guest" not in first_name:
             share_images = {
-              "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
+              #"share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
               # "share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
               # "share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
               "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo_email.png"),

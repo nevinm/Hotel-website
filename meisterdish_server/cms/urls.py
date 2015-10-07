@@ -26,7 +26,7 @@ urlpatterns = patterns('',
     url(r'^delete_meal/(?P<meal_id>[0-9]+)/$', meals.delete_meal, name='delete_meal'),
     # url(r'^export_meals/$', meals.export_meals, name='export_meals'),
     url(r'^update_meal_order/(?P<meal_id>[0-9]+)/$', meals.update_meal_order, name='update_meal_order'),
-    
+    url(r'^update_meal_availablity/(?P<meal_id>[0-9]+)/$', meals.update_meal_availablity, name='update_meal_availablity'),
      
 
     url(r'^delete_order/(?P<order_id>[0-9]+)/$', order.delete_order, name='delete_order'),
