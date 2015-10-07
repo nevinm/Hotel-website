@@ -498,7 +498,7 @@ $("form").each(function () {
             },
             promocode: {
                 required: true,
-                maxlength: 8
+                maxlength: 9
             },
             giftcard: {
                 required: true,
@@ -526,7 +526,10 @@ $("form").each(function () {
                 minlength: 2
             },
             available: {
-                required: true
+                required: true,
+                number:true,
+                minAmount:0,
+                maxlength: 10
             },
             category: {
                 required: true
@@ -733,6 +736,7 @@ $("form").each(function () {
             },
             giftcardname: "Enter valid giftcardname.",
             order: "Enter valid Order.",
+            available:"Enter valid data.",
             subject: "Enter a valid subject."
                     // image_upload:"Please select an image."
         }

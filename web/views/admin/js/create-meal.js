@@ -305,7 +305,7 @@ function createMeal() {
         prep_time = $('#meal-prep-time').val(),
         saved_time = $('#meal-saved-time').val(),
         descptn = $('#description').val(),
-        availability = $('#create-meal-available option:selected').attr('value'),
+        availability = $('#create-meal-available').val(),
         category = $('#create-meal-category option:selected').attr('value'),
         meal_image_id = $('#meal-image').attr("data-id"),
         pre_requisites_image = $('#kitchen-image').attr("data-id"),
