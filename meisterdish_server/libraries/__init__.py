@@ -58,6 +58,9 @@ def send_referel_mail(to_list, subject, message, sender=None, headers=None, desi
         "deliver": os.path.join(settings.STATIC_ROOT, "default", "deliver.png"),
         "recepies": os.path.join(settings.STATIC_ROOT, "default", "recepies.png"),
         "cook": os.path.join(settings.STATIC_ROOT, "default", "cook.png"),
+        "fb": os.path.join(settings.STATIC_ROOT, "default", "fb_icon.png"),
+        "instagram": os.path.join(settings.STATIC_ROOT, "default", "inst_icon.png"),
+        "twitter": os.path.join(settings.STATIC_ROOT, "default", "tw_icon.png"),
                     }
     if design:
         for cid, img in share_images.items():
