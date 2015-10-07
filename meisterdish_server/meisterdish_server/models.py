@@ -22,7 +22,7 @@ months = ((1, 'January'),
           (12, 'December'),
          )
 cy = datetime.date.today().year
-years = [(y,y) for y in range(2000, cy+10)]
+years = [(y, y) for y in range(2000, cy + 10)]
 
 class Role(models.Model):
     name = models.CharField(max_length=20)
@@ -89,7 +89,7 @@ class Image(models.Model):
                 FILE_EXTENSION = PIL_TYPE
                 if PIL_TYPE.upper() == "JPG":
                     PIL_TYPE = 'jpeg'
-                DJANGO_TYPE = "image/+"+PIL_TYPE
+                DJANGO_TYPE = "image/+" + PIL_TYPE
                 
             image = Image.open(StringIO(self.image.read()))
      
@@ -103,7 +103,7 @@ class Image(models.Model):
             suf = SimpleUploadedFile(os.path.split(self.image.name)[-1],
                     temp_handle.read(), content_type=DJANGO_TYPE)
         except KeyError as e:
-            log.error(e.message +"-"+ str(traceback.tb_lineno(sys.exc_info()[2])))
+            log.error(e.message + "-" + str(traceback.tb_lineno(sys.exc_info()[2])))
         
         self.thumb.save(
             '%s_thumbnail.%s' % (os.path.splitext(suf.name)[0], FILE_EXTENSION),
@@ -163,8 +163,8 @@ class User(models.Model):
     stripe_customer_id = models.CharField(max_length=50, null=True, default=None, blank=True)
     
     def save(self, *args, **kwargs):
-        if self.full_name !=  self.first_name +' '+self.last_name:
-            self.full_name = self.first_name +' '+self.last_name
+        if self.full_name != self.first_name + ' ' + self.last_name:
+            self.full_name = self.first_name + ' ' + self.last_name
         if not self.id:
             self.created = datetime.datetime.now()
             if self.role.pk == ROLE_USER:
@@ -184,14 +184,14 @@ class Address(models.Model):
     company = models.CharField(max_length=100, default="")
     street = models.CharField(max_length=50)
     building = models.CharField(max_length=50)
-    state =models.ForeignKey(State) 
+    state = models.ForeignKey(State) 
     city = models.CharField(max_length=50)
     zip = models.CharField(max_length=10)
     phone = models.CharField(max_length=15)
     email = models.CharField(max_length=50, null=True, blank=True)
 
     def __unicode__(self):
-        return str(self.user.email) + " : " + self.first_name +" "+ self.last_name
+        return str(self.user.email) + " : " + self.first_name + " " + self.last_name
     
 class CreditCardDetails(models.Model):
     user = models.ForeignKey(User, related_name="cc_details")
@@ -208,7 +208,7 @@ class CreditCardDetails(models.Model):
 class Category(models.Model):
     name = models.CharField(db_index=True, max_length=25)
     is_hidden = models.BooleanField(db_index=True, default=False)
-    is_deleted =  models.BooleanField(db_index=True, default=False)
+    is_deleted = models.BooleanField(db_index=True, default=False)
     
     def __unicode__(self):
         return self.name
@@ -216,7 +216,7 @@ class Category(models.Model):
 class MealType(models.Model):
     name = models.CharField(db_index=True, max_length=25)
     is_hidden = models.BooleanField(db_index=True, default=False)
-    is_deleted =  models.BooleanField(db_index=True, default=False)
+    is_deleted = models.BooleanField(db_index=True, default=False)
     image = models.ForeignKey(Image)
     
     def __unicode__(self):
@@ -269,26 +269,27 @@ class Meal(models.Model):
     pre_requisites = models.TextField(max_length=1024, null=True, blank=True, default="")
     pre_requisites_image = models.ForeignKey(Image, null=True, blank=True, related_name="pre_requisites")
 
-    #nutrients = models.ManyToManyField(Nutrient, through="MealNutrient", null=True, blank=True)
+    # nutrients = models.ManyToManyField(Nutrient, through="MealNutrient", null=True, blank=True)
     nutrients = models.TextField(max_length=1024, null=True, blank=True, default="")
-    calories =  models.CharField(max_length=30, null=True, blank=True, default="")
+    calories = models.CharField(max_length=30, null=True, blank=True, default="")
 
     ingredients = models.ManyToManyField(Ingredient, null=True, blank=True)
     #===========================================================================
-    #ingredients = models.TextField(max_length=1024, null=True, blank=True, default="")
-    #ingredients_image = models.ForeignKey(Image, null=True, blank=True, related_name="ingredients")
+    # ingredients = models.TextField(max_length=1024, null=True, blank=True, default="")
+    # ingredients_image = models.ForeignKey(Image, null=True, blank=True, related_name="ingredients")
     #===========================================================================
     
     tips = models.ManyToManyField(Tips, null=True, blank=True)
 
-    allergy_notice = models.TextField(max_length=1024,  null=True, blank=True, default="")
+    allergy_notice = models.TextField(max_length=1024, null=True, blank=True, default="")
     need_boiling_water = models.BooleanField(default=False)
     
     price = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     tax = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
     
     is_deleted = models.BooleanField(db_index=True, default=False)
-    available = models.BooleanField(db_index=True, default=True)
+    #available = models.BooleanField(db_index=True, default=True)
+    available = models.IntegerField(default=0)
     sold_out = models.BooleanField(default=False)
     locked = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
@@ -361,7 +362,7 @@ class Cart(models.Model):
     completed = models.BooleanField(default=False)
 
     def str(self):
-        return "Cart for user "+user.first_name + " "+user.last_name
+        return "Cart for user " + user.first_name + " " + user.last_name
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart)
@@ -423,7 +424,7 @@ class Order(models.Model):
             gc_amt = 0 if not gc_amt else gc_amt
             self.discount += gc_amt
 
-            self.grand_total = self.total_amount + self.total_tax  - self.discount - self.credits
+            self.grand_total = self.total_amount + self.total_tax - self.discount - self.credits
             
             if self.delivery_type == 'delivery':
                 self.grand_total += SHIPPING_CHARGE + self.tip
@@ -431,10 +432,10 @@ class Order(models.Model):
                 self.tip = 0
             
             self.grand_total = 0 if self.grand_total < 0 else self.grand_total
-            self.grand_total = round(self.grand_total,2)
+            self.grand_total = round(self.grand_total, 2)
 
         super(Order, self).save(*args, **kwargs)
-        self.order_num = '0' * (6-len(str(self.id))) + str(self.id)
+        self.order_num = '0' * (6 - len(str(self.id))) + str(self.id)
         super(Order, self).save(*args, **kwargs)
     
 class GiftCard(models.Model):
@@ -468,11 +469,11 @@ class PromoCode(models.Model):
         return self.code
 class DeliveryTimeSlot(models.Model):
     date = models.DateField(unique=True)
-    slot1 = models.IntegerField(default= 0)
-    slot2 = models.IntegerField(default= 0)
-    slot3 = models.IntegerField(default= 0)
-    slot4 = models.IntegerField(default= 0)
-    slot5 = models.IntegerField(default= 0)
+    slot1 = models.IntegerField(default=0)
+    slot2 = models.IntegerField(default=0)
+    slot3 = models.IntegerField(default=0)
+    slot4 = models.IntegerField(default=0)
+    slot5 = models.IntegerField(default=0)
     
     def __unicode__(self):
         return self.date.strftime('%m-%d-%Y')

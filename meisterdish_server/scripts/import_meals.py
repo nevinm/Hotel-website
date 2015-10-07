@@ -1,4 +1,4 @@
-#encoding: utf-8
+# encoding: utf-8
 import os, sys, csv, json
 sys.path.append('/home/nasar/env/meisterdish/lib/python2.7/site-packages/')
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -29,7 +29,7 @@ keys = {
     "ing" : "Ingredients",
     "ing_image" : 'Ingredients Image',
     
-    "tips" : "Tips & Tricks",    
+    "tips" : "Tips & Tricks",
     "nutrients" : "Nutrients",
 
     
@@ -107,7 +107,7 @@ class ImportMeals:
         count = 0
         for row in data:
             try:
-                count +=1
+                count += 1
                 meal = Meal()
                 meal.name = row[keys["name"]].strip()
                 meal.sub = row[keys["sub"]].strip()
@@ -119,7 +119,7 @@ class ImportMeals:
                 meal.price = 0 if price == "" else float(price)
                 meal.tax = 0 if tax == "" else float(tax)
 
-                #meal.main_image = Image.objects.#main_img
+                # meal.main_image = Image.objects.#main_img
                 meal.available = bool(int(row[keys["available"]]))
 
                 meal.category = Category.objects.get_or_create(name=row[keys["cat"]].strip())[0]
@@ -136,21 +136,21 @@ class ImportMeals:
                 meal.finished_preparation = json.dumps(row[keys["what_we_prepd"]]).strip("")
 
                 meal.pre_requisites = json.dumps(row[keys["all_you_need"]]).strip("")
-                #all_you_need_image
+                # all_you_need_image
 
                 meal.ingredients = json.dumps(row[keys["ing"]]).strip("")
-                #ing_image
+                # ing_image
 
-                #tips
+                # tips
                 meal.nutrients = json.dumps(row[keys["nutrients"]]).strip("")
 
                 meal.save()
             except Exception as e:
-                print "Error in inserting row "+str(count) + " : " +e.message
+                print "Error in inserting row " + str(count) + " : " + e.message
                 print row
                 continue
             else:
-                print "Row "+str(count) + " Inserted"
+                print "Row " + str(count) + " Inserted"
         print "Done"
         return True
 

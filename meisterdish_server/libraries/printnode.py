@@ -8,7 +8,7 @@ username = settings.PRINTNODE_USERNAME
 password = settings.PRINTNODE_PASSWORD
 def api_call(section, data=None):
     try:
-        request = urllib2.Request(url+"/"+section)
+        request = urllib2.Request(url + "/" + section)
         base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
         request.add_header("Authorization", "Basic %s" % base64string)   
         if data:
@@ -17,5 +17,5 @@ def api_call(section, data=None):
         result = urllib2.urlopen(request)
         return  json.loads(result.read())
     except Exception as e:
-        log.error("Failed to print : "+e.message)
+        log.error("Failed to print : " + e.message)
         return None

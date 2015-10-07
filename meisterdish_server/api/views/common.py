@@ -73,7 +73,7 @@ def login(request, data):
                     except Cart.DoesNotExist:
                         try:
                             guest_cart = Cart.objects.get(user=guest_user, completed=False)
-                            guest_cart.user=user
+                            guest_cart.user = user
                             guest_cart.save()
                         except Cart.DoesNotExist:
                             pass
@@ -100,7 +100,7 @@ def login(request, data):
                     session.create()
                     log.info("User Logged in to guest session. cart updated")
                 except Exception as e:
-                    log.error("No guest session found with guest user/no cart in guest session"+e.message)
+                    log.error("No guest session found with guest user/no cart in guest session" + e.message)
                 else:
                     guest_user.delete()
 
@@ -116,7 +116,7 @@ def login(request, data):
                 session.set_expiry = settings.SESSION_EXPIRY
             session.save()
 
-            log.info(email+" logged in ..")
+            log.info(email + " logged in ..")
             return json_response({"status":1, "message": "Logged in succesfully", "user":user_dic, "session_key":session.session_key})
         else:
             log.error("Login failed")
@@ -130,7 +130,7 @@ def login(request, data):
 def logout(request, data):
     if 'HTTP_SESSION_KEY' not in request.META:
         log.error("API:logout, Invalid session.")
-        response = {'status': -1, "message": "Invalid session."}
+        response = {'status':-1, "message": "Invalid session."}
     else:
         session = SessionStore(session_key=request.META['HTTP_SESSION_KEY'])
         if 'user' in session:
@@ -189,15 +189,15 @@ def signup(request, data):
                     user.credits = bonus
                     user.save()               
                     # Commented - awarded up on first transaction only
-                    #referrer.credits += bonus
-                    #referrer.save()
+                    # referrer.credits += bonus
+                    # referrer.save()
 
                     referral = Referral()
                     referral.referrer = referrer
                     referral.referree = user
                     referral.save()
                 except Exception as e:
-                    log.error("Signup - The referrer code " + referral_code + "is invalid : "+e.message)
+                    log.error("Signup - The referrer code " + referral_code + "is invalid : " + e.message)
 
             user_dic = {"id":user.id,
                                   "email":user.email,
@@ -213,7 +213,7 @@ def signup(request, data):
                 session = SessionStore(session_key=session_key)
                 log.info("Logging in to guest session")
                 if 'user' in session and session["user"]["id"] != user.id:
-                    log.error("User " + email + "logging in to the session for "+session["user"]["email"] + ": REJECTED")
+                    log.error("User " + email + "logging in to the session for " + session["user"]["email"] + ": REJECTED")
                     return custom_error("Invalid session.")
             else:
                 session = SessionStore()
@@ -226,18 +226,18 @@ def signup(request, data):
             log.info(email + " : Signed up ")
             if send_user_verification_mail(user):
                 log.info("Sent verification mail to " + user.email)
-                return json_response({"status":1, "message": "A verification email has been sent to your email ("+email+"). Please follow the instructions to activate your account.", "user":user_dic, "session_key":session.session_key})
+                return json_response({"status":1, "message": "A verification email has been sent to your email (" + email + "). Please follow the instructions to activate your account.", "user":user_dic, "session_key":session.session_key})
             else:
                 log.error("Failed to send user verification mail : ")
                 return custom_error("An error has occurred in sending verification mail. Please try later.")
         except Exception as e:
-            log.error(email + " : Failed to sign up "+e.message)
+            log.error(email + " : Failed to sign up " + e.message)
             return custom_error("Failed to sign up. Please try again later")
     except KeyError as field:
-        log.error("failed to signup "+str(field) + "missing")
+        log.error("failed to signup " + str(field) + "missing")
         return custom_error("Invalid input")
     except Exception as e:
-        log.error("Failed to signup "+e.message)
+        log.error("Failed to signup " + e.message)
         return custom_error("Failed to signup. Please check all the fields.")
 
 def send_user_verification_mail(user, change_email=False, email=""):
@@ -247,14 +247,14 @@ def send_user_verification_mail(user, change_email=False, email=""):
     
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
         if change_email:
-            link = settings.SITE_URL + 'verify-email/'+token+"/"
-            token = token + "-"+email
+            link = settings.SITE_URL + 'verify-email/' + token + "/"
+            token = token + "-" + email
         else:
-            link = settings.SITE_URL + 'verify-user/'+token+"/"
+            link = settings.SITE_URL + 'verify-user/' + token + "/"
         
         user.user_verify_token = token
         user.save()
-        unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/'+base64.b64encode(user.email)+"/"
+        unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/' + base64.b64encode(user.email) + "/"
         dic = {
                "email" : user.email,
                "link" : link,
@@ -274,10 +274,10 @@ def send_user_verification_mail(user, change_email=False, email=""):
             msg = render_to_string('verify_user_email_template.html', dic)
             sub = 'Verify your account for Meisterdish'
             to_email = user.email
-        mail([to_email], sub, msg )
+        mail([to_email], sub, msg)
         log.info("Sent verification mail to " + to_email)
     except Exception as e:
-        log.error("Failed to send user verification mail : "+ e.message)
+        log.error("Failed to send user verification mail : " + e.message)
         return False
     return True
 
@@ -291,34 +291,34 @@ def verify_user(request, data, token):
         user = User.objects.get(user_verify_token=token)
         
         user.user_verify_token = ""
-        user.is_active=True
+        user.is_active = True
         user.save()
         
-        log.info("Verified user "+user.email)
+        log.info("Verified user " + user.email)
 
         if not check_delivery_area(user.zipcode):
             log.error("User's zip code not available.")
             add_to_mailing_list(user.email, user.zipcode)
             return HttpResponseRedirect(fail_url)        
 
-        return HttpResponseRedirect(login_url+"?account_verify=true")
+        return HttpResponseRedirect(login_url + "?account_verify=true")
     
     except KeyError as field:
-        log.error("verify request request missing "+field.message)
-        return HttpResponseRedirect(login_url+"?account_verify=false&error=Invalid+token")
+        log.error("verify request request missing " + field.message)
+        return HttpResponseRedirect(login_url + "?account_verify=false&error=Invalid+token")
 
     except User.DoesNotExist:
         log.error("Verify : No user found with given token")
-        return HttpResponseRedirect(login_url+"?account_verify=false&error=Invalid+token+or+the+user+is+already+verified.")
+        return HttpResponseRedirect(login_url + "?account_verify=false&error=Invalid+token+or+the+user+is+already+verified.")
 
     except Exception as e:
-        log.error("Validate token : Exception : "+e.message)
-        return HttpResponseRedirect(login_url+"?account_verify=false&error=Failed+to+verify+this+user.")
+        log.error("Validate token : Exception : " + e.message)
+        return HttpResponseRedirect(login_url + "?account_verify=false&error=Failed+to+verify+this+user.")
 
 @check_input('GET')
 def verify_email(request, data, token):
     login_url = settings.SITE_URL + "views/menu.html"
-    #login_url = "http://10.1.4.87/MeisterDish/meisterdish/web/views/menu.html"
+    # login_url = "http://10.1.4.87/MeisterDish/meisterdish/web/views/menu.html"
     try:
         token = token.strip()
         
@@ -331,20 +331,20 @@ def verify_email(request, data, token):
         user.email = email
         user.save()
         
-        log.info("Verified email "+user.email)
-        return HttpResponseRedirect(login_url+"?email_verify=true")
+        log.info("Verified email " + user.email)
+        return HttpResponseRedirect(login_url + "?email_verify=true")
     
     except KeyError as field:
-        log.error("verify email request missing "+field.message)
-        return HttpResponseRedirect(login_url+"?email_verify=false")
+        log.error("verify email request missing " + field.message)
+        return HttpResponseRedirect(login_url + "?email_verify=false")
 
     except User.DoesNotExist:
         log.error("Verify : No user found with given token")
-        return HttpResponseRedirect(login_url+"?email_verify=false")
+        return HttpResponseRedirect(login_url + "?email_verify=false")
 
     except Exception as e:
-        log.error("Validate token : Exception : "+e.message)
-        return HttpResponseRedirect(login_url+"?email_verify=false")
+        log.error("Validate token : Exception : " + e.message)
+        return HttpResponseRedirect(login_url + "?email_verify=false")
 
 @check_input('POST')
 def forgot_password(request, data):
@@ -357,11 +357,11 @@ def forgot_password(request, data):
         from libraries import mail
         
         token = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(20))
-        #link = settings.BASE_URL + 'password_reset_return/'+token+"/"
-        link = settings.SITE_URL+"views/reset-password.html?token="+token
+        # link = settings.BASE_URL + 'password_reset_return/'+token+"/"
+        link = settings.SITE_URL + "views/reset-password.html?token=" + token
         user.password_reset_token = token
         user.save()
-        unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/'+base64.b64encode(user.email)+"/"
+        unsubscribe_url = settings.SITE_URL + 'unsubscribe_from_emails/' + base64.b64encode(user.email) + "/"
         dic = {
                "to_email" : email,
                "link" : link,
@@ -373,20 +373,20 @@ def forgot_password(request, data):
                }
         msg = render_to_string('forgot_password_email_template.html', dic)
 
-        res = mail([email], 'Reset your password for Meisterdish', msg )
+        res = mail([email], 'Reset your password for Meisterdish', msg)
         log.info(res)
     except KeyError as field:
-        log.error("Forgot password request missing "+field.message)
+        log.error("Forgot password request missing " + field.message)
         return custom_error("Invalid input.")
     except User.DoesNotExist as e:
-        log.error("Forgot password request with non-existing email: "+email)
+        log.error("Forgot password request with non-existing email: " + email)
         return custom_error("No user exists with the given email address.")
     except Exception as e:
-        log.error("Failed to send the password reset email : "+e.message)
+        log.error("Failed to send the password reset email : " + e.message)
         return custom_error("Failed to send the password reset email.")
     else:
-        log.info("Reset password mail sent to : "+email)
-        return json_response({"status":1, "message":"Password reset link has been sent to "+user.email+"."})
+        log.info("Reset password mail sent to : " + email)
+        return json_response({"status":1, "message":"Password reset link has been sent to " + user.email + "."})
 
 @check_input('POST')
 def reset_password(request, data):
@@ -399,17 +399,17 @@ def reset_password(request, data):
         user.password = md5.new(new_password).hexdigest()
         user.save()
         
-        log.info("Password reset for user "+user.email)
+        log.info("Password reset for user " + user.email)
         return json_response({"status":1, "message":"Your password has been reset."})
     
     except KeyError as field:
-        log.error("Reset password request missing "+field.message)
+        log.error("Reset password request missing " + field.message)
         return custom_error("Invalid input.")
     except User.DoesNotExist:
         log.error("Reset password : No user found with given token")
         return custom_error("Invalid token.")
     except Exception as e:
-        log.error("Validate token : Exception : "+e.message)
+        log.error("Validate token : Exception : " + e.message)
         return custom_error("Failed to reset password. Please try again later.")
 
 @check_input('POST')
@@ -430,7 +430,7 @@ def change_password(request, data, user):
         log.info("user : " + user.email + " : changed password")
         return json_response({"status":1, "message":"Password changed successfully."})
     except Exception as e:
-        log.error( "Change password failed : "+e.message)
+        log.error("Change password failed : " + e.message)
         return custom_error("Failed to change the password.")
 
 @check_input('POST')
@@ -470,7 +470,7 @@ def get_profile(request, data, user):
         user_data = {
                      "status":1,
                      "id" : user.id,
-                     "name" : (user.last_name + " "+ user.first_name).title(),
+                     "name" : (user.last_name + " " + user.first_name).title(),
                      "email" : user.email,
                      "mobile" : user.mobile,
                      "profile_image" : settings.DEFAULT_USER_IMAGE if not user.profile_image else user.profile_image.image.url,
@@ -479,19 +479,19 @@ def get_profile(request, data, user):
                      "meals_in_cart" : meals,
                      "meals_in_cart_count" : len(meals),
                      "credits" : "{0:.2f}".format(user.credits),
-                     "email_promotions" : user.need_email_promotions,#need_sms_notification,
+                     "email_promotions" : user.need_email_promotions,  # need_sms_notification,
                      "address_list" : address_list,
                      "first_name" : user.first_name.title(),
                      "last_name" : user.last_name.title(),
                      "stripe_id":user.stripe_customer_id if user.stripe_customer_id else "",
-                     "referral_code" : settings.SITE_URL + 'share/'+user.referral_code+'/',
+                     "referral_code" : settings.SITE_URL + 'share/' + user.referral_code + '/',
                      }
         return json_response(user_data)
     except KeyError as e:
         log.error("Profile request with no user_id")
         return custom_error("Invalid input.")
     except Exception as e:
-        log.error("Get profile :Exception: "+e.message + str(traceback.tb_lineno(sys.exc_info()[2])))
+        log.error("Get profile :Exception: " + e.message + str(traceback.tb_lineno(sys.exc_info()[2])))
         return custom_error("Failed to retrieve profile details.")
 
 @check_input('POST')
@@ -505,7 +505,7 @@ def edit_profile(request, data, user):
         
         if 'mobile' in data:
             mob = str(data['mobile']).strip()
-            if len(mob) <10 or len(mob)>13:
+            if len(mob) < 10 or len(mob) > 13:
                 return custom_error("Please enter a valid phone number.")
             user.mobile = mob
             
@@ -513,11 +513,11 @@ def edit_profile(request, data, user):
             if "profile_picture_id" in data:
                 user.profile_image = Image.objects.get(pk=data['profile_picture_id'].strip())
         except Exception as e:
-            log.error("Failed to get the profile picture "+e.message)
+            log.error("Failed to get the profile picture " + e.message)
             return custom_error("The Profile image does not exist. Please try again.")
         
         sms = False
-        if "sms_notification" in data and str(data['sms_notification'])=='1':
+        if "sms_notification" in data and str(data['sms_notification']) == '1':
             sms = True
         
         user.need_sms_notification = sms
@@ -526,7 +526,7 @@ def edit_profile(request, data, user):
         log.info("user : " + user.email + " : updated profile")
         return json_response({"status":1, "message":"Profile updated successfully."})
     except Exception as e:
-        log.error("user id : " + str(user.id) + " : profile update failed : "+e.message)
+        log.error("user id : " + str(user.id) + " : profile update failed : " + e.message)
         return custom_error("Failed to update profile.")
 
 @check_input('POST')
@@ -592,9 +592,9 @@ def change_email(request, data, user):
             else:
                 if send_user_verification_mail(user, True, email):
                     log.info("Sent verification mail to " + email)
-                    return json_response({"status":1, "message": "A verification email has been sent to your email ("+email+"). Please follow the link in verification email to verify."})
+                    return json_response({"status":1, "message": "A verification email has been sent to your email (" + email + "). Please follow the link in verification email to verify."})
                 else:
-                    log.error("Failed to send user verification mail : "+email)
+                    log.error("Failed to send user verification mail : " + email)
                     return custom_error("An error has occurred in sending verification mail. Please try later.")
 
                 user.email = email
@@ -618,7 +618,7 @@ def get_address_list(request, data, user):
         delivery_address = 0
 
         for add in addresses:
-            #if 'checkout' in data and data['checkout'] == 1 and not check_delivery_area(add.zip):
+            # if 'checkout' in data and data['checkout'] == 1 and not check_delivery_area(add.zip):
             #    continue
             if add.is_primary:
                 delivery_address = add.id
@@ -632,7 +632,7 @@ def get_address_list(request, data, user):
                                  "street":add.street,
                                  "building":add.building,
                                  "city":add.city.title(),
-                                 #"city_id":add.city.id,
+                                 # "city_id":add.city.id,
                                  "state":add.state.name,
                                  "state_id":add.state.id,
                                  "zip":add.zip,
@@ -651,7 +651,7 @@ def get_address_list(request, data, user):
         log.error("Failed to send address list : " + e.message)
         return custom_error("Failed to retrieve address list")
 
-#For uploading profile picture
+# For uploading profile picture
 @check_input('POST')
 def upload_picture(request, data, user):
     try:
@@ -672,7 +672,7 @@ def referral_return(request, data, token):
         log.error("Invalid referral token")
         return HttpResponseRedirect(settings.SITE_URL)
     if User.objects.filter(referral_code=token).exists():
-        return HttpResponseRedirect(settings.SITE_URL + 'views/signup.html?ref='+token)
+        return HttpResponseRedirect(settings.SITE_URL + 'views/signup.html?ref=' + token)
     else:
         log.error("Invalid referral token")
         return HttpResponseRedirect(settings.SITE_URL)
@@ -688,7 +688,7 @@ def validate_session(request, data):
                 user = User.objects.get(query)
                 return json_response({"status":1, "role":user.role.name.title()})
     except Exception as e:
-        log.error("Validate session error : "+e.message)
+        log.error("Validate session error : " + e.message)
         return custom_error("Invalid session")
     else:
         return custom_error("Invalid session")
@@ -701,19 +701,19 @@ def unsubscribe_from_emails(request, data, token):
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            log.error("Ubsubscribe : email:"+str(email) + " does not exist.")
-            return HttpResponseRedirect(unsub_return_url+"error")
+            log.error("Ubsubscribe : email:" + str(email) + " does not exist.")
+            return HttpResponseRedirect(unsub_return_url + "error")
         else:
             if user and user.email and user.email != '':
                 user.need_email_promotions = False
                 user.save()
-                return HttpResponseRedirect(unsub_return_url+"success")
+                return HttpResponseRedirect(unsub_return_url + "success")
             else:   
                 log.error("Could not unsuscribe.", error.message)
-                return HttpResponseRedirect(unsub_return_url+"error")
+                return HttpResponseRedirect(unsub_return_url + "error")
     except Exception as error:
         log.error("Could not unsuscribe.", error.message)
-        return HttpResponseRedirect(unsub_return_url+"error")
+        return HttpResponseRedirect(unsub_return_url + "error")
 
 @check_input('POST')
 def send_contactus_email(request, data):
@@ -749,13 +749,13 @@ def send_contactus_email(request, data):
                 "site_url":settings.SITE_URL,
                }
         msg = render_to_string('contact_us_email_template.html', dic)
-        email_sub = 'Inquiry from '+ name
+        email_sub = 'Inquiry from ' + name
         mail(['contact@meisterdish.com'], email_sub, msg, None, None, False)
     except Exception as e:
-        log.error("Failed to send the contact us email : "+e.message)
+        log.error("Failed to send the contact us email : " + e.message)
         return custom_error("Failed to send the contact us email.")
     else:
-        log.info("Contact us mail sent to : contact@meisterdish.com , from "+email)
+        log.info("Contact us mail sent to : contact@meisterdish.com , from " + email)
         return json_response({"status":1, "message":"Email sent successfully"})   
 
 
@@ -769,6 +769,6 @@ def get_home_meal(request, data):
             return custom_error("No home meal is set.")
 
     except Exception as e:
-        log.error("Failed to get home meal. : "+e.message)
+        log.error("Failed to get home meal. : " + e.message)
         return custom_error("Failed to get the home meal.")
 

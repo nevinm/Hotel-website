@@ -55,7 +55,7 @@ def manage_gift_card(request, data, user):
         gc.amount = amount
         gc.name = name
         gc.save()
-        return json_response({"status":1, "id":gc.id, "message": action + "ed "+name, "code":code})
+        return json_response({"status":1, "id":gc.id, "message": action + "ed " + name, "code":code})
       
     except Exception as e:
         log.error("Manage GiftCards : " + e.message)
@@ -65,13 +65,13 @@ def manage_gift_card(request, data, user):
 def list_gift_cards(request, data, user):
     try:
         limit = data.get('perPage', settings.PER_PAGE)
-        page = data.get("nextPage",1)
+        page = data.get("nextPage", 1)
                     
         gc_list = []
         gcs = GiftCard.objects.all()
         total_count = gcs.count()
         
-        #Filter
+        # Filter
         if "code" in data and str(data['code']).strip() != "":
             gcs = gcs.filter(code__istartswith=data['code'])
         
@@ -84,14 +84,14 @@ def list_gift_cards(request, data, user):
 
         try:
             paginator = Paginator(gcs, limit)
-            if page <1 or page > paginator.page_range:
+            if page < 1 or page > paginator.page_range:
                 page = 1
             gcs = paginator.page(page)
         except Exception as e:
             log.error("Gift Card list pagination : " + e.message)
             custom_error("There was an error listing gift cards.")
 
-        #Format response
+        # Format response
         for gc in gcs:
             gc_list.append({
                 "id" : gc.id,
@@ -102,8 +102,8 @@ def list_gift_cards(request, data, user):
                 "code":gc.code,
                 "amount":gc.amount
                 })
-        #End format response
-        return json_response({"status":1, 
+        # End format response
+        return json_response({"status":1,
                               "aaData":gc_list,
                               "total_count":total_count,
                               "actual_count":actual_count,
@@ -122,7 +122,7 @@ def manage_promocode(request, data, user):
         if "edit_id" in data and str(data["edit_id"]).strip() != "":
             code = data['code'].strip()
             amount = float(str(data['amount']).strip())
-            expiry_date = datetime.strptime(str(data['expiry_date']).strip()+" 23:59:59","%m/%d/%Y %H:%M:%S")
+            expiry_date = datetime.strptime(str(data['expiry_date']).strip() + " 23:59:59", "%m/%d/%Y %H:%M:%S")
 
             if code == "":
                 return custom_error("Please enter valid promo code.")
@@ -131,7 +131,7 @@ def manage_promocode(request, data, user):
 
             action = "Updat"
             if PromoCode.objects.exclude(pk=data["edit_id"]).filter(code=code).exists():
-                return custom_error("The Promo code ("+ code+") already exists.")
+                return custom_error("The Promo code (" + code + ") already exists.")
             elif GiftCard.objects.filter(code=code).exists():
                 return custom_error("A gift card with this code or name already exists.")
 
@@ -146,7 +146,7 @@ def manage_promocode(request, data, user):
         else:
             code = data['code'].strip()
             amount = float(str(data['amount']).strip())
-            expiry_date = datetime.strptime(str(data['expiry_date']).strip()+" 23:59:59","%m/%d/%Y %H:%M:%S")
+            expiry_date = datetime.strptime(str(data['expiry_date']).strip() + " 23:59:59", "%m/%d/%Y %H:%M:%S")
 
             if code == "":
                 return custom_error("Please enter valid promo code.")
@@ -154,7 +154,7 @@ def manage_promocode(request, data, user):
                 return custom_error("Please enter a valid amount.")
 
             if PromoCode.objects.filter(code=code).exists():
-                return custom_error("The Promo code ("+ code+") already exists.")
+                return custom_error("The Promo code (" + code + ") already exists.")
             elif GiftCard.objects.filter(code=code).exists():
                 return custom_error("A gift card with this code or name already exists.")
 
@@ -165,7 +165,7 @@ def manage_promocode(request, data, user):
         promo.amount = amount
         promo.expiry_date = expiry_date
         promo.save()
-        return json_response({"status":1, "id":promo.id, "message": action + "ed "+code, "code":code})
+        return json_response({"status":1, "id":promo.id, "message": action + "ed " + code, "code":code})
       
     except Exception as e:
         log.error("Manage Promo codes : " + e.message)
@@ -175,13 +175,13 @@ def manage_promocode(request, data, user):
 def list_promocodes(request, data, user):
     try:
         limit = data.get('perPage', settings.PER_PAGE)
-        page = data.get("nextPage",1)
+        page = data.get("nextPage", 1)
                     
         promo_list = []
         promos = PromoCode.objects.all()
         total_count = promos.count()
         
-        #Filter
+        # Filter
         if "code" in data and str(data['code']).strip() != "":
             promos = promos.filter(code__istartswith=data['code'])
         
@@ -192,14 +192,14 @@ def list_promocodes(request, data, user):
 
         try:
             paginator = Paginator(promos, limit)
-            if page <1 or page > paginator.page_range:
+            if page < 1 or page > paginator.page_range:
                 page = 1
             promos = paginator.page(page)
         except Exception as e:
             log.error("Promocode list pagination : " + e.message)
             custom_error("There was an error listing promo codes.")
 
-        #Format response
+        # Format response
         for promo in promos:
             promo_list.append({
                 "id" : promo.id,
@@ -209,8 +209,8 @@ def list_promocodes(request, data, user):
                 "expiry_date_format":promo.expiry_date.strftime("%m/%d/%Y"),
                 "status":int(promo.active),
                 })
-        #End format response
-        return json_response({"status":1, 
+        # End format response
+        return json_response({"status":1,
                               "aaData":promo_list,
                               "total_count":total_count,
                               "actual_count":actual_count,
@@ -233,7 +233,7 @@ def change_promocode_status(request, data, user):
         code_obj.active = status
         code_obj.save()
         msg = ("A" if status else "Dea") + "ctivated"
-        return json_response({"status":1, "message": msg+ " promo code "+code_obj.code, "new_status":int(status)})
+        return json_response({"status":1, "message": msg + " promo code " + code_obj.code, "new_status":int(status)})
     except Exception as e:
         log.error("Failed change promo code status." + e.message)
         return custom_error("An error has occurred.")

@@ -16,7 +16,7 @@ class Command(BaseCommand):
         try:
             now = datetime.now()
             a = now.hour
-            orders = Order.objects.filter(status__lt=3, delivery_type="delivery", delivery_time__year=now.year, delivery_time__month=now.month, delivery_time__day=now.day, delivery_time__hour=now.hour+2)
+            orders = Order.objects.filter(status__lt=3, delivery_type="delivery", delivery_time__year=now.year, delivery_time__month=now.month, delivery_time__day=now.day, delivery_time__hour=now.hour + 2)
             if not orders.exists():
                 self.stdout.write('There are no notifications to send.')
                 return False
@@ -24,7 +24,7 @@ class Command(BaseCommand):
             sent = 0
             for order in orders:
                 if self.send_sms_notification(order):
-                    sent+= 1
+                    sent += 1
 
         except Exception as e:
             self.stdout.write('Error : "%s"' % e.message)    
@@ -46,7 +46,7 @@ class Command(BaseCommand):
             number = country_code + str(order.phone).strip()
 
             message = client.messages.create(body=txt,
-                    to= number,
+                    to=number,
                     from_=settings.TWILIO_NUMBER)
             
             if message:
@@ -57,5 +57,5 @@ class Command(BaseCommand):
                 return False
 
         except Exception as e:
-            log.error("Failed to send order SMS to : " + number + " : "+e.message)
+            log.error("Failed to send order SMS to : " + number + " : " + e.message)
             return False

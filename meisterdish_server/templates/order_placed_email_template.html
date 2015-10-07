@@ -8,6 +8,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Meisterdish - Email Template</title>
+    <link href='https://fonts.googleapis.com/css?family=Didact+Gothic' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        @font-face {
+            font-family: 'BrandonGrotesque-Regular';
+            src: url('http://meisterdish.qburst.com/fonts/Brandon%20Grotesque/BrandonGrotesque-Regular.otf');
+            font-weight: normal;
+            font-style: normal;
+            font-variant: normal;
+        }
+        @import url(https://fonts.googleapis.com/css?family=Didact+Gothic);
+    </style>
 </head>
 
 <body style="margin: 0; font-family: sans-serif; padding: 0;">
@@ -209,20 +220,37 @@
                 <table align="center" width="800" cellpadding="0" cellspacing="0" style="border-collapse: collapse;border:1px solid #d0d0d0;background-color:#fff">
                     <tbody>
                         <tr style="width:100%;">
-                            <td align='center' style="padding:20px 0;font-size:24px;text-align: center;width: 100%;"><span>SHARE FOR ${{referral_bonus}} FREE CREDIT</span></td>
+                            <td align='center' style="padding:20px 0 5px;font-size:24px;text-align: center;width: 100%;    letter-spacing: 4px;  font-size: 19px;  color: #525151; font-weight: bold;"><span>REFER YOUR FRIENDS</span>
+                                <div style="    width: 100px; height: 2px;  background-color: #CECECE; margin: auto; margin-top: 15px;"></div></td>
                         </tr>
                         <tr style="width:100%;">
-                            <td align='center' style="padding:10px 0;font-size:16px;text-align: center;width: 100%;">{{site_url}}share/{{referral_code}}</td>
+                            <td align='center' style="padding:10px 75px 20px;font-size:14px;text-align: center;width: 100%;color:#6B6B6B; font-family: 'BrandonGrotesque-Regular', 'Didact Gothic', sans-serif;">You'll get ${{referral_bonus}} credit for each friend that signs up and order using the link, which gives them ${{referral_bonus}} credit on their first two orders as well.</td>
                         </tr>
-                        <tr style="">
+                        <tr style="width:100%">
                             
-                            <td align='center' style="padding:10px 0;padding-bottom:20px;text-align:center;width:100%;">
-                                 <a href="http://www.facebook.com/share.php?u=http://meisterdish.qburst.com/views/signup.html?ref=TEMP_44">
-                                    <img src="cid:share_fb" style="padding:0 20px;max-height: 45px;padding-left:0px;">
-                                </a>
-                                <!-- <img src="cid:share_tw" style="padding:0 20px;max-height: 45px;">
-                                <img src="cid:share_em" style="padding:0 20px;max-height: 45px;padding-right:0px;"> -->
-                            </td>
+                            <table align="center" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;text-align:center;    border: 2px solid #E8E8E8; margin-bottom:15px;">
+                                <tr>
+                                    <td style="">
+                                        <table width="100%" style='color: #6B6B6B'>
+                                            <tr>
+                                                <td align="center" style="padding: 5px;">
+                                                    <a id="" href="" target="_parent" style="color: white; text-decoration: none;">
+                                                    <div style="position:absolute; sleft:163px;top:1px;font-size: 12px; display: block">
+                                                        <font color="#6b6b6b" style="font-family: 'BrandonGrotesque-Regular', 'Didact Gothic', sans-serif; font-size: 13px; display: block;  font-weight: bold;  letter-spacing: .03em;">{{site_url}}share/{{referral_code}}</font>
+                                                    </div>
+                                                </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size: 13px; padding: 5px;">
+                                                    Copy your invite link and send to your friend.
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
                         
                         </tr>
                     </tbody>

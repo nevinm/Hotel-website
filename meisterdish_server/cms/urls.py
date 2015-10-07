@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     url(r'^get_meal_details/(?P<meal_id>[0-9]+)/$', meals.get_meal_details, name='get_meal_details'),
     url(r'^create_meal/$', meals.create_meal, name='create_meal'),
     url(r'^delete_meal/(?P<meal_id>[0-9]+)/$', meals.delete_meal, name='delete_meal'),
-    #url(r'^export_meals/$', meals.export_meals, name='export_meals'),
+    # url(r'^export_meals/$', meals.export_meals, name='export_meals'),
     url(r'^update_meal_order/(?P<meal_id>[0-9]+)/$', meals.update_meal_order, name='update_meal_order'),
     
      
@@ -32,12 +32,12 @@ urlpatterns = patterns('',
     url(r'^delete_order/(?P<order_id>[0-9]+)/$', order.delete_order, name='delete_order'),
     url(r'^update_order/(?P<order_id>[0-9]+)/$', order.update_order, name='update_order'),
 
-    url(r'^manage_gift_card/$', promotions.manage_gift_card, name='manage_gift_card'), 
-    url(r'^list_gift_cards/$', promotions.list_gift_cards, name='list_gift_cards'), 
+    url(r'^manage_gift_card/$', promotions.manage_gift_card, name='manage_gift_card'),
+    url(r'^list_gift_cards/$', promotions.list_gift_cards, name='list_gift_cards'),
     
-    url(r'^manage_promocode/$', promotions.manage_promocode, name='manage_promocode'), 
-    url(r'^list_promocodes/$', promotions.list_promocodes, name='list_promocodes'), 
-    url(r'^change_promocode_status/$', promotions.change_promocode_status, name='change_promocode_status'), 
+    url(r'^manage_promocode/$', promotions.manage_promocode, name='manage_promocode'),
+    url(r'^list_promocodes/$', promotions.list_promocodes, name='list_promocodes'),
+    url(r'^change_promocode_status/$', promotions.change_promocode_status, name='change_promocode_status'),
 
     url(r'^get_delivery_areas/$', delivery.get_delivery_areas, name='get_delivery_areas'),
     url(r'^manage_delivery_area/$', delivery.manage_delivery_area, name='manage_delivery_area'),
@@ -53,8 +53,8 @@ urlpatterns = patterns('',
     url(r'^get_kitchen_orders/$', order.get_kitchen_orders, name='get_kitchen_orders'),
     url(r'^get_delivery_orders/$', order.get_delivery_orders, name='get_delivery_orders'),
 
-    url(r'^import_meals/$', meals.import_meals, name='import_meals'),    
-    url(r'^manage_credits/$', promotions.manage_credits, name='manage_credits'),    
+    url(r'^import_meals/$', meals.import_meals, name='import_meals'),
+    url(r'^manage_credits/$', promotions.manage_credits, name='manage_credits'),
     
     url(r'^create_attribute/$', meals.create_attribute, name='create_attribute'),
     url(r'^list_attributes/$', meals.list_attributes, name='list_attributes'),

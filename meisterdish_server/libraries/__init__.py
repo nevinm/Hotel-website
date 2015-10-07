@@ -13,7 +13,7 @@ from datetime import datetime
 log = logging.getLogger('libraries')
 import os
 
-def mail(to_list, subject, message, sender=None, headers = None, design=True):
+def mail(to_list, subject, message, sender=None, headers=None, design=True):
     if not sender:
       sender = "Meisterdish<contact@meisterdish.com>"
     if not headers:
@@ -30,7 +30,7 @@ def mail(to_list, subject, message, sender=None, headers = None, design=True):
           fp = open(img, 'rb')
           msgImage = MIMEImage(fp.read())
           fp.close()
-          msgImage.add_header('Content-ID', '<'+cid+'>')
+          msgImage.add_header('Content-ID', '<' + cid + '>')
           msg.attach(msgImage)
     else:
       imgs = {"meisterdish_logo" : os.path.join(settings.STATIC_ROOT, "default", "logo_email.png")}  
@@ -38,11 +38,11 @@ def mail(to_list, subject, message, sender=None, headers = None, design=True):
           fp = open(img, 'rb')
           msgImage = MIMEImage(fp.read())
           fp.close()
-          msgImage.add_header('Content-ID', '<'+cid+'>')
+          msgImage.add_header('Content-ID', '<' + cid + '>')
           msg.attach(msgImage)
     return msg.send()
 
-def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdish<contact@meisterdish.com>", headers = {
+def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdish<contact@meisterdish.com>", headers={
               'Reply-To': "Meisterdish<contact@meisterdish.com>",
               'From':"Meisterdish<contact@meisterdish.com>",
               }):
@@ -55,26 +55,26 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
         if "Guest" not in first_name:
             share_images = {
               "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
-              #"share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
-              #"share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
+              # "share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
+              # "share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
               "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo_email.png"),
             }
         else:
             share_images = {
-              #"share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
-              #"share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
-              #"share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
+              # "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
+              # "share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
+              # "share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
               "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo_email.png"),
             }
 
         for ci in order.cart.cartitem_set.all():
-            share_images["img_"+str(ci.meal.id)] = ci.meal.main_image.image.path if ci.meal.main_image else os.path.join(settings.STATIC_ROOT,"default", "meal-default.jpg")
+            share_images["img_" + str(ci.meal.id)] = ci.meal.main_image.image.path if ci.meal.main_image else os.path.join(settings.STATIC_ROOT, "default", "meal-default.jpg")
 
         for cid, img in share_images.items():
             fp = open(img, 'rb')
             msgImage = MIMEImage(fp.read())
             fp.close()
-            msgImage.add_header('Content-ID', '<'+cid+'>')
+            msgImage.add_header('Content-ID', '<' + cid + '>')
             msg.attach(msgImage)
         return msg.send()
     except KeyError as e:
@@ -92,11 +92,11 @@ def manage_image_upload(request):
         wrapped_file = UploadedFile(file)
         filename = wrapped_file.name
         file_size = wrapped_file.file.size
-        log.info ('File upload : "'+str(filename)+'"')
+        log.info ('File upload : "' + str(filename) + '"')
 
         image = Image()
-        image.title=str(filename)
-        image.image=file
+        image.title = str(filename)
+        image.image = file
         image.save()
         log.info('Image uploaded.')
         
@@ -104,8 +104,8 @@ def manage_image_upload(request):
                    "status":1,
                    "message" : "Sucessfully uploaded the image.",
                    "id":image.id,
-                   "name":filename, 
-                   "size":file_size, 
+                   "name":filename,
+                   "size":file_size,
                    "url":image.image.url,
                    "thumbnail_url":image.thumb.url,
                 }
@@ -122,7 +122,7 @@ def validate_zipcode(zip):
 def validate_date(date_str):
     correctDate = None
     try:
-        correctDate = datetime.strptime(date_str,'%m-%d-%Y')
+        correctDate = datetime.strptime(date_str, '%m-%d-%Y')
         return True
     except ValueError:
         return False
@@ -156,9 +156,9 @@ def create_guest_user(request, details=None):
   log.info(details)
   try:
     if details:
-      email = 'guest_'+details["guest_email"].strip()
+      email = 'guest_' + details["guest_email"].strip()
       try:
-          user = User.objects.get(email= email)
+          user = User.objects.get(email=email)
       except User.DoesNotExist:
           user = User()
     else:
@@ -190,7 +190,7 @@ def create_guest_user(request, details=None):
       return (None, None)
     
   except Exception as e:
-    log.error("Failed to add guest user " +e.message )
+    log.error("Failed to add guest user " + e.message)
     return (None, None)
 
 
@@ -207,7 +207,7 @@ def json_request(request):
         req = request.body
 
         if not req:
-            req='{"a":"b"}'
+            req = '{"a":"b"}'
 
     if (req):
         try:
@@ -216,7 +216,7 @@ def json_request(request):
             else:
                 return simplejson.loads(req, "ISO-8859-1")
         except Exception as e:
-            log.error("Error json-decoding input : " +e.message)
+            log.error("Error json-decoding input : " + e.message)
             return None
     else:
         return None
@@ -242,7 +242,7 @@ def custom_error(message, status=-1):
 
 def save_payment_data(data):
     try:
-        payment =Payment()
+        payment = Payment()
         payment.response = simplejson.dumps(data)
         payment.transaction_id = data["id"]
         payment.transaction_date = datetime.fromtimestamp(data["created"])
@@ -258,17 +258,17 @@ def save_payment_data(data):
 
 def create_address_text_from_model(address, phone=None):
     if not address or not isinstance(address, Address):
-        return "Pick up ( Ph: +1 "+str(phone)+")"
+        return "Pick up ( Ph: +1 " + str(phone) + ")"
     text = address.first_name.title() + " " + address.last_name.title() + ", "
     text += address.street + ", " + address.building + ", "
-    text += address.city.title() + ", "+address.state.name + ", "
-    text += str(address.zip) + ", Ph: +1 "+str(address.phone)
+    text += address.city.title() + ", " + address.state.name + ", "
+    text += str(address.zip) + ", Ph: +1 " + str(address.phone)
     return text
 
 def export_csv(export_list, filename):
     import csv, os
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="'+filename+'"'
+    response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
     writer = csv.writer(response)
     for row in export_list:
         writer.writerow(row)
@@ -276,7 +276,7 @@ def export_csv(export_list, filename):
 
 def get_time_past(dtm):
     now = datetime.now()
-    mins = (now - dtm).days*24*60
+    mins = (now - dtm).days * 24 * 60
     return mins
 
 def add_to_mailing_list(email, zip):
@@ -299,5 +299,5 @@ def add_to_mailing_list(email, zip):
             log.info("Failed to add email to list")
             return False
     except Exception as e:
-        log.error("Failed to add to mailing list : "+e.message)
+        log.error("Failed to add to mailing list : " + e.message)
         return False

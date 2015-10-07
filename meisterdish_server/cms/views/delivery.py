@@ -20,7 +20,7 @@ log = logging.getLogger(__name__)
 def get_delivery_areas(request, data, user):
     try:
         limit = data.get('perPage', settings.PER_PAGE)
-        page = data.get("nextPage",1)
+        page = data.get("nextPage", 1)
 
         if "search" in data and data["search"].strip() != "":
           areas = DeliveryArea.objects.filter(zip__startswith=data["search"].strip())
@@ -31,7 +31,7 @@ def get_delivery_areas(request, data, user):
 
         try:
             paginator = Paginator(areas, limit)
-            if page <1 or page > paginator.page_range:
+            if page < 1 or page > paginator.page_range:
                 page = 1
             areas = paginator.page(page)
 
@@ -40,7 +40,7 @@ def get_delivery_areas(request, data, user):
             custom_error("There was an error listing delivery areas.")
 
         area_list = [{"id":area.id, "zip":str(area.zip)} for area in areas]
-        return json_response({"status":1, 
+        return json_response({"status":1,
                               "aaData":area_list,
                               "actual_count":actual_count,
                               "num_pages" : paginator.num_pages,
@@ -69,7 +69,7 @@ def manage_delivery_area(request, data, user):
             zip_obj = DeliveryArea.objects.get(pk=data["delete_id"])
             zip = zip_obj.zip
             zip_obj.delete()
-            return json_response({"status":1, "id":data["delete_id"], "message": "Deleted "+zip, "zip":zip})
+            return json_response({"status":1, "id":data["delete_id"], "message": "Deleted " + zip, "zip":zip})
 
         else:
             zip = data['zip'].strip()
@@ -82,7 +82,7 @@ def manage_delivery_area(request, data, user):
         
         area.zip = zip
         area.save()
-        return json_response({"status":1, "id":area.id, "message": action + "ed "+zip, "zip":zip})
+        return json_response({"status":1, "id":area.id, "message": action + "ed " + zip, "zip":zip})
       
     except Exception as e:
         log.error("Manage delivery area error : " + e.message)
@@ -90,7 +90,7 @@ def manage_delivery_area(request, data, user):
     
 
 @check_input('POST', settings.ROLE_ADMIN)
-def manage_delivery_slots(request,data,user):
+def manage_delivery_slots(request, data, user):
     try:
         single = False
         if "from_date" in data and str(data["from_date"]).strip() != "":
@@ -112,25 +112,25 @@ def manage_delivery_slots(request,data,user):
           
           
            
-        start_date = datetime.datetime.strptime(from_date,'%m-%d-%Y').date()
+        start_date = datetime.datetime.strptime(from_date, '%m-%d-%Y').date()
           
 
               
         if not single:
-            end_date = datetime.datetime.strptime(to_date,'%m-%d-%Y').date()
+            end_date = datetime.datetime.strptime(to_date, '%m-%d-%Y').date()
         else:
             end_date = start_date
               
         day_count = (end_date - start_date).days + 1
         dates = [d for d in (start_date + timedelta(n) for n in range(day_count)) if d.weekday() < 5]
-        log.info("Dates in range are" + " ".join(map(lambda i:datetime.datetime.strftime(i,format='%m-%d-%Y'),dates)))
+        log.info("Dates in range are" + " ".join(map(lambda i:datetime.datetime.strftime(i, format='%m-%d-%Y'), dates)))
         for slot_data in slots_list:
-            if datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y').date() not in dates and datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y').date().weekday() <5:
+            if datetime.datetime.strptime(slot_data["date"], '%m-%d-%Y').date() not in dates and datetime.datetime.strptime(slot_data["date"], '%m-%d-%Y').date().weekday() < 5:
                 return custom_error("Date not in the given Range")
-            time_slots = DeliveryTimeSlot.objects.filter(date = datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y'))
+            time_slots = DeliveryTimeSlot.objects.filter(date=datetime.datetime.strptime(slot_data["date"], '%m-%d-%Y'))
             
             if len(time_slots) == 0:
-                time_slots = DeliveryTimeSlot(date=datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y'))
+                time_slots = DeliveryTimeSlot(date=datetime.datetime.strptime(slot_data["date"], '%m-%d-%Y'))
 #                 time_slots = DeliveryTimeSlot.objects.create(date=datetime.datetime.strptime(slot_data["date"],'%m-%d-%Y'),slot1=0,slot2=0,slot3=0,slot4=0,slot5=0)
             else:
                 time_slots = time_slots[0]
@@ -146,7 +146,7 @@ def manage_delivery_slots(request,data,user):
                   
         return json_response({"status":1,
                                 
-                               "message":"value form "+from_date + " to " + to_date + " saved successfully",
+                               "message":"value form " + from_date + " to " + to_date + " saved successfully",
                                }
                               
                             )
@@ -161,7 +161,7 @@ def manage_delivery_slots(request,data,user):
     
 
 @check_input('POST', settings.ROLE_ADMIN)
-def get_delivery_slots(request,data,user):
+def get_delivery_slots(request, data, user):
     try:
         single = False
         if "from_date" in data and str(data["from_date"]).strip() != "":
@@ -175,27 +175,27 @@ def get_delivery_slots(request,data,user):
         else :
             single = True
         log.info("Date validated")
-        start_date = datetime.datetime.strptime(from_date,'%m-%d-%Y').date()
+        start_date = datetime.datetime.strptime(from_date, '%m-%d-%Y').date()
         log.info("Strp ed start date") 
         slots_list = []
               
         if not single:
-            end_date = datetime.datetime.strptime(to_date,'%m-%d-%Y').date()
+            end_date = datetime.datetime.strptime(to_date, '%m-%d-%Y').date()
         else:
             end_date = start_date
               
         day_count = (end_date - start_date).days + 1
-        dates = [d for d in (start_date + timedelta(n) for n in range(day_count)) if d.weekday()< 5]
+        dates = [d for d in (start_date + timedelta(n) for n in range(day_count)) if d.weekday() < 5]
         for d in dates:
-            time_slots = DeliveryTimeSlot.objects.filter(date = d)
+            time_slots = DeliveryTimeSlot.objects.filter(date=d)
             if len(time_slots) == 0:
-                tmp = DeliveryTimeSlot.objects.filter(date = (d- timedelta(days= 7)))
+                tmp = DeliveryTimeSlot.objects.filter(date=(d - timedelta(days=7)))
                 if tmp:
-                    time_slots = DeliveryTimeSlot.objects.create(date=d,slot1=tmp[0].slot1,slot2=tmp[0].slot2,slot3=tmp[0].slot3,slot4=tmp[0].slot4
-,slot5=tmp[0].slot5)
+                    time_slots = DeliveryTimeSlot.objects.create(date=d, slot1=tmp[0].slot1, slot2=tmp[0].slot2, slot3=tmp[0].slot3, slot4=tmp[0].slot4
+, slot5=tmp[0].slot5)
                 else:
                           
-                    time_slots = DeliveryTimeSlot.objects.create(date=d,slot1=0,slot2=0,slot3=0,slot4=0,slot5=0)
+                    time_slots = DeliveryTimeSlot.objects.create(date=d, slot1=0, slot2=0, slot3=0, slot4=0, slot5=0)
             else:
                 time_slots = time_slots[0]
             slots = {

@@ -15,19 +15,19 @@ def get_meals(request, data):
 
         limit = data.get('perPage', settings.PER_PAGE)
         page = data.get("nextPage", None)
-                    
+       
         meal_list = []
-        meals = Meal.objects.filter(is_deleted=False, available=True)
+        meals = Meal.objects.filter(is_deleted=False, available__gt=0)
         total_count = meals.count()
          
         if "search" in data and data['search'].strip() != '':
             search = data["search"]
-            meals = meals.filter(Q(name__istartswith=search)| Q(description__istartswith=search))
+            meals = meals.filter(Q(name__istartswith=search) | Q(description__istartswith=search))
         
         if "category_id" in data and str(data['category_id']) != '':
             meals = meals.filter(category__id=data["category_id"])
             
-        if "type_ids" in data and len(data['type_ids']) >0 and str(data['type_ids']) != '':
+        if "type_ids" in data and len(data['type_ids']) > 0 and str(data['type_ids']) != '':
             meals = meals.filter(types__id__in=data['type_ids'])
         
         meals = meals.order_by("order", "pk")
@@ -53,7 +53,7 @@ def get_meals(request, data):
                                     "thumb_url" : settings.DEFAULT_MEAL_IMAGE if not img.thumb else img.thumb.url,
                                     })
             """
-            #ingredients = simplejson.loads(meal.ingredients) if meal.ingredients is not None and len(meal.ingredients) > 0 else []
+            # ingredients = simplejson.loads(meal.ingredients) if meal.ingredients is not None and len(meal.ingredients) > 0 else []
             ings = [ingredient for ingredient in meal.ingredients.all() if len(meal.ingredients.all()) > 0]
             ing_list = []
             for ingredient in ings:
@@ -76,15 +76,15 @@ def get_meals(request, data):
                               "name":meal.name,
                               "sub":meal.sub,
                               "description":meal.description,
-                              #"images":meal_images,
+                              # "images":meal_images,
                               "main_image" : settings.DEFAULT_MEAL_IMAGE if not meal.main_image else meal.main_image.image.url,
-                              "available":1 if meal.available else 0,
+                              "available": meal.available,
                               "sold_out":1 if meal.sold_out else 0,
                               "category":"Not Available" if not meal.category else meal.category.name.title(),
                               "meal_types":meal_types,
                               "preparation_time":meal.preparation_time,
                               "price":meal.price,
-                              "tax":(meal.price * meal.tax) /100,
+                              "tax":(meal.price * meal.tax) / 100,
                               "ingredients":ing_list,
                               "in_cart" : 1  if qty != 0 else 0,
                               "quantity" : qty,
@@ -104,7 +104,7 @@ def get_meals(request, data):
         
         return json_response(res)
     except Exception as e:
-        log.error("Failed to list meals : "+e.message)
+        log.error("Failed to list meals : " + e.message)
         return custom_error("Failed to list meals")
     
 @check_input('POST')
@@ -118,16 +118,16 @@ def get_meal_details(request, data, meal_id):
             except Exception as e:
                 user = None
         else:
-            user=None
+            user = None
 
-        if str(meal_id) == '0' : # Get meal for home page
+        if str(meal_id) == '0' :  # Get meal for home page
             meal_id = Configuration.objects.filter(key='home_meal_id')
             if not meal_id.exists():
                 return custom_error("Home meal is not set.")
             else:
                 meal_id = int(meal_id[0].value)
         
-        meal = Meal.objects.get(pk=meal_id, is_deleted=False, available=True)
+        meal = Meal.objects.get(pk=meal_id, is_deleted=False, available__gt=0)
         rating_list = []
         rating_sum = 0.0
         rating_count = 0
@@ -174,8 +174,8 @@ def get_meal_details(request, data, meal_id):
             "description" : meal.description,
             "price":meal.price,
             "need_boiling_water":meal.need_boiling_water,
-            "tax":(meal.price * meal.tax) /100,
-            "available" : 1 if meal.available else 0,
+            "tax":(meal.price * meal.tax) / 100,
+            "available" : meal.available,
             "sold_out":1 if meal.sold_out else 0,
             "calories" : meal.calories,
             "cat_id" : 'Not Available' if not meal.category else {
@@ -202,7 +202,7 @@ def get_meal_details(request, data, meal_id):
                     },
 
             "nutrients" : "" if not meal.nutrients or meal.nutrients == ""  else simplejson.loads(meal.nutrients),
-            "ingredients" : [{"id":ing.id, "name":ing.name,"image_url":ing.image.image.url} for ing in meal.ingredients.all()],
+            "ingredients" : [{"id":ing.id, "name":ing.name, "image_url":ing.image.image.url} for ing in meal.ingredients.all()],
         # "" if not meal.ingredients or meal.ingredients == "" else simplejson.loads(meal.ingredients),
 #             "ingredients_image" : settings.DEFAULT_INGREDIENTS_IMAGE if meal.ingredients_image is None else {
 #                                                         "id" : meal.ingredients_image.id,
@@ -212,7 +212,7 @@ def get_meal_details(request, data, meal_id):
             "allergy_notice" : meal.allergy_notice,
             "images" : image_list,
             "ratings" : rating_list,
-            "avg_rating" : rating_sum/rating_count if int(rating_count) != 0 else 0,
+            "avg_rating" : rating_sum / rating_count if int(rating_count) != 0 else 0,
             "ratings_count" : rating_count,
             "main_image" : {"url":settings.DEFAULT_MEAL_IMAGE, "id":""} if not meal.main_image else {
                 "id":meal.main_image.id,
