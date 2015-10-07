@@ -739,7 +739,7 @@ $("form").each(function () {
                 required: "Enter valid data.",
                 number: "Enter a valid number.",
                 minAmount: "Enter a valid number.",
-                maxlength: "Enter valid data.",
+                maxlength: "Count should not contain more than 10 digits.",
                 even: "Enter an even number."
             },
             giftcardname: "Enter valid giftcardname.",
