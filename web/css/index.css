@@ -168,11 +168,15 @@ SLIDER
 }
 
 #section-what-is .slide-description,
-#section-zipcode .slide-description {
+#section-zipcode .slide-description,
+#sectionPromocode .slide-description{
     background: rgba(255, 255, 255, 0.8);
     max-width: 700px;
     border-radius: 5px;
     margin: 0 auto;
+    -webkit-box-shadow: inset 0px 0px 0px 1px rgba(211, 207, 207, 0.37);
+    -moz-box-shadow:inset 0px 0px 0px 1px rgba(211, 207, 207, 0.37);
+    box-shadow: inset 0px 0px 0px 1px rgba(211, 207, 207, 0.37);
 }
 
 .outer-slide-description {
@@ -181,6 +185,9 @@ SLIDER
     max-width: 720px;
     margin: 0 auto;
     border-radius: 5px;
+    -webkit-box-shadow: 0 3px 14px 0px rgba(211, 207, 207, 0.8);
+    -moz-box-shadow:0 3px 14px 0px rgba(211, 207, 207, 0.8);
+    box-shadow: 0 3px 14px 0px rgba(211, 207, 207, 0.8);
 }
 
 .menu-button {
@@ -379,7 +386,7 @@ p.lower-line {
     padding: 60px 10px;
 }
 
-#section-zipcode {
+#section-zipcode, #sectionPromocode {
     box-shadow: inset 0 7px 9px -7px rgba(211, 207, 207, 0.8);
 }
 
@@ -562,7 +569,15 @@ p.upper-content {
     max-height: 30px;
 }
 
+/*==============================*\
+        &Section promocode
+\*==============================*/
 
+#sectionPromocode {
+    background: url(../images/homepageslider/promocode-bg.jpg) center center no-repeat;
+    background-position: fixed;
+    background-size: cover;
+}
 /*==============================*\
         &Section zip code
 \*==============================*/
@@ -578,7 +593,7 @@ p.upper-content {
     margin-top: -50px;
 }
 
-.zip-code-container {
+.zip-code-container,.promo-code-container {
     text-align: center;
     padding: 30px 0;
     position: relative;
@@ -586,7 +601,7 @@ p.upper-content {
     margin: 0 auto;
 }
 
-#zip-code {
+#zip-code,#promoCode {
     width: 100%;
     height: 45px;
     text-align: center;
@@ -599,12 +614,12 @@ p.upper-content {
     position: relative;
     width: 46%;
 }
-input#zip-code[type="text"] {
+input#zip-code[type="text"],#promoCode {
     font-size: 16px;
     font-family: 'BrandonGrotesque-Light';
     text-transform: uppercase;
 }
-#zip-check{
+#zip-check,#promoCheck{
     width: 50%;
 }
 img#cancel,
@@ -666,7 +681,8 @@ img#close {
     left: 0;
 }
 
-label#zip-code-error {
+label#zip-code-error,
+label#promoCode-error{
     background: none;
     top: -26px;
     left: 0;
@@ -680,30 +696,35 @@ label#username-error {
     width: 70%;
 }
 
-#section-zipcode .header-hr {
+#section-zipcode .header-hr,
+#sectionPromocode .header-hr {
     width: 40%;
     margin-bottom: 20px;
 }
 
-#section-zipcode .slide-header {
+#section-zipcode .slide-header,
+#sectionPromocode .slide-header {
     padding: 30px;
 }
 
-#section-zipcode .zip-text {
+#section-zipcode .zip-text,
+#sectionPromocode .promo-text{
     margin-bottom: 20px;
 }
 
-#section-zipcode .zip-text p {
+#section-zipcode .zip-text p,
+#sectionPromocode .promo-text p{
     letter-spacing: 1.5px;
     font-family: 'BrandonGrotesque-Regular';
-    font-size: 15px;
+    font-size: 16px;
     color: #6B6B6B;
     text-align: center;
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
     #section-what-is .slide-description,
-    #section-zipcode .slide-description {
+    #section-zipcode .slide-description,
+    #sectionPromocode .slide-description{
         background: rgba(255, 255, 255, 1);
     }
     #section-what-is-meisterdish .meisterdish-details {
@@ -761,7 +782,8 @@ label#username-error {
     .menu-button {
         display: none;
     }
-    #section-zipcode .slide-header {
+    #section-zipcode .slide-header,
+    #sectionPromocode .slide-header {
         font-size: 30px;
     }
     .meal-image {
@@ -800,21 +822,25 @@ label#username-error {
     #section-what-to-expect .slide-description {
         padding: 0;
     }
-    .delivery-area-check-popup .popup-zip-fail, .zip-code-container {
+    .delivery-area-check-popup .popup-zip-fail,
+    .zip-code-container,
+    .promo-code-container{
         max-width: 300px;
         width: 80%;
     }
-    #zip-check{
+    #zip-check,#promoCheck{
         min-width: 0;
     }
-    input#zip-code[type="text"]{
+    input#zip-code[type="text"],#promoCode{
         font-size: 14px;
     }
 }
 
 @media (min-width: 320px) and (max-width: 400px) {
     #zip-code,
-    #zip-check {
+    #zip-check,
+    #promoCode,
+    #promoCheck{
         margin: 0;
     }
     .meal-sub-description p,
@@ -824,7 +850,7 @@ label#username-error {
     p.upper-line {
         font-size: 35px;
     }
-    label#zip-code-error{
+    label#zip-code-error,label#promoCode-error{
         top: -33px;
     }
 }

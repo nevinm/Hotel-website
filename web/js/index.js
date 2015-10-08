@@ -4,11 +4,20 @@ $(document).ready(function () {
     getMainMealId();
     // getHomePageMeal();
     shouldFullpageRender();
+    if (localStorage['loggedIn'] == 'true') {
+        $("#sectionPromocode").hide();
+    }
     $(".check-delivery").on('click', function (e) {
         e.preventDefault();
         var zipcode = $("#zip-code").val();
         if ($("form.zip-code-container").valid()) {
             locationCheck(zipcode);
+        }
+    });
+    $("#promoCheck").on("click", function (e) {
+        e.preventDefault();
+        if ($("form.promo-code-container").valid()) {
+            window.open(homeUrl + "/share/" + PROMO_CODE + "/", "_self");
         }
     });
     $("body").on("load", isSessionExpired);
@@ -73,6 +82,7 @@ function fullPageRender() {
     $("#section-zipcode").css({
         "height": screenHeight - footerHeight
     });
+    $("#sectionPromocode").height($("#section-zipcode").height() + 10);
 }
 //add to cart call back
 var addToCartCallback = {
@@ -319,6 +329,7 @@ function populateOverlayDetails(mealDetails) {
         $(".meal-overlay").show();
     }
     if (mealDetails.quantity >= 10) {
+//    if (mealDetails.quantity >= 10 || mealDetails.quantity >= mealDetails.available) {
         $("#meal-add").addClass("button-disabled");
     } else {
         $("#meal-add").removeClass("button-disabled");

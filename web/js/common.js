@@ -626,6 +626,10 @@ $("form").each(function () {
             subject: {
                 minlength: 3,
                 required: true,
+            },
+            promoCode: {
+                equals: PROMO_CODE,
+                required: true
             }
         },
         messages: {
@@ -742,6 +746,10 @@ $("form").each(function () {
                 maxlength: "Count should not contain more than 10 digits.",
                 even: "Enter an even number."
             },
+            promoCode: {
+                equals: "Invalid promo code.",
+                required: "Please enter promo code."
+            },
             giftcardname: "Enter valid giftcardname.",
             order: "Enter valid Order.",
             subject: "Enter a valid subject."
@@ -783,6 +791,9 @@ if ($.validator) {
     });
     $.validator.addMethod('even', function (value) {
         return (Number(value) % 2) === 0;
+    });
+    $.validator.addMethod('equals', function (value, element, comparator) {
+        return value.toUpperCase() === comparator;
     });
 }
 //CartItemCount
