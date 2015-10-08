@@ -319,6 +319,7 @@ function populateOverlayDetails(mealDetails) {
         $(".meal-overlay").show();
     }
     if (mealDetails.quantity >= 10) {
+//    if (mealDetails.quantity >= 10 || mealDetails.quantity >= mealDetails.available) {
         $("#meal-add").addClass("button-disabled");
     } else {
         $("#meal-add").removeClass("button-disabled");
