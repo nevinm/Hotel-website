@@ -1,6 +1,7 @@
 var sessionExpiryTime = 30,
-    baseURL = 'http://meisterdish.qburst.com/backend/api/',
-    homeUrl = "http://meisterdish.qburst.com";
+        baseURL = 'http://meisterdish.qburst.com/backend/api/',
+        homeUrl = "http://meisterdish.qburst.com",
+        PROMO_CODE = "MEISTER20"
 
 function getCurrentPage(firstChar, secondChar, url) {
     currentPage = url.substring(url.lastIndexOf(firstChar) + 1, url.lastIndexOf(secondChar));
@@ -9,7 +10,7 @@ function getCurrentPage(firstChar, secondChar, url) {
 
 function sessionCheckLogout() {
     var currentLink = window.location.href,
-        currentPage = getCurrentPage("/", ".", currentLink);
+            currentPage = getCurrentPage("/", ".", currentLink);
     if (!readCookie("SessionExpireTime") && JSON.parse(localStorage.getItem('loggedIn'))) {
         localStorage.removeItem('username');
         localStorage.removeItem('session_key');
@@ -21,12 +22,12 @@ function sessionCheckLogout() {
         localStorage['loggedIn'] = false;
         localStorage['admin_loggedIn'] = false;
         if (currentPage == "login" || currentPage == "how-it-works" ||
-            currentPage == "checkout" || currentPage == "forgot-password" ||
-            currentPage == "gift-cards-select" || currentPage == "giftcard-payment" ||
-            currentPage == "signup-fail" || currentPage == "meal-details" ||
-            currentPage == "privacy-terms" || currentPage == "signup" ||
-            currentPage == "menu" || currentPage == "reset-password" ||
-            currentPage == "reset-passwordsuccess") {
+                currentPage == "checkout" || currentPage == "forgot-password" ||
+                currentPage == "gift-cards-select" || currentPage == "giftcard-payment" ||
+                currentPage == "signup-fail" || currentPage == "meal-details" ||
+                currentPage == "privacy-terms" || currentPage == "signup" ||
+                currentPage == "menu" || currentPage == "reset-password" ||
+                currentPage == "reset-passwordsuccess") {
             location.reload();
         } else {
             window.location.href = 'login.html';
@@ -46,7 +47,8 @@ function createCookie(name, value, minutes) {
         var date = new Date();
         date.setTime(date.getTime() + (minutes * 60 * 1000));
         var expires = "; expires=" + date.toGMTString();
-    } else var expires = "";
+    } else
+        var expires = "";
     document.cookie = name + "=" + value + expires + "; path=/";
 }
 
@@ -55,8 +57,10 @@ function readCookie(name) {
     var ca = document.cookie.split(';');
     for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        while (c.charAt(0) == ' ')
+            c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0)
+            return c.substring(nameEQ.length, c.length);
     }
     return null;
 }
@@ -67,7 +71,7 @@ function eraseCookie(name) {
 
 function isLocalStorageNameSupported() {
     var testKey = 'test',
-        storage = window.sessionStorage;
+            storage = window.sessionStorage;
     try {
         storage.setItem(testKey, '1');
         storage.removeItem(testKey);
