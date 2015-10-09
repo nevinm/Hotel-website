@@ -469,7 +469,7 @@ p.lower-content {
 .meal-sub-description p,
 p.lower-content {
     letter-spacing: 1.5px;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 p.lower-content {
@@ -506,7 +506,7 @@ p.upper-content {
 
 .what-you-get-section p {
     font-family: 'BrandonGrotesque-Regular';
-    font-size: 24px;
+    /*font-size: 24px;*/
     letter-spacing: 1px;
     color: #6B6B6B;
     /*text-align: center;*/
