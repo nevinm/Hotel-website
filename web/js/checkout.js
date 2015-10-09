@@ -41,9 +41,9 @@ $(document).ready(function () {
         selectedTip = 0;
         $('.driver-tip-display').text("$0.00");
         selectedTip = this.value;
-        if (this.value.length > 2) {
-            selectedTip = this.value = this.value.slice(0, 2);
-        }
+//        if (this.value.length > 4) {
+//            selectedTip = this.value = this.value.slice(0, 2);
+//        }
         if (selectedTip >= 1) {
             $('.driver-tip-display').text("$" + selectedTip + ".00");
         } else if (selectedTip < 1 && selectedTip > 0) {
