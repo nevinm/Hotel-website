@@ -735,9 +735,9 @@ $("form").each(function () {
             giftcard: "Please enter valid code.",
             tip: {
                 required: "Please enter tip",
-                number: "Enter a number between 1 and 1000.",
-                maxAmount: "Enter amount between 1 and 1000.",
-                minAmount: "Enter amount between 1 and 1000."
+                number: "Please enter an amount",
+                maxAmount: "Please enter amount less than 1000",
+                minAmount: "Please enter tip"
             },
             available: {
                 required: "Enter a valid number.",
