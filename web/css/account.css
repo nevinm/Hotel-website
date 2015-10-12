@@ -112,6 +112,10 @@ input.autofillremove:-webkit-autofill {
 .mandatory{
     color: #a9d77b;
 }
+.delivery-order-container{
+    width: 64%;
+    float: left;
+}
 
 
 /*==================================*\
@@ -1043,8 +1047,8 @@ form.addaddress-popup, #new-address-form {
 }
 
 .order-list-container {
-    width: 64%;
-    float: right;
+/*    width: 64%;
+    float: right;*/
     padding: 10px 0 0 0;
     overflow-x: auto;
     height: 196px;
@@ -2183,7 +2187,7 @@ a#add-address-popup:hover {
     }
     .time-container {
         width: 100%;
-        float: none;
+        /*float: none;*/
         margin-bottom: 20px;
     }
     .delivery-order-container {
