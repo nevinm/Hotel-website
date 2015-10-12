@@ -274,7 +274,8 @@ def send_user_verification_mail(user, change_email=False, email=""):
             msg = render_to_string('verify_user_email_template.html', dic)
             sub = 'Verify your account for Meisterdish'
             to_email = user.email
-        mail([to_email], sub, msg)
+        
+        mail([to_email], sub, msg,design=False)
         log.info("Sent verification mail to " + to_email)
     except Exception as e:
         log.error("Failed to send user verification mail : " + e.message)
@@ -373,7 +374,7 @@ def forgot_password(request, data):
                }
         msg = render_to_string('forgot_password_email_template.html', dic)
 
-        res = mail([email], 'Reset your password for Meisterdish', msg)
+        res = mail([email], 'Reset your password for Meisterdish', msg,design=False)
         log.info(res)
     except KeyError as field:
         log.error("Forgot password request missing " + field.message)

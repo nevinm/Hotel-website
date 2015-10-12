@@ -155,6 +155,7 @@ def create_order(request, data, user):
         try:
             del_time = data['delivery_time'].strip()
             delivery_time = datetime.strptime(del_time, "%m/%d/%Y %H:%M:%S")
+            del_type = data["delivery_type"].strip()
             
             slot = DeliveryTimeSlot.objects.get(date=delivery_time.date())
             slot_dict = {"16": slot.slot1,
@@ -163,7 +164,7 @@ def create_order(request, data, user):
                               "19": slot.slot4,
                               "20": slot.slot5}
             slot_val = slot_dict[str(delivery_time.hour)] if slot_dict.has_key(str(delivery_time.hour)) else 0
-            if not slot_val:
+            if not slot_val and del_type.lower() != "pickup":
                 return custom_error("No available slots. Please select another time slot.")
             
             
@@ -178,7 +179,7 @@ def create_order(request, data, user):
         # if tip < 5:
         #    return custom_error("Miniumum tip amount is $5.") 
         
-        del_type = data["delivery_type"].strip()
+        
         if del_type.lower() == "pickup":
             email = data["email"].strip()
             phone = data["phone"].strip()
@@ -313,18 +314,20 @@ def create_order(request, data, user):
         order.save()
         user.save()
         
-        if delivery_time.hour == 16:
-            slot.slot1 -= 1
-        elif delivery_time.hour == 17:
-            slot.slot2 -= 1
-        elif delivery_time.hour == 18:
-            slot.slot3 -= 1
-        elif delivery_time.hour == 19:
-            slot.slot4 -= 1
-        elif delivery_time.hour == 20:
-            slot.slot5 -= 1
+        if del_type == "delivery":
+            
+            if delivery_time.hour == 16:
+                slot.slot1 -= 1
+            elif delivery_time.hour == 17:
+                slot.slot2 -= 1
+            elif delivery_time.hour == 18:
+                slot.slot3 -= 1
+            elif delivery_time.hour == 19:
+                slot.slot4 -= 1
+            elif delivery_time.hour == 20:
+                slot.slot5 -= 1
         
-        slot.save()
+            slot.save()
 
         for item in items:
             item.status = 0  # Placed
