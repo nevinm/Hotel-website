@@ -135,6 +135,66 @@
             <div id="page-container">
                 <div class="checkout-wrapper">
                     <div class="left-wrapper">
+                        <div class="delivery-time-container box-border">
+                            <div class="delivery-order-container">
+                                <div class="checkout-header">
+                                    <span>YOUR ORDER</span>
+                                </div>
+                                <div class="contents">
+                                    <div class="order-list-container">
+                                        <div class="order-list-header">
+                                            <span class="content-heading">ITEMS</span>
+                                            <span class="content-heading">SERVINGS</span>
+                                            <span class="content-heading">PRICE</span>
+                                        </div>
+                                        <div class="emtpy-cart-message body-text-small"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="time-container ">
+                                <div class="checkout-header">
+                                    <span>PICKUP OR DELIVERY</span>
+                                </div>
+                                <div class="contents contents-time-date">
+                                    <div class="select-delivery-method">
+                                        <div class="pickup">
+                                            <input type="radio" name="delivery-method" data-type='pickup' id="pickup-radio" class="checkbox-green">
+                                            <label for="pickup-radio">PICKUP</label>
+                                        </div>
+                                        <div class="delivery">
+                                            <input type="radio" checked="checked" class="checkbox-green" name="delivery-method" data-type='delivery' id="delivery-radio">
+                                            <label for="delivery-radio">DELIVERY</label>
+                                        </div>
+                                    </div>
+                                    <div class="today-content">
+                                        <span class="content-heading"></span>
+                                        <p class='shop-status body-text-big'>Closed for the day.</p>
+                                        <input type="button" data-slot='slot1' data-hr='16' value="4-5pm" class="checkout-time-button set-time-button">
+                                        <input type="button" data-slot='slot2' data-hr='17' value="5-6pm" class="checkout-time-button set-time-button">
+                                        <input type="button" data-slot='slot3' data-hr='18' value="6-7pm" class="checkout-time-button set-time-button">
+                                        <input type="button" data-slot='slot4' data-hr='19' value="7-8pm" class="checkout-time-button set-time-button">
+                                        <input type="button" data-slot='slot5' data-hr='20' value="8-9pm" class="checkout-time-button set-time-button">
+                                    </div>
+                                    <div class="week-content">
+                                        <span class="content-heading"></span>
+                                        <div class="time-content">
+                                            <input type="button" data-slot='slot1' data-hr='16' value="4-5pm" class="checkout-time-button set-time-button">
+                                            <input type="button" data-slot='slot2' data-hr='17' value="5-6pm" class="checkout-time-button set-time-button">
+                                            <input type="button" data-slot='slot3' data-hr='18' value="6-7pm" class="checkout-time-button set-time-button">
+                                            <input type="button" data-slot='slot4' data-hr='19' value="7-8pm" class="checkout-time-button set-time-button">
+                                            <input type="button" data-slot='slot5' data-hr='20' value="8-9pm" class="checkout-time-button set-time-button">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pickup-content">
+                                    <span>
+                                        OUR ADDRESS IS <b>218 EAST 81st ST, 10028</b>
+                                    </span>
+                                    <a class='google-maps-link' target='_blank' id='google-maps-link' href=''><b>OPEN IN GOOGLE MAPS</b></a>
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="delivery-info-container box-border">
                             <div class="delivery-info">
                                 <div class="checkout-header">
@@ -293,65 +353,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="delivery-time-container box-border">
-                            <div class="time-container ">
-                                <div class="checkout-header">
-                                    <span>PICKUP OR DELIVERY</span>
-                                </div>
-                                <div class="contents contents-time-date">
-                                    <div class="select-delivery-method">
-                                        <div class="pickup">
-                                            <input type="radio" name="delivery-method" data-type='pickup' id="pickup-radio" class="checkbox-green">
-                                            <label for="pickup-radio">PICKUP</label>
-                                        </div>
-                                        <div class="delivery">
-                                            <input type="radio" checked="checked" class="checkbox-green" name="delivery-method" data-type='delivery' id="delivery-radio">
-                                            <label for="delivery-radio">DELIVERY</label>
-                                        </div>
-                                    </div>
-                                    <div class="today-content">
-                                        <span class="content-heading"></span>
-                                        <p class='shop-status body-text-big'>Closed for the day.</p>
-                                        <input type="button" data-slot='slot1' data-hr='16' value="4-5pm" class="checkout-time-button set-time-button">
-                                        <input type="button" data-slot='slot2' data-hr='17' value="5-6pm" class="checkout-time-button set-time-button">
-                                        <input type="button" data-slot='slot3' data-hr='18' value="6-7pm" class="checkout-time-button set-time-button">
-                                        <input type="button" data-slot='slot4' data-hr='19' value="7-8pm" class="checkout-time-button set-time-button">
-                                        <input type="button" data-slot='slot5' data-hr='20' value="8-9pm" class="checkout-time-button set-time-button">
-                                    </div>
-                                    <div class="week-content">
-                                        <span class="content-heading"></span>
-                                        <div class="time-content">
-                                            <input type="button" data-slot='slot1' data-hr='16' value="4-5pm" class="checkout-time-button set-time-button">
-                                            <input type="button" data-slot='slot2' data-hr='17' value="5-6pm" class="checkout-time-button set-time-button">
-                                            <input type="button" data-slot='slot3' data-hr='18' value="6-7pm" class="checkout-time-button set-time-button">
-                                            <input type="button" data-slot='slot4' data-hr='19' value="7-8pm" class="checkout-time-button set-time-button">
-                                            <input type="button" data-slot='slot5' data-hr='20' value="8-9pm" class="checkout-time-button set-time-button">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pickup-content">
-                                    <span>
-                                        OUR ADDRESS IS <b>218 EAST 81st ST, 10028</b>
-                                    </span>
-                                    <a class='google-maps-link' target='_blank' id='google-maps-link' href=''><b>OPEN IN GOOGLE MAPS</b></a>
-                                </div>
-                            </div>
-                            <div class="delivery-order-container">
-                                <div class="checkout-header">
-                                    <span>YOUR ORDER</span>
-                                </div>
-                                <div class="contents">
-                                    <div class="order-list-container">
-                                        <div class="order-list-header">
-                                            <span class="content-heading">ITEMS</span>
-                                            <span class="content-heading">SERVINGS</span>
-                                            <span class="content-heading">PRICE</span>
-                                        </div>
-                                        <div class="emtpy-cart-message body-text-small"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="right-wrapper">
                         <div class="receipt-container">
