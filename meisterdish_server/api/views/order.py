@@ -313,18 +313,20 @@ def create_order(request, data, user):
         order.save()
         user.save()
         
-        if delivery_time.hour == 16:
-            slot.slot1 -= 1
-        elif delivery_time.hour == 17:
-            slot.slot2 -= 1
-        elif delivery_time.hour == 18:
-            slot.slot3 -= 1
-        elif delivery_time.hour == 19:
-            slot.slot4 -= 1
-        elif delivery_time.hour == 20:
-            slot.slot5 -= 1
+        if del_type == "delivery":
+            
+            if delivery_time.hour == 16:
+                slot.slot1 -= 1
+            elif delivery_time.hour == 17:
+                slot.slot2 -= 1
+            elif delivery_time.hour == 18:
+                slot.slot3 -= 1
+            elif delivery_time.hour == 19:
+                slot.slot4 -= 1
+            elif delivery_time.hour == 20:
+                slot.slot5 -= 1
         
-        slot.save()
+            slot.save()
 
         for item in items:
             item.status = 0  # Placed
