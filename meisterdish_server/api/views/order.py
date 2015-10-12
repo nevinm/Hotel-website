@@ -404,7 +404,7 @@ def save_pdf(order):
         else:
             name = 'Guest User'
         res = save_to_pdf(
-                    'print_order.html',
+                    'print_order_new.html',
                     {
                         'pagesize':'A8',
                         'order':order,
