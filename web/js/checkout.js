@@ -44,11 +44,11 @@ $(document).ready(function () {
 //        if (this.value.length > 4) {
 //            selectedTip = this.value = this.value.slice(0, 2);
 //        }
-        if (selectedTip >= 1) {
+        if (selectedTip >= 0) {
             $('.driver-tip-display').text("$" + selectedTip + ".00");
         } else if (selectedTip < 1 && selectedTip > 0) {
             $('.driver-tip-display').text("$0." + selectedTip);
-        } else if (selectedTip == 0 || isNaN(selectedTip)) {
+        } else if (isNaN(selectedTip)) {
             $('.driver-tip-display').text("$0.00");
         }
         if ($('#tip-form').valid()) {
