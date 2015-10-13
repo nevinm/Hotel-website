@@ -409,6 +409,8 @@ class Order(models.Model):
     created = models.DateTimeField(db_index=True, null=True)
     updated = models.DateTimeField(null=True)
     
+    notified = models.BooleanField(default=False)
+    
     def save(self, *args, **kwargs):
         self.updated = datetime.datetime.now()
 
