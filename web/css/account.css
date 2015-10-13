@@ -1361,7 +1361,7 @@ form#pay-form, form#credit-card-form, form#update-pay-form {
 .tip-input-container {
     position: relative;
     float: left;
-    width: 75%;
+    width: 100%;
     padding-top: 20px;
 }
 
@@ -1883,7 +1883,7 @@ img.accepted-cards {
 .driver-tip {
     font-family: 'ProximaNova-regular';
     color: #9B9B9B;
-    width: 80% !important;
+    width: 45% !important;
 }
 
 input::-webkit-inner-spin-button {
