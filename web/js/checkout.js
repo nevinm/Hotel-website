@@ -38,8 +38,12 @@ $(document).ready(function () {
     $('#tip-form').on('submit', function (e) {
         e.preventDefault();
     });
-
-    $('.driver-tip').off().on('keyup input', function () {
+    $('.driver-tip').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+    $('.driver-tip').on('keyup input', function (e) {
         selectedTip = 0;
         $('.driver-tip-display').text("$0.00");
         selectedTip = this.value;
