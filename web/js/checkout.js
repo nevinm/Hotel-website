@@ -39,7 +39,7 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $('.driver-tip').on('keyup input', function () {
+    $('.driver-tip').off().on('keyup input', function () {
         selectedTip = 0;
         $('.driver-tip-display').text("$0.00");
         selectedTip = this.value;
