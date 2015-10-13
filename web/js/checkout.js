@@ -3,9 +3,11 @@ var billingAddressId, cardDetails,
         returnUrl = baseURL + "paypal_success/",
         cancelReturnUrl = homeUrl + "/views/checkout.html",
         notifyUrl = baseURL + "paypal_ipn/",
-        totalDiscount = 0;
+        totalDiscount = 0,
+        tipAmt = null;
 
 $(document).ready(function () {
+    $("#tip-error").css("width", "144px");
     CartItemCount();
     if (localStorage["session_key"]) {
         getAddress();
@@ -557,6 +559,7 @@ function updateReciept(GiftcardDetails, flag) {
     if ($('#pickup-radio').prop('checked')) {
         totalDeliveryCost = 0;
         totalDriverTip = 0;
+        tipAmt = $('.driver-tip').val();
         $('.driver-tip').val(0);
         $(".driver-tip-container").hide();
         $('span.total-delivery-cost').text('$0.00');
@@ -564,6 +567,13 @@ function updateReciept(GiftcardDetails, flag) {
         if ($(".order-list-items").length > 0) {
             totalDeliveryCost = 2.95;
             $('span.total-delivery-cost').text('$2.95');
+            if ($('.driver-tip').is(':visible')) {
+                tipAmt = $('.driver-tip').val();
+            }
+            if (tipAmt) {
+                $('.driver-tip').val(tipAmt);
+            }
+
             $(".driver-tip-display").text("$" + parseFloat($('.driver-tip').val()).toFixed(2));
         } else {
             $('span.total-delivery-cost').text('$0.00');
