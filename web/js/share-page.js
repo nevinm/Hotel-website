@@ -54,12 +54,13 @@ function popitup(url) {
 }
 
 function facebookShare(site_url, accessToken) {
-    var imgURL = homeUrl + "/images/fb-sharing-1.png", //change with your external photo url
+    var imgURL = homeUrl + "/images/fb-sharing.png", //change with your external photo url
             referralCode = localStorage['referral_code'];
     FB.api('me/photos', 'post', {
-        message: "New York's first on-demand delivery service that lets you cook in 15 minutes." +
-                " For a limited time only, all first-time customers receive $20 towards their first two meals." +
-                " Just use promo code MEISTER20 on our landing page." + referralCode,
+        message: 'Ready to cook meals, delivered on demand.' +
+                'Start cooking today for $20 off your first order!' +
+                'Fresh ingredients washed and prepped by us,' +
+                'cooked to perfection by you. ' + referralCode,
         status: 'success',
         access_token: accessToken,
         url: imgURL
