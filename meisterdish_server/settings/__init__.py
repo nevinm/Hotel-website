@@ -211,6 +211,10 @@ LOGGING = {
             'handlers': ['logfile'],
             'level': 'DEBUG'
         },
+        'xhtml2pdf': {
+            'handlers': ['logfile'],
+            'level': 'DEBUG'
+        },
     }
 }
 
