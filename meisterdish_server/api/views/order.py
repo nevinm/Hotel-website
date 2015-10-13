@@ -175,7 +175,7 @@ def create_order(request, data, user):
         # if delivery_time < datetime.now():# - timedelta(hours=settings.ORDER_DELIVERY_WINDOW):
         #    return custom_error("Sorry, you cannot choose a past time as delivery time.")
 
-        tip = int(data.get('tip', 5))
+        tip = float(data.get('tip', 5))
         # if tip < 5:
         #    return custom_error("Miniumum tip amount is $5.") 
         

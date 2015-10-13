@@ -347,7 +347,7 @@ def add_to_mailing_list(email, zip):
 
 def send_text_reminder(context):
     try:
-        txt = "Your Meisterdish order %s is getting ready and will be delivered within 2 hours." % context['order']
+        txt = "Your Meisterdish is getting prepared and will be delivered within the next hour. Please make sure that you are at location to receive your meal"
         client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
         country_code = "+1" if settings.Live else "+91"
         number = country_code + str(context["mobile"]).strip()
