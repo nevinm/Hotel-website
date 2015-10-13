@@ -12,6 +12,8 @@ import json as simplejson
 from datetime import datetime
 log = logging.getLogger('libraries')
 import os
+from twilio.rest  import TwilioRestClient
+
 
 def mail(to_list, subject, message, sender=None, headers=None, design=True):
     if not sender:
@@ -341,3 +343,28 @@ def add_to_mailing_list(email, zip):
     except Exception as e:
         log.error("Failed to add to mailing list : " + e.message)
         return False
+
+
+def send_text_reminder(context):
+    try:
+        txt = "Your Meisterdish order %s is getting ready and will be delivered within 2 hours." % context['order']
+        client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+        country_code = "+1" if settings.Live else "+91"
+        number = country_code + str(context["mobile"]).strip()
+        message = client.messages.create(body=txt,
+            to= number,
+            from_=settings.TWILIO_NUMBER)
+        log.info(message)
+        if message:
+            log.info("Sent SMS to " + number)
+            return True
+        else:
+            log.error("Failed to send SMS to " + number)
+            return False
+    except Exception as e:
+        log.error("Failed to send order SMS to : " + number + " : "+e.message)
+        return False
+
+
+
+
