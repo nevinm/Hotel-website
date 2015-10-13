@@ -436,7 +436,11 @@ var getCartItemsCallback = {
                 $(".total-delivery-cost").text("$0.00");
                 $(".driver-tip").val(0);
             }
-            $(".driver-tip-display").text("$" + parseFloat($('.driver-tip').val()).toFixed(2));
+            if ($('.driver-tip').val().length > 0) {
+                $(".driver-tip-display").text("$" + parseFloat($('.driver-tip').val()).toFixed(2));
+            } else {
+                $(".total-delivery-cost").text("$0.00");
+            }
             populateCartItems(cartItems);
             populateDate(cartItems);
             if (cartItems.coupon != null) {
@@ -523,7 +527,11 @@ function populateCartItems(data) {
         $(".total-delivery-cost").text("$0.00");
         $(".driver-tip").val(0);
     }
-    $(".driver-tip-display").text("$" + parseFloat($('.driver-tip').val()).toFixed(2));
+    if ($('.driver-tip').val().length > 0) {
+        $(".driver-tip-display").text("$" + parseFloat($('.driver-tip').val()).toFixed(2));
+    } else {
+        $(".driver-tip-display").text("$0.00");
+    }
     $.each(data.aaData, function (key, value) {
         $('.order-list-container').append("<div class='order-list-items' data-id='" + value.id + "'>" +
                 "<img src='" + value.image + "'>" + "<span class='body-text-small'>" + value.name + "</span>" +
@@ -575,8 +583,12 @@ function updateReciept(GiftcardDetails, flag) {
             if (tipAmt) {
                 $('.driver-tip').val(tipAmt);
             }
+            if ($('.driver-tip').val().length > 0) {
+                $(".driver-tip-display").text("$" + parseFloat($('.driver-tip').val()).toFixed(2));
+            } else {
+                $(".driver-tip-display").text("$0.00");
+            }
 
-            $(".driver-tip-display").text("$" + parseFloat($('.driver-tip').val()).toFixed(2));
         } else {
             $('span.total-delivery-cost').text('$0.00');
             $('.driver-tip').val(0);
