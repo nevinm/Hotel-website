@@ -38,20 +38,22 @@ $(document).ready(function () {
     $('#tip-form').on('submit', function (e) {
         e.preventDefault();
     });
-
-    $('.driver-tip').off().on('keyup input', function () {
+    $('.driver-tip').keypress(function (event) {
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        }
+    });
+    $('.driver-tip').on('keyup input', function (e) {
         selectedTip = 0;
         $('.driver-tip-display').text("$0.00");
         selectedTip = this.value;
 //        if (this.value.length > 4) {
 //            selectedTip = this.value = this.value.slice(0, 2);
 //        }
-        if (selectedTip >= 0) {
-            $('.driver-tip-display').text("$" + selectedTip + ".00");
-        } else if (selectedTip < 1 && selectedTip > 0) {
-            $('.driver-tip-display').text("$0." + selectedTip);
-        } else if (isNaN(selectedTip)) {
+        if (isNaN(selectedTip) || selectedTip.length === 0) {
             $('.driver-tip-display').text("$0.00");
+        } else if (selectedTip >= 0) {
+            $('.driver-tip-display').text("$" + parseFloat(selectedTip).toFixed(2));
         }
         if ($('#tip-form').valid()) {
             updateReciept();
