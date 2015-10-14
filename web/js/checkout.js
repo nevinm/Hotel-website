@@ -4,7 +4,8 @@ var billingAddressId, cardDetails,
         cancelReturnUrl = homeUrl + "/views/checkout.html",
         notifyUrl = baseURL + "paypal_ipn/",
         totalDiscount = 0,
-        tipAmt = null;
+        tipAmt = null,
+        decimalPoint = 0
 
 $(document).ready(function () {
     $("#tip-error").css("width", "144px");
@@ -38,18 +39,12 @@ $(document).ready(function () {
     $('#tip-form').on('submit', function (e) {
         e.preventDefault();
     });
-    $('.driver-tip').keypress(function (event) {
-        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
-            event.preventDefault();
-        }
-    });
-    $('.driver-tip').on('keyup input', function (e) {
+    $('.driver-tip').on('keydown', function (event) {
+        return isNumber(event, this);
+    }).on('keyup', function (event) {
         selectedTip = 0;
         $('.driver-tip-display').text("$0.00");
         selectedTip = this.value;
-//        if (this.value.length > 4) {
-//            selectedTip = this.value = this.value.slice(0, 2);
-//        }
         if (isNaN(selectedTip) || selectedTip.length === 0) {
             $('.driver-tip-display').text("$0.00");
         } else if (selectedTip >= 0) {
@@ -58,8 +53,18 @@ $(document).ready(function () {
         if ($('#tip-form').valid()) {
             updateReciept();
         }
+    }).on('blur', function (e) {
+        var element = $(this);
+        if (element.val() === "")
+            element.val(0);
     });
-
+    function isNumber(evt, element) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ((charCode != 190 || $(element).val().indexOf('.') != -1)  // “.” CHECK DOT, AND ONLY ONE.
+                && ((charCode < 48 && charCode != 8) || charCode > 57))
+            return false;
+        return true;
+    }
     //Set time for delivery API call
     $('.set-time-button').on('click', function () {
         var requiredDate = $(this).attr("data-date");
@@ -259,8 +264,8 @@ $(document).ready(function () {
         $('.pickup-content').hide();
         $("#add-guest-address").show();
         $(".state-selector-container").show();
-        $('span.driver-tip-display').text('$5.00');
-        $('.driver-tip').val(5);
+//        $('span.driver-tip-display').text('$5.00');
+//        $('.driver-tip').val(5);
         updateReciept();
         $('#tip-form').validate().resetForm();
         $("#guest-address-info").validate().resetForm()
@@ -569,20 +574,20 @@ function updateReciept(GiftcardDetails, flag) {
     if ($('#pickup-radio').prop('checked')) {
         totalDeliveryCost = 0;
         totalDriverTip = 0;
-        tipAmt = $('.driver-tip').val();
-        $('.driver-tip').val(0);
+//        tipAmt = $('.driver-tip').val();
+//        $('.driver-tip').val(0);
         $(".driver-tip-container").hide();
         $('span.total-delivery-cost').text('$0.00');
     } else {
         if ($(".order-list-items").length > 0) {
             totalDeliveryCost = 2.95;
             $('span.total-delivery-cost').text('$2.95');
-            if ($('.driver-tip').is(':visible')) {
-                tipAmt = $('.driver-tip').val();
-            }
-            if (tipAmt) {
-                $('.driver-tip').val(tipAmt);
-            }
+//            if ($('.driver-tip').is(':visible')) {
+//                tipAmt = $('.driver-tip').val();
+//            }
+//            if (tipAmt) {
+//                $('.driver-tip').val(tipAmt);
+//            }
             if ($('.driver-tip').val().length > 0) {
                 $(".driver-tip-display").text("$" + parseFloat($('.driver-tip').val()).toFixed(2));
             } else {
