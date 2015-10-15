@@ -138,18 +138,22 @@ SLIDER
 \*==============================*/
 
 #section-what-is {
-    background: url(../images/homepageslider/homepage-main.jpg) 0% 50% no-repeat;
+    /*background: url(../images/homepageslider/homepage-main.jpg) 0% 50% no-repeat;*/
+    background: url(../images/home-header-bg.jpg) 0% 29% no-repeat;
     background-position: fixed;
     margin-top: 100px;
     background-size: cover;
     text-align: center;
+    background-color: #D8D8D8;
+    background-blend-mode: multiply;
 }
 
 #section-what-is .main-header {
-    font-family: 'BrandonGrotesque-Medium';
-    font-size: 40px;
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 30px;
     letter-spacing: 2.5px;
     color: #6B6B6B;
+    padding: 10px;
 }
 
 #section-what-is .sub-header {
@@ -160,7 +164,7 @@ SLIDER
 }
 
 .main-header-container {
-    padding: 30px 0;
+    padding: 10px 0;
 }
 
 .sub-header-container {
@@ -189,10 +193,32 @@ SLIDER
     -moz-box-shadow:0 3px 14px 0px rgba(211, 207, 207, 0.8);
     box-shadow: 0 3px 14px 0px rgba(211, 207, 207, 0.8);
 }
+#section-what-is .outer-slide-description{
+    margin: 0 10%;
+    max-width: 518px;
+}
+.main-header-ads ul{
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 17px;
+    letter-spacing: 2px;
+    color: #7E7E7E;
+    padding: 0px 12px;
+}
+.main-header-ads li{
+    list-style: none;
+    width: 33%;
+    float: left;
+    padding: 15px;
+    text-align: center;
+}
+.main-header-ads img{
+    height: 66px;
+    max-height: 66px;
+}
 
 .menu-button {
     margin-bottom: 30px;
-    padding: 0 40px;
+    padding: 0 75px;
 }
 
 #section-what-is .section-logo img,
@@ -727,6 +753,12 @@ label#username-error {
     #sectionPromocode .slide-description{
         background: rgba(255, 255, 255, 1);
     }
+    #section-what-is .slide-description{
+        height: 664px;
+    }
+    .main-header-ads li{
+        width: 100%;
+    }
     #section-what-is-meisterdish .meisterdish-details {
         width: 100%;
     }
@@ -761,7 +793,8 @@ label#username-error {
         max-width: 80%;
         margin: 0 auto;
     }
-    .outer-slide-description {
+    .outer-slide-description,
+    #section-what-is .outer-slide-description {
         max-width: 80%;
         margin: 0 auto;
     }
