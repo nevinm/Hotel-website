@@ -1047,8 +1047,8 @@ form.addaddress-popup, #new-address-form {
 }
 
 .order-list-container {
-/*    width: 64%;
-    float: right;*/
+    /*    width: 64%;
+        float: right;*/
     padding: 10px 0 0 0;
     overflow-x: auto;
     height: 196px;
@@ -1895,6 +1895,16 @@ input::-webkit-inner-spin-button {
 
 #tip-error {
     bottom: 33px;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+input[type=number]{
+    -moz-appearance:textfield;
 }
 
 .shop-status {
