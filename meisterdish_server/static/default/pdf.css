@@ -151,7 +151,7 @@ tr,
 th,
 td {
 
-    vertical-align: middle;
+    vertical-align: baseline;
     width: auto;
 }
 
