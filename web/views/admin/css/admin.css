@@ -614,7 +614,7 @@ img#cancel, .edit-meal-available-popup .cancel {
 
 .order-status, #order-status-filter {
     background-color: rgb(247, 247, 247);
-    width: 145px;
+    width: 100px;
     border: 1px solid #ddd;
     font-family: 'BrandonGrotesque-Regular';
     color: #7E7979;
@@ -622,7 +622,9 @@ img#cancel, .edit-meal-available-popup .cancel {
     font-size: 11px;
     padding: 2px;
 }
-
+.qty span{
+    text-align: center;
+}
 #search-orders {
     margin-left: 30px;
     margin-top: 28px;
