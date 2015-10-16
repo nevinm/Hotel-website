@@ -5,7 +5,8 @@ var billingAddressId, cardDetails,
         notifyUrl = baseURL + "paypal_ipn/",
         totalDiscount = 0,
         tipAmt = null,
-        decimalPoint = 0
+        decimalPoint = 0,
+        slotsArray = ["4-5pm", "5-6pm", "6-7pm", "7-8pm", "8-9pm", "4-5pm", "5-6pm", "6-7pm", "7-8pm", "8-9pm"];
 
 $(document).ready(function () {
     $("#tip-error").css("width", "144px");
@@ -228,6 +229,7 @@ $(document).ready(function () {
         e.preventDefault();
     });
     $('#pickup-radio').on("click", function () {
+        resetSlots();
         $('.address-info-guest').show();
         $('.address-info').hide();
         $("#guest-address-info input").removeClass('error');
@@ -248,6 +250,7 @@ $(document).ready(function () {
     });
 
     $('#delivery-radio').on("click", function () {
+        getDeliverySlots();
         if ($('.address-info').is(':empty')) {
             $('.address-info-guest').show();
 
@@ -405,7 +408,8 @@ var getDeliverySlotsCallback = {
     success: function (data, textStatus) {
         deliverySlotData = JSON.parse(data);
         if (deliverySlotData.status == 1) {
-            populateDeliverySlotData(deliverySlotData);
+            if ($("#delivery-radio").prop("checked"))
+                populateDeliverySlotData(deliverySlotData);
         } else {
             showPopup(deliverySlotData);
         }
@@ -1525,4 +1529,12 @@ function fixGoogleMapLink() {
     } else {
         $("#google-maps-link").attr("href", "http://maps.google.com/maps?saddr=Current+Location&daddr=Meisterdish+218+E+81st+St+New+York+NY+10028+United+States");
     }
+}
+
+function resetSlots() {
+    var elements = $(".checkout-time-button");
+    $.each(elements, function (key, value) {
+        $(value).val(slotsArray[key]);
+        $(value).removeClass("time-slot-disabled").addClass("checkout-time-button").addClass("set-time-button");
+    });
 }
