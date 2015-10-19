@@ -218,7 +218,11 @@ SLIDER
 
 .menu-button {
     margin-bottom: 30px;
-    padding: 0 75px;
+    padding: 7px 88px;
+    height: auto;
+    line-height: normal;
+    text-align: center;
+    font-size: 15px;
 }
 
 #section-what-is .section-logo img,
@@ -816,7 +820,12 @@ label#username-error {
     .mobile-menu-button {
         display: block;
         margin: 30px auto 0 auto !important;
-        width: 200px;
+        width: 235px;
+        padding: 7px;
+        height: auto;
+        line-height: normal;
+        text-align: center;
+        font-size: 15px;
     }
     .menu-button {
         display: none;
