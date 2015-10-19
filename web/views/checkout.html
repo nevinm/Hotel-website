@@ -220,16 +220,28 @@
                                                 </div>
                                             </div>
                                             <div class="section2">
+                                                <div class="forminput-wrapper" id="companyWrapper">
+                                                    <label class="body-text-small">Company Name</label>
+                                                    <input type="text" name="company" class="popup-input" id="companyName">
+                                                    <input type="hidden" id="hidden-companyName" value="">
+                                                </div>
+
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small">Delivery Address<span class="mandatory">*</span></label>
+                                                    <input type="checkbox" value="Business" id="business" class="regular-checkbox">
+                                                    <label for="business"  class="body-text-small">Business</label>
+                                                    <input type="text" name="street" class="popup-input" id="address-line-1" style="
+                                                           margin-bottom: 10px;">
+                                                </div>
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small">Suit/Apt</label>
+                                                    <input type="text" class="popup-input apartment" style="
+                                                           margin-bottom: 10px;">
+                                                </div>
                                                 <div class="forminput-wrapper">
                                                     <label class="body-text-small">Email<span class="mandatory">*</span></label>
                                                     <input type="email" name="email" class="popup-input" id="guest-email">
                                                     <input type="hidden" id="hidden-pickupEmail" value="">
-                                                </div>
-                                                <div class="forminput-wrapper">
-                                                    <label class="body-text-small">Delivery Address<span class="mandatory">*</span></label>
-                                                    <input type="text" name="street" class="popup-input" id="address-line-1" style="
-                                                           margin-bottom: 10px;">
-                                                    <input type="text" name="building" class="popup-input" id="address-line-2">
                                                 </div>
                                             </div>
                                             <div class="section3">
@@ -385,7 +397,7 @@
                                     <div class="inner-content body-text-small">
                                         <form id="tip-form">
                                             <div class="tip-input-container">
-                                                <input class="driver-tip popup-input" type="number" value="0" name="tip" min="0" max="1000" step="0.01"/>
+                                                <input class="driver-tip popup-input" type="number" value="0" name="tip" min="0" max="1000" step="0.01" maxlength="4"/>
                                                 <!--<input type="number" name="tip" min="0" max="100" step="10" value="30" class="popup-input driver-tip">-->
                                             </div>
                                         </form>
@@ -471,15 +483,27 @@
                                     </div>
                                 </div>
                                 <div class="section2">
+                                    <div class="forminput-wrapper" id="companySection">
+                                        <label class="body-text-small">Company Name</label>
+                                        <input type="text" name="company" class="popup-input" id="companyName">
+                                        <input type="hidden" id="hidden-companyName" value="">
+                                    </div>
+
+
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Delivery Address<span class="mandatory">*</span></label>
+                                        <input type="checkbox" value="Business" id="businessCheckbox" class="regular-checkbox">
+                                        <label for="businessCheckbox" class="body-text-small">Business</label>
+                                        <input type="text" name="street" class="popup-input" id="address-line-1" style="
+                                               margin-bottom: 10px;">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Suit/Apt</label>
+                                        <input type="text" class="popup-input apartment" style="margin-bottom: 10px;">
+                                    </div>
                                     <div class="forminput-wrapper">
                                         <label class="body-text-small">Email<span class="mandatory">*</span></label>
                                         <input type="email" name="email" class="popup-input">
-                                    </div>
-                                    <div class="forminput-wrapper">
-                                        <label class="body-text-small">Delivery Address<span class="mandatory">*</span></label>
-                                        <input type="text" name="street" class="popup-input" id="address-line-1" style="
-                                               margin-bottom: 10px;">
-                                        <input type="text" name="building" class="popup-input" id="address-line-2">
                                     </div>
                                 </div>
                                 <div class="section3">

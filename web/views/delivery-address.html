@@ -167,35 +167,43 @@
                             <form class="addaddress-popup">
                                 <div class="section1">
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">First Name</label>
+                                        <label class="body-text-small">First Name<span class="mandatory">*</span></label>
                                         <input type="text" name="firstname" class="popup-input">
                                     </div>
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">Last Name</label>
+                                        <label class="body-text-small">Last Name<span class="mandatory">*</span></label>
                                         <input type="text" name="lastname" class="popup-input">
                                     </div>
                                 </div>
                                 <div class="section2">
-                                    <div class="forminput-wrapper">
-                                        <label class="body-text-small">Email</label>
-                                        <input type="email" name="email" class="popup-input" id="guest-email">
+                                    <div class="forminput-wrapper" id="companySection">
+                                        <label class="body-text-small">Company Name</label>
+                                        <input type="text" name="company" class="popup-input" id="company-name">
                                     </div>
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">Address Line (Street)</label>
+                                        <label class="body-text-small">Street<span class="mandatory">*</span></label>
                                         <div class='primary-wrapper'>
-                                            <input type="checkbox" name="is-primary" class="popup-input checkbox">
-                                            <span class='checkbox-span'>Primary</span>
+                                            <input type="checkbox" name="is-primary" class="popup-input checkbox" id="isPrimary">
+                                            <label class='checkbox-span' for="isPrimary">Primary</label>
+                                        </div>
+                                        <div class='business-wrapper'>
+                                            <input type="checkbox" name="is-business" class="popup-input checkbox" id="isBusiness">
+                                            <label class='checkbox-span' for="isBusiness">Business</label>
                                         </div>
                                         <input type="text" name="street" class="popup-input" id="address-line-1">
                                     </div>
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">Address Line (Appartment)</label>
-                                        <input type="text" name="building" class="popup-input" id="address-line-2">
+                                        <label class="body-text-small">Suit/Apt</label>
+                                        <input type="text" class="popup-input apartment">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Email<span class="mandatory">*</span></label>
+                                        <input type="email" name="email" class="popup-input" id="guest-email">
                                     </div>
                                 </div>
                                 <div class="section3">
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">State</label>
+                                        <label class="body-text-small">State<span class="mandatory">*</span></label>
                                         <div class="styled-select-state">
                                             <select class='state-selector' name="state">
                                                 <option value=""></option>
@@ -203,24 +211,25 @@
                                         </div>
                                     </div>
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">City</label>
+                                        <label class="body-text-small">City<span class="mandatory">*</span></label>
                                         <input type="text" name="city" class="popup-input city-selector">
                                     </div>
                                 </div>
                                 <div class="section4">
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">Zip</label>
+                                        <label class="body-text-small">Zip<span class="mandatory">*</span></label>
                                         <input type="text" name="zip" class="popup-input">
                                     </div>
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">Phone</label>
-                                        <input type="text" name="phonenumber"placeholder='XXXXXXXXXX' class="popup-input">
+                                        <label class="body-text-small">Phone<span class="mandatory">*</span></label>
+                                        <input type="text" name="phonenumber" placeholder='XXXXXXXXXX' class="popup-input">
                                     </div>
                                 </div>
                                 <div class="button">
                                     <input class="btn btn-small-primary medium-green" id="savepopup-data" value="" type="submit">
                                 </div>
                             </form>
+                            <div style="clear: both;"></div>
                         </div>
                     </div>
                 </div>
