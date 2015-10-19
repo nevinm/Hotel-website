@@ -726,6 +726,10 @@ form.addaddress-popup, #new-address-form {
     width: 65%;
     float: left;
 }
+.address-info-guest .section2 .forminput-wrapper:nth-child(2){
+    width: 70%;
+    min-width: 200px;
+}
 .section2 .forminput-wrapper:nth-child(4){
     width: 100%;
 }
@@ -736,6 +740,10 @@ form.addaddress-popup, #new-address-form {
     width: 30%;
     float: right;
 }
+.address-info-guest .section2 .forminput-wrapper:nth-child(3) {
+    width: 27%;
+}
+
 .section2 .forminput-wrapper:nth-child(4){
     clear: both;
 }
