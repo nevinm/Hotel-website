@@ -417,6 +417,7 @@ def export_users_for_promotion(request, data):
                     if primary_address :
                         primary_address = primary_address[0]
                         company = primary_address.company if primary_address.company else ""
+                        is_business_flag = 'Yes' if primary_address.is_business else "No"
                         address = '''Name          : %s %s
 Is Business ? :%s
 Company       :%s
@@ -427,7 +428,7 @@ State         :%s
 Zip code      :%s
 Phone         :%s
 Email         :%s
-''' % (primary_address.first_name, primary_address.last_name, company, primary_address.building, primary_address.street, primary_address.city, primary_address.state.name, primary_address.zip, primary_address.phone, primary_address.email)
+''' % (primary_address.first_name, primary_address.last_name, is_business_flag,company, primary_address.building, primary_address.street, primary_address.city, primary_address.state.name, primary_address.zip, primary_address.phone, primary_address.email)
                     else:
                         address = ""
                     users_list.append([
