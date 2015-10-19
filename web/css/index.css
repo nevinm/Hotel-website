@@ -197,6 +197,9 @@ SLIDER
     margin: 0 10%;
     max-width: 518px;
 }
+.main-header-ads{
+    margin-bottom: 10px;
+}
 .main-header-ads ul{
     font-family: 'BrandonGrotesque-Regular';
     font-size: 17px;
