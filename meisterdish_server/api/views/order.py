@@ -263,7 +263,7 @@ def create_order(request, data, user):
             elif order.cart.gift_cards.count():
                 gc_amount = 0
                 gc_amount = order.cart.gift_cards.aggregate(Sum('amount'))["amount__sum"]
-                if gc_amount > order.total_payable:
+                if gc_amount > order    .total_payable:
                     order.discount = order.total_payable
                     user.credits += gc_amount - order.total_payable
                     order.total_payable = 0
@@ -369,6 +369,7 @@ def create_order(request, data, user):
         return custom_error(e.message + "is missing.")
 
 def print_order(order):
+    
     try:
         pdf_content = save_pdf(order)
         if not pdf_content:
@@ -393,6 +394,7 @@ def print_order(order):
         return False
 
 def save_pdf(order):
+    
     try:
         from libraries.pdfcreator import save_to_pdf
         path = settings.MEDIA_ROOT + "/prints/order_" + order.order_num + ".pdf"
@@ -422,7 +424,7 @@ def save_pdf(order):
         log.error("Failed to save PDF for order #" + order.order_num)
         return False
     except Exception as e:
-        log.error("Failed to save pdf." + e.message)
+        log.error("Failed to save pdf." + e.message+ " type: "+str(type(e)))
         return False
 
 def get_order_cart_items(order):
@@ -594,7 +596,9 @@ def send_order_placed_notification(order):
                "cart_items":order.cart.cartitem_set.all().order_by('id'),
                }
         if order.delivery_type != "pickup":
+            dic["is_business"] = order.delivery_address.is_business
             dic["delivery_name"] = order.delivery_address.first_name.title() + " " + order.delivery_address.last_name.title()
+            dic["delivery_company"] = order.delivery_address.company
             dic["delivery_add1"] = order.delivery_address.building + ", " + order.delivery_address.street
             dic["delivery_add2"] = order.delivery_address.city.title() + ", " + order.delivery_address.state.name + ", " + order.delivery_address.zip
         
