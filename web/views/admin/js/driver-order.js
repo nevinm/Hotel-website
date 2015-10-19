@@ -88,6 +88,7 @@ function populateDeliveryOrderList(order_data) {
                 address_name = undefinedCheck(delivery_address.first_name) + " " +
                 undefinedCheck(delivery_address.last_name),
                 building = undefinedCheck(delivery_address.building),
+                company = undefinedCheck(delivery_address.company),
                 street = undefinedCheck(delivery_address.street),
                 city = undefinedCheck(delivery_address.city),
                 state = undefinedCheck(delivery_address.state),
@@ -105,7 +106,8 @@ function populateDeliveryOrderList(order_data) {
                 meridianDeliveryTime.date + "<br>" + meridianDeliveryTime.time + "</td>" +
                 "<td>" + value.order_num + "</td>" +
                 "<td>" + zip + "</td>" +
-                "<td>" + "<span class='address'>" + building + ", " + street + "</span>" + "</td>" +
+                "<td>" + "<span class='address'>" + (company.length > 0 ? company + ", " : "")
+                + (building.length > 0 ? building + ", " : "") + ", " + street + "</span>" + "</td>" +
                 "<td>" + "<span class='address'>" + city + ", " + state + "</span>" + "</td>" +
                 "<td>" + name + "</td>" +
                 "<td>" + phone + "</td>" +
@@ -133,9 +135,9 @@ function populateDeliveryOrderList(order_data) {
         $.each(meals, function (key, value) {
             $("#delivery-order td.qty:last").append("<span>" + value.quantity + " " + "</span>");
             if (key + 1 == mealLength) {
-                $("#delivery-order td.meals:last").append("<span>" + value.name + " " + "</span>");               
+                $("#delivery-order td.meals:last").append("<span>" + value.name + " " + "</span>");
             } else {
-                $("#delivery-order td.meals:last").append("<span>" + value.name + "," + "</span>");               
+                $("#delivery-order td.meals:last").append("<span>" + value.name + "," + "</span>");
             }
         });
 
