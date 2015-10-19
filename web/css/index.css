@@ -753,8 +753,11 @@ label#username-error {
     #sectionPromocode .slide-description{
         background: rgba(255, 255, 255, 1);
     }
-    #section-what-is .slide-description{
-        height: 664px;
+    /*    #section-what-is .slide-description{
+            height: 664px;
+        }*/
+    #clear{
+        clear: both;
     }
     .main-header-ads li{
         width: 100%;
@@ -797,6 +800,9 @@ label#username-error {
     #section-what-is .outer-slide-description {
         max-width: 80%;
         margin: 0 auto;
+    }
+    #section-what-is .outer-slide-description {
+        max-width: 90%;
     }
     .section-logo {
         padding: 30px 0;
