@@ -243,6 +243,8 @@ def get_order_details(request, data, user, order_id):
                      "id":order.delivery_address.id,
                      "first_name":order.delivery_address.first_name,
                      "last_name":order.delivery_address.last_name,
+                     "is_business":"Yes" if order.delivery_address.is_business else "No",
+                     "company":order.delivery_address.company,
                      "street":order.delivery_address.street,
                      "building":order.delivery_address.building,
                      "city":order.delivery_address.city.title(),
