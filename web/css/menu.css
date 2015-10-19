@@ -282,7 +282,7 @@
 
 .meal-overlay,.sold-overlay {
     position: absolute;
-    height: 99%;
+    height: 98%;
     width: 100%;
     top: 0;
     left: 0;
@@ -695,6 +695,9 @@ span.per-serving-text {
     .menu-offer {
         height: 50px;
         font-size: 12px;
+    }
+    .meal-overlay,.sold-overlay {
+        height: 99%;
     }
 }
 

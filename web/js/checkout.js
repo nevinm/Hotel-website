@@ -9,6 +9,8 @@ var billingAddressId, cardDetails,
         slotsArray = ["4-5pm", "5-6pm", "6-7pm", "7-8pm", "8-9pm", "4-5pm", "5-6pm", "6-7pm", "7-8pm", "8-9pm"];
 
 $(document).ready(function () {
+    loadViewDefaults();
+    bindEvents();
     $("#tip-error").css("width", "144px");
     CartItemCount();
     if (localStorage["session_key"]) {
@@ -58,6 +60,10 @@ $(document).ready(function () {
         var element = $(this);
         if (element.val() === "")
             element.val(0);
+    }).on('input', function (e) {
+        var maxlength = $(this).attr("maxLength");
+        if ($(this).val().length > maxlength)
+            $(this).val($(this).val().slice(0, maxlength));
     });
     function isNumber(evt, element) {
         var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -151,6 +157,7 @@ $(document).ready(function () {
     });
     //add address
     $(document).on('click', '#add-address-popup', function () {
+        loadViewDefaults();
         if (localStorage['loggedIn'] != 'true') {
             getProfile();
         }
@@ -159,6 +166,7 @@ $(document).ready(function () {
         $('.addresspopup-wrapper').show();
     });
     $('#close-new-address-form').on("click", function () {
+        $(".regular-checkbox").prop("checked", false);
         $('.addresspopup-wrapper').hide();
     })
     $(document).on('click', '#save-new-address', function (e) {
@@ -230,6 +238,7 @@ $(document).ready(function () {
     });
     $('#pickup-radio').on("click", function () {
         resetSlots();
+        $(".regular-checkbox").prop("checked", false);
         $('.address-info-guest').show();
         $('.address-info').hide();
         $("#guest-address-info input").removeClass('error');
@@ -274,7 +283,8 @@ $(document).ready(function () {
 //        $('.driver-tip').val(5);
         updateReciept();
         $('#tip-form').validate().resetForm();
-        $("#guest-address-info").validate().resetForm()
+        $("#guest-address-info").validate().resetForm();
+        loadViewDefaults();
     });
 
     $('#is-gift-card').on('click', function () {
@@ -926,6 +936,7 @@ function populateAddresstoInfoContainer(userDetails) {
                 $('.address-info').append("<div class='contents address-added' data-id='" + value.id + "'>" +
                         "<span class='content-heading'>" + "DELIVERY ADDRESS" + "</span>" +
                         "<span>" + value.first_name + " " + value.last_name + "</span>" +
+                        ((value.is_business == 1 && value.company.length > 0) ? ("<span>" + value.company + "</span>") : "") +
                         "<span>" + value.street + ", " + value.building + "</span>" +
                         "<span>" + value.city + ", " + value.state + " " + value.zip + "</span>" +
                         "<span>" + value.phone + "</span>" +
@@ -964,6 +975,7 @@ function appendAddresscontent(addressList) {
                 "<label class='list-address' for='" + value.id + 1 + "' data-email = '"
                 + value.email + "' data-phone='" + value.phone + "'>" +
                 "<span>" + value.first_name + " " + value.last_name + "</span>" +
+                ((value.is_business == 1 && value.company.length > 0) ? ("<span>" + value.company + "</span>") : "") +
                 "<span>" + value.street + ", " + value.building + "</span>" +
                 "<span>" + value.city + ", " + value.state + " " + value.zip + "</span>" +
                 "<span>" + value.phone + "</span>" + "</label>" + "</div>");
@@ -1040,7 +1052,9 @@ function addAddress(flag) {
         "street": newAddress.street,
         "building": newAddress.building,
         "is_primary": newAddress.is_primary,
-        "checkout": 1
+        "checkout": 1,
+        is_business: newAddress.is_business,
+        company: newAddress.company
     };
     data = JSON.stringify(userData);
     var addAddressInstance = new AjaxHttpSender();
@@ -1066,10 +1080,12 @@ function getNewAddress(flag) {
         email: $addressContainer.find("input[name*='email']").val(),
         city_id: city_name,
         city: city_name,
-        building: $addressContainer.find("input[name*='building']").val(),
+        building: $addressContainer.find("input[class*='apartment']").val(),
         is_primary: $addressContainer.find("input[type*='checkbox']").val() == "on" ? 1 : 0,
         state_id: state_id,
-        state: state_name
+        state: state_name,
+        is_business: $addressContainer.find("input[id*='business']").prop("checked") ? 1 : 0,
+        company: $addressContainer.find("input[name*='company']").val()
     }
     return newAddress;
 }
@@ -1536,5 +1552,25 @@ function resetSlots() {
     $.each(elements, function (key, value) {
         $(value).val(slotsArray[key]);
         $(value).removeClass("time-slot-disabled").addClass("checkout-time-button").addClass("set-time-button");
+    });
+    setCurrentTime();
+}
+function loadViewDefaults() {
+    $(".forminput-wrapper input").removeClass("error");
+    $("#companyWrapper").hide();
+    if ($("#guest-address-info .regular-checkbox").prop("checked")) {
+        $("#companyWrapper").toggle();
+    }
+    $("#companySection").hide();
+    if ($("#new-address-form .regular-checkbox").prop("checked")) {
+        $("#companySection").toggle();
+    }
+}
+function bindEvents() {
+    $("#guest-address-info .regular-checkbox").on("click", function () {
+        $("#companyWrapper").toggle();
+    });
+    $("#new-address-form .regular-checkbox").on("click", function () {
+        $("#companySection").toggle();
     });
 }

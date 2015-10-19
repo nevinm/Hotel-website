@@ -397,7 +397,7 @@ ol {
 }
 
 .content .address {
-    min-height: 160px;
+    min-height: 200px;
     width: 33.33%;
     float: left;
     padding: 2px 32px 6px 9px;
@@ -427,7 +427,7 @@ ol {
     width: 240px;
 }
 
-#editaddress-container .content ol li span:nth-child(6), #review-container .content ol li span:nth-child(6) {
+.add-primary, #review-container .content ol li span:nth-child(6) {
     font-family: 'BrandonGrotesque-Bold';
     padding-top: 20px;
     width: 240px;
@@ -684,7 +684,7 @@ form.addaddress-popup, #new-address-form {
     float: left;
 }
 
-.primary-wrapper {
+.primary-wrapper,.business-wrapper {
     width: 75px;
     margin-top: -5px;
     float: right;
@@ -695,6 +695,9 @@ form.addaddress-popup, #new-address-form {
     width: 157px;
     float: left;
     margin-bottom: 10px;
+}
+.margin-validate{
+    margin-top: 22px;
 }
 
 .section1 .forminput-wrapper:first-child {
@@ -716,14 +719,25 @@ form.addaddress-popup, #new-address-form {
     position: relative;
 }
 
-.section2 .forminput-wrapper:nth-child(2) {
+.section2 .forminput-wrapper:nth-child(2), 
+.section2 .forminput-wrapper:nth-child(4){
     margin-bottom: 12px;
     position: relative;
+    width: 65%;
+    float: left;
+}
+.section2 .forminput-wrapper:nth-child(4){
+    width: 100%;
 }
 
 .section2 .forminput-wrapper:nth-child(3) {
     margin-bottom: 12px;
     position: relative;
+    width: 30%;
+    float: right;
+}
+.section2 .forminput-wrapper:nth-child(4){
+    clear: both;
 }
 
 .section3 .forminput-wrapper select {
@@ -1552,7 +1566,7 @@ input.radio-button-payment {
     font-family: 'ProximaNova-Regular';
     color: #b0b0b0;
     padding: 20px 20px;
-    min-height: 138px;
+    min-height: 142px;
 }
 
 .list-address span {
@@ -1639,8 +1653,12 @@ input.radio-button-payment {
     display: none;
 }
 
-form#guest-address-info #address-line-1-error, form#guest-address-info #address-line-2-error {
-    bottom: 76px;
+form#guest-address-info #address-line-1-error, 
+form#guest-address-info #address-line-2-error,
+#new-address-form #address-line-1-error, 
+#new-address-form #address-line-2-error{
+    bottom: 48px;
+    width: 135px;
 }
 
 .select-delivery-method {
@@ -1931,9 +1949,7 @@ a#add-address-popup:hover {
     cursor: pointer;
 }
 
-#new-address-form #address-line-1-error, #new-address-form #address-line-2-error {
-    bottom: 74px;
-}
+
 
 #new-address-form .styled-select {
     background: url(../images/selector-arrow.png) no-repeat 113px 6px #f7f7f7;
@@ -1949,7 +1965,52 @@ a#add-address-popup:hover {
 .google-maps-link{
     color: #BEE09B;
 }
-
+.regular-checkbox {
+    display: none;
+}
+.regular-checkbox+label {
+    position: relative;
+    padding-left: 27px;
+    -webkit-font-smoothing: antialiased;
+    cursor: pointer;
+    float: right;
+}
+.regular-checkbox:checked+label:before {
+    background-color: #e9ecee;
+    border: 1px solid #adb8c0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05),inset 0px -15px 10px -12px rgba(0,0,0,0.05),inset 15px 10px -12px rgba(255,255,255,0.1);
+    color: #99a1a7;
+}
+.regular-checkbox+label:before {
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05),inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 2px;
+    border-radius: 3px;
+    position: absolute;
+    content: '';
+    width: 12px;
+    height: 12px;
+    left: 0;
+}
+.regular-checkbox:checked+label:after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 2px;
+    width: 15px;
+    height: 10px;
+    background: url(../images/green_checkmark.png) no-repeat 0 0;
+    background-size: 100%;
+    background-position: 0% 58%;
+}
+.button-disabled+label:before{
+    background-color: #d0d0d0;
+}
+.forminput-wrapper{
+    /*    position: relative;
+        margin-bottom: 15px;*/
+}
 /*==================================*\
                         &TABLET
 \*==================================*/
@@ -1992,6 +2053,10 @@ a#add-address-popup:hover {
     }
     .meal-content {
         max-height: none;
+    }
+    .addresspopup .container {
+        overflow: auto;
+        max-height: 320px;
     }
 }
 
@@ -2292,7 +2357,7 @@ a#add-address-popup:hover {
         width: 25%;
     }
     form#guest-address-info #address-line-1-error {
-        bottom: 88px;
+        bottom: 49px;
     }
     form#guest-address-info #address-line-2-error {
         bottom: 88px;
@@ -2361,6 +2426,19 @@ a#add-address-popup:hover {
     .upload-image-container {
         width: 100%;
         margin: 50px 0 0 0;
+    }
+    .forminput-wrapper{
+        margin-top: 10px;
+    }
+    #new-address-form .styled-select {
+        background-position: 96%;
+    }
+    .section3 .forminput-wrapper .styled-select-state{
+        width: 100%;
+        background-position: 96%;
+    }
+    .delivery-main-wrapper .section2 .forminput-wrapper #address-line-1-error {
+        bottom: 32px;
     }
 }
 
@@ -2436,7 +2514,8 @@ a#add-address-popup:hover {
         width: 100%;
         height: 30px;
     }
-    .addresspopup .primary-wrapper input.popup-input {
+    .addresspopup .primary-wrapper input.popup-input,
+    .addresspopup .business-wrapper input.popup-input{
         height: auto !important;
         width: auto !important;
     }
