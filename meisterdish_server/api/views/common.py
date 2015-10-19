@@ -461,6 +461,7 @@ def get_profile(request, data, user):
                                  "last_name":add.last_name,
                                  "is_primary":1 if add.is_primary else 0,
                                  "is_business":1 if add.is_business else 0,
+                                 "company": add.company,
                                  "street":add.street,
                                  "building":add.building,
                                  "city":add.city.title(),
