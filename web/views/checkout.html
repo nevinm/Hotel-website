@@ -316,7 +316,7 @@
                                             <form id="pay-form" action="" method="POST" autocomplete='off'>
                                                 <div class="forminput-wrapper">
                                                     <label class="body-text-small">Card Holder Name</label>
-                                                    <input type="text" name="nameOnCard" class="popup-input" id="name-on-card">
+                                                    <input type="text" name="nameOnCard" class="popup-input" id="name-on-card" data-stripe="name" maxlength="26">
                                                 </div>
                                                 <div class="forminput-wrapper">
                                                     <label class="body-text-small">Credit card number</label>
@@ -586,7 +586,7 @@
                                 </div>
                                 <div class="forminput-wrapper">
                                     <label class="body-text-small">Name</label>
-                                    <input type="text" name="nameOnCard" class="popup-input" id="nameOnCard">
+                                    <input type="text" maxlength="26" name="nameOnCard" class="popup-input" id="nameOnCard" data-stripe="name">
                                 </div>
                                 <div class="button-container">
                                     <input type="submit" id="addPopupCreditCard" class="btn btn-small-extended medium-green update-add-credit-card" value="ADD">
