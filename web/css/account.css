@@ -1869,6 +1869,13 @@ img.accepted-cards {
 .credit-card-wrapper .button-container{
     padding-bottom: 0px;
 }
+#firstCreditCardBtn{
+    display: none;
+    text-align: center;
+    margin: 0 auto;
+    padding: 12px 0px;
+    clear: both;
+}
 #update-payment {
     display: none;
     float: left;
