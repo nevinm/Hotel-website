@@ -2492,6 +2492,9 @@ a#add-address-popup:hover {
     .delivery-main-wrapper .section2 .forminput-wrapper #address-line-1-error {
         bottom: 32px;
     }
+    #name-on-card-error{
+        bottom: 66px;
+    }
 }
 
 @media (max-width:400px) {
