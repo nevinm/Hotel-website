@@ -1582,7 +1582,9 @@ function bindEvents() {
     });
     $(document).on('click', "#close-new-credit-card-form", function (e) {
         e.preventDefault();
+        $('#payForm').validate().resetForm();
         $(".credit-card-wrapper").hide();
+
     });
     $("#addPopupCreditCard").on("click", function (e) {
         e.preventDefault();
