@@ -781,6 +781,7 @@ var savedCardDetailsCallback = {
                 $('.payment-method-guest-container').hide();
             } else {
                 $('.payment-method-guest-container').show();
+                $("#firstCreditCardBtn").show();
 //                $('.payment-info .checkout-header span').css('padding-left', '35px');
             }
         } else {
@@ -1596,9 +1597,16 @@ function bindEvents() {
             StripeController.createToken($("#payForm"), creditCardAddToStripeCallback);
         }
     });
+    $("#saveFirstCreditCard").on("click", function (e) {
+        e.preventDefault();
+        var $form = $(".payment-method-guest-container #pay-form");
+        if ($form.valid()) {
+            $("#saveFirstCreditCard").prop('disabled', true);
+            StripeController.createToken($form, creditCardAddToStripeCallback);
+        }
+    });
 }
-function creditCardAddToStripeCallback(status, response) {
-    var $form = $("#payForm");
+function creditCardAddToStripeCallback(status, response, $form) {
     if (response.error) {
         $(".credit-card-wrapper").hide();
         $form.find('button').prop('disabled', false);
