@@ -239,6 +239,7 @@ def save_credit_card(request, data, user):
         if card:
     	    c_card = CreditCardDetails()
             c_card.user = user
+            c_card.name = card.name
             c_card.card_id = card.id
             c_card.number = '#### #### #### ' + str(card.last4)
             c_card.funding = card.funding
@@ -268,6 +269,7 @@ def update_credit_card(request, data, user, card_id):
 
         if "name" in data and data["name"].strip() != "":
             card.name = data["name"].strip()
+            card_obj.name = data["name"].strip()
 
         if "exp_month" in data:
             card.exp_month = data["exp_month"]
@@ -318,6 +320,7 @@ def get_saved_cards(request, data, user):
         for card in cards:
             cards_list.append({
                 "id": card.id,
+                "name":card.name,
                 "card_id" : card.card_id,
                 "number" : card.number,
                 "expire_month" : card.expire_month,
