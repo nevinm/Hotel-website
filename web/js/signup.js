@@ -61,20 +61,19 @@ function referralUIIntegrate() {
 }
 
 function signupInit() {
-    redirectIfLoggedIn();
-//    if (localStorage['loggedIn'] == 'true') {
-//        
-//        $(".popup-container .content span").text("You're already logged in!");
-//        $("#close").text("OK");
-//        $(".popup-wrapper").show();
-//    }
-//    $("#close").on("click", function (e) {
-//        e.preventDefault();
-//        $(".popup-wrapper").hide();
-//        $(".popup-container .content span").text("SOMTHING WENT WRONG");
-//        $("#close").text("CLOSE");
-//        redirectIfLoggedIn();
-//    });
+//    redirectIfLoggedIn();
+    if (localStorage['loggedIn'] == 'true') {
+        $(".popup-container .content span").text("You're already logged in!");
+        $("#close").text("OK");
+        $(".popup-wrapper").show();
+    }
+    $("#close").on("click", function (e) {
+        e.preventDefault();
+        $(".popup-wrapper").hide();
+        $(".popup-container .content span").text("SOMTHING WENT WRONG");
+        $("#close").text("CLOSE");
+        redirectIfLoggedIn();
+    });
     CartItemCount();
     referralCode = getParameterFromUrl('ref');
     if (referralCode.length) {

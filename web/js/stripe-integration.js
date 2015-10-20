@@ -1,5 +1,5 @@
 function stripeIntegration() {
-    $('#pay-form').submit(function(event) {
+    $('#pay-form').submit(function (event) {
         if ($('#pay-form').valid()) {
             event.preventDefault();
             var $form = $(this);
@@ -29,13 +29,35 @@ function stripeResponseHandler(status, response) {
     } else {
         // response contains id and card, which contains additional card details
         var token = response.id,
-            currentPage = getCurrentPage("/", ".html", window.location.href);
+                currentPage = getCurrentPage("/", ".html", window.location.href);
         if (currentPage == "add-creditcard") {
             saveCreditCardDetails(token);
         } else if (currentPage == "checkout") {
             cardNotSavedCreateOrder(token);
-        } else if(currentPage == "giftcard-payment"){
+        } else if (currentPage == "giftcard-payment") {
             fetchGiftCardData(token);
         }
     }
-};
+}
+var StripeController = (function () {
+    var global = {
+        callback: undefined,
+        form: undefined
+    };
+    function createToken(form, callbackFn) {
+        global.callback = callbackFn;
+        global.form = form;
+        var $form = form;
+        Stripe.card.createToken($form, StripeController.tokenResponseHandler);
+        return false;
+    }
+    function tokenResponseHandler(status, response) {
+        if (global.callback !== undefined) {
+            global.callback(status, response, global.form);
+        }
+    }
+    return {
+        createToken: createToken,
+        tokenResponseHandler: tokenResponseHandler
+    };
+})();

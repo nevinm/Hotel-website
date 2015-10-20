@@ -296,7 +296,7 @@
                                             <span class="content-heading">PAYING WITH CREDIT CARD</span>
                                             <div class="saved-cards"></div>
                                         </div>
-                                        <span class="change-address-payment" id="change-payment-method">CHANGE PAYMENT METHOD</span>
+                                        <span class="change-address-payment" id="change-payment-method">ADD/CHANGE PAYMENT METHOD</span>
                                     </div>
                                 </div>
                                 <div class="payment-method-guest-container">
@@ -359,6 +359,9 @@
                                                 <div class="forminput-wrapper">
                                                     <label class="body-text-small">Billing zip</label>
                                                     <input type="text" name="zip" class="popup-input" id="billing-zip">
+                                                </div>
+                                                <div class="button" id="firstCreditCardBtn">
+                                                    <input type="submit" id="saveFirstCreditCard" value="SAVE" class="btn btn-small-primary medium-green">
                                                 </div>
                                                 <div class="button">
                                                     <input type="checkbox" name="save-card-details" id="save-credit-card"><span>Save card details?</span>
@@ -535,6 +538,61 @@
                                     <input type="submit" id="save-new-address" value="ADD" class="btn btn-small-primary medium-green">
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="credit-card-wrapper">
+                    <div class="bk-overlay"></div>
+                    <div class="credit-card-popup">
+                        <div class="header">ADD A CREDIT CARD<img src="../images/cross-black.png" id="close-new-credit-card-form">
+                        </div>
+                        <div class="container">
+                            <form id="payForm" autocomplete="off" novalidate="novalidate">
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Credit card number</label>
+                                    <input style="display:none" type="text" name="fakeusernameremembered">
+                                    <input type="text" name="cardnumber" autocomplete="off" size="20" data-stripe="number" class="popup-input ignore" id="card-number" maxlength="20">
+                                </div>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">CVV</label>
+                                    <input style="display:none" type="password" name="fakepasswordremembered">
+                                    <input type="password" name="cvv" size="4" autocomplete="off" data-stripe="cvc" class="popup-input" id="cvv-number" maxlength="4">
+                                </div>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Expiry Date</label>
+                                    <div class="styled-select">
+                                        <select name="expiryMonth" id="ExpMonth" data-stripe="exp-month">
+                                            <option value="1">JAN</option>
+                                            <option value="2">FEB</option>
+                                            <option value="3">MAR</option>
+                                            <option value="4">APR</option>
+                                            <option value="5">MAY</option>
+                                            <option value="6">JUN</option>
+                                            <option value="7">JUL</option>
+                                            <option value="8">AUG</option>
+                                            <option value="9">SEP</option>
+                                            <option value="10">OCT</option>
+                                            <option value="11">NOV</option>
+                                            <option value="12">DEC</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <span class="div">/</span>
+                                <div class="forminput-wrapper">
+                                    <div class="styled-select">
+                                        <select id="expiryYear" name="expiryYear" data-stripe="exp-year">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Name</label>
+                                    <input type="text" name="nameOnCard" class="popup-input" id="nameOnCard">
+                                </div>
+                                <div class="button-container">
+                                    <input type="submit" id="addPopupCreditCard" class="btn btn-small-extended medium-green update-add-credit-card" value="ADD">
+                                </div>
+                            </form>
+                            <div style="clear: both;"></div>
                         </div>
                     </div>
                 </div>

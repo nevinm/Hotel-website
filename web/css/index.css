@@ -885,6 +885,9 @@ label#username-error {
     input#zip-code[type="text"],#promoCode{
         font-size: 14px;
     }
+    .meal-details{
+        padding: 15px 0px 0px 0px;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 400px) {
