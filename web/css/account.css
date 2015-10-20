@@ -552,15 +552,18 @@ ol {
     padding: 20px 0px;
 }
 
-.addresspopup-wrapper {
+.addresspopup-wrapper,
+.credit-card-wrapper {
     display: none;
 }
 
-.addresspopup-wrapper .bk-overlay {
+.addresspopup-wrapper .bk-overlay,
+.credit-card-wrapper .bk-overlay{
     z-index: 9999;
 }
 
-.addresspopup {
+.addresspopup,
+.credit-card-popup {
     position: fixed;
     top: 40%;
     width: 400px;
@@ -624,7 +627,8 @@ img.popup-close {
                         $ADDRESS-POPUP
 \*==================================*/
 
-.addresspopup .header {
+.addresspopup .header,
+.credit-card-popup .header{
     width: 100%;
     background-color: #F7F7F7;
     color: #000;
@@ -633,10 +637,18 @@ img.popup-close {
     border-bottom: 1px solid #ddd;
 }
 
-.addresspopup .container {
+.addresspopup .container ,
+.credit-card-popup .container{
     width: 100%;
     text-align: center;
     padding-top: 23px;
+}
+.credit-card-popup .container{
+    padding: 23px 25px;
+}
+
+.credit-card-popup .forminput-wrapper{
+    position: relative;
 }
 
 input.popup-input {
@@ -727,7 +739,7 @@ form.addaddress-popup, #new-address-form {
     float: left;
 }
 .address-info-guest .section2 .forminput-wrapper:nth-child(2){
-    width: 70%;
+    width: 74%;
     min-width: 200px;
 }
 .section2 .forminput-wrapper:nth-child(4){
@@ -741,7 +753,7 @@ form.addaddress-popup, #new-address-form {
     float: right;
 }
 .address-info-guest .section2 .forminput-wrapper:nth-child(3) {
-    width: 27%;
+    width: 24%;
 }
 
 .section2 .forminput-wrapper:nth-child(4){
@@ -791,7 +803,8 @@ form.addaddress-popup, #new-address-form {
     position: relative;
 }
 
-.addresspopup .button {
+.addresspopup .button ,
+.credit-card-popup .button{
     float: left;
     width: 100%;
     text-align: center;
@@ -1325,7 +1338,8 @@ form#pay-form, form#credit-card-form, form#update-pay-form {
     background-position: 97% 50%;
 }
 
-.pay-by-credit-container .div {
+.pay-by-credit-container .div,
+.credit-card-wrapper #payForm .div {
     width: 4%;
     float: left;
     padding-top: 49px;
@@ -1601,7 +1615,8 @@ input.radio-button-payment {
     position: initial;
 }
 
-.address-payment-list-popup .button #cancel {
+.address-payment-list-popup .button #cancel,
+.address-payment-list-popup .button #addCreditCard {
     float: left;
     margin-left: 20px;
 }
@@ -1614,7 +1629,8 @@ input.radio-button-payment {
     left: -9px;
 }
 
-.pay-by-credit-container select {
+.pay-by-credit-container select,
+.credit-card-popup select{
     font-size: 12px !important;
     color: #b0b0b0;
     width: 100%;
@@ -1801,40 +1817,58 @@ img.accepted-cards {
     padding-left: 0;
     margin-bottom: 20px;
 }
-
-.card-list-container .pay-by-credit-container .forminput-wrapper:first-child {
+.credit-card-wrapper #payForm .forminput-wrapper{
+    float: left;
+}
+.card-list-container .pay-by-credit-container .forminput-wrapper:first-child,
+.credit-card-wrapper #payForm .forminput-wrapper:first-child{
     float: left;
     width: 68%;
     padding-bottom: 0;
 }
+.credit-card-wrapper #payForm .forminput-wrapper:first-child{
+    width: 63%;
+}
 
-.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(2) {
+.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(2),
+.credit-card-wrapper #payForm .forminput-wrapper:nth-child(2){
     width: 28%;
     margin-left: 4%;
 }
+.credit-card-wrapper #payForm .forminput-wrapper:nth-child(2){
+    width: 32%;
+}
 
-.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(3) {
+.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(3),
+.credit-card-wrapper #payForm .forminput-wrapper:nth-child(3){
     padding-top: 20px;
     width: 30%;
     margin-left: 0;
 }
 
-.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(3) .styled-select, .card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(5) .styled-select {
+.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(3) .styled-select, 
+.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(5) .styled-select,
+.credit-card-wrapper #payForm .forminput-wrapper:nth-child(3) .styled-select,
+.credit-card-wrapper #payForm .forminput-wrapper:nth-child(5) .styled-select{
     background-position: 97% 50%;
 }
 
-.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(5) {
+.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(5),
+.credit-card-wrapper #payForm .forminput-wrapper:nth-child(5){
     padding-top: 43px;
     width: 28%;
     margin-right: 4%;
 }
 
-.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(6) {
+.card-list-container .pay-by-credit-container .forminput-wrapper:nth-child(6),
+.credit-card-wrapper #payForm .forminput-wrapper:nth-child(6){
     padding-top: 20px;
     width: 34%;
     margin-right: 0;
 }
-
+.credit-card-wrapper .button-container{
+    padding-bottom: 0px;
+}
 #update-payment {
     display: none;
     float: left;
@@ -1952,7 +1986,8 @@ a#add-address-popup:hover {
     color: #B8E986;
 }
 
-#close-new-address-form {
+#close-new-address-form,
+#close-new-credit-card-form{
     float: right;
     cursor: pointer;
 }
@@ -2062,7 +2097,8 @@ a#add-address-popup:hover {
     .meal-content {
         max-height: none;
     }
-    .addresspopup .container {
+    .addresspopup .container,
+    .credit-card-popup .container{
         overflow: auto;
         max-height: 320px;
     }
@@ -2424,7 +2460,8 @@ a#add-address-popup:hover {
         max-height: 200px;
         overflow-y: auto;
     }
-    .addresspopup {
+    .addresspopup,
+    .credit-card-popup{
         width: 85%;
         max-width: 400px;
     }

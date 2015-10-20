@@ -29,7 +29,7 @@ $(document).ready(function () {
     }
     stripeIntegration();
     setCurrentTime();
-    populateYear();
+    populateYear($('#ExpYear'));
     fixGoogleMapLink();
     getDeliverySlots();
     var cartItems;
@@ -138,15 +138,6 @@ $(document).ready(function () {
             $(".item-count").text("(" + updateQuantity() + ")");
         }
     });
-
-    //populate year
-    function populateYear() {
-        var currentYear = new Date().getFullYear();
-        for (var i = 1; i <= 20; i++) {
-            $('#ExpYear').append("<option value='" + currentYear + "'>" + currentYear + "</option>");
-            currentYear = currentYear + 1;
-        }
-    }
 
     $(document).on('click', 'input[type=radio][name=address]', function () {
         $('#save-delivery-address').removeClass('button-disabled');
@@ -744,7 +735,7 @@ function updateCartItems(meal_id, quantity) {
 }
 
 //save credit card details call back
-var saveCreditCardDetailsCallback = {
+var creditCardAddToDbCallback = {
     success: function (data, textStatus) {
         var response = JSON.parse(data);
         if (response.status == 1) {
@@ -775,7 +766,7 @@ function saveCreditCardDetails() {
     }
     data = JSON.stringify(params);
     var saveCreditCardDetailsInstance = new AjaxHttpSender();
-    saveCreditCardDetailsInstance.sendPost(url, header, data, saveCreditCardDetailsCallback);
+    saveCreditCardDetailsInstance.sendPost(url, header, data, creditCardAddToDbCallback);
 }
 
 //Get saved cards
@@ -1341,6 +1332,7 @@ function populateCreditCardDetails() {
     });
     $('.address-payment-list-popup .popup-container').append("<div class='button'>" +
             "<a href='#' class='btn btn-medium-primary medium-green' id='save-payment'>" + "SELECT" + "</a>" +
+            '<a href="#" class="btn btn-medium-secondary" id="addCreditCard">ADD CREDIT CARD</a>' +
             "<a href='#' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
     $('#save-payment').addClass('button-disabled');
     $('.address-payment-list-popup').show();
@@ -1566,6 +1558,14 @@ function loadViewDefaults() {
         $("#companySection").toggle();
     }
 }
+//populate year
+function populateYear(element) {
+    var currentYear = new Date().getFullYear();
+    for (var i = 1; i <= 20; i++) {
+        element.append("<option value='" + currentYear + "'>" + currentYear + "</option>");
+        currentYear = currentYear + 1;
+    }
+}
 function bindEvents() {
     $("#guest-address-info .regular-checkbox").on("click", function () {
         $("#companyWrapper").toggle();
@@ -1573,4 +1573,67 @@ function bindEvents() {
     $("#new-address-form .regular-checkbox").on("click", function () {
         $("#companySection").toggle();
     });
+    $(document).on('click', "#addCreditCard", function (e) {
+        e.preventDefault();
+        $(".credit-card-wrapper").show();
+        $(".address-payment-list-popup").hide();
+        populateYear($("#expiryYear"));
+    });
+    $(document).on('click', "#close-new-credit-card-form", function (e) {
+        e.preventDefault();
+        $(".credit-card-wrapper").hide();
+    });
+    $("#addPopupCreditCard").on("click", function (e) {
+        e.preventDefault();
+    });
+    $("#payForm").on("submit", function (e) {
+        e.preventDefault();
+    });
+    $("#addPopupCreditCard").on("click", function (e) {
+        e.preventDefault();
+        if ($('#payForm').valid()) {
+            $("#addPopupCreditCard").prop('disabled', true);
+            StripeController.createToken($("#payForm"), creditCardAddToStripeCallback);
+        }
+    });
 }
+function creditCardAddToStripeCallback(status, response) {
+    var $form = $("#payForm");
+    if (response.error) {
+        $(".credit-card-wrapper").hide();
+        $form.find('button').prop('disabled', false);
+        var error = {};
+        error.message = (response.error.message);
+        showPopup(error);
+        return;
+    } else {
+        creditCardAddToDb(response.id);
+    }
+}
+
+function creditCardAddToDb(token) {
+    var url = baseURL + "save_credit_card/";
+    var header = {
+        "session-key": localStorage["session_key"]
+    },
+    params = {
+        "stripeToken": token
+    };
+    var data = JSON.stringify(params);
+    new AjaxHttpSender().sendPost(url, header, data, creditCardAddToDbCallback);
+}
+
+
+var creditCardAddToDbCallback = {
+    success: function (data, textStatus) {
+        $(".credit-card-wrapper").hide();
+        var cardDetails = JSON.parse(data);
+        if (cardDetails.status == 1) {
+            savedCardDetails();
+        } else {
+            showPopup(cardDetails);
+        }
+    },
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
+};
