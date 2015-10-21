@@ -686,6 +686,13 @@ input.checkbox {
     background-color: #F7F7F7;
 }
 
+select::-ms-expand {
+    display: none;
+}
+select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
 form.addaddress-popup, #new-address-form {
     width: 83%;
     margin: 0 auto;
@@ -2174,6 +2181,17 @@ a#add-address-popup:hover {
 \*==================================*/
 
 @media (min-width: 320px)and (max-width:767px) {
+    .pay-by-credit-container .div,
+    .credit-card-wrapper #payForm .div {
+        padding-top: 62px;
+    }
+    .address-payment-list-popup .button #addCreditCard,
+    .address-payment-list-popup .button #cancel,
+    #save-payment{
+        text-align: center;
+        margin: 7px auto;
+        float: none;
+    }
     .address .button {
         width: 99px;
     }
