@@ -26,6 +26,7 @@ def check_input(method):
                                              "get_meal_details",
                                              "add_to_cart",
                                              "check_delivery",
+                                             "get_states",
                                              "gift_card_order",
                                              "referral_return",
                                              "get_cart_items_count",

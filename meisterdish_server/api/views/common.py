@@ -558,7 +558,7 @@ def get_cities(request, data, user):
         return custom_error("Failed to retrieve city list.")
     
 @check_input('POST')
-def get_states(request, data, user):
+def get_states(request, data):
     try:
         state_list = []
         if not "country_id" in data:
