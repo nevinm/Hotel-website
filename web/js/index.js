@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    window.onunload = function () {
+    };
     ipadWidth = 767;
     CartItemCount();
     getMainMealId();

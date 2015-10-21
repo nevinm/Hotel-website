@@ -86,6 +86,8 @@ function signupInit() {
 
 $(document).ready(function () {
     signupInit();
+    window.onunload = function () {
+    };
 
     $('#signup-button').on('click', function (e) {
         e.preventDefault();
