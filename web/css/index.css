@@ -235,13 +235,14 @@ SLIDER
 
 .meal-overlay,.sold-overlay {
     position: absolute;
-    height: 99%;
+    /*height: 99%;*/
     width: 100%;
     top: 0;
     left: 0;
+    bottom: 0;
     background-color: rgba(142, 198, 87, 0.65);
     display: none;
-    border-radius: 4px;
+    /*border-radius: 4px;*/
 }
 .sold-overlay{
     background-color: rgba(199, 199, 199, 0.72)
@@ -752,6 +753,10 @@ label#username-error {
     font-size: 16px;
     color: #6B6B6B;
     text-align: center;
+}
+.meal-image-container img{
+    width: 100%;
+    vertical-align: top;
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
