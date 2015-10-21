@@ -17,7 +17,6 @@ $(document).ready(function () {
         getAddress();
         getCartItems();
         savedCardDetails();
-        getStates();
         // CartItemCount();
     } else {
         $('.address-info-guest').show();
@@ -32,6 +31,7 @@ $(document).ready(function () {
     populateYear($('#ExpYear'));
     fixGoogleMapLink();
     getDeliverySlots();
+    getStates();
     var cartItems;
 
     //Remove cart items
@@ -1087,6 +1087,7 @@ var getStatesCallback = {
     success: function (data, textStatus) {
         var stateList = JSON.parse(data);
         localStorage['delivery-states'] = data;
+        $('.state-selector').html("");
         if (stateList.status == 1) {
             $.each(stateList.state_list, function (index, value) {
                 $('.state-selector').append($('<option/>', {
@@ -1105,14 +1106,13 @@ var getStatesCallback = {
 function getStates() {
     var url = baseURL + "get_states/",
             header = {
-                "session-key": localStorage["session_key"]
             },
-    userData = {
-        "search": "New York"
-    };
+            userData = {
+                "search": "New York"
+            };
     data = JSON.stringify(userData);
     var getStatesInstance = new AjaxHttpSender();
-    getStatesInstance.sendPost(url, header, data, getStatesCallback);
+    new AjaxHttpSender().sendPost(url, header, data, getStatesCallback);
 }
 
 function populateAddedAddress(delivery_address, flag) {
