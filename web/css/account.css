@@ -2495,6 +2495,13 @@ a#add-address-popup:hover {
     #name-on-card-error{
         bottom: 66px;
     }
+    #guest-address-info .section1 .forminput-wrapper,
+    .address-info-guest .section2 .forminput-wrapper:nth-child(2),
+    .address-info-guest .section2 .forminput-wrapper:nth-child(3),
+    #guest-address-info .section3 .forminput-wrapper,
+    .address-info-guest .section4 .forminput-wrapper{
+        width: 100%;
+    }
 }
 
 @media (max-width:400px) {
