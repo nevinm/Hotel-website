@@ -61,8 +61,9 @@ $(document).ready(function () {
         if (element.val() === "")
             element.val(0);
     }).on('input', function (e) {
-        var maxlength = $(this).attr("maxLength");
-        if ($(this).val().length > maxlength)
+        var maxlength = $(this).attr("dataLength");
+        var val = parseInt($(this).val()) + "";
+        if (val.length > maxlength)
             $(this).val($(this).val().slice(0, maxlength));
     });
     function isNumber(evt, element) {
