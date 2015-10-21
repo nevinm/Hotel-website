@@ -174,6 +174,10 @@ class User(models.Model):
         
     def __unicode__(self):
         return self.email if self.email else "Guest user"
+    
+    def delete(self, using=None):
+        self.deleted = True
+        self.save()
 
 class Address(models.Model):
     user = models.ForeignKey(User, related_name="user_address")
