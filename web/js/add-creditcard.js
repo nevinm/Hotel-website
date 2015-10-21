@@ -26,6 +26,7 @@ function checkIfEdit() {
         savedCardDetails(card_id);
         $(".account-header h3").text("UPDATE CREDIT CARD");
         $('.update-add-credit-card').val("UPDATE");
+        $(".content-heading").text("UPDATE CREDIT CARD");
         $("form").attr('id', 'update-pay-form');
         $("form").validate({
             ignore: ".ignore"
@@ -35,6 +36,7 @@ function checkIfEdit() {
         $("form").attr('id', 'pay-form');
         $(".account-header h3").text("ADD A CREDIT CARD");
         $('.update-add-credit-card').val("ADD");
+        $(".content-heading").text("ADD A CREDIT CARD");
     }
 }
 
