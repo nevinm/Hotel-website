@@ -12,6 +12,7 @@ from twilio.rest import TwilioRestClient
 import stripe
 import sys
 import base64
+from thread import start_new_thread
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -359,8 +360,11 @@ def create_order(request, data, user):
             log.error("Failed to send order notification")
         cart_items = get_order_cart_items(order)
         
-        if not print_order(order):
-            log.error("Failed to print order #" + str(order.order_num))
+        
+        start_new_thread(print_order, (order, ))
+        
+#         if not print_order(order):
+#             log.error("Failed to print order #" + str(order.order_num))
 
         return json_response({"status":1, "message":"Thanks for your order! We've sent you a confirmation email and are on our way.", "cart_items":cart_items})
         
