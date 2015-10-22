@@ -2517,8 +2517,13 @@ a#add-address-popup:hover {
     .address-info-guest .section2 .forminput-wrapper:nth-child(2),
     .address-info-guest .section2 .forminput-wrapper:nth-child(3),
     #guest-address-info .section3 .forminput-wrapper,
-    .address-info-guest .section4 .forminput-wrapper{
+    .address-info-guest .section4 .forminput-wrapper,
+    .payment-method-guest-container .pay-by-credit-container .forminput-wrapper:nth-child(7){
         width: 100%;
+    }
+    .payment-method-guest-container .pay-by-credit-container .forminput-wrapper:nth-child(4),
+    .payment-method-guest-container .pay-by-credit-container .forminput-wrapper:nth-child(6){
+        width: 45%;
     }
 }
 
