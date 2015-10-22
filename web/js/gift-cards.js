@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     CartItemCount();
     currentPage = getCurrentPage("/", ".html", window.location.href);
     if (currentPage == "giftcard-payment") {
@@ -14,7 +14,7 @@ $(document).ready(function() {
     }
     populateYear();
     //Old giftcard page
-    $("#redeem-card").on('click', function() {
+    $("#redeem-card").on('click', function () {
         var code = $(".card-code").val();
         redeemGiftCard(code);
     });
@@ -27,7 +27,7 @@ $(document).ready(function() {
         $('.payment-container-guest,.your-info-container,.payment-info-container').show();
     }
 
-    $(".giftcard-selector").on("click", function() {
+    $(".giftcard-selector").on("click", function () {
 
         var giftcardAmount = 0;
         $(".giftcard-selector").removeClass("giftcard-selected");
@@ -40,7 +40,9 @@ $(document).ready(function() {
         $("#giftcard-form").validate().resetForm();
     });
 
-    $(".giftcard-custom-amount input").on("click", function() {
+    $(".giftcard-custom-amount input").on("focus", function (e) {
+        e.preventDefault();
+        console.log(e.type);
         if ($(".giftcard-selected").length) {
             $(this).val("");
         }
@@ -48,50 +50,52 @@ $(document).ready(function() {
         $(".giftcard-selected").removeClass("giftcard-selected");
     });
 
-    $("#edit-giftcard").on("click", function() {
+    $("#edit-giftcard").on("click", function () {
         $(".giftcard-popup-wrapper").show();
         populateEditCardDetails();
     });
-    $("#cancel").on("click", function() {
+    $("#cancel").on("click", function () {
         $(".giftcard-popup-wrapper").hide();
     });
 
-    $("#edit-recipient-details").on("submit", function(e) {
+    $("#edit-recipient-details").on("submit", function (e) {
         e.preventDefault();
         updateRecipientGiftCard();
     });
 
-    $(".proceed-checkout").on("click", function(e) {
+    $(".proceed-checkout").on("click", function (e) {
         e.preventDefault();
         if ($('form').valid()) {
             getGiftCardData();
             window.location.href = 'giftcard-payment.html';
-        } else {}
+        } else {
+        }
     });
-    $('#change-payment').on("click", function() {
+    $('#change-payment').on("click", function () {
         $('.address-payment-list-popup').show();
         populateCardDetailsInPopup();
     })
-    $(document).on('click', '#cancel', function() {
+    $(document).on('click', '#cancel', function () {
         $('.address-payment-list-popup').hide();
     });
-    $(document).on('click', '#save-payment', function() {
+    $(document).on('click', '#save-payment', function () {
         var selectedId = $('input[type=radio][name=change-card]:checked').attr('id');
         showSelectedPaymentMethod(selectedId);
         $('.address-payment-list-popup').hide();
     });
 
     //To prevent refresh
-    $('#address').on("submit", function(e) {
+    $('#address').on("submit", function (e) {
         e.preventDefault();
         return false;
     })
 
-    $("#gift-place-order").on("click", function(e) {
+    $("#gift-place-order").on("click", function (e) {
         e.preventDefault();
         if (validateGiftOrder()) {
             placeGiftOrder();
-        };
+        }
+        ;
     });
 });
 
@@ -125,7 +129,7 @@ function validateGiftOrder() {
 //Old giftcard page
 //Redeem Gift Card API.
 var redeemGiftCardCallback = {
-    success: function(data, textStatus) {
+    success: function (data, textStatus) {
         userDetails = JSON.parse(data);
         showPopup(userDetails);
         if (userDetails.status == 1) {
@@ -134,18 +138,19 @@ var redeemGiftCardCallback = {
             showPopup(userDetails);
         }
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
 }
 
 function redeemGiftCard(code) {
     var url = baseURL + 'redeem_gift_card/',
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        userInfo = {
-            "code": code
-        },
-        data = JSON.stringify(userInfo);
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    userInfo = {
+        "code": code
+    },
+    data = JSON.stringify(userInfo);
 
     var redeemGiftCardInstance = new AjaxHttpSender();
     redeemGiftCardInstance.sendPost(url, header, data, redeemGiftCardCallback);
@@ -155,11 +160,11 @@ function redeemGiftCard(code) {
 function getGiftCardData() {
     var $giftCardSelected = $(".giftcard-selected");
     var giftcardAmount = $giftCardSelected.length ? $($giftCardSelected).find(".giftcard-amount").data("amount") :
-        $("#giftcard-custom-amount").val(),
-        recipientName = $("#recipient-name").val(),
-        recipientEmail = $("#recipient-email").val(),
-        recipientMessage = $("#recipient-message").val(),
-        giftcardDetails = {};
+            $("#giftcard-custom-amount").val(),
+            recipientName = $("#recipient-name").val(),
+            recipientEmail = $("#recipient-email").val(),
+            recipientMessage = $("#recipient-message").val(),
+            giftcardDetails = {};
     giftcardDetails = {
         "giftcardAmount": giftcardAmount,
         "recipientName": recipientName,
@@ -184,19 +189,19 @@ function populateGiftcardDetails(giftcardDetails) {
 
 function fetchGiftCardData(token, cardId) {
     var localGiftCardRecipient = fetchLocalGiftCardData(),
-        giftCardOrderParams = {
-            "name": localGiftCardRecipient.recipientName,
-            "email": localGiftCardRecipient.recipientEmail,
-            "message": localGiftCardRecipient.recipientMessage,
-            "amount": localGiftCardRecipient.giftcardAmount,
-            "stripeToken": token,
-            "card_id": cardId
-        };
+            giftCardOrderParams = {
+                "name": localGiftCardRecipient.recipientName,
+                "email": localGiftCardRecipient.recipientEmail,
+                "message": localGiftCardRecipient.recipientMessage,
+                "amount": localGiftCardRecipient.giftcardAmount,
+                "stripeToken": token,
+                "card_id": cardId
+            };
     if (localStorage['loggedIn'] == 'false') {
         var first_name = $('input[name="firstname"]').val(),
-            last_name = $('input[name="lastname"]').val(),
-            email = $('input[name="email"]').val(),
-            zip = $('input[name="zip"]').val()
+                last_name = $('input[name="lastname"]').val(),
+                email = $('input[name="email"]').val(),
+                zip = $('input[name="zip"]').val()
         guestParams = {
             "guest_first_name": first_name,
             "guest_last_name": last_name,
@@ -210,8 +215,8 @@ function fetchGiftCardData(token, cardId) {
 
 //save credit card details call back
 var saveCreditCardGiftCardCallback = {
-    success: function(data, textStatus) {
-    $('.loading-indicator').hide();
+    success: function (data, textStatus) {
+        $('.loading-indicator').hide();
         var response = JSON.parse(data);
         if (response.status == 1) {
             $("#pay-form")[0].reset();
@@ -221,7 +226,7 @@ var saveCreditCardGiftCardCallback = {
             showPopup(response);
         }
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
         $('.loading-indicator').hide();
     }
 }
@@ -229,10 +234,10 @@ var saveCreditCardGiftCardCallback = {
 //save credit card items
 function saveCreditCardGiftCard(giftCardOrderParams) {
     var url = baseURL + "gift_card_order/",
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        params = giftCardOrderParams;
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    params = giftCardOrderParams;
     data = JSON.stringify(params);
     var saveCreditCardGiftCardInstance = new AjaxHttpSender();
     saveCreditCardGiftCardInstance.sendPost(url, header, data, saveCreditCardGiftCardCallback);
@@ -248,9 +253,9 @@ function populateEditCardDetails() {
 
 function updateRecipientGiftCard() {
     var recipientName = $("#recipient-name").val(),
-        recipientEmail = $("#recipient-email").val(),
-        recipientMessage = $("#recipient-message").val(),
-        recipientAmount = $("#recipient-amount").val();
+            recipientEmail = $("#recipient-email").val(),
+            recipientMessage = $("#recipient-message").val(),
+            recipientAmount = $("#recipient-amount").val();
     giftcardDetails = {};
     giftcardDetails = {
         "giftcardAmount": recipientAmount,
@@ -277,7 +282,7 @@ function populateYear() {
 
 //Get saved cards
 var savedCardDetailsCallback = {
-    success: function(data, textStatus) {
+    success: function (data, textStatus) {
         var last_num;
         cardDetails = JSON.parse(data);
         if (cardDetails.status == 1) {
@@ -296,15 +301,16 @@ var savedCardDetailsCallback = {
             showPopup(cardDetails);
         }
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
 }
 
 function savedCardDetails() {
     var url = baseURL + "get_saved_cards/",
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        params = {}
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    params = {}
     data = JSON.stringify(params);
     var savedCardDetailsInstance = new AjaxHttpSender();
     savedCardDetailsInstance.sendPost(url, header, data, savedCardDetailsCallback);
@@ -312,30 +318,30 @@ function savedCardDetails() {
 
 function populateCardDetails(cards, selectedId) {
     if (selectedId) {
-        $.each(cards, function(key, value) {
+        $.each(cards, function (key, value) {
             last_num = cards[key].number.slice(-4);
             if (selectedId == value.id) {
                 $('.saved-cards').append("<div class='saved-card-list'>" +
-                    "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
-                    "' class='radio-button-payment'>" +
-                    "<label for='" + value.id + "'>" +
-                    "<img class='paypal' src='" + value.logo + "'>" +
-                    "<span class='body-text-small'>" + value.type + " " + "ending in" + " " + last_num + "</span>" +
-                    "<span class='body-text-small'>" + "Expires on" + " " +
-                    value.expire_month + "/" + value.expire_year + "</span>" + "</label>" + "</div>");
+                        "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + value.id +
+                        "' class='radio-button-payment'>" +
+                        "<label for='" + value.id + "'>" +
+                        "<img class='paypal' src='" + value.logo + "'>" +
+                        "<span class='body-text-small'>" + value.type + " " + "ending in" + " " + last_num + "</span>" +
+                        "<span class='body-text-small'>" + "Expires on" + " " +
+                        value.expire_month + "/" + value.expire_year + "</span>" + "</label>" + "</div>");
             }
         });
 
     } else {
         last_num = cards[0].number.slice(-4);
         $('.saved-cards').append("<div class='saved-card-list'>" +
-            "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + cards[0].id +
-            "' class='radio-button-payment'>" +
-            "<label for='" + cards[0].id + "'>" +
-            "<img class='paypal' src='" + cards[0].logo + "'>" +
-            "<span class='body-text-small'>" + cards[0].type + " " + "ending in" + " " + last_num + "</span>" +
-            "<span class='body-text-small'>" + "Expires on" + " " +
-            cards[0].expire_month + "/" + cards[0].expire_year + "</span>" + "</label>" + "</div>");
+                "<input type='radio' class='added-card pullLeft payment-checked' name='saved-card' id='" + cards[0].id +
+                "' class='radio-button-payment'>" +
+                "<label for='" + cards[0].id + "'>" +
+                "<img class='paypal' src='" + cards[0].logo + "'>" +
+                "<span class='body-text-small'>" + cards[0].type + " " + "ending in" + " " + last_num + "</span>" +
+                "<span class='body-text-small'>" + "Expires on" + " " +
+                cards[0].expire_month + "/" + cards[0].expire_year + "</span>" + "</label>" + "</div>");
     }
 }
 
@@ -345,21 +351,21 @@ function populateCardDetailsInPopup() {
     $('.address-payment-list-popup .button').remove();
     $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .popup-container').append("<div class='popup-sub-wrapper'>" + "</div>");
-    $.each(cards, function(key, value) {
+    $.each(cards, function (key, value) {
         $('.address-payment-list-popup .popup-container .popup-sub-wrapper').append("<div class='payment-popup-sub-container'>" +
-            "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' id='" + value.id + "'>" +
-            "<label>" + "<img class='paypal' src='" + value.logo + "'>" +
-            "<span class='body-text-small'>" + value.type + " " +
-            "ending in" + " " + last_num + "</span>" +
-            "<span class='body-text-small'>" + "Expires on" +
-            " " + value.expire_month + "/" + value.expire_year + "</span>" + "</label>" + "</div>")
+                "<input type='radio' class='added-card pullLeft' name='change-card' class='radio-button-payment' id='" + value.id + "'>" +
+                "<label>" + "<img class='paypal' src='" + value.logo + "'>" +
+                "<span class='body-text-small'>" + value.type + " " +
+                "ending in" + " " + last_num + "</span>" +
+                "<span class='body-text-small'>" + "Expires on" +
+                " " + value.expire_month + "/" + value.expire_year + "</span>" + "</label>" + "</div>")
     });
     $('.address-payment-list-popup .popup-container').append("<div class='button'>" +
-        "<a href='#' class='btn btn-medium-primary medium-green pullLeft' id='save-payment'>" + "SELECT" + "</a>" +
-        "<a href='#!' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
+            "<a href='#' class='btn btn-medium-primary medium-green pullLeft' id='save-payment'>" + "SELECT" + "</a>" +
+            "<a href='#!' class='btn btn-medium-secondary' id='cancel'>" + "CANCEL" + "</a>" + "</div>");
     $('#save-payment').addClass('button-disabled');
     $('.address-payment-list-popup').show();
-    $('input[type=radio][name=change-card]').on("focus", function() {
+    $('input[type=radio][name=change-card]').on("focus", function () {
         $('#save-payment').removeClass('button-disabled');
     })
 }
