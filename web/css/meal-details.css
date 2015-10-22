@@ -197,7 +197,7 @@ span.per-serving-text {
     top: 10px;
     left: 10px;
     right: 50px;
-    bottom: 14px;
+    bottom: 10px;
     background-color: rgba(142, 198, 87, 0.65);
     display: none;
     border-radius: 4px;
@@ -260,6 +260,7 @@ p.lower-line {
     border-radius: 4px;
     height: auto;
     width: 100%;
+    vertical-align: top;
 }
 
 .details-part-2 {
@@ -703,7 +704,7 @@ span.ingredients-text{
         margin: 0 auto;
         max-width: 400px;
         border: 1px solid #b0b0b0;
-        border-radius: 3px;
+        border-radius: 4px;
         background: #fff;
         box-shadow: 0 0 4px #b0b0b0;
         margin-top: 120px;
@@ -715,6 +716,8 @@ span.ingredients-text{
     }
     .thumbnail {
         width: 100%;
+        vertical-align: top;
+        border-radius: 4px;
     }
     .menu-header {
         font-size: 16px;
@@ -856,12 +859,13 @@ span.ingredients-text{
         border-bottom: 0px;
     }
     .meal-overlay,.sold-overlay {
-        height: 99%;
+        /*height: 99%;*/
         width: 100%;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
+        border-radius: 4px;
     }
     .details-part-1 .sold-overlay{
         display:none !important;

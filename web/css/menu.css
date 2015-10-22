@@ -278,14 +278,15 @@
     border-radius: 5px;
     border: 1px solid #C7C7C7;
     cursor: pointer;
+    vertical-align: top;
 }
 
 .meal-overlay,.sold-overlay {
     position: absolute;
-    height: 98%;
-    width: 100%;
     top: 0;
     left: 0;
+    bottom: 0;
+    right: 0;
     background-color: rgba(142, 198, 87, 0.65);
     display: none;
     border-radius: 4px;
@@ -553,9 +554,8 @@ span.per-serving-text {
         display: block;
         width: 100%;
     }
-    .meal-overlay,.sold-overlay {
-        height: 100%;
-        width: 98%;
+    .meal-overlay, .sold-overlay {
+        right: 2%;
     }
     .menuItemDetails {
         padding-left: 0 !important;
@@ -696,9 +696,9 @@ span.per-serving-text {
         height: 50px;
         font-size: 12px;
     }
-    .meal-overlay,.sold-overlay {
-        height: 99%;
-    }
+    /*    .meal-overlay,.sold-overlay {
+            height: 99%;
+        }*/
 }
 
 @media (max-width: 440px) {
