@@ -96,7 +96,7 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
         first_name = user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest"
         if "Guest" not in first_name:
             share_images = {
-              #"share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
+              "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
               # "share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
               # "share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
               "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo_email.png"),
