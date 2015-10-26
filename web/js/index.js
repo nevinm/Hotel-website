@@ -69,7 +69,7 @@ function shouldFullpageRender() {
         fullPageRender();
     }
     if ($(window).width() > ipadWidth) {
-        var marginLeft = parseFloat($(".contentArea").css("margin-left").split("px")[0]) - 10;
+        var marginLeft = $(".contentArea").offset().left - 10;
         $("#section-what-is .outer-slide-description").css("margin-left", marginLeft + "px");
     } else {
         $("#section-what-is .outer-slide-description").css("margin-left", "auto");
