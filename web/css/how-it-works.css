@@ -44,7 +44,7 @@
     left: 0;
     background-size: cover !important;
     background-color: #D8D8D8;
-    background-blend-mode: multiply;
+    /*background-blend-mode: multiply;*/
 }
 #you-cook .image-wrapper{
     /*background-image: url('../images/how_it_works/banner1.jpg');*/

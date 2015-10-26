@@ -87,6 +87,90 @@ MOBILE RESPONSIVE
     font-style: normal;
     font-variant: normal;
 }
+@font-face {
+    font-family: 'BrandonText-Black';
+    src: url('../fonts/Brandon Text/HVD Fonts - BrandonText-Black.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
+@font-face {
+    font-family: 'BrandonText-BlackItalic';
+    src: url('../fonts/Brandon Text/HVD Fonts - BrandonText-BlackItalic.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
+@font-face {
+    font-family: 'BrandonText-Bold';
+    src: url('../fonts/Brandon Text/HVD Fonts - BrandonText-Bold.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
+@font-face {
+    font-family: 'BrandonText-BoldItalic';
+    src: url('../fonts/Brandon Text/HVD Fonts - BrandonText-BoldItalic.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
+@font-face {
+    font-family: 'BrandonText-Light';
+    src: url('../fonts/Brandon Text/HVD Fonts - BrandonText-Light.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
+@font-face {
+    font-family: 'BrandonText-LightItalic';
+    src: url('../fonts/Brandon Text/HVD Fonts - BrandonText-LightItalic.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
+@font-face {
+    font-family: 'BrandonText-Medium';
+    src: url('../fonts/Brandon Text/HVD Fonts - BrandonText-Medium.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
+@font-face {
+    font-family: 'BrandonText-MediumItalic';
+    src: url('../fonts/Brandon Text/HVD Fonts - BrandonText-MediumItalic.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
+@font-face {
+    font-family: 'BrandonText-Regular';
+    src: url('../fonts/Brandon Text/HVD Fonts - BrandonText-Regular.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
+@font-face {
+    font-family: 'BrandonText-RegularItalic';
+    src: url('../fonts/Brandon Text/HVD Fonts - BrandonText-RegularItalic.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
+@font-face {
+    font-family: 'BrandonText-Thin';
+    src: url('../fonts/Brandon Text/HVD Fonts - BrandonText-Thin.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
+@font-face {
+    font-family: 'BrandonText-ThinItalic';
+    src: url('../fonts/Brandon Text/HVD Fonts - BrandonText-ThinItalic.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+}
 /*==============================*\
            &COLOURS-MODULE
 \*==============================*/

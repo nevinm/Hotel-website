@@ -68,6 +68,12 @@ function shouldFullpageRender() {
     } else {
         fullPageRender();
     }
+    if ($(window).width() > ipadWidth) {
+        var marginLeft = parseFloat($(".contentArea").css("margin-left").split("px")[0]) - 10;
+        $("#section-what-is .outer-slide-description").css("margin-left", marginLeft + "px");
+    } else {
+        $("#section-what-is .outer-slide-description").css("margin-left", "auto");
+    }
 }
 
 function fullPageRender() {
@@ -85,6 +91,7 @@ function fullPageRender() {
         "height": screenHeight - footerHeight
     });
     $("#sectionPromocode").height($("#section-zipcode").height() + 10);
+
 }
 //add to cart call back
 var addToCartCallback = {
