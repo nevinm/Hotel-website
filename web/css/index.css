@@ -164,7 +164,7 @@ SLIDER
 }
 
 .main-header-container {
-    padding: 10px 0;
+    padding: 10px 26px;
 }
 
 .sub-header-container {
@@ -195,7 +195,8 @@ SLIDER
 }
 #section-what-is .outer-slide-description{
     margin: 0 10%;
-    max-width: 518px;
+    /*max-width: 518px;*/
+    max-width: 600px;
 }
 .main-header-ads{
     margin-bottom: 10px;
@@ -209,7 +210,7 @@ SLIDER
 }
 .main-header-ads li{
     list-style: none;
-    width: 33%;
+    width: 33.33%;
     float: left;
     padding: 15px;
     text-align: center;
@@ -893,6 +894,9 @@ label#username-error {
     }
     .meal-details{
         padding: 15px 0px 0px 0px;
+    }
+    .main-header-container {
+        padding: 10px 5px;
     }
 }
 
