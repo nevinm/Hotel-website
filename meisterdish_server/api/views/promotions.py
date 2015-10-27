@@ -139,7 +139,7 @@ def send_gift_card(gc):
         msg = render_to_string('gift_card_email.html', dic)
         sub = 'Your Gift Card for Meisterdish'    
             
-        mail([gc.email], sub, msg)
+        mail([gc.email], sub, msg,design=False)
         return True
     except Exception as e:
         log.error("Failed to send gift card mail : " + e.message)
