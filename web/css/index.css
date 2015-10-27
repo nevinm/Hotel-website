@@ -145,13 +145,13 @@ SLIDER
     background-size: cover;
     text-align: center;
     background-color: #D8D8D8;
-    background-blend-mode: multiply;
+    /*background-blend-mode: multiply;*/
 }
 
 #section-what-is .main-header {
-    font-family: 'BrandonGrotesque-Regular';
-    font-size: 30px;
-    letter-spacing: 2.5px;
+    font-family: 'BrandonText-Medium';
+    font-size: 35px;
+    letter-spacing: 0px;
     color: #6B6B6B;
     padding: 10px;
 }
@@ -164,7 +164,7 @@ SLIDER
 }
 
 .main-header-container {
-    padding: 10px 0;
+    padding: 10px 26px;
 }
 
 .sub-header-container {
@@ -195,21 +195,22 @@ SLIDER
 }
 #section-what-is .outer-slide-description{
     margin: 0 10%;
-    max-width: 518px;
+    /*max-width: 518px;*/
+    max-width: 600px;
 }
 .main-header-ads{
     margin-bottom: 10px;
 }
 .main-header-ads ul{
-    font-family: 'BrandonGrotesque-Regular';
-    font-size: 17px;
-    letter-spacing: 2px;
+    font-family: BrandonGrotesque-Bold;
+    font-size: 16px;
+    letter-spacing: 1px;
     color: #7E7E7E;
     padding: 0px 12px;
 }
 .main-header-ads li{
     list-style: none;
-    width: 33%;
+    width: 33.33%;
     float: left;
     padding: 15px;
     text-align: center;
@@ -235,10 +236,11 @@ SLIDER
 
 .meal-overlay,.sold-overlay {
     position: absolute;
-    height: 99%;
+    /*height: 99%;*/
     width: 100%;
     top: 0;
     left: 0;
+    bottom: 0;
     background-color: rgba(142, 198, 87, 0.65);
     display: none;
     border-radius: 4px;
@@ -753,6 +755,11 @@ label#username-error {
     color: #6B6B6B;
     text-align: center;
 }
+.meal-image-container img{
+    width: 100%;
+    vertical-align: top;
+    border-radius: 4px;
+}
 
 @media (min-width: 320px) and (max-width: 767px) {
     #section-what-is .slide-description,
@@ -887,6 +894,9 @@ label#username-error {
     }
     .meal-details{
         padding: 15px 0px 0px 0px;
+    }
+    .main-header-container {
+        padding: 10px 5px;
     }
 }
 

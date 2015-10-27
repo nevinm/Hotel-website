@@ -96,7 +96,7 @@ def mail_order_confirmation(to_list, subject, message, order, sender="Meisterdis
         first_name = user.first_name.title() if user.role.id == settings.ROLE_USER else "Guest"
         if "Guest" not in first_name:
             share_images = {
-              #"share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
+              "share_fb" : os.path.join(settings.STATIC_ROOT, "default", "share_fb.png"),
               # "share_tw" : os.path.join(settings.STATIC_ROOT, "default", "share_tw.png"),
               # "share_em" : os.path.join(settings.STATIC_ROOT, "default", "share_em.png"),
               "meisterdish_logo":os.path.join(settings.STATIC_ROOT, "default", "logo_email.png"),
@@ -349,7 +349,7 @@ def send_text_reminder(context):
     try:
         txt = "Your Meisterdish is getting prepared and will be delivered within the next hour. Please make sure that you are at location to receive your meal"
         client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-        country_code = "+1" if settings.Live else "+91"
+        country_code = "+1" if settings.Live else "+1"
         number = country_code + str(context["mobile"]).strip()
         message = client.messages.create(body=txt,
             to= number,
