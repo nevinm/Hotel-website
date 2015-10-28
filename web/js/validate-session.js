@@ -9,7 +9,7 @@ var sessionExpiryTime = 30,
 
 //------ LIVE ----
         baseURL = 'http://meisterdish.com/backend/api/',
-        homeUrl = "http://meisterdish.com",
+        homeUrl = "http://www.meisterdish.com",
         PROMO_CODE = "MEISTER20",
         GLOBAL = {
             APP_ID: '1412578365736463'
