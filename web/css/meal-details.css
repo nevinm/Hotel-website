@@ -600,10 +600,11 @@ iframe {
     font-family: 'BrandonGrotesque-Regular';
     font-size: 18px;
     color: #6B6B6B;
-    padding-top: 20px;
+    /*padding-top: 20px;*/
     display: none;
     /*text-transform: uppercase;*/
     letter-spacing: 1px;
+    padding: 10% 0;
 }
 
 .icons-container1, .icons-container2, span.upper-content, span.lower-content, .details-description, .meal-full-details {
