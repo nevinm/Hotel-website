@@ -898,6 +898,24 @@ label#username-error {
     .main-header-container {
         padding: 10px 5px;
     }
+    #section-zipcode .outer-slide-description {
+        margin-top: auto;
+    }
+    .section.fp-table,#section-zipcode{
+        padding: 50px 0px;
+    }
+    #promoCode::-webkit-input-placeholder{
+        font-size: 12px;
+    }
+    #promoCode:-moz-placeholder{
+        font-size: 12px; 
+    }
+    #promoCode::-moz-placeholder{
+        font-size: 12px;
+    }
+    #promoCode:-ms-input-placeholder {
+        font-size: 12px;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 400px) {
