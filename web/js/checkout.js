@@ -113,6 +113,25 @@ $(document).ready(function () {
             $(".item-count").text("(" + updateQuantity() + ")");
         }
     });
+//    $(document).on('click', '.operator-plus', function () {
+//        var $trElement = $(this).closest('tr');
+//        var oldVal = parseInt($trElement.find('.quantity').val()),
+//                newVal = oldVal + 2,
+//                meal_id = $trElement.attr('data-id'),
+//                qty = newVal,
+//                $priceSpanElement = $trElement.find(".price-container"),
+//                price = $priceSpanElement.data("price"),
+//                tax = $priceSpanElement.data("tax");
+//        if (newVal <= $(this).data("max")) {
+//            $trElement.find('.quantity').val(newVal);
+//        }
+//        if (qty <= 10) {
+//            $trElement.find(".price-container").text(dollarConvert(((price + tax) * qty).toFixed(2)));
+//            updateCartItems(meal_id, qty);
+//            updateReciept();
+//            $(".item-count").text("(" + updateQuantity() + ")");
+//        }
+//    });
 
     $(document).on('click', '#save-payment', function () {
         var selectedId = $('input[type=radio][name=change-card]:checked').attr('data-id');
@@ -139,6 +158,26 @@ $(document).ready(function () {
             $(".item-count").text("(" + updateQuantity() + ")");
         }
     });
+//    $(document).on('click', '.operator-minus', function () {
+//        var $trElement = $(this).closest('tr');
+//        var oldVal = parseInt($trElement.find('.quantity').val()),
+//                newVal = oldVal - 2,
+//                meal_id = $trElement.attr('data-id'),
+//                qty = newVal,
+//                $priceSpanElement = $trElement.find(".price-container"),
+//                price = $priceSpanElement.data("price"),
+//                tax = $priceSpanElement.data("tax");
+//
+//        if (oldVal > $(this).data("min")) {
+//            $trElement.find('.quantity').val(newVal);
+//        }
+//        if (qty >= 1) {
+//            $trElement.find(".price-container").text(dollarConvert(((price + tax) * qty).toFixed(2)));
+//            updateCartItems(meal_id, qty);
+//            updateReciept();
+//            $(".item-count").text("(" + updateQuantity() + ")");
+//        }
+//    });
 
     $(document).on('click', 'input[type=radio][name=address]', function () {
         $('#save-delivery-address').removeClass('button-disabled');
@@ -471,6 +510,7 @@ var getCartItemsCallback = {
             $('#hidden-credit').val(cartItems.credits);
         } else {
             $('.order-list-items').remove();
+//            $("#checkOutItems tbody tr").remove();
             $(".emtpy-cart-message").empty();
             $(".emtpy-cart-message").append("<span>" + cartItems.message + "</span>");
             $(".emtpy-cart-message").show();
@@ -533,6 +573,7 @@ function saveDeliveryTime(date, delivery_Id) {
 //populate cart items
 function populateCartItems(data) {
     $('.order-list-items').remove();
+//    $("#checkOutItems tbody tr").remove();
     $(".items-container .item-count").text("(" + data.total_count + ")");
     if (data.total_count > 0) {
         $(".total-delivery-cost").text("$2.95");
@@ -546,6 +587,7 @@ function populateCartItems(data) {
     } else {
         $(".driver-tip-display").text("$0.00");
     }
+//    var element = "";
     $.each(data.aaData, function (key, value) {
         $('.order-list-container').append("<div class='order-list-items' data-id='" + value.id + "'>" +
                 "<img src='" + value.image + "'>" + "<span class='body-text-small'>" + value.name + "</span>" +
@@ -555,12 +597,23 @@ function populateCartItems(data) {
                 "<span class='price-container' data-tax='" + value.tax + "' data-price='" + value.price + "'>" +
                 dollarConvert(parseFloat((value.tax + value.price) * value.quantity).toFixed(2)) + "</span>" +
                 "<img src='../images/hamburger-menu-close.png' id='remove-cart-item'>" + "</div>");
+//        element += "<tr class='' data-id='" + value.id + "'>" +
+//                "<td><img src='" + value.image + "'></td>" +
+//                "<td>" + value.name + "</td>" +
+//                "<td><div class='quantity-container'>" + "<span class='operator-minus' data-min='2'>" + '-' + "</span>" +
+//                "<input type='text' disabled='disabled' class='quantity' value='" + value.quantity + "'>" +
+//                "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div></td>" +
+//                "<td class='price-container' data-tax='" + value.tax + "' data-price='" + value.price + "'>" + dollarConvert(parseFloat((value.tax + value.price) * value.quantity).toFixed(2)) + "</td>" +
+//                "<td data-id='" + value.id + "'><img src='../images/hamburger-menu-close.png' id='remove-cart-item'></td>" +
+//                "</tr>";
     });
+//    $("#checkOutItems tbody").append(element);
     updateReciept();
 }
 
 function updateQuantity() {
     var parentElement = $(".order-list-items").find(".quantity"),
+//    var parentElement = $("#checkOutItems tbody tr").find(".quantity"),
             totalQuantity = 0;
     $(parentElement).each(function (index, elem) {
         totalQuantity += parseInt($(elem).val());
@@ -589,6 +642,7 @@ function updateReciept(GiftcardDetails, flag) {
         $('span.total-delivery-cost').text('$0.00');
     } else {
         if ($(".order-list-items").length > 0) {
+//        if ($("#checkOutItems tbody tr").length > 0) {
             totalDeliveryCost = 2.95;
             $('span.total-delivery-cost').text('$2.95');
 //            if ($('.driver-tip').is(':visible')) {
@@ -612,6 +666,7 @@ function updateReciept(GiftcardDetails, flag) {
         totalDriverTip = parseFloat($('.driver-tip').val());
     }
     $(".order-list-items").each(function (key, value) {
+//    $("#checkOutItems tbody tr").each(function (key, value) {
         quantity = parseInt($(value).find('.quantity').val());
         price = parseFloat($(value).find('.price-container').attr("data-price"));
         tax = parseFloat($(value).find('.price-container').attr("data-tax"));

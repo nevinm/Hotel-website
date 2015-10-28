@@ -2632,3 +2632,99 @@ a#add-address-popup:hover {
         height:auto;
     }
 }
+/*#checkOutItems{
+    width: 100%;
+}
+#checkOutItems th{
+    font-family: BrandonGrotesque-Bold;
+    color: #6b6b6b;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-shadow: none;
+    padding-bottom: 5px;
+    font-weight: normal;
+}
+#checkOutItems th:first-child{
+    text-align: left;
+}
+#checkOutItems td:first-child img{
+    height: 27px;
+    border-radius: 4px;
+}
+#checkOutItems td{
+    vertical-align: middle;
+    color: #666666;
+    font-size: 13px;
+    font-family: 'ProximaNova-regular';
+    letter-spacing: 0.8px;
+    line-height: 18px;
+    padding: 3px 3px;
+}
+#checkOutItems .quantity-container input{
+    width: 30px;
+    padding: 5px 0px;
+    text-align: center;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+    background-color: #f7f7f7;
+}
+#checkOutItems .quantity-container{
+    margin: 0 auto;
+    margin-right: auto;
+    text-align: center;
+    width: auto;
+    float:none;
+}
+#checkOutItems .price-container{
+    font-family: 'BrandonGrotesque-Bold';
+    color: #888;
+    font-size: 16px;
+    float: none;
+    width: auto;
+    text-align: center;
+}
+#checkOutItems #remove-cart-item{
+    display: block;
+    float: none;
+}
+#checkOutItems tr:hover #remove-cart-item {
+    display: block;
+}
+#checkOutItems th:last-child,#checkOutItems tr td:last-child{
+    width: 33px;
+    min-width: 33px;
+}
+#checkOutItems #remove-cart-item{
+    margin: 0;
+}
+@media screen and (min-width:320px) and (max-width:767px){
+    #checkOutItems thead{
+        display: none;
+    }
+    #checkOutItems td{
+        padding: 10px 0px;
+        font-size: 12px;
+    }
+    #checkOutItems td:first-child{
+        width: 15%;
+    }
+    #checkOutItems td:nth-child(2){
+        width: 30%;
+        padding: 10px 0px 10px 2px;
+    }
+    #checkOutItems .quantity-container{
+        width: 56px;
+    }
+    #checkOutItems .quantity-container input{
+        width: 23px;
+        padding: 3px 0px;
+    }
+    .order-list-container{
+        padding-left: 0px;
+    }
+
+    #checkOutItems th:last-child,#checkOutItems tr td:last-child{
+        width: 19px;
+        min-width: 19px;
+    }
+}*/
