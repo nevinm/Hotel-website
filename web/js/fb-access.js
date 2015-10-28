@@ -13,7 +13,7 @@ function statusChangeCallback(response) {
         fbLogin();
         // The person is logged into Facebook, but not your app.
         document.getElementById('status').innerHTML = 'Please log ' +
-            'into this app.';
+                'into this app.';
     } else {
         fbLogin();
         // The person is not logged into Facebook, so we're not sure if
@@ -32,9 +32,9 @@ function checkLoginState() {
     // });
 }
 
-window.fbAsyncInit = function() {
+window.fbAsyncInit = function () {
     FB.init({
-        appId: '736537916455826',
+        appId: GLOBAL.APP_ID,
         cookie: true, // enable cookies to allow the server to access 
         oauth: true,
         status: true, // check login status
@@ -62,7 +62,7 @@ window.fbAsyncInit = function() {
 };
 
 var loginFBCallback = {
-    success: function(data, textStatus) {
+    success: function (data, textStatus) {
         userDetails = JSON.parse(data);
         if (userDetails.status == -1) {
             showPopup(userDetails);
@@ -78,27 +78,29 @@ var loginFBCallback = {
             window.location.href = '../index.html';
         }
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
 }
 
 function loginFB(fb_id, email) {
     var url = baseURL + 'login/',
-        header = {};
+            header = {};
     var userInfo = {
-            "username": email,
-            "fb_id": fb_id,
-            "remember": 1
-        },
-        data = JSON.stringify(userInfo);
+        "username": email,
+        "fb_id": fb_id,
+        "remember": 1
+    },
+    data = JSON.stringify(userInfo);
 
     var loginFBInstance = new AjaxHttpSender();
     loginFBInstance.sendPost(url, header, data, loginFBCallback);
 }
 
 // Load the SDK asynchronously
-(function(d, s, id) {
+(function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
+    if (d.getElementById(id))
+        return;
     js = d.createElement(s);
     js.id = id;
     js.src = "//connect.facebook.net/en_US/sdk.js";
@@ -108,7 +110,7 @@ function loginFB(fb_id, email) {
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
 function testAPI() {
-    FB.api('/me', function(response) {
+    FB.api('/me', function (response) {
         if ($('title').text().split('-')[1] == ' Log in') {
             loginFB(response.id, response.email)
         } else {
@@ -118,7 +120,7 @@ function testAPI() {
             $('#signup-email').val(response.email);
         }
     });
-    FB.api("/me/picture?width=300&height=300", function(response) {
+    FB.api("/me/picture?width=300&height=300", function (response) {
         if (response && !response.error) {
             localStorage['fb-image'] = response.data.url;
         }
@@ -127,7 +129,7 @@ function testAPI() {
 }
 
 function fbLogin() {
-    FB.login(function(response) {
+    FB.login(function (response) {
         if (response.authResponse) {
             var url = window.location.href;
             currentPage = getCurrentPage("/", ".html", url);
