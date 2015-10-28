@@ -1,7 +1,7 @@
 #Enable mod rewrite
 RewriteEngine On
-ErrorDocument 404 http://meisterdish.com
-ErrorDocument 403 http://meisterdish.com
+ErrorDocument 404 http://www.meisterdish.com
+ErrorDocument 403 http://www.meisterdish.com
 
 RewriteRule    ^share(.*)$  /backend/share/$1    [L]
 RewriteRule    ^verify-email(.*)$  /backend/verify-email/$1    [L]
