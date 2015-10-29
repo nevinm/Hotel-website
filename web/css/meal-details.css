@@ -665,7 +665,7 @@ span.ingredients-text{
     float: left;
     height: 1px;
     border: 0;
-    background-color: #A9D77B;
+    /*background-color: #A9D77B;*/
     margin: 20px 0;
     display: none;
 }
