@@ -810,13 +810,13 @@ label#username-error {
         max-width: 80%;
         margin: 0 auto;
     }
-    .outer-slide-description,
-    #section-what-is .outer-slide-description {
+    .outer-slide-description{
         max-width: 80%;
         margin: 0 auto;
     }
     #section-what-is .outer-slide-description {
-        max-width: 90%;
+        max-width: 100%;
+        margin: 0px 10px;
     }
     .section-logo {
         padding: 30px 0;
