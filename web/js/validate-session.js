@@ -1,19 +1,19 @@
 var sessionExpiryTime = 30,
 //------ QA ----
-//        baseURL = 'http://meisterdish.qburst.com/backend/api/',
-//        homeUrl = "http://meisterdish.qburst.com",
-//        PROMO_CODE = "MEISTER20",
-//        GLOBAL = {
-//            APP_ID: '736537916455826'
-//        };
-
-//------ LIVE ----
-        baseURL = 'http://meisterdish.com/backend/api/',
-        homeUrl = "http://www.meisterdish.com",
+        baseURL = 'http://meisterdish.qburst.com/backend/api/',
+        homeUrl = "http://meisterdish.qburst.com",
         PROMO_CODE = "MEISTER20",
         GLOBAL = {
-            APP_ID: '1412578365736463'
+            APP_ID: '736537916455826'
         };
+
+//------ LIVE ----
+//        baseURL = 'http://meisterdish.com/backend/api/',
+//        homeUrl = "http://www.meisterdish.com",
+//        PROMO_CODE = "MEISTER20",
+//        GLOBAL = {
+//            APP_ID: '1412578365736463'
+//        };
 
 function getCurrentPage(firstChar, secondChar, url) {
     currentPage = url.substring(url.lastIndexOf(firstChar) + 1, url.lastIndexOf(secondChar));
