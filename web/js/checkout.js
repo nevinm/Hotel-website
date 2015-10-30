@@ -11,6 +11,7 @@ var billingAddressId, cardDetails,
 $(document).ready(function () {
     loadViewDefaults();
     bindEvents();
+    $('.loading-indicator').show();
     $("#tip-error").css("width", "144px");
     CartItemCount();
     if (localStorage["session_key"]) {
@@ -1662,6 +1663,9 @@ function bindEvents() {
             $("#saveFirstCreditCard").prop('disabled', true);
             StripeController.createToken($form, creditCardAddToStripeCallback);
         }
+    });
+    $(document).ajaxStop(function () {
+        $('.loading-indicator').hide();
     });
 }
 function creditCardAddToStripeCallback(status, response, $form) {
