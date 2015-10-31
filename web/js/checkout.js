@@ -338,6 +338,8 @@ function setCurrentTime() {
             minutesToCLose = 15;
     $(".today-content .checkout-time-button").each(function (key, value) {
         currentHour = currentHourMin.substring(0, currentHourMin.length - 3);
+		console.log(new Date().getDay());
+		if(new Date().getDay()!==0 && new Date().getDay() !== 6){
         if (currentHour >= closingTime) {
             $(this).remove();
             $(".shop-status").show();
@@ -353,6 +355,7 @@ function setCurrentTime() {
                 }
             }
         }
+	}
     });
 
     var currentdate = new Date(),
