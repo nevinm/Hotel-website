@@ -1011,3 +1011,8 @@ label#username-error {
         padding: 0px 0px 10px 0px;
     }
 }
+@media screen and (min-width:768px){
+    .what-you-get-section .details-content {
+        margin-left: -4.5px;
+    }
+}
