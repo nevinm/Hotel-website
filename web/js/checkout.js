@@ -338,18 +338,20 @@ function setCurrentTime() {
             minutesToCLose = 15;
     $(".today-content .checkout-time-button").each(function (key, value) {
         currentHour = currentHourMin.substring(0, currentHourMin.length - 3);
-        if (currentHour >= closingTime) {
-            $(this).remove();
-            $(".shop-status").show();
-        } else {
-            currentMintues = parseInt(currentHourMin.slice(-2));
-            if (parseInt(currentHour) == $(value).data().hr) {
-                $(this).prevAll('.set-time-button').remove();
-                $(this).val("NOW");
-                $(this).addClass("checkout-time-button-active");
-                if (currentMintues >= minutesToCLose) {
-                    $(this).addClass("button-disabled");
-                    $(this).removeClass("checkout-time-button-active");
+        if (new Date().getDay() !== 0 && new Date().getDay() !== 6) {
+            if (currentHour >= closingTime) {
+                $(this).remove();
+                $(".shop-status").show();
+            } else {
+                currentMintues = parseInt(currentHourMin.slice(-2));
+                if (parseInt(currentHour) == $(value).data().hr) {
+                    $(this).prevAll('.set-time-button').remove();
+                    $(this).val("NOW");
+                    $(this).addClass("checkout-time-button-active");
+                    if (currentMintues >= minutesToCLose) {
+                        $(this).addClass("button-disabled");
+                        $(this).removeClass("checkout-time-button-active");
+                    }
                 }
             }
         }
@@ -1003,6 +1005,7 @@ function populateAddressListPopup() {
     $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .button').remove();
     $('#save-delivery-address').addClass('button-disabled');
+    $('.address-payment-list-popup .popup .header').text("SELECT YOUR DELIVERY ADDRESS");
     if (localStorage['delivery_addressess'] != undefined && localStorage['delivery_addressess'] != null && localStorage['loggedIn'] == "true") {
         var checkLocal = JSON.parse(localStorage['delivery_addressess']).address_list.length;
         addressList = JSON.parse(localStorage['delivery_addressess']);
@@ -1407,21 +1410,11 @@ function showSelectedPaymentMethod(selectedId) {
 function validateOrder() {
     var data = {};
     data.message = "";
-    if ($(".total-cost").val() > 0) {
-        if ($(".saved-card-list").length && !$(".payment-checked:checked").length) {
-            data.message = "Add a method of payment and then proceed";
-            showPopup(data);
-            return false;
-        }
-    }
 
-    if (typeof cartItems === 'undefined') {
-    } else {
-        if (cartItems.status == "-1") {
-            data.message = "Add meals to cart and then proceed";
-            showPopup(data);
-            return false;
-        }
+    if (typeof cartItems === 'undefined' || cartItems.status == "-1") {
+        data.message = "Add meals to cart and then proceed";
+        showPopup(data);
+        return false;
     }
     if (!$(".checkout-time-button-active").length) {
         if ($('#pickup-radio').prop('checked')) {
@@ -1431,6 +1424,13 @@ function validateOrder() {
         }
         showPopup(data);
         return false;
+    }
+    if ($(".total-cost").val() > 0) {
+        if (!$(".saved-card-list").length && !$(".payment-checked:checked").length) {
+            data.message = "Add a method of payment and then proceed";
+            showPopup(data);
+            return false;
+        }
     }
     if ($("#delivery-radio").is(":checked")) {
         if (!$(".address-added").length) {

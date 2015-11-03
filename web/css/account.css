@@ -1877,7 +1877,7 @@ img.accepted-cards {
     padding-bottom: 0px;
 }
 #firstCreditCardBtn{
-    display: none;
+    display: block;
     text-align: center;
     clear: both;
     float: left;
