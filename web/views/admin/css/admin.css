@@ -1515,9 +1515,12 @@ form.edit-gift-card #new-name-error {
 #nutritionSection tbody tr:last-child td{
     border-bottom: 1px solid #ddd;
 }
-#nutritionSection tbody td,
 #nutritionSection tbody th{
-    padding: 10px 0px;
+    padding: 10px 41px;
+}
+#nutritionSection tbody td{
+    text-align: left;
+    padding: 10px 50px;
 }
 #nutritionSection td div{
     width: 200px;
@@ -1535,4 +1538,8 @@ form.edit-gift-card #new-name-error {
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f7f7f7;
+}
+#nutritionSection th{
+    color:grey;
+    text-align: left;
 }
