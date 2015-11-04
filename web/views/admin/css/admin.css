@@ -1510,17 +1510,23 @@ form.edit-gift-card #new-name-error {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     padding: 10px 0px;
+    color: #929292;
+    text-align: center;
 }
 #nutritionSection tbody tr:last-child th,
 #nutritionSection tbody tr:last-child td{
     border-bottom: 1px solid #ddd;
 }
 #nutritionSection tbody th{
-    padding: 10px 41px;
+    padding: 25px 41px 0px 41px;
+    color: #959595;
+    text-align: left;
+    font-weight: normal;
 }
 #nutritionSection tbody td{
     text-align: left;
-    padding: 10px 50px;
+    padding: 4px 50px;
+    color: #BBBBBB;
 }
 #nutritionSection td div{
     width: 200px;
@@ -1531,15 +1537,14 @@ form.edit-gift-card #new-name-error {
     position: absolute;
     top: 8px;
     right: 8px;
+    color: #6D6D6D;
 }
 #nutritionSection td input{
     width: 100%;
-    padding: 8px 25px;
-    border: 1px solid #ddd;
+    padding: 8px 33px 8px 6px;
+    border: 1px solid #989898;
     border-radius: 5px;
     background-color: #f7f7f7;
-}
-#nutritionSection th{
-    color:grey;
-    text-align: left;
+    color: #6D6D6D;
+    /*font-family: BrandonGrotesque-Regular;*/
 }

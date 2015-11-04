@@ -271,21 +271,79 @@
                                         <tr><th></th><th>PER SERVING</th><th>% DAILY VALUE</th></tr>
                                     </thead>
                                     <tbody>
-                                        <tr><th>CALORIES</th><td><div><input type="text"></div></td><td></td></tr>
-                                        <tr><th>TOTAL FAT</th><td><div><input type="text"><span>g</span></div></td><td><div><input type="text"><span>%</span></div></td></tr>
-                                        <tr><td>SATURATED FAT</td><td><div><input type="text"><span>g</span></div></td><td><div><input type="text"><span>%</span></div></td></tr>
-                                        <tr><td>TRANS FAT</td><td><div><input type="text"><span>g</span></div></td><td></td></tr>
-                                        <tr><th>CHOLESTEROL</th><td><div><input type="text"><span>mg</span></div></td><td><div><input type="text"><span>%</span></div></td></tr>
-                                        <tr><th>SODIUM</th><td><div><input type="text"><span>mg</span></div></td><td><div><input type="text"><span>%</span></div></td></tr>
-                                        <tr><th>TOTAL CARBOHYDRATE</th><td><div><input type="text"><span>g</span></div></td><td><div><input type="text"><span>%</span></div></td></tr>
-                                        <tr><td>DIETARY FIBER</td><td><div><input type="text"><span>g</span></div></td><td><div><input type="text"><span>%</span></div></td></tr>
-                                        <tr><td>SUGARS</td><td><div><input type="text"><span>g</span></div></td><td></td></tr>
-                                        <tr><th>PROTEIN</th><td><div><input type="text"><span>g</span></div></td><td></td></tr>
-                                        <tr><th>VITAMINS</th><td></td><td></td></tr>
-                                        <tr><td>VITAMIN A</td><td></td><td><div><input type="text"><span>%</span></div></td></tr>
-                                        <tr><td>VITAMIN C</td><td></td><td><div><input type="text"><span>%</span></div></td></tr>
-                                        <tr><td>CALCIUM</td><td></td><td><div><input type="text"><span>%</span></div></td></tr>
-                                        <tr><td>IRON</td><td></td><td><div><input type="text"><span>%</span></div></td></tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Calories">CALORIES</th>
+                                            <td><div class="per-serving-input"><input type="text"></div></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Total Fat">TOTAL FAT</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Saturated Fat">SATURATED FAT</td>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Trans Fat">TRANS FAT</td>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Cholesterol">CHOLESTEROL</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>mg</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Sodium">SODIUM</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>mg</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Total Carbohydrate">TOTAL CARBOHYDRATE</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Dietary Fiber">DIETARY FIBER</td>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Sugars">SUGARS</td>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Protein">PROTEIN</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Vitamins">VITAMINS</th><td></td><td></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Vitamin A">VITAMIN A</td>
+                                            <td></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Vitamin C">VITAMIN C</td>
+                                            <td></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Calcium">CALCIUM</td>
+                                            <td></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Iron">IRON</td>
+                                            <td></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
