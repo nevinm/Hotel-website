@@ -620,7 +620,7 @@ iframe {
 .meal-type-icon {
     max-width: 45px;
     max-height: 45px;
-    height: 45px;
+    /*height: 45px;*/
     line-height: 100%;
     display: inline-block;
 }
