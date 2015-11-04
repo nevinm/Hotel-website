@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
     Ingredients.initView();
 });
-var Ingredients = (function() {
+var Ingredients = (function () {
     function initView() {
         bindEvents();
         loadDefaults();
@@ -9,11 +9,12 @@ var Ingredients = (function() {
 
     function loadDefaults() {
         setUploadUrl('ingredient-image-upload-element');
-        loadIngredientsList("", 1);
+//        loadIngredientsList("", 1);
+        loadIngredientsList("");
     }
 
     function bindEvents() {
-        $("#addNewIngredients").off().on("click", function() {
+        $("#addNewIngredients").off().on("click", function () {
             showIngredientPopup();
             $(".popup-input-wrapper .ingredient-icon").attr("src", "");
             $("#newIngredient").val("");
@@ -28,31 +29,31 @@ var Ingredients = (function() {
             }
             $("form").data('validator').resetForm();
         });
-        $("#no-button").off().on("click", function(e) {
+        $("#no-button").off().on("click", function (e) {
             e.preventDefault();
             $(".confirm-popup-wrapper").removeAttr("style");
         });
-        $("#addIngredient").off().on("click", function(e) {
+        $("#addIngredient").off().on("click", function (e) {
             e.preventDefault();
             if ($(".popup-container").valid()) {
                 $('.popup-wrapper').hide();
                 var ingredientName = $('#newIngredient').val(),
-                    imageId = $(".popup-input-wrapper .ingredient-icon").attr("data-id");
+                        imageId = $(".popup-input-wrapper .ingredient-icon").attr("data-id");
                 addIngredient(ingredientName, imageId);
             }
         });
-        $("#ingredientChangeIcon").off().on("click", function() {
+        $("#ingredientChangeIcon").off().on("click", function () {
             $(this).next(".ingredient-image-upload-element").trigger("click");
         });
-        $(".ingredient-image-upload-element").on('click', function() {
+        $(".ingredient-image-upload-element").on('click', function () {
             var inputElement = $(this),
-                imageElement = $(this).parent().find(".ingredient-icon");
+                    imageElement = $(this).parent().find(".ingredient-icon");
             uploadImage(inputElement, imageElement);
         });
-        $("input[id^=editIngredientName-]").off().on("click", function() {
+        $("input[id^=editIngredientName-]").off().on("click", function () {
             var ingredientName = $(this).closest('tr').find('.ingredient-name').text(),
-                imageUrl = $(this).data("url"),
-                imageId = $(this).data("imageid");
+                    imageUrl = $(this).data("url"),
+                    imageId = $(this).data("imageid");
             showIngredientPopup();
             $("#addIngredient").hide();
             $("#editIngredient").show();
@@ -67,17 +68,17 @@ var Ingredients = (function() {
             $("#editIngredient").attr("data-id", $(this).closest('tr').attr("data-id"));
             setIngredientsImageLoader();
         });
-        $("#editIngredient").off().on("click", function(e) {
+        $("#editIngredient").off().on("click", function (e) {
             e.preventDefault();
             if ($(".popup-container").valid()) {
                 $('.popup-wrapper').hide();
                 var id = $("#editIngredient").attr("data-id"),
-                    ingredient = $('#newIngredient').val(),
-                    imageId = $(".popup-input-wrapper .ingredient-icon").attr("data-id");
+                        ingredient = $('#newIngredient').val(),
+                        imageId = $(".popup-input-wrapper .ingredient-icon").attr("data-id");
                 updateIngredient(ingredient, imageId, id);
             }
         });
-        $("input[id^=deleteIngredient-]").off().on("click", function() {
+        $("input[id^=deleteIngredient-]").off().on("click", function () {
             $('.popup-wrapper').hide();
             $(".confirm-popup-wrapper .header").text("Delete");
             $(".confirm-popup-wrapper .content span").text("Are you sure you want to delete?");
@@ -85,7 +86,7 @@ var Ingredients = (function() {
             $("#yes-button").attr('data-id', id)
             $(".confirm-popup-wrapper").show();
         });
-        $("#yes-button").off().on("click", function() {
+        $("#yes-button").off().on("click", function () {
             var id = $(this).attr('data-id');
             $(".confirm-popup-wrapper").hide();
             deleteIngredient(id);
@@ -101,34 +102,36 @@ var Ingredients = (function() {
     function addIngredient(ingredientName, ingredientIcon) {
         var url = baseURL + 'cms/add_ingredient/';
         header = {
-                "session-key": localStorage['session_key']
-            },
-            params = {
-                "ingredient": ingredientName,
-                "image_id": ingredientIcon
-            };
+            "session-key": localStorage['session_key']
+        },
+        params = {
+            "ingredient": ingredientName,
+            "image_id": ingredientIcon
+        };
         data = JSON.stringify(params);
         var api = new AjaxHttpSender();
         api.sendPost(url, header, data, Ingredients.addIngredientCallback);
     }
     var addIngredientCallback = {
-        success: function(data, textStatus) {
+        success: function (data, textStatus) {
             var responseData = JSON.parse(data);
             if (responseData.status == -1) {
                 showCallBackStatusPre();
                 showPopup(responseData);
             } else {
-                loadIngredientsList("", $(".pagination").pagination('getCurrentPage'));
+                loadIngredientsList("");
+//                loadIngredientsList("", $(".pagination").pagination('getCurrentPage'));
             }
         },
-        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+        failure: function (XMLHttpRequest, textStatus, errorThrown) {
+        }
     }
 
     function uploadImage(imageElementSelect, imageElement) {
         $(imageElementSelect).fileupload({
-            add: function(e, data) {
+            add: function (e, data) {
                 var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i,
-                    error = [];
+                        error = [];
                 if (data.originalFiles[0]['type'] && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
                     error.message = 'Not an accepted file type';
                     showCallBackStatusPre();
@@ -151,10 +154,10 @@ var Ingredients = (function() {
             formData: {
                 example: 'test'
             },
-            start: function(e) {
+            start: function (e) {
                 $(".upload-gif").show();
             },
-            done: function(e, data) {
+            done: function (e, data) {
                 $(".upload-gif").hide();
                 if (data.result.status == 1) {
                     $(imageElement).attr('src', data.result.thumbnail_url);
@@ -200,7 +203,7 @@ var Ingredients = (function() {
         getIngredientsList.sendPost(url, header, data, Ingredients.getIngredientsListCallback);
     }
     var getIngredientsListCallback = {
-        success: function(data, textStatus) {
+        success: function (data, textStatus) {
             var ingredientsList = JSON.parse(data);
             if (ingredientsList.status == 1) {
                 populateIngredients(ingredientsList);
@@ -209,33 +212,40 @@ var Ingredients = (function() {
                 showPopup(ingredientsList);
             }
         },
-        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+        failure: function (XMLHttpRequest, textStatus, errorThrown) {
+        }
     }
 
     function populateIngredients(ingredientsList) {
         $('#ingredientsArea tbody tr').remove();
-        $.each(ingredientsList.aaData, function(key, value) {
-            $('#ingredientsArea tbody').append("<tr class='row' data-id='" + value.id + "'>" + "<td class='ingredient-name mealtype-name-value'>" + value.name + "</td>" + "<td>" + "<input type='button' data-url='" + value.image_url + "' class='btn btn-small-primary medium-green'" + " id='editIngredientName-" + value.image_id + "' data-imageid='" + value.image_id + "' value='EDIT'>" + "</td>" + "<td>" + "<input type='button' class='btn btn-small-primary medium-green'" + " id='deleteIngredient-" + value.image_id + "' value='DELETE'>" + "</td>" + "<td><img class='mealtype-icon ingredient-icon' src='" + value.image_url + "'/>" + "<input class='ingredient-image-upload-element' value='' type='file' name='image_upload'/></td>" + "</tr>");
+        $.each(ingredientsList.aaData, function (key, value) {
+            $('#ingredientsArea tbody').append("<tr class='row' data-id='" + value.id + "'>"
+                    + "<td class='ingredient-name mealtype-name-value'>" + value.name + "</td>"
+                    + "<td>" + "<input type='button' data-url='" + value.image_url + "' class='btn btn-small-primary medium-green'" + " id='editIngredientName-" + value.image_id + "' data-imageid='" + value.image_id + "' value='EDIT'>" + "</td>" +
+                    "<td>" + "<input type='button' class='btn btn-small-primary medium-green'" + " id='deleteIngredient-" + value.image_id + "' value='DELETE'>" + "</td>" +
+                    "<td><img class='mealtype-icon ingredient-icon' src='" + value.image_url + "'/>" + "<input class='ingredient-image-upload-element' value='' type='file' name='image_upload'/></td>" + "</tr>");
         });
-        $(".pagination").pagination({
-            pages: ingredientsList.num_pages,
-            currentPage: ingredientsList.current_page,
-            cssStyle: 'light-theme',
-            onPageClick: function(pageNumber, event) {
-                loadIngredientsList("", pageNumber);
-            },
-            onInit: function() {
-                if (getStringAfterHash(location.href, "#")) {
-                    var pageString = getStringAfterHash(location.href, "#");
-                    if (pageString.indexOf('page') != -1) {
-                        pageNumber = getStringAfterHash(pageString, "-");
-                        if ($(".pagination").pagination('getCurrentPage') == pageNumber) {} else {
-                            $(".pagination").pagination('selectPage', pageNumber);
-                        }
-                    }
-                } else {}
-            }
-        });
+//        $(".pagination").pagination({
+//            pages: ingredientsList.num_pages,
+//            currentPage: ingredientsList.current_page,
+//            cssStyle: 'light-theme',
+//            onPageClick: function (pageNumber, event) {
+//                loadIngredientsList("", pageNumber);
+//            },
+//            onInit: function () {
+//                if (getStringAfterHash(location.href, "#")) {
+//                    var pageString = getStringAfterHash(location.href, "#");
+//                    if (pageString.indexOf('page') != -1) {
+//                        pageNumber = getStringAfterHash(pageString, "-");
+//                        if ($(".pagination").pagination('getCurrentPage') == pageNumber) {
+//                        } else {
+//                            $(".pagination").pagination('selectPage', pageNumber);
+//                        }
+//                    }
+//                } else {
+//                }
+//            }
+//        });
         bindEvents();
         setUploadUrl('ingredient-image-upload-element');
     }
@@ -243,12 +253,12 @@ var Ingredients = (function() {
     function updateIngredient(ingredient, imageId, id) {
         var url = baseURL + 'cms/update_ingredient/' + id + '/';
         header = {
-                "session-key": localStorage['session_key']
-            },
-            params = {
-                "ingredient": ingredient,
-                "image_id": imageId
-            };
+            "session-key": localStorage['session_key']
+        },
+        params = {
+            "ingredient": ingredient,
+            "image_id": imageId
+        };
         data = JSON.stringify(params);
         var api = new AjaxHttpSender();
         api.sendPost(url, header, data, Ingredients.updateIngredientCallback);
@@ -262,39 +272,43 @@ var Ingredients = (function() {
         }
     }
     var updateIngredientCallback = {
-        success: function(data, textStatus) {
+        success: function (data, textStatus) {
             var responseData = JSON.parse(data);
             if (responseData.status == -1) {
                 showCallBackStatusPre();
                 showPopup(responseData);
             } else {
-                loadIngredientsList("", $(".pagination").pagination('getCurrentPage'));
+                loadIngredientsList("");
+//                loadIngredientsList("", $(".pagination").pagination('getCurrentPage'));
             }
         },
-        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+        failure: function (XMLHttpRequest, textStatus, errorThrown) {
+        }
     }
 
     function deleteIngredient(id) {
         var url = baseURL + 'cms/delete_ingredient/' + id + '/';
         header = {
-                "session-key": localStorage['session_key']
-            },
-            params = {},
-            data = JSON.stringify(params);
+            "session-key": localStorage['session_key']
+        },
+        params = {},
+                data = JSON.stringify(params);
         var api = new AjaxHttpSender();
         api.sendPost(url, header, data, Ingredients.deleteIngredientCallback);
     }
     var deleteIngredientCallback = {
-        success: function(data, textStatus) {
+        success: function (data, textStatus) {
             var responseData = JSON.parse(data);
             if (responseData.status == -1) {
                 showCallBackStatusPre();
                 showPopup(responseData);
             } else {
-                loadIngredientsList("", 1);
+//                loadIngredientsList("", 1);
+                loadIngredientsList("");
             }
         },
-        failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+        failure: function (XMLHttpRequest, textStatus, errorThrown) {
+        }
     }
     return {
         initView: initView,
