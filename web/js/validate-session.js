@@ -8,12 +8,12 @@ var sessionExpiryTime = 30,
 //        };
 
 //------ LIVE ----
-baseURL = 'http://meisterdish.com/backend/api/',
-        homeUrl = "http://meisterdish.com",
+        baseURL = 'http://meisterdish.com/backend/api/',
+        homeUrl = "http://www.meisterdish.com",
         PROMO_CODE = "MEISTER20",
         GLOBAL = {
-        APP_ID : '1412578365736463'
-};
+            APP_ID: '1412578365736463'
+        };
 
 function getCurrentPage(firstChar, secondChar, url) {
     currentPage = url.substring(url.lastIndexOf(firstChar) + 1, url.lastIndexOf(secondChar));

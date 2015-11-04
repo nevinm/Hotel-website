@@ -145,3 +145,8 @@ function fbLogin() {
         scope: 'publish_stream,email,publish_actions'
     });
 }
+//FB.api('/me/permissions', function (response) {
+//        alert(response);
+//        console.log(response);
+//        
+//    });
