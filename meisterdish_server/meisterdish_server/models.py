@@ -178,6 +178,10 @@ class User(models.Model):
     def delete(self, using=None):
         self.deleted = True
         self.save()
+        if self.role == Role.objects.get(name="Guest"):
+            if not Order.objects.filter(cart__user=self).exists():
+                models.Model.delete(self, using)
+
 
 class Address(models.Model):
     user = models.ForeignKey(User, related_name="user_address")

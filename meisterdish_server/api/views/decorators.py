@@ -43,7 +43,7 @@ def check_input(method):
                         if session and 'user' in session :
                             try:
                                 query = Q(pk=session['user']['id']) & (Q(role__pk=settings.ROLE_USER) | Q(role__pk=settings.ROLE_GUEST))
-                                user = User.objects.get(query)
+                                user = User.objects.get(query, deleted=False)
                             except Exception as e:
                                 log.error("No user in session !!" + str(session['user']['id']) + e.message)
                                 return custom_error("This user is no more available. Please login again.", -2)
