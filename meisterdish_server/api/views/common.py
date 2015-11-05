@@ -148,9 +148,8 @@ def signup(request, data):
         first_name = data['first_name'].strip()
         last_name = data['last_name'].strip()
         zipcode = data["zipcode"].strip()
-        
+        merge_flag = False
         referral_code = data.get("referral_code", False)
-
         fb = False
         fb_id = ""
         profile_image = None
@@ -171,7 +170,17 @@ def signup(request, data):
         if User.objects.filter(email__iexact=email, deleted=False).exists():
             return custom_error("Email already exists.")
         try:
-            user = User()
+            guests = User.objects.filter(user_address__email=email, role=Role.objects.get(name="Guest"))
+            guest_user = guests.last()
+            if len(guests) > 1:
+                tmp_guests = guests.exclude(pk=guest_user.pk)
+                Cart.objects.filter(user__in = tmp_guests).update(user= guest_user)
+                Order.objects.filter(cart__user__in=tmp_guests).update(delivery_address=guest_user.user_address.first())                   
+            if guests:
+                user = guest_user
+                merge_flag = True
+            else: 
+                user = User()
             user.email = email
             user.password = md5.new(password).hexdigest()
             user.first_name = first_name
@@ -180,6 +189,8 @@ def signup(request, data):
             user.fb_user_id = fb_id
             user.profile_image = profile_image
             user.zipcode = zipcode
+            user.deleted = False
+            user.is_active = False
             user.save()
 
             if referral_code:
@@ -226,7 +237,12 @@ def signup(request, data):
             log.info(email + " : Signed up ")
             if send_user_verification_mail(user):
                 log.info("Sent verification mail to " + user.email)
-                return json_response({"status":1, "message": "A verification email has been sent to your email (" + email + "). Please follow the instructions to activate your account.", "user":user_dic, "session_key":session.session_key})
+                message = "A verification email has been sent to your email (" + email + "). Please follow the instructions to activate your account."
+                if merge_flag:
+                    message += " Please note that a guest user account already exists with your email, It will be merged automatically."
+                return json_response({"status":1, 
+                                      "message": message,
+                                      "user":user_dic, "session_key":session.session_key})
             else:
                 log.error("Failed to send user verification mail : ")
                 return custom_error("An error has occurred in sending verification mail. Please try later.")
