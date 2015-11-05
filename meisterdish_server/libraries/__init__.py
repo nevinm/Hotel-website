@@ -200,7 +200,7 @@ def create_guest_user(request, details=None):
     if details:
       email = 'guest_' + details["guest_email"].strip()
       try:
-          user = User.objects.get(email=email)
+          user = User.objects.get(email=email, deleted=False)
       except User.DoesNotExist:
           user = User()
     else:
