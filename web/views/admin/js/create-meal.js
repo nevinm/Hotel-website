@@ -122,6 +122,23 @@ $(document).ready(function () {
             }
         }
     })
+    $("#nutritionSection tbody input").on('input', function (e) {
+        var value = $(this).val();
+        if (!(/^[0-9]{0,15}(\.[0-9]{0,2})?$/g.test($(this).val()))) {
+            $(this).val(value.slice(0, value.length - 1));
+        }
+    }).on('keydown', function (evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if ((charCode != 190 || $(this).val().indexOf('.') != -1)
+                && (charCode != 110 || $(this).val().indexOf('.') != -1)
+                && ((charCode < 48 && charCode != 8)
+                        || (charCode > 57 && charCode < 96)
+                        || charCode > 105)) {
+            return false;
+        } else if (/^[0-9]{0,15}(\.[0-9]{0,2})?$/g.test($(this).val())) {
+            return true;
+        }
+    });
     addDynamicApiUrlUploadPicture("meal-image-input");
     addDynamicApiUrlUploadPicture("chef-image-input");
     addDynamicApiUrlUploadPicture("kitchen-image-input");
