@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $("#page-container").css("min-height", ($(window).height() - 200) + "px")
     var perPage = 6,
             nextPage = 1,
             mealTypeFilter = [],
@@ -112,7 +113,7 @@ $(document).ready(function () {
     $('#share-now').on('click', function () {
         window.location.href = "share-page.html";
     });
-    
+
     CartItemCount();
     getCategory();
     getmealList('', '', '', '', '');
