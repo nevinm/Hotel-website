@@ -40,7 +40,9 @@ var getProfileCallback = {
                     $("#" + profileId).attr('src', '../images/blank-person.png');
                 }
             }
-        } else {}
+        } else {
+            showPopup(userDetails);
+        }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
 }
