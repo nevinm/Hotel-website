@@ -48,7 +48,8 @@
 }
 #you-cook .image-wrapper{
     /*background-image: url('../images/how_it_works/banner1.jpg');*/
-    background-image: url('../images/how_it_works/You-Cook.jpg');
+    /*background-image: url('../images/how_it_works/You-Cook.jpg');*/
+    background-image: url('../images/how_it_works/box-you-cook.jpg');    
 }
 #what-you-get .image-wrapper{
     background-image: url('../images/how_it_works/wyg-bg.jpg');
