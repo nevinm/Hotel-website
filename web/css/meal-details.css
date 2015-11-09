@@ -756,6 +756,7 @@ span.ingredients-text{
     }
     .table-container {
         width: 100%;
+        padding: 10px 0px;
     }
     .text-container {
         display: none;
