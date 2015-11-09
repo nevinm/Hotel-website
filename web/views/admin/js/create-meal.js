@@ -670,7 +670,8 @@ function getNutrients() {
     }
     return nutrients;
     function getData($selector, classSelector) {
-        return $selector.find(classSelector + " input").length > 0
+        console.log($selector.find(classSelector + " input").val());
+        return ($selector.find(classSelector + " input").val() !== undefined && $selector.find(classSelector + " input").val().length > 0)
                 ? $selector.find(classSelector + ' input').val() + " " + $selector.find(classSelector + ' span').text().trim()
                 : "";
     }
@@ -697,6 +698,6 @@ function setNutrients(nutrients) {
         });
     });
     function getData(string) {
-        return string.indexOf(" ") > 0 ? string.substring(0, string.lastIndexOf(" ")) : string;
+        return string.indexOf(" ") > 0 ? string.substring(0, string.lastIndexOf(" ")) : ($.isNumeric(string) ? string : "");
     }
 }
