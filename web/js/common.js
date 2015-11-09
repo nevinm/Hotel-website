@@ -758,7 +758,7 @@ $("form").each(function () {
 });
 if ($.validator) {
     $.validator.addMethod('letters', function (value) {
-        return value.match(/^[- a-zA-Z]+$/);
+        return value.match(/^[a-zA-Z]+('[a-zA-Z])?[a-zA-Z]*$/);
     });
     $.validator.addMethod('email', function (value) {
         return value.match(/^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/);
