@@ -1436,7 +1436,7 @@ function validateOrder() {
         return false;
     }
     if ($(".total-cost").val() > 0) {
-        if (!$(".saved-card-list").length && !$(".payment-checked:checked").length) {
+        if (!$(".payment-checked:checked").length) {
             data.message = "Add a method of payment and then proceed";
             showPopup(data);
             return false;
