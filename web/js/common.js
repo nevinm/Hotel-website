@@ -381,6 +381,7 @@ function showSessionExpire(data) {
     $('.sessionexpire-wrapper').show();
 }
 $(document).on('click', '#close', function () {
+    $('.popup-container').removeAttr("style");
     $('.popup-wrapper').hide();
     if (currentPage == "Meisterdish - Signup" || currentPage == "Meisterdish - Login") {
         if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
