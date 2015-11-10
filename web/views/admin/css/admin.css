@@ -34,7 +34,9 @@ input[type="number"]{
 #meal-sub-name-error {
     top: 7px;
 }
-
+#kitchen-image{
+    max-width: 300px;
+}
 .adminlogin-wrapper {
     width: 400px;
     margin: 0 auto;
