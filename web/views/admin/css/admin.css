@@ -725,7 +725,8 @@ input#searchBy-name {
 
 .meal-list-img {
     height: auto;
-    width: 77px;
+    width: 50px;
+    max-width: 50px;
 }
 
 #meal-list .primary-meal ,.not-sold-out{
@@ -1514,6 +1515,8 @@ form.edit-gift-card #new-name-error {
     padding: 10px 0px;
     color: #929292;
     text-align: center;
+    font-family: 'BrandonGrotesque-Bold';
+    font-weight: normal;
 }
 #nutritionSection tbody tr:last-child th,
 #nutritionSection tbody tr:last-child td{
@@ -1524,11 +1527,14 @@ form.edit-gift-card #new-name-error {
     color: #959595;
     text-align: left;
     font-weight: normal;
+    font-family: 'BrandonGrotesque-Medium';
 }
 #nutritionSection tbody td{
     text-align: left;
     padding: 4px 50px;
     color: #BBBBBB;
+    font-size: 16px;
+    font-family: BrandonGrotesque-Regular;
 }
 #nutritionSection td div{
     width: 200px;
@@ -1537,16 +1543,35 @@ form.edit-gift-card #new-name-error {
 }
 #nutritionSection td span{
     position: absolute;
-    top: 8px;
+    top: 5px;
     right: 8px;
     color: #6D6D6D;
+    font-family: BrandonGrotesque-Regular;
+    font-size: 16px;
 }
 #nutritionSection td input{
     width: 100%;
-    padding: 8px 33px 8px 6px;
+    padding: 7px;
     border: 1px solid #989898;
     border-radius: 5px;
     background-color: #f7f7f7;
-    color: #6D6D6D;
-    /*font-family: BrandonGrotesque-Regular;*/
+    color: #5A5959;
+    font-family: BrandonGrotesque-Regular;
+    font-size: 13px;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+input[type=number]{
+    -moz-appearance:textfield;
+}
+#meal-list th{
+    padding: 10px 3px;
+}
+#meal-list .btn-small-primary{
+    min-width: 85px;
 }
