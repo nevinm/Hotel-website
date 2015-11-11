@@ -600,8 +600,8 @@ p.upper-content {
 }
 
 .meal-type-description-icon {
-    max-width: 30px;
-    max-height: 30px;
+    max-width: 45px;
+    max-height: 45px;
 }
 
 /*==============================*\
@@ -871,7 +871,9 @@ label#username-error {
         font-size: 20px;
     }
     .meal-type-description-icon {
-        width: 20px;
+        /*width: 20px;*/
+        max-width: 35px;
+        max-height: 35px;
     }
     .meal-sub-description p,
     p.lower-content {
