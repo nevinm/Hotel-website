@@ -556,7 +556,7 @@ p.upper-content {
 .what-you-get-section .details-content {
     width: 25%;
     display: inline-block;
-    float: none;
+    /*float: none;*/
     padding: 10px 0px;
     height: auto;
 }
@@ -567,7 +567,7 @@ p.upper-content {
 
 #section-what-to-expect .ingredients-wrapper {
     padding: 25px 0;
-    text-align: center;
+    /*text-align: center;*/
     width: 100%;
 }
 
@@ -1011,5 +1011,10 @@ label#username-error {
     }
     .details-content {
         padding: 0px 0px 10px 0px;
+    }
+}
+@media screen and (min-width:768px){
+    .what-you-get-section .details-content {
+        margin-left: -4.5px;
     }
 }
