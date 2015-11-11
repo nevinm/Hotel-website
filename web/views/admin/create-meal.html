@@ -247,26 +247,105 @@
                                     </div> -->
                                 </div>
                             </div>
-                            <div class="section-5">
+                            <div class="section-5" id="nutritionSection">
                                 <div class="section-header">NUTRITION</div>
-                                <div class="content-1">
-                                    <div class="input-feild-container">
-                                        <div class="forminput-wrapper">
-                                            <label class="body-text-small">Nutrients</label>
-                                            <input type="text"class="create-meal-input" id="nutrients">
-                                        </div>
-                                        <div class="forminput-wrapper">
-                                            <label class="body-text-small">Per serving</label>
-                                            <input type="text"class="create-meal-input" id="nutrients-per-serving">
-                                        </div>
-                                        <div class="forminput-wrapper">
-                                            <label class="body-text-small">%Daily value</label>
-                                            <input type="text"class="create-meal-input" id="nutrients-daily-value">
-                                        </div>
-                                        <input type="button" class="add-nutrition-content" value="add">
-                                    </div>
-                                </div>
-                                <div class="content-1 nutrients-total"></div>
+                                <!--                                <div class="content-1">
+                                                                    <div class="input-feild-container">
+                                                                        <div class="forminput-wrapper">
+                                                                            <label class="body-text-small">Nutrients</label>
+                                                                            <input type="text"class="create-meal-input" id="nutrients">
+                                                                        </div>
+                                                                        <div class="forminput-wrapper">
+                                                                            <label class="body-text-small">Per serving</label>
+                                                                            <input type="text"class="create-meal-input" id="nutrients-per-serving">
+                                                                        </div>
+                                                                        <div class="forminput-wrapper">
+                                                                            <label class="body-text-small">%Daily value</label>
+                                                                            <input type="text"class="create-meal-input" id="nutrients-daily-value">
+                                                                        </div>
+                                                                        <input type="button" class="add-nutrition-content" value="add">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="content-1 nutrients-total"></div>-->
+                                <table><thead>
+                                        <tr><th></th><th>PER SERVING</th><th>% DAILY VALUE</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Calories">CALORIES</th>
+                                            <td><div class="per-serving-input"><input type="text"></div></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Total Fat">TOTAL FAT</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Saturated Fat">SATURATED FAT</td>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Trans Fat">TRANS FAT</td>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Cholesterol">CHOLESTEROL</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>mg</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Sodium">SODIUM</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>mg</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Total Carbohydrate">TOTAL CARBOHYDRATE</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Dietary Fiber">DIETARY FIBER</td>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Sugars">SUGARS</td>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Protein">PROTEIN</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="15"><span>g</span></div></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Vitamins">VITAMINS</th><td></td><td></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Vitamin A">VITAMIN A</td>
+                                            <td></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Vitamin C">VITAMIN C</td>
+                                            <td></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Calcium">CALCIUM</td>
+                                            <td></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Iron">IRON</td>
+                                            <td></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="15"><span>%</span></div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="section-6">
                                 <div class="section-header">TIPS & TRICKS</div>
