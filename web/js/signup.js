@@ -7,6 +7,13 @@ var signupCallback = {
         } else {
             $('.signup-formcontainer')[0].reset();
             showPopup(userDetails);
+            var splitter = "Please note that a guest user account already exists with your email";
+            if (userDetails.message.match(splitter)) {
+                var dataArray = userDetails.message.split(splitter);
+                var element = dataArray[0] + "<br>" + splitter + dataArray[1];
+                $('.popup-container .content span').html(element);
+                $('.popup-container').attr("style","padding:0px");
+            }
             ga('send', {
                 'hitType': 'event', // Required.
                 'eventCategory': 'button', // Required.

@@ -276,20 +276,51 @@ function tipsTricksTab(mealDetails) {
 
 function nutrientsTab(mealDetails) {
     if (mealDetails.nutrients.length) {
+//        $.each(mealDetails.nutrients, function (key, value) {
+//            $("#nutrient-table tbody").append("<tr><td>" + value.mainNutrient + "</td>" +
+//                    "<td class='per-serving'>" + value.perServing + "</td>" +
+//                    "<td>" + value.dailyValue + "</td>" +
+//                    "</tr>");
+//            if (value.subNutrients.length) {
+//                $.each(value.subNutrients, function (key, value) {
+//                    $("#nutrient-table tbody").append("<tr><td class='sub-nutrients'>" + value.nutrientsName + "</td>" +
+//                            "<td class='per-serving'>" + value.servingValue + "</td>" +
+//                            "<td>" + value.dailyValue + "</td>" +
+//                            "</tr>");
+//                });
+//            }
+//        });
+        
+        var element = "";
         $.each(mealDetails.nutrients, function (key, value) {
-            $("#nutrient-table tbody").append("<tr><td>" + value.mainNutrient + "</td>" +
+            element += "";
+            var mainData = false;
+            var subData = false;
+            var subElement = "";
+            var mainElement = "<tr><td>" + value.mainNutrient + "</td>" +
                     "<td class='per-serving'>" + value.perServing + "</td>" +
                     "<td>" + value.dailyValue + "</td>" +
-                    "</tr>");
+                    "</tr>";
+
             if (value.subNutrients.length) {
-                $.each(value.subNutrients, function (key, value) {
-                    $("#nutrient-table tbody").append("<tr><td class='sub-nutrients'>" + value.nutrientsName + "</td>" +
-                            "<td class='per-serving'>" + value.servingValue + "</td>" +
-                            "<td>" + value.dailyValue + "</td>" +
-                            "</tr>");
+                $.each(value.subNutrients, function (subKey, subValue) {
+                    if (subValue.servingValue.length > 0 || subValue.dailyValue.length > 0) {
+                        subData = true;
+                        subElement += "<tr><td class='sub-nutrients'>" + subValue.nutrientsName + "</td>" +
+                                "<td class='per-serving'>" + subValue.servingValue + "</td>" +
+                                "<td>" + subValue.dailyValue + "</td>" +
+                                "</tr>";
+                    }
                 });
             }
+            if (value.perServing.length > 0 || value.dailyValue.length > 0 || subData) {
+                element += mainElement;
+            }
+            if (subData) {
+                element += subElement;
+            }
         });
+        $("#nutrient-table tbody").html(element);
     } else {
         $("#nutrient-table tbody").append("<tr>" + "<td><div>" + "No nutrients present...." + "</div></td>" + "<td></td>" + "<td></td>" + "</tr>");
     }
