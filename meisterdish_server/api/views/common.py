@@ -67,7 +67,7 @@ def login(request, data):
                 session = SessionStore(session_key=session_key)
                 log.info("Logging in to guest session")
                 try:
-                    guest_user = User.objects.get(pk=session["user"]["id"], role__pk=settings.ROLE_GUEST)
+                    guest_user = User.objects.get(pk=session["user"]["id"], role__pk=settings.ROLE_GUEST, deleted=False)
                     try:
                         my_cart = Cart.objects.get(user__email=user.email, completed=False)
                     except Cart.DoesNotExist:
@@ -148,9 +148,8 @@ def signup(request, data):
         first_name = data['first_name'].strip()
         last_name = data['last_name'].strip()
         zipcode = data["zipcode"].strip()
-        
+        merge_flag = False
         referral_code = data.get("referral_code", False)
-
         fb = False
         fb_id = ""
         profile_image = None
@@ -168,10 +167,20 @@ def signup(request, data):
             log.error(email + " : Sign up failed. Fill required fields.")
             return custom_error("Please fill in all the required fields")
         
-        if User.objects.filter(email__iexact=email).exists():
+        if User.objects.filter(email__iexact=email, deleted=False).exists():
             return custom_error("Email already exists.")
         try:
-            user = User()
+            guests = User.objects.filter(user_address__email=email, role=Role.objects.get(name="Guest"))
+            guest_user = guests.last()
+            if len(guests) > 1:
+                tmp_guests = guests.exclude(pk=guest_user.pk)
+                Cart.objects.filter(user__in = tmp_guests).update(user= guest_user)
+                Order.objects.filter(cart__user__in=tmp_guests).update(delivery_address=guest_user.user_address.first())                   
+            if guests:
+                user = guest_user
+                merge_flag = True
+            else: 
+                user = User()
             user.email = email
             user.password = md5.new(password).hexdigest()
             user.first_name = first_name
@@ -180,11 +189,13 @@ def signup(request, data):
             user.fb_user_id = fb_id
             user.profile_image = profile_image
             user.zipcode = zipcode
+            user.deleted = False
+            user.is_active = False
             user.save()
 
             if referral_code:
                 try:
-                    referrer = User.objects.get(referral_code=referral_code)
+                    referrer = User.objects.get(referral_code=referral_code, deleted=False)
                     bonus = float(Configuration.objects.get(key='REFERRAL_BONUS').value)
                     user.credits = bonus
                     user.save()               
@@ -226,7 +237,12 @@ def signup(request, data):
             log.info(email + " : Signed up ")
             if send_user_verification_mail(user):
                 log.info("Sent verification mail to " + user.email)
-                return json_response({"status":1, "message": "A verification email has been sent to your email (" + email + "). Please follow the instructions to activate your account.", "user":user_dic, "session_key":session.session_key})
+                message = "A verification email has been sent to your email (" + email + "). Please follow the instructions to activate your account."
+                if merge_flag:
+                    message += " Please note that a guest user account already exists with your email, It will be merged automatically."
+                return json_response({"status":1, 
+                                      "message": message,
+                                      "user":user_dic, "session_key":session.session_key})
             else:
                 log.error("Failed to send user verification mail : ")
                 return custom_error("An error has occurred in sending verification mail. Please try later.")
@@ -289,7 +305,7 @@ def verify_user(request, data, token):
     try:
         token = token.strip()
         
-        user = User.objects.get(user_verify_token=token)
+        user = User.objects.get(user_verify_token=token, deleted=False)
         
         user.user_verify_token = ""
         user.is_active = True
@@ -323,7 +339,7 @@ def verify_email(request, data, token):
     try:
         token = token.strip()
         
-        user = User.objects.get(user_verify_token__startswith=token)
+        user = User.objects.get(user_verify_token__startswith=token, deleted=False)
         
         token = user.user_verify_token[0:20]
         email = user.user_verify_token[20:].strip("-")
@@ -352,7 +368,7 @@ def forgot_password(request, data):
     try:
         email = data['email'].strip()
         
-        user = User.objects.get(email=email)
+        user = User.objects.get(email=email, deleted=False)
         
         import string, random
         from libraries import mail
@@ -394,7 +410,7 @@ def reset_password(request, data):
     try:
         token = data['token'].strip()
         new_password = data['password'].strip()
-        user = User.objects.get(password_reset_token=token)
+        user = User.objects.get(password_reset_token=token, deleted=False)
         
         user.password_reset_token = ""
         user.password = md5.new(new_password).hexdigest()
@@ -590,7 +606,7 @@ def change_email(request, data, user):
                 return custom_error("Please provide a valid email.")
             if user.email == email:
                 raise Exception("Please enter a different email.")
-            elif User.objects.filter(email=email).exists():
+            elif User.objects.filter(email=email, deleted=False).exists():
                 raise Exception("Email already exists for another user.")
             else:
                 if send_user_verification_mail(user, True, email):
@@ -674,7 +690,7 @@ def referral_return(request, data, token):
     if not len(token):
         log.error("Invalid referral token")
         return HttpResponseRedirect(settings.SITE_URL)
-    if User.objects.filter(referral_code=token).exists():
+    if User.objects.filter(referral_code=token, deleted=False).exists():
         return HttpResponseRedirect(settings.SITE_URL + 'views/signup.html?ref=' + token)
     else:
         log.error("Invalid referral token")
@@ -688,7 +704,7 @@ def validate_session(request, data):
             session = SessionStore(session_key=session_key)
             if session and 'user' in session :
                 query = Q(pk=session['user']['id']) & (Q(role__pk=settings.ROLE_USER) | Q(role__pk=settings.ROLE_GUEST))
-                user = User.objects.get(query)
+                user = User.objects.get(query, deleted=False)
                 return json_response({"status":1, "role":user.role.name.title()})
     except Exception as e:
         log.error("Validate session error : " + e.message)
@@ -702,7 +718,7 @@ def unsubscribe_from_emails(request, data, token):
         unsub_return_url = settings.SITE_URL + 'views/unsubscribed.html?subscribe='
         email = base64.b64decode(token)
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(email=email, deleted=False)
         except User.DoesNotExist:
             log.error("Ubsubscribe : email:" + str(email) + " does not exist.")
             return HttpResponseRedirect(unsub_return_url + "error")
@@ -730,7 +746,7 @@ def send_contactus_email(request, data):
         if session_key :
             session = SessionStore(session_key=session_key)
         if session and 'user' in session :
-            user = User.objects.get(pk=session['user']['id'])
+            user = User.objects.get(pk=session['user']['id'], deleted=False)
             name = user.first_name + " " + user.last_name
             email = user.email
         else:

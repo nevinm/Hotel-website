@@ -261,7 +261,7 @@
 
 .listItems {
     width: 32%;
-    margin: 0 0 60px 2%;
+    margin: 0 0 25px 2%;
     float: left;
     overflow: hidden;
     height: auto;
@@ -746,3 +746,6 @@ div.serveBox {
     margin: 0px 2px;
 }
 
+#page-container {
+    height: auto;
+}

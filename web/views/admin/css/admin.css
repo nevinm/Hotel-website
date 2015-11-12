@@ -34,7 +34,9 @@ input[type="number"]{
 #meal-sub-name-error {
     top: 7px;
 }
-
+#kitchen-image{
+    max-width: 300px;
+}
 .adminlogin-wrapper {
     width: 400px;
     margin: 0 auto;
@@ -723,7 +725,8 @@ input#searchBy-name {
 
 .meal-list-img {
     height: auto;
-    width: 77px;
+    width: 50px;
+    max-width: 50px;
 }
 
 #meal-list .primary-meal ,.not-sold-out{
@@ -1486,4 +1489,89 @@ form.edit-gift-card #new-name-error {
 }
 #ingredientImageHolder li div{
     text-align: center;
+}
+#nutritionSection{
+    padding: 20px 60px;
+}
+#nutritionSection table{
+    margin: 0 auto;
+    width: 100%;
+    table-layout: fixed;
+    color: #9B9B9B;
+    border-collapse: collapse;
+}
+#nutritionSection thead th:first-child,
+#nutritionSection tbody tr td:first-child,
+#nutritionSection tbody tr th:first-child{
+    border-left: 1px solid #ddd;
+}
+#nutritionSection thead th:last-child,
+#nutritionSection tbody tr td:last-child{
+    border-right: 1px solid #ddd;
+}
+#nutritionSection thead th{
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0px;
+    color: #929292;
+    text-align: center;
+    font-family: 'BrandonGrotesque-Bold';
+    font-weight: normal;
+}
+#nutritionSection tbody tr:last-child th,
+#nutritionSection tbody tr:last-child td{
+    border-bottom: 1px solid #ddd;
+}
+#nutritionSection tbody th{
+    padding: 25px 41px 0px 41px;
+    color: #959595;
+    text-align: left;
+    font-weight: normal;
+    font-family: 'BrandonGrotesque-Medium';
+}
+#nutritionSection tbody td{
+    text-align: left;
+    padding: 4px 50px;
+    color: #BBBBBB;
+    font-size: 16px;
+    font-family: BrandonGrotesque-Regular;
+}
+#nutritionSection td div{
+    width: 200px;
+    margin: 0 auto;
+    position: relative;
+}
+#nutritionSection td span{
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    color: #6D6D6D;
+    font-family: BrandonGrotesque-Regular;
+    font-size: 16px;
+}
+#nutritionSection td input{
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #989898;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    color: #5A5959;
+    font-family: BrandonGrotesque-Regular;
+    font-size: 13px;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+input[type=number]{
+    -moz-appearance:textfield;
+}
+#meal-list th{
+    padding: 10px 3px;
+}
+#meal-list .btn-small-primary{
+    min-width: 85px;
 }

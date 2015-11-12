@@ -350,7 +350,7 @@ p.lower-line {
     padding-left: 15px;
     padding-bottom: 20px;
     font-size: 14px;
-    word-break: break-all;
+    /*word-break: break-all;*/
     float: left;
     width: 100%;
     padding-right: 20px;
@@ -620,7 +620,7 @@ iframe {
 .meal-type-icon {
     max-width: 45px;
     max-height: 45px;
-    height: 45px;
+    /*height: 45px;*/
     line-height: 100%;
     display: inline-block;
 }
@@ -665,7 +665,7 @@ span.ingredients-text{
     float: left;
     height: 1px;
     border: 0;
-    background-color: #A9D77B;
+    /*background-color: #A9D77B;*/
     margin: 20px 0;
     display: none;
 }
@@ -756,6 +756,7 @@ span.ingredients-text{
     }
     .table-container {
         width: 100%;
+        padding: 10px 0px;
     }
     .text-container {
         display: none;

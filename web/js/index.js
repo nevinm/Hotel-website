@@ -72,7 +72,7 @@ function shouldFullpageRender() {
         var marginLeft = $(".contentArea").offset().left - 10;
         $("#section-what-is .outer-slide-description").css("margin-left", marginLeft + "px");
     } else {
-        $("#section-what-is .outer-slide-description").css("margin-left", "auto");
+        $("#section-what-is .outer-slide-description").css("margin-left", "");
     }
 }
 
