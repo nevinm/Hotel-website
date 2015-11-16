@@ -1,1 +1,1 @@
-This is a sample file for update checking.
+This is a sampllette file for update checking.
