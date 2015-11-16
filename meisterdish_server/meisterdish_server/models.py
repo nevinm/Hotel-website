@@ -210,7 +210,7 @@ class CreditCardDetails(models.Model):
     expire_month = models.CharField(max_length=16)
     expire_year = models.CharField(max_length=16)
     funding = models.CharField(max_length=20)
-    card_type = models.CharField(max_length=15)
+    card_type = models.CharField(max_length=30)
     
     def __unicode__(self):
         return str(self.user.email) + " : " + str(self.number)
