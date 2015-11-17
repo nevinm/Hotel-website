@@ -167,7 +167,8 @@ class User(models.Model):
             self.full_name = self.first_name + ' ' + self.last_name
         if not self.id:
             self.created = datetime.datetime.now()
-            if self.role.pk == ROLE_USER:
+        if self.role.pk == ROLE_USER:
+            if not self.referral_code:
                 self.referral_code = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
 
         super(User, self).save(*args, **kwargs)
@@ -178,6 +179,10 @@ class User(models.Model):
     def delete(self, using=None):
         self.deleted = True
         self.save()
+        if self.role == Role.objects.get(name="Guest"):
+            if not Order.objects.filter(cart__user=self).exists() and not Order.objects.filter(delivery_address__in=Address.objects.filter(user=self)).exists():
+                models.Model.delete(self, using)
+
 
 class Address(models.Model):
     user = models.ForeignKey(User, related_name="user_address")
@@ -205,7 +210,7 @@ class CreditCardDetails(models.Model):
     expire_month = models.CharField(max_length=16)
     expire_year = models.CharField(max_length=16)
     funding = models.CharField(max_length=20)
-    card_type = models.CharField(max_length=15)
+    card_type = models.CharField(max_length=30)
     
     def __unicode__(self):
         return str(self.user.email) + " : " + str(self.number)
