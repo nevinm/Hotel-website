@@ -12,20 +12,6 @@ def live():
     print "Completed Live server configurations . . . "
     env.password = 'kuf6zU!E'
 
-
-# def live():
-#     env.hosts = ['synlive@54.153.92.133']
-#     env.directory = '/home/synlive/synbackend/env'
-#     env.activate = 'source /home/synlive/synbackend/env/bin/activate'
-
-
-# def dev():
-#     env.hosts = ['syn@54.251.44.26']
-#     env.directory = '/home/syn/public_html/env'
-#     env.activate = 'source /home/syn/public_html/env/bin/activate'
-#     # env.password = 'syn@123'
-
-
 def qa():
     env.hosts = ['meisterdish@meisterdish.qburst.com']
     env.directory = '/home/meisterdish/public_html/meisterdish/meisterdish_server'
