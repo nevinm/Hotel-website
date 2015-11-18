@@ -1,6 +1,6 @@
-import re
 from calendar import monthrange
 import datetime
+import re
 
 
 class Card(object):
@@ -142,6 +142,7 @@ class ExpDate(object):
     """
     An expiration date of a credit card.
     """
+
     def __init__(self, month, year):
         """
         Attaches the last possible datetime for the given month and year, as
@@ -209,10 +210,12 @@ class ExpDate(object):
         """
         return self.expired_after.strftime('%Y')
 
+
 class Holder(object):
     """
     A credit card holder.
     """
+
     def __init__(self, first, last, street, post_code):
         """
         Attaches holder data for later use.
