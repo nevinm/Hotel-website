@@ -381,6 +381,7 @@ function showSessionExpire(data) {
     $('.sessionexpire-wrapper').show();
 }
 $(document).on('click', '#close', function () {
+    $('.popup-container').removeAttr("style");
     $('.popup-wrapper').hide();
     if (currentPage == "Meisterdish - Signup" || currentPage == "Meisterdish - Login") {
         if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
@@ -736,7 +737,7 @@ $("form").each(function () {
 //                required: "Please enter tip",
                 number: "Enter an amount",
                 minAmount: "Enter valid tip",
-                max:"The maximum limit is 1000",
+                max: "The maximum limit is 1000",
             },
             available: {
                 required: "Enter a valid number.",
@@ -758,7 +759,10 @@ $("form").each(function () {
 });
 if ($.validator) {
     $.validator.addMethod('letters', function (value) {
-        return value.match(/^[- a-zA-Z]+$/);
+//        debugger;
+//        /^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/
+///[\^<,\"@\/\{\}\(\)\*\$%\?=>:\|;#0-9]+/i
+        return value.match(/^[^\^<,\"@\/\{\}\(\)\*\$%\?=>:\|;#0-9]+$/);
     });
     $.validator.addMethod('email', function (value) {
         return value.match(/^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/);

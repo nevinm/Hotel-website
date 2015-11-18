@@ -58,7 +58,7 @@ def check_input(method):
                                     pk=session['user']['id']) & (
                                     Q(role__pk=settings.ROLE_USER) | Q(
                                         role__pk=settings.ROLE_GUEST))
-                                user = User.objects.get(query)
+                                user = User.objects.get(query, deleted=False)
                             except Exception as error:
                                 log.error(
                                     "No user in session !!" + str(
@@ -66,6 +66,7 @@ def check_input(method):
                                 return custom_error(
                                     "This user is no more available. \
                                     Please login again.", -2)
+
                             else:
                                 return func(
                                     request, req, user, *args, **kwargs)

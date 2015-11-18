@@ -11,6 +11,7 @@ var billingAddressId, cardDetails,
 $(document).ready(function () {
     loadViewDefaults();
     bindEvents();
+    $('.loading-indicator').show();
     $("#tip-error").css("width", "144px");
     CartItemCount();
     if (localStorage["session_key"]) {
@@ -221,7 +222,15 @@ $(document).ready(function () {
     $('#add-guest-address').on("click", function (e) {
         e.preventDefault();
         if ($('#guest-address-info').valid()) {
-            addAddress();
+            if (localStorage['cartItems'] === undefined
+                    || localStorage['cartItems'] === null) {
+                var errorData = {};
+                errorData.message = "Add meals to cart and then proceed";
+                showPopup(errorData);
+                return false;
+            } else {
+                addAddress();
+            }
         }
     });
 
@@ -338,18 +347,20 @@ function setCurrentTime() {
             minutesToCLose = 15;
     $(".today-content .checkout-time-button").each(function (key, value) {
         currentHour = currentHourMin.substring(0, currentHourMin.length - 3);
-        if (currentHour >= closingTime) {
-            $(this).remove();
-            $(".shop-status").show();
-        } else {
-            currentMintues = parseInt(currentHourMin.slice(-2));
-            if (parseInt(currentHour) == $(value).data().hr) {
-                $(this).prevAll('.set-time-button').remove();
-                $(this).val("NOW");
-                $(this).addClass("checkout-time-button-active");
-                if (currentMintues >= minutesToCLose) {
-                    $(this).addClass("button-disabled");
-                    $(this).removeClass("checkout-time-button-active");
+        if (new Date().getDay() !== 0 && new Date().getDay() !== 6) {
+            if (currentHour >= closingTime) {
+                $(this).remove();
+                $(".shop-status").show();
+            } else {
+                currentMintues = parseInt(currentHourMin.slice(-2));
+                if (parseInt(currentHour) == $(value).data().hr) {
+                    $(this).prevAll('.set-time-button').remove();
+                    $(this).val("NOW");
+                    $(this).addClass("checkout-time-button-active");
+                    if (currentMintues >= minutesToCLose) {
+                        $(this).addClass("button-disabled");
+                        $(this).removeClass("checkout-time-button-active");
+                    }
                 }
             }
         }
@@ -860,6 +871,7 @@ function savedCardDetails() {
 }
 
 function populateCardDetails(cards, selectedId) {
+    $('.saved-cards').html("");
     if (selectedId) {
         $.each(cards, function (key, value) {
             last_num = cards[key].number.slice(-4);
@@ -1003,6 +1015,7 @@ function populateAddressListPopup() {
     $('.address-payment-list-popup .popup-container').empty();
     $('.address-payment-list-popup .button').remove();
     $('#save-delivery-address').addClass('button-disabled');
+    $('.address-payment-list-popup .popup .header').text("SELECT YOUR DELIVERY ADDRESS");
     if (localStorage['delivery_addressess'] != undefined && localStorage['delivery_addressess'] != null && localStorage['loggedIn'] == "true") {
         var checkLocal = JSON.parse(localStorage['delivery_addressess']).address_list.length;
         addressList = JSON.parse(localStorage['delivery_addressess']);
@@ -1383,7 +1396,7 @@ function populateCreditCardDetails() {
                 "<input type='radio' class='checkbox-green added-card pullLeft' name='change-card' class='radio-button-payment' data-id='" + value.id + "' id='" + value.id + 1 + "'>" +
                 "<label for='" + value.id + 1 + "'>" + "<img class='paypal' src='" + value.logo + "'>" +
                 "<span class='body-text-small'>" + value.type + " " +
-                "ending in" + " " + last_num + "</span>" +
+                "ending in" + " " + value.number.slice(-4) + "</span>" +
                 "<span class='body-text-small'>" + "Expires on" +
                 " " + value.expire_month + "/" + value.expire_year + "</span>" + "</label>" + "</div>")
     });
@@ -1407,21 +1420,11 @@ function showSelectedPaymentMethod(selectedId) {
 function validateOrder() {
     var data = {};
     data.message = "";
-    if ($(".total-cost").val() > 0) {
-        if ($(".saved-card-list").length && !$(".payment-checked:checked").length) {
-            data.message = "Add a method of payment and then proceed";
-            showPopup(data);
-            return false;
-        }
-    }
 
-    if (typeof cartItems === 'undefined') {
-    } else {
-        if (cartItems.status == "-1") {
-            data.message = "Add meals to cart and then proceed";
-            showPopup(data);
-            return false;
-        }
+    if (typeof cartItems === 'undefined' || cartItems.status == "-1") {
+        data.message = "Add meals to cart and then proceed";
+        showPopup(data);
+        return false;
     }
     if (!$(".checkout-time-button-active").length) {
         if ($('#pickup-radio').prop('checked')) {
@@ -1431,6 +1434,13 @@ function validateOrder() {
         }
         showPopup(data);
         return false;
+    }
+    if ($(".total-cost").val() > 0) {
+        if (!$(".payment-checked:checked").length) {
+            data.message = "Add a method of payment and then proceed";
+            showPopup(data);
+            return false;
+        }
     }
     if ($("#delivery-radio").is(":checked")) {
         if (!$(".address-added").length) {
@@ -1618,6 +1628,7 @@ function loadViewDefaults() {
 //populate year
 function populateYear(element) {
     var currentYear = new Date().getFullYear();
+    element.html("");
     for (var i = 1; i <= 20; i++) {
         element.append("<option value='" + currentYear + "'>" + currentYear + "</option>");
         currentYear = currentYear + 1;
@@ -1632,6 +1643,7 @@ function bindEvents() {
     });
     $(document).on('click', "#addCreditCard", function (e) {
         e.preventDefault();
+        resetCreditCardDetails();
         $(".credit-card-wrapper").show();
         $(".address-payment-list-popup").hide();
         populateYear($("#expiryYear"));
@@ -1642,13 +1654,13 @@ function bindEvents() {
         $(".credit-card-wrapper").hide();
 
     });
-    $("#addPopupCreditCard").on("click", function (e) {
-        e.preventDefault();
-    });
+//    $("#addPopupCreditCard").on("click", function (e) {
+//        e.preventDefault();
+//    });
     $("#payForm").on("submit", function (e) {
         e.preventDefault();
     });
-    $("#addPopupCreditCard").on("click", function (e) {
+    $("#addPopupCreditCard").off().on("click", function (e) {
         e.preventDefault();
         if ($('#payForm').valid()) {
             $("#addPopupCreditCard").prop('disabled', true);
@@ -1659,9 +1671,20 @@ function bindEvents() {
         e.preventDefault();
         var $form = $(".payment-method-guest-container #pay-form");
         if ($form.valid()) {
-            $("#saveFirstCreditCard").prop('disabled', true);
-            StripeController.createToken($form, creditCardAddToStripeCallback);
+            var data = {};
+            if (localStorage['cartItems'] === undefined
+                    || localStorage['cartItems'] === null) {
+                data.message = "Add meals to cart and then proceed";
+                showPopup(data);
+                return false;
+            } else {
+                $("#saveFirstCreditCard").prop('disabled', true);
+                StripeController.createToken($form, creditCardAddToStripeCallback);
+            }
         }
+    });
+    $(document).ajaxStop(function () {
+        $('.loading-indicator').hide();
     });
 }
 function creditCardAddToStripeCallback(status, response, $form) {
@@ -1703,3 +1726,11 @@ var creditCardAddToDbCallback = {
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
     }
 };
+function resetCreditCardDetails() {
+    $(".credit-card-wrapper #payForm #card-number").val("");
+    $(".credit-card-wrapper #payForm #nameOnCard").val("");
+    $(".credit-card-wrapper #payForm #cvv-number").val("");
+    $(".credit-card-wrapper #payForm #ExpMonth option:selected").prop("selected", "1");
+    populateYear($('.credit-card-wrapper #payForm #expiryYear'));
+    $("#addPopupCreditCard").prop('disabled', false);
+}

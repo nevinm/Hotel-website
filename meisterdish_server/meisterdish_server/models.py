@@ -202,6 +202,12 @@ class User(models.Model):
     def delete(self, using=None):
         self.deleted = True
         self.save()
+        if self.role == Role.objects.get(name="Guest"):
+            if not Order.objects.filter(cart__user=self).exists() and \
+                not Order.objects.filter(
+                    delivery_address__in=Address.objects.filter(
+                        user=self)).exists():
+                models.Model.delete(self, using)
 
 
 class Address(models.Model):
