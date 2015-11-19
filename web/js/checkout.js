@@ -347,25 +347,25 @@ function setCurrentTime() {
             minutesToCLose = 15;
     $(".today-content .checkout-time-button").each(function (key, value) {
         currentHour = currentHourMin.substring(0, currentHourMin.length - 3);
-		console.log(new Date().getDay());
-		if(new Date().getDay()!==0 && new Date().getDay() !== 6){
-        if (currentHour >= closingTime) {
-            $(this).remove();
-            $(".shop-status").show();
-        } else {
-            currentMintues = parseInt(currentHourMin.slice(-2));
-            if (parseInt(currentHour) == $(value).data().hr) {
-                $(this).prevAll('.set-time-button').remove();
-                $(this).val("NOW");
-                $(this).addClass("checkout-time-button-active");
-                if (currentMintues >= minutesToCLose) {
-                    $(this).addClass("button-disabled");
-                    $(this).removeClass("checkout-time-button-active");
+        console.log(new Date().getDay());
+        if (new Date().getDay() !== 0 && new Date().getDay() !== 6) {
+            if (currentHour >= closingTime) {
+                $(this).remove();
+                $(".shop-status").show();
+            } else {
+                currentMintues = parseInt(currentHourMin.slice(-2));
+                if (parseInt(currentHour) == $(value).data().hr) {
+                    $(this).prevAll('.set-time-button').remove();
+                    $(this).val("NOW");
+                    $(this).addClass("checkout-time-button-active");
+                    if (currentMintues >= minutesToCLose) {
+                        $(this).addClass("button-disabled");
+                        $(this).removeClass("checkout-time-button-active");
 
+                    }
                 }
             }
         }
-	}
     });
 
     var currentdate = new Date(),
@@ -1248,6 +1248,7 @@ var placeOrderCallback = {
                 $(".ok-container a").attr("href", "../index.html");
                 showPopup(response);
             }
+            SessionController.fbTrackConversionEvent(SessionController.getPlaceOrderPixel(), response.cart_items.grand_total, 'USD');
         } else {
             showPopup(response);
         }

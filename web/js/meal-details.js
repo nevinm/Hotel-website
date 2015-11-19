@@ -1,11 +1,17 @@
 $(document).ready(function () {
     CartItemCount();
+    window.onbeforeunload = function (e) {
+        if (cartCount < parseInt($('.hidden-field').val())) {
+            SessionController.fbTrackConversionEvent(SessionController.getAddToCartPixel(), '0.00', 'USD');
+        }
+    };
     var mealId = getParameterFromUrl("mealId");
     getMealDetails(mealId);
 
     $(".add-meal").on('click', function () {
         var mealId = $(this).attr("data-id"),
                 count = 0;
+        cartCount = parseInt($('.hidden-field').val());
         count = parseInt($('.hidden-field').val()) + 2;
         if (count <= 10) {
             $('.hidden-field').val(count);
@@ -290,7 +296,7 @@ function nutrientsTab(mealDetails) {
 //                });
 //            }
 //        });
-        
+
         var element = "";
         $.each(mealDetails.nutrients, function (key, value) {
             element += "";

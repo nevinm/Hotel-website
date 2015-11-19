@@ -1,4 +1,11 @@
 $(document).ready(function () {
+    window.onbeforeunload = function (e) {
+//    setTimeout(function () {
+        if (cartCount < parseInt($(".count").text())) {
+            SessionController.fbTrackConversionEvent(SessionController.getAddToCartPixel(), '0.00', 'USD');
+        }
+//    }, 1000);
+    };
     $("#page-container").css("min-height", ($(window).height() - 200) + "px")
     var perPage = 6,
             nextPage = 1,
@@ -31,6 +38,7 @@ $(document).ready(function () {
         var x = {},
                 count = 0,
                 meal_id = $(this).attr('data-id');
+        cartCount = parseInt($(".count").text());
         count = parseInt($(this).closest('.listItemDetails').find('.hidden-field').val()) + 2;
         if (count <= 10) {
             $(this).closest('.listItemDetails').find('.hidden-field').val(count);

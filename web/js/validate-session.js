@@ -1,19 +1,64 @@
 var sessionExpiryTime = 30,
 //------ QA ----
-//        baseURL = 'http://meisterdish.qburst.com/backend/api/',
-//        homeUrl = "http://meisterdish.qburst.com",
-//        PROMO_CODE = "MEISTER20",
-//        GLOBAL = {
-//            APP_ID: '736537916455826'
-//        };
-//
-//------ LIVE ----
-        baseURL = 'http://meisterdish.com/backend/api/',
-        homeUrl = "http://www.meisterdish.com",
+        baseURL = 'http://meisterdish.qburst.com/backend/api/',
+        homeUrl = "http://meisterdish.qburst.com",
         PROMO_CODE = "MEISTER20",
         GLOBAL = {
-            APP_ID: '1412578365736463'
+            APP_ID: '736537916455826'
         };
+//
+//------ LIVE ----
+//        baseURL = 'http://meisterdish.com/backend/api/',
+//        homeUrl = "http://www.meisterdish.com",
+//        PROMO_CODE = "MEISTER20",
+//        GLOBAL = {
+//            APP_ID: '1412578365736463'
+//        };
+var SessionController = (function () {
+    var data = {
+        signUp: '6044372159257',
+        placeOrder: '6044371585457',
+        addToCart: '6044372168057'
+    };
+    function getSignUpPixel() {
+        return data.signUp;
+    }
+    function getAddToCartPixel() {
+        return data.addToCart;
+    }
+    function includePixel() {
+        (function () {
+            var _fbq = window._fbq || (window._fbq = []);
+            if (!_fbq.loaded) {
+                var fbds = document.createElement('script');
+                fbds.async = true;
+                fbds.src = '//connect.facebook.net/en_US/fbds.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(fbds, s);
+                _fbq.loaded = true;
+            }
+        })();
+        window._fbq = window._fbq || [];
+    }
+    function getPlaceOrderPixel() {
+        return data.placeOrder;
+    }
+    function fbTrackConversionEvent(pixelId, value, currency) {
+        var customData = {};
+        customData.value = value;
+        customData.currency = currency;
+        _fbq.push(['track', pixelId, customData]);
+        $('head').append('<noscript id="fbTrack"></noscript>');
+        document.getElementById('fbTrack').innerHTML = '<img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=' + pixelId + '&amp;cd[value]=' + value + '&amp;cd[currency]=' + currency + '&amp;noscript=1" />';
+    }
+    return{
+        getSignUpPixel: getSignUpPixel,
+        getPlaceOrderPixel: getPlaceOrderPixel,
+        includePixel: includePixel,
+        fbTrackConversionEvent: fbTrackConversionEvent,
+        getAddToCartPixel: getAddToCartPixel
+    };
+})();
 
 function getCurrentPage(firstChar, secondChar, url) {
     currentPage = url.substring(url.lastIndexOf(firstChar) + 1, url.lastIndexOf(secondChar));

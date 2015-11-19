@@ -12,7 +12,7 @@ var signupCallback = {
                 var dataArray = userDetails.message.split(splitter);
                 var element = dataArray[0] + "<br>" + splitter + dataArray[1];
                 $('.popup-container .content span').html(element);
-                $('.popup-container').attr("style","padding:0px");
+                $('.popup-container').attr("style", "padding:0px");
             }
             ga('send', {
                 'hitType': 'event', // Required.
@@ -21,6 +21,7 @@ var signupCallback = {
                 'eventLabel': 'Account Creation',
                 'eventValue': 4
             });
+            SessionController.fbTrackConversionEvent(SessionController.getSignUpPixel(), '0.00', 'USD');
         }
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
