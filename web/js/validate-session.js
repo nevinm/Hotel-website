@@ -1,5 +1,5 @@
 var sessionExpiryTime = 30,
------- QA ----
+//------ QA ----
         baseURL = 'http://meisterdish.qburst.com/backend/api/',
         homeUrl = "http://meisterdish.qburst.com",
         PROMO_CODE = "MEISTER20",
