@@ -1,49 +1,58 @@
 # encoding: utf-8
-import os, sys, csv, json
+import csv
+import django
+import json
+import os
+import sys
+
+from meisterdish_server.models import Meal, Tips, Category, MealType
+import settings
+
+
 sys.path.append('/home/nasar/env/meisterdish/lib/python2.7/site-packages/')
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-import settings
-import django
 django.setup()
-from meisterdish_server.models import Meal, Tips, Category, MealType
 keys = {
-    "name" : "Meal Name",
-    "sub" : "Meal Ingredients",
-    "desc" : "Description",
-    "price" : "Price",
-    "tax" : "Tax",
-    "main_img" : "Main Image",
-    "available" : "Availability",
-    "cat" : "Category",
-    "types" : "Meal Types",
+    "name": "Meal Name",
+    "sub": "Meal Ingredients",
+    "desc": "Description",
+    "price": "Price",
+    "tax": "Tax",
+    "main_img": "Main Image",
+    "available": "Availability",
+    "cat": "Category",
+    "types": "Meal Types",
 
-    "prep_time" : "Preparation Time",
-    "saved_time" : "Saved Time",
-    "all_you_do" : "All You'll Be Doing",
-    "what_we_prepd" : "What We've Prepped",
+    "prep_time": "Preparation Time",
+    "saved_time": "Saved Time",
+    "all_you_do": "All You'll Be Doing",
+    "what_we_prepd": "What We've Prepped",
 
-    "all_you_need" : "All You Need",
-    "all_you_need_image" : "All You Need Image",
+    "all_you_need": "All You Need",
+    "all_you_need_image": "All You Need Image",
 
-    "ing" : "Ingredients",
-    "ing_image" : 'Ingredients Image',
-    
-    "tips" : "Tips & Tricks",
-    "nutrients" : "Nutrients",
+    "ing": "Ingredients",
+    "ing_image": 'Ingredients Image',
 
-    
+    "tips": "Tips & Tricks",
+    "nutrients": "Nutrients",
+
+
 }
 
-lists = ["Meal Types", "All You'll Be Doing", "What We've Prepped", "All You Need", "Ingredients", "Tips & Tricks", "Nutrients"]
+lists = ["Meal Types", "All You'll Be Doing", "What We've Prepped",
+         "All You Need", "Ingredients", "Tips & Tricks", "Nutrients"]
+
 
 class ImportMeals:
+
     def __init__(self):
-        
+
         if len(sys.argv) != 2:
-            print "Please provide a valid import file name"
+            print("Please provide a valid import file name")
             return None
-        
+
         filename = sys.argv[1]
         if not self.check_file_type(filename):
             return None
@@ -54,13 +63,12 @@ class ImportMeals:
 
         response = self.import_meals(data)
 
-
     def check_file_type(self, filename):
         if not filename or filename.strip() == "":
-            print "Invalid file name"
+            print("Invalid file name")
             return False
         elif filename.split(".")[-1] != "csv":
-            print "Please enter a valid CSV file"
+            print("Please enter a valid CSV file")
             return False
         return True
 
@@ -70,18 +78,17 @@ class ImportMeals:
             try:
                 reader = csv.DictReader(csvfile, delimiter=',')
             except:
-                print "Invalid CSV file."
+                print("Invalid CSV file.")
                 return False
             counter = 0
             for row in reader:
                 counter += 1
-                if counter == 1:
-                    if row.keys().sort() != keys.values().sort():
-                        print "Please cross check all the field names"
-                        return False
-                print "Checking Row :" + str(counter)
+                if counter == 1 and row.keys().sort() != keys.values().sort():
+                    print("Please cross check all the field names")
+                    return False
+                print("Checking Row :" + str(counter))
                 for key, field in row.items():
-                    
+
                     if key in lists:
                         try:
                             if field.strip() == '':
@@ -89,21 +96,22 @@ class ImportMeals:
                             else:
                                 old_field = field
                                 field = field.strip("").replace("'", "\"")
-                                field = field.replace('\xe2\x80\x9d', '"').replace('\xe2\x80\x9c', '"').replace("\n", "")
+                                field = field.replace(
+                                    '\xe2\x80\x9d', '"').replace(
+                                    '\xe2\x80\x9c', '"').replace("\n", "")
                                 field = json.loads(field)
-                        except Exception as e:
-                            print "No valid json data in " + key + ".. Skipping row"
-                            print old_field
-                            print field
+                        except Exception as error:
+                            print("No valid json data in " + key +
+                                  ".. Skipping row")
+                            print(old_field)
+                            print(field)
                             return
-                            continue
                     row[key] = field
                 data.append(row)
         return data
 
-
     def import_meals(self, data):
-        print "Importing data"
+        print("Importing data")
         count = 0
         for row in data:
             try:
@@ -114,7 +122,8 @@ class ImportMeals:
                 meal.desciption = row[keys["desc"]].strip()
 
                 price = row[keys["price"]].strip().strip('$').strip()
-                tax = row[keys["tax"]].strip().strip('%').strip().strip('$').strip()
+                tax = row[keys["tax"]].strip().strip(
+                    '%').strip().strip('$').strip()
 
                 meal.price = 0 if price == "" else float(price)
                 meal.tax = 0 if tax == "" else float(tax)
@@ -122,20 +131,26 @@ class ImportMeals:
                 # meal.main_image = Image.objects.#main_img
                 meal.available = bool(int(row[keys["available"]]))
 
-                meal.category = Category.objects.get_or_create(name=row[keys["cat"]].strip())[0]
-                
-                if type(row[keys["types"]]) == type([]) and len(row[keys["types"]]):
+                meal.category = Category.objects.get_or_create(
+                    name=row[keys["cat"]].strip())[0]
+
+                if isinstance(row[keys["types"]], list) and len(
+                        row[keys["types"]]):
                     for ty in row[keys["types"]]:
-                        meal.types.add(MealType.objects.get_or_create(name__iexact=ty.strip()))
+                        meal.types.add(
+                            MealType.objects.get_or_create(
+                                name__iexact=ty.strip()))
 
                 meal.preparation_time = row[keys["prep_time"]].strip()
                 meal.saved_time = row[keys["saved_time"]].strip()
 
                 meal.user_to_do = json.dumps(row[keys["all_you_do"]]).strip("")
 
-                meal.finished_preparation = json.dumps(row[keys["what_we_prepd"]]).strip("")
+                meal.finished_preparation = json.dumps(
+                    row[keys["what_we_prepd"]]).strip("")
 
-                meal.pre_requisites = json.dumps(row[keys["all_you_need"]]).strip("")
+                meal.pre_requisites = json.dumps(
+                    row[keys["all_you_need"]]).strip("")
                 # all_you_need_image
 
                 meal.ingredients = json.dumps(row[keys["ing"]]).strip("")
@@ -145,19 +160,15 @@ class ImportMeals:
                 meal.nutrients = json.dumps(row[keys["nutrients"]]).strip("")
 
                 meal.save()
-            except Exception as e:
-                print "Error in inserting row " + str(count) + " : " + e.message
-                print row
+            except Exception as error:
+                print("Error in inserting row " + str(count) +
+                      " :" + error.message)
+                print(row)
                 continue
             else:
-                print "Row " + str(count) + " Inserted"
-        print "Done"
+                print("Row " + str(count) + " Inserted")
+        print("Done")
         return True
-
-
-
-
-
 
 
 import_ = ImportMeals()
