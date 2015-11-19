@@ -1,6 +1,7 @@
 var userDetails, currentPage = $("title").text(),
         currentPageTitle,
-        clicked = 0;
+        clicked = 0,
+        cartCount = 0;
 //If already logged in
 var $userentry = $('.login-signup');
 $(document).ready(function () {

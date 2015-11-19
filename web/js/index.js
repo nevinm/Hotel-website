@@ -1,6 +1,11 @@
 $(document).ready(function () {
     window.onunload = function () {
     };
+    window.onbeforeunload = function (e) {
+        if (cartCount < parseInt($("#hidden-count").val())) {
+            SessionController.fbTrackConversionEvent(SessionController.getAddToCartPixel(), '0.00', 'USD');
+        }
+    };
     ipadWidth = 767;
     CartItemCount();
     getMainMealId();
@@ -42,6 +47,7 @@ $(document).ready(function () {
         var mealId = $(this).attr('data-id'),
                 count = 0;
         count = parseInt($("#hidden-count").val()) + 2;
+        cartCount = parseInt($("#hidden-count").val());
         if (count <= 10) {
             $("#hidden-count").val(count);
             addToCart(mealId);
@@ -103,6 +109,7 @@ var addToCartCallback = {
         } else {
             populateOverlayDetails(meal_details);
             CartItemCount();
+
         }
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
