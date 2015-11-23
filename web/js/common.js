@@ -802,19 +802,22 @@ if ($.validator) {
 }
 //CartItemCount
 var CartItemCountCallback = {
-    success: function (data, textStatus) {
+    success: function (data, textStatus, callBack) {
         var numOfItems = JSON.parse(data);
         if (numOfItems.status == 1) {
             $('span.count').text(numOfItems.count);
         } else {
             $('span.count').text('0');
         }
+        if (callBack !== undefined) {
+            callBack();
+        }
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
     }
 }
 
-function CartItemCount() {
+function CartItemCount(callBack) {
     var url = baseURL + 'get_cart_items_count/',
             header = {
                 "session-key": localStorage["session_key"]
@@ -822,7 +825,7 @@ function CartItemCount() {
     params = {};
     data = JSON.stringify(params);
     var CartItemCountInstance = new AjaxHttpSender();
-    CartItemCountInstance.sendPost(url, header, data, CartItemCountCallback);
+    CartItemCountInstance.sendPost(url, header, data, CartItemCountCallback, callBack);
 }
 //Used to add form fields - paypal.
 function addFormFields(form, data) {
@@ -885,4 +888,7 @@ function convertToEmbedded(url) {
     } else {
         return 'error';
     }
+}
+function setCartCount() {
+    cartCount = parseInt($(".count").text());
 }
