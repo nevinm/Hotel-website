@@ -1,7 +1,7 @@
 $(document).ready(function () {
     window.onbeforeunload = function (e) {
 //    setTimeout(function () {
-        if (cartCount < parseInt($(".count").text())) {
+        if (cartCount === 0 && cartCount < parseInt($(".count").text())) {
             SessionController.fbTrackConversionEvent(SessionController.getAddToCartPixel(), '0.00', 'USD');
         }
 //    }, 1000);
@@ -38,7 +38,6 @@ $(document).ready(function () {
         var x = {},
                 count = 0,
                 meal_id = $(this).attr('data-id');
-        cartCount = parseInt($(".count").text());
         count = parseInt($(this).closest('.listItemDetails').find('.hidden-field').val()) + 2;
         if (count <= 10) {
             $(this).closest('.listItemDetails').find('.hidden-field').val(count);
@@ -122,7 +121,7 @@ $(document).ready(function () {
         window.location.href = "share-page.html";
     });
 
-    CartItemCount();
+    CartItemCount(setCartCount);
     getCategory();
     getmealList('', '', '', '', '');
     //Removed for showing all data initially

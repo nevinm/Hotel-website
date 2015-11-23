@@ -1,3 +1,4 @@
+/* global SessionController */
 var sessionExpiryTime = 30,
 //------ QA ----
         baseURL = 'http://meisterdish.qburst.com/backend/api/',

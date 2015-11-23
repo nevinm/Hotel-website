@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    CartItemCount();
+    CartItemCount(setCartCount);
     window.onbeforeunload = function (e) {
-        if (cartCount < parseInt($('.hidden-field').val())) {
+        if (cartCount === 0 && cartCount < parseInt($('.hidden-field').val())) {
             SessionController.fbTrackConversionEvent(SessionController.getAddToCartPixel(), '0.00', 'USD');
         }
     };
@@ -11,7 +11,7 @@ $(document).ready(function () {
     $(".add-meal").on('click', function () {
         var mealId = $(this).attr("data-id"),
                 count = 0;
-        cartCount = parseInt($('.hidden-field').val());
+//        cartCount = parseInt($('.hidden-field').val());
         count = parseInt($('.hidden-field').val()) + 2;
         if (count <= 10) {
             $('.hidden-field').val(count);
