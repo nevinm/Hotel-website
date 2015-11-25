@@ -71,7 +71,7 @@ def get_cart_items(request, data, user):
         if not len(cart_list):
             return custom_error("There are no items in cart.")
         else:
-            return json_response({
+            res = {
                 "status": 1,
                 "aaData": cart_list,
                 "total_count": items_count,
@@ -84,7 +84,12 @@ def get_cart_items(request, data, user):
                     if not cart_item.cart.delivery_address
                     else cart_item.cart.delivery_address.id),
                 "coupon": coupon,
-                "credits": get_user_credit(user)})
+                "credits": get_user_credit(user)}
+            if isinstance(res["credits"], str):
+                res["credit_type"] = "percentage"
+            else:
+                res["credit_type"] = "amount"
+            return json_response(res)
     except Exception as error:
         log.error("Failed to list cart items." + error.message)
         return custom_error("Failed to get cart items.")
@@ -389,9 +394,13 @@ def get_user_credit(user):
             Configuration.objects.get(key="REFERRAL_BONUS").value)
         referred = Referral.objects.filter(
             referree=user).exists() and user.credits >= referral_bonus
+        if Referral.objects.filter(referree=user).first().\
+                referrer.referral_code == "HOLIDAY50" and \
+                not Order.objects.filter(cart__user=user).exists():
+            return "50"
         if not Order.objects.filter(cart__user=user).exists() and referred:
             return referral_bonus / 2
         return user.credits
     except Exception as error:
-        log.error("Failed to get credit")
+        log.error("Failed to get credit " + error.message)
         return 0.0
