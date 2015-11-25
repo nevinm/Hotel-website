@@ -47,6 +47,7 @@ def check_input(method):
                                              "unsubscribe_from_emails",
                                              "get_home_meal",
                                              "get_delivery_slots",
+                                             "verify_promocode"
                                              ]:
 
                         session_key = request.META.get(
