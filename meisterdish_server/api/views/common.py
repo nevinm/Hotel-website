@@ -255,10 +255,12 @@ def signup(request, data):
                 try:
                     referrer = User.objects.get(
                         referral_code=referral_code, deleted=False)
-                    bonus = float(Configuration.objects.get(
-                        key='REFERRAL_BONUS').value)
-                    user.credits = bonus
-                    user.save()
+                    log.debug("Referral code is {0}".format(referral_code))
+                    if str(referral_code) != "HOLIDAY50":
+                        bonus = float(Configuration.objects.get(
+                            key='REFERRAL_BONUS').value)
+                        user.credits = bonus
+                        user.save()
 
                     referral = Referral()
                     referral.referrer = referrer
