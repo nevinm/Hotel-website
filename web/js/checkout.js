@@ -698,7 +698,7 @@ function updateReciept(GiftcardDetails, flag) {
     grandTotal = totalItemCost + totalTaxCost + totalDeliveryCost;
     var creditType = "amount";
     if (cartItems.credit_type === "percentage") {
-        grandTotal = grandTotal - (grandTotal * cartItems.credits / 100);
+        totalDiscount = grandTotal * cartItems.credits / 100;
         creditType = "percentage";
     }
     grandTotal += totalDriverTip;
