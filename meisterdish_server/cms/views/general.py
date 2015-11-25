@@ -14,7 +14,7 @@ from cms.views.decorators import check_input
 from libraries import custom_error, json_response, export_csv,\
     manage_image_upload
 from meisterdish_server.models import User, Category, Meal, MealType, Image,\
-    Address, ZipUnavailable
+    Address, ZipUnavailable, Referral
 
 
 log = logging.getLogger(__name__)
@@ -490,6 +490,7 @@ def export_users(request, data):
                     'Facebook User ID',
                     'Joined Date',
                     'Need Email Promotions',
+                    'Signup Promocode',
                     'Referral Code',
                     'Credits',
                     'Activation Status',
@@ -528,6 +529,8 @@ Email         :%s
                             primary_address.email)
                     else:
                         address = ""
+                    referral = Referral.objects.filter(
+                        referree=user).first()
                     users_list.append([
                         user.full_name.title(),
                         settings.ROLE_DIC[user.role.pk],
@@ -539,6 +542,7 @@ Email         :%s
                         user.fb_user_id,
                         user.created.strftime('%m-%d-%Y %H:%M:%S'),
                         "Yes" if user.need_email_promotions else "No",
+                        referral.referrer.referral_code if referral else "",
                         user.referral_code,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
@@ -581,6 +585,7 @@ def export_users_for_promotion(request, data):
                     'Facebook User ID',
                     'Joined Date',
                     'Need Email Promotions',
+                    'Signup Promocode',
                     'Referral Code',
                     'Credits',
                     'Activation Status',
@@ -618,6 +623,8 @@ Email         :%s
                             primary_address.email)
                     else:
                         address = ""
+                    referral = Referral.objects.filter(
+                        referree=user).first()
                     users_list.append([
                         user.full_name.title(),
                         settings.ROLE_DIC[user.role.pk],
@@ -629,6 +636,7 @@ Email         :%s
                         user.fb_user_id,
                         user.created.strftime('%m-%d-%Y %H:%M:%S'),
                         "Yes" if user.need_email_promotions else "No",
+                        referral.referrer.referral_code if referral else "",
                         user.referral_code,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
