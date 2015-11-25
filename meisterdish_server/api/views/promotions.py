@@ -12,7 +12,8 @@ from api.views.decorators import check_input
 from libraries import custom_error, validate_email, get_request_user,\
     create_guest_user, save_payment_data, json_response, mail
 from meisterdish_server.models import CreditCardDetails, GiftCard, CartItem,\
-    Configuration, Referral, Order, Cart, PromoCode
+    Configuration, Referral, Order, Cart, PromoCode, User
+from settings import PROMOCODES
 import settings
 import stripe
 
@@ -321,4 +322,40 @@ def remove_promocode(request, data, user):
         return custom_error("There are no meals added to this transaction.")
     except Exception as error:
         log.error("remove promocode." + error.message)
+        return custom_error("An error has occurred. Please try again.")
+
+
+@check_input('POST')
+def verify_promocode(request, data):
+    try:
+        promo_code = data['promocode']
+        codes = User.objects.filter(referral_code=promo_code).first()
+        if not codes:
+            codes = PromoCode.objects.filter(code=promo_code).first()
+        res = {
+            "status": 1,
+            "message": ""
+        }
+        default_msg = "You've been invited to start cooking with $20 towards \
+                        your first two orders. Sign up for free below to claim\
+                        your credit."
+        if not codes:
+            return custom_error("Invalid promo code")
+        else:
+            if isinstance(codes, User):
+                code = codes.referral_code
+                if str(code).upper() in PROMOCODES.keys():
+                    welcome_message = PROMOCODES[str(code).upper()]
+                else:
+                    welcome_message = default_msg
+            elif isinstance(codes, PromoCode):
+                code = codes.code
+                welcome_message = "Use this promo code to get $" + \
+                    str(codes.amount) + " off your order."
+        res["message"] = "Valid promo code"
+        res["label"] = welcome_message
+        return json_response(res)
+
+    except Exception as error:
+        log.error("Unable to verify promo code " + error.message)
         return custom_error("An error has occurred. Please try again.")
