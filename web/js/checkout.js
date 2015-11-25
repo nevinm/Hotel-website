@@ -515,12 +515,17 @@ var getCartItemsCallback = {
             if (cartItems.credits) {
                 $(".discount-container .discount-amount").css('color', '#8EC657');
             }
-            if (cartItems.credits > 0) {
-                $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
-            } else {
-                $(".discount-container .discount-amount").text("$" + (cartItems.credits).toFixed(2));
+            if (cartItems.credit_type === "percentage") {
+                $(".discount-container .discount-amount").text("-" + cartItems.credits + "%");
+                $('#hidden-credit').val('0');
+            } else if (cartItems.credit_type === "amount") {
+                if (cartItems.credits > 0) {
+                    $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
+                } else {
+                    $(".discount-container .discount-amount").text("$" + (cartItems.credits).toFixed(2));
+                }
+                $('#hidden-credit').val(cartItems.credits);
             }
-            $('#hidden-credit').val(cartItems.credits);
         } else {
             $('.order-list-items').remove();
 //            $("#checkOutItems tbody tr").remove();
@@ -690,15 +695,23 @@ function updateReciept(GiftcardDetails, flag) {
     if (isNaN(totalDriverTip)) {
         totalDriverTip = 0;
     }
-    grandTotal = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost;
+    grandTotal = totalItemCost + totalTaxCost + totalDeliveryCost;
+    var creditType = "amount";
+    if (cartItems.credit_type === "percentage") {
+        totalDiscount = grandTotal * cartItems.credits / 100;
+        creditType = "percentage";
+    }
+    grandTotal += totalDriverTip;
     if (GiftcardDetails && !flag) {
         totalItemCost = GiftcardDetails.amount;
         totalTaxCost = GiftcardDetails.tax;
         totalDiscount = GiftcardDetails.discount;
         totalCredits = GiftcardDetails.credits;
+        creditType = "gift";
     }
     if (flag == "coupon-applied") {
-        totalDiscount = GiftcardDetails.discount;
+        totalDiscount = GiftcardDetails.discount
+        creditType = "gift";
     }
     totalCredits = totalCredits + totalDiscount;
     if (totalCredits > grandTotal) {
@@ -713,6 +726,9 @@ function updateReciept(GiftcardDetails, flag) {
         $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
     } else {
         $(".discount-container .discount-amount").text("$" + (appliedCredit).toFixed(2));
+    }
+    if (creditType === "percentage") {
+        $(".discount-container .discount-amount").text("-" + cartItems.credits + "%");
     }
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
