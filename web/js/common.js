@@ -629,7 +629,7 @@ $("form").each(function () {
                 required: true,
             },
             promoCode: {
-                equals: PROMO_CODE,
+//                equals: PROMO_CODE,
                 required: true
             }
         },
@@ -748,7 +748,7 @@ $("form").each(function () {
                 even: "Enter an even number."
             },
             promoCode: {
-                equals: "Invalid promo code.",
+//                equals: "Invalid promo code.",
                 required: "Please enter promo code."
             },
             giftcardname: "Enter valid giftcardname.",
