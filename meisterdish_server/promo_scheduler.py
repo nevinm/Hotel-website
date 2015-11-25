@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def schedule_promocode(name='Holyday 20'):
+def schedule_promocode(name='Holiday 20'):
     from meisterdish_server.models import User
     user = User.objects.get(full_name=name)
     print user.referral_code

@@ -24,7 +24,8 @@ $(document).ready(function () {
     $("#promoCheck").on("click", function (e) {
         e.preventDefault();
         if ($("form.promo-code-container").valid()) {
-            window.open(homeUrl + "/share/" + PROMO_CODE + "/", "_self");
+            checkPromocode($("#promoCode").val());
+//        window.open(homeUrl + "/share/" + PROMO_CODE + "/", "_self");
         }
     });
     $("body").on("load", isSessionExpired);
@@ -69,6 +70,28 @@ $(document).ready(function () {
     });
 });
 
+function checkPromocode(promoCode) {
+    var url = baseURL + "verify_promocode/",
+            userData = {
+                "promocode": promoCode
+            },
+    header = {
+    };
+    var data = JSON.stringify(userData);
+    new AjaxHttpSender().sendPost(url, header, data, checkPromocodeCallback, promoCode);
+}
+var checkPromocodeCallback = {
+    success: function (data, textStatus, promoCode) {
+        var promoCodeDetails = JSON.parse(data);
+        if (promoCodeDetails.status == 1) {
+            window.open(homeUrl + "/share/" + promoCode + "/", "_self");
+        } else {
+            showPopup(promoCodeDetails);
+        }
+    },
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
+};
 function shouldFullpageRender() {
     if ($("#section-what-is .fp-tableCell").innerHeight() > window.innerHeight) {
     } else {
