@@ -15,7 +15,7 @@ from api.views.meals import get_meals, get_meal_details
 from api.views.order import get_orders, get_order_details, create_order,\
     get_delivery_slots
 from api.views.promotions import apply_promocode, gift_card_order,\
-    remove_promocode
+    remove_promocode, verify_promocode
 from api.views.user import add_address, remove_address, update_address,\
     get_categories, add_rating, get_user_reviews, get_saved_cards,\
     save_credit_card, delete_credit_card, update_credit_card, share_via_email,\
@@ -87,6 +87,8 @@ urlpatterns = patterns(
     url(r'^check_delivery/$', check_delivery, name='check_delivery'),
     url(r'^apply_promocode/$', apply_promocode,
         name='apply_promocode'),
+    url(r'^verify_promocode/$', verify_promocode, name="verify_promocode"),
+
     url(r'^gift_card_order/$', gift_card_order,
         name='gift_card_order'),
     url(r'^remove_promocode/$', remove_promocode,

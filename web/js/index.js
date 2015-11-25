@@ -2,12 +2,12 @@ $(document).ready(function () {
     window.onunload = function () {
     };
     window.onbeforeunload = function (e) {
-        if (cartCount < parseInt($("#hidden-count").val())) {
+        if (cartCount === 0 && cartCount < parseInt($("#hidden-count").val())) {
             SessionController.fbTrackConversionEvent(SessionController.getAddToCartPixel(), '0.00', 'USD');
         }
     };
     ipadWidth = 767;
-    CartItemCount();
+    CartItemCount(setCartCount);
     getMainMealId();
     // getHomePageMeal();
     shouldFullpageRender();
@@ -47,7 +47,7 @@ $(document).ready(function () {
         var mealId = $(this).attr('data-id'),
                 count = 0;
         count = parseInt($("#hidden-count").val()) + 2;
-        cartCount = parseInt($("#hidden-count").val());
+//        cartCount = parseInt($("#hidden-count").val());
         if (count <= 10) {
             $("#hidden-count").val(count);
             addToCart(mealId);
