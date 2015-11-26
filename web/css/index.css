@@ -652,6 +652,9 @@ p.upper-content {
 input#zip-code[type="text"],#promoCode {
     font-size: 16px;
     font-family: 'BrandonGrotesque-Light';
+    /*text-transform: uppercase;*/
+}
+input#zip-code[type="text"]{
     text-transform: uppercase;
 }
 #zip-check,#promoCheck{
