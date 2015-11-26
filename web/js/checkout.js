@@ -954,11 +954,16 @@ var getAddressCallback = {
                 if (value.is_primary == 1) {
                     billingAddressId = value.id;
                 }
-            })
+            });
+            if (addressList.length === 1 && addressList[0].is_primary === 0) {
+                setPrimaryAdd(addressList[0].id);
+                billingAddressId = addressList[0].id;
+                userDetails.delivery_address = billingAddressId;
+            }
             if (flag == "populateAddressToPopUp") {
                 appendAddresscontent(userDetails);
             } else {
-                popuplateAddressList(data);
+                popuplateAddressList(JSON.stringify(userDetails));
             }
         } else {
         }
@@ -1160,12 +1165,12 @@ function getNewAddress(flag) {
         city_id: city_name,
         city: city_name,
         building: $addressContainer.find("input[class*='apartment']").val(),
-        is_primary: $addressContainer.find("input[type*='checkbox']").val() == "on" ? 1 : 0,
+        is_primary: (flag == 'popup') ? 0 : 1,
         state_id: state_id,
         state: state_name,
         is_business: $addressContainer.find("input[id*='business']").prop("checked") ? 1 : 0,
         company: $addressContainer.find("input[name*='company']").val()
-    }
+    };
     return newAddress;
 }
 
