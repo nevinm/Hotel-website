@@ -82,11 +82,46 @@ def send_success_mail():
             "<tr>  <td> "+"<pre>" + gvar[0]+" <pre>"+" </td> </tr>" + \
             "<tr>  <td> "+ gvar[1] +" </td> </tr>" + \
             " </body> </html>"
-    return requests.post(
-            "https://api.mailgun.net/v3/mg.tacyonresearch.com/messages",
-            auth=("api", "key-78fdfe9cece971221ca16d70b0c39bf9"),
-            data={"from": "Autobuild Meisterdish QA <mailgun@mg.tacyonresearch.com>",
-                "to": ["ashique@qburst.com", "thushar@qburst.com","reshmaraveendran@qburst.com"],
-                "subject": "Jenkins Meisterdish Build Status",
-                "html": html})
+
+    import smtplib
+    import datetime
+    from email.mime.multipart import import MIMEMultipart
+    from email.mime.text import import MIMEText
+
+
+
+    sender = 'calicutjenkins@gmail.com'
+    receivers = ['thushar@qburst.com']
+    
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = "Meisterdish Autodeployment QA Success!"
+    msg['From'] = sender
+    msg['To'] = receivers
+
+    text = "Meisterdish Autodeploymet of the QA Server is a success\n Deployed on "+ str(datetime.datetime.now())
+    # Html mail with Plain text alternate file
+    part1 = MIMEText(text, 'plain')
+    part2 = MIMEText(html, 'html')
+
+    # Attach parts into message container.
+    # According to RFC 2046, the last part of a multipart message, in this case
+    # the HTML message, is best and preferred.
+    msg.attach(part1)
+    msg.attach(part2)
+
+
+
+    try:
+        username = 'calicutjenkins@gmail.com'
+        password = 'calicut.jenkins'
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        server.starttls()
+        server.login(username,password)
+        server.sendmail(sender, receivers, msg)
+        server.quit()
+        print "Successfully sent email"
+    except SMTPException:
+        print "Error: unable to send email"
+
+
 
