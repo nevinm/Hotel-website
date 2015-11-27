@@ -79,7 +79,7 @@ def uptime():
 def send_success_mail():
     html = "<html> <body><table> </table>"+\
             "<tr>  <td>   Auto deployment on QA Success  </td> </tr>" + \
-            "<tr>  <td> "+ gvar[0] +" </td> </tr>" + \
+            "<tr>  <td> "+"<pre>" + gvar[0]+" <pre>"+" </td> </tr>" + \
             "<tr>  <td> "+ gvar[1] +" </td> </tr>" + \
             " </body> </html>"
     return requests.post(
