@@ -85,8 +85,8 @@ def send_success_mail():
 
     import smtplib
     import datetime
-    from email.mime.multipart import import MIMEMultipart
-    from email.mime.text import import MIMEText
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.text import MIMEText
 
 
 
