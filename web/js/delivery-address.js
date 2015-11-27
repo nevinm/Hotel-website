@@ -294,7 +294,7 @@ $(document).ready(function () {
                 }
             }
         }
-
+        $("#isPrimary").removeAttr("disabled");
     });
 
 
@@ -320,6 +320,7 @@ $(document).ready(function () {
     //show addaddress popup 
     $('#add-address').on("click", function () {
         $(".addaddress-popup")[0].reset();
+        $("#companySection").hide();
         $('.editaddress-popup .header span').text('ADD A NEW ADDRESS');
         $('#savepopup-data').val("ADD ADDRESS");
         if (userDetails) {
@@ -328,6 +329,7 @@ $(document).ready(function () {
         $("#savepopup-data").show();
         $(".addresspopup-wrapper").show();
         $("#address-line-1,.apartment").removeClass("margin-validate");
+        $("#isPrimary").removeAttr("disabled");
     });
     $('#cancel').on("click", function () {
         $(".addaddress-popup").validate().resetForm();
@@ -336,6 +338,7 @@ $(document).ready(function () {
         $("#company-name").val("");
         $("#companySection").hide();
         $("#address-line-1,.apartment").removeClass("margin-validate");
+        $("#isPrimary").removeAttr("disabled");
     });
 
     //show edit address popup
@@ -347,6 +350,9 @@ $(document).ready(function () {
         populateAddressToForm(currentId);
         $(".addresspopup-wrapper").show();
         $("#address-line-1,.apartment").removeClass("margin-validate");
+        if ($(".address").length === 1) {
+            $("#isPrimary").prop("disabled", "disabled");
+        }
     });
 
     $(document).on("change", "#isBusiness", function (e) {
