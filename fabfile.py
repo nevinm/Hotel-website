@@ -117,7 +117,7 @@ def send_success_mail():
         server = smtplib.SMTP('smtp.gmail.com:587')
         server.starttls()
         server.login(username,password)
-        server.sendmail(sender, receivers, msg)
+        server.sendmail(sender, receivers, msg.as_string())
         server.quit()
         print "Successfully sent email"
     except smtplib.SMTPException:
