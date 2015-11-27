@@ -120,7 +120,7 @@ def send_success_mail():
         server.sendmail(sender, receivers, msg)
         server.quit()
         print "Successfully sent email"
-    except SMTPException:
+    except smtplib.SMTPException:
         print "Error: unable to send email"
 
 
