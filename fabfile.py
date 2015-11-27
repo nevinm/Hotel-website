@@ -95,8 +95,8 @@ def send_success_mail():
     
     msg = MIMEMultipart('alternative')
     msg['Subject'] = "Meisterdish Autodeployment QA Success!"
-    msg['From'] = sender
-    msg['To'] = receivers
+    msg['From'] = "Meisterdish QA [Autodeployment]"
+    msg['To'] = "Meisterdish DevTeam"
 
     text = "Meisterdish Autodeploymet of the QA Server is a success\n Deployed on "+ str(datetime.datetime.now())
     # Html mail with Plain text alternate file
