@@ -328,6 +328,7 @@ def get_users(request, data, user):
                 "is_admin": "Yes" if user.role.id == 1 else "No",
                 "credits": "$ " + "{0:.2f}".format(user.credits),
                 "is_active": user.is_active,
+                "ambassador_code": user.ambassador_code
             })
 
         return json_response({
@@ -492,6 +493,7 @@ def export_users(request, data):
                     'Need Email Promotions',
                     'Signup Promocode',
                     'Referral Code',
+                    'Ambassador Code',
                     'Credits',
                     'Activation Status',
                     'Primary Address',
@@ -544,6 +546,7 @@ Email         :%s
                         "Yes" if user.need_email_promotions else "No",
                         referral.referrer.referral_code if referral else "",
                         user.referral_code,
+                        user.ambassador_code,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
                         address,
@@ -587,6 +590,7 @@ def export_users_for_promotion(request, data):
                     'Need Email Promotions',
                     'Signup Promocode',
                     'Referral Code',
+                    'Ambassador Code',
                     'Credits',
                     'Activation Status',
                     'Primary Address',
@@ -638,6 +642,7 @@ Email         :%s
                         "Yes" if user.need_email_promotions else "No",
                         referral.referrer.referral_code if referral else "",
                         user.referral_code,
+                        user.ambassador_code,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
                         address

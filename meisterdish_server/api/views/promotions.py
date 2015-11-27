@@ -329,31 +329,45 @@ def remove_promocode(request, data, user):
 def verify_promocode(request, data):
     try:
         promo_code = data['promocode']
-        codes = User.objects.filter(referral_code=promo_code).first()
+        default_msg = (
+            "You've been invited to start cooking with $20 towards " +
+            "your first two orders. Sign up for free below to claim " +
+            " your credit.")
+
+        ambassador_msg = (
+            "You've been invited to start cooking with 50% off your " +
+            "first order. Sign up for free below.")
+
+        try:
+            codes = User.objects.get(referral_code=promo_code)
+        except User.DoesNotExist:
+            codes = None
+
+        if codes:
+            code = codes.referral_code
+            if str(code).upper() in PROMOCODES.keys():
+                welcome_message = PROMOCODES[str(code).upper()]
+            else:
+                welcome_message = default_msg
         if not codes:
-            codes = PromoCode.objects.filter(code=promo_code).first()
-        res = {
-            "status": 1,
-            "message": ""
-        }
-        default_msg = "You've been invited to start cooking with $20 towards \
-                        your first two orders. Sign up for free below to claim\
-                        your credit."
+            try:
+                codes = User.objects.get(ambassador_code=promo_code)
+            except User.DoesNotExist:
+                codes = None
+            else:
+                welcome_message = ambassador_msg
+                code = codes.ambassador_code
+
         if not codes:
             return custom_error("Invalid promo code")
-        else:
-            if isinstance(codes, User):
-                code = codes.referral_code
-                if str(code).upper() in PROMOCODES.keys():
-                    welcome_message = PROMOCODES[str(code).upper()]
-                else:
-                    welcome_message = default_msg
-            elif isinstance(codes, PromoCode):
-                code = codes.code
-                welcome_message = "Use this promo code to get $" + \
-                    str(codes.amount) + " off your order."
-        res["message"] = "Valid promo code"
-        res["label"] = welcome_message
+
+        res = {
+            "status": 1,
+            "message": "",
+            "message": "Valid promo code",
+            "label": welcome_message
+        }
+
         return json_response(res)
 
     except Exception as error:
