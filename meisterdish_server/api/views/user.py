@@ -10,11 +10,11 @@ from django.utils.html import escape
 import logging
 
 from api.views.decorators import check_input
-from libraries import check_delivery_area, custom_error, validate_zipcode,\
-    validate_phone, validate_email, json_response, send_referel_mail,\
+from libraries import check_delivery_area, custom_error, validate_zipcode, \
+    validate_phone, validate_email, json_response, send_referel_mail, \
     add_to_mailing_list
 import mailchimp
-from meisterdish_server.models import Address, State, Category, MealType,\
+from meisterdish_server.models import Address, State, Category, MealType, \
     MealRating, Meal, CreditCardDetails, Configuration, Order
 from settings import ROLE_USER
 import stripe
@@ -49,8 +49,7 @@ def add_address(request, data, user):
                 Please choose a different zip code.")
 
         is_primary = False
-        if "is_primary" in data and data["is_primary"] and \
-            not Address.objects.filter(
+        if not Address.objects.filter(
                 user=user, is_primary=True).exists():
             is_primary = True
 
@@ -154,12 +153,17 @@ def update_address(request, data, user, address_id):
             add.phone = phone
             add.email = email
 
-        if "is_primary" in data and data["is_primary"] and \
-                not Address.objects.exclude(id=add.id).filter(
-                user=user, is_primary=True).exists():
-            add.is_primary = True
-        else:
-            add.is_primary = False
+        if "is_primary" in data:
+            alist = Address.objects.exclude(id=add.id).filter(
+                user=user, is_primary=True)
+            if alist:
+                alist[0].is_primary = False
+                alist[0].save()
+            log.error("The value of is_primary in data : " + 
+                      "" + str(data["is_primary"]))
+            add.is_primary = True if data["is_primary"] == 1 else False
+            log.error("Changed the value of is_primary to " + 
+                      " " + str(add.is_primary))
 
         if "is_business" in data and str(data['is_business']) != '':
             add.is_business = bool(data['is_business'])
@@ -438,7 +442,7 @@ def get_saved_cards(request, data, user):
                 "expire_month": card.expire_month,
                 "expire_year": card.expire_year,
                 "type": card.card_type,
-                "logo": (settings.STATIC_URL +
+                "logo": (settings.STATIC_URL + 
                          "default/" + card.card_type.lower(
                          ).replace(" ", "_") + ".png"),
             })
