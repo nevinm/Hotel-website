@@ -109,7 +109,7 @@ function getNewAddressFromForm() {
         city_id: $addressPopup.find(".city-selector").val(),
         state_id: $addressPopup.find(".state-selector").val(),
         building: $addressPopup.find("input[class*='apartment']").val(),
-        is_primary: $addressPopup.find("input[type*='checkbox']").is(":checked") == true ? 1 : 0,
+        is_primary: $addressPopup.find("input[name='is-primary']").is(":checked") == true ? 1 : 0,
         email: $addressPopup.find("input[name*='email']").val(),
         is_business: $addressPopup.find("input[name=is-business]").prop("checked") ? 1 : 0,
         company: $addressPopup.find("input[id*='company-name']").val()
@@ -172,9 +172,9 @@ function populateAddressToForm(id) {
             $addressPopup.find("input[class*='apartment']").val(value.building);
             $addressPopup.find("input[name*='email']").val(value.email);
             if (value.is_primary == 1) {
-                $addressPopup.find("input[type*='checkbox']").prop("checked", true);
+                $addressPopup.find("input[name='is-primary']").prop("checked", true);
             } else {
-                $addressPopup.find("input[type*='checkbox']").prop("checked", false);
+                $addressPopup.find("input[name='is-primary']").prop("checked", false);
             }
             if (value.is_business == 1) {
                 $addressPopup.find("input[name=is-business]").prop("checked", true);

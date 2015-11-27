@@ -951,7 +951,7 @@ form.addaddress-popup, #new-address-form {
     width: 90%;
     margin: 0 auto;
     margin-top: 70px;
-    display: table;
+    /*display: table;*/
     max-width: 1100px;
 }
 
