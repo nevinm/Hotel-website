@@ -280,14 +280,25 @@ def create_order(request, data, user):
             Configuration.objects.get(key="REFERRAL_BONUS").value)
         referred = Referral.objects.filter(
             referree=user).exists() and user.credits >= referral_bonus
+        if Referral.objects.filter(referree=user).first().\
+                referrer.referral_code == "HOLIDAY50" and \
+                not Order.objects.filter(cart__user=user).exists():
+            holiday50 = True
+        else:
+            holiday50 = False
 
         referred_user_first_order = False
 
-        if not Order.objects.filter(cart__user=user).exists() and referred:
+        if not Order.objects.filter(cart__user=user).exists():
             # First Order
-            user.credits -= referral_bonus / 2  # Half of referral bonus
-            order.credits = referral_bonus / 2
-            order.total_payable -= referral_bonus / 2
+            if holiday50:
+                dis = (total_price + total_tax + settings.SHIPPING_CHARGE) / 2
+                order.total_payable -= dis
+                order.credits = dis
+            elif referred:
+                user.credits -= referral_bonus / 2  # Half of referral bonus
+                order.credits = referral_bonus / 2
+                order.total_payable -= referral_bonus / 2
             referred_user_first_order = True
         else:
             if order.cart.promo_code:
