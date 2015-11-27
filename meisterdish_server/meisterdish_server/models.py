@@ -33,7 +33,7 @@ years = [(y, y) for y in range(2000, cy + 10)]
 
 def generate_ambassador_code():
     return "AM" + ''.join(random.SystemRandom().choice(
-        string.ascii_uppercase + string.digits) for _ in range(7))
+        string.digits) for _ in range(7))
 
 
 class Role(models.Model):
