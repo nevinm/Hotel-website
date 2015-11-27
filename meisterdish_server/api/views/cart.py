@@ -9,7 +9,7 @@ from api.views.decorators import check_input
 from libraries import json_response, custom_error, get_request_user,\
     create_guest_user
 from meisterdish_server.models import CartItem, Meal, Cart, Address,\
-    DeliveryArea, Configuration, Referral, Order
+    DeliveryArea, Configuration, Referral, Order, AmbassadorReferral
 
 
 log = logging.getLogger(__name__)
@@ -390,17 +390,16 @@ def get_user_credit(user):
     :param user:
     '''
     try:
-        referral_bonus = float(
-            Configuration.objects.get(key="REFERRAL_BONUS").value)
-        referred = Referral.objects.filter(
-            referree=user).exists() and user.credits >= referral_bonus
-        if Referral.objects.filter(referree=user).first().\
-                referrer.referral_code == "HOLIDAY50" and \
-                not Order.objects.filter(cart__user=user).exists():
-            return "50"
-        if not Order.objects.filter(cart__user=user).exists() and referred:
-            return referral_bonus / 2
-        return user.credits
+        if Order.objects.filter(cart__user=user).exists():
+            return user.credits
+        else:
+            referral_bonus = float(
+                Configuration.objects.get(key="REFERRAL_BONUS").value)
+            if AmbassadorReferral.objects.filter(referree=user).exists():
+                return "50"
+            elif Referral.objects.filter(referree=user).exists():
+                return referral_bonus / 2
+            return user.credits
     except Exception as error:
         log.error("Failed to get credit " + error.message)
         return 0.0
