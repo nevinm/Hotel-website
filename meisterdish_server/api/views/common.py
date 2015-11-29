@@ -18,7 +18,8 @@ from api.views.decorators import check_input
 from libraries import custom_error, json_response, check_delivery_area,\
     add_to_mailing_list, mail, validate_email, manage_image_upload
 from meisterdish_server.models import User, Cart, CartItem, Image, Role,\
-    Configuration, Referral, Meal, Address, City, State, Order
+    Configuration, Referral, Meal, Address, City, State, Order,\
+    AmbassadorReferral
 
 log = logging.getLogger(__name__)
 
@@ -253,19 +254,29 @@ def signup(request, data):
 
             if referral_code:
                 try:
-                    referrer = User.objects.get(
-                        referral_code=referral_code, deleted=False)
-                    log.debug("Referral code is {0}".format(referral_code))
-                    if str(referral_code) != "HOLIDAY50":
-                        bonus = float(Configuration.objects.get(
-                            key='REFERRAL_BONUS').value)
+                    bonus = float(Configuration.objects.get(
+                        key='REFERRAL_BONUS').value)
+                    try:
+                        referrer = User.objects.get(
+                            ambassador_code=referral_code)
+                    except User.DoesNotExist:
+                        referrer = User.objects.get(
+                            referral_code=referral_code)
                         user.credits = bonus
                         user.save()
+                        referral = Referral()
+                        referral.referrer = referrer
+                    else:
+                        referral = AmbassadorReferral()
+                        referral.ambassador = referrer
+                        referrer.credits += bonus
+                        referrer.save()
 
-                    referral = Referral()
-                    referral.referrer = referrer
+                    log.debug("Referral code is {0}".format(referral_code))
+
                     referral.referree = user
                     referral.save()
+
                 except Exception as error:
                     log.error("Signup - The referrer code " +
                               referral_code + "is invalid : " + error.message)
@@ -891,7 +902,8 @@ def referral_return(request, data, token):
     if not len(token):
         log.error("Invalid referral token")
         return HttpResponseRedirect(settings.SITE_URL)
-    if User.objects.filter(referral_code=token, deleted=False).exists():
+    if User.objects.filter(referral_code=token, deleted=False).exists() or \
+            User.objects.filter(ambassador_code=token).exists():
         return HttpResponseRedirect(settings.SITE_URL +
                                     'views/signup.html?ref=' + token)
 
