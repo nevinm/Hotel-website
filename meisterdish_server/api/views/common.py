@@ -8,7 +8,6 @@ from django.db.models import Q
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.template.loader import render_to_string
 import logging
-import md5
 import random
 import string
 import sys
@@ -17,9 +16,11 @@ import traceback
 from api.views.decorators import check_input
 from libraries import custom_error, json_response, check_delivery_area,\
     add_to_mailing_list, mail, validate_email, manage_image_upload
+import md5
 from meisterdish_server.models import User, Cart, CartItem, Image, Role,\
     Configuration, Referral, Meal, Address, City, State, Order,\
     AmbassadorReferral
+
 
 log = logging.getLogger(__name__)
 
@@ -258,7 +259,7 @@ def signup(request, data):
                         key='REFERRAL_BONUS').value)
                     try:
                         referrer = User.objects.get(
-                            ambassador_code=referral_code)
+                            ambassador_code=referral_code, is_ambassador=True)
                     except User.DoesNotExist:
                         referrer = User.objects.get(
                             referral_code=referral_code)

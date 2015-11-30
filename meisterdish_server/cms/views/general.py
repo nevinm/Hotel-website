@@ -328,6 +328,7 @@ def get_users(request, data, user):
                 "is_admin": "Yes" if user.role.id == 1 else "No",
                 "credits": "$ " + "{0:.2f}".format(user.credits),
                 "is_active": user.is_active,
+                "is_ambassador": user.is_ambassador,
                 "ambassador_code": user.ambassador_code
             })
 
@@ -411,6 +412,30 @@ def change_user_status(request, data, session_user):
     except Exception as error:
         log.error("Failed to change user status : " + error.message)
         return custom_error("Failed to change user status")
+
+
+def set_ambassador(request, data, session_user):
+    '''
+    API to change user status
+    :param request:
+    :param data:
+    :param session_user:
+    '''
+    try:
+        user_id = data['id']
+        status = data['is_ambassador']
+        user_status = True if status == 1 else False
+        user = User.objects.get(id=user_id)
+        user.is_ambassador = user_status
+        user.save()
+        msg = ("User set as Ambassador"if user.is_ambassador else "User not\
+             Ambassador.")
+        return json_response({
+            "status": 1, "is_ambassador": user.is_ambassador,
+            "message": msg})
+    except Exception as error:
+        log.error("Failed to change user Ambassador status : " + error.message)
+        return custom_error("Failed to change user Ambassador status")
 
 
 @check_input('POST', settings.ROLE_ADMIN)
