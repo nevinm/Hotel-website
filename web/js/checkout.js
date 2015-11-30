@@ -6,7 +6,7 @@ var billingAddressId, cardDetails,
         totalDiscount = 0,
         tipAmt = null,
         decimalPoint = 0,
-        slotsArray = ["4-5pm", "5-6pm", "6-7pm", "7-8pm", "8-9pm", "4-5pm", "5-6pm", "6-7pm", "7-8pm", "8-9pm"];
+        slotsObject = {"slot1": "4-5pm", "slot2": "5-6pm", "slot3": "6-7pm", "slot4": "7-8pm", "slot5": "8-9pm"};
 
 $(document).ready(function () {
     loadViewDefaults();
@@ -1633,7 +1633,7 @@ function fixGoogleMapLink() {
 function resetSlots() {
     var elements = $(".checkout-time-button");
     $.each(elements, function (key, value) {
-        $(value).val(slotsArray[key]);
+        $(value).val(slotsObject[$(value).attr("data-slot")]);
         $(value).removeClass("time-slot-disabled").addClass("checkout-time-button").addClass("set-time-button");
     });
     setCurrentTime();
