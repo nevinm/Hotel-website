@@ -6,6 +6,7 @@ var billingAddressId, cardDetails,
         totalDiscount = 0,
         tipAmt = null,
         decimalPoint = 0,
+        cartItems = [],
         slotsObject = {"slot1": "4-5pm", "slot2": "5-6pm", "slot3": "6-7pm", "slot4": "7-8pm", "slot5": "8-9pm"};
 
 $(document).ready(function () {
@@ -342,6 +343,7 @@ function haveAccountCheck() {
 }
 
 function setCurrentTime() {
+    debugger;
     currentHourMin = getCurrentHourMin();
     var closingTime = 21,
             minutesToCLose = 15;
@@ -357,7 +359,9 @@ function setCurrentTime() {
                 if (parseInt(currentHour) == $(value).data().hr) {
                     $(this).prevAll('.set-time-button').remove();
                     $(this).val("NOW");
-                    $(this).addClass("checkout-time-button-active");
+                    if ($(".checkout-time-button-active").length === 0) {
+                        $(this).addClass("checkout-time-button-active");
+                    }
                     if (currentMintues >= minutesToCLose) {
                         $(this).addClass("button-disabled");
                         $(this).removeClass("checkout-time-button-active");
