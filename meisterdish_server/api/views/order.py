@@ -297,7 +297,11 @@ def create_order(request, data, user):
                 order.total_payable -= referral_bonus / 2
                 referred_user_first_order = True
             elif ambassador_referrel:
-                dis = (total_price + total_tax + settings.SHIPPING_CHARGE) / 2
+                if order.delivery_type == "delivery":
+                    dis = (
+                        total_price + total_tax + settings.SHIPPING_CHARGE) / 2
+                else:
+                    dis = (total_price + total_tax) / 2
                 order.total_payable -= dis
                 order.credits = dis
         else:
