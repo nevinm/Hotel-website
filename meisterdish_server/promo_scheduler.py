@@ -9,11 +9,16 @@ import sys
 def schedule_promocode(name='Holiday 20'):
     from meisterdish_server.models import User
     user = User.objects.get(full_name=name)
+    print user.ambassador_code
     print user.referral_code
     tmp =[] 
+    tmp2 = []
     for i in range(9):
         tmp.append(random.choice(string.punctuation))
+        tmp2.append(random.choice(string.punctuation))
+
     user.referral_code = ''.join(tmp)
+    user.ambassador_code = ''.join(tmp2)
     user.save()
 
 
