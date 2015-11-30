@@ -174,6 +174,7 @@ class User(models.Model):
         max_length=20, null=True, blank=True, default="")
 
     is_active = models.BooleanField(db_index=True, default=False)
+    is_ambassador = models.BooleanField(db_index=True, default=False)
 
     facebook_login = models.BooleanField(default=False)
     credits = models.FloatField(
@@ -191,7 +192,7 @@ class User(models.Model):
         max_length=50, null=True, default=None, blank=True)
 
     ambassador_code = models.CharField(
-        max_length=9, default=generate_ambassador_code)
+       max_length=9, default=generate_ambassador_code)
 
     def save(self, *args, **kwargs):
         if self.full_name != self.first_name + ' ' + self.last_name:
