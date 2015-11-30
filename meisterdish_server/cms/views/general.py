@@ -414,6 +414,7 @@ def change_user_status(request, data, session_user):
         return custom_error("Failed to change user status")
 
 
+@check_input('POST', True)
 def set_ambassador(request, data, session_user):
     '''
     API to change user status
@@ -428,10 +429,12 @@ def set_ambassador(request, data, session_user):
         user = User.objects.get(id=user_id)
         user.is_ambassador = user_status
         user.save()
-        msg = ("User set as Ambassador"if user.is_ambassador else "User not\
-             Ambassador.")
+        msg = ("User set as Ambassador\
+        " if user.is_ambassador else "User not Ambassador.")
         return json_response({
-            "status": 1, "is_ambassador": user.is_ambassador,
+            "status": 1,
+            "ambassador_code": user.ambassador_code,
+            "is_ambassador": user.is_ambassador,
             "message": msg})
     except Exception as error:
         log.error("Failed to change user Ambassador status : " + error.message)

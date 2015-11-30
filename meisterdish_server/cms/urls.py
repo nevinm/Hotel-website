@@ -34,6 +34,7 @@ urlpatterns = patterns(
     url(r'^change_user_status/$',
         general.change_user_status,
         name='change_user_status'),
+
     url(r'^set_ambassador/$',
         general.set_ambassador,
         name='set_ambassador'),
