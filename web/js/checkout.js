@@ -343,7 +343,6 @@ function haveAccountCheck() {
 }
 
 function setCurrentTime() {
-    debugger;
     currentHourMin = getCurrentHourMin();
     var closingTime = 21,
             minutesToCLose = 15;
@@ -1652,6 +1651,8 @@ function loadViewDefaults() {
     if ($("#new-address-form .regular-checkbox").prop("checked")) {
         $("#companySection").toggle();
     }
+    $("#pickup-radio").removeAttr("checked");
+    $("#delivery-radio").prop("checked", "checked");
 }
 //populate year
 function populateYear(element) {
