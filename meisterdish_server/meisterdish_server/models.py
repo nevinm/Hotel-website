@@ -189,9 +189,9 @@ class User(models.Model):
     created = models.DateTimeField()
     stripe_customer_id = models.CharField(
         max_length=50, null=True, default=None, blank=True)
-    is_ambassador = models.BooleanField(db_index=True, default=False)
+    is_ambassador = models.BooleanField(db_index=True, default=True)
     ambassador_code = models.CharField(
-       max_length=9, default=generate_ambassador_code)
+        max_length=9, default=generate_ambassador_code)
 
     def save(self, *args, **kwargs):
         if self.full_name != self.first_name + ' ' + self.last_name:
