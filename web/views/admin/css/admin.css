@@ -293,7 +293,7 @@ input#add-confirm, #update-confirm {
 \*=======================*/
 
 table#userlist {
-    width: 90%;
+    width: 97%;
     margin-top: 20px;
 }
 
@@ -729,12 +729,12 @@ input#searchBy-name {
     max-width: 50px;
 }
 
-#meal-list .primary-meal ,.not-sold-out{
+#meal-list .primary-meal ,.not-sold-out,.ambassador{
     cursor: pointer;
     color: green;
 }
 
-#meal-list .non-primary-meal ,.sold-out{
+#meal-list .non-primary-meal ,.sold-out,.not-ambassador{
     cursor: pointer;
     color: red;
 }
@@ -1052,7 +1052,6 @@ input#create-meal-button {
 
 .nutrients-popup-wrapper .popup-container .content, .tips-tricks-wrapper .popup-container .content {
     padding: 0 !important;
-    ]
 }
 
 .nutrients-popup-wrapper .popup-input, .tips-tricks-wrapper .popup-input {
