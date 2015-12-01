@@ -17,7 +17,8 @@ from libraries import custom_error, json_response, validate_email,\
     validate_phone, check_delivery_area, mail_order_confirmation,\
     save_payment_data, validate_date
 from meisterdish_server.models import Order, CartItem, DeliveryTimeSlot,\
-    Configuration, Referral, CreditCardDetails, Meal, Address
+    Configuration, Referral, CreditCardDetails, Meal, Address,\
+    AmbassadorReferral
 import stripe
 
 
@@ -281,14 +282,28 @@ def create_order(request, data, user):
         referred = Referral.objects.filter(
             referree=user).exists() and user.credits >= referral_bonus
 
+        if AmbassadorReferral.objects.filter(referree=user).exists():
+            ambassador_referrel = True
+        else:
+            ambassador_referrel = False
+
         referred_user_first_order = False
 
-        if not Order.objects.filter(cart__user=user).exists() and referred:
+        if not Order.objects.filter(cart__user=user).exists():
             # First Order
-            user.credits -= referral_bonus / 2  # Half of referral bonus
-            order.credits = referral_bonus / 2
-            order.total_payable -= referral_bonus / 2
-            referred_user_first_order = True
+            if referred:
+                user.credits -= referral_bonus / 2  # Half of referral bonus
+                order.credits = referral_bonus / 2
+                order.total_payable -= referral_bonus / 2
+                referred_user_first_order = True
+            elif ambassador_referrel:
+                if order.delivery_type == "delivery":
+                    dis = (
+                        total_price + total_tax + settings.SHIPPING_CHARGE) / 2
+                else:
+                    dis = (total_price + total_tax) / 2
+                order.total_payable -= dis
+                order.credits = dis
         else:
             if order.cart.promo_code:
                 if order.cart.promo_code.amount > order.total_payable:

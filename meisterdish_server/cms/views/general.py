@@ -8,13 +8,13 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http.response import HttpResponse, HttpResponseRedirect
 import logging
-import md5
 
 from cms.views.decorators import check_input
 from libraries import custom_error, json_response, export_csv,\
     manage_image_upload
+import md5
 from meisterdish_server.models import User, Category, Meal, MealType, Image,\
-    Address, ZipUnavailable
+    Address, ZipUnavailable, Referral, AmbassadorReferral
 
 
 log = logging.getLogger(__name__)
@@ -328,6 +328,8 @@ def get_users(request, data, user):
                 "is_admin": "Yes" if user.role.id == 1 else "No",
                 "credits": "$ " + "{0:.2f}".format(user.credits),
                 "is_active": user.is_active,
+                "is_ambassador": user.is_ambassador,
+                "ambassador_code": user.ambassador_code
             })
 
         return json_response({
@@ -412,6 +414,33 @@ def change_user_status(request, data, session_user):
         return custom_error("Failed to change user status")
 
 
+@check_input('POST', True)
+def set_ambassador(request, data, session_user):
+    '''
+    API to change user status
+    :param request:
+    :param data:
+    :param session_user:
+    '''
+    try:
+        user_id = data['id']
+        status = data['is_ambassador']
+        user_status = True if status == 1 else False
+        user = User.objects.get(id=user_id)
+        user.is_ambassador = user_status
+        user.save()
+        msg = ("User set as Ambassador\
+        " if user.is_ambassador else "User not Ambassador.")
+        return json_response({
+            "status": 1,
+            "ambassador_code": user.ambassador_code,
+            "is_ambassador": user.is_ambassador,
+            "message": msg})
+    except Exception as error:
+        log.error("Failed to change user Ambassador status : " + error.message)
+        return custom_error("Failed to change user Ambassador status")
+
+
 @check_input('POST', settings.ROLE_ADMIN)
 def upload_image(request, data, user):
     '''
@@ -491,6 +520,8 @@ def export_users(request, data):
                     'Joined Date',
                     'Need Email Promotions',
                     'Referral Code',
+                    'Ambassador Code',
+                    'Signup Promocode',
                     'Credits',
                     'Activation Status',
                     'Primary Address',
@@ -528,6 +559,16 @@ Email         :%s
                             primary_address.email)
                     else:
                         address = ""
+
+                    if Referral.objects.filter(referree=user).exists():
+                        referrel = Referral.objects.get(
+                            referree=user).referrer.referral_code
+                    elif AmbassadorReferral.objects.filter(
+                            referree=user).exists():
+                        referrel = AmbassadorReferral.objects.get(
+                            referree=user).ambassador.ambassador_code
+                    else:
+                        referrel = ""
                     users_list.append([
                         user.full_name.title(),
                         settings.ROLE_DIC[user.role.pk],
@@ -540,6 +581,8 @@ Email         :%s
                         user.created.strftime('%m-%d-%Y %H:%M:%S'),
                         "Yes" if user.need_email_promotions else "No",
                         user.referral_code,
+                        user.ambassador_code,
+                        referrel,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
                         address,
@@ -582,6 +625,8 @@ def export_users_for_promotion(request, data):
                     'Joined Date',
                     'Need Email Promotions',
                     'Referral Code',
+                    'Ambassador Code',
+                    'Signup Promocode',
                     'Credits',
                     'Activation Status',
                     'Primary Address',
@@ -618,6 +663,15 @@ Email         :%s
                             primary_address.email)
                     else:
                         address = ""
+                    if Referral.objects.filter(referree=user).exists():
+                        referrel = Referral.objects.get(
+                            referree=user).referrer.referral_code
+                    elif AmbassadorReferral.objects.filter(
+                            referree=user).exists():
+                        referrel = AmbassadorReferral.objects.get(
+                            referree=user).ambassador.referral_code
+                    else:
+                        referrel = ""
                     users_list.append([
                         user.full_name.title(),
                         settings.ROLE_DIC[user.role.pk],
@@ -630,6 +684,8 @@ Email         :%s
                         user.created.strftime('%m-%d-%Y %H:%M:%S'),
                         "Yes" if user.need_email_promotions else "No",
                         user.referral_code,
+                        user.ambassador_code,
+                        referrel,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
                         address

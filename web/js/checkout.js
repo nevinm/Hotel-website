@@ -6,7 +6,8 @@ var billingAddressId, cardDetails,
         totalDiscount = 0,
         tipAmt = null,
         decimalPoint = 0,
-        slotsArray = ["4-5pm", "5-6pm", "6-7pm", "7-8pm", "8-9pm", "4-5pm", "5-6pm", "6-7pm", "7-8pm", "8-9pm"];
+        cartItems = [],
+        slotsObject = {"slot1": "4-5pm", "slot2": "5-6pm", "slot3": "6-7pm", "slot4": "7-8pm", "slot5": "8-9pm"};
 
 $(document).ready(function () {
     loadViewDefaults();
@@ -357,7 +358,9 @@ function setCurrentTime() {
                 if (parseInt(currentHour) == $(value).data().hr) {
                     $(this).prevAll('.set-time-button').remove();
                     $(this).val("NOW");
-                    $(this).addClass("checkout-time-button-active");
+                    if ($(".checkout-time-button-active").length === 0) {
+                        $(this).addClass("checkout-time-button-active");
+                    }
                     if (currentMintues >= minutesToCLose) {
                         $(this).addClass("button-disabled");
                         $(this).removeClass("checkout-time-button-active");
@@ -515,12 +518,17 @@ var getCartItemsCallback = {
             if (cartItems.credits) {
                 $(".discount-container .discount-amount").css('color', '#8EC657');
             }
-            if (cartItems.credits > 0) {
-                $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
-            } else {
-                $(".discount-container .discount-amount").text("$" + (cartItems.credits).toFixed(2));
+            if (cartItems.credit_type === "percentage") {
+                $(".discount-container .discount-amount").text("-" + cartItems.credits + "%");
+                $('#hidden-credit').val('0');
+            } else if (cartItems.credit_type === "amount") {
+                if (cartItems.credits > 0) {
+                    $(".discount-container .discount-amount").text("-" + "$" + (cartItems.credits).toFixed(2));
+                } else {
+                    $(".discount-container .discount-amount").text("$" + (cartItems.credits).toFixed(2));
+                }
+                $('#hidden-credit').val(cartItems.credits);
             }
-            $('#hidden-credit').val(cartItems.credits);
         } else {
             $('.order-list-items').remove();
 //            $("#checkOutItems tbody tr").remove();
@@ -690,15 +698,23 @@ function updateReciept(GiftcardDetails, flag) {
     if (isNaN(totalDriverTip)) {
         totalDriverTip = 0;
     }
-    grandTotal = totalItemCost + totalTaxCost + totalDriverTip + totalDeliveryCost;
+    grandTotal = totalItemCost + totalTaxCost + totalDeliveryCost;
+    var creditType = "amount";
+    if (cartItems.credit_type === "percentage") {
+        totalDiscount = grandTotal * cartItems.credits / 100;
+        creditType = "percentage";
+    }
+    grandTotal += totalDriverTip;
     if (GiftcardDetails && !flag) {
         totalItemCost = GiftcardDetails.amount;
         totalTaxCost = GiftcardDetails.tax;
         totalDiscount = GiftcardDetails.discount;
         totalCredits = GiftcardDetails.credits;
+        creditType = "gift";
     }
     if (flag == "coupon-applied") {
-        totalDiscount = GiftcardDetails.discount;
+        totalDiscount = GiftcardDetails.discount
+        creditType = "gift";
     }
     totalCredits = totalCredits + totalDiscount;
     if (totalCredits > grandTotal) {
@@ -713,6 +729,9 @@ function updateReciept(GiftcardDetails, flag) {
         $(".discount-container .discount-amount").text("-" + "$" + (appliedCredit).toFixed(2));
     } else {
         $(".discount-container .discount-amount").text("$" + (appliedCredit).toFixed(2));
+    }
+    if (creditType === "percentage") {
+        $(".discount-container .discount-amount").text("-" + cartItems.credits + "%");
     }
     $(".items-container .total-item-cost").text("$" + (totalItemCost).toFixed(2));
     $(".items-container .total-tax-cost").text("$" + (totalTaxCost).toFixed(2));
@@ -938,11 +957,16 @@ var getAddressCallback = {
                 if (value.is_primary == 1) {
                     billingAddressId = value.id;
                 }
-            })
+            });
+            if (addressList.length === 1 && addressList[0].is_primary === 0) {
+                setPrimaryAdd(addressList[0].id);
+                billingAddressId = addressList[0].id;
+                userDetails.delivery_address = billingAddressId;
+            }
             if (flag == "populateAddressToPopUp") {
                 appendAddresscontent(userDetails);
             } else {
-                popuplateAddressList(data);
+                popuplateAddressList(JSON.stringify(userDetails));
             }
         } else {
         }
@@ -1144,12 +1168,12 @@ function getNewAddress(flag) {
         city_id: city_name,
         city: city_name,
         building: $addressContainer.find("input[class*='apartment']").val(),
-        is_primary: $addressContainer.find("input[type*='checkbox']").val() == "on" ? 1 : 0,
+        is_primary: (flag == 'popup') ? 0 : 1,
         state_id: state_id,
         state: state_name,
         is_business: $addressContainer.find("input[id*='business']").prop("checked") ? 1 : 0,
         company: $addressContainer.find("input[name*='company']").val()
-    }
+    };
     return newAddress;
 }
 
@@ -1612,7 +1636,7 @@ function fixGoogleMapLink() {
 function resetSlots() {
     var elements = $(".checkout-time-button");
     $.each(elements, function (key, value) {
-        $(value).val(slotsArray[key]);
+        $(value).val(slotsObject[$(value).attr("data-slot")]);
         $(value).removeClass("time-slot-disabled").addClass("checkout-time-button").addClass("set-time-button");
     });
     setCurrentTime();
@@ -1627,6 +1651,8 @@ function loadViewDefaults() {
     if ($("#new-address-form .regular-checkbox").prop("checked")) {
         $("#companySection").toggle();
     }
+    $("#pickup-radio").removeAttr("checked");
+    $("#delivery-radio").prop("checked", "checked");
 }
 //populate year
 function populateYear(element) {

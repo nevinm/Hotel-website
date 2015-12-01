@@ -109,7 +109,7 @@ function getNewAddressFromForm() {
         city_id: $addressPopup.find(".city-selector").val(),
         state_id: $addressPopup.find(".state-selector").val(),
         building: $addressPopup.find("input[class*='apartment']").val(),
-        is_primary: $addressPopup.find("input[type*='checkbox']").is(":checked") == true ? 1 : 0,
+        is_primary: $addressPopup.find("input[name='is-primary']").is(":checked") == true ? 1 : 0,
         email: $addressPopup.find("input[name*='email']").val(),
         is_business: $addressPopup.find("input[name=is-business]").prop("checked") ? 1 : 0,
         company: $addressPopup.find("input[id*='company-name']").val()
@@ -172,9 +172,9 @@ function populateAddressToForm(id) {
             $addressPopup.find("input[class*='apartment']").val(value.building);
             $addressPopup.find("input[name*='email']").val(value.email);
             if (value.is_primary == 1) {
-                $addressPopup.find("input[type*='checkbox']").prop("checked", true);
+                $addressPopup.find("input[name='is-primary']").prop("checked", true);
             } else {
-                $addressPopup.find("input[type*='checkbox']").prop("checked", false);
+                $addressPopup.find("input[name='is-primary']").prop("checked", false);
             }
             if (value.is_business == 1) {
                 $addressPopup.find("input[name=is-business]").prop("checked", true);
@@ -294,7 +294,7 @@ $(document).ready(function () {
                 }
             }
         }
-
+        $("#isPrimary").removeAttr("disabled");
     });
 
 
@@ -320,6 +320,7 @@ $(document).ready(function () {
     //show addaddress popup 
     $('#add-address').on("click", function () {
         $(".addaddress-popup")[0].reset();
+        $("#companySection").hide();
         $('.editaddress-popup .header span').text('ADD A NEW ADDRESS');
         $('#savepopup-data').val("ADD ADDRESS");
         if (userDetails) {
@@ -328,6 +329,7 @@ $(document).ready(function () {
         $("#savepopup-data").show();
         $(".addresspopup-wrapper").show();
         $("#address-line-1,.apartment").removeClass("margin-validate");
+        $("#isPrimary").removeAttr("disabled");
     });
     $('#cancel').on("click", function () {
         $(".addaddress-popup").validate().resetForm();
@@ -336,6 +338,7 @@ $(document).ready(function () {
         $("#company-name").val("");
         $("#companySection").hide();
         $("#address-line-1,.apartment").removeClass("margin-validate");
+        $("#isPrimary").removeAttr("disabled");
     });
 
     //show edit address popup
@@ -347,6 +350,9 @@ $(document).ready(function () {
         populateAddressToForm(currentId);
         $(".addresspopup-wrapper").show();
         $("#address-line-1,.apartment").removeClass("margin-validate");
+        if ($(".address").length === 1) {
+            $("#isPrimary").prop("disabled", "disabled");
+        }
     });
 
     $(document).on("change", "#isBusiness", function (e) {

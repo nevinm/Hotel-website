@@ -84,13 +84,33 @@ function signupInit() {
     });
     CartItemCount();
     referralCode = getParameterFromUrl('ref');
+    checkPromocode(referralCode);
     if (referralCode.length) {
         referralUIIntegrate();
         $("#invite-code").val(referralCode);
-        $(".referral-message-container").show();
-    } else {
     }
 }
+function checkPromocode(promoCode) {
+    var url = baseURL + "verify_promocode/",
+            userData = {
+                "promocode": promoCode
+            },
+    header = {
+    };
+    var data = JSON.stringify(userData);
+    new AjaxHttpSender().sendPost(url, header, data, checkPromocodeCallback, promoCode);
+}
+var checkPromocodeCallback = {
+    success: function (data, textStatus, promoCode) {
+        var promoCodeDetails = JSON.parse(data);
+        if (promoCodeDetails.status == 1) {
+            $(".referral-message-container .message").text(promoCodeDetails.label);
+            $(".referral-message-container").show();
+        }
+    },
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
+};
 
 $(document).ready(function () {
     signupInit();

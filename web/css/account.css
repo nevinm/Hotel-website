@@ -951,7 +951,7 @@ form.addaddress-popup, #new-address-form {
     width: 90%;
     margin: 0 auto;
     margin-top: 70px;
-    display: table;
+    /*display: table;*/
     max-width: 1100px;
 }
 
@@ -1481,6 +1481,9 @@ textarea::-webkit-input-placeholder {
     width: 20%;
     display: table-cell;
     vertical-align: top;
+}
+.right-wrapper .caption{
+    line-height: 16px;
 }
 
 .order-list-items:hover #remove-cart-item {
@@ -2155,7 +2158,7 @@ a#add-address-popup:hover {
     .delivery-time-container, .delivery-info-container {
         width: 100%;
     }
-    .receipt-container .caption {
+    .receipt-container .caption,.right-wrapper .caption {
         display: none;
     }
     .meal-reviews-row {
@@ -2362,7 +2365,7 @@ a#add-address-popup:hover {
     .payment-info {
         width: 100%;
     }
-    .receipt-container .caption {
+    .receipt-container .caption,.right-wrapper .caption {
         display: none;
     }
     .forminput-wrapper .styled-select {

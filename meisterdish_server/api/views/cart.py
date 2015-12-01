@@ -9,7 +9,7 @@ from api.views.decorators import check_input
 from libraries import json_response, custom_error, get_request_user,\
     create_guest_user
 from meisterdish_server.models import CartItem, Meal, Cart, Address,\
-    DeliveryArea, Configuration, Referral, Order
+    DeliveryArea, Configuration, Referral, Order, AmbassadorReferral
 
 
 log = logging.getLogger(__name__)
@@ -71,7 +71,7 @@ def get_cart_items(request, data, user):
         if not len(cart_list):
             return custom_error("There are no items in cart.")
         else:
-            return json_response({
+            res = {
                 "status": 1,
                 "aaData": cart_list,
                 "total_count": items_count,
@@ -84,7 +84,12 @@ def get_cart_items(request, data, user):
                     if not cart_item.cart.delivery_address
                     else cart_item.cart.delivery_address.id),
                 "coupon": coupon,
-                "credits": get_user_credit(user)})
+                "credits": get_user_credit(user)}
+            if isinstance(res["credits"], str):
+                res["credit_type"] = "percentage"
+            else:
+                res["credit_type"] = "amount"
+            return json_response(res)
     except Exception as error:
         log.error("Failed to list cart items." + error.message)
         return custom_error("Failed to get cart items.")
@@ -385,13 +390,16 @@ def get_user_credit(user):
     :param user:
     '''
     try:
-        referral_bonus = float(
-            Configuration.objects.get(key="REFERRAL_BONUS").value)
-        referred = Referral.objects.filter(
-            referree=user).exists() and user.credits >= referral_bonus
-        if not Order.objects.filter(cart__user=user).exists() and referred:
-            return referral_bonus / 2
-        return user.credits
+        if Order.objects.filter(cart__user=user).exists():
+            return user.credits
+        else:
+            referral_bonus = float(
+                Configuration.objects.get(key="REFERRAL_BONUS").value)
+            if AmbassadorReferral.objects.filter(referree=user).exists():
+                return "50"
+            elif Referral.objects.filter(referree=user).exists():
+                return referral_bonus / 2
+            return user.credits
     except Exception as error:
-        log.error("Failed to get credit")
+        log.error("Failed to get credit " + error.message)
         return 0.0
