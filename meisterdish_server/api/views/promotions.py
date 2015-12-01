@@ -12,7 +12,8 @@ from api.views.decorators import check_input
 from libraries import custom_error, validate_email, get_request_user,\
     create_guest_user, save_payment_data, json_response, mail
 from meisterdish_server.models import CreditCardDetails, GiftCard, CartItem,\
-    Configuration, Referral, Order, Cart, PromoCode
+    Configuration, Referral, Order, Cart, PromoCode, User
+from settings import PROMOCODES
 import settings
 import stripe
 
@@ -321,4 +322,54 @@ def remove_promocode(request, data, user):
         return custom_error("There are no meals added to this transaction.")
     except Exception as error:
         log.error("remove promocode." + error.message)
+        return custom_error("An error has occurred. Please try again.")
+
+
+@check_input('POST')
+def verify_promocode(request, data):
+    try:
+        promo_code = data['promocode']
+        default_msg = (
+            "You've been invited to start cooking with $20 towards " +
+            "your first two orders. Sign up for free below to claim " +
+            " your credit.")
+
+        ambassador_msg = (
+            "You've been invited to start cooking with 50% off your " +
+            "first order. Sign up for free below.")
+
+        try:
+            codes = User.objects.get(referral_code=promo_code)
+        except User.DoesNotExist:
+            codes = None
+
+        if codes:
+            code = codes.referral_code
+            if str(code).upper() in PROMOCODES.keys():
+                welcome_message = PROMOCODES[str(code).upper()]
+            else:
+                welcome_message = default_msg
+        if not codes:
+            try:
+                codes = User.objects.get(ambassador_code=promo_code)
+            except User.DoesNotExist:
+                codes = None
+            else:
+                welcome_message = ambassador_msg
+                code = codes.ambassador_code
+
+        if not codes:
+            return custom_error("Invalid promo code")
+
+        res = {
+            "status": 1,
+            "message": "",
+            "message": "Valid promo code",
+            "label": welcome_message
+        }
+
+        return json_response(res)
+
+    except Exception as error:
+        log.error("Unable to verify promo code " + error.message)
         return custom_error("An error has occurred. Please try again.")

@@ -31,6 +31,11 @@ cy = datetime.date.today().year
 years = [(y, y) for y in range(2000, cy + 10)]
 
 
+def generate_ambassador_code():
+    return "AM" + ''.join(random.SystemRandom().choice(
+        string.digits) for _ in range(7))
+
+
 class Role(models.Model):
     name = models.CharField(max_length=20)
 
@@ -184,6 +189,9 @@ class User(models.Model):
     created = models.DateTimeField()
     stripe_customer_id = models.CharField(
         max_length=50, null=True, default=None, blank=True)
+    is_ambassador = models.BooleanField(db_index=True, default=True)
+    ambassador_code = models.CharField(
+        max_length=9, default=generate_ambassador_code)
 
     def save(self, *args, **kwargs):
         if self.full_name != self.first_name + ' ' + self.last_name:
@@ -571,6 +579,14 @@ class Referral(models.Model):
 
     def __str__(self):
         return self.referrer.first_name + " --> " + self.referree.first_name
+
+
+class AmbassadorReferral(models.Model):
+    ambassador = models.ForeignKey(User)
+    referree = models.ForeignKey(User, related_name="ambassador_referree")
+
+    def __unicode__(self):
+        return self.ambassador.full_name + "-->" + self.referree.full_name
 
 
 class Configuration(models.Model):
