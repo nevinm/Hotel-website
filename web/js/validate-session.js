@@ -17,17 +17,17 @@ var sessionExpiryTime = 30,
         };
 var SessionController = (function () {
     //------ LIVE ----
-//    var data = {
-//        signUp: '6044372159257',
-//        placeOrder: '6044371585457',
-//        addToCart: '6044372168057'
-//    };
-    //------ QA ----
     var data = {
-        signUp: '1522687691376277',
-        placeOrder: '1522687691376277',
-        addToCart: '1522687691376277'
+        signUp: '6044372159257',
+        placeOrder: '6044371585457',
+        addToCart: '6044372168057'
     };
+//    //------ QA ----
+//    var data = {
+//        signUp: '1522687691376277',
+//        placeOrder: '1522687691376277',
+//        addToCart: '1522687691376277'
+//    };
     function getSignUpPixel() {
         return data.signUp;
     }
