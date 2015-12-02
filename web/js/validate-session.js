@@ -1,33 +1,33 @@
 /* global SessionController */
 var sessionExpiryTime = 30,
 //------ QA ----
-        baseURL = 'http://meisterdish.qburst.com/backend/api/',
-        homeUrl = "http://meisterdish.qburst.com",
-        PROMO_CODE = "MEISTER20",
-        GLOBAL = {
-            APP_ID: '736537916455826'
-        };
-//
-//------ LIVE ----
-//        baseURL = 'http://meisterdish.com/backend/api/',
-//        homeUrl = "http://www.meisterdish.com",
+//        baseURL = 'http://meisterdish.qburst.com/backend/api/',
+//        homeUrl = "http://meisterdish.qburst.com",
 //        PROMO_CODE = "MEISTER20",
 //        GLOBAL = {
-//            APP_ID: '1412578365736463'
+//            APP_ID: '736537916455826'
 //        };
+//
+//------ LIVE ----
+        baseURL = 'http://meisterdish.com/backend/api/',
+        homeUrl = "http://www.meisterdish.com",
+        PROMO_CODE = "MEISTER20",
+        GLOBAL = {
+            APP_ID: '1412578365736463'
+        };
 var SessionController = (function () {
     //------ LIVE ----
-//    var data = {
-//        signUp: '6044372159257',
-//        placeOrder: '6044371585457',
-//        addToCart: '6044372168057'
-//    };
-    //------ QA ----
     var data = {
-        signUp: '1522687691376277',
-        placeOrder: '1522687691376277',
-        addToCart: '1522687691376277'
+        signUp: '6044372159257',
+        placeOrder: '6044371585457',
+        addToCart: '6044372168057'
     };
+//    //------ QA ----
+//    var data = {
+//        signUp: '1522687691376277',
+//        placeOrder: '1522687691376277',
+//        addToCart: '1522687691376277'
+//    };
     function getSignUpPixel() {
         return data.signUp;
     }
