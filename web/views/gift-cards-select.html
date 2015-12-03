@@ -8,9 +8,10 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta property="og:title" content="Meisterdish – New York's first on-demand delivery service that lets you cook in 15 minutes" />
-        <meta property="og:image" content="http://meisterdish.qburst.com/images/fb_banner_meister_14-10-15.jpg" />
+        <meta property="og:image" content="http://www.meisterdish.com/images/fb_banner_meister_30-11-15.jpg" />
         <meta property="og:description" content="For a limited time only, all first-time customers receive $20 towards their first two orders.
-              Use promo code MEISTER20 on our landing page." /> 
+              Use promo code MEISTER20 on our landing page." />
+        <meta property="og:url" content="http://www.meisterdish.com" /> 
         <title>Meisterdish - Gift Cards Select</title>
         <link rel="stylesheet" type="text/css" href="../css/reset.css">
         <link rel="stylesheet" type="text/css" href="../css/fontello.css">
@@ -117,41 +118,60 @@
             </header>
             <div id="page-container">
                 <div class='giftcard-banner'>
-                    <div class="logo-banner">
-                        <img src='../images/meisterdish-logo.png' />
-                        <div class="h0">GIFTCARDS</div>
-                        <hr>
-                    </div>
+                    <!--                    <div class="logo-banner">
+                                            <img src='../images/meisterdish-logo.png' />
+                                            <div class="h0">GIFTCARDS</div>
+                                            <hr>
+                                        </div>-->
+                    <section class="banner-section">
+                        <section>
+                            <img src='../images/meisterdish-logo.png' />
+                            <div class="banner-header">GIFT CARDS</div>
+                            <div class="clear-div"></div>
+                            <div class="banner-caption">Treat your friends and family this holiday season.
+                                Introduce them to Meisterdish with one of our giftcards, 
+                                and bring cooking back into their lifestyle</div>
+                        </section>
+                    </section>
                 </div>
                 <div class='giftcard-container contentArea'>
                     <form id='giftcard-form'>
                         <div class='giftcard-flow-amount'>
+                            <!--                            <div class='giftcard-select-amount'>
+                                                            <p><b>1.</b> SELECT AN AMOUNT</p>
+                                                            <div class='giftcard-selector giftcard-selected'>
+                                                                <div class='giftcard-amount' data-amount='50'><span>$50</span><span>.00</span></div>
+                                                                <div class='giftcard-selector-checkbox'>
+                                                                    <img class='checkbox-image' src='../images/checked.png' />
+                                                                </div>
+                                                            </div>
+                                                            <div class="giftcard-selector">
+                                                                <div class="giftcard-amount" data-amount='100'><span>$100</span><span>.00</span></div>
+                                                                <div class="giftcard-selector-checkbox">
+                                                                    <img class='checkbox-image' src='../images/unchecked.png' />
+                                                                </div>
+                                                            </div>
+                                                            <div class="giftcard-selector ">
+                                                                <div class="giftcard-amount" data-amount='150'><span>$150</span><span>.00</span></div>
+                                                                <div class="giftcard-selector-checkbox">
+                                                                    <img class='checkbox-image' src='../images/unchecked.png' />
+                                                                </div>
+                                                            </div>
+                                                            <div class="giftcard-selector">
+                                                                <div class="giftcard-amount" data-amount='250'><span>$250</span><span>.00</span></div>
+                                                                <div class="giftcard-selector-checkbox">
+                                                                    <img class='checkbox-image' src='../images/unchecked.png' />
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
                             <div class='giftcard-select-amount'>
                                 <p><b>1.</b> SELECT AN AMOUNT</p>
-                                <div class='giftcard-selector giftcard-selected'>
-                                    <div class='giftcard-amount' data-amount='50'><span>$50</span><span>.00</span></div>
-                                    <div class='giftcard-selector-checkbox'>
-                                        <img class='checkbox-image' src='../images/checked.png' />
-                                    </div>
-                                </div>
-                                <div class="giftcard-selector">
-                                    <div class="giftcard-amount" data-amount='100'><span>$100</span><span>.00</span></div>
-                                    <div class="giftcard-selector-checkbox">
-                                        <img class='checkbox-image' src='../images/unchecked.png' />
-                                    </div>
-                                </div>
-                                <div class="giftcard-selector ">
-                                    <div class="giftcard-amount" data-amount='150'><span>$150</span><span>.00</span></div>
-                                    <div class="giftcard-selector-checkbox">
-                                        <img class='checkbox-image' src='../images/unchecked.png' />
-                                    </div>
-                                </div>
-                                <div class="giftcard-selector">
-                                    <div class="giftcard-amount" data-amount='250'><span>$250</span><span>.00</span></div>
-                                    <div class="giftcard-selector-checkbox">
-                                        <img class='checkbox-image' src='../images/unchecked.png' />
-                                    </div>
-                                </div>
+                                <ul>
+                                    <li><div id="gift-amount-50" class="gift-amount"><a href="#" data-amount='50'>$50.00</a><span>Fine Dining For 2</span></div></li>
+                                    <li><div id="gift-amount-100" class="gift-amount"><a href="#" data-amount='100'>$100.00</a><span>Dinner Party</span></div></li>
+                                    <li><div id="gift-amount-150" class="gift-amount"><a href="#" data-amount='150'>$150.00</a><span>Start Cooking Again</span></div></li>
+                                    <li><div id="gift-amount-250" class="gift-amount"><a href="#" data-amount='250'>$250.00</a><span>New Year's Resolution</span></div></li>
+                                </ul>
                             </div>
                             <div class='giftcard-custom-amount pullRight'>
                                 <span class="body-text-small">Or enter your own amount: $</span>
@@ -164,30 +184,36 @@
                             <div class='giftcard-flow-header'>
                                 <p><b>2.</b> RECIPIENT INFO</p>
                             </div>
-                            <div class='giftcard-form-container'>
-                                <div class="forminput-wrapper recipient-form recipient-name-form">
-                                    <label for='name' class="body-text-small">Recipient's Name</label>
-                                    <input id='recipient-name' type="text" name="fullname" class="popup-input">
+                            <section>
+                                <div class='giftcard-form-container'>
+                                    <div class="forminput-wrapper recipient-form recipient-name-form">
+                                        <label for='name' class="body-text-small">Recipient's Name</label>
+                                        <input id='recipient-name' type="text" name="fullname" class="popup-input">
+                                    </div>
+                                    <div class="forminput-wrapper recipient-form">
+                                        <label for='email' class="body-text-small">Recipient's Email</label>
+                                        <input id='recipient-email' type="email" name="email" class="popup-input">
+                                    </div>
+                                    <div class="forminput-wrapper form-message">
+                                        <label for='message' class="body-text-small">Message</label>
+                                        <textarea name='message' id='recipient-message'></textarea>
+                                    </div>
+                                    <div class='giftcard-message'>
+                                        <div>
+                                            <p class="body-text-small">Gift cards have no expiry</p>
+                                            <p class="body-text-small">Unused value is applied to the </p>
+                                            <p class="body-text-small">recipient's account as credit. </p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="forminput-wrapper recipient-form">
-                                    <label for='email' class="body-text-small">Recipient's Email</label>
-                                    <input id='recipient-email' type="email" name="email" class="popup-input">
+
+                                <div class='proceed-checkout-container'>
+                                    <input type="submit" class="btn btn-medium-extended medium-green proceed-checkout" value="PROCEED TO CHECKOUT">
                                 </div>
-                                <div class="forminput-wrapper form-message">
-                                    <label for='message' class="body-text-small">Message</label>
-                                    <textarea name='message' id='recipient-message'></textarea>
-                                </div>
-                            </div>
-                            <div class='giftcard-message'>
-                                <div class='giftcard-message-inner'>
-                                    <p class="body-text-small">Gift cards have no expiry</p>
-                                    <p class="body-text-small">Unused value is applied to the </p>
-                                    <p class="body-text-small">recipient's account as credit. </p>
-                                </div>
-                            </div>
+                            </section>
                         </div>
                         <div class='proceed-checkout-container'>
-                            <input type="submit" class="btn btn-medium-extended medium-green proceed-checkout" value="PROCEED TO CHECKOUT">
+                            <!--<input type="submit" class="btn btn-medium-extended medium-green proceed-checkout" value="PROCEED TO CHECKOUT">-->
                         </div>
                     </form>
                 </div>

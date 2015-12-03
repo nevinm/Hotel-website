@@ -13,12 +13,12 @@ def schedule_promocode(name='Holiday 20'):
     print user.referral_code
     tmp =[] 
     tmp2 = []
-    for i in range(9):
+    for i in range(5):
         tmp.append(random.choice(string.punctuation))
         tmp2.append(random.choice(string.punctuation))
 
-    user.referral_code = ''.join(tmp)
-    user.ambassador_code = ''.join(tmp2)
+    user.referral_code = 'HO20' + ''.join(tmp)
+    user.ambassador_code = 'HO50'+''.join(tmp2)
     user.save()
 
 
