@@ -192,7 +192,7 @@ function populateGiftcardDetails(giftcardDetails) {
     $(".recepient-name").text(giftcardDetails.recipientName);
     $(".recepient-email").text(giftcardDetails.recipientEmail);
     $(".recepient-message").text(giftcardDetails.recipientMessage);
-    $(".recepient-amount").text("$" + giftcardDetails.giftcardAmount);
+    $(".recepient-amount").text("$" + parseFloat(giftcardDetails.giftcardAmount).toFixed(2));
     $(".recepient-amount").attr("data-amount", giftcardDetails.giftcardAmount);
 }
 

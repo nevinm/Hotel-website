@@ -142,150 +142,153 @@
                         </section>
                     </section>
                 </div>
-                <div class='giftcard-container contentArea'>
-                    <div class="gift-card-details-container">
-                        <div class="details-main-header">3. GIFT CARD CHECKOUT</div>
-                        <div class="details">
-                            <div class="details-sub-header">GIFT CARD DETAILS</div>
-                            <hr class="mobile-hr">
-                            <div class="row">
-                                <span class="details-label">Recepient:</span>
-                                <span class="details-content recepient-name"></span>
+                <div class='contentArea'>
+                    <div class="gift-header"><p><b>3.</b> CHECKOUT</p></div>
+                    <section>
+                        <div class="gift-card-details-container">
+
+                            <div class="details">
+                                <div class="details-sub-header">GIFT CARD DETAILS</div>
+                                <hr class="mobile-hr">
+                                <div class="row">
+                                    <span class="details-label">Recepient:</span>
+                                    <span class="details-content recepient-name"></span>
+                                </div>
+                                <div class="row">
+                                    <span class="details-label">Recepient's Email</span>
+                                    <span class="details-content recepient-email"></span>
+                                </div>
+                                <div class="row">
+                                    <span class="details-label">Message:</span>
+                                    <span class="details-content recepient-message"></span>
+                                </div>
+                                <div class="row">
+                                    <span class="details-label">Amount:</span>
+                                    <span class="details-content recepient-amount" data-amount=''></span>
+                                </div>
+                                <span class="details-foot green" id='edit-giftcard'>EDIT GIFT CARD</span>
                             </div>
-                            <div class="row">
-                                <span class="details-label">Recepient's Email</span>
-                                <span class="details-content recepient-email"></span>
+                            <div class="payment-method">
+                                <div class="details-sub-header">PAYMENT METHOD</div>
+                                <hr class="mobile-hr">
+                                <div class="saved-cards"></div>
+                                <span class="details-foot" id="change-payment">CHANGE PAYMENT METHOD</span>
                             </div>
-                            <div class="row">
-                                <span class="details-label">Message:</span>
-                                <span class="details-content recepient-message"></span>
-                            </div>
-                            <div class="row">
-                                <span class="details-label">Amount:</span>
-                                <span class="details-content recepient-amount" data-amount=''></span>
-                            </div>
-                            <span class="details-foot" id='edit-giftcard'>EDIT GIFT CARD</span>
                         </div>
-                        <div class="payment-method">
-                            <div class="details-sub-header">PAYMENT METHOD</div>
-                            <hr class="mobile-hr">
-                            <div class="saved-cards"></div>
-                            <span class="details-foot" id="change-payment">CHANGE PAYMENT METHOD</span>
-                        </div>
-                    </div>
-                    <div class="payment-container-guest">
-                        <div class="your-info-container">
-                            <div class="details-sub-header">YOUR INFO</div>
-                            <hr class="mobile-hr">
-                            <span class="content-heading have-account">
-                                Do you have an account? 
-                                <a href="login.html" class="green">Log In here</a></span>
-                            <form id="address">
-                                <div class="section1">
-                                    <div class="forminput-wrapper">
-                                        <label class="body-text-small">First Name</label>
-                                        <input type="text" name="firstname" class="popup-input" autofocus>
-                                    </div>
-                                    <div class="forminput-wrapper">
-                                        <label class="body-text-small">Last Name</label>
-                                        <input type="text" name="lastname" class="popup-input">
-                                    </div>
-                                </div>
-                                <div class="section2">
-                                    <div class="forminput-wrapper">
-                                        <label class="body-text-small">Email</label>
-                                        <input type="email" name="email" class="popup-input" id="guest-email">
-                                    </div>
-                                </div>
-                                <div class="section3">
-                                    <div class="forminput-wrapper">
-                                        <label class="body-text-small">Zip</label>
-                                        <input type="text" name="zip" class="popup-input">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="payment-info-container">
-                            <div class="details-sub-header">PAYMENT INFORMATION</div>
-                            <hr class="mobile-hr">
-                            <div class="accepted-cards-wrapper">
-                                <label class="body-text-small">Accepted cards</label>
-                                <div class="accepted-cards-list">
-                                    <img class='accepted-cards' src="../images/master.png">
-                                    <img class='accepted-cards' src="../images/visa.png">
-                                    <img class='accepted-cards' src="../images/amex.png">
-                                    <img class='accepted-cards' src="../images/discover.png">
-                                    <img class='accepted-cards' src="../images/diners.png">
-                                    <img class='accepted-cards' src="../images/jcb.png">
-                                </div>
-                            </div>
-                            <div class="pay-by-credit-container">
-                                <form id="pay-form" action="" method="POST" autocomplete='off'>
-                                    <div class="forminput-wrapper">
-                                        <label class="body-text-small">Card Holder Name</label>
-                                        <input type="text" name="nameOnCard" class="popup-input" id="name-on-card">
-                                    </div>
-                                    <div class="forminput-wrapper">
-                                        <label class="body-text-small">Credit card number</label>
-                                        <input style="display:none" type="text" name="fakeusernameremembered"/>
-                                        <input type="text" autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number" name="cardnumber">
-                                    </div>
-                                    <div class="forminput-wrapper">
-                                        <label class="body-text-small">CVV</label>
-                                        <input style="display:none" type="password" name="fakepasswordremembered"/>
-                                        <input type="password" size="4" data-stripe="cvc" class="popup-input" id="cvv-number" name="cvv">
-                                    </div>
-                                    <div class="forminput-wrapper">
-                                        <label class="body-text-small">Expiry Date</label>
-                                        <div class="styled-select">
-                                            <select name="expiryMonth" id="ExpMonth" data-stripe="exp-month">
-                                                <option value=""></option>
-                                                <option value="01">JAN</option>
-                                                <option value="02">FEB</option>
-                                                <option value="03">MAR</option>
-                                                <option value="04">APR</option>
-                                                <option value="05">MAY</option>
-                                                <option value="06">JUN</option>
-                                                <option value="07">JUL</option>
-                                                <option value="08">AUG</option>
-                                                <option value="09">SEP</option>
-                                                <option value="10">OCT</option>
-                                                <option value="11">NOV</option>
-                                                <option value="12">DEC</option>
-                                            </select>
+                        <div class="payment-container-guest">
+                            <div class="your-info-container">
+                                <div class="details-sub-header">YOUR INFO</div>
+                                <hr class="mobile-hr">
+                                <span class="content-heading have-account">
+                                    Do you have an account? 
+                                    <a href="login.html" class="green">Log In here</a></span>
+                                <form id="address">
+                                    <div class="section1">
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">First Name<span class="mandatory">*</span></label>
+                                            <input type="text" name="firstname" class="popup-input" autofocus>
+                                        </div>
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Last Name<span class="mandatory">*</span></label>
+                                            <input type="text" name="lastname" class="popup-input">
                                         </div>
                                     </div>
-                                    <span class="div">/</span>
-                                    <div class="forminput-wrapper">
-                                        <div class="styled-select">
-                                            <select name="expiryYear" id="ExpYear" data-stripe="exp-year">
-                                                <option value=""></option>
-                                            </select>
+                                    <div class="section2">
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Email<span class="mandatory">*</span></label>
+                                            <input type="email" name="email" class="popup-input" id="guest-email">
                                         </div>
                                     </div>
-                                    <div class="forminput-wrapper">
-                                        <label class="body-text-small">Billing zip</label>
-                                        <input type="text" name="zip" class="popup-input" id="billing-zip">
+                                    <div class="section3">
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Zip<span class="mandatory">*</span></label>
+                                            <input type="text" name="zip" class="popup-input">
+                                        </div>
                                     </div>
                                 </form>
                             </div>
+                            <div class="payment-info-container">
+                                <div class="details-sub-header">PAYMENT INFORMATION</div>
+                                <hr class="mobile-hr">
+                                <div class="accepted-cards-wrapper">
+                                    <label class="body-text-small">Accepted cards</label>
+                                    <div class="accepted-cards-list">
+                                        <img class='accepted-cards' src="../images/master.png">
+                                        <img class='accepted-cards' src="../images/visa.png">
+                                        <img class='accepted-cards' src="../images/amex.png">
+                                        <img class='accepted-cards' src="../images/discover.png">
+                                        <img class='accepted-cards' src="../images/diners.png">
+                                        <img class='accepted-cards' src="../images/jcb.png">
+                                    </div>
+                                </div>
+                                <div class="pay-by-credit-container">
+                                    <form id="pay-form" action="" method="POST" autocomplete='off'>
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Card Holder Name</label>
+                                            <input type="text" name="nameOnCard" class="popup-input" id="name-on-card">
+                                        </div>
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Credit card number</label>
+                                            <input style="display:none" type="text" name="fakeusernameremembered"/>
+                                            <input type="text" autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number" name="cardnumber">
+                                        </div>
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">CVV</label>
+                                            <input style="display:none" type="password" name="fakepasswordremembered"/>
+                                            <input type="password" size="4" data-stripe="cvc" class="popup-input" id="cvv-number" name="cvv">
+                                        </div>
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Expiry Date</label>
+                                            <div class="styled-select">
+                                                <select name="expiryMonth" id="ExpMonth" data-stripe="exp-month">
+                                                    <option value=""></option>
+                                                    <option value="01">JAN</option>
+                                                    <option value="02">FEB</option>
+                                                    <option value="03">MAR</option>
+                                                    <option value="04">APR</option>
+                                                    <option value="05">MAY</option>
+                                                    <option value="06">JUN</option>
+                                                    <option value="07">JUL</option>
+                                                    <option value="08">AUG</option>
+                                                    <option value="09">SEP</option>
+                                                    <option value="10">OCT</option>
+                                                    <option value="11">NOV</option>
+                                                    <option value="12">DEC</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <span class="div">/</span>
+                                        <div class="forminput-wrapper">
+                                            <div class="styled-select">
+                                                <select name="expiryYear" id="ExpYear" data-stripe="exp-year">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Billing zip</label>
+                                            <input type="text" name="zip" class="popup-input" id="billing-zip">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="payment-amount-container">
-                        <div class="row">
-                            <span>SUBTOTAL</span>
-                            <span class='recepient-amount'></span>
+                        <div class="payment-amount-container">
+                            <div class="row">
+                                <span>SUBTOTAL</span>
+                                <span class='recepient-amount'></span>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <span>TOTAL</span>
+                                <span class='recepient-amount'></span>
+                            </div>
                         </div>
-                        <hr>
-                        <div class="row">
-                            <span>TOTAL</span>
-                            <span class='recepient-amount'></span>
+                        <!--<hr class="fullWidth-hr">-->
+                        <div class="button-container">
+                            <a href="#!" class="btn btn-large-primary medium-green" id="gift-place-order">PURCHASE GIFT CARD</a>
                         </div>
-                    </div>
-                    <hr class="fullWidth-hr">
-                    <div class="button-container">
-                        <a href="#!" class="btn btn-large-primary medium-green" id="gift-place-order">PURCHASE GIFT CARD</a>
-                    </div>
+                    </section>
                 </div>
                 <div class="address-payment-list-popup">
                     <div class="bk-overlay"></div>

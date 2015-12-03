@@ -361,6 +361,21 @@
     width: 100%;
     float: left;
 }
+.giftcard-payment .contentArea section{
+    margin: 0 auto;
+    background: #FFF;
+    height: 100%;
+    display: inline-block;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+.giftcard-payment{
+    background: url(../images/linen-bg-big.jpg) no-repeat center center;
+}
+.mandatory {
+    color: #a9d77b;
+}
 
 .payment-amount-container {
     padding: 30px 30%;
@@ -435,7 +450,7 @@ hr {
 
 .details-label {
     font-family: 'ProximaNova-semibold';
-    color: #1a1a1a;
+    color: #6B6B6B;
     font-size: 14px;
     text-align: left;
 }
@@ -453,7 +468,7 @@ hr {
 
 .details-content {
     font-family: 'ProximaNova-semibold';
-    color: #5a5a5a;
+    color: #1a1a1a;
     font-size: 14px;
 }
 
@@ -466,9 +481,11 @@ hr {
     width: 50%;
     cursor: pointer;
 }
-
+.gift-header{
+    padding: 30px 0px;
+}
 .giftcard-select-amount p,
-.giftcard-flow-header p {
+.giftcard-flow-header p,.gift-header p {
     font-family: 'BrandonGrotesque-Regular';
     font-size: 24px;
     letter-spacing: 1px;
@@ -523,9 +540,13 @@ input.popup-input {
     float: left;
 }
 
-.giftcard-form-container .form-message,
-.payment-container-guest {
+.giftcard-form-container .form-message{
     width: 72%;
+    float: left;
+    margin-top: 30px;
+    position: relative;
+}
+.payment-container-guest {
     float: left;
     margin-top: 30px;
     position: relative;
@@ -949,8 +970,11 @@ form#edit-recipient-details input.popup-input{
         width: 100% !important;
     }
 
-    .giftcard-container{
+    .giftcard-container,.giftcard-payment .contentArea{
         padding: 0 40px;
+    }
+    .giftcard-payment .contentArea section{
+        padding: 10px;
     }
     .accepted-cards-wrapper{
         padding-top: 25px;
