@@ -7,27 +7,48 @@ var sessionExpiryTime = 30,
         GLOBAL = {
             APP_ID: '736537916455826'
         };
-//
-//------ LIVE ----
-//        baseURL = 'http://meisterdish.com/backend/api/',
-//        homeUrl = "http://www.meisterdish.com",
-//        PROMO_CODE = "MEISTER20",
-//        GLOBAL = {
-//            APP_ID: '1412578365736463'
-//        };
+(function () {
+    if (window.location.href.indexOf("meisterdish.com") > 0) {
+        //------ LIVE ----
+        baseURL = 'http://meisterdish.com/backend/api/';
+        homeUrl = "http://www.meisterdish.com";
+        PROMO_CODE = "MEISTER20";
+        GLOBAL = {
+            APP_ID: '1412578365736463'
+        };
+    }
+})();
+
+
 var SessionController = (function () {
-    //------ LIVE ----
-//    var data = {
-//        signUp: '6044372159257',
-//        placeOrder: '6044371585457',
-//        addToCart: '6044372168057'
-//    };
-    //------ QA ----
-    var data = {
-        signUp: '1522687691376277',
-        placeOrder: '1522687691376277',
-        addToCart: '1522687691376277'
-    };
+    var data = {};
+    (function () {
+        if (window.location.href.indexOf("meisterdish.com") > 0) {
+            //------ LIVE ----
+            data = {
+                signUp: '6044372159257',
+                placeOrder: '6044371585457',
+                addToCart: '6044372168057'
+            };
+        } else {
+            //------ QA ----
+            data = {
+                signUp: '1522687691376277',
+                placeOrder: '1522687691376277',
+                addToCart: '1522687691376277'
+            };
+        }
+    })();
+    // This identifies your website in the createToken call
+    function getStripeKey() {
+        if (window.location.href.indexOf("meisterdish.com") > 0) {
+            //------ LIVE ----
+            Stripe.setPublishableKey('pk_live_DH4VRbJ2QAen7RIsMh1XHtvr');
+        } else {
+            //------ QA ----
+            Stripe.setPublishableKey('pk_test_O2igwUk6spl3vmvoYlMVAHr0');
+        }
+    }
     function getSignUpPixel() {
         return data.signUp;
     }
@@ -64,7 +85,8 @@ var SessionController = (function () {
         getPlaceOrderPixel: getPlaceOrderPixel,
         includePixel: includePixel,
         fbTrackConversionEvent: fbTrackConversionEvent,
-        getAddToCartPixel: getAddToCartPixel
+        getAddToCartPixel: getAddToCartPixel,
+        getStripeKey: getStripeKey
     };
 })();
 

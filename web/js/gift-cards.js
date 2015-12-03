@@ -40,14 +40,23 @@ $(document).ready(function () {
         $("#giftcard-form").validate().resetForm();
     });
 
+    $(".gift-amount a").on("click", function (e) {
+        e.preventDefault();
+        var giftcardAmount = 0;
+        $(".gift-amount").removeClass("active-card");
+        $(this).closest('.gift-amount').addClass("active-card");
+        $("#giftcard-custom-amount").val("");
+        giftcardAmount = $(this).attr("data-amount");
+        $("#giftcard-custom-amount").val(giftcardAmount);
+        $("#giftcard-form").validate().resetForm();
+    });
+
     $(".giftcard-custom-amount input").on("focus", function (e) {
         e.preventDefault();
-        console.log(e.type);
-        if ($(".giftcard-selected").length) {
+        if ($(".active-card").length) {
             $(this).val("");
         }
-        $(".checkbox-image").attr("src", "../images/unchecked.png");
-        $(".giftcard-selected").removeClass("giftcard-selected");
+        $(".gift-amount").removeClass("active-card");
     });
 
     $("#edit-giftcard").on("click", function () {
@@ -183,7 +192,7 @@ function populateGiftcardDetails(giftcardDetails) {
     $(".recepient-name").text(giftcardDetails.recipientName);
     $(".recepient-email").text(giftcardDetails.recipientEmail);
     $(".recepient-message").text(giftcardDetails.recipientMessage);
-    $(".recepient-amount").text("$" + giftcardDetails.giftcardAmount);
+    $(".recepient-amount").text("$" + parseFloat(giftcardDetails.giftcardAmount).toFixed(2));
     $(".recepient-amount").attr("data-amount", giftcardDetails.giftcardAmount);
 }
 
