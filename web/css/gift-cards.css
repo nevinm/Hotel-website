@@ -912,6 +912,9 @@ form#edit-recipient-details input.popup-input{
     .giftcard-message{
         text-align: center;
     }
+    .giftcard-select-amount li {
+        width: 100%;
+    }
     .giftcard-select-amount li span{
         font-size: 19px;  
     }
@@ -1109,7 +1112,7 @@ form#edit-recipient-details input.popup-input{
         font-size: 14px;
     }
 }
-@media(max-width:1023px){
+@media(min-width:768px) and (max-width:1023px){
     .giftcard-select-amount li{
         width: 49%;
     }
