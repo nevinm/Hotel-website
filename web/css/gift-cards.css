@@ -153,12 +153,92 @@
     width: 100%;
 }
 
-.giftcard-container {}
-
+.giftcard-container {
+    background: url(../images/linen-bg-big.jpg) no-repeat center center;
+    width: 100%;
+    max-width: 100%;
+}
+#giftcard-form{
+    max-width: 1100px;
+    width: 90%;
+    margin: 0 auto;
+}
+.giftcard-select-amount li{
+    width: 24%;
+    text-align: center;
+    padding: 10px;
+    list-style: none;
+    display: inline-block;
+    vertical-align: top;
+}
+.giftcard-select-amount li span{
+    padding: 10px;
+    color: #636363;
+    font-family: 'BrandonGrotesque-Regular';
+    font-size: 24px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 24px;
+    display: block;
+}
+.giftcard-select-amount li div{
+    position: relative;
+    display: block;
+    margin: 0 auto;
+}
+#gift-amount-50 a{
+    background-color: #7a9a6f;
+    background: #7a9a6f;
+}
+#gift-amount-100 a{
+    background-color: #335129;
+    background: #335129;
+}
+#gift-amount-150 a{
+    background-color: #e58474;
+    background: #e58474;
+}
+#gift-amount-250 a{
+    background-color: #bf140e;
+    background: #bf140e;
+}
+.giftcard-select-amount li a{
+    padding: 20px;
+    max-width: 232px;
+    color: #FFFFFF;
+    font-size: 30px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 1px rgba(255,255,255,0.24);
+    -moz-box-shadow: inset 0 1px rgba(255,255,255,0.24);
+    box-shadow: inset 0 1px rgba(255,255,255,0.24);
+    font-weight: bold;
+    text-shadow: 0 -1px rgba(0,0,0,0.5);
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-family: "BrandonGrotesque-Regular";
+}
+.giftcard-select-amount li a:active,
+.giftcard-select-amount li a:focus{
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.54);
+}
+.giftcard-flow-recipient section{
+    background: #FFF;
+    height: 100%;
+    display: inline-block;
+    width: 100%;
+    padding: 33px 0px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 .giftcard-flow-recipient {
     position: relative;
     padding-bottom: 40px;
-    border-bottom: 1px solid #9B9B9B;
+    /*border-bottom: 1px solid #9B9B9B;*/
 }
 
 .giftcard-flow-amount,
@@ -169,7 +249,7 @@
 
 .recipient-form {
     position: relative;
-    width: 49%;
+    width: 35%;
     float: left;
 }
 
@@ -192,18 +272,76 @@
     padding: 8px;
     background-color: #fff;
 }
+.banner-section{
+    margin: 50px auto;
+    max-width: 542px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    -webkit-box-shadow: 0 3px 14px 0px rgba(211, 207, 207, 0.8);
+    -moz-box-shadow: 0 3px 14px 0px rgba(211, 207, 207, 0.8);
+    box-shadow: 0 3px 14px 0px rgba(211, 207, 207, 0.8);
 
+}
+.active-card a{
+    font-family: "BrandonGrotesque-Bold" !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.54) !important;
+}
+.active-card span{
+    font-weight: bold !important;
+}
+.banner-section section{
+    background: rgba(255, 255, 255, 0.8);
+    max-width: 542px;
+    border-radius: 5px;
+    margin: 0 auto;
+    -webkit-box-shadow: inset 0px 0px 0px 1px rgba(211, 207, 207, 0.37);
+    -moz-box-shadow: inset 0px 0px 0px 1px rgba(211, 207, 207, 0.37);
+    box-shadow: inset 0px 0px 0px 1px rgba(211, 207, 207, 0.37);
+    text-align: center;
+    padding: 30px 20px;
+    margin: 0 auto;
+}
+.banner-section img{
+    width: 28px;
+}
+.banner-caption{
+    color: #6b6b6b;
+    font-weight: 500;
+    line-height: 24px;
+    font-family: "BrandonText-Medium";
+    font-weight: 500;
+    padding: 17px 25px 0px 25px;
+    font-size: 17px;
+}
+.banner-header{
+    font-family: "BrandonText-Regular";
+    letter-spacing: 2px;
+    color: #6b6b6b;
+    padding: 15px 0px;
+    font-size: 30px;
+}
+.clear-div{
+    width: 100px;
+    margin: 0 auto;
+    border-bottom: 1.9px solid #D5D7D6;
+}
 .giftcard-banner {
-    max-height: 300px;
-    background: url(../images/giftcard-bg.jpg) no-repeat center center;
+    /*max-height: 300px;*/
+    /*background: url(../images/giftcard-bg.jpg) no-repeat center center;*/
+    background: url(../images/gift-card-bg-v1.jpg) no-repeat center center;
     background-size: cover;
     overflow: hidden;
     margin-top: 100px;
-    height: 250px;
+    /*height: 250px;*/
     position: relative;
-    background-image: url(../images/giftcard-bg.jpg);
+    /*background-image: url(../images/giftcard-bg.jpg);*/
+    background-image: url(../images/gift-card-bg-v1.jpg);
     background-size: cover;
     background-position: 50% 50%;
+}
+.giftcard-select-amount p{
+    padding: 20px;
 }
 .giftcard-select-amount {
     padding: 50px 0;
@@ -362,14 +500,14 @@ input.popup-input {
 
 :-moz-placeholder {
     /* Firefox 18- */
-    
+
     font-family: 'BrandonGrotesque-medium';
     color: #9B9B9B;
 }
 
 ::-moz-placeholder {
     /* Firefox 19+ */
-    
+
     font-family: 'BrandonGrotesque-medium';
     color: #9B9B9B;
 }
@@ -380,14 +518,14 @@ input.popup-input {
 }
 
 .giftcard-form-container {
-    width: 65%;
+    /*width: 65%;*/
     margin-left: 10%;
     float: left;
 }
 
 .giftcard-form-container .form-message,
 .payment-container-guest {
-    width: 100%;
+    width: 72%;
     float: left;
     margin-top: 30px;
     position: relative;
@@ -410,9 +548,9 @@ input.popup-input {
 }
 
 .giftcard-message {
-    padding: 0 10px;
-    float: left;
+    float: right;
     width: 25%;
+    margin-top: 50px;
 }
 
 .giftcard-message-inner {
@@ -423,9 +561,10 @@ input.popup-input {
 }
 
 .giftcard-container .body-text-small {
-    font-size: 12px;
+    font-size: 14px;
     color: #6B6B6B;
     letter-spacing: 0.5px;
+    font-family: "BrandonText-Medium";
 }
 
 .proceed-checkout-container {
@@ -749,6 +888,24 @@ form#edit-recipient-details input.popup-input{
         border: none;
         overflow-x: hidden;
     }
+    .giftcard-message{
+        text-align: center;
+    }
+    .giftcard-select-amount li span{
+        font-size: 19px;  
+    }
+    #giftcard-form {
+        width: auto;
+    }
+    .giftcard-select-amount {
+        padding: 0;
+    }
+    .giftcard-form-container{
+        padding: 0px 25px;
+    }
+    .giftcard-select-amount p {
+        padding: 35px 20px;
+    }
     .details-main-header{
         font-size: 16px;
     }
@@ -756,12 +913,15 @@ form#edit-recipient-details input.popup-input{
         background-color: rgba(255, 255, 255, 1);
     }
     .giftcard-banner{
-        height: 290px;
-        margin-top: 0px;
+        /* height: 290px; */
+        margin-top: 75px;
+    }
+    .banner-section{
+        margin: auto;
     }
     .giftcard-banner img{
-        height: 300px;
-        margin-top: 0px;
+        /*        height: 300px;
+                margin-top: 0px;*/
     }
     .h0{
         font-size: 24px;
@@ -923,6 +1083,14 @@ form#edit-recipient-details input.popup-input{
     .address-payment-list-popup .header{
         letter-spacing: .3px;
         font-size: 14px;
+    }
+}
+@media(max-width:1023px){
+    .giftcard-select-amount li{
+        width: 49%;
+    }
+    .giftcard-select-amount li a{
+        margin: 0 auto;
     }
 }
 @media (max-width: 400px) {
