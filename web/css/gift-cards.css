@@ -172,7 +172,7 @@
     vertical-align: top;
 }
 .giftcard-select-amount li span{
-    padding: 10px;
+    padding: 10px 0px;
     color: #636363;
     font-family: 'BrandonGrotesque-Regular';
     font-size: 24px;
@@ -379,11 +379,14 @@
 }
 
 .payment-amount-container {
-    padding: 30px 30%;
+    padding: 30px 20% 30px 50%;
     width: 100%;
-    float: left;
+    float: right;
     font-family: 'BrandonGrotesque-bold';
     margin-top: 50px;
+}
+.center-align{
+    padding: 30px 35%;
 }
 
 .payment-amount-container .row {
@@ -423,7 +426,7 @@ hr {
 }
 
 .payment-amount-container hr {
-    background-color: #9B9B9B;
+    background-color: #D7D9D9;
 }
 
 .details-main-header {
@@ -595,7 +598,7 @@ input.popup-input {
     width: 100%;
     display: inline-block;
 }
-.proceed-checkout{
+.proceed-checkout,#gift-place-order{
     width:313px;
 }
 /*payment-method-guest*/
@@ -1115,7 +1118,7 @@ form#edit-recipient-details input.popup-input{
         letter-spacing: .3px;
         font-size: 14px;
     }
-    .proceed-checkout {
+    .proceed-checkout,#gift-place-order {
         width: auto;
     }
 }
