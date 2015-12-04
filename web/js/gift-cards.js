@@ -1,6 +1,7 @@
 $(document).ready(function () {
     CartItemCount();
     currentPage = getCurrentPage("/", ".html", window.location.href);
+    $("#giftcard-custom-amount").val("50");
     if (currentPage == "giftcard-payment") {
         stripeIntegration();
     }
