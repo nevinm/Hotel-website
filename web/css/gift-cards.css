@@ -221,6 +221,7 @@
     text-decoration: none;
     display: block;
     font-family: "BrandonGrotesque-Regular";
+    margin: 0 auto;
 }
 .giftcard-select-amount li a:active,
 .giftcard-select-amount li a:focus{
@@ -593,6 +594,9 @@ input.popup-input {
     padding: 40px 0;
     width: 100%;
     display: inline-block;
+}
+.proceed-checkout{
+    width:313px;
 }
 /*payment-method-guest*/
 
@@ -1110,6 +1114,9 @@ form#edit-recipient-details input.popup-input{
     .address-payment-list-popup .header{
         letter-spacing: .3px;
         font-size: 14px;
+    }
+    .proceed-checkout {
+        width: auto;
     }
 }
 @media(min-width:768px) and (max-width:1023px){
