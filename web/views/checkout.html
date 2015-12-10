@@ -1,73 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Meisterdish - Checkout</title>
-    <link rel="stylesheet" type="text/css" href="../css/reset.css">
-    <link rel="stylesheet" type="text/css" href="../css/fontello.css">
-    <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/account.css">
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <script type="text/javascript" src='../js/validate_session.js'></script>
-    <script type="text/javascript">
-    // This identifies your website in the createToken call below
-    Stripe.setPublishableKey('pk_test_O2igwUk6spl3vmvoYlMVAHr0');
-    </script>
-    <script>
-    (function(i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function() {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta property="og:title" content="Meisterdish – New York's first on-demand delivery service that lets you cook in 15 minutes" />
+        <meta property="og:image" content="http://www.meisterdish.com/images/fb_banner_meister_30-11-15.jpg" />
+        <meta property="og:description" content="For a limited time only, all first-time customers receive $20 towards their first two orders.
+              Use promo code MEISTER20 on our landing page." /> 
+        <meta property="og:url" content="http://www.meisterdish.com" /> 
+        <title>Meisterdish - Checkout</title>
+        <link rel="stylesheet" type="text/css" href="../css/reset.css">
+        <link rel="stylesheet" type="text/css" href="../css/fontello.css">
+        <link rel="stylesheet" type="text/css" href="../css/common.css">
+        <link rel="stylesheet" type="text/css" href="../css/account.css">
+        <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+        <script type="text/javascript" src='../js/validate-session.js'></script>
+        <script type="text/javascript">
+            // This identifies your website in the createToken call below
+//            Stripe.setPublishableKey('pk_test_O2igwUk6spl3vmvoYlMVAHr0');
+//            Stripe.setPublishableKey('pk_live_DH4VRbJ2QAen7RIsMh1XHtvr');
+            SessionController.getStripeKey();
+        </script>
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', 'UA-63283790-1', 'auto');
-    ga('send', 'pageview');
-    ga('require', 'ecommerce');
+            ga('create', 'UA-63283790-1', 'auto');
+            ga('send', 'pageview');
+            ga('require', 'ecommerce');
+        </script>
+        <script>
+            SessionController.includePixel();
+        </script>
+    </head>
 
-    </script>
-</head>
-
-<body>
-    <div id="account-mainWrapper" class='checkout-container'>
-        <header id="header">
-            <div class="contentArea">
-                <a href="../index.html"><img class="pullLeft logo" src="../images/logo.png" alt="MeisterDish"></a>
-               <!--  <div class="backNav-mobile">
-                    <span>
-                        <a href="account.html">
-                            <img src="../images/back_arrowMobile.png">
+    <body>
+        <div id="account-mainWrapper" class='checkout-container'>
+            <header id="header">
+                <div class="contentArea">
+                    <a href="../index.html"><img class="pullLeft logo" src="../images/logo.png" alt="MeisterDish"></a>
+                    <!--  <div class="backNav-mobile">
+                        <span>
+                            <a href="account.html">
+                                <img src="../images/back-arrow-mobile.png">
+                            </a>
+                        </span>
+                        <span><a href="account.html">BACK TO ACCOUNT</a></span>
+                    </div> -->
+                    <div class="cart pullRight">
+                        <a href="#">
+                            <span class="count"></span>
+                            <img src="../images/cart-icon.png">
                         </a>
-                    </span>
-                    <span><a href="account.html">BACK TO ACCOUNT</a></span>
-                </div> -->
-                <div class="cart pullRight">
-                    <a href="#">
-                        <span class="count"></span>
-                        <img src="../images/cart_icon.png">
-                    </a>
-                </div>
-                <span class="icon-menu pullRight"></span>
-                <div class="logo-mobile-container">
-                    <a href="index.html">
-                        <img class="pullLeft logo-mobile" src="../images/logo.png" alt="MeisterDish">
-                    </a>
-                </div>
-                <div class="navMenu" style="display:none">
-                    <ul>
-                        <li>
-                            <a href="../index.html">HOME</a>
-                        </li>
+                    </div>
+                    <span class="icon-menu pullRight"></span>
+                    <div class="logo-mobile-container">
+                        <a href="index.html">
+                            <img class="pullLeft logo-mobile" src="../images/logo.png" alt="MeisterDish">
+                        </a>
+                    </div>
+                    <div class="navMenu" style="display:none">
+                        <ul>
+                            <li>
+                                <a href="../index.html">HOME</a>
+                            </li>
+                            <li>
+                                <a href="menu.html">MENU</a>
+                            </li>
+                            <li>
+                                <a href="how-it-works.html">HOW IT WORKS</a>
+                            </li>
+                            <li>
+                                <a href="gift-cards-select.html">GIFTS</a>
+                            </li>
+                            <li class="login-signup">
+                                <a href="login.html">LOG IN</a>
+                            </li>
+                            <li class='login-signup'>
+                                <a href="signup.html">SIGN UP</a>
+                            </li>
+                            <li id="navbar-username" class="bold green">
+                                <a href='account.html'></a>
+                            </li>
+                        </ul>
+                        <footer id="footer-navMenu">
+                            <div class="footerContent">
+                                <ul>
+                                    <li>
+                                        <a href="contact-us.html">CONTACT</a>
+                                    </li>
+                                    <li>
+                                        <a href="privacy-terms.html">PRIVACY & TERMS</a>
+                                    </li>
+                                    <li>
+                                        <a href="help.html">HELP</a>
+                                    </li>
+                                </ul>
+                                <ul class='social-media-icons'>
+                                    <li class='sml_sprite facebook'>
+                                        <a href='http://www.facebook.com/meisterdish' target="_blank"></a>
+                                    </li>
+                                    <li class='sml_sprite twitter'></li>
+                                    <li class='sml_sprite instagram'></li>
+                                    <li class='sml_sprite pintrest'></li>
+                                </ul>
+                            </div>
+                        </footer>
+                    </div>
+                    <ul id="menu" class="pullRight">
                         <li>
                             <a href="menu.html">MENU</a>
                         </li>
@@ -77,406 +130,402 @@
                         <li>
                             <a href="gift-cards-select.html">GIFTS</a>
                         </li>
-                        <li class="login-signup">
+                        <li class="bold login-signup">
                             <a href="login.html">LOG IN</a>
                         </li>
                         <li class='login-signup'>
-                            <a href="signup.html">SIGN UP</a>
+                            <a href="signup.html" class="btn btn-small-secondary">SIGN UP</a>
                         </li>
                         <li id="navbar-username" class="bold green">
                             <a href='account.html'></a>
                         </li>
                     </ul>
-                    <footer id="footer-navMenu">
-                        <div class="footerContent">
-                            <ul>
-                                <li>
-                                    <a href="contact-us.html">CONTACT</a>
-                                </li>
-                                <li>
-                                    <a href="privacy-terms.html">PRIVACY & TERMS</a>
-                                </li>
-                                <li>
-                                    <a href="">HELP</a>
-                                </li>
-                            </ul>
-                            <ul class='social-media-icons'>
-                                <li class='sml_sprite facebook'><a href='http://www.facebook.com/meisterdish' target="_blank"></a></li>
-                                <li class='sml_sprite twitter'></li>
-                                <li class='sml_sprite instagram'></li>
-                                <li class='sml_sprite pintrest'></li>
-                            </ul>
-                        </div>
-                    </footer>
                 </div>
-                <ul id="menu" class="pullRight">
-                    <li>
-                        <a href="menu.html">MENU</a>
-                    </li>
-                    <li>
-                        <a href="how-it-works.html">HOW IT WORKS</a>
-                    </li>
-                    <li>
-                        <a href="gift-cards-select.html">GIFTS</a>
-                    </li>
-                    <li class="bold login-signup">
-                        <a href="login.html">LOG IN</a>
-                    </li>
-                    <li class='login-signup'>
-                        <a href="signup.html" class="btn btn-small-secondary">SIGN UP</a>
-                    </li>
-                    <li id="navbar-username" class="bold green">
-                        <a href='account.html'></a>
-                    </li>
-                </ul>
-            </div>
-        </header>
-        <div id="page-container">
-            <div class="checkout-wrapper">
-                <div class="left-wrapper">
-                    <div class="delivery-info-container box-border">
-                        <div class="delivery-info">
-                            <div class="checkout-header">
-                                <span></span>
-                            </div>
-                            <div class="address-info"></div>
-                            <div class="address-info-guest">
-                                <div class="content">
-                                    <span class="content-heading have-account">Do you have an account? <a href='login.html' class='green'>Log In here</a></span>
-                                    <form id="guest-address-info" novalidate="novalidate">
-                                        <div class="section1">
-                                            <div class="forminput-wrapper">
-                                                <label class="body-text-small">First Name</label>
-                                                <input type="text" name="firstname" class="popup-input">
-                                            </div>
-                                            <div class="forminput-wrapper">
-                                                <label class="body-text-small">Last Name</label>
-                                                <input type="text" name="lastname" class="popup-input">
-                                            </div>
-                                        </div>
-                                        <div class="section2">
-                                            <div class="forminput-wrapper">
-                                                <label class="body-text-small">Email</label>
-                                                <input type="email" name="email" class="popup-input" id="guest-email">
-                                                <input type="hidden" id="hidden-pickupEmail" value="">
-                                            </div>
-                                            <div class="forminput-wrapper">
-                                                <label class="body-text-small">Delivery Address</label>
-                                                <input type="text" name="street" class="popup-input" id="address-line-1" style="
-                                                margin-bottom: 10px;">
-                                                <input type="text" name="building" class="popup-input" id="address-line-2">
-                                            </div>
-                                        </div>
-                                        <div class="section3">
-                                            <div class="forminput-wrapper state-selector-container">
-                                                <label class="body-text-small">State</label>
-                                                <div class="styled-select">
-                                                    <select class="state-selector" name="state">
-                                                        <option value=""></option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="forminput-wrapper state-selector-container">
-                                                <label class="body-text-small">City</label>
-                                                <input type="text" id='city-selector' name="city" class="popup-input">
-                                            </div>
-                                        </div>
-                                        <div class="section4">
-                                            <div class="forminput-wrapper">
-                                                <label class="body-text-small">Zip</label>
-                                                <input type="text" name="zip" class="popup-input">
-                                            </div>
-                                            <div class="forminput-wrapper">
-                                                <label class="body-text-small">Phone</label>
-                                                <input type="text" id='guest-phone'  placeholder='XXXXXXXXXX' name="phonenumber" class="popup-input">
-                                            </div>
-                                        </div>
-                                        <div class="button">
-                                            <input type="submit" id="add-guest-address" value="ADD" class="btn btn-small-primary medium-green">
-                                        </div>
-                                    </form>
+            </header>
+            <div id="page-container">
+                <div class="checkout-wrapper">
+                    <div class="left-wrapper">
+                        <div class="delivery-time-container box-border">
+                            <div class="delivery-order-container">
+                                <div class="checkout-header">
+                                    <span>YOUR ORDER</span>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="payment-info">
-                            <div class="checkout-header">
-                                <span>PAYMENT DETAILS</span>
-                            </div>
-                            <div class="payment-method-container">
                                 <div class="contents">
-                                    <div class="accepted-cards-wrapper">
-                                        <label class="body-text-small">Accepted cards</label>
-                                        <div class="accepted-cards-list">
-                                            <img class='accepted-cards' src="../images/master.png">
-                                            <img class='accepted-cards' src="../images/visa.png">
-                                            <img class='accepted-cards' src="../images/amex.png">
-                                            <img class='accepted-cards' src="../images/discover.png">
-                                            <img class='accepted-cards' src="../images/diners.png">
-                                            <img class='accepted-cards' src="../images/jcb.png">
+                                    <div class="order-list-container">
+                                        <div class="order-list-header">
+                                            <span class="content-heading">ITEMS</span>
+                                            <span class="content-heading">SERVINGS</span>
+                                            <span class="content-heading">PRICE</span>
                                         </div>
+                                        <!--                                        <table id="checkOutItems">
+                                                                                    <thead>
+                                                                                    <tr><th colspan="2">ITEMS</th><th>SERVINGS</th><th>PRICE</th><th></th></tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        
+                                                                                    </tbody>
+                                                                                </table>-->
+                                        <div class="emtpy-cart-message body-text-small"></div>
                                     </div>
-                                    <div class="credit-card-container">
-                                        <span class="content-heading">PAYING WITH CREDIT CARD</span>
-                                        <div class="saved-cards"></div>
-                                    </div>
-                                    <span class="change-address-payment" id="change-payment-method">CHANGE PAYMENT METHOD</span>
                                 </div>
                             </div>
-                            <div class="payment-method-guest-container">
-                                <div class="content">
-                                    <div class="accepted-cards-wrapper">
-                                        <label class="body-text-small">Accepted cards</label>
-                                        <div class="accepted-cards-list">
-                                            <img class='accepted-cards' src="../images/master.png">
-                                            <img class='accepted-cards' src="../images/visa.png">
-                                            <img class='accepted-cards' src="../images/amex.png">
-                                            <img class='accepted-cards' src="../images/discover.png">
-                                            <img class='accepted-cards' src="../images/diners.png">
-                                            <img class='accepted-cards' src="../images/jcb.png">
+                            <div class="time-container ">
+                                <div class="checkout-header">
+                                    <span>PICKUP OR DELIVERY</span>
+                                </div>
+                                <div class="contents contents-time-date">
+                                    <div class="select-delivery-method">
+                                        <div class="pickup">
+                                            <input type="radio" name="delivery-method" data-type='pickup' id="pickup-radio" class="checkbox-green">
+                                            <label for="pickup-radio">PICKUP</label>
+                                        </div>
+                                        <div class="delivery">
+                                            <input type="radio" checked="checked" class="checkbox-green" name="delivery-method" data-type='delivery' id="delivery-radio">
+                                            <label for="delivery-radio">DELIVERY</label>
                                         </div>
                                     </div>
-                                    <div class="pay-by-credit-container">
-                                        <form id="pay-form" action="" method="POST" autocomplete='off'>
-                                            <div class="forminput-wrapper">
-                                                <label class="body-text-small">Card Holder Name</label>
-                                                <input type="text" name="nameOnCard" class="popup-input" id="name-on-card">
-                                            </div>
-                                            <div class="forminput-wrapper">
-                                                <label class="body-text-small">Credit card number</label>
-                                                <input style="display:none" type="text" name="fakeusernameremembered"/>
-                                                <input type="text" autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number" name="cardnumber">
-                                            </div>
-                                            <div class="forminput-wrapper">
-                                                <label class="body-text-small">CVV</label>
-                                                <input style="display:none" type="password" name="fakepasswordremembered"/>
-                                                <input type="password" size="4" data-stripe="cvc" class="popup-input" id="cvv-number" name="cvv">
-                                            </div>
-                                            <div class="forminput-wrapper">
-                                                <label class="body-text-small expiryDate-label">Expiry Date</label>
-                                                <div class="styled-select">
-                                                    <select name="expiryMonth" id="ExpMonth" data-stripe="exp-month">
-                                                        <option value=""></option>
-                                                        <option value="01">JAN</option>
-                                                        <option value="02">FEB</option>
-                                                        <option value="03">MAR</option>
-                                                        <option value="04">APR</option>
-                                                        <option value="05">MAY</option>
-                                                        <option value="06">JUN</option>
-                                                        <option value="07">JUL</option>
-                                                        <option value="08">AUG</option>
-                                                        <option value="09">SEP</option>
-                                                        <option value="10">OCT</option>
-                                                        <option value="11">NOV</option>
-                                                        <option value="12">DEC</option>
-                                                    </select>
+                                    <div class="today-content">
+                                        <span class="content-heading"></span>
+                                        <p class='shop-status body-text-big'>Closed for the day.</p>
+                                        <input type="button" data-slot='slot1' data-hr='16' value="4-5pm" class="checkout-time-button set-time-button">
+                                        <input type="button" data-slot='slot2' data-hr='17' value="5-6pm" class="checkout-time-button set-time-button">
+                                        <input type="button" data-slot='slot3' data-hr='18' value="6-7pm" class="checkout-time-button set-time-button">
+                                        <input type="button" data-slot='slot4' data-hr='19' value="7-8pm" class="checkout-time-button set-time-button">
+                                        <input type="button" data-slot='slot5' data-hr='20' value="8-9pm" class="checkout-time-button set-time-button">
+                                    </div>
+                                    <div class="week-content">
+                                        <span class="content-heading"></span>
+                                        <div class="time-content">
+                                            <input type="button" data-slot='slot1' data-hr='16' value="4-5pm" class="checkout-time-button set-time-button">
+                                            <input type="button" data-slot='slot2' data-hr='17' value="5-6pm" class="checkout-time-button set-time-button">
+                                            <input type="button" data-slot='slot3' data-hr='18' value="6-7pm" class="checkout-time-button set-time-button">
+                                            <input type="button" data-slot='slot4' data-hr='19' value="7-8pm" class="checkout-time-button set-time-button">
+                                            <input type="button" data-slot='slot5' data-hr='20' value="8-9pm" class="checkout-time-button set-time-button">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pickup-content">
+                                    <span>
+                                        OUR ADDRESS IS <b>218 EAST 81st ST, 10028</b>
+                                    </span>
+                                    <a class='google-maps-link' target='_blank' id='google-maps-link' href=''><b>OPEN IN GOOGLE MAPS</b></a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="delivery-info-container box-border">
+                            <div class="delivery-info">
+                                <div class="checkout-header">
+                                    <span></span>
+                                </div>
+                                <div class="address-info"></div>
+                                <div class="address-info-guest">
+                                    <div class="content">
+                                        <span class="content-heading have-account">Do you have an account? <a href='login.html' class='green'>Log In here</a></span>
+                                        <form id="guest-address-info" novalidate="novalidate">
+                                            <div class="section1">
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small">First Name<span class="mandatory">*</span></label>
+                                                    <input type="text" name="firstname" class="popup-input">
+                                                </div>
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small">Last Name<span class="mandatory">*</span></label>
+                                                    <input type="text" name="lastname" class="popup-input">
                                                 </div>
                                             </div>
-                                            <span class="div">/</span>
-                                            <div class="forminput-wrapper">
-                                                <div class="styled-select">
-                                                    <select id="ExpYear" data-stripe="exp-year" name="expiryYear">
-                                                        <option value=""></option>
-                                                    </select>
+                                            <div class="section2">
+                                                <div class="forminput-wrapper" id="companyWrapper">
+                                                    <label class="body-text-small">Company Name</label>
+                                                    <input type="text" name="company" class="popup-input" id="companyName">
+                                                    <input type="hidden" id="hidden-companyName" value="">
+                                                </div>
+
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small">Delivery Address<span class="mandatory">*</span></label>
+                                                    <input type="checkbox" value="Business" id="business" class="regular-checkbox">
+                                                    <label for="business"  class="body-text-small">Business</label>
+                                                    <input type="text" name="street" class="popup-input" id="address-line-1" style="
+                                                           margin-bottom: 10px;">
+                                                </div>
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small">Suit/Apt</label>
+                                                    <input type="text" class="popup-input apartment" style="
+                                                           margin-bottom: 10px;">
+                                                </div>
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small">Email<span class="mandatory">*</span></label>
+                                                    <input type="email" name="email" class="popup-input" id="guest-email">
+                                                    <input type="hidden" id="hidden-pickupEmail" value="">
                                                 </div>
                                             </div>
-                                            <div class="forminput-wrapper">
-                                                <label class="body-text-small">Billing zip</label>
-                                                <input type="text" name="zip" class="popup-input" id="billing-zip">
+                                            <div class="section3">
+                                                <div class="forminput-wrapper state-selector-container">
+                                                    <label class="body-text-small">State<span class="mandatory">*</span></label>
+                                                    <div class="styled-select">
+                                                        <select class="state-selector" name="state">
+                                                            <option value=""></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="forminput-wrapper state-selector-container">
+                                                    <label class="body-text-small">City<span class="mandatory">*</span></label>
+                                                    <input type="text" id='city-selector' name="city" class="popup-input">
+                                                </div>
                                             </div>
-                                            <!-- <button id='credit-card-submit' type="submit"></button> -->
+                                            <div class="section4">
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small">Zip<span class="mandatory">*</span></label>
+                                                    <input type="text" name="zip" class="popup-input">
+                                                </div>
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small">Phone<span class="mandatory">*</span></label>
+                                                    <input type="text" id='guest-phone' placeholder='XXXXXXXXXX' name="phonenumber" class="popup-input">
+                                                </div>
+                                            </div>
                                             <div class="button">
-                                                <input type="checkbox" name="save-card-details" id="save-credit-card"><span>Save card details?</span>
+                                                <input type="submit" id="add-guest-address" value="ADD" class="btn btn-small-primary medium-green">
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
+                            <div class="payment-info">
+                                <div class="checkout-header">
+                                    <span>PAYMENT DETAILS</span>
+                                </div>
+                                <div class="payment-method-container">
+                                    <div class="contents">
+                                        <div class="accepted-cards-wrapper">
+                                            <label class="body-text-small">Accepted cards</label>
+                                            <div class="accepted-cards-list">
+                                                <img class='accepted-cards' src="../images/master.png">
+                                                <img class='accepted-cards' src="../images/visa.png">
+                                                <img class='accepted-cards' src="../images/amex.png">
+                                                <img class='accepted-cards' src="../images/discover.png">
+                                                <img class='accepted-cards' src="../images/diners.png">
+                                                <img class='accepted-cards' src="../images/jcb.png">
+                                            </div>
+                                        </div>
+                                        <div class="credit-card-container">
+                                            <span class="content-heading">PAYING WITH CREDIT CARD</span>
+                                            <div class="saved-cards"></div>
+                                        </div>
+                                        <span class="change-address-payment" id="change-payment-method">ADD/CHANGE PAYMENT METHOD</span>
+                                    </div>
+                                </div>
+                                <div class="payment-method-guest-container">
+                                    <div class="content">
+                                        <div class="accepted-cards-wrapper">
+                                            <label class="body-text-small">Accepted cards</label>
+                                            <div class="accepted-cards-list">
+                                                <img class='accepted-cards' src="../images/master.png">
+                                                <img class='accepted-cards' src="../images/visa.png">
+                                                <img class='accepted-cards' src="../images/amex.png">
+                                                <img class='accepted-cards' src="../images/discover.png">
+                                                <img class='accepted-cards' src="../images/diners.png">
+                                                <img class='accepted-cards' src="../images/jcb.png">
+                                            </div>
+                                        </div>
+                                        <div class="pay-by-credit-container">
+                                            <form id="pay-form" action="" method="POST" autocomplete='off'>
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small">Card Holder Name</label>
+                                                    <input type="text" name="nameOnCard" class="popup-input" id="name-on-card" data-stripe="name" maxlength="26">
+                                                </div>
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small">Credit card number</label>
+                                                    <input style="display:none" type="text" name="fakeusernameremembered" />
+                                                    <input type="text" autocomplete="off" size="20" data-stripe="number" class="popup-input" id="card-number" name="cardnumber">
+                                                </div>
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small">CVV</label>
+                                                    <input style="display:none" type="password" name="fakepasswordremembered" />
+                                                    <input type="password" size="4" data-stripe="cvc" class="popup-input" id="cvv-number" name="cvv">
+                                                </div>
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small expiryDate-label">Expiry Date</label>
+                                                    <div class="styled-select">
+                                                        <select name="expiryMonth" id="ExpMonth" data-stripe="exp-month">
+                                                            <option value=""></option>
+                                                            <option value="01">JAN</option>
+                                                            <option value="02">FEB</option>
+                                                            <option value="03">MAR</option>
+                                                            <option value="04">APR</option>
+                                                            <option value="05">MAY</option>
+                                                            <option value="06">JUN</option>
+                                                            <option value="07">JUL</option>
+                                                            <option value="08">AUG</option>
+                                                            <option value="09">SEP</option>
+                                                            <option value="10">OCT</option>
+                                                            <option value="11">NOV</option>
+                                                            <option value="12">DEC</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <span class="div">/</span>
+                                                <div class="forminput-wrapper">
+                                                    <div class="styled-select">
+                                                        <select id="ExpYear" data-stripe="exp-year" name="expiryYear">
+                                                            <option value=""></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="forminput-wrapper">
+                                                    <label class="body-text-small">Billing zip</label>
+                                                    <input type="text" name="zip" class="popup-input" id="billing-zip">
+                                                </div>
+                                                <div class="button" id="firstCreditCardBtn">
+                                                    <input type="submit" id="saveFirstCreditCard" value="ADD" class="btn btn-small-primary medium-green">
+                                                </div>
+                                                <div class="button">
+                                                    <input type="checkbox" name="save-card-details" id="save-credit-card"><span>Save card details?</span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
-                    <div class="delivery-time-container box-border">
-                        <div class="time-container ">
+                    <div class="right-wrapper">
+                        <div class="receipt-container">
                             <div class="checkout-header">
-                                <span>PICKUP OR DELIVERY</span>
-                            </div>
-                            <div class="contents contents-time-date">
-                                <div class="select-delivery-method">
-                                    <div class="pickup">
-                                        <input type="radio" name="delivery-method" data-type='pickup' id="pickup-radio" class="checkbox-green">
-                                        <label for="pickup-radio">PICKUP</label>
-                                    </div>
-                                    <div class="delivery">
-                                        <input type="radio" checked="checked" class="checkbox-green" name="delivery-method" data-type='delivery' id="delivery-radio">
-                                        <label for="delivery-radio">DELIVERY</label>
-                                    </div>
-                                </div>
-                                <div class="today-content">
-                                    <span class="content-heading"></span>
-                                    <p class='shop-status body-text-big'>Closed for the day.</p>
-                                    <input type="button" data-hr='16' value="4-5pm" class="checkout-time-button set-time-button">
-                                    <input type="button" data-hr='17' value="5-6pm" class="checkout-time-button set-time-button">
-                                    <input type="button" data-hr='18' value="6-7pm" class="checkout-time-button set-time-button">
-                                    <input type="button" data-hr='19' value="7-8pm" class="checkout-time-button set-time-button">
-                                    <input type="button" data-hr='20' value="8-9pm" class="checkout-time-button set-time-button">
-                                </div>
-                                <div class="week-content">
-                                    <span class="content-heading"></span>
-                                    <div class="time-content">
-                                        <input type="button" data-hr='16' value="4-5pm" class="checkout-time-button set-time-button">
-                                        <input type="button" data-hr='17' value="5-6pm" class="checkout-time-button set-time-button">
-                                        <input type="button" data-hr='18' value="6-7pm" class="checkout-time-button set-time-button">
-                                        <input type="button" data-hr='19' value="7-8pm" class="checkout-time-button set-time-button">
-                                        <input type="button" data-hr='20' value="8-9pm" class="checkout-time-button set-time-button">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pickup-content">
-                                <span>
-                                    OUR ADDRESS IS <b>218 EAST 81st ST, 10028</b>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="delivery-order-container">
-                            <div class="checkout-header">
-                                <span>YOUR ORDER</span>
+                                <span>RECEIPT</span>
                             </div>
                             <div class="contents">
-                                <div class="order-list-container">
-                                    <div class="order-list-header">
-                                        <span class="content-heading">ITEMS</span>
-                                        <span class="content-heading">SERVINGS</span>
-                                        <span class="content-heading">PRICE</span>
+                                <div class="items-container">
+                                    <span class="content-heading">ITEMS</span>
+                                    <div class="inner-content body-text-small">
+                                        <span>Items<span class='item-count'></span></span>
+                                        <span class='total-item-cost'>$0.00</span>
                                     </div>
-                                    <div class="emtpy-cart-message body-text-small"></div>
+                                    <div class="inner-content body-text-small">
+                                        <span>Delivery</span>
+                                        <span class='total-delivery-cost'>$0.00</span>
+                                    </div>
+                                    <div class="inner-content body-text-small">
+                                        <span>Tax</span>
+                                        <span class='total-tax-cost'>$0.00</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="right-wrapper">
-                    <div class="receipt-container">
-                        <div class="checkout-header">
-                            <span>RECEIPT</span>
-                        </div>
-                        <div class="contents">
-                            <div class="items-container">
-                                <span class="content-heading">ITEMS</span>
-                                <div class="inner-content body-text-small">
-                                    <span>Items<span class='item-count'></span></span>
-                                    <span class='total-item-cost'></span>
+                                <div class="driver-tip-container">
+                                    <span class="content-heading">DRIVER TIP</span>
+                                    <div class="inner-content body-text-small">
+                                        <form id="tip-form">
+                                            <div class="tip-input-container">
+                                                <input class="driver-tip popup-input" type="number" value="0" name="tip" min="0" max="1000" step="0.01" dataLength="4"/>
+                                                <!--<input type="number" name="tip" min="0" max="100" step="10" value="30" class="popup-input driver-tip">-->
+                                            </div>
+                                        </form>
+                                        <span class='driver-tip-display'>$0.00</span>
+                                    </div>
                                 </div>
-                                <div class="inner-content body-text-small">
-                                    <span>Delivery</span>
-                                    <span class='total-delivery-cost'>$2.95</span>
+                                <div class="gift-card-container">
+                                    <span class="content-heading" id="is-gift-card">GIFT CARD?</span>
+                                    <div class="isPromocode-wrapper">
+                                        <input type="text" id="promo-gift-input" class="popup-input" placeholder="Enter code">
+                                        <input type="button" class="btn btn-small-primary medium-green" id="apply-promo-gift" value="APPLY">
+                                        <div class="promo-validation-message"></div>
+                                    </div>
+                                    <hr>
                                 </div>
-                                <div class="inner-content body-text-small">
-                                    <span>Tax</span>
-                                    <span class='total-tax-cost'></span>
+                                <div class="discount-container body-text-small">
+                                    <input type="hidden" id="hidden-credit" value="0">
+                                    <span>Applied Credit</span>
+                                    <span class="discount-amount">$0.00</span>
                                 </div>
-                            </div>
-                            <div class="driver-tip-container">
-                                <span class="content-heading">DRIVER TIP</span>
-                                <div class="inner-content body-text-small">
-                                    <form id="tip-form">
-                                        <div class="tip-input-container">
-                                            <input class="driver-tip popup-input" type="text" value="5" name="tip" />
-                                        </div>
-                                    </form>
-                                    <span class='driver-tip-display'>$5.00</span>
+                                <div class="total-container">
+                                    <span>TOTAL</span>
+                                    <span class='total-cost'>$0.00</span>
                                 </div>
-                            </div>
-                            <div class="gift-card-container">
-                                <span class="content-heading" id="is-gift-card">GIFT CARD?</span>
-                                <div class="isPromocode-wrapper">
-                                    <input type="text" id="promo-gift-input" class="popup-input" placeholder="Enter code">
-                                    <input type="button" class="btn btn-small-primary medium-green" id="apply-promo-gift" value="APPLY">
-                                    <div class="promo-validation-message"></div>
-                                </div>
-                                <hr>
-                            </div>
-                            <div class="discount-container body-text-small">
-                                <input type="hidden" id="hidden-credit" value="0">
-                                <span>Applied Credit</span>
-                                <span class="discount-amount">$0.00</span>
-                            </div>
-                            <div class="total-container">
-                                <span>TOTAL</span>
-                                <span class='total-cost'></span>
-                            </div>
-                            <div class="instruction-container">
-                                <span class="content-heading">DRIVER INSTRUCTIONS</span>
-                                <textarea placeholder="Anything that might help our driver to get to you faster?" id="driver-description"></textarea>
-                                <div style="width:100%;text-align:center">
-                                    <a href="#" class="btn btn-small-primary medium-green" id="place-order">PLACE ORDER</a>
+                                <div class="instruction-container">
+                                    <span class="content-heading">DRIVER INSTRUCTIONS</span>
+                                    <textarea placeholder="Anything that might help our driver to get to you faster?" id="driver-description"></textarea>
+                                    <div style="width:100%;text-align:center">
+                                        <a href="#" class="btn btn-small-primary medium-green" id="place-order">PLACE ORDER</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <span class="caption">
-                        By placing your order, you agree to our terms and conditions
-                    </span>
+                            By placing your order, you agree to our terms of use.
+                        </span>
                     </div>
                 </div>
-            </div>
-            <div class="popup-message">
-                <span></span>
-            </div>
-            <div class="popup-wrapper">
-                <div class="bk-overlay"></div>
-                <div class="popup">
-                    <div class="header"></div>
-                    <div class="popup-container">
-                        <div class="content">
-                            <span>SOMTHING WENT WRONG</span>
-                        </div>
-                        <div class="button close-container">
-                            <a href="#!" class="btn btn-small-secondary" id="close">CLOSE</a>
-                        </div>
-                        <div class="button ok-container">
-                            <a href="#!" class="btn btn-small-secondary" id="ok">OK</a>
+                <div class="popup-message">
+                    <span></span>
+                </div>
+                <div class="popup-wrapper">
+                    <div class="bk-overlay"></div>
+                    <div class="popup">
+                        <div class="header"></div>
+                        <div class="popup-container">
+                            <div class="content">
+                                <span>SOMTHING WENT WRONG</span>
+                            </div>
+                            <div class="button close-container">
+                                <a href="#!" class="btn btn-small-secondary" id="close">CLOSE</a>
+                            </div>
+                            <div class="button ok-container">
+                                <a href="#!" class="btn btn-small-secondary" id="ok">OK</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="address-payment-list-popup">
-                <div class="bk-overlay"></div>
-                <div class="popup">
-                    <div class="header">SELECT YOUR DELIVERY ADDRESS</div>
-                    <div class="popup-container">
+                <div class="address-payment-list-popup">
+                    <div class="bk-overlay"></div>
+                    <div class="popup">
+                        <div class="header">SELECT YOUR DELIVERY ADDRESS</div>
+                        <div class="popup-container">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="addresspopup-wrapper">
-                <div class="bk-overlay"></div>
-                <div class="addresspopup">
-                    <div class="header">ADD A NEW ADDRESS
-                        <img src="../images/cross_black.png" id="close-new-address-form">
-                    </div>
-                    <div class="container">
-                        <form id="new-address-form" novalidate="novalidate">
+                <div class="addresspopup-wrapper">
+                    <div class="bk-overlay"></div>
+                    <div class="addresspopup">
+                        <div class="header">ADD A NEW ADDRESS
+                            <img src="../images/cross-black.png" id="close-new-address-form">
+                        </div>
+                        <div class="container">
+                            <form id="new-address-form" novalidate="novalidate">
                                 <div class="section1">
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">First Name</label>
+                                        <label class="body-text-small">First Name<span class="mandatory">*</span></label>
                                         <input type="text" name="firstname" class="popup-input">
                                     </div>
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">Last Name</label>
+                                        <label class="body-text-small">Last Name<span class="mandatory">*</span></label>
                                         <input type="text" name="lastname" class="popup-input">
                                     </div>
                                 </div>
                                 <div class="section2">
+                                    <div class="forminput-wrapper" id="companySection">
+                                        <label class="body-text-small">Company Name</label>
+                                        <input type="text" name="company" class="popup-input" id="companyName">
+                                        <input type="hidden" id="hidden-companyName" value="">
+                                    </div>
+
+
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">Email</label>
-                                        <input type="email" name="email" class="popup-input">
+                                        <label class="body-text-small">Delivery Address<span class="mandatory">*</span></label>
+                                        <input type="checkbox" value="Business" id="businessCheckbox" class="regular-checkbox">
+                                        <label for="businessCheckbox" class="body-text-small">Business</label>
+                                        <input type="text" name="street" class="popup-input" id="address-line-1" style="
+                                               margin-bottom: 10px;">
                                     </div>
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">Delivery Address</label>
-                                        <input type="text" name="street" class="popup-input" id="address-line-1" style="
-                                        margin-bottom: 10px;">
-                                        <input type="text" name="building" class="popup-input" id="address-line-2">
+                                        <label class="body-text-small">Suit/Apt</label>
+                                        <input type="text" class="popup-input apartment" style="margin-bottom: 10px;">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Email<span class="mandatory">*</span></label>
+                                        <input type="email" name="email" class="popup-input">
                                     </div>
                                 </div>
                                 <div class="section3">
                                     <div class="forminput-wrapper state-selector-container">
-                                        <label class="body-text-small">State</label>
+                                        <label class="body-text-small">State<span class="mandatory">*</span></label>
                                         <div class="styled-select">
                                             <select class="state-selector" name="state">
                                                 <option value=""></option>
@@ -484,17 +533,17 @@
                                         </div>
                                     </div>
                                     <div class="forminput-wrapper state-selector-container">
-                                        <label class="body-text-small">City</label>
+                                        <label class="body-text-small">City<span class="mandatory">*</span></label>
                                         <input type="text" id='city-selector' name="city" class="popup-input">
                                     </div>
                                 </div>
                                 <div class="section4">
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">Zip</label>
+                                        <label class="body-text-small">Zip<span class="mandatory">*</span></label>
                                         <input type="text" name="zip" class="popup-input">
                                     </div>
                                     <div class="forminput-wrapper">
-                                        <label class="body-text-small">Phone</label>
+                                        <label class="body-text-small">Phone<span class="mandatory">*</span></label>
                                         <input type="text" id='guest-phone' placeholder='XXXXXXXXXX' name="phonenumber" class="popup-input">
                                         <input type="hidden" id="hidden-pickupPhone" value="">
                                     </div>
@@ -502,22 +551,105 @@
                                 <div class="button">
                                     <input type="submit" id="save-new-address" value="ADD" class="btn btn-small-primary medium-green">
                                 </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="loading-indicator">
-                <div class="bk-overlay"></div>
-                <div class="loader">...loading</div>
+                <div class="credit-card-wrapper">
+                    <div class="bk-overlay"></div>
+                    <div class="credit-card-popup">
+                        <div class="header">ADD A CREDIT CARD<img src="../images/cross-black.png" id="close-new-credit-card-form">
+                        </div>
+                        <div class="container">
+                            <form id="payForm" autocomplete="off" novalidate="novalidate">
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Credit card number</label>
+                                    <input style="display:none" type="text" name="fakeusernameremembered">
+                                    <input type="text" name="cardnumber" autocomplete="off" size="20" data-stripe="number" class="popup-input ignore" id="card-number" maxlength="20">
+                                </div>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">CVV</label>
+                                    <input style="display:none" type="password" name="fakepasswordremembered">
+                                    <input type="password" name="cvv" size="4" autocomplete="off" data-stripe="cvc" class="popup-input" id="cvv-number" maxlength="4">
+                                </div>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Expiry Date</label>
+                                    <div class="styled-select">
+                                        <select name="expiryMonth" id="ExpMonth" data-stripe="exp-month">
+                                            <option value="1">JAN</option>
+                                            <option value="2">FEB</option>
+                                            <option value="3">MAR</option>
+                                            <option value="4">APR</option>
+                                            <option value="5">MAY</option>
+                                            <option value="6">JUN</option>
+                                            <option value="7">JUL</option>
+                                            <option value="8">AUG</option>
+                                            <option value="9">SEP</option>
+                                            <option value="10">OCT</option>
+                                            <option value="11">NOV</option>
+                                            <option value="12">DEC</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <span class="div">/</span>
+                                <div class="forminput-wrapper">
+                                    <div class="styled-select">
+                                        <select id="expiryYear" name="expiryYear" data-stripe="exp-year">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="forminput-wrapper">
+                                    <label class="body-text-small">Name</label>
+                                    <input type="text" maxlength="26" name="nameOnCard" class="popup-input" id="nameOnCard" data-stripe="name">
+                                </div>
+                                <div class="button-container">
+                                    <input type="submit" id="addPopupCreditCard" class="btn btn-small-extended medium-green update-add-credit-card" value="ADD">
+                                </div>
+                            </form>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </div>
+                </div>
+                <footer id="slider-footer">
+                    <div class="footerContent">
+                        <ul class='footer-list'>
+                            <li class='footer-non-social'>
+                                <a href="contact-us.html">Contact us</a>
+                            </li>
+                            <li class='footer-non-social'>
+                                <a href="privacy-terms.html">Privacy & Terms</a>
+                            </li>
+                            <li class='footer-non-social'>
+                                <a href="help.html">Help</a>
+                            </li>
+                            <li class='footer-non-social'>
+                                <p class='meisterdish-copyright'>&#169 2015 MEISTERDISH</p>
+                            </li>
+                            <li class='social-media-icons-parent'>
+                                <ul class='social-media-icons'>
+                                    <li class='sml_sprite facebook'>
+                                        <a href='http://www.facebook.com/meisterdish' target="_blank"></a>
+                                    </li>
+                                    <li class='sml_sprite twitter'></li>
+                                    <li class='sml_sprite instagram'></li>
+                                    <li class='sml_sprite pintrest'></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </footer>
+                <div class="loading-indicator">
+                    <div class="bk-overlay"></div>
+                    <div class="loader">...loading</div>
+                </div>
             </div>
         </div>
-    </div>
-    <script type="text/javascript" src='../js/jquery.min.js'></script>
-    <script type="text/javascript" src='../js/jquery.validate.min.js'></script>
-    <script type="text/javascript" src='../js/ajax_reusable.js'></script>
-    <script type="text/javascript" src='../js/common.js'></script>
-    <script type="text/javascript" src='../js/stripe_integration.js'></script>
-    <script type="text/javascript" src='../js/checkout.js'></script>
-</body>
+        <script type="text/javascript" src='../js/jquery.min.js'></script>
+        <script type="text/javascript" src='../js/jquery.validate.min.js'></script>
+        <script type="text/javascript" src='../js/ajax-reusable.js'></script>
+        <script type="text/javascript" src='../js/common.js'></script>
+        <script type="text/javascript" src='../js/stripe-integration.js'></script>
+        <script type="text/javascript" src='../js/checkout.js'></script>
+    </body>
 
 </html>

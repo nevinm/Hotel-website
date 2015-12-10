@@ -1,19 +1,16 @@
 var userDetails, currentPage = $("title").text(),
-    currentPageTitle,
-    clicked = 0;
-
+        currentPageTitle,
+        clicked = 0,
+        cartCount = 0;
 //If already logged in
 var $userentry = $('.login-signup');
-
-$(document).ready(function() {
-
+$(document).ready(function () {
     //Logout process
-    $("#logout,.mobile-logout").on('click', function() {
+    $("#logout,.mobile-logout").on('click', function () {
         logingOut();
     });
-    
     //FOOTER UPDATIONS /****START****/
-    $('.socialMedia').on("click", function() {
+    $('.socialMedia').on("click", function () {
         var clicked_id = $(this).attr('id');
         if (clicked_id == 'facebook') {
             window.open('http://www.facebook.com/meisterdish', '_blank');
@@ -28,75 +25,75 @@ $(document).ready(function() {
             window.open('http://pinterest.com/meisterdish', '_blank');
         }
     });
-
     //hide help link
-    $(".footer-list li.footer-non-social:nth-child(3)").hide();
-    $("#footer-navMenu ul").not('.social-media-icons').find('li:nth-child(3)').hide();
-
+//    $(".footer-list li.footer-non-social:nth-child(3)").hide();
+//    $("#footer-navMenu ul").not('.social-media-icons').find('li:nth-child(3)').hide();
     //hide social media icons
     $("ul.social-media-icons").find(".sml_sprite").not(".facebook").hide();
-
     //FOOTER UPDATIONS /****END****/
-
-    // &NAVMENU - RESPONSIVE
-    $('.icon-menu').on("click", function() {
-        clicked = 1;
+    $('.icon-menu').on("click", function () {
+        clicked = 1, leftMargin = 0;
         $('.navMenu').show();
+        if (window.innerWidth < 380) {
+            leftMargin = "80%";
+        } else {
+            leftMargin = "300px";
+        }
         $('#header').animate({
-                marginLeft: "80%"
-
-            })
-            // $("#page-container").css("position","fixed")
+            marginLeft: leftMargin
+        })
         $('#page-container').animate({
             marginLeft: "80%"
         });
-        setTimeout(function() {
+        setTimeout(function () {
             $('#page-container').hide();
         });
         $('.navMenu').animate({
             marginLeft: "0"
         });
-        setTimeout(function() {
+        setTimeout(function () {
             $('.icon-menu').addClass('icon-cancel').removeClass('icon-menu');
         }, 100);
-        if(currentPage == "menu"){
+        $(".logo-mobile").hide();
+        if (currentPage == "menu") {
             $(".menu-offer").hide();
-            $("#header").css("margin-top","0px");
+            $("#header").css("margin-top", "0px");
         }
     });
-    $(document).on('click', '.icon-cancel', function() {
+    $(document).on('click', '.icon-cancel', function () {
         clicked = 0;
         $('.navMenu').animate({
             marginLeft: "-80%"
         });
-        // $("#page-container").css("position","relative");
         $('#page-container').animate({
             marginLeft: "0px"
         });
-        setTimeout(function() {
+        setTimeout(function () {
             $('#page-container').show();
+            $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
         }, 700)
-
         $('#header').animate({
             marginLeft: "0px"
         });
-        setTimeout(function() {
-            $('.icon-cancel').addClass('icon-menu').removeClass('icon-cancel');
+        setTimeout(function () {
+            if (window.innerWidth < 1024 && window.innerWidth > 768) {
+                $(".logo-mobile").show();
+            }
         }, 600);
-        if(currentPage == "menu"){
-            setTimeout(function() {
+        if (currentPage == "menu") {
+            setTimeout(function () {
                 $(".menu-offer").show();
-                if(localStorage["loggedIn"] == "true"){
+                if (localStorage["loggedIn"] == "true") {
                     if ($(window).width() <= 767 && $(window).width() >= 320) {
-                        $("#header").css("margin-top","50px");
-                    }else{
-                        $("#header").css("margin-top","40px");
+                        $("#header").css("margin-top", "50px");
+                    } else {
+                        $("#header").css("margin-top", "40px");
                     }
                 }
-            }, 700);  
+            }, 700);
         }
     });
-    $(document).on('keydown', function(e) {
+    $(document).on('keydown', function (e) {
         var key = e.which;
         if (key == 13) // the enter key code
         {
@@ -130,10 +127,8 @@ $(document).ready(function() {
             }
         }
     });
-
     verifyAccount();
 });
-
 
 function checkLoggedIn() {
     if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
@@ -156,7 +151,8 @@ checkLoggedIn();
 function redirectIfLoggedIn() {
     if (localStorage['loggedIn'] == 'true') {
         window.location.href = '../index.html';
-    } else {}
+    } else {
+    }
 }
 
 function dollarConvert(value) {
@@ -168,12 +164,50 @@ function getHourCorrected(Hour) {
     return (("0" + Hour).slice(-2));
 }
 
+function returnDay(weekdaynumber) {
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[weekdaynumber];
+}
+
+//Number of iterations for the days required according to the date provided.
+function weekendRestrictionDayCount(date) {
+    dateCount = {
+        "firstDateCount": 0,
+        "secondDateCount": 0
+    };
+    if (date == '6') {
+        dateCount = {
+            "firstDateCount": 2,
+            "secondDateCount": 3
+        }
+    }
+    else if (date == '0') {
+        dateCount = {
+            "firstDateCount": 1,
+            "secondDateCount": 2
+        }
+    } else if (date == '5') {
+        dateCount = {
+            "firstDateCount": 0,
+            "secondDateCount": 3
+        }
+    }
+    else {
+        dateCount = {
+            "firstDateCount": 0,
+            "secondDateCount": 1
+        }
+    }
+    return dateCount;
+}
+
+
 // delivery_time : 04-28-2015 20:15:20
 function getCurrentDateTime(days) {
     var currentdate = new Date();
     currentdate.setDate(currentdate.getDate() + days);
     return datetime = ('0' + (currentdate.getMonth() + 1)).slice(-2) +
-        "-" + ('0' + currentdate.getDate()).slice(-2) + "-" + currentdate.getFullYear();
+            "-" + ('0' + currentdate.getDate()).slice(-2) + "-" + currentdate.getFullYear();
 }
 
 function getCurrentPageTitle() {
@@ -195,8 +229,8 @@ function stringToDate(date, format, delimiter) {
 
 function convertToEST(timeRecieved) {
     //EST
-    var offset = -4.0,
-        clientDate = new Date(timeRecieved);
+    var offset = 0,
+            clientDate = new Date(timeRecieved);
     utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
     serverDate = new Date(utc + (3600000 * offset));
     return serverDate;
@@ -204,49 +238,36 @@ function convertToEST(timeRecieved) {
 
 function getEstFormattedForWebService(time) {
     var hours = time.getHours(),
-        day = time.getDate(),
-        months = time.getMonth() + 1,
-        year = time.getFullYear();
-    var selectedDate = (('0' + (time.getMonth() + 1)).slice(-2) +
-        "-" + ('0' + time.getDate()).slice(-2) + "-" + time.getFullYear() + " " +
-        getHourCorrected(hours) + ":00:00").replace(/\-/g, "/");
+            day = time.getDate(),
+            months = time.getMonth() + 1,
+            year = time.getFullYear();
+    var selectedDate = (('0' + (time.getMonth() + 1)).slice(-2) + "-" + ('0' + time.getDate()).slice(-2) + "-" + time.getFullYear() + " " + getHourCorrected(hours) + ":00:00").replace(/\-/g, "/");
     return selectedDate;
 }
 
 function convertToMeridianTime(deliverytime) {
     var date = deliverytime.split(" ")[0],
-        time = deliverytime.split(" ")[1],
-        hours = parseInt(deliverytime.split(" ")[1].slice(0, -6)),
-        mintues = deliverytime.split(" ")[1].slice(3,-3),
-        meridian = hours > 12 ? "PM" : "AM",
-        hours12Hr = ((hours + 11) % 12 + 1),
-        formattedDate ={
-            "date" : deliverytime.split(" ")[0],
-            "time" : hours12Hr +":" + mintues + meridian
-        }
-
+            time = deliverytime.split(" ")[1],
+            hours = parseInt(deliverytime.split(" ")[1].slice(0, -6)),
+            mintues = deliverytime.split(" ")[1].slice(3, -3),
+            meridian = hours > 12 ? "PM" : "AM",
+            hours12Hr = ((hours + 11) % 12 + 1),
+            formattedDate = {
+                "date": deliverytime.split(" ")[0],
+                "time": hours12Hr + ":" + mintues + meridian
+            }
     return formattedDate;
 }
 
 function getCurrentDateMonth(days) {
     var currentdate = new Date(),
-        month = [];
+            month = [];
     currentdate.setDate(currentdate.getDate() + days);
-    month[0] = "January";
-    month[1] = "February";
-    month[2] = "March";
-    month[3] = "April";
-    month[4] = "May";
-    month[5] = "June";
-    month[6] = "July";
-    month[7] = "August";
-    month[8] = "September";
-    month[9] = "October";
-    month[10] = "November";
-    month[11] = "December";
-    var monthName = month[currentdate.getMonth()];
-
-    return dateMonth = ('0' + currentdate.getDate()).slice(-2) + " " + monthName;
+    month = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"];
+    var monthName = month[currentdate.getMonth()],
+            dayName = returnDay(currentdate.getDay());
+    return dateMonth = dayName + ", " + monthName + " " + ('0' + currentdate.getDate()).slice(-2);
 }
 
 function getStringAfterHash(url, symbol) {
@@ -259,16 +280,15 @@ function getStringAfterHash(url, symbol) {
 
 function getCurrentHourMin() {
     var currentdate = new Date(),
-        hours = currentdate.getHours(),
-        minutes = ("0" + currentdate.getMinutes()).slice(-2),
-        strTime = hours + ":" + minutes;
+            hours = currentdate.getHours(),
+            minutes = ("0" + currentdate.getMinutes()).slice(-2),
+            strTime = hours + ":" + minutes;
     return strTime;
 }
 
 function getMonthDate(currentDate) {
     return currentDate.replace(/\-/g, "/").substring(0, 5);
 }
-
 
 function getCurrentYear() {
     var currentdate = new Date();
@@ -282,10 +302,9 @@ function getDateTimeRequiredFormat(date) {
 function getParameterFromUrl(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
+            results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
-
 
 function getCurrentPage(firstChar, secondChar, url) {
     currentPage = url.substring(url.lastIndexOf(firstChar) + 1, url.lastIndexOf(secondChar));
@@ -296,23 +315,22 @@ function verifyAccount() {
     var verify_url = window.location.href;
     var search_verify = verify_url.indexOf("account_verify");
     var search_ve = verify_url.indexOf("email_verify");
-
     //email verification
     if (search_verify != -1 && search_verify != undefined) {
         var trueMessage = {
-                'message': "Account is verified, proceed to login."
-            }
+            'message': "Account is verified, proceed to login."
+        }
         var falseMessage = {
-                'message': "account is not verified."
-            }
+            'message': "account is not verified."
+        }
         var alreadyVerifiedMessage = {
-                'message': "Account already verified."
-            }
+            'message': "Account already verified."
+        }
         if (verify_url.split("?")[1].split("=")[1] == "true") {
             showPopup(trueMessage);
-        } else if(verify_url.split("&")[1].split("=")[0] == "error"){
+        } else if (verify_url.split("&")[1].split("=")[0] == "error") {
             showPopup(alreadyVerifiedMessage);
-        }else{
+        } else {
             showPopup(falseMessage);
         }
     }
@@ -331,12 +349,13 @@ function logingOut() {
     currentPage = $("title").text();
     if (currentPage == "Meisterdish - Admin") {
         window.location.href = 'index.html';
-    } else if (currentPage == "Meisterdish Home Page") {} else {
+    } else if (currentPage == "Meisterdish Home Page") {
+    } else {
         window.location.href = '../index.html';
     }
 }
 
-function ClearLocalStorage(){
+function ClearLocalStorage() {
     localStorage.removeItem('username');
     localStorage.removeItem('session_key');
     localStorage.removeItem('cartItems');
@@ -347,7 +366,6 @@ function ClearLocalStorage(){
     localStorage.removeItem('admin_role');
     localStorage.removeItem('referral_code');
 }
-
 //SHOW POPUP
 function showPopup(data) {
     var message = data.message;
@@ -357,15 +375,14 @@ function showPopup(data) {
         $("#close").addClass("session-expire-close");
     }
 }
-
 //SHOW POPUP
 function showSessionExpire(data) {
     var message = data.message;
     $('.popup-container .content span').text(message);
     $('.sessionexpire-wrapper').show();
 }
-
-$(document).on('click', '#close', function() {
+$(document).on('click', '#close', function () {
+    $('.popup-container').removeAttr("style");
     $('.popup-wrapper').hide();
     if (currentPage == "Meisterdish - Signup" || currentPage == "Meisterdish - Login") {
         if (localStorage['loggedIn'] == 'true' || localStorage['admin_loggedIn'] == 'true') {
@@ -381,20 +398,17 @@ $(document).on('click', '#close', function() {
         logingOut();
     }
 });
-
 //show Error popup
 function showErrorPopup(data) {
     var message = data.message;
     $('.popup-container .content span').text(message);
     $('.error-popup-wrapper').show();
-    $('#ok-button').on("click", function() {
+    $('#ok-button').on("click", function () {
         $('.error-popup-wrapper').hide();
     })
 }
-
-
 //JQuery Validation   
-$("form").each(function() {
+$("form").each(function () {
     $(this).validate({
         rules: {
             firstname: {
@@ -424,9 +438,9 @@ $("form").each(function() {
                 required: true,
                 minlength: 3,
             },
-            mealsubHeader:{
-                required : true,
-                minlength : 3,
+            mealsubHeader: {
+                required: true,
+                minlength: 3,
             },
             chef_name: {
                 required: true,
@@ -486,7 +500,7 @@ $("form").each(function() {
             },
             promocode: {
                 required: true,
-                maxlength: 8
+                maxlength: 9
             },
             giftcard: {
                 required: true,
@@ -497,10 +511,6 @@ $("form").each(function() {
                 maxlength: 8
             },
             zip: {
-                // required: true,
-                // number: true,
-                // minlength: 4,
-                // maxlength: 6,
                 zipcode: true
             },
             state: {
@@ -518,7 +528,11 @@ $("form").each(function() {
                 minlength: 2
             },
             available: {
-                required: true
+                required: true,
+                number: true,
+                minAmount: 0,
+                maxlength: 10,
+                even: true
             },
             category: {
                 required: true
@@ -554,7 +568,7 @@ $("form").each(function() {
             preperationtime: {
                 required: true
             },
-            savedtime:{
+            savedtime: {
                 required: true
             },
             tips_details: {
@@ -591,12 +605,12 @@ $("form").each(function() {
             },
             update_category: {
                 required: true,
-                minlength: 3
+                minlength: 5,
+                maxlength: 25
             },
             tip: {
-                required: true,
+//                required: true,
                 number: true,
-                maxAmount: 10,
                 minAmount: 0
             },
             order: {
@@ -610,9 +624,13 @@ $("form").each(function() {
             dailyvalue: {
                 number: true
             },
-            subject : {
-                minlength:3,
-                required:true,
+            subject: {
+                minlength: 3,
+                required: true,
+            },
+            promoCode: {
+//                equals: PROMO_CODE,
+                required: true
             }
         },
         messages: {
@@ -688,7 +706,7 @@ $("form").each(function() {
                 required: "Please enter prepared time"
             },
             savedtime: {
-                required: "Please enter prepared time"
+                required: "Please enter saved time"
             },
             dailyvalue: {
                 number: "Should be a number"
@@ -707,7 +725,7 @@ $("form").each(function() {
             mealname: "Enter a valid meal name.",
             mealsubHeader: "Enter valid meal sub header.",
             message: "Enter a message.",
-            chef_name: "Enter a valid chef name.",
+                    chef_name: "Enter a valid chef name.",
             mealdescription: "Meal description is not valid.",
             cvv: "provide a valid cvv.",
             url: "Enter valid url.",
@@ -717,71 +735,102 @@ $("form").each(function() {
             promocode: "Please enter valid promocode.",
             giftcard: "Please enter valid code.",
             tip: {
-                required: "Please enter tip",
-                number: "Enter a number less than 10.",
-                maxAmount: "Enter a number less than 10.",
-                minAmount: "Enter a number greater than 0."
+//                required: "Please enter tip",
+                number: "Enter an amount",
+                minAmount: "Enter valid tip",
+                max: "The maximum limit is 1000",
+            },
+            available: {
+                required: "Enter a valid number.",
+                number: "Enter a valid number.",
+                minAmount: "Enter a valid number.",
+                maxlength: "Count should not contain more than 10 digits.",
+                even: "Enter an even number."
+            },
+            promoCode: {
+//                equals: "Invalid promo code.",
+                required: "Please enter promo code."
             },
             giftcardname: "Enter valid giftcardname.",
             order: "Enter valid Order.",
-            subject: "Enter a valid subject." 
-                // image_upload:"Please select an image."
+            subject: "Enter a valid subject."
+                    // image_upload:"Please select an image."
         }
     });
 });
-
 if ($.validator) {
-    $.validator.addMethod('letters', function(value) {
-        return value.match(/^[- a-zA-Z]+$/);
+    $.validator.addMethod('letters', function (value) {
+//        debugger;
+//        /^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/
+///[\^<,\"@\/\{\}\(\)\*\$%\?=>:\|;#0-9]+/i
+        return value.match(/^[^\^<,\"@\/\{\}\(\)\*\$%\?=>:\|;#0-9]+$/);
     });
-    $.validator.addMethod('youtube_url', function(value) {
+    $.validator.addMethod('email', function (value) {
+        return value.match(/^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/);
+    });
+    $.validator.addMethod('youtube_url', function (value) {
         return value.match(/^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/);
     });
-    $.validator.addMethod('minAmount', function(value, el, param) {
+    $.validator.addMethod('minAmount', function (value, el, param) {
         return value >= param;
     });
-    $.validator.addMethod('maxAmount', function(value, el, param) {
+    $.validator.addMethod('maxAmount', function (value, el, param) {
         return value <= param;
     });
-    $.validator.addMethod('zipcode', function(value) {
+    $.validator.addMethod('zipcode', function (value) {
         return value.match(/\d{5}-\d{4}$|^\d{5}$/);
     });
-    $.validator.addMethod('decimal', function(value, element) {
+    $.validator.addMethod('decimal', function (value, element) {
         return this.optional(element) || /^[0-9,]+$/.test(value);
     });
-    $.validator.addMethod('positiveNumber', function(value) {
+    $.validator.addMethod('positiveNumber', function (value) {
         return Number(value) > 0;
     });
+    $.validator.addMethod('minlength', function (value, element, minlength) {
+        return this.optional(element) || value.trim().length >= minlength;
+    });
+    $.validator.addMethod('xss', function (value) {
+        var regExp = /<[^\w<>]*(?:[^<>"'\s]*:)?[^\w<>]*(?:\W*s\W*c\W*r\W*i\W*p\W*t|\W*f\W*o\W*r\W*m|\W*s\W*t\W*y\W*l\W*e|\W*s\W*v\W*g|\W*m\W*a\W*r\W*q\W*u\W*e\W*e|(?:\W*l\W*i\W*n\W*k|\W*o\W*b\W*j\W*e\W*c\W*t|\W*e\W*m\W*b\W*e\W*d|\W*a\W*p\W*p\W*l\W*e\W*t|\W*p\W*a\W*r\W*a\W*m|\W*i?\W*f\W*r\W*a\W*m\W*e|\W*b\W*a\W*s\W*e|\W*b\W*o\W*d\W*y|\W*m\W*e\W*t\W*a|\W*i\W*m\W*a?\W*g\W*e?|\W*v\W*i\W*d\W*e\W*o|\W*a\W*u\W*d\W*i\W*o|\W*b\W*i\W*n\W*d\W*i\W*n\W*g\W*s|\W*s\W*e\W*t|\W*i\W*s\W*i\W*n\W*d\W*e\W*x|\W*a\W*n\W*i\W*m\W*a\W*t\W*e)[^>\w])|(?:<\w[\s\S]*[\s\0\/]|['"])(?:formaction|style|background|src|lowsrc|ping|on(?:d(?:e(?:vice(?:(?:orienta|mo)tion|proximity|found|light)|livery(?:success|error)|activate)|r(?:ag(?:e(?:n(?:ter|d)|xit)|(?:gestur|leav)e|start|drop|over)?|op)|i(?:s(?:c(?:hargingtimechange|onnect(?:ing|ed))|abled)|aling)|ata(?:setc(?:omplete|hanged)|(?:availabl|chang)e|error)|urationchange|ownloading|blclick)|Moz(?:M(?:agnifyGesture(?:Update|Start)?|ouse(?:PixelScroll|Hittest))|S(?:wipeGesture(?:Update|Start|End)?|crolledAreaChanged)|(?:(?:Press)?TapGestur|BeforeResiz)e|EdgeUI(?:C(?:omplet|ancel)|Start)ed|RotateGesture(?:Update|Start)?|A(?:udioAvailable|fterPaint))|c(?:o(?:m(?:p(?:osition(?:update|start|end)|lete)|mand(?:update)?)|n(?:t(?:rolselect|extmenu)|nect(?:ing|ed))|py)|a(?:(?:llschang|ch)ed|nplay(?:through)?|rdstatechange)|h(?:(?:arging(?:time)?ch)?ange|ecking)|(?:fstate|ell)change|u(?:echange|t)|l(?:ick|ose))|m(?:o(?:z(?:pointerlock(?:change|error)|(?:orientation|time)change|fullscreen(?:change|error)|network(?:down|up)load)|use(?:(?:lea|mo)ve|o(?:ver|ut)|enter|wheel|down|up)|ve(?:start|end)?)|essage|ark)|s(?:t(?:a(?:t(?:uschanged|echange)|lled|rt)|k(?:sessione|comma)nd|op)|e(?:ek(?:complete|ing|ed)|(?:lec(?:tstar)?)?t|n(?:ding|t))|u(?:ccess|spend|bmit)|peech(?:start|end)|ound(?:start|end)|croll|how)|b(?:e(?:for(?:e(?:(?:scriptexecu|activa)te|u(?:nload|pdate)|p(?:aste|rint)|c(?:opy|ut)|editfocus)|deactivate)|gin(?:Event)?)|oun(?:dary|ce)|l(?:ocked|ur)|roadcast|usy)|a(?:n(?:imation(?:iteration|start|end)|tennastatechange)|fter(?:(?:scriptexecu|upda)te|print)|udio(?:process|start|end)|d(?:apteradded|dtrack)|ctivate|lerting|bort)|DOM(?:Node(?:Inserted(?:IntoDocument)?|Removed(?:FromDocument)?)|(?:CharacterData|Subtree)Modified|A(?:ttrModified|ctivate)|Focus(?:Out|In)|MouseScroll)|r(?:e(?:s(?:u(?:m(?:ing|e)|lt)|ize|et)|adystatechange|pea(?:tEven)?t|movetrack|trieving|ceived)|ow(?:s(?:inserted|delete)|e(?:nter|xit))|atechange)|p(?:op(?:up(?:hid(?:den|ing)|show(?:ing|n))|state)|a(?:ge(?:hide|show)|(?:st|us)e|int)|ro(?:pertychange|gress)|lay(?:ing)?)|t(?:ouch(?:(?:lea|mo)ve|en(?:ter|d)|cancel|start)|ime(?:update|out)|ransitionend|ext)|u(?:s(?:erproximity|sdreceived)|p(?:gradeneeded|dateready)|n(?:derflow|load))|f(?:o(?:rm(?:change|input)|cus(?:out|in)?)|i(?:lterchange|nish)|ailed)|l(?:o(?:ad(?:e(?:d(?:meta)?data|nd)|start)?|secapture)|evelchange|y)|g(?:amepad(?:(?:dis)?connected|button(?:down|up)|axismove)|et)|e(?:n(?:d(?:Event|ed)?|abled|ter)|rror(?:update)?|mptied|xit)|i(?:cc(?:cardlockerror|infochange)|n(?:coming|valid|put))|o(?:(?:(?:ff|n)lin|bsolet)e|verflow(?:changed)?|pen)|SVG(?:(?:Unl|L)oad|Resize|Scroll|Abort|Error|Zoom)|h(?:e(?:adphoneschange|l[dp])|ashchange|olding)|v(?:o(?:lum|ic)e|ersion)change|w(?:a(?:it|rn)ing|heel)|key(?:press|down|up)|(?:AppComman|Loa)d|no(?:update|match)|Request|zoom))[\s\0]*=/;
+        return value.test(regExp);
+    });
+    $.validator.addMethod('even', function (value) {
+        return (Number(value) % 2) === 0;
+    });
+    $.validator.addMethod('equals', function (value, element, comparator) {
+        return value.toUpperCase() === comparator;
+    });
 }
-
 //CartItemCount
 var CartItemCountCallback = {
-    success: function(data, textStatus) {
+    success: function (data, textStatus, callBack) {
         var numOfItems = JSON.parse(data);
         if (numOfItems.status == 1) {
             $('span.count').text(numOfItems.count);
         } else {
             $('span.count').text('0');
         }
+        if (callBack !== undefined) {
+            callBack();
+        }
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
 }
 
-function CartItemCount() {
+function CartItemCount(callBack) {
     var url = baseURL + 'get_cart_items_count/',
-        header = {
-            "session-key": localStorage["session_key"]
-        },
-        params = {};
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    params = {};
     data = JSON.stringify(params);
     var CartItemCountInstance = new AjaxHttpSender();
-    CartItemCountInstance.sendPost(url, header, data, CartItemCountCallback);
+    CartItemCountInstance.sendPost(url, header, data, CartItemCountCallback, callBack);
 }
-
 //Used to add form fields - paypal.
 function addFormFields(form, data) {
     if (data != null) {
-        $.each(data, function(name, value) {
+        $.each(data, function (name, value) {
             if (value != null) {
                 var input = $("<input></input>").attr("type", "hidden").attr("name", name).val(value);
                 form.append(input);
@@ -789,26 +838,28 @@ function addFormFields(form, data) {
         });
     }
 }
-
-$(window).resize(function() {
+$(window).resize(function () {
     mobileResponsive();
 });
-
-$(window).load(function() {
+$(window).load(function () {
     mobileResponsive();
 });
 
 function mobileResponsive() {
     if ($(window).width() <= 767 && $(window).width() >= 320) {
         if (clicked == 1) {
-            $('#page-container').css("margin-left", "80%");
-            $('#header').css("margin-left", "80%");
+            $('#page-container').css("margin-left", "300px");
+            $('#header').css("margin-left", "300px");
+            if ($(window).width() <= 380 && $(window).width() >= 320) {
+                $('#page-container').css("margin-left", "80%");
+                $('#header').css("margin-left", "80%");
+            }
         }
-        if(currentPage == "menu"){
-            if(localStorage["loggedIn"] == "true"){
+        if (currentPage == "menu") {
+            if (localStorage["loggedIn"] == "true") {
                 $('#page-container').css("margin-top", "125px");
                 $('#header').css("margin-top", "50px");
-            }else{
+            } else {
                 $('#page-container').css("margin-top", "75px");
                 $('#header').css("margin-top", "0px");
             }
@@ -817,11 +868,11 @@ function mobileResponsive() {
         $('#page-container').css("margin-left", "0px");
         $('#page-container').show();
         $('#header').css("margin-left", "0px");
-        if(currentPage == "menu"){
-            if(localStorage["loggedIn"] == "true"){
+        if (currentPage == "menu") {
+            if (localStorage["loggedIn"] == "true") {
                 $('#page-container').css("margin-top", "140px");
                 $('#header').css("margin-top", "40px");
-            }else{
+            } else {
                 $('#page-container').css("margin-top", "100px");
                 $('#header').css("margin-top", "0px");
             }
@@ -832,10 +883,12 @@ function mobileResponsive() {
 function convertToEmbedded(url) {
     var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
-
     if (match && match[2].length == 11) {
         return match[2];
     } else {
         return 'error';
     }
+}
+function setCartCount() {
+    cartCount = parseInt($(".count").text());
 }

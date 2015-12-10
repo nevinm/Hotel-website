@@ -1,24 +1,24 @@
 function loggingIn() {
     var url = baseURL + "login/",
-        header = {
-            "session-key": localStorage["session_key"]
-        };
+            header = {
+                "session-key": localStorage["session_key"]
+            };
     var username = $("#username").val(),
-        password = $("#password").val(),
-        remember = 1,
-        userData = {
-            "username": username,
-            "password": password,
-            "remember": remember
-        },
-        data = JSON.stringify(userData);
+            password = $("#password").val(),
+            remember = 1,
+            userData = {
+                "username": username,
+                "password": password,
+                "remember": remember
+            },
+    data = JSON.stringify(userData);
     var loginInstance = new AjaxHttpSender();
     loginInstance.sendPost(url, header, data, loginCallback);
 }
 
 //Login process
 var loginCallback = {
-    success: function(data, textStatus) {
+    success: function (data, textStatus) {
         userDetails = JSON.parse(data);
         if (userDetails.status == -1) {
             showPopup(userDetails);
@@ -35,7 +35,8 @@ var loginCallback = {
             checkReferredPage();
         }
     },
-    failure: function(XMLHttpRequest, textStatus, errorThrown) {}
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
 }
 
 function loginInit() {
@@ -50,17 +51,17 @@ function checkReferredPage() {
         window.location.href = 'checkout.html';
     } else if (referredPage == "giftcard-payment") {
         window.location.href = 'giftcard-payment.html';
-    } else if(referredPage == "contact-us"){
+    } else if (referredPage == "contact-us") {
         window.location.href = 'contact-us.html';
     } else {
         window.location.href = 'menu.html';
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     loginInit();
     //login form submit
-    $("#login-button").on('click', function(e) {
+    $("#login-button").on('click', function (e) {
         e.preventDefault();
         if ($('form').valid()) {
             loggingIn();

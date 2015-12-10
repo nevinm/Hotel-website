@@ -70,7 +70,7 @@ SLIDER
 }
 
 .sml_sprite {
-    background: url('../images/footer_sml_sprite.png') no-repeat;
+    background: url('../images/footer-sml-sprite.png') no-repeat;
     width: 38px;
     height: 35px;
     cursor: pointer;
@@ -99,12 +99,6 @@ SLIDER
 #slider-footer .social-media-icons .pintrest {
     background-position: -105px 0px;
 }
-
-.social-media-icons-parent {
-    /*    margin-top: -12px;
-    position: absolute;*/
-}
-
 .footer-non-social {
     margin-top: 12px;
 }
@@ -144,18 +138,22 @@ SLIDER
 \*==============================*/
 
 #section-what-is {
-    background: url(../images/homepageslider/homepage_1.jpg) 0% 50% no-repeat;
+    /*background: url(../images/homepageslider/homepage-main.jpg) 0% 50% no-repeat;*/
+    background: url(../images/home-header-bg.jpg) 0% 29% no-repeat;
     background-position: fixed;
     margin-top: 100px;
     background-size: cover;
     text-align: center;
+    background-color: #D8D8D8;
+    /*background-blend-mode: multiply;*/
 }
 
 #section-what-is .main-header {
-    font-family: 'BrandonGrotesque-Medium';
-    font-size: 40px;
-    letter-spacing: 2.5px;
+    font-family: 'BrandonText-Medium';
+    font-size: 35px;
+    letter-spacing: 0px;
     color: #6B6B6B;
+    padding: 10px;
 }
 
 #section-what-is .sub-header {
@@ -166,7 +164,7 @@ SLIDER
 }
 
 .main-header-container {
-    padding: 30px 0;
+    padding: 10px 26px;
 }
 
 .sub-header-container {
@@ -174,11 +172,15 @@ SLIDER
 }
 
 #section-what-is .slide-description,
-#section-zipcode .slide-description {
+#section-zipcode .slide-description,
+#sectionPromocode .slide-description{
     background: rgba(255, 255, 255, 0.8);
     max-width: 700px;
     border-radius: 5px;
     margin: 0 auto;
+    -webkit-box-shadow: inset 0px 0px 0px 1px rgba(211, 207, 207, 0.37);
+    -moz-box-shadow:inset 0px 0px 0px 1px rgba(211, 207, 207, 0.37);
+    box-shadow: inset 0px 0px 0px 1px rgba(211, 207, 207, 0.37);
 }
 
 .outer-slide-description {
@@ -187,11 +189,44 @@ SLIDER
     max-width: 720px;
     margin: 0 auto;
     border-radius: 5px;
+    -webkit-box-shadow: 0 3px 14px 0px rgba(211, 207, 207, 0.8);
+    -moz-box-shadow:0 3px 14px 0px rgba(211, 207, 207, 0.8);
+    box-shadow: 0 3px 14px 0px rgba(211, 207, 207, 0.8);
+}
+#section-what-is .outer-slide-description{
+    margin: 0 10%;
+    /*max-width: 518px;*/
+    max-width: 600px;
+}
+.main-header-ads{
+    margin-bottom: 10px;
+}
+.main-header-ads ul{
+    font-family: BrandonGrotesque-Bold;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #7E7E7E;
+    padding: 0px 12px;
+}
+.main-header-ads li{
+    list-style: none;
+    width: 33.33%;
+    float: left;
+    padding: 15px;
+    text-align: center;
+}
+.main-header-ads img{
+    height: 66px;
+    max-height: 66px;
 }
 
 .menu-button {
     margin-bottom: 30px;
-    padding: 0 40px;
+    padding: 7px 88px;
+    height: auto;
+    line-height: normal;
+    text-align: center;
+    font-size: 15px;
 }
 
 #section-what-is .section-logo img,
@@ -199,16 +234,19 @@ SLIDER
     display: none;
 }
 
-.meal-overlay {
+.meal-overlay,.sold-overlay {
     position: absolute;
-    height: 99%;
+    /*height: 99%;*/
     width: 100%;
     top: 0;
     left: 0;
+    bottom: 0;
     background-color: rgba(142, 198, 87, 0.65);
     display: none;
     border-radius: 4px;
-    cursor: pointer;
+}
+.sold-overlay{
+    background-color: rgba(199, 199, 199, 0.72)
 }
 
 p.upper-line {
@@ -266,7 +304,25 @@ p.lower-line {
 .removeItemButton:hover {
     background-color: #8EC657;
 }
-
+.meal-sub-description p{
+    border-bottom: 2px solid #A9D77B;
+    padding-bottom: 10px;
+}
+.meal-properties .cart-button-container{
+    width: 100%;
+    padding: 23px 0px;
+}
+.meal-properties .cart-button-container .btn{
+    width: 230px;
+    font-size: 16px;
+}
+.meal-properties .removeItemButton{
+    float:none;
+}
+#section-what-to-expect .button-container a:hover{
+    color: #A9D77B;
+    border:1px solid #A9D77B;
+}
 
 /*====================================*\
     &Section what is meisterdish
@@ -365,7 +421,7 @@ p.lower-line {
     padding: 60px 10px;
 }
 
-#section-zipcode {
+#section-zipcode, #sectionPromocode {
     box-shadow: inset 0 7px 9px -7px rgba(211, 207, 207, 0.8);
 }
 
@@ -413,6 +469,7 @@ p.upper-content,
 .meal-image {
     width: 40%;
     float: left;
+    min-height: 200px;
 }
 
 .meal-name {
@@ -426,8 +483,8 @@ p.upper-content,
 
 .meal-description-wrapper {
     width: 60%;
-    padding: 20px 30px;
-    float: left;
+    padding: 10px 30px;
+    float: right;
 }
 
 .meal-name p,
@@ -438,15 +495,26 @@ p.lower-content {
     font-size: 30px;
     color: #6B6B6B;
 }
+.meal-name p{
+    font-size: 34px;
+    letter-spacing: 1px;
+    font-family: 'BrandonGrotesque-Medium';
+}
 
 .meal-sub-description p,
 p.lower-content {
     letter-spacing: 1.5px;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 p.lower-content {
     text-align: center;
+}
+.ingredients-wrapper p.lower-content{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    letter-spacing: 1.5px;
 }
 
 p.upper-content {
@@ -461,29 +529,36 @@ p.upper-content {
 .details-content {
     width: 20%;
     float: left;
+    height: 85px;
 }
 
 .what-you-get-section {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     overflow: hidden;
+    padding-left: 22px;
 }
 
 .what-you-get-section p {
     font-family: 'BrandonGrotesque-Regular';
-    font-size: 24px;
+    /*font-size: 24px;*/
     letter-spacing: 1px;
     color: #6B6B6B;
-    text-align: center;
-    /*padding-bottom: 30px;*/
+    /*text-align: center;*/
 }
 
 .what-you-get-section .sub-heading {
     font-family: 'BrandonGrotesque-Medium';
+    font-size: 18px;
+    border-bottom: 1px solid #A9D77B;
 }
 
 .what-you-get-section .details-content {
-    width: 14.28%;
+    width: 25%;
+    display: inline-block;
+    /*float: none;*/
+    padding: 10px 0px;
+    height: auto;
 }
 
 .what-you-get-section .upper-content img {
@@ -492,6 +567,8 @@ p.upper-content {
 
 #section-what-to-expect .ingredients-wrapper {
     padding: 25px 0;
+    /*text-align: center;*/
+    width: 100%;
 }
 
 #section-what-to-expect .meal-properties {
@@ -500,19 +577,21 @@ p.upper-content {
 
 #section-what-to-expect .button-container {
     text-align: center;
-    width: 55%;
-    margin: 0 auto;
-    float: none;
+    width: 40%;
+    padding: 16px 0px;
 }
 
 #section-what-to-expect .button-container a {
-    width: 150px;
+    width: 100%;
+    border: 1px solid #CCC7C7;
+    background: #F1EDED;
 }
 
 .cart-button-container {
-    width: 33.33%;
+    width: 100%;
     float: left;
     text-align: center;
+    padding: 8px 0px;
 }
 
 .cart-button-container .btn {
@@ -521,17 +600,25 @@ p.upper-content {
 }
 
 .meal-type-description-icon {
-    max-width: 30px;
-    max-height: 30px;
+    max-width: 45px;
+    max-height: 45px;
 }
 
+/*==============================*\
+        &Section promocode
+\*==============================*/
 
+#sectionPromocode {
+    background: url(../images/homepageslider/promocode-bg.jpg) center center no-repeat;
+    background-position: fixed;
+    background-size: cover;
+}
 /*==============================*\
         &Section zip code
 \*==============================*/
 
 #section-zipcode {
-    background: url(../images/homepageslider/Map_UpperEastSide.png) center top no-repeat;
+    background: url(../images/homepageslider/map-uppereast-side.png) center top no-repeat;
     background-position: fixed;
     padding: 6% 0 0 0;
     background-size: cover;
@@ -541,7 +628,7 @@ p.upper-content {
     margin-top: -50px;
 }
 
-.zip-code-container {
+.zip-code-container,.promo-code-container {
     text-align: center;
     padding: 30px 0;
     position: relative;
@@ -549,7 +636,7 @@ p.upper-content {
     margin: 0 auto;
 }
 
-#zip-code {
+#zip-code,#promoCode {
     width: 100%;
     height: 45px;
     text-align: center;
@@ -562,12 +649,15 @@ p.upper-content {
     position: relative;
     width: 46%;
 }
-input#zip-code[type="text"] {
+input#zip-code[type="text"],#promoCode {
     font-size: 16px;
     font-family: 'BrandonGrotesque-Light';
+    /*text-transform: uppercase;*/
+}
+input#zip-code[type="text"]{
     text-transform: uppercase;
 }
-#zip-check{
+#zip-check,#promoCheck{
     width: 50%;
 }
 img#cancel,
@@ -629,7 +719,8 @@ img#close {
     left: 0;
 }
 
-label#zip-code-error {
+label#zip-code-error,
+label#promoCode-error{
     background: none;
     top: -26px;
     left: 0;
@@ -643,43 +734,92 @@ label#username-error {
     width: 70%;
 }
 
-#section-zipcode .header-hr {
+#section-zipcode .header-hr,
+#sectionPromocode .header-hr {
     width: 40%;
     margin-bottom: 20px;
 }
 
-#section-zipcode .slide-header {
+#section-zipcode .slide-header,
+#sectionPromocode .slide-header {
     padding: 30px;
 }
 
-#section-zipcode .zip-text {
+#section-zipcode .zip-text,
+#sectionPromocode .promo-text{
     margin-bottom: 20px;
 }
 
-#section-zipcode .zip-text p {
+#section-zipcode .zip-text p,
+#sectionPromocode .promo-text p{
     letter-spacing: 1.5px;
     font-family: 'BrandonGrotesque-Regular';
-    font-size: 15px;
+    font-size: 16px;
     color: #6B6B6B;
     text-align: center;
+}
+.meal-image-container img{
+    width: 100%;
+    vertical-align: top;
+    border-radius: 4px;
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
     #section-what-is .slide-description,
-    #section-zipcode .slide-description {
+    #section-zipcode .slide-description,
+    #sectionPromocode .slide-description{
         background: rgba(255, 255, 255, 1);
+    }
+    /*    #section-what-is .slide-description{
+            height: 664px;
+        }*/
+    #clear{
+        clear: both;
+    }
+    .main-header-ads li{
+        width: 100%;
     }
     #section-what-is-meisterdish .meisterdish-details {
         width: 100%;
+    }
+    .meal-name, .meal-sub-description{
+        padding-left: 0px;
+    }
+    .meal-description-wrapper{
+        padding: 20px;
+    }
+    .meal-name p {
+        font-size: 30px;
+    }
+    .meal-properties .cart-button-container{
+        padding: 10px 0px;
+    }
+    .what-you-get-section .sub-heading{
+        text-align: left;
+    }
+    .what-you-get-section,#section-what-to-expect .button-container {
+        /* width: 90%; */
+        padding: 0;
+    }
+    #section-what-to-expect .button-container{
+        width: 100% !important;
+        overflow: hidden;
+    }
+    #section-what-to-expect .ingredients-wrapper{
+        padding: 25px 0px 0px 0px;
     }
     #section-what-is .section-logo img {
         display: block;
         max-width: 80%;
         margin: 0 auto;
     }
-    .outer-slide-description {
+    .outer-slide-description{
         max-width: 80%;
         margin: 0 auto;
+    }
+    #section-what-is .outer-slide-description {
+        max-width: 100%;
+        margin: 0px 10px;
     }
     .section-logo {
         padding: 30px 0;
@@ -693,12 +833,18 @@ label#username-error {
     .mobile-menu-button {
         display: block;
         margin: 30px auto 0 auto !important;
-        width: 200px;
+        width: 235px;
+        padding: 7px;
+        height: auto;
+        line-height: normal;
+        text-align: center;
+        font-size: 15px;
     }
     .menu-button {
         display: none;
     }
-    #section-zipcode .slide-header {
+    #section-zipcode .slide-header,
+    #sectionPromocode .slide-header {
         font-size: 30px;
     }
     .meal-image {
@@ -707,6 +853,9 @@ label#username-error {
     }
     .details-content {
         width: 25%;
+    }
+    .meal-properties .details-content{
+        padding: 0px 0px 10px 0px;
     }
     .what-you-get-section .details-content {
         width: 25%;
@@ -725,30 +874,60 @@ label#username-error {
         font-size: 20px;
     }
     .meal-type-description-icon {
-        width: 20px;
+        /*width: 20px;*/
+        max-width: 35px;
+        max-height: 35px;
     }
     .meal-sub-description p,
     p.lower-content {
-        font-size: 17px;
+        font-size: 16px;
     }
     #section-what-to-expect .slide-description {
         padding: 0;
     }
-    .delivery-area-check-popup .popup-zip-fail, .zip-code-container {
+    .delivery-area-check-popup .popup-zip-fail,
+    .zip-code-container,
+    .promo-code-container{
         max-width: 300px;
         width: 80%;
     }
-    #zip-check{
+    #zip-check,#promoCheck{
         min-width: 0;
     }
-    input#zip-code[type="text"]{
+    input#zip-code[type="text"],#promoCode{
         font-size: 14px;
+    }
+    .meal-details{
+        padding: 15px 0px 0px 0px;
+    }
+    .main-header-container {
+        padding: 10px 5px;
+    }
+    #section-zipcode .outer-slide-description {
+        margin-top: auto;
+    }
+    .section.fp-table,#section-zipcode{
+        padding: 50px 0px;
+    }
+    #promoCode::-webkit-input-placeholder{
+        font-size: 12px;
+    }
+    #promoCode:-moz-placeholder{
+        font-size: 12px; 
+    }
+    #promoCode::-moz-placeholder{
+        font-size: 12px;
+    }
+    #promoCode:-ms-input-placeholder {
+        font-size: 12px;
     }
 }
 
 @media (min-width: 320px) and (max-width: 400px) {
     #zip-code,
-    #zip-check {
+    #zip-check,
+    #promoCode,
+    #promoCheck{
         margin: 0;
     }
     .meal-sub-description p,
@@ -758,7 +937,7 @@ label#username-error {
     p.upper-line {
         font-size: 35px;
     }
-    label#zip-code-error{
+    label#zip-code-error,label#promoCode-error{
         top: -33px;
     }
 }
@@ -780,16 +959,12 @@ label#username-error {
     #section-what-to-expect .slide-header {
         padding-bottom: 10px;
     }
-    #section-what-is-meisterdish .outer-slide-description,
-    #section-what-to-expect .outer-slide-description {
-        /*margin: 20px auto 0 auto;*/
-    }
-    .meal-name p {
-        /*font-size: 25px;*/
-    }
     .meal-sub-description p,
     p.lower-content {
         font-size: 18px;
+    }
+    p.lower-content {
+        font-size: 16px;
     }
     p.upper-content {
         font-size: 25px;
@@ -797,11 +972,7 @@ label#username-error {
     #section-what-to-expect .slide-description {
         padding: 10px;
     }
-    .what-you-get-section .sub-heading {
-        /*font-size: 20px;*/
-    }
     .meal-image {
-        /*padding-left: 10%;*/
         padding-top: 2%;
     }
 }
@@ -809,15 +980,17 @@ label#username-error {
 @media (min-width: 320px) and (max-width: 1024px) {
     #section-what-to-expect .button-container {
         text-align: center;
-        width: 80%;
+        /*width: 80%;*/
         margin: 0 auto;
     }
     .cart-button-container {
         width: 100%;
         padding: 10px 0;
-        max-width: 350px;
-        float: none;
         margin: 0 auto;
+    }
+    .button-container .cart-button-container{
+        max-width: 350px;
+        float: none; 
     }
     #section-what-to-expect .button-container a {
         width: 100%;
@@ -831,13 +1004,20 @@ label#username-error {
     }
     .removeItemButton {
         height: 40px;
-        width: 13%;
-        float: left;
-        margin-right: 4%;
+        width: 44px;
+        margin-right: 1%;
         min-width: 0px;
+        line-height: 1.3;
     }
     .width-adjust {
         width: 83% !important;
     }
+    .details-content {
+        padding: 0px 0px 10px 0px;
+    }
 }
-
+@media screen and (min-width:768px){
+    .what-you-get-section .details-content {
+        margin-left: -4.5px;
+    }
+}

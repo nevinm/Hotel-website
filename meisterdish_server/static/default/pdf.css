@@ -151,7 +151,7 @@ tr,
 th,
 td {
 
-    vertical-align: middle;
+    vertical-align: baseline;
     width: auto;
 }
 
@@ -204,6 +204,6 @@ noscript {
 }
 
 @page {
-  size: a6 landscape;
-  margin: 1cm;
+  size: 2.5in 4in landscape;
+  margin: 5mm;
 } 

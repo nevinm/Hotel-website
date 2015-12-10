@@ -105,7 +105,7 @@ var updateCategoriesCallback = {
             $(".new-category").val("");
             $(".update-category-container").hide();
         } else {
-            alert("Something went wrong")
+            showPopup(categoriesData);
         }
     },
     failure: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -137,8 +137,7 @@ function populateCategories(categoriesData) {
             "</tr>");
     })
     $(".pagination").pagination({
-        items: categoriesData.total_count,
-        itemsOnPage: categoriesData.per_page,
+        pages: categoriesData.num_pages,
         currentPage: categoriesData.current_page,
         cssStyle: 'light-theme',
         onPageClick: function(pageNumber, event) {
@@ -147,9 +146,11 @@ function populateCategories(categoriesData) {
         onInit: function() {
             if (getStringAfterHash(location.href, "#")) {
                 var pageString = getStringAfterHash(location.href, "#");
-                pageNumber = getStringAfterHash(pageString, "-");
-                if ($(".pagination").pagination('getCurrentPage') == pageNumber) {} else {
-                    $(".pagination").pagination('selectPage', pageNumber);
+                if(pageString.indexOf('page') != -1){
+                    pageNumber = getStringAfterHash(pageString, "-");
+                    if ($(".pagination").pagination('getCurrentPage') == pageNumber) {} else {
+                        $(".pagination").pagination('selectPage', pageNumber);
+                    }
                 }
             } else {}
         }

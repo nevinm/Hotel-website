@@ -1,94 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Meisterdish - Admin</title>
-    <script type="text/javascript" src='js/redirect_admin.js'></script>
-    <link rel="stylesheet" type="text/css" href="../../css/reset.css">
-    <link rel="stylesheet" type="text/css" href="../../css/fontello.css">
-    <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
-    <link rel="stylesheet" type="text/css" href="../../css/common.css">
-    <link rel="stylesheet" type="text/css" href="css/admin.css">
-    <script type="text/javascript" src='../../js/validate_session.js'></script>
-</head>
-
-<body>
-    <div id="admin-mainWrapper">
-        <header id="header">
-            <div class="contentArea adminContentArea">
-                <a href="#"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
-                </a>
-                <ul id="menu" class="pullRight">
-                    <li class='admin-links'>
-                        <a href="manage-delivery-areas.html">DELIVERY AREA</a>
-                    </li>
-                    <li class='admin-links'>
-                       <a href="promocode.html">PROMOCODES</a>
-                   </li>
-                   <li class='admin-links'>
-                       <a href="giftcards.html">GIFTCARDS</a>
-                   </li>
-                    <li class='admin-links'>
-                        <a href="orderlist.html">ORDERS</a>
-                    </li>
-                    <li class="kitchen-links">
-                        <a href="#">KITCHEN</a>
-                    </li>
-                    <li class='admin-links'>
-                        <a href="meallist.html">MEALS</a>
-                    </li>
-                    <li class='admin-links'>
-                        <a href="mealtype.html">MEAL TYPE</a>
-                    </li>
-                    <li class="bold admin-links">
-                        <a href="userlist.html">USERS</a>
-                    </li>
-                    <li class='admin-links'>
-                        <a href="categories.html">CATEGORIES</a>
-                    </li>
-                    <li id="navbar-username_hidden" class="bold green">
-                        <a href='../account.html'></a>
-                    </li>
-                </ul>
-            </div>
-        </header>
-        <div id="page-container">
-            <div class='admin-inner-wrapper'>
-                <div class="accountNav">
-                    <div class="logout body-text-bold">
-                    <form id='download-users-form' action="" method="post">
-                        <input type='hidden' name='session_key'/>
-                        <input type="submit" class="btn btn-small-primary medium-green download-csv" id="download-users-csv" value="DOWNLOAD USERS CSV">
-                    </form>
-                    <form id='download-users-promotion-form' action="" method="post">
-                        <input type='hidden' name='session_key'/>
-                        <input type="submit" class="btn btn-small-primary medium-green download-csv" id="download-users-promotion-csv" value="DOWNLOAD USERS PROMOTION CSV">
-                    </form>
-                        <a id='logout'>LOG OUT</a>
-                    </div>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Meisterdish - Admin</title>
+        <script type="text/javascript" src='js/redirect-admin.js'></script>
+        <link rel="stylesheet" type="text/css" href="../../css/reset.css">
+        <link rel="stylesheet" type="text/css" href="../../css/fontello.css">
+        <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
+        <link rel="stylesheet" type="text/css" href="../../css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/admin.css">
+        <script type="text/javascript" src='../../js/validate-session.js'></script>
+    </head>
+    <body>
+        <div id="admin-mainWrapper">
+            <header id="header">
+                <div class="contentArea adminContentArea">
+                    <a href="#"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
+                    </a>
+                    <ul id="menu" class="pullRight">
+                        <li class='admin-links'>
+                            <a href="manage-delivery-areas.html">DELIVERY AREA</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="promocode.html">PROMOCODES</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="giftcards.html">GIFTCARDS</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="orderlist.html">ORDERS</a>
+                        </li>
+                        <li class="kitchen-links">
+                            <a href="#">KITCHEN</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="meallist.html">MEALS</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="mealtype.html">MEAL TYPE</a>
+                        </li>
+                        <li class="bold admin-links">
+                            <a href="userlist.html">USERS</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="categories.html">CATEGORIES</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="ingredients.html">INGREDIENTS</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="delivery-slots.html">DELIVERY SLOTS</a>
+                        </li>
+                       <li class='admin-links'>
+                            <a href="meals-review.html">REVIEWS</a>
+                        </li>
+                        <li id="navbar-username_hidden" class="bold green">
+                            <a href='../account.html'></a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="admin-page-container">
-                    <div class="admin-header">
-                        <h2>USERLIST MANAGEMENT</h2>
+            </header>
+            <div id="page-container">
+                <div class='admin-inner-wrapper'>
+                    <div class="accountNav">
+                        <div class="logout body-text-bold">
+                            <form id='download-users-form' action="" method="post">
+                                <input type='hidden' name='session_key'/>
+                                <input type="submit" class="btn btn-small-primary medium-green download-csv" id="download-users-csv" value="DOWNLOAD USERS CSV">
+                            </form>
+                            <form id='download-users-promotion-form' action="" method="post">
+                                <input type='hidden' name='session_key'/>
+                                <input type="submit" class="btn btn-small-primary medium-green download-csv" id="download-users-promotion-csv" value="DOWNLOAD USERS PROMOTION CSV">
+                            </form>
+                            <a id='logout'>LOG OUT</a>
+                        </div>
                     </div>
-                    <table id="userlist" class="display" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Credits</th>
-                                <th>Email</th>
-                                <th>Is Admin</th>
-                                <th>Mobile</th>
-                                <th>Profile Image</th>
-                                <th>Delete User</th>
-                                <th>Activation status</th>
-                            </tr>
-                        </thead>
+                    <div class="admin-page-container">
+                        <div class="admin-header">
+                            <h2>USERLIST MANAGEMENT</h2>
+                        </div>
+                        <table id="userlist" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Credits</th>
+                                    <th>Email</th>
+                                    <th>Is Admin</th>   
+                                    <th>Ambassador Code</th>
+                                    <th>Mobile</th>
+                                    <th>Profile Image</th>
+                                    <th>Delete User</th>
+                                    <th>Activation status</th>
+                                </tr>
+                            </thead>
                         <tbody></tbody>
                     </table>
                     <br>
@@ -128,10 +136,9 @@
     <script type="text/javascript" src='../../js/jquery.min.js'></script>
     <script type="text/javascript" src='js/jquery.simplePagination.js'></script>
     <script type="text/javascript" src='../../js/jquery.validate.min.js'></script>
-    <script type="text/javascript" src='../../js/ajax_reusable.js'></script>
+    <script type="text/javascript" src='../../js/ajax-reusable.js'></script>
     <script type="text/javascript" src='../../js/common.js'></script>
     <script type="text/javascript" src='js/admin.js'></script>
     <script type="text/javascript" src='js/userlist.js'></script>
 </body>
-
 </html>
