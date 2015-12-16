@@ -809,7 +809,7 @@ var CartItemCountCallback = {
         } else {
             $('span.count').text('0');
         }
-        if (callBack !== undefined) {
+        if (callBack !== undefined && typeof callBack === "function") {
             callBack();
         }
     },
