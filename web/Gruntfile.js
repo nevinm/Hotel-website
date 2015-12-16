@@ -85,14 +85,17 @@ module.exports = function (grunt) {
                         dest: 'views/admin/css/build/'
                     }]
             }
+        },
+        watch: {
+            js: {
+                files: ['js/app/dev/*', 'views/admin/js/app/dev/*', 'css/dev/*', 'views/admin/css/dev/*'],
+                tasks: ['dev']
+            }
         }
-//        watch: {
-//            js: {files: 'js/*.js', tasks: ['uglify']}
-//        }
     });
 
 // load plugins
-//    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');

@@ -1,0 +1,45 @@
+body{
+  min-height: 100$;
+}
+
+.incogneto-error-container {
+    position: relative;
+}
+
+.incogneto-error-container .outer-slide-description {
+    padding: 10px;
+    background-color: rgb(244, 244, 244);
+    max-width: 720px;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+.incogneto-error-container .main-header-container {
+    padding: 30px 0;
+}
+
+.incogneto-error-container .sub-header-container {
+    padding-bottom: 20px;
+}
+
+.incogneto-error-container .center-div {
+    position: relative;
+    margin: 150px auto 0 auto;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.incogneto-error-container .main-header {
+  font-family: 'BrandonGrotesque-Bold';
+  font-size: 30px;
+  letter-spacing: 1px;
+  color: #6B6B6B;
+}
+
+.incogneto-error-container .sub-header {
+  font-family: 'BrandonGrotesque-Regular';
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: #6B6B6B;
+}
