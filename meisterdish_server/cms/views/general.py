@@ -537,7 +537,7 @@ def export_users(request, data):
                         business = (
                             "No" if not primary_address.is_business
                             else "Yes")
-                        address = ('''Name          : %s %s
+                        address = '''Name          : %s %s
 Is Business ? :%s
 Company       :%s
 Building      :%s
@@ -556,7 +556,7 @@ Email         :%s
                             primary_address.state.name,
                             primary_address.zip,
                             primary_address.phone,
-                            primary_address.email)).encode('utf-8')
+                            primary_address.email)
                     else:
                         address = ""
 
@@ -642,7 +642,7 @@ def export_users_for_promotion(request, data):
                         is_business_flag = (
                             'Yes' if primary_address.is_business
                             else "No")
-                        address = ('''Name          : %s %s
+                        address = '''Name          : %s %s
 Is Business ? :%s
 Company       :%s
 Building      :%s
@@ -660,7 +660,7 @@ Email         :%s
                             primary_address.state.name,
                             primary_address.zip,
                             primary_address.phone,
-                            primary_address.email)).encode('utf-8')
+                            primary_address.email)
                     else:
                         address = ""
                     if Referral.objects.filter(referree=user).exists():
