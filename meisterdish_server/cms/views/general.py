@@ -8,11 +8,11 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http.response import HttpResponse, HttpResponseRedirect
 import logging
+import md5
 
 from cms.views.decorators import check_input
 from libraries import custom_error, json_response, export_csv,\
     manage_image_upload
-import md5
 from meisterdish_server.models import User, Category, Meal, MealType, Image,\
     Address, ZipUnavailable, Referral, AmbassadorReferral
 
@@ -537,7 +537,7 @@ def export_users(request, data):
                         business = (
                             "No" if not primary_address.is_business
                             else "Yes")
-                        address = '''Name          : %s %s
+                        address = ('''Name          : %s %s
 Is Business ? :%s
 Company       :%s
 Building      :%s
@@ -556,7 +556,7 @@ Email         :%s
                             primary_address.state.name,
                             primary_address.zip,
                             primary_address.phone,
-                            primary_address.email)
+                            primary_address.email)).encode('utf-8')
                     else:
                         address = ""
 
@@ -642,7 +642,7 @@ def export_users_for_promotion(request, data):
                         is_business_flag = (
                             'Yes' if primary_address.is_business
                             else "No")
-                        address = '''Name          : %s %s
+                        address = ('''Name          : %s %s
 Is Business ? :%s
 Company       :%s
 Building      :%s
@@ -660,7 +660,7 @@ Email         :%s
                             primary_address.state.name,
                             primary_address.zip,
                             primary_address.phone,
-                            primary_address.email)
+                            primary_address.email)).encode('utf-8')
                     else:
                         address = ""
                     if Referral.objects.filter(referree=user).exists():
