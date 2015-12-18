@@ -1,9 +1,3 @@
-//module.exports = function (grunt) {
-//    grunt.registerTask("demo", function () {
-//        console.log("demo");
-//    });
-//};
-
 module.exports = function (grunt) {
     // Project configuration.
     grunt.initConfig({
@@ -11,59 +5,29 @@ module.exports = function (grunt) {
         uglify: {
             js: {
                 files: [{
-                        src: 'js/app/dev/*.js', // source files mask
-                        dest: 'js/app/build/', // destination folder
+                        src: 'app/js/app/*.js', // source files mask
+                        dest: 'js/app/', // destination folder
                         expand: true, // allow dynamic building
                         flatten: true // remove all unnecessary nesting
                     }, {
-                        src: 'views/admin/js/app/dev/*.js',
-                        dest: 'views/admin/js/app/build/',
+                        src: 'views/admin/js/app/*.js',
+                        dest: 'views/admin/js/app/',
                         expand: true,
                         flatten: true
                     }]
             }
         },
         copy: {
-            dev: {
-                files: [{
-                        expand: true,
-                        cwd: 'js/app/dev/',
-                        src: ['**'],
-                        dest: 'js/app/build/'
-                    }, {
-                        expand: true,
-                        cwd: 'css/dev/',
-                        src: ['**'],
-                        dest: 'css/build/'
-                    }, {
-                        expand: true,
-                        cwd: 'views/admin/js/app/dev/',
-                        src: ['**'],
-                        dest: 'views/admin/js/app/build/'
-                    }, {
-                        expand: true,
-                        cwd: 'views/admin/css/dev/',
-                        src: ['**'],
-                        dest: 'views/admin/css/build/'
-                    }]
-            },
-            prd: {
-                files: [{
-                        expand: true,
-                        cwd: 'css/dev/',
-                        src: ['**'],
-                        dest: 'css/build/'
-                    }, {
-                        expand: true,
-                        cwd: 'views/admin/css/dev/',
-                        src: ['**'],
-                        dest: 'views/admin/css/build/'
-                    }]
+            files: {
+                expand: true,
+                cwd: 'app/',
+                src: ['**'],
+                dest: ''
             }
         },
         clean: {
             js: {
-                src: ["js/app/build/", "css/build/", "views/admin/css/build/", "views/admin/js/app/build/"]
+                src: ["js/", "css/", "views/", "images/", "fonts/"]
             }
         },
         cssmin: {
@@ -75,33 +39,45 @@ module.exports = function (grunt) {
             target: {
                 files: [{
                         expand: true,
-                        cwd: 'css/dev/',
+                        cwd: 'app/css/',
                         src: ['*.css', '!*.min.css'],
-                        dest: 'css/build/'
+                        dest: 'css/'
                     }, {
                         expand: true,
-                        cwd: 'views/admin/css/dev/',
+                        cwd: 'app/views/admin/css/',
                         src: ['*.css', '!*.min.css'],
-                        dest: 'views/admin/css/build/'
+                        dest: 'views/admin/css/'
                     }]
             }
         },
         watch: {
             js: {
-                files: ['js/app/dev/*', 'views/admin/js/app/dev/*', 'css/dev/*', 'views/admin/css/dev/*'],
+                files: ['app/js/app/*', 'app/views/admin/js/app/*', 'app/css/*', 'app/views/admin/css/*'],
                 tasks: ['dev']
             }
         },
         htmlmin: {
-            options: {
-                removeComments: true,
-                collapseWhitespace: true
-            },
-            files: {
-                expand: true,
-                cwd: 'html/dev',
-                src: ['*.html'],
-                dest: 'html/'
+            views: {
+                options: {
+                    removeComments: true,
+                    collapseWhitespace: true
+                },
+                files: [{
+                        expand: true,
+                        cwd: 'app/views/',
+                        src: ['*.html'],
+                        dest: 'views/'
+                    }, {
+                        expand: true,
+                        cwd: 'app/',
+                        src: ['index.html'],
+                        dest: ''
+                    }, {
+                        expand: true,
+                        cwd: 'app/views/admin/',
+                        src: ['*.html'],
+                        dest: 'views/admin/'
+                    }]
             }
         }
     });
@@ -116,7 +92,7 @@ module.exports = function (grunt) {
 
 // register at least this one task
     grunt.registerTask('clear', ['clean']);
-    grunt.registerTask('dev', ['clean', 'copy:dev']);
-    grunt.registerTask('build', ['clean', 'uglify:js', 'copy:prd', 'cssmin']);
-    grunt.registerTask('default', 'htmlmin');
+    grunt.registerTask('dev', ['clean', 'copy']);
+    grunt.registerTask('build', ['clean', 'copy', 'uglify:js', 'cssmin', 'htmlmin:views']);
+    grunt.registerTask('default', 'watch:js');
 };
