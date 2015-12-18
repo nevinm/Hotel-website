@@ -91,6 +91,18 @@ module.exports = function (grunt) {
                 files: ['js/app/dev/*', 'views/admin/js/app/dev/*', 'css/dev/*', 'views/admin/css/dev/*'],
                 tasks: ['dev']
             }
+        },
+        htmlmin: {
+            options: {
+                removeComments: true,
+                collapseWhitespace: true
+            },
+            files: {
+                expand: true,
+                cwd: 'html/dev',
+                src: ['*.html'],
+                dest: 'html/'
+            }
         }
     });
 
@@ -100,10 +112,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
 // register at least this one task
     grunt.registerTask('clear', ['clean']);
     grunt.registerTask('dev', ['clean', 'copy:dev']);
     grunt.registerTask('build', ['clean', 'uglify:js', 'copy:prd', 'cssmin']);
-    grunt.registerTask('default', 'dev');
+    grunt.registerTask('default', 'htmlmin');
 };
