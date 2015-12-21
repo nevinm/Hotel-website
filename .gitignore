@@ -3,3 +3,8 @@
 .pydevproject
 test/
 nbproject/
+
+web/css/build/
+web/js/app/build/
+web/views/admin/css/build/
+web/views/admin/js/app/build/
