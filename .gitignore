@@ -3,3 +3,4 @@
 .pydevproject
 test/
 nbproject/
+web/node_modules/*
