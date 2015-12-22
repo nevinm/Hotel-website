@@ -45,7 +45,7 @@ def deploy():
     with cd(path), prefix(env.activate):
         gvar.append(run("git checkout QA_release && git pull --no-edit origin QA_release"))
         run("pip install -r requirements.txt")
-        gvar.append(run('cd web && npm install && grunt build'))
+        gvar.append(run('cd web && npm install && grunt build| ../ansi2html -p'))
         run('ls -l meisterdish_server')
         run("cd meisterdish_server && python manage.py makemigrations && python manage.py migrate")
         gvar.append(run("service apache2 reload"))
