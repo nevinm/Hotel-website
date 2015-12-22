@@ -91,7 +91,7 @@ def send_success_mail():
 
 
     sender = 'calicutjenkins@gmail.com'
-    receivers = ['thushar@qburst.com','reshmaraveendran@qburst.com','ashique@qburst.com']
+    receivers = ['thushar@qburst.com','reshmaraveendran@qburst.com','ashique@qburst.com','jawahir@qburst.com']
     
     msg = MIMEMultipart('alternative')
     msg['Subject'] = "Meisterdish Autodeployment QA Success!"
