@@ -1,1 +1,154 @@
-function checkIfEdit(){var a=window.location.href;return-1!=a.indexOf("cardId")?(card_id=getParameterFromUrl("cardId"),savedCardDetails(card_id),$(".account-header h3").text("UPDATE CREDIT CARD"),$(".update-add-credit-card").val("UPDATE"),$(".content-heading").text("UPDATE CREDIT CARD"),$("form").attr("id","update-pay-form"),$("form").validate({ignore:".ignore"}),card_id):($("form").attr("id","pay-form"),$(".account-header h3").text("ADD A CREDIT CARD"),$(".update-add-credit-card").val("ADD"),$(".content-heading").text("ADD A CREDIT CARD"),void 0)}function populateYear(){for(var a=(new Date).getFullYear(),b=1;20>=b;b++)$("#ExpYear").append("<option value='"+a+"'>"+a+"</option>"),a+=1}function saveCreditCardDetails(a){var b=baseURL+"save_credit_card/",c={"session-key":localStorage.session_key},d={stripeToken:a};data=JSON.stringify(d);var e=new AjaxHttpSender;e.sendPost(b,c,data,saveCreditCardDetailsCallback)}function savedCardDetails(a){var b=baseURL+"get_saved_cards/",c={"session-key":localStorage.session_key},d={card_id:a};data=JSON.stringify(d);var e=new AjaxHttpSender;e.sendPost(b,c,data,savedCardDetailsCallback)}function populateCardDetails(a){var b=a.number,c=a.expire_year,d=a.expire_month;$("#card-number").val(b),$("#card-number").prop("readonly",!0),$("#card-number-error").hide(),$("#card-number").removeClass("error"),$("#card-number").addClass("button-disabled"),$("#cvv-number").addClass("button-disabled"),$("#cvv-number").val("****"),$("#cvv-number").prop("readonly",!0),$('#ExpMonth  option[value="'+d+'"]').prop("selected",!0),$('#ExpYear option[value="'+c+'"]').prop("selected",!0),$("#name-on-card").val(a.name?a.name:"")}function updateCardDetails(a){var b=baseURL+"update_credit_card/"+a+"/",c=$("#name-on-card").val(),d=$("#ExpMonth option:selected").val(),e=$("#ExpYear option:selected").text(),f={"session-key":localStorage.session_key},g={name:c,exp_month:d,exp_year:e};data=JSON.stringify(g);var h=new AjaxHttpSender;h.sendPost(b,f,data,updateCardDetailsCallback)}setTimeout(function(){$("form")[0].reset()},50),$(document).ready(function(){populateYear(),CartItemCount(),stripeIntegration();var a=checkIfEdit();$(".update-add-credit-card").on("click",function(b){b.preventDefault(),$("form").valid()&&("ADD"==$(".update-add-credit-card").val()&&$("form").submit(),"UPDATE"==$(".update-add-credit-card").val()&&updateCardDetails(a))})});var saveCreditCardDetailsCallback={success:function(a,b){var c=JSON.parse(a);1==c.status?($("form")[0].reset(),window.location.href="manage-creditcard.html"):showPopup(c)},failure:function(a,b,c){}},savedCardDetailsCallback={success:function(a,b){var c=JSON.parse(a);1==c.status?populateCardDetails(c.cards[0]):showPopup(c)},failure:function(a,b,c){}},updateCardDetailsCallback={success:function(a,b){var c=JSON.parse(a);1==c.status?window.location.href="manage-creditcard.html":showPopup(c)},failure:function(a,b,c){}};
+setTimeout(function () {
+    $('form')[0].reset();
+}, 50);
+$(document).ready(function () {
+    populateYear();
+    CartItemCount();
+    stripeIntegration();
+    var card_id = checkIfEdit();
+    $('.update-add-credit-card').on('click', function (e) {
+        e.preventDefault();
+        if ($('form').valid()) {
+            if ($('.update-add-credit-card').val() == "ADD") {
+                $('form').submit();
+            }
+            if ($('.update-add-credit-card').val() == "UPDATE") {
+                updateCardDetails(card_id);
+            }
+        }
+    })
+});
+
+function checkIfEdit() {
+    var siteUrl = window.location.href;
+    if (siteUrl.indexOf('cardId') != -1) {
+        card_id = getParameterFromUrl('cardId');
+        savedCardDetails(card_id);
+        $(".account-header h3").text("UPDATE CREDIT CARD");
+        $('.update-add-credit-card').val("UPDATE");
+        $(".content-heading").text("UPDATE CREDIT CARD");
+        $("form").attr('id', 'update-pay-form');
+        $("form").validate({
+            ignore: ".ignore"
+        });
+        return card_id;
+    } else {
+        $("form").attr('id', 'pay-form');
+        $(".account-header h3").text("ADD A CREDIT CARD");
+        $('.update-add-credit-card').val("ADD");
+        $(".content-heading").text("ADD A CREDIT CARD");
+    }
+}
+
+function populateYear() {
+    var currentYear = new Date().getFullYear();
+    for (var i = 1; i <= 20; i++) {
+        $('#ExpYear').append("<option value='" + currentYear + "'>" + currentYear + "</option>");
+        currentYear = currentYear + 1;
+    }
+}
+
+//save credit card details call back
+var saveCreditCardDetailsCallback = {
+    success: function (data, textStatus) {
+        var response = JSON.parse(data);
+        if (response.status == 1) {
+            $("form")[0].reset();
+            window.location.href = 'manage-creditcard.html';
+        } else {
+            showPopup(response);
+        }
+    },
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
+}
+
+//save credit card items
+function saveCreditCardDetails(token) {
+    var url = baseURL + "save_credit_card/",
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    params = {
+        "stripeToken": token
+    }
+    data = JSON.stringify(params);
+    var saveCreditCardDetailsInstance = new AjaxHttpSender();
+    saveCreditCardDetailsInstance.sendPost(url, header, data, saveCreditCardDetailsCallback);
+}
+
+//Get saved cards
+var savedCardDetailsCallback = {
+    success: function (data, textStatus) {
+        var cardDetails = JSON.parse(data);
+        if (cardDetails.status == 1) {
+            populateCardDetails(cardDetails.cards[0]);
+        } else {
+            showPopup(cardDetails);
+        }
+    },
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
+}
+
+function savedCardDetails(card_id) {
+    var url = baseURL + "get_saved_cards/",
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    params = {
+        card_id: card_id
+    }
+    data = JSON.stringify(params);
+    var savedCardDetailsInstance = new AjaxHttpSender();
+    savedCardDetailsInstance.sendPost(url, header, data, savedCardDetailsCallback);
+}
+
+function populateCardDetails(cardDetails) {
+    var card_num = cardDetails.number,
+            exp_year = cardDetails.expire_year,
+            exp_month = cardDetails.expire_month;
+    $('#card-number').val(card_num);
+    $('#card-number').prop('readonly', true);
+    $('#card-number-error').hide();
+    $('#card-number').removeClass('error');
+    $('#card-number').addClass('button-disabled');
+    $('#cvv-number').addClass('button-disabled');
+    $('#cvv-number').val('****');
+    $('#cvv-number').prop('readonly', true);
+    $('#ExpMonth  option[value="' + exp_month + '"]').prop('selected', true);
+    $('#ExpYear option[value="' + exp_year + '"]').prop('selected', true);
+    $("#name-on-card").val(cardDetails.name ? cardDetails.name : "");
+}
+
+//Update card details 
+var updateCardDetailsCallback = {
+    success: function (data, textStatus) {
+        var cardDetails = JSON.parse(data);
+        if (cardDetails.status == 1) {
+            window.location.href = "manage-creditcard.html";
+        } else {
+            showPopup(cardDetails);
+        }
+    },
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
+}
+
+function updateCardDetails(card_id) {
+    var url = baseURL + "update_credit_card/" + card_id + "/",
+            name = $('#name-on-card').val(),
+            month = $('#ExpMonth option:selected').val(),
+            year = $('#ExpYear option:selected').text(),
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    params = {
+        "name": name,
+        "exp_month": month,
+        "exp_year": year
+    }
+    data = JSON.stringify(params);
+    var updateCardDetailsInstance = new AjaxHttpSender();
+    updateCardDetailsInstance.sendPost(url, header, data, updateCardDetailsCallback);
+}

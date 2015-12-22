@@ -1,1 +1,1576 @@
-.adminlogin-container .input,.adminlogin-input{position:relative}.admin-inner-wrapper h2,tbody,thead{text-align:center}input[type=text],input[type=email],input[type=password],input[type=number]{color:#000}#admin-mainWrapper{width:100%;border-right:10px solid #fff;border-left:10px solid #fff;float:left;padding-bottom:50px;background-color:#F9FAF7;min-height:100%}#admin-mainWrapper .contentArea .bold{font-family:BrandonGrotesque-Bold;font-weight:400}#meal-sub-name{margin:0;height:89px;width:270px;resize:none}#meal-sub-name-error{top:7px}#kitchen-image{max-width:300px}.adminlogin-wrapper{width:400px;margin:0 auto;margin-top:100px}.admin-inner-wrapper{margin-top:150px}.header-small{border-bottom:1px solid #D0D0D0;height:46px;padding-left:35px;padding-top:10px;background-color:#f7f7f7;color:#454545}.adminlogin-container{background-color:#fff;border:1px solid #D0D0D0;border-radius:3px;margin-top:40px;float:left;width:100%;box-shadow:0 0 4px #D3D3D3}.adminlogin-input{width:100%;padding-top:10px}.adminlogin-container .formcontainer{padding-left:35px;width:100%;float:left;padding-top:30px;padding-right:35px}.adminlogin-container .form-wrapper{width:65%;float:left;padding:15px 0}#create-meal-available{padding:8px 25px;border:1px solid #ddd;border-radius:2px;background-color:#f7f7f7}.adminlogin-container .button{padding-bottom:20px}li#navbar-username a{margin:0;padding:0}li#navbar-username{padding:0}#menu li{display:none}.showLi{display:inline-block!important}.download-csv{float:left}.download-csv:nth-child(2){margin-left:20px}.admin-header h2{font-size:20px}#categories{margin-top:50px}#categories .update{margin-right:10px;cursor:pointer}#categories,#categories td,#categories th,#delivery-area,#delivery-area td,#delivery-area th,#giftcards-list,#giftcards-list td,#giftcards-list th,#ingredients-area,#ingredientsArea td,#ingredientsArea th,#meal-list,#meal-list td,#meal-list th,#mealtype-area,#mealtype-area td,#mealtype-area th,#promocodes-list,#promocodes-list td,#promocodes-list th,#reviewsArea td,#reviewsArea th,#userlist,#userlist td,#userlist th{border:1px solid #d0d0d0;padding:10px;border-collapse:collapse;background-color:#f7f7f7;font-family:BrandonGrotesque-Regular;text-transform:uppercase;font-size:12px}#meal-list td,#order-list td{vertical-align:middle}.space td{border:none!important}.produced-meal{background-color:#737373;color:#e2d7d7}#order-list,#order-list td,#order-list th{border:1px solid #d0d0d0;padding:10px;border-collapse:collapse;font-family:BrandonGrotesque-Regular;text-transform:uppercase;font-size:12px}.accountNav{width:90%;margin:0 auto;text-align:right}#admin-mainWrapper .accountNav{overflow:hidden;max-width:1100px}#userlist img,.meal-list-img{max-width:50px}.admin-nav{width:80%;margin:0 auto;padding:15px 0}.pagination{float:right;padding:20px 0}.add-category-container,.update-category-container{display:none;width:400px;position:absolute;left:50%;margin-left:-200px;border-radius:5px;background:#f7f9f9;text-align:center;height:auto;border:1px solid #000}.add-category-inner-container{padding:10px 0}.new-category{margin-top:10px;width:80%;height:35px}.add-category-container button{width:30%;height:30px;margin-top:10px}.add-status{position:absolute;display:none;border-radius:5px;width:200px;padding:11px;height:50px;top:110px;margin-left:-100px;left:10%;text-align:center;border:1px solid #000}.admin-page-container{width:90%;margin:0 auto;background-color:#fff;border:1px solid #d0d0d0;border-radius:3px;overflow:auto}.admin-header{background-color:#f7f7f7;border-bottom:1px solid #D0D0D0;border-radius:3px 3px 0 0}.admin-page-container table{width:80%;margin:0 auto;padding-bottom:10px}.add-category-container .popup .header,.update-category-container .popup .header{padding-left:0}#update-confirm,input#add-confirm{width:0;margin-bottom:1px;margin-top:0}#add-new-category .popup-input-wrapper,#update-category-form .popup-input-wrapper{margin-left:0}table#userlist{width:97%;margin-top:20px}.status{background:#ccc;cursor:pointer;background-color:#6f6c6c;padding:5px;color:#fff;border:1px hidden;border-radius:2px;min-width:60px}.status.down{background:#bbb;background-color:green;border:1px hidden;border-radius:2px;min-width:60px}#userlist .cross{float:none}.mealtype-change-icon{cursor:pointer;display:inline!important;float:left;padding:0!important;width:auto!important;margin-right:40px;margin-top:12px;margin-left:20px;text-decoration:underline}.credits-edit,.mealtype-image-upload{display:none;color:#a9d77b;cursor:pointer}.mealtype-image-upload-element{display:none!important}.row:hover .credits-edit,.row:hover .mealtype-image-upload{display:block}.edit-meal-available-popup,.edit-meal-order-popup,.upload-gif{display:none}.mealtype-icon,.mealtype-image{max-width:45px;max-height:45px}#mealtype-container .popup{height:230px}.icon-change{cursor:pointer}.upload-gif{margin-top:15px}.mealtype-image{float:left}.order-list-container .profile-image{width:50px}#order-list{width:100%;float:left;cursor:pointer}span.edit-meal-available,span.edit-meal-order{width:100%;float:left;cursor:pointer;color:#8EC657}#order-list tbody{cursor:pointer}.edit-meal-available-popup .cancel,img#cancel{cursor:pointer;float:right;padding-right:20px;padding-top:3px}.edit-meal-available-popup .forminput-wrapper,.edit-meal-order-popup .forminput-wrapper{width:100%;margin-left:28%;padding-top:0}.edit-meal-available-popup .popup,.edit-meal-order-popup .popup{height:180px}.edit-meal-available-popup .forminput-wrapper .body-text-small,.edit-meal-order-popup .forminput-wrapper .body-text-small{text-align:left}.create-button-container,.create-meal-header,.order-list-items input,.qty span,.section-header{text-align:center}#new-order-error,#newAvailable-error{width:150px;bottom:24px;left:0;padding-left:0}.order-detail-popup{display:none;width:800px;height:475px;margin:auto;position:fixed;top:7%;left:0;bottom:0;right:0;background-color:#fff;border-radius:5px;border:1px solid #dadada;-webkit-box-shadow:0 3px 5px 0 rgba(0,0,0,.75);-moz-box-shadow:0 3px 5px 0 rgba(0,0,0,.75);box-shadow:0 3px 5px 0 rgba(0,0,0,.75);z-index:999999}.order-detail-popup .accordion-header{border-top:1px solid #ADADAD;padding-left:20px;border-bottom:1px solid #ADADAD;cursor:pointer;background-color:#e4e4e4;padding-top:10px;padding-bottom:10px;position:relative}.order-detail-popup .accordion-header .remove{position:absolute;top:-6px;right:-6px}.accordion-header h4{font-family:BrandonGrotesque-bold;font-weight:400}.accordion-header h4:nth-child(2){font-family:BrandonGrotesque-Light;font-weight:400}.order-num{float:left;padding-right:116px}.accordion-content .row{display:table;border-bottom:1px solid #eaeaea;border-spacing:10px 15px;border-collapse:separate}.accordion-subcontent{display:table-cell;vertical-align:top;padding-left:10px}.accordion-subcontent:first-child,.accordion-subcontent:nth-child(2){width:15%}.accordion-subcontent:nth-child(3){width:25%}.accordion-subcontent:nth-child(4){width:20%}.order-head{font-weight:700;color:#000;float:left;width:100%}.order-meal{margin-top:15px;height:200px;padding:0 10px;overflow:auto}.order-content{float:left;padding-top:15px}#order-list tbody tr:hover{background-color:#eaeaea;color:#000}.content-heading:nth-child(1),.content-heading:nth-child(2){margin-right:30%}.order-list-items{width:100%;float:left;margin-bottom:10px}.order-list-items img{width:30px;height:30px;float:left;border-radius:4px}.order-list-items .body-text-small{padding:5px 0;padding-left:10px;width:243px;margin-right:21px;float:left}.order-list-items input{width:30px;padding:5px 0;border:1px solid #d0d0d0;border-radius:3px;background-color:#f7f7f7}.order-list-items .quantity-container{float:left;margin-right:33%}.order-list-items .price-container{font-family:BrandonGrotesque-Bold;color:#b0b0b0;float:left;width:30px}#order-status-filter,.meal-list-empty,.order-list-container .search-filters,.order-list-empty,.order-status,select.meallist-select{font-family:BrandonGrotesque-Regular;text-transform:uppercase}.order-list-header{padding-bottom:20px}.order-list-container .search-filters{float:left;font-size:12px;margin-top:10px;width:12.5%}.order-list-container .search-filters label{margin-top:5px}#order-status-filters{margin-right:20px}#order-status-filter,.order-status{background-color:#f7f7f7;width:100px;border:1px solid #ddd;color:#7E7979;font-size:11px;padding:2px}#search-orders{margin-left:30px;margin-top:28px}.meal-list-empty,.order-list-empty{display:none;margin-top:50px;width:100%;text-align:center;padding:10px;font-size:12px;float:left}.search-filters input{width:115px;padding:3px 0}.search-filters label{color:#9B9B9B;font-size:12px}.manage-area-container,.meal-list-container,.order-list-container{width:90%;margin:0 auto}.create-meal-wrapper{padding:10px 0;float:left}table#delivery-area,table#giftcards-list,table#ingredients-area,table#meal-list,table#mealtype-area,table#promocodes-list{width:100%;margin:20px auto}.filter-container{padding:21px 0}select.meallist-select{margin-right:30px;background-color:#f7f7f7;width:117px;border:1px solid #ddd;color:#7E7979;font-size:11px;padding:2px}input#searchBy-name{border:1px solid #ddd;padding:4px 0;padding-left:10px}#searchinMeal{height:24px;width:50px;margin:0;margin-left:8px;line-height:25px;letter-spacing:2px}.search-filters input[type=date]{font-size:9px;color:#9B9B9B;outline:0}.kitchen-filter{height:50px}#kitchen-order-container td{cursor:default}.meal-produced{cursor:pointer}.meal-list-img{height:auto;width:50px}#meal-list .primary-meal,.ambassador,.not-sold-out{cursor:pointer;color:green}#meal-list .non-primary-meal,.not-ambassador,.sold-out{cursor:pointer;color:red}.admin-createmeal-inner-wrapper{margin-top:150px;float:left}#chef-image,#meal-image{width:auto;height:auto;max-width:150px;margin-left:40px}.create-meal-container{margin:0 auto;width:90%;border:1px solid #D0D0D0;background:#fff;margin-bottom:30px}.create-meal-header{font-family:BrandonGrotesque-Medium;width:100%;background-color:#f7f7f7;padding:13px 0;font-size:22px;border-bottom:1px solid #d0d0d0}.section-container{margin:0 auto;width:85%}.create-meal-input{padding:8px 25px;border:1px solid #ddd;border-radius:2px;background-color:#f7f7f7}.section-1 input{margin-right:20px}.section-1,.section-2,.section-3,.section-4,.section-5,.section-6{padding:20px 0;border:1px solid #ddd;margin-top:30px;position:relative;float:left;width:100%}.section-2 span{float:left;padding-top:20px}.section-header{position:absolute;top:-12px;background-color:#fff;font-family:BrandonGrotesque-bold;left:41px;color:grey;width:92px}.content-1{float:left;width:100%;padding:10px 60px}.section-1 input:first-child{margin-right:20px;width:206px;float:left;margin-top:33px}.fileUpload{cursor:pointer;display:inline-block;overflow:hidden;position:relative}.section-3 .fileUpload,.section-4 .fileUpload{margin-left:55%}.fileUpload input{cursor:pointer;font-size:100px;-moz-opacity:.01;opacity:.01;position:absolute;right:0;top:0}.upload-button{background:#A9D77B;-moz-border-radius:5px!important;-webkit-border-radius:5px!important;border-radius:5px;cursor:pointer;display:inline-block;font-size:11px!important;font-weight:700;margin-right:5px;padding:7px 20px!important;font-family:BrandonGrotesque-Black!important;color:#fff!important;text-transform:uppercase;margin-top:33px;margin-left:40px}#user-credit-form .content,.nutrients-popup-wrapper,.tips-tricks-wrapper{display:none}.text-area-container{width:50%;float:left;font-family:ProximaNova-regular}textarea#description{height:100px;width:79%;border:1px solid #ddd;border-radius:4px;background-color:#f7f7f7;resize:none}input#meal-price{margin-bottom:36px}.meal-image-upload-container{width:25%;float:right}.dummy-image{height:100px;width:100px;border:1px solid #ddd;float:left;background:url(../../../images/5213421.png);background-size:cover}.forminput-wrapper{float:left;position:relative;width:280px;padding-top:15px}#chef-image-input-error,#meal-image-input-error{left:30px}#description-error{bottom:107px}#meal-price-error{bottom:75px}#create-meal-mealType-error{bottom:73px}.section-2 .section-header{width:130px}.section-3 .section-header{width:150px}.preperation-container-1 input:first-child,.preperation-container-2 input:first-child{width:140px}.section-3 span,.section-4 span{width:100%;float:left;padding-top:20px}.section-4{width:100%;float:left}.ingredients-container,.pre-requisties-container{width:50%;float:left}.list-container{float:left;width:100%;padding-left:63px;word-break:break-all}.list-container ul li{list-style-type:initial;float:left;width:100%;font-family:BrandonGrotesque-Regular;color:#909090}.list-container ul{width:60%;float:left}.preperation-container-1 .add-preparation-button,.preperation-container-2 .add-preparation-button{margin-top:102px}.preperation-container-1,.preperation-container-2{width:50%;float:left}.section-5,.section-6{width:100%;float:left}.section-5 .forminput-wrapper{width:240px;margin-bottom:20px;margin-right:20px}#add-tips-main,#add-tips-sub-list,.add-ingredients-list-button,.add-list-button,.add-nutrition-content,.add-preparation-button{height:40px;width:40px;border-radius:20px;background:#a9d77b;border:1px hidden;font-family:BrandonGrotesque-Black;color:#fff;text-transform:uppercase}.add-ingredients-list-button,.add-list-button,.add-nutrition-content,.add-preparation-button{margin-top:33px}#add-tips-main,input#create-meal-button{margin-top:30px}#add-tips-sub-list{margin-left:10px}.section-1 select{padding:4px 35px;border:1px solid #ddd;background:#fff;font-family:BrandonGrotesque-Regular;color:#909090;text-transform:uppercase}#create-meal-mealType{height:69px}.section-5 input{margin-right:20px}.add-tips-sublist,.add-tr,.del-sub-list,.del-tips-sub-list,.remove-tr{height:14px;margin-left:10px;cursor:pointer}.nutrients-popup-wrapper .popup-container .content,.tips-tricks-wrapper .popup-container .content{padding:0!important}.nutrients-popup-wrapper .popup-input,.tips-tricks-wrapper .popup-input{height:30px;border:1px solid #ddd;background:#f7f7f7;border-radius:3px;padding-left:5px;color:#909090;width:220px}.nutrients-popup-wrapper .popup{height:300px}.tips-tricks-wrapper .popup{height:195px;margin-top:-50px}.nutrients-popup-wrapper .popup-container,.tips-tricks-wrapper .popup-container{padding:15px;width:253px;margin:0 auto}.tips-sublist-input-container ul li{font-size:15px;color:grey;text-transform:lowercase;text-align:left;padding-left:160px}.img-container{width:50%;float:left}.section-6 .section-header{width:138px}table#tips-and-tricks-table{width:100%}.section-6 table thead th:first-child{width:330px}.tips-sublist-input-container{width:100%;float:left}.section-6 table .create-meal-input{padding-left:1px}.remove{height:14px;margin-left:10px;cursor:pointer}.nutrient-main-container{width:45%;border:1px solid #9B9B9B;float:left;margin:10px;position:relative}.nutrient-main-container .remove{position:absolute;right:-6px;top:-6px;height:15px}.nutrient-main-container span{padding:0 10px}.nutrient-main,.nutrient-sub{padding-left:10px;border:1px solid #ddd;overflow:hidden;margin:10px 0}.nutrient-sub{margin-left:50px;position:relative}.nutrient-main-container .remove-sub-nutrients{top:17px;right:10px}.nutrient-main .add-nutrient-sublist{float:right;height:20px;margin:0 5px 5px 0;cursor:pointer}.nutrient-main div,.nutrient-sub div{width:100%}#delivery-area .btn-small-primary{line-height:20px;min-width:80px;padding:0;height:25px}.add-deliveryarea-wrapper{padding-top:20px}.manage-area-container .popup{height:190px}.edit-meal-available-popup .header,.edit-meal-order-popup .header,.manage-area-container .popup .header,.user-list-popup .header{font-family:BrandonGrotesque-Bold;color:#6b6b6b;padding:11px 0;background-color:#f7f7f7;padding-left:20px}.user-credits-input{width:200px;height:30px}.popup-input-wrapper{margin-left:95px;margin-bottom:10px;position:relative}.manage-area-container .popup-container .button{text-align:none;padding:10px 80px}.manage-area-container .popup-container .content span{display:block}.confirm-popup-wrapper,.giftcard-list-empty,.popup-message,.promocodes-list-empty,input#add-gift-card{display:none}#add-delivery-area,#add-mealtype,#edit-delivery-area{float:left;display:none}.manage-area-container #close{float:right}.popup-message{position:relative;width:100%;top:103px;padding:10px 0;text-align:center;background:#A9D77B}.popup-message span{font-family:ProximaNova-semibold;color:#fff}#new-address-error{left:0;bottom:23px;width:202px;padding-left:0}.popup-giftcard{height:300px}.popup-giftcard input{width:170px}input#add-gift-card,input#add-new-promo{margin-top:20px}.no-popup .btn-small-primary,td .btn-small-primary{height:25px;line-height:10px}#new-amount-error,#new-code-error,#new-date-error{position:absolute;top:0}#total-amount{width:100px}.filter-container .search-filters:nth-child(6){width:11%}.search-filter-input{width:20%;float:left;margin-right:30px}.search-filter-input input{padding:3px}#search-coupon-code{margin-top:17px}form.edit-gift-card #update{width:initial;margin-bottom:1px}form.edit-gift-card #new-name-error{bottom:26px}#ingredientContainer .popup{height:230px}.ingredient-image-upload-element{display:none!important}.create-meal-container .ingredients-container select{padding:4px;border:1px solid #ddd;background:#fff;font-family:BrandonGrotesque-Regular;color:#909090;text-transform:uppercase}#ingredientImageHolder li{font-family:BrandonGrotesque-Regular;color:#909090;width:100px;clear:both;list-style:none;display:inline-block;margin:10px;text-transform:capitalize}#ingredientImageHolder span{padding:0}.slot-section-header{padding:15px;border-bottom:2px solid #8EC657;margin:0 31px}.slot-section-header h2{text-align:left;font-size:27px;font-family:BrandonGrotesque-Regular;margin:0}.week-section{max-width:49%;padding:10px;width:49%;position:absolute;clear:both}.week-section thead th{vertical-align:bottom}.week-section th{padding:0 4px;vertical-align:middle;font-family:BrandonGrotesque-Bold}.week-section td,.week-section th{height:50px;color:#000}.week-section td{font-family:BrandonGrotesque-Regular;padding:8px}.week-section tbody th{text-align:right}#ingredientImageHolder li div,#nutritionSection thead th,.apply-slot-section,.week-header{text-align:center}.week-section input[type=text]{width:63px;height:33px;border:1px solid #d0d0d0;border-radius:5px;text-align:center;font-size:20px;color:#656464;font-family:BrandonGrotesque-Regular}.week-header{background:#8EC657;padding:7px;font-family:BrandonGrotesque-Bold;color:#F9F3F3}.week-section-wrapper{position:relative;min-height:500px;margin:22px 0}#nextWeekSection{right:0}#nextWeekSection .week-header{background:#FFF;border:1px solid #000;color:#000}#nutritionSection tbody tr:last-child td,#nutritionSection tbody tr:last-child th,#nutritionSection thead th{border-bottom:1px solid #ddd}.week-section table{width:100%}#selectIngredientsError{display:none}#admin-mainWrapper #menu li a{margin:0 10px 0 0}#reviewsArea{margin:27px auto;width:100%}#reviewsArea .rating-star{float:left}#reviewsArea td:first-child{text-align:left}#ingredientImageHolder img{width:50px;max-width:50px}#nutritionSection{padding:20px 60px}#nutritionSection table{margin:0 auto;width:100%;table-layout:fixed;color:#9B9B9B;border-collapse:collapse}#nutritionSection tbody tr td:first-child,#nutritionSection tbody tr th:first-child,#nutritionSection thead th:first-child{border-left:1px solid #ddd}#nutritionSection tbody tr td:last-child,#nutritionSection thead th:last-child{border-right:1px solid #ddd}#nutritionSection thead th{border-top:1px solid #ddd;padding:10px 0;color:#929292;font-family:BrandonGrotesque-Bold;font-weight:400}#nutritionSection tbody th{padding:25px 41px 0;color:#959595;text-align:left;font-weight:400;font-family:BrandonGrotesque-Medium}#nutritionSection tbody td{text-align:left;padding:4px 50px;color:#BBB;font-size:16px;font-family:BrandonGrotesque-Regular}#nutritionSection td div{width:200px;margin:0 auto;position:relative}#nutritionSection td span{position:absolute;top:5px;right:8px;color:#6D6D6D;font-family:BrandonGrotesque-Regular;font-size:16px}#nutritionSection td input{width:100%;padding:7px;border:1px solid #989898;border-radius:5px;background-color:#f7f7f7;color:#5A5959;font-family:BrandonGrotesque-Regular;font-size:13px}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;-moz-appearance:none;appearance:none;margin:0}input[type=number]{-moz-appearance:textfield}#meal-list th{padding:10px 3px}#meal-list .btn-small-primary{min-width:85px}
+/*=======================*\
+       &ADMIN-LOGIN
+\*=======================*/
+
+input[type="text"], 
+input[type="email"], 
+input[type="password"],
+input[type="number"]{
+    color: black;
+}
+
+#admin-mainWrapper {
+    width: 100%;
+    border-right: 10px solid #fff;
+    border-left: 10px solid #fff;
+    float: left;
+    padding-bottom: 50px;
+    background-color: #F9FAF7;
+    min-height: 100%;
+}
+
+#admin-mainWrapper .contentArea .bold {
+    font-family: 'BrandonGrotesque-Bold';
+    font-weight: normal;
+}
+
+#meal-sub-name {
+    margin: 0px;
+    height: 89px;
+    width: 270px;
+    resize: none;
+}
+
+#meal-sub-name-error {
+    top: 7px;
+}
+#kitchen-image{
+    max-width: 300px;
+}
+.adminlogin-wrapper {
+    width: 400px;
+    margin: 0 auto;
+    margin-top: 100px;
+}
+
+.admin-inner-wrapper {
+    margin-top: 150px;
+}
+
+.header-small {
+    border-bottom: 1px solid #D0D0D0;
+    height: 46px;
+    padding-left: 35px;
+    padding-top: 10px;
+    background-color: #f7f7f7;
+    color: #454545;
+}
+
+.adminlogin-container {
+    background-color: #ffffff;
+    border: 1px solid #D0D0D0;
+    border-radius: 3px;
+    margin-top: 40px;
+    float: left;
+    width: 100%;
+    box-shadow: 0 0 4px #D3D3D3;
+}
+
+.adminlogin-container .input {
+    position: relative;
+}
+
+.adminlogin-input {
+    width: 100%;
+    padding-top: 10px;
+    position: relative;
+}
+
+.adminlogin-container .formcontainer {
+    padding-left: 35px;
+    width: 100%;
+    float: left;
+    padding-top: 30px;
+    padding-right: 35px;
+}
+
+.adminlogin-container .form-wrapper {
+    width: 65%;
+    float: left;
+    padding: 15px 0px;
+}
+#create-meal-available{
+    padding: 8px 25px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    background-color: #f7f7f7;
+}
+
+.adminlogin-container .button {
+    padding-bottom: 20px;
+}
+
+li#navbar-username a {
+    margin: 0px;
+    padding: 0px;
+}
+
+li#navbar-username {
+    padding: 0;
+}
+
+#menu li {
+    display: none;
+}
+
+.showLi {
+    display: inline-block !important;
+}
+
+.download-csv {
+    float: left;
+}
+
+.download-csv:nth-child(2) {
+    margin-left: 20px;
+}
+
+
+/*=======================*\
+       &Category-Page
+\*=======================*/
+
+.admin-header h2 {
+    font-size: 20px;
+}
+
+.admin-inner-wrapper h2 {
+    text-align: center
+}
+
+#categories {
+    margin-top: 50px;
+}
+
+#categories .update {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#userlist, #userlist th, #userlist td, #giftcards-list, #giftcards-list th, #giftcards-list td, #promocodes-list, #promocodes-list th, #promocodes-list td, #categories, #categories th, #categories td, #meal-list, #meal-list th, #meal-list td, #delivery-area, #delivery-area th, #delivery-area td, #mealtype-area, #mealtype-area th, #mealtype-area td, #ingredients-area, #ingredientsArea th, #ingredientsArea td, #reviewsArea th, #reviewsArea td {
+    border: 1px solid #d0d0d0;
+    padding: 10px;
+    border-collapse: collapse;
+    background-color: #f7f7f7;
+    font-family: 'BrandonGrotesque-Regular';
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+#meal-list td {
+    vertical-align: middle;
+}
+
+#order-list td {
+    vertical-align: middle;
+}
+
+.space td {
+    border: none !important;
+}
+
+.produced-meal {
+    background-color: rgb(115, 115, 115);
+    color: rgb(226, 215, 215);
+}
+
+#order-list, #order-list th, #order-list td {
+    border: 1px solid #d0d0d0;
+    padding: 10px;
+    border-collapse: collapse;
+    font-family: 'BrandonGrotesque-Regular';
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+tbody, thead {
+    text-align: center;
+}
+
+.accountNav {
+    width: 90%;
+    margin: 0 auto;
+    text-align: right;
+}
+
+#admin-mainWrapper .accountNav {
+    overflow: hidden;
+    max-width: 1100px;
+}
+
+.admin-nav {
+    width: 80%;
+    margin: 0 auto;
+    padding: 15px 0;
+}
+
+.pagination {
+    float: right;
+    padding: 20px 0;
+}
+
+.add-category-container, .update-category-container {
+    display: none;
+    width: 400px;
+    position: absolute;
+    left: 50%;
+    margin-left: -200px;
+    border-radius: 5px;
+    background: rgb(247, 249, 249);
+    text-align: center;
+    height: auto;
+    border: 1px solid black;
+}
+
+.add-category-inner-container {
+    padding: 10px 0px;
+}
+
+.new-category {
+    margin-top: 10px;
+    width: 80%;
+    height: 35px;
+}
+
+.add-category-container button {
+    width: 30%;
+    height: 30px;
+    margin-top: 10px;
+}
+
+.add-status {
+    position: absolute;
+    display: none;
+    border-radius: 5px;
+    width: 200px;
+    padding: 11px;
+    height: 50px;
+    top: 110px;
+    margin-left: -100px;
+    left: 10%;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.admin-page-container {
+    width: 90%;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+    overflow: auto;
+}
+
+.admin-header {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #D0D0D0;
+    border-radius: 3px 3px 0 0;
+}
+
+.admin-page-container table {
+    width: 80%;
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+
+.add-category-container .popup .header, .update-category-container .popup .header {
+    padding-left: 0;
+}
+
+input#add-confirm, #update-confirm {
+    width: 0%;
+    margin-bottom: 1px;
+    margin-top: 0;
+}
+
+#add-new-category .popup-input-wrapper, #update-category-form .popup-input-wrapper {
+    margin-left: 0;
+}
+
+
+/*=======================*\
+       &Userlist-Page
+\*=======================*/
+
+table#userlist {
+    width: 97%;
+    margin-top: 20px;
+}
+
+#userlist img {
+    max-width: 50px;
+}
+
+.status {
+    background: #ccc;
+    cursor: pointer;
+    background-color: rgb(111, 108, 108);
+    border-top: solid 2px #eaeaea;
+    border-left: solid 2px #eaeaea;
+    border-bottom: solid 2px #777;
+    border-right: solid 2px #777;
+    padding: 5px 5px;
+    color: white;
+    border: 1px hidden;
+    border-radius: 2px;
+    min-width: 60px;
+}
+
+.status.down {
+    background: #bbb;
+    border-top: solid 2px #777;
+    border-left: solid 2px #777;
+    border-bottom: solid 2px #eaeaea;
+    border-right: solid 2px #eaeaea;
+    background-color: green;
+    border: 1px hidden;
+    border-radius: 2px;
+    min-width: 60px;
+}
+
+#userlist .cross {
+    float: none;
+}
+
+
+/*MealType*/
+
+.mealtype-change-icon {
+    cursor: pointer;
+    display: inline !important;
+    float: left;
+    padding: 0 !important;
+    width: auto !important;
+    margin-right: 40px;
+}
+
+.credits-edit, .mealtype-image-upload {
+    display: none;
+    color: #a9d77b;
+    cursor: pointer;
+}
+
+.mealtype-image-upload-element {
+    display: none !important;
+}
+
+.row:hover .credits-edit, .row:hover .mealtype-image-upload {
+    display: block;
+}
+
+.mealtype-icon, .mealtype-image {
+    max-width: 45px;
+    max-height: 45px;
+}
+
+#mealtype-container .popup {
+    height: 230px;
+}
+
+.icon-change {
+    cursor: pointer;
+}
+
+.mealtype-change-icon {
+    margin-top: 12px;
+    margin-left: 20px;
+    text-decoration: underline;
+}
+
+.upload-gif {
+    display: none;
+    margin-top: 15px;
+}
+
+.mealtype-image {
+    float: left;
+}
+
+
+/*=======================*\
+       &Order-Page
+\*=======================*/
+
+.order-list-container .profile-image {
+    width: 50px;
+}
+
+#order-list {
+    width: 100%;
+    float: left;
+    cursor: pointer;
+}
+
+span.edit-meal-order,span.edit-meal-available {
+    width: 100%;
+    float: left;
+    cursor: pointer;
+    color: #8EC657;
+}
+
+.edit-meal-order-popup,.edit-meal-available-popup {
+    display: none;
+}
+
+#order-list tbody {
+    cursor: pointer;
+}
+
+img#cancel, .edit-meal-available-popup .cancel {
+    cursor: pointer;
+    float: right;
+    padding-right: 20px;
+    padding-top: 3px;
+}
+
+.edit-meal-order-popup .forminput-wrapper,
+.edit-meal-available-popup .forminput-wrapper {
+    width: 100%;
+    margin-left: 28%;
+    padding-top: 0px;
+}
+
+.edit-meal-order-popup .popup, 
+.edit-meal-available-popup .popup{
+    height: 180px;
+}
+
+.edit-meal-order-popup .forminput-wrapper .body-text-small,
+.edit-meal-available-popup .forminput-wrapper .body-text-small{
+    text-align: left;
+}
+
+#new-order-error,#newAvailable-error {
+    width: 150px;
+    bottom: 24px;
+    left: 0px;
+    padding-left: 0;
+}
+
+.order-detail-popup {
+    display: none;
+    width: 800px;
+    height: 475px;
+    margin: auto;
+    position: fixed;
+    top: 7%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid rgb(218, 218, 218);
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.75);
+    z-index: 999999;
+}
+
+.order-detail-popup .accordion-header {
+    border-top: 1px solid #ADADAD;
+    padding-left: 20px;
+    border-bottom: 1px solid #ADADAD;
+    cursor: pointer;
+    background-color: rgb(228, 228, 228);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.order-detail-popup .accordion-header .remove {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+}
+
+.accordion-header h4 {
+    font-family: 'BrandonGrotesque-bold';
+    font-weight: normal;
+}
+
+.accordion-header h4:nth-child(2) {
+    font-family: 'BrandonGrotesque-Light';
+    font-weight: normal;
+}
+
+.order-num {
+    float: left;
+    padding-right: 116px;
+}
+
+.accordion-content .row {
+    display: table;
+    border-bottom: 1px solid rgb(234, 234, 234);
+    border-spacing: 10px 15px;
+    border-collapse: separate;
+}
+
+.accordion-subcontent {
+    display: table-cell;
+    vertical-align: top;
+    padding-left: 10px;
+}
+
+.accordion-subcontent:first-child, .accordion-subcontent:nth-child(2) {
+    width: 15%;
+}
+
+.accordion-subcontent:nth-child(3) {
+    width: 25%;
+}
+
+.accordion-subcontent:nth-child(4) {
+    width: 20%;
+}
+
+.order-head {
+    font-weight: bold;
+    color: #000;
+    float: left;
+    width: 100%;
+}
+
+.order-meal {
+    margin-top: 15px;
+    height: 200px;
+    padding: 0 10px;
+    overflow: auto;
+}
+
+.order-content {
+    float: left;
+    padding-top: 15px;
+}
+
+#order-list tbody tr:hover {
+    background-color: rgb(234, 234, 234);
+    color: black;
+}
+
+.content-heading:nth-child(1), .content-heading:nth-child(2) {
+    margin-right: 30%
+}
+
+.order-list-items {
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.order-list-items img {
+    width: 30px;
+    height: 30px;
+    float: left;
+    border-radius: 4px;
+}
+
+.order-list-items .body-text-small {
+    padding: 5px 0px;
+    padding-left: 10px;
+    width: 243px;
+    margin-right: 21px;
+    float: left;
+}
+
+.order-list-items input {
+    width: 30px;
+    padding: 5px 0px;
+    text-align: center;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+    background-color: #f7f7f7;
+}
+
+.order-list-items .quantity-container {
+    float: left;
+    margin-right: 33%;
+}
+
+.order-list-items .price-container {
+    font-family: 'BrandonGrotesque-Bold';
+    color: #b0b0b0;
+    float: left;
+    width: 30px;
+}
+
+.order-list-header {
+    padding-bottom: 20px;
+}
+
+.order-list-container .search-filters {
+    float: left;
+    font-family: 'BrandonGrotesque-Regular';
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-top: 10px;
+    width: 12.5%;
+}
+
+.order-list-container .search-filters label {
+    margin-top: 5px;
+}
+
+#order-status-filters {
+    margin-right: 20px;
+}
+
+.order-status, #order-status-filter {
+    background-color: rgb(247, 247, 247);
+    width: 100px;
+    border: 1px solid #ddd;
+    font-family: 'BrandonGrotesque-Regular';
+    color: #7E7979;
+    text-transform: uppercase;
+    font-size: 11px;
+    padding: 2px;
+}
+.qty span{
+    text-align: center;
+}
+#search-orders {
+    margin-left: 30px;
+    margin-top: 28px;
+}
+
+.order-list-empty, .meal-list-empty {
+    display: none;
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-family: 'BrandonGrotesque-Regular';
+    text-transform: uppercase;
+    font-size: 12px;
+    float: left;
+}
+
+.search-filters input {
+    width: 115px;
+    padding: 3px 0;
+}
+
+.search-filters label {
+    color: #9B9B9B;
+    font-size: 12px;
+}
+
+
+/*====================================*\
+     &MEAL - LIST and ORDER - LIST
+\*====================================*/
+
+.meal-list-container, .order-list-container, .manage-area-container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.create-meal-wrapper {
+    padding: 10px 0px;
+    float: left;
+}
+
+table#promocodes-list, table#meal-list, table#delivery-area, table#giftcards-list, table#mealtype-area, table#ingredients-area {
+    width: 100%;
+    margin: 20px auto;
+}
+
+.filter-container {
+    padding: 21px 0px;
+}
+
+select.meallist-select {
+    margin-right: 30px;
+    background-color: rgb(247, 247, 247);
+    width: 117px;
+    border: 1px solid #ddd;
+    font-family: 'BrandonGrotesque-Regular';
+    color: #7E7979;
+    text-transform: uppercase;
+    font-size: 11px;
+    padding: 2px
+}
+
+input#searchBy-name {
+    border: 1px solid rgb(221, 221, 221);
+    padding: 4px 0;
+    padding-left: 10px;
+}
+
+#searchinMeal {
+    height: 24px;
+    width: 50px;
+    margin: 0;
+    margin-left: 8px;
+    line-height: 25px;
+    letter-spacing: 2px;
+}
+
+.search-filters input[type=date] {
+    font-size: 9px;
+    color: #9B9B9B;
+    outline: none;
+}
+
+.kitchen-filter {
+    height: 50px;
+}
+
+#kitchen-order-container td {
+    cursor: default;
+}
+
+.meal-produced {
+    cursor: pointer;
+}
+
+.meal-list-img {
+    height: auto;
+    width: 50px;
+    max-width: 50px;
+}
+
+#meal-list .primary-meal ,.not-sold-out,.ambassador{
+    cursor: pointer;
+    color: green;
+}
+
+#meal-list .non-primary-meal ,.sold-out,.not-ambassador{
+    cursor: pointer;
+    color: red;
+}
+
+
+/*=======================*\
+     &CREATE -MEAL
+\*=======================*/
+
+.admin-createmeal-inner-wrapper {
+    margin-top: 150px;
+    float: left;
+}
+
+#meal-image, #chef-image {
+    width: auto;
+    height: auto;
+    max-width: 150px;
+    margin-left: 40px;
+}
+
+.create-meal-container {
+    margin: 0 auto;
+    width: 90%;
+    border: 1px solid #D0D0D0;
+    background: #fff;
+    margin-bottom: 30px;
+}
+
+.create-meal-header {
+    font-family: 'BrandonGrotesque-Medium';
+    width: 100%;
+    text-align: center;
+    background-color: #f7f7f7;
+    padding: 13px 0;
+    font-size: 22px;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.section-container {
+    margin: 0 auto;
+    width: 85%;
+}
+
+.create-meal-input {
+    padding: 8px 25px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    background-color: #f7f7f7;
+}
+
+.section-1 input {
+    margin-right: 20px;
+}
+
+.section-1, .section-2, .section-3, .section-4, .section-5, .section-6 {
+    padding: 20px 0;
+    border: 1px solid #ddd;
+    margin-top: 30px;
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+.section-2 span {
+    float: left;
+    padding-top: 20px;
+}
+
+.section-header {
+    position: absolute;
+    top: -12px;
+    background-color: #fff;
+    font-family: 'BrandonGrotesque-bold';
+    left: 41px;
+    color: grey;
+    width: 92px;
+    text-align: center;
+}
+
+.content-1 {
+    float: left;
+    width: 100%;
+    padding: 10px 60px;
+}
+
+.section-1 input:first-child {
+    margin-right: 20px;
+    width: 206px;
+    float: left;
+    margin-top: 33px;
+}
+
+.fileUpload {
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+}
+
+.section-3 .fileUpload, .section-4 .fileUpload {
+    margin-left: 55%;
+}
+
+.fileUpload input {
+    cursor: pointer;
+    font-size: 100px;
+    -moz-opacity: 0.01;
+    opacity: 0.01;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.upload-button {
+    background: #A9D77B;
+    -moz-border-radius: 5px !important;
+    -webkit-border-radius: 5px !important;
+    border-radius: 5px;
+    color: #000 !important;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 11px !important;
+    font-weight: bold;
+    margin-right: 5px;
+    padding: 7px 20px !important;
+    font-family: 'BrandonGrotesque-Black' !important;
+    color: #fff !important;
+    text-transform: uppercase;
+    margin-top: 33px;
+    margin-left: 40px;
+}
+
+.text-area-container {
+    width: 50%;
+    float: left;
+    font-family: 'ProximaNova-regular';
+}
+
+textarea#description {
+    height: 100px;
+    width: 79%;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 4px;
+    background-color: rgb(247, 247, 247);
+    resize: none;
+}
+
+input#meal-price {
+    margin-bottom: 36px;
+}
+
+.meal-image-upload-container {
+    width: 25%;
+    float: right;
+}
+
+.dummy-image {
+    height: 100px;
+    width: 100px;
+    border: 1px solid #ddd;
+    float: left;
+    background: url(../../../images/5213421.png);
+    background-size: cover;
+}
+
+.forminput-wrapper {
+    float: left;
+    position: relative;
+    width: 280px;
+    padding-top: 15px;
+}
+
+#chef-image-input-error, #meal-image-input-error {
+    left: 30px;
+}
+
+#description-error {
+    bottom: 107px;
+}
+
+#meal-price-error {
+    bottom: 75px;
+}
+
+#create-meal-mealType-error {
+    bottom: 73px;
+}
+
+.section-2 .section-header {
+    width: 130px;
+}
+
+.section-3 .section-header {
+    width: 150px;
+}
+
+.preperation-container-1 input:first-child, .preperation-container-2 input:first-child {
+    width: 140px;
+}
+
+.section-3 span, .section-4 span {
+    width: 100%;
+    float: left;
+    padding-top: 20px;
+}
+
+.section-4 {
+    width: 100%;
+    float: left;
+}
+
+.ingredients-container, .pre-requisties-container {
+    width: 50%;
+    float: left;
+}
+
+.list-container {
+    float: left;
+    width: 100%;
+    padding-left: 63px;
+    word-break: break-all;
+}
+
+.list-container ul li {
+    list-style-type: initial;
+    float: left;
+    width: 100%;
+    font-family: 'BrandonGrotesque-Regular';
+    color: #909090;
+}
+
+.list-container ul {
+    width: 60%;
+    float: left;
+}
+
+.preperation-container-1 .add-preparation-button, .preperation-container-2 .add-preparation-button {
+    margin-top: 102px;
+}
+
+.preperation-container-1, .preperation-container-2 {
+    width: 50%;
+    float: left;
+}
+
+.section-5, .section-6 {
+    width: 100%;
+    float: left;
+}
+
+.section-5 .forminput-wrapper {
+    width: 240px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+.add-list-button, .add-preparation-button, #add-tips-main, #add-tips-sub-list, .add-nutrition-content, .add-ingredients-list-button {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    background: rgb(169, 215, 123);
+    border: 1px hidden;
+    font-family: 'BrandonGrotesque-Black';
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.add-preparation-button, .add-list-button, .add-ingredients-list-button {
+    margin-top: 33px;
+}
+
+.add-nutrition-content {
+    margin-top: 33px;
+}
+
+#add-tips-sub-list {
+    margin-left: 10px;
+}
+
+#add-tips-main {
+    margin-top: 30px;
+}
+
+.section-1 select {
+    padding: 4px 35px;
+    border: 1px solid rgb(221, 221, 221);
+    background: #fff;
+    font-family: 'BrandonGrotesque-Regular';
+    color: #909090;
+    text-transform: uppercase;
+}
+
+#create-meal-mealType {
+    height: 69px;
+}
+
+.create-button-container {
+    text-align: center;
+}
+
+input#create-meal-button {
+    margin-top: 30px;
+}
+
+.section-5 input {
+    margin-right: 20px;
+}
+
+.remove-tr, .add-tr, .del-sub-list, .add-tips-sublist, .del-tips-sub-list {
+    height: 14px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.nutrients-popup-wrapper .popup-container .content, .tips-tricks-wrapper .popup-container .content {
+    padding: 0 !important;
+}
+
+.nutrients-popup-wrapper .popup-input, .tips-tricks-wrapper .popup-input {
+    height: 30px;
+    border: 1px solid #ddd;
+    background: #f7f7f7;
+    border-radius: 3px;
+    padding-left: 5px;
+    color: #909090;
+    width: 220px;
+}
+
+.nutrients-popup-wrapper .popup {
+    height: 300px;
+}
+
+.tips-tricks-wrapper .popup {
+    height: 195px;
+    margin-top: -50px;
+}
+
+.nutrients-popup-wrapper .popup-container, .tips-tricks-wrapper .popup-container {
+    padding: 15px;
+    width: 253px;
+    margin: 0 auto;
+}
+
+.nutrients-popup-wrapper, .tips-tricks-wrapper {
+    display: none;
+}
+
+.tips-sublist-input-container ul li {
+    font-size: 15px;
+    color: grey;
+    text-transform: lowercase;
+    text-align: left;
+    padding-left: 160px;
+}
+
+.img-container {
+    width: 50%;
+    float: left;
+}
+
+.section-6 .section-header {
+    width: 138px;
+}
+
+table#tips-and-tricks-table {
+    width: 100%;
+}
+
+.section-6 table thead th:first-child {
+    width: 330px;
+}
+
+.tips-sublist-input-container {
+    width: 100%;
+    float: left;
+}
+
+.section-6 table .create-meal-input {
+    padding-left: 1px;
+}
+
+.remove {
+    height: 14px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.nutrient-main-container {
+    width: 45%;
+    border: 1px solid #9B9B9B;
+    float: left;
+    margin: 10px;
+    position: relative;
+}
+
+.nutrient-main-container .remove {
+    position: absolute;
+    right: -6px;
+    top: -6px;
+    height: 15px;
+}
+
+.nutrient-main-container span {
+    padding: 0 10px;
+}
+
+.nutrient-sub, .nutrient-main {
+    padding-left: 10px;
+    border: 1px solid #dddddd;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.nutrient-sub {
+    margin-left: 50px;
+    position: relative;
+}
+
+.nutrient-main-container .remove-sub-nutrients {
+    top: 17px;
+    right: 10px;
+}
+
+.nutrient-main .add-nutrient-sublist {
+    float: right;
+    height: 20px;
+    margin: 0px 5px 5px 0;
+    cursor: pointer;
+}
+
+.nutrient-main div, .nutrient-sub div {
+    width: 100%
+}
+
+
+/**********************\
+  Manage delivery areas
+\**********************/
+
+#delivery-area .btn-small-primary {
+    line-height: 20px;
+    min-width: 80px;
+    padding: 0;
+    height: 25px;
+}
+
+.add-deliveryarea-wrapper {
+    padding-top: 20px;
+}
+
+.manage-area-container .popup {
+    height: 190px;
+}
+
+.manage-area-container .popup .header, 
+.user-list-popup .header, 
+.edit-meal-order-popup .header,
+.edit-meal-available-popup .header{
+    font-family: 'BrandonGrotesque-Bold';
+    color: rgb(107, 107, 107);
+    padding: 11px 0px;
+    background-color: #f7f7f7;
+    padding-left: 20px;
+}
+
+.user-credits-input {
+    width: 200px;
+    height: 30px;
+}
+
+#user-credit-form .content {
+    display: none;
+}
+
+.popup-input-wrapper {
+    margin-left: 95px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.manage-area-container .popup-container .button {
+    text-align: none;
+    padding: 10px 80px;
+}
+
+.manage-area-container .popup-container .content span {
+    display: block;
+}
+
+#edit-delivery-area, #add-delivery-area, #add-mealtype {
+    float: left;
+    display: none;
+}
+
+.manage-area-container #close {
+    float: right;
+}
+
+.popup-message {
+    position: relative;
+    width: 100%;
+    top: 103px;
+    padding: 10px 0px;
+    text-align: center;
+    background: #A9D77B;
+    display: none;
+}
+
+.popup-message span {
+    font-family: 'ProximaNova-semibold';
+    color: #fff;
+}
+
+.confirm-popup-wrapper {
+    display: none;
+}
+
+#new-address-error {
+    left: 0px;
+    bottom: 23px;
+    width: 202px;
+    padding-left: 0;
+}
+
+
+/*=======================*\
+        &GIFT-CARDS
+\*=======================*/
+
+.popup-giftcard {
+    height: 300px;
+}
+
+.popup-giftcard input {
+    width: 170px;
+}
+
+.giftcard-list-empty, .promocodes-list-empty {
+    display: none;
+}
+
+input#add-gift-card, input#add-new-promo {
+    margin-top: 20px;
+}
+
+input#add-gift-card {
+    display: none;
+}
+
+.no-popup .btn-small-primary, td .btn-small-primary {
+    height: 25px;
+    line-height: 10px;
+}
+
+#new-amount-error, #new-date-error, #new-code-error {
+    position: absolute;
+    top: 0;
+}
+
+#total-amount {
+    width: 100px;
+}
+
+.filter-container .search-filters:nth-child(6) {
+    width: 11%;
+}
+
+.search-filter-input {
+    width: 20%;
+    float: left;
+    margin-right: 30px;
+}
+
+.search-filter-input input {
+    padding: 3px 3px;
+}
+
+#search-coupon-code {
+    margin-top: 17px;
+}
+
+form.edit-gift-card #update {
+    width: initial;
+    margin-bottom: 1px;
+}
+
+form.edit-gift-card #new-name-error {
+    bottom: 26px;
+}
+
+
+/*CR1*/
+
+
+/*=======================*\
+       &INGREDIENTS
+\*=======================*/
+
+#ingredientContainer .popup {
+    height: 230px;
+}
+
+.ingredient-image-upload-element {
+    display: none !important;
+}
+
+.create-meal-container .ingredients-container select {
+    padding: 4px 4px;
+    border: 1px solid rgb(221, 221, 221);
+    background: #fff;
+    font-family: 'BrandonGrotesque-Regular';
+    color: #909090;
+    text-transform: uppercase;
+}
+
+#ingredientImageHolder li {
+    font-family: 'BrandonGrotesque-Regular';
+    color: #909090;
+    width: 100px;
+    clear: both;
+    /*height: 100px;*/
+    list-style: none;
+    display: inline-block;
+    margin: 10px;
+    text-transform: capitalize;
+}
+
+#ingredientImageHolder span {
+    /*text-align: center;*/
+    padding: 0;
+}
+
+
+/*=======================*\
+       &DELIVERY SLOTS
+\*=======================*/
+
+.slot-section-header {
+    padding: 15px;
+    border-bottom: 2px solid #8EC657;
+    margin: 0px 31px;
+}
+
+.slot-section-header h2 {
+    text-align: left;
+    font-size: 27px;
+    font-family: 'BrandonGrotesque-Regular';
+    margin: 0;
+}
+
+.week-section {
+    max-width: 49%;
+    padding: 10px;
+    width: 49%;
+    position: absolute;
+    clear: both;
+}
+
+.week-section thead th {
+    vertical-align: bottom;
+    ;
+}
+
+.week-section th {
+    padding: 0px 4px;
+    vertical-align: middle;
+    font-family: BrandonGrotesque-Bold;
+}
+
+.week-section td, .week-section th {
+    height: 50px;
+    color: #000;
+}
+
+.week-section td {
+    font-family: 'BrandonGrotesque-Regular';
+    padding: 8px;
+}
+
+.week-section tbody th {
+    text-align: right;
+}
+
+.week-section input[type=text] {
+    width: 63px;
+    height: 33px;
+    border: 1px solid #d0d0d0;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 20px;
+    color: #656464;
+    font-family: 'BrandonGrotesque-Regular';
+}
+
+.week-header {
+    background: #8EC657;
+    padding: 7px;
+    text-align: center;
+    font-family: BrandonGrotesque-Bold;
+    color: #F9F3F3;
+}
+
+.week-section-wrapper {
+    position: relative;
+    min-height: 500px;
+    margin: 22px 0px;
+}
+
+#nextWeekSection {
+    right: 0;
+}
+
+#nextWeekSection .week-header {
+    background: #FFFFFF;
+    border: 1px solid #000;
+    color: #000;
+}
+
+.week-section table {
+    width: 100%;
+}
+
+.apply-slot-section {
+    text-align: center;
+}
+
+#selectIngredientsError {
+    display: none;
+}
+
+#admin-mainWrapper #menu li a {
+    margin: 0 10px 0 0;
+}
+
+#reviewsArea {
+    margin: 27px auto;
+    width: 100%;
+}
+
+#reviewsArea .rating-star {
+    float: left;
+}
+
+#reviewsArea td:first-child {
+    text-align: left;
+}
+#ingredientImageHolder img{
+    width: 50px;
+    max-width: 50px;
+}
+#ingredientImageHolder li div{
+    text-align: center;
+}
+#nutritionSection{
+    padding: 20px 60px;
+}
+#nutritionSection table{
+    margin: 0 auto;
+    width: 100%;
+    table-layout: fixed;
+    color: #9B9B9B;
+    border-collapse: collapse;
+}
+#nutritionSection thead th:first-child,
+#nutritionSection tbody tr td:first-child,
+#nutritionSection tbody tr th:first-child{
+    border-left: 1px solid #ddd;
+}
+#nutritionSection thead th:last-child,
+#nutritionSection tbody tr td:last-child{
+    border-right: 1px solid #ddd;
+}
+#nutritionSection thead th{
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0px;
+    color: #929292;
+    text-align: center;
+    font-family: 'BrandonGrotesque-Bold';
+    font-weight: normal;
+}
+#nutritionSection tbody tr:last-child th,
+#nutritionSection tbody tr:last-child td{
+    border-bottom: 1px solid #ddd;
+}
+#nutritionSection tbody th{
+    padding: 25px 41px 0px 41px;
+    color: #959595;
+    text-align: left;
+    font-weight: normal;
+    font-family: 'BrandonGrotesque-Medium';
+}
+#nutritionSection tbody td{
+    text-align: left;
+    padding: 4px 50px;
+    color: #BBBBBB;
+    font-size: 16px;
+    font-family: BrandonGrotesque-Regular;
+}
+#nutritionSection td div{
+    width: 200px;
+    margin: 0 auto;
+    position: relative;
+}
+#nutritionSection td span{
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    color: #6D6D6D;
+    font-family: BrandonGrotesque-Regular;
+    font-size: 16px;
+}
+#nutritionSection td input{
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #989898;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    color: #5A5959;
+    font-family: BrandonGrotesque-Regular;
+    font-size: 13px;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+input[type=number]{
+    -moz-appearance:textfield;
+}
+#meal-list th{
+    padding: 10px 3px;
+}
+#meal-list .btn-small-primary{
+    min-width: 85px;
+}

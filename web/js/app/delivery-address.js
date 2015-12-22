@@ -1,1 +1,369 @@
-function removeAddress(a){var b=baseURL+"remove_address/",c={"session-key":localStorage.session_key},d={id:a};data=JSON.stringify(d);var e=new AjaxHttpSender;e.sendPost(b,c,data,removeAddressCallback)}function getAddress(a){var b=baseURL+"get_address_list/",c={"session-key":localStorage.session_key},d={id:a};data=JSON.stringify(d);var e=new AjaxHttpSender;e.sendPost(b,c,data,getAddressCallback)}function autoPopulateAdressess(a){$("#editaddress-container ol").empty(),$.each(a.address_list,function(a,b){$("#editaddress-container ol").append('<li class="address"><div class ="button"><a href="#" data-id="'+b.id+'" class="edit-address btn btn-small-secondary">EDIT</a><a href="#" data-id="'+b.id+'" class="remove-address btn btn-small-secondary">REMOVE</a></div><div class="address-content"><span class="address-name">'+b.first_name+" "+b.last_name+"</span>"+(1==b.is_business&&b.company.length>0?"<span>"+b.company+"</span>":"")+'<span class="address-street">'+b.street+", "+b.building+'</span><span class="address-city">'+b.city+", "+b.state+'</span><span class="address-mobile">'+b.phone+'</span><span class="address-zip">'+b.zip+'</span><span class="green primary-address add-primary" data-id="'+b.id+'">PRIMARY ADDRESS</span><span class="non-primary-address add-primary" data-id="'+b.id+'">MAKE THIS YOUR PRIMARY ADDRESS</span></div></li>'),1==b.is_primary?($(".primary-address:last").addClass("show"),$(".remove-address:last").addClass("hide")):($(".non-primary-address:last").addClass("show"),$(".remove-address:last").addClass("show"))})}function getNewAddressFromForm(){var a=$(".addaddress-popup"),b={first_name:a.find("input[name*='firstname']").val(),last_name:a.find("input[name*='lastname']").val(),phone:a.find("input[name*='phonenumber']").val(),zip:a.find("input[name*='zip']").val(),street:a.find("input[name*='street']").val(),city_id:a.find(".city-selector").val(),state_id:a.find(".state-selector").val(),building:a.find("input[class*='apartment']").val(),is_primary:1==a.find("input[name='is-primary']").is(":checked")?1:0,email:a.find("input[name*='email']").val(),is_business:a.find("input[name=is-business]").prop("checked")?1:0,company:a.find("input[id*='company-name']").val()};return b}function addAddress(){var a=getNewAddressFromForm(),b=baseURL+"add_address/",c={"session-key":localStorage.session_key},d={first_name:a.first_name,last_name:a.last_name,phone:a.phone,zip:a.zip,city_id:a.city_id,street:a.street,building:a.building,is_primary:a.is_primary,email:a.email,state_id:a.state_id,is_business:a.is_business,company:a.company};data=JSON.stringify(d);var e=new AjaxHttpSender;e.sendPost(b,c,data,addAddressCallback)}function populateAddressToForm(a){var b=$(".addaddress-popup"),c=JSON.parse(localStorage.delivery_addressess);$.each(c.address_list,function(c,d){d.id==a&&(b.find(".state-selector").val(d.state_id),b.find("input[name*='firstname']").val(d.first_name),b.find("input[name*='lastname']").val(d.last_name),b.find("input[name*='phonenumber']").val(d.phone),b.find("input[name*='zip']").val(d.zip),b.find("input[name*='city']").val(d.city),b.find("input[name*='street']").val(d.street),b.find("input[class*='apartment']").val(d.building),b.find("input[name*='email']").val(d.email),1==d.is_primary?b.find("input[name='is-primary']").prop("checked",!0):b.find("input[name='is-primary']").prop("checked",!1),1==d.is_business?(b.find("input[name=is-business]").prop("checked",!0),$("#company-name").val(d.company),$("#companySection").show()):(b.find("input[name=is-business]").prop("checked",!1),$("#company-name").val(""),$("#companySection").hide()))})}function editAddress(a,b,c){var d=baseURL+"update_address/"+a+"/",e={"session-key":localStorage.session_key},f={};if(b?f.is_primary=b:f.is_primary=0,"justId"!=c){var g=getNewAddressFromForm();f.first_name=g.first_name,f.last_name=g.last_name,f.phone=g.phone,f.zip=g.zip,f.city_id=g.city_id,f.street=g.street,f.building=g.building,f.email=g.email,f.state_id=g.state_id,f.is_business=g.is_business,f.company=g.company}data=JSON.stringify(f);var h=new AjaxHttpSender;h.sendPost(d,e,data,editAddressCallback)}function getStates(){var a=baseURL+"get_states/",b={"session-key":localStorage.session_key},c={search:"New York"};data=JSON.stringify(c);var d=new AjaxHttpSender;d.sendPost(a,b,data,getStatesCallback)}function isAddress(){$("#editaddress-container .content ol").is(":empty")?($("#editaddress-container .content .message").show(),$(".update-delivery-address").hide()):($("#editaddress-container .content .message").hide(),$(".update-delivery-address").show())}var removeAddressCallback={success:function(a,b){var c=JSON.parse(a);1==c.status?(getAddress(),isAddress()):showErrorPopup(c)},failure:function(a,b,c){}},getAddressCallback={success:function(a,b){var c=JSON.parse(a);1==c.status?(localStorage.delivery_addressess=a,autoPopulateAdressess(c),isAddress()):showErrorPopup(c)},failure:function(a,b,c){}},addAddressCallback={success:function(a,b){var c=JSON.parse(a);1==c.status?(getAddress(),$(".addresspopup-wrapper").hide()):showErrorPopup(c)},failure:function(a,b,c){}},editAddressCallback={success:function(a,b){var c=JSON.parse(a);1==c.status?(getAddress(),$(".addresspopup-wrapper").hide()):showErrorPopup(c)},failure:function(a,b,c){}},getStatesCallback={success:function(a,b){var c=JSON.parse(a);localStorage["delivery-states"]=a,1==c.status?$.each(c.state_list,function(a,b){$(".state-selector").append($("<option/>",{value:b.id,text:b.name}))}):showErrorPopup(userDetails)},failure:function(a,b,c){}};$(document).ready(function(){$(document).on("change",".state-selector",function(){$(this).val()}),$("#savepopup-data").on("click",function(a){if(a.preventDefault(),"SAVE ADDRESS"==$(this).val()){var b=$(this).attr("data-id"),c=0;$("form.addaddress-popup").valid()?($("input[name='is-primary']").is(":checked")&&(c=1),editAddress(b,c)):$("#address-line-1-error").is(":visible")&&$("#address-line-1,.apartment").addClass("margin-validate")}"ADD ADDRESS"==$(this).val()&&($("form.addaddress-popup").valid()?($("#address-line-1,.apartment").removeClass("margin-validate"),addAddress()):$("#address-line-1-error").is(":visible")&&$("#address-line-1,.apartment").addClass("margin-validate")),$("#isPrimary").removeAttr("disabled")}),$(document).on("click",".non-primary-address.add-primary",function(){var a=$(this).data().id;editAddress(a,1,"justId")}),$(document).on("click",".remove-address",function(){$(".popup-wrapper .content").find("span").text("Are you sure want to remove this address?"),$(".popup-wrapper").show();var a=$(this).data().id;$("#yes-button").on("click",function(){$(".popup-wrapper").hide(),removeAddress(a)}),$("#no-button").on("click",function(){$(".popup-wrapper").hide()})}),$("#add-address").on("click",function(){$(".addaddress-popup")[0].reset(),$("#companySection").hide(),$(".editaddress-popup .header span").text("ADD A NEW ADDRESS"),$("#savepopup-data").val("ADD ADDRESS"),userDetails&&$("#guest-email").val(userDetails.email),$("#savepopup-data").show(),$(".addresspopup-wrapper").show(),$("#address-line-1,.apartment").removeClass("margin-validate"),$("#isPrimary").removeAttr("disabled")}),$("#cancel").on("click",function(){$(".addaddress-popup").validate().resetForm(),$(".addresspopup-wrapper").hide(),$("#isBusiness").prop("checked",!1),$("#company-name").val(""),$("#companySection").hide(),$("#address-line-1,.apartment").removeClass("margin-validate"),$("#isPrimary").removeAttr("disabled")}),$(document).on("click",".edit-address",function(){$(".editaddress-popup .header span").text("EDIT ADDRESS"),$("#savepopup-data").val("SAVE ADDRESS"),currentId=$(this).data().id,$("#savepopup-data").attr("data-id",currentId),populateAddressToForm(currentId),$(".addresspopup-wrapper").show(),$("#address-line-1,.apartment").removeClass("margin-validate"),1===$(".address").length&&$("#isPrimary").prop("disabled","disabled")}),$(document).on("change","#isBusiness",function(a){$("#isBusiness").prop("checked")?$("#companySection").show():$("#companySection").hide()}),$("#companySection").hide(),getStates(),getAddress(),CartItemCount()});
+// Remove address API
+var removeAddressCallback = {
+    success: function (data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            getAddress();
+            isAddress();
+        } else {
+            showErrorPopup(userDetails);
+        }
+    },
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
+}
+
+function removeAddress(id) {
+    var url = baseURL + "remove_address/",
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    userData = {
+        "id": id
+    };
+    data = JSON.stringify(userData);
+    var removeAddressInstance = new AjaxHttpSender();
+    removeAddressInstance.sendPost(url, header, data, removeAddressCallback);
+}
+
+
+var getAddressCallback = {
+    success: function (data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            localStorage['delivery_addressess'] = data;
+            autoPopulateAdressess(userDetails);
+            isAddress();
+        } else {
+            showErrorPopup(userDetails);
+        }
+    },
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
+}
+
+function getAddress(id) {
+    var url = baseURL + "get_address_list/",
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    userData = {
+        "id": id
+    };
+    data = JSON.stringify(userData);
+    var getAddressInstance = new AjaxHttpSender();
+    getAddressInstance.sendPost(url, header, data, getAddressCallback);
+}
+
+function autoPopulateAdressess(userDetails) {
+    $("#editaddress-container ol").empty();
+    $.each(userDetails.address_list, function (key, value) {
+        $("#editaddress-container ol").append('<li class="address">' +
+                '<div class ="button">' +
+                '<a href="#" data-id="' + value.id + '" class="edit-address btn btn-small-secondary">EDIT</a>' +
+                '<a href="#" data-id="' + value.id + '" class="remove-address btn btn-small-secondary">REMOVE</a></div>' +
+                '<div class="address-content">' +
+                '<span class="address-name">' + value.first_name + " " + value.last_name + '</span>' +
+                ((value.is_business == 1 && value.company.length > 0) ? ("<span>" + value.company + "</span>") : "") +
+                '<span class="address-street">' + value.street + ', ' + value.building + '</span>' +
+                '<span class="address-city">' + value.city + ', ' + value.state + '</span>' +
+                '<span class="address-mobile">' + value.phone + '</span>' +
+                '<span class="address-zip">' + value.zip + '</span>' +
+                '<span class="green primary-address add-primary" data-id="' + value.id + '">PRIMARY ADDRESS</span>' +
+                '<span class="non-primary-address add-primary" data-id="' + value.id + '">MAKE THIS YOUR PRIMARY ADDRESS</span>' +
+                '</div></li>');
+
+        if (value.is_primary == 1) {
+            $('.primary-address:last').addClass("show");
+            $('.remove-address:last').addClass("hide");
+        } else {
+            $('.non-primary-address:last').addClass("show");
+            $('.remove-address:last').addClass("show");
+        }
+    });
+}
+
+//Add address API
+var addAddressCallback = {
+    success: function (data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            getAddress();
+            $(".addresspopup-wrapper").hide();
+        } else {
+            showErrorPopup(userDetails);
+        }
+    },
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
+}
+
+function getNewAddressFromForm() {
+    var $addressPopup = $(".addaddress-popup");
+    var newAddress = {
+        first_name: $addressPopup.find("input[name*='firstname']").val(),
+        last_name: $addressPopup.find("input[name*='lastname']").val(),
+        phone: $addressPopup.find("input[name*='phonenumber']").val(),
+        zip: $addressPopup.find("input[name*='zip']").val(),
+        street: $addressPopup.find("input[name*='street']").val(),
+        city_id: $addressPopup.find(".city-selector").val(),
+        state_id: $addressPopup.find(".state-selector").val(),
+        building: $addressPopup.find("input[class*='apartment']").val(),
+        is_primary: $addressPopup.find("input[name='is-primary']").is(":checked") == true ? 1 : 0,
+        email: $addressPopup.find("input[name*='email']").val(),
+        is_business: $addressPopup.find("input[name=is-business]").prop("checked") ? 1 : 0,
+        company: $addressPopup.find("input[id*='company-name']").val()
+    }
+    return newAddress;
+}
+
+function addAddress() {
+    var newAddress = getNewAddressFromForm(),
+            url = baseURL + "add_address/",
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    userData = {
+        "first_name": newAddress.first_name,
+        "last_name": newAddress.last_name,
+        "phone": newAddress.phone,
+        "zip": newAddress.zip,
+        "city_id": newAddress.city_id,
+        "street": newAddress.street,
+        "building": newAddress.building,
+        "is_primary": newAddress.is_primary,
+        "email": newAddress.email,
+        "state_id": newAddress.state_id,
+        is_business: newAddress.is_business,
+        company: newAddress.company
+    };
+    data = JSON.stringify(userData);
+    var addAddressInstance = new AjaxHttpSender();
+    addAddressInstance.sendPost(url, header, data, addAddressCallback);
+}
+
+//Edit address API
+var editAddressCallback = {
+    success: function (data, textStatus) {
+        var userDetails = JSON.parse(data);
+        if (userDetails.status == 1) {
+            getAddress();
+            $(".addresspopup-wrapper").hide();
+        } else {
+            showErrorPopup(userDetails);
+        }
+    },
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
+}
+
+function populateAddressToForm(id) {
+    var $addressPopup = $(".addaddress-popup"),
+            deliveryAddressList = JSON.parse(localStorage['delivery_addressess']);
+    $.each(deliveryAddressList.address_list, function (key, value) {
+        if (value.id == id) {
+            $addressPopup.find(".state-selector").val(value.state_id);
+            $addressPopup.find("input[name*='firstname']").val(value.first_name);
+            $addressPopup.find("input[name*='lastname']").val(value.last_name);
+            $addressPopup.find("input[name*='phonenumber']").val(value.phone);
+            $addressPopup.find("input[name*='zip']").val(value.zip);
+            $addressPopup.find("input[name*='city']").val(value.city);
+            $addressPopup.find("input[name*='street']").val(value.street);
+            $addressPopup.find("input[class*='apartment']").val(value.building);
+            $addressPopup.find("input[name*='email']").val(value.email);
+            if (value.is_primary == 1) {
+                $addressPopup.find("input[name='is-primary']").prop("checked", true);
+            } else {
+                $addressPopup.find("input[name='is-primary']").prop("checked", false);
+            }
+            if (value.is_business == 1) {
+                $addressPopup.find("input[name=is-business]").prop("checked", true);
+                $("#company-name").val(value.company);
+                $("#companySection").show();
+            } else {
+                $addressPopup.find("input[name=is-business]").prop("checked", false);
+                $("#company-name").val("");
+                $("#companySection").hide();
+            }
+        }
+    });
+}
+
+function editAddress(currentId, primaryAdd, selector) {
+    var url = baseURL + "update_address/" + currentId + "/",
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    userData = {};
+    if (primaryAdd) {
+        userData.is_primary = primaryAdd;
+    } else {
+        userData.is_primary = 0;
+    }
+    if (selector != "justId") {
+        var newAddress = getNewAddressFromForm();
+        userData.first_name = newAddress.first_name;
+        userData.last_name = newAddress.last_name;
+        userData.phone = newAddress.phone;
+        userData.zip = newAddress.zip;
+        userData.city_id = newAddress.city_id;
+        userData.street = newAddress.street;
+        userData.building = newAddress.building;
+        userData.email = newAddress.email;
+        userData.state_id = newAddress.state_id;
+        userData.is_business = newAddress.is_business;
+        userData.company = newAddress.company;
+    }
+    data = JSON.stringify(userData);
+    var editAddressInstance = new AjaxHttpSender();
+    editAddressInstance.sendPost(url, header, data, editAddressCallback);
+}
+
+// Get states API
+var getStatesCallback = {
+    success: function (data, textStatus) {
+        var stateList = JSON.parse(data);
+        localStorage['delivery-states'] = data;
+        if (stateList.status == 1) {
+            $.each(stateList.state_list, function (index, value) {
+                $('.state-selector').append($('<option/>', {
+                    value: value.id,
+                    text: value.name,
+                }));
+            });
+        } else {
+            showErrorPopup(userDetails);
+        }
+    },
+    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+    }
+}
+
+function getStates() {
+    var url = baseURL + "get_states/",
+            header = {
+                "session-key": localStorage["session_key"]
+            },
+    userData = {
+        "search": "New York"
+    };
+    data = JSON.stringify(userData);
+    var getStatesInstance = new AjaxHttpSender();
+    getStatesInstance.sendPost(url, header, data, getStatesCallback);
+}
+
+//check is there any addresses exist 
+function isAddress() {
+    if ($('#editaddress-container .content ol').is(':empty')) {
+        $('#editaddress-container .content .message').show();
+        $('.update-delivery-address').hide();
+    } else {
+        $('#editaddress-container .content .message').hide();
+        $('.update-delivery-address').show();
+    }
+}
+
+$(document).ready(function () {
+    $(document).on('change', '.state-selector', function () {
+        var stateSelectedId = $(this).val();
+    });
+
+    $("#savepopup-data").on('click', function (e) {
+        e.preventDefault();
+        if ($(this).val() == "SAVE ADDRESS") {
+            var currentId = $(this).attr("data-id"),
+                    isPrimary = 0;
+            if ($('form.addaddress-popup').valid()) {
+                if ($("input[name='is-primary']").is(":checked")) {
+                    isPrimary = 1;
+                }
+                editAddress(currentId, isPrimary);
+            } else {
+                if ($("#address-line-1-error").is(":visible")) {
+                    $("#address-line-1,.apartment").addClass("margin-validate");
+                }
+            }
+        }
+        if ($(this).val() == "ADD ADDRESS") {
+            if ($('form.addaddress-popup').valid()) {
+                $("#address-line-1,.apartment").removeClass("margin-validate");
+                addAddress();
+            } else {
+                if ($("#address-line-1-error").is(":visible")) {
+                    $("#address-line-1,.apartment").addClass("margin-validate");
+                }
+            }
+        }
+        $("#isPrimary").removeAttr("disabled");
+    });
+
+
+    $(document).on('click', '.non-primary-address.add-primary', function () {
+        var currentId = $(this).data().id;
+        // populateAddressToForm(currentId);
+        editAddress(currentId, 1, "justId");
+    });
+
+    $(document).on('click', '.remove-address', function () {
+        $(".popup-wrapper .content").find("span").text("Are you sure want to remove this address?");
+        $(".popup-wrapper").show();
+        var deleteId = $(this).data().id;
+        $('#yes-button').on('click', function () {
+            $(".popup-wrapper").hide();
+            removeAddress(deleteId);
+        });
+        $('#no-button').on('click', function () {
+            $(".popup-wrapper").hide();
+        });
+    });
+
+    //show addaddress popup 
+    $('#add-address').on("click", function () {
+        $(".addaddress-popup")[0].reset();
+        $("#companySection").hide();
+        $('.editaddress-popup .header span').text('ADD A NEW ADDRESS');
+        $('#savepopup-data').val("ADD ADDRESS");
+        if (userDetails) {
+            $("#guest-email").val(userDetails.email);
+        }
+        $("#savepopup-data").show();
+        $(".addresspopup-wrapper").show();
+        $("#address-line-1,.apartment").removeClass("margin-validate");
+        $("#isPrimary").removeAttr("disabled");
+    });
+    $('#cancel').on("click", function () {
+        $(".addaddress-popup").validate().resetForm();
+        $(".addresspopup-wrapper").hide();
+        $("#isBusiness").prop("checked", false);
+        $("#company-name").val("");
+        $("#companySection").hide();
+        $("#address-line-1,.apartment").removeClass("margin-validate");
+        $("#isPrimary").removeAttr("disabled");
+    });
+
+    //show edit address popup
+    $(document).on("click", ".edit-address", function () {
+        $('.editaddress-popup .header span').text('EDIT ADDRESS');
+        $('#savepopup-data').val("SAVE ADDRESS");
+        currentId = $(this).data().id;
+        $("#savepopup-data").attr("data-id", currentId);
+        populateAddressToForm(currentId);
+        $(".addresspopup-wrapper").show();
+        $("#address-line-1,.apartment").removeClass("margin-validate");
+        if ($(".address").length === 1) {
+            $("#isPrimary").prop("disabled", "disabled");
+        }
+    });
+
+    $(document).on("change", "#isBusiness", function (e) {
+        if ($("#isBusiness").prop("checked")) {
+            $("#companySection").show();
+        } else {
+            $("#companySection").hide();
+        }
+    });
+    $("#companySection").hide();
+    getStates();
+    getAddress();
+    CartItemCount();
+});
