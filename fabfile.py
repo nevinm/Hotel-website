@@ -43,6 +43,10 @@ def deploy():
     """ Deployment Process """
     path = 'public_html/meisterdish/'
     with cd(path), prefix(env.activate):
+        run('cd web')
+        run('npm install')
+        gvar.append(run('grunt build'))
+        run('cd ..')
         gvar.append(run("git checkout QA_release && git pull --no-edit origin QA_release"))
         run("pip install -r requirements.txt")
         run('ls -l meisterdish_server')
