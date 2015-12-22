@@ -1,1 +1,453 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content=""><meta name="author" content=""><title>Meisterdish - Admin</title><script type="text/javascript" src="js/app/redirect-admin.js"></script><link rel="stylesheet" type="text/css" href="../../css/reset.css"><link rel="stylesheet" type="text/css" href="../../css/fontello.css"><link rel="stylesheet" type="text/css" href="../../css/common.css"><link rel="stylesheet" type="text/css" href="css/admin.css"><script type="text/javascript" src="../../js/app/validate-session.js"></script></head><body><div id="admin-mainWrapper"><header id="header"><div class="contentArea adminContentArea"><a href="#"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish"></a><ul id="menu" class="pullRight"><li class="admin-links"><a href="manage-delivery-areas.html">DELIVERY AREA</a></li><li class="admin-links"><a href="promocode.html">PROMOCODES</a></li><li class="admin-links"><a href="giftcards.html">GIFTCARDS</a></li><li class="admin-links"><a href="orderlist.html">ORDERS</a></li><li class="kitchen-links"><a href="#">KITCHEN</a></li><li class="bold admin-links"><a href="meallist.html">MEALS</a></li><li class="admin-links"><a href="mealtype.html">MEAL TYPE</a></li><li class="admin-links"><a href="userlist.html">USERS</a></li><li class="admin-links"><a href="categories.html">CATEGORIES</a></li><li class="admin-links"><a href="ingredients.html">INGREDIENTS</a></li><li class="admin-links"><a href="delivery-slots.html">DELIVERY SLOTS</a></li><li class="admin-links"><a href="meals-review.html">REVIEWS</a></li><li id="navbar-username_hidden" class="bold green"><a href="../account.html"></a></li></ul></div></header><div id="page-container"><div class="admin-createmeal-inner-wrapper"><div class="accountNav"><div class="logout body-text-bold"><a id="logout">LOG OUT</a></div></div><div class="create-meal-container"><div class="create-meal-header">CREATE MEAL</div><form id="create-meal" class="section-container"><div class="section-1"><div class="section-header">DETAILS :</div><div class="content-1"><div class="forminput-wrapper"><label class="body-text-small">Meal Name</label><input type="text" name="mealname" class="create-meal-input" id="meal-name"></div><div class="forminput-wrapper"><label class="body-text-small">Meal Sub Header</label><textarea name="mealsubHeader" class="create-meal-input" id="meal-sub-name"></textarea></div><div class="meal-image-upload-container"><div><img data-id id="meal-image" src="../../images/meal-default.jpg"></div><div class="fileUpload"><span class="upload-button">UPLOAD MEAL IMAGE</span> <input id="meal-image-input" value="" type="file" name="image_upload"></div></div></div><div class="content-1"><div class="text-area-container"><div class="forminput-wrapper"><label class="body-text-small">Description</label><textarea id="description" name="mealdescription" cols="70" rows="50"></textarea></div></div><div class="forminput-wrapper"><label class="body-text-small">Price</label><input type="text" name="mealprice" class="create-meal-input" id="meal-price"></div><div class="forminput-wrapper"><label class="body-text-small">Tax Percentage</label><input type="text" name="mealtax" class="create-meal-input" id="meal-tax"></div><div class="forminput-wrapper"><label class="body-text-small">Calories</label><input type="text" name="calories" class="create-meal-input" id="meal-calories"></div><div class="forminput-wrapper"><label class="body-text-small">Sold Out</label><select name="soldOut" id="soldOut"><option value disabled="disabled">Sold Out</option><option value="1">Yes</option><option value="0" selected="selected">No</option></select></div></div><div class="content-1"><div class="forminput-wrapper"><label class="body-text-small">Chef name</label><input type="text" name="chef_name" class="create-meal-input" id="chef-name"></div><div class="forminput-wrapper"><label class="body-text-small">Chef Comments</label><input type="text" name="chef_comments" class="create-meal-input" id="chef-comments"></div><div class="meal-image-upload-container"><div><img data-id id="chef-image" src="../../images/chef-default.png"></div><div class="fileUpload"><span class="upload-button">UPLOAD CHEF IMAGE</span> <input id="chef-image-input" type="file" name="image_upload" multiple="multiple"></div></div></div><div class="content-1"><div class="forminput-wrapper"><label class="body-text-small">Available</label><input type="number" name="available" id="create-meal-available" min="0" step="2"></div><div class="forminput-wrapper"><label class="body-text-small">Meal-category</label><select name="category" id="create-meal-category"></select></div><div class="forminput-wrapper"><label class="body-text-small">Meal Type</label><select name="meal_type" id="create-meal-mealType" multiple="multiple"><option value="0" selected="selected">NONE</option></select></div></div></div><div class="section-2"><div class="section-header">PREPARATION :</div><div class="content-1"><div class="preperation-container-1"><div class="forminput-wrapper"><label class="body-text-small">Prep-Time</label><input type="text" name="preperationtime" class="create-meal-input" id="meal-prep-time"></div><div class="forminput-wrapper"><label class="body-text-small">All you will be doing</label><input type="text" class="create-meal-input" id="preparation-id-1"></div><input type="button" class="add-preparation-button" value="add"> <span><h3>ALL YOU WILL BE DOING:</h3></span><div class="list-container"><ul></ul></div></div><div class="preperation-container-2"><div class="forminput-wrapper"><label class="body-text-small">Saved-Time</label><input type="text" name="savedtime" class="create-meal-input" id="meal-saved-time"></div><div class="forminput-wrapper"><label class="body-text-small">What we have prepared</label><input type="text" class="create-meal-input" id="preparation-id-2"></div><input type="button" class="add-preparation-button" value="add"> <span><h3>WHAT WE HAVE PREPPED:</h3></span><div class="list-container"><ul></ul></div></div></div></div><div class="section-3"><div class="section-header">ALL YOU NEED:</div><div class="content-1"><div class="pre-requisties-container"><div class="forminput-wrapper"><label class="body-text-small">Pre-requisties</label><input type="text" class="create-meal-input" id="pre-requisties"></div><input type="button" class="add-list-button" value="add"> <span><h3>FROM YOUR KITCHEN:</h3></span><div class="list-container"><ul></ul></div></div><div class="img-container"><img data-id id="kitchen-image" src="../../images/pre-requisites-default.png"></div><div class="fileUpload"><span class="upload-button">UPLOAD IMAGE</span> <input id="kitchen-image-input" type="file" name="image_upload" multiple="multiple"></div></div></div><div class="section-4"><div class="section-header">INGREDIENTS</div><div class="content-1" id="ingredientsContent"><div class="ingredients-container"><div class="forminput-wrapper"><label class="body-text-small">Ingredients</label><select name="ingredient" id="selectIngredients"><option value="0" selected="selected">Select</option></select><label id="selectIngredientsError" for="selectIngredients">Please select ingredients</label></div><input type="button" class="add-ingredients-list-button" id="add-ingredients" value="add"> <span><h3>IN THE BOX :</h3></span><div class="list-container"><ul></ul></div></div><div class="img-container"><ul id="ingredientImageHolder"></ul></div></div></div><div class="section-5" id="nutritionSection"><div class="section-header">NUTRITION</div><table><thead><tr><th></th><th>PER SERVING</th><th>% DAILY VALUE</th></tr></thead><tbody><tr class="main-nutrient-tr"><th data-attr="Calories">CALORIES</th><td><div class="per-serving-input"><input type="text" maxlength="6"></div></td><td></td></tr><tr class="main-nutrient-tr"><th data-attr="Total Fat">TOTAL FAT</th><td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td><td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td></tr><tr class="sub-nutrient-tr"><td data-attr="Saturated Fat">SATURATED FAT</td><td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td><td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td></tr><tr class="sub-nutrient-tr"><td data-attr="Trans Fat">TRANS FAT</td><td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td><td></td></tr><tr class="main-nutrient-tr"><th data-attr="Cholesterol">CHOLESTEROL</th><td><div class="per-serving-input"><input type="text" maxlength="6"><span>mg</span></div></td><td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td></tr><tr class="main-nutrient-tr"><th data-attr="Sodium">SODIUM</th><td><div class="per-serving-input"><input type="text" maxlength="6"><span>mg</span></div></td><td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td></tr><tr class="main-nutrient-tr"><th data-attr="Total Carbohydrate">TOTAL CARBOHYDRATE</th><td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td><td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td></tr><tr class="sub-nutrient-tr"><td data-attr="Dietary Fiber">DIETARY FIBER</td><td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td><td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td></tr><tr class="sub-nutrient-tr"><td data-attr="Sugars">SUGARS</td><td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td><td></td></tr><tr class="main-nutrient-tr"><th data-attr="Protein">PROTEIN</th><td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td><td></td></tr><tr class="main-nutrient-tr"><th data-attr="Vitamins">VITAMINS</th><td></td><td></td></tr><tr class="sub-nutrient-tr"><td data-attr="Vitamin A">VITAMIN A</td><td></td><td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td></tr><tr class="sub-nutrient-tr"><td data-attr="Vitamin C">VITAMIN C</td><td></td><td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td></tr><tr class="sub-nutrient-tr"><td data-attr="Calcium">CALCIUM</td><td></td><td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td></tr><tr class="sub-nutrient-tr"><td data-attr="Iron">IRON</td><td></td><td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td></tr></tbody></table></div><div class="section-6"><div class="section-header">TIPS & TRICKS</div><div class="content-1"><div class="tips-container"><div class="forminput-wrapper"><label class="body-text-small">Video/Image URL</label><input type="text" class="create-meal-input tips-enter-submit" id="tips-video-url"><label id="tips-video-url-label-error">Enter valid image/video URL</label></div><div class="forminput-wrapper"><label class="body-text-small">Title</label><input type="text" class="create-meal-input tips-enter-submit" id="tips-and-tricks"><label id="tips-and-tricks-label-error">Invalid title</label></div><input type="button" id="add-tips-main" value="add"></div></div><div class="content-1"><table id="tips-and-tricks-table"><thead><tr><th>VIDEO/IMAGE URL</th><th>TIPS & TRICKS</th></tr></thead></table></div></div><div class="create-button-container"><input type="submit" class="btn btn-large-primary medium-green" id="create-meal-button" value="SAVE"></div></form></div></div><div class="nutrients-popup-wrapper"><div class="bk-overlay"></div><div class="popup"><div class="header"></div><div class="popup-container"><div class="content"><div class="input-wrapper"><label class="body-text-small">Nutrients</label><input class="popup-input" type="text" id="sub-nutrients"></div><div class="input-wrapper"><label class="body-text-small">Per Serving</label><input class="popup-input" type="text" id="sub-per-serving"></div><div class="input-wrapper"><label class="body-text-small">%Daily Value</label><input class="popup-input" type="text" id="sub-daily-value"></div></div><div class="button"><a href="#!" class="btn btn-small-secondary" id="save-nutrients">SAVE</a> <a href="#!" class="btn btn-small-secondary" id="cancel-nurient-popup">CANCEL</a></div></div></div></div><div class="tips-tricks-wrapper"><div class="bk-overlay"></div><div class="popup"><div class="header"></div><div class="popup-container"><div class="content"><div class="input-wrapper"><label class="body-text-small">Tips and Tricks</label><input class="popup-input" type="text" id="tips_tricks_content"></div></div><div class="button"><a href="#!" class="btn btn-small-secondary" id="save-tips">SAVE</a> <a href="#!" class="btn btn-small-secondary" id="cancel-tips-popup">CANCEL</a></div></div></div></div><div class="popup-wrapper"><div class="bk-overlay"></div><div class="popup"><div class="header"></div><div class="popup-container"><div class="content"><span>SOMTHING WENT WRONG</span></div><div class="button"><a href="#" class="btn btn-small-secondary" id="close">CLOSE</a></div></div></div></div></div></div><script type="text/javascript" src="../../js/libs/jquery.min.js"></script><script type="text/javascript" src="../../js/libs/jquery.validate.min.js"></script><script type="text/javascript" src="../../js/app/ajax-reusable.js"></script><script type="text/javascript" src="../../js/libs/jquery-ui.min.js"></script><script type="text/javascript" src="../../js/app/jquery.fileupload.js"></script><script type="text/javascript" src="../../js/app/common.js"></script><script type="text/javascript" src="js/app/admin.js"></script><script type="text/javascript" src="js/app/create-meal.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Meisterdish - Admin</title>
+        <script type="text/javascript" src='js/app/redirect-admin.js'></script>
+        <link rel="stylesheet" type="text/css" href="../../css/reset.css">
+        <link rel="stylesheet" type="text/css" href="../../css/fontello.css">
+        <link rel="stylesheet" type="text/css" href="../../css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/admin.css">
+        <script type="text/javascript" src='../../js/app/validate-session.js'></script>
+    </head>
+    <body>
+        <div id="admin-mainWrapper">
+            <header id="header">
+                <div class="contentArea adminContentArea">
+                    <a href="#"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
+                    </a>
+                    <ul id="menu" class="pullRight">
+                        <li class='admin-links'>
+                            <a href="manage-delivery-areas.html">DELIVERY AREA</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="promocode.html">PROMOCODES</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="giftcards.html">GIFTCARDS</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="orderlist.html">ORDERS</a>
+                        </li>
+                        <li class="kitchen-links">
+                            <a href="#">KITCHEN</a>
+                        </li>
+                        <li class="bold admin-links">
+                            <a href="meallist.html">MEALS</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="mealtype.html">MEAL TYPE</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="userlist.html">USERS</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="categories.html">CATEGORIES</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="ingredients.html">INGREDIENTS</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="delivery-slots.html">DELIVERY SLOTS</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="meals-review.html">REVIEWS</a>
+                        </li>
+                        <li id="navbar-username_hidden" class="bold green">
+                            <a href='../account.html'></a>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <div id="page-container">
+                <div class='admin-createmeal-inner-wrapper'>
+                    <div class="accountNav">
+                        <div class="logout body-text-bold">
+                            <a id='logout'>LOG OUT</a>
+                        </div>
+                    </div>
+                    <div class="create-meal-container">
+                        <div class="create-meal-header">CREATE MEAL</div>
+                        <form id="create-meal" class="section-container">
+                            <div class="section-1">
+                                <div class="section-header">DETAILS :</div>
+                                <div class="content-1">
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Meal Name</label>
+                                        <input type="text" name="mealname" class="create-meal-input" id="meal-name">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Meal Sub Header</label>
+                                        <textarea name="mealsubHeader" class="create-meal-input" id="meal-sub-name"></textarea>
+                                    </div>
+                                    <div class="meal-image-upload-container">
+                                        <div>
+                                            <img data-id='' id='meal-image' src='../../images/meal-default.jpg' />
+                                        </div>
+                                        <div class="fileUpload">
+                                            <span class='upload-button'>UPLOAD MEAL IMAGE</span>
+                                            <input id="meal-image-input" value="" type="file" name="image_upload">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="content-1">
+                                    <div class="text-area-container">
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Description</label>
+                                            <textarea id="description" name= 'mealdescription' cols="70" rows="50"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Price</label>
+                                        <input type="text" name="mealprice" class="create-meal-input" id="meal-price">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Tax Percentage</label>
+                                        <input type="text" name="mealtax" class="create-meal-input" id="meal-tax">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Calories</label>
+                                        <input type="text" name="calories" class="create-meal-input" id="meal-calories">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Sold Out</label>
+                                        <select name="soldOut" id="soldOut">
+                                            <option value disabled>Sold Out</option>
+                                            <option value="1">Yes</option>
+                                            <option value="0" selected>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="content-1">
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Chef name</label>
+                                        <input type="text" name="chef_name" class="create-meal-input" id="chef-name">
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Chef Comments</label>
+                                        <input type="text" name="chef_comments" class="create-meal-input" id="chef-comments">
+                                    </div>
+                                    <div class="meal-image-upload-container">
+                                        <div>
+                                            <img data-id='' id='chef-image' src='../../images/chef-default.png' />
+                                        </div>
+                                        <div class="fileUpload">
+                                            <span class='upload-button'>UPLOAD CHEF IMAGE</span>
+                                            <input id="chef-image-input" type="file" name="image_upload" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="content-1">
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Available</label>
+                                        <input type="number" name="available" id="create-meal-available" min="0" step="2">                
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Meal-category</label>
+                                        <select name="category" id="create-meal-category">
+                                            <!-- <option value disabled>Meal Category</option> -->
+                                        </select>
+                                    </div>
+                                    <div class="forminput-wrapper">
+                                        <label class="body-text-small">Meal Type</label>
+                                        <select name="meal_type" id="create-meal-mealType" multiple>
+                                            <option value='0' selected>NONE</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section-2">
+                                <div class="section-header">PREPARATION :</div>
+                                <div class="content-1">
+                                    <div class="preperation-container-1">
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Prep-Time</label>
+                                            <input type="text" name="preperationtime" class="create-meal-input" id="meal-prep-time">
+                                        </div>
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">All you will be doing</label>
+                                            <input type="text"class="create-meal-input" id="preparation-id-1">
+                                        </div>
+                                        <input type="button" class="add-preparation-button" value="add">
+                                        <span><h3>ALL YOU WILL BE DOING:</h3></span>
+                                        <div class="list-container">
+                                            <ul></ul>
+                                        </div>
+                                    </div>
+                                    <div class="preperation-container-2">
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Saved-Time</label>
+                                            <input type="text" name="savedtime" class="create-meal-input" id="meal-saved-time">
+                                        </div>
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">What we have prepared</label>
+                                            <input type="text"class="create-meal-input" id="preparation-id-2">
+                                        </div>
+                                        <input type="button" class="add-preparation-button" value="add">
+                                        <span><h3>WHAT WE HAVE PREPPED:</h3></span>
+                                        <div class="list-container">
+                                            <ul></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section-3">
+                                <div class="section-header">ALL YOU NEED:</div>
+                                <div class="content-1">
+                                    <div class="pre-requisties-container">
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Pre-requisties</label>
+                                            <input type="text" class="create-meal-input" id="pre-requisties">
+                                        </div>
+                                        <input type="button" class="add-list-button" value="add">
+                                        <span><h3>FROM YOUR KITCHEN:</h3></span>
+                                        <div class="list-container">
+                                            <ul></ul>
+                                        </div>
+                                    </div>
+                                    <div class='img-container'>
+                                        <img data-id='' id='kitchen-image' src='../../images/pre-requisites-default.png' />
+                                    </div>
+                                    <div class="fileUpload">
+                                        <span class='upload-button'>UPLOAD IMAGE</span>
+                                        <input id="kitchen-image-input" type="file" name="image_upload" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section-4">
+                                <div class="section-header">INGREDIENTS</div>
+                                <div class="content-1" id="ingredientsContent">
+                                    <div class="ingredients-container">
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Ingredients</label>
+                                            <select name="ingredient" id="selectIngredients">
+                                                <option value='0' selected>Select</option>
+                                            </select>
+                                            <label id="selectIngredientsError" for="selectIngredients">Please select ingredients</label>
+                                            <!-- <input type="text" class="create-meal-input" id="ingredients"> -->
+                                        </div>
+                                        <input type="button" class="add-ingredients-list-button" id="add-ingredients" value="add">
+                                        <span><h3>IN THE BOX :</h3></span>
+                                        <div class="list-container">
+                                            <ul></ul>
+                                        </div>
+                                    </div>
+                                    <div class='img-container'>
+                                        <ul id="ingredientImageHolder"></ul>
+                                        <!-- <img data-id='' id='ingredients-image' src='../../images/ingredients-default.png' /> -->
+                                    </div>
+                                    <!--  <div class="fileUpload">
+                                                                                                                                    <span class='upload-button'>UPLOAD IMAGE</span>
+                                                                                                                                    <input id="ingredients-image-input" type="file" name=
+                                                                                                                                    "image_upload" multiple>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="section-5" id="nutritionSection">
+                                <div class="section-header">NUTRITION</div>
+                                <!--                                <div class="content-1">
+                                                                    <div class="input-feild-container">
+                                                                        <div class="forminput-wrapper">
+                                                                            <label class="body-text-small">Nutrients</label>
+                                                                            <input type="text"class="create-meal-input" id="nutrients">
+                                                                        </div>
+                                                                        <div class="forminput-wrapper">
+                                                                            <label class="body-text-small">Per serving</label>
+                                                                            <input type="text"class="create-meal-input" id="nutrients-per-serving">
+                                                                        </div>
+                                                                        <div class="forminput-wrapper">
+                                                                            <label class="body-text-small">%Daily value</label>
+                                                                            <input type="text"class="create-meal-input" id="nutrients-daily-value">
+                                                                        </div>
+                                                                        <input type="button" class="add-nutrition-content" value="add">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="content-1 nutrients-total"></div>-->
+                                <table><thead>
+                                        <tr><th></th><th>PER SERVING</th><th>% DAILY VALUE</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Calories">CALORIES</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="6"></div></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Total Fat">TOTAL FAT</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Saturated Fat">SATURATED FAT</td>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Trans Fat">TRANS FAT</td>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Cholesterol">CHOLESTEROL</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="6"><span>mg</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Sodium">SODIUM</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="6"><span>mg</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Total Carbohydrate">TOTAL CARBOHYDRATE</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Dietary Fiber">DIETARY FIBER</td>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Sugars">SUGARS</td>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Protein">PROTEIN</th>
+                                            <td><div class="per-serving-input"><input type="text" maxlength="6"><span>g</span></div></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="main-nutrient-tr">
+                                            <th data-attr="Vitamins">VITAMINS</th><td></td><td></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Vitamin A">VITAMIN A</td>
+                                            <td></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Vitamin C">VITAMIN C</td>
+                                            <td></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Calcium">CALCIUM</td>
+                                            <td></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td>
+                                        </tr>
+                                        <tr class="sub-nutrient-tr">
+                                            <td data-attr="Iron">IRON</td>
+                                            <td></td>
+                                            <td><div class="daily-value-input"><input type="text" maxlength="6"><span>%</span></div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="section-6">
+                                <div class="section-header">TIPS & TRICKS</div>
+                                <div class="content-1">
+                                    <div class="tips-container">
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Video/Image URL</label>
+                                            <input type="text" class="create-meal-input tips-enter-submit" id="tips-video-url">
+                                            <label id="tips-video-url-label-error">Enter valid image/video URL</label>
+                                        </div>
+                                        <div class="forminput-wrapper">
+                                            <label class="body-text-small">Title</label>
+                                            <input type="text" class="create-meal-input tips-enter-submit" id="tips-and-tricks">
+                                            <label id="tips-and-tricks-label-error">Invalid title</label>
+                                        </div>
+                                        <input type="button" id="add-tips-main" value="add">
+                                    </div>
+                                </div>
+                                <div class="content-1">
+                                    <table id="tips-and-tricks-table">
+                                        <thead>
+                                            <tr>
+                                                <th>VIDEO/IMAGE URL</th>
+                                                <th>TIPS & TRICKS</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="create-button-container">
+                                <input type="submit" class="btn btn-large-primary medium-green" id="create-meal-button" value="SAVE">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="nutrients-popup-wrapper">
+                    <div class="bk-overlay"></div>
+                    <div class="popup">
+                        <div class="header"></div>
+                        <div class="popup-container">
+                            <div class="content">
+                                <div class="input-wrapper">
+                                    <label class="body-text-small">Nutrients</label>
+                                    <input class="popup-input" type="text" id="sub-nutrients">
+                                </div>
+                                <div class="input-wrapper">
+                                    <label class="body-text-small">Per Serving</label>
+                                    <input class="popup-input" type="text" id="sub-per-serving">
+                                </div>
+                                <div class="input-wrapper">
+                                    <label class="body-text-small">%Daily Value</label>
+                                    <input class="popup-input" type="text" id="sub-daily-value">
+                                </div>
+                            </div>
+                            <div class="button">
+                                <a href="#!" class="btn btn-small-secondary" id="save-nutrients">SAVE</a>
+                                <a href="#!" class="btn btn-small-secondary" id="cancel-nurient-popup">CANCEL</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='tips-tricks-wrapper'>
+                    <div class="bk-overlay"></div>
+                    <div class="popup">
+                        <div class="header"></div>
+                        <div class="popup-container">
+                            <div class="content">
+                                <div class="input-wrapper">
+                                    <label class="body-text-small">Tips and Tricks</label>
+                                    <input class="popup-input" type="text" id="tips_tricks_content">
+                                </div>
+                            </div>
+                            <div class="button">
+                                <a href="#!" class="btn btn-small-secondary" id="save-tips">SAVE</a>
+                                <a href="#!" class="btn btn-small-secondary" id="cancel-tips-popup">CANCEL</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-wrapper">
+                    <div class="bk-overlay"></div>
+                    <div class="popup">
+                        <div class="header"></div>
+                        <div class="popup-container">
+                            <div class="content">
+                                <span>SOMTHING WENT WRONG</span>
+                            </div>
+                            <div class="button">
+                                <a href="#" class="btn btn-small-secondary" id="close">CLOSE</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src='../../js/libs/jquery.min.js'></script>
+        <script type="text/javascript" src='../../js/libs/jquery.validate.min.js'></script>
+        <script type="text/javascript" src='../../js/app/ajax-reusable.js'></script>
+        <script type="text/javascript" src='../../js/libs/jquery-ui.min.js'></script>
+        <script type="text/javascript" src='../../js/app/jquery.fileupload.js'></script>
+        <script type="text/javascript" src='../../js/app/common.js'></script>
+        <script type="text/javascript" src='js/app/admin.js'></script>
+        <script type="text/javascript" src='js/app/create-meal.js'></script>
+    </body>
+</html>
