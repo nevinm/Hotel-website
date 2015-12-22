@@ -44,6 +44,7 @@ def deploy():
     path = 'public_html/meisterdish/'
     with cd(path), prefix(env.activate):
         run('cd web')
+        run('pwd')
         run('npm install')
         gvar.append(run('grunt build'))
         run('cd ..')
