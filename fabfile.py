@@ -45,7 +45,8 @@ def deploy():
     with cd(path), prefix(env.activate):
         gvar.append(run("git checkout QA_release && git pull --no-edit origin QA_release"))
         run("pip install -r requirements.txt")
-        gvar.append(run('cd web && npm install && grunt build| ../ansi2html -p'))
+        gvar.append(run('cd web && npm install'))
+        gvar.append(run('cd web && grunt build| ../ansi2html -p'))
         run('ls -l meisterdish_server')
         run("cd meisterdish_server && python manage.py makemigrations && python manage.py migrate")
         gvar.append(run("service apache2 reload"))
@@ -79,10 +80,11 @@ def uptime():
 
 def send_success_mail():
     html = "<html> <body><table> </table>"+\
-            "<tr>  <td>   Auto deployment on QA Success  </td> </tr>" + \
-            "<tr>  <td> "+"<pre style=\"background-color:#f4f4f4;padding-left:20px;padding-top:20px;font-size:12px;\">" + gvar[0]+" <pre>"+" </td> </tr>" + \
-            "<tr>  <td> "+"<pre style=\"background-color:#f4f4f4;padding-left:20px;padding-top:20px;font-size:12px;\">" + gvar[1]+" <pre>"+" </td>     </tr>" + \
-            "<tr>  <td style=\"color:green;\"> "+ gvar[2] +" </td> </tr>" + \
+             "<tr>  <td>   Auto deployment on QA Success  </td> </tr>" + \
+"<tr>  <td style=\"color:red;\"> "+ gvar[0]+"    </td> </tr>" + \
+            "<tr>  <td> "+"<pre style=\"background-color:#f4f4f4;padding-left:20px;padding-top:20px;font-size:12px;\">" + gvar[1]+" <pre>"+" </td> </tr>" + \
+            "<tr>  <td> "+"<pre style=\"background-color:#f4f4f4;padding-left:20px;padding-top:20px;font-size:12px;\">" + gvar[2]+" <pre>"+" </td>     </tr>" + \
+            "<tr>  <td style=\"color:green;\"> "+ gvar[3] +" </td> </tr>" + \
             " </body> </html>"
 
     import smtplib
