@@ -1,3 +1,4 @@
+//Prototype pattern
 var bootstrap = null;
 var Bootstrap = function () {
 };
