@@ -1,79 +1,6 @@
+var bootstrap = null;
 var Bootstrap = function () {
 };
-var bootstrap = null;
-$(document).ready(function () {
-    bootstrap = new Bootstrap();
-    window.onunload = function () {
-    };
-    window.onbeforeunload = function (e) {
-        if (cartCount === 0 && cartCount < parseInt($("#hidden-count").val())) {
-            SessionController.fbTrackConversionEvent(SessionController.getAddToCartPixel(), '0.00', 'USD');
-        }
-    };
-    ipadWidth = 767;
-    CartItemCount(setCartCount);
-    bootstrap.getMainMealId();
-    // getHomePageMeal();
-    bootstrap.shouldFullpageRender();
-    if (localStorage['loggedIn'] == 'true') {
-        $("#sectionPromocode").hide();
-    }
-    $(".check-delivery").on('click', function (e) {
-        e.preventDefault();
-        var zipcode = $("#zip-code").val();
-        if ($("form.zip-code-container").valid()) {
-            bootstrap.locationCheck(zipcode);
-        }
-    });
-    $("#promoCheck").on("click", function (e) {
-        e.preventDefault();
-        if ($("form.promo-code-container").valid()) {
-            bootstrap.checkPromocode($("#promoCode").val());
-//        window.open(homeUrl + "/share/" + PROMO_CODE + "/", "_self");
-        }
-    });
-    $("body").on("load", bootstrap.isSessionExpired);
-    $('#submit-email').on("click", function (e) {
-        e.preventDefault();
-        var email = $('input[type=email]').val(),
-                zipcode = $('#zip-code').val();
-        if ($('form#validate-email').valid()) {
-            bootstrap.saveEmail(email, zipcode);
-        }
-    });
-    $('.delivery-area-check-popup img#cancel').on("click", function () {
-        $('.delivery-area-check-popup').fadeOut();
-    });
-    $("#meal-info").on("click", function () {
-        mealId = $(this).attr('data-id');
-        window.location.href = 'views/meal-details.html?mealId=' + mealId;
-    });
-    $("#meal-add").on("click", function () {
-        var mealId = $(this).attr('data-id'),
-                count = 0;
-        count = parseInt($("#hidden-count").val()) + 2;
-//        cartCount = parseInt($("#hidden-count").val());
-        if (count <= 10) {
-            $("#hidden-count").val(count);
-            bootstrap.addToCart(mealId);
-        }
-    });
-    $(".removeItemButton").on("click", function () {
-        var quantity = -2,
-                count = 0,
-                mealId = $(this).attr('data-id');
-        count = parseInt($("#hidden-count").val()) - 2;
-        if (count >= 0) {
-            $("#hidden-count").val(count);
-            bootstrap.addToCart(mealId, quantity);
-        } else {
-        }
-    });
-    $(window).resize(function () {
-        bootstrap.shouldFullpageRender();
-    });
-});
-
 Bootstrap.prototype = {
     checkPromocode: function (promoCode) {
         var url = baseURL + "verify_promocode/",
@@ -372,3 +299,75 @@ Bootstrap.prototype = {
         }
     }
 };
+$(document).ready(function () {
+    bootstrap = new Bootstrap();
+    window.onunload = function () {
+    };
+    window.onbeforeunload = function (e) {
+        if (cartCount === 0 && cartCount < parseInt($("#hidden-count").val())) {
+            SessionController.fbTrackConversionEvent(SessionController.getAddToCartPixel(), '0.00', 'USD');
+        }
+    };
+    ipadWidth = 767;
+    CartItemCount(setCartCount);
+    bootstrap.getMainMealId();
+    // getHomePageMeal();
+    bootstrap.shouldFullpageRender();
+    if (localStorage['loggedIn'] == 'true') {
+        $("#sectionPromocode").hide();
+    }
+    $(".check-delivery").on('click', function (e) {
+        e.preventDefault();
+        var zipcode = $("#zip-code").val();
+        if ($("form.zip-code-container").valid()) {
+            bootstrap.locationCheck(zipcode);
+        }
+    });
+    $("#promoCheck").on("click", function (e) {
+        e.preventDefault();
+        if ($("form.promo-code-container").valid()) {
+            bootstrap.checkPromocode($("#promoCode").val());
+//        window.open(homeUrl + "/share/" + PROMO_CODE + "/", "_self");
+        }
+    });
+    $("body").on("load", bootstrap.isSessionExpired);
+    $('#submit-email').on("click", function (e) {
+        e.preventDefault();
+        var email = $('input[type=email]').val(),
+                zipcode = $('#zip-code').val();
+        if ($('form#validate-email').valid()) {
+            bootstrap.saveEmail(email, zipcode);
+        }
+    });
+    $('.delivery-area-check-popup img#cancel').on("click", function () {
+        $('.delivery-area-check-popup').fadeOut();
+    });
+    $("#meal-info").on("click", function () {
+        mealId = $(this).attr('data-id');
+        window.location.href = 'views/meal-details.html?mealId=' + mealId;
+    });
+    $("#meal-add").on("click", function () {
+        var mealId = $(this).attr('data-id'),
+                count = 0;
+        count = parseInt($("#hidden-count").val()) + 2;
+//        cartCount = parseInt($("#hidden-count").val());
+        if (count <= 10) {
+            $("#hidden-count").val(count);
+            bootstrap.addToCart(mealId);
+        }
+    });
+    $(".removeItemButton").on("click", function () {
+        var quantity = -2,
+                count = 0,
+                mealId = $(this).attr('data-id');
+        count = parseInt($("#hidden-count").val()) - 2;
+        if (count >= 0) {
+            $("#hidden-count").val(count);
+            bootstrap.addToCart(mealId, quantity);
+        } else {
+        }
+    });
+    $(window).resize(function () {
+        bootstrap.shouldFullpageRender();
+    });
+});
