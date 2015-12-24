@@ -74,21 +74,21 @@
                                 <tr><td></td></tr>
                                 {% if order.delivery_address%}
                                 <tr><td style="padding: 0px;"> <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:2px;font-size: 10px;">{{name}}</p>
-                                       					{% if order.delivery_address.is_business%}
-<p style="margin:0;width:100%;text-align:left;padding-bottom:2px;">{{order.delivery_address.company|upper}}</p>
-					{% endif %}
- <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:2px;font-size: 10px;">{{order.delivery_address.building|upper}}</p>
+                                        {% if order.delivery_address.is_business%}
+                                        <p style="margin:0;width:100%;text-align:left;padding-bottom:2px;">{{order.delivery_address.company|upper}}</p>
+                                        {% endif %}
+                                        <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:2px;font-size: 10px;">{{order.delivery_address.building|upper}}</p>
 
                                         <p style="margin:0;width:100%;text-align:left;padding-bottom:2px;">{{order.delivery_address.street|upper}}</p>
-                                    
-					<p style="margin:0;width:100%;text-align:left;padding-bottom:2px;">{{order.phone}}</p></td></tr>
+
+                                        <p style="margin:0;width:100%;text-align:left;padding-bottom:2px;">{{order.phone}}</p></td></tr>
                                 {% else %}
                                 <tr><td></td></tr>
                                 <tr><td></td></tr>
                                 <tr><td style="padding: 0px;"> 
                                         <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:2px;font-size: 10px;">{{name}}</p>
                                         <p style="margin:0;width:100%;text-align:left;font-weight:bolder;padding-bottom:2px;">{{order.email}}</p>
-                                        <p style="margin:0;width:100%;text-align:left;padding-bottom:5px;">{{order.phone}}</p></td></tr>-->
+                                        <p style="margin:0;width:100%;text-align:left;padding-bottom:5px;">{{order.phone}}</p></td></tr>
                                 {% endif %}
                             </tbody>
                         </table>
