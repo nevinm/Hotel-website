@@ -27,7 +27,7 @@ module.exports = function (grunt) {
         },
         clean: {
             js: {
-                src: ["index.html","js/", "css/", "views/", "images/", "fonts/"]
+                src: ["index.html", "js/", "css/", "views/", "images/", "fonts/"]
             }
         },
         cssmin: {

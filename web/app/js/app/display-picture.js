@@ -1,6 +1,7 @@
 function setProfileImage() {
     var profileId = "display-pic";
-    getProfile(profileId);
+    account = new AccountController();
+    account.getProfile(profileId);
 }
 
 $(document).ready(function() {
