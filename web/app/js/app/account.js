@@ -173,6 +173,7 @@ AccountController.prototype = function () {
         showAdminLink: showAdminLink
     };
 }();
+
 $(document).ready(function () {
     account = new AccountController();
     $("#change-contact #updateButton").on('click', function (e) {
