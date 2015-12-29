@@ -31,7 +31,7 @@ function stripeResponseHandler(status, response) {
         var token = response.id,
                 currentPage = getCurrentPage("/", ".html", window.location.href);
         if (currentPage == "add-creditcard") {
-            saveCreditCardDetails(token);
+            new AddCreditCardController().saveCreditCardDetails(token);
         } else if (currentPage == "checkout") {
             cardNotSavedCreateOrder(token);
         } else if (currentPage == "giftcard-payment") {

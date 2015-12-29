@@ -1,5 +1,4 @@
 //Revealing Prototype Pattern
-var account = null;
 var userDetails;
 var AccountController = function () {
 };
@@ -174,7 +173,7 @@ AccountController.prototype = function () {
     };
 }();
 $(document).ready(function () {
-    account = new AccountController();
+    var account = new AccountController();
     $("#change-contact #updateButton").on('click', function (e) {
         e.preventDefault();
         if ($('form#change-contact').valid()) {
