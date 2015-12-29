@@ -1,4 +1,213 @@
+var MenuController = function () {
+};
+MenuController.prototype = function () {
+    //Infinite Scrolling
+    var infiniteScrolling = function () {
+        console.log("infiniteScrolling")
+        var stickyMenuOffset = $('.subMenu').offset().top;
+        $(document).unbind('scroll');
+        $(document).on('scroll', function (e) {
+            if ($('.listItems').length && endOfList == false) {
+                if (elementScrolling(".listItems:last")) {
+                    $(document).unbind('scroll');
+                    mealData = JSON.parse(localStorage['meal_details']);
+                    getmealList(mealData.search, mealData.category_id, mealData.type_ids, mealData.perPage, mealData.nextPage + 1, true)
+                }
+                ;
+            }
+        });
+    };
+    //Get Category list of food items.
+    var getCategoryCallback = {
+        success: function (data, textStatus) {
+            userDetails = JSON.parse(data);
+            if (userDetails.status == 1) {
+                $.each(userDetails.categories, function (key, value) {
+                    $('.category-wrapper .category-menu').append("<li class='menu-categories-list'><a '" + " class='menu-categories' data-id='" + value.id + "'>" + value.name + "</a></li>");
+                });
+                $.each(userDetails.meal_types, function (key, value) {
+                    $(".filter-drop-down ul").append("<li><div><input id='mealtype" + key + "' type='checkbox' " + "name='mealtype" + key + "' value='" + value.id + "'>" + "<label for='mealtype" + key + "'>" + value.name + "</label></div></li>");
+                });
+            } else {
+                console.log("somthing wrong with categories");
+            }
+        },
+        failure: function (XMLHttpRequest, textStatus, errorThrown) {
+        }
+    };
+
+    var getCategory = function () {
+        var url = baseURL + 'get_categories/',
+                header = {
+                    "session-key": localStorage["session_key"]
+                },
+        userInfo = {
+            "get": 1
+        },
+        data = JSON.stringify(userInfo);
+        var getCategoryInstance = new AjaxHttpSender();
+        getCategoryInstance.sendPost(url, header, data, getCategoryCallback);
+    };
+    //Get meal list
+    var getmealListCallback = {
+        success: function (data, textStatus, isInfinteScrolling) {
+            var mealList = JSON.parse(data);
+            if (mealList.status == 1) {
+                endOfList = (mealList.current_page == mealList.page_range[mealList.page_range.length - 1]);
+                if (endOfList == true) {
+                    // $(document).unbind('scroll');
+                } else {
+                }
+                populateMealList(mealList, isInfinteScrolling);
+            } else {
+                console.log("Something wrong with meals list");
+            }
+            $(".menu-loading-gif").hide();
+        },
+        failure: function (XMLHttpRequest, textStatus, errorThrown) {
+        }
+    };
+
+    var getmealList = function (search_name, category, mealtype, perPage, nextPage, isInfinteScrolling) {
+        if (isInfinteScrolling) {
+            $(".menu-loading-gif").show();
+        }
+        var url = baseURL + "get_meals/";
+        header = {
+            "session-key": localStorage['session_key']
+        }
+        params = {
+            // "search": search_name,
+            // "category_id": category,
+            // "type_ids": mealtype,
+            // "perPage": perPage,
+            // "nextPage": nextPage
+        }
+        data = JSON.stringify(params);
+        localStorage['meal_details'] = data;
+        var getmeallistInstance = new AjaxHttpSender();
+        getmeallistInstance.sendPost(url, header, data, getmealListCallback, isInfinteScrolling);
+    };
+
+    var populateMealList = function (mealList, isInfinteScrolling) {
+        if (!isInfinteScrolling) {
+            $(".listContainer").empty();
+        } else {
+        }
+        $.each(mealList.aaData, function (key, value) {
+            if (value.available) {
+                $(".listContainer").append("<div class='listItems'>" + "<div class='meal-image-wrapper'>" +
+                        "<img src='" + value.main_image + "' data-id='" + value.id + "' class='thumbnail'>" +
+                        "<div class='meal-overlay' data-id='" + value.id + "'>" + "<p class='upper-line'>" +
+                        "<span>" + value.quantity + "</span>" + " " + "SERVINGS" + "</p>" +
+                        "<p class='lower-line'>" + "Added to cart" + "</p>" + "</div>" +
+                        " <div class='sold-overlay'  data-id='" + value.id + "'>" + "<p class='upper-line' style='top:44%;'>SOLD OUT</p>" + "</div>" + "</div>" +
+                        "<section class='listItemDetails'>" + "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +
+                        "<div class='menuItemDetails'>" + value.sub + "</div>" +
+                        "<hr class='mealList-hr'>" + "</section><section class='listItemDetails tableDisplay'>" +
+                        "<input type='hidden' class='hidden-field' value='" + value.quantity + "'>" +
+                        "<h3 class='pullLeft itemCost'>" + dollarConvert(parseFloat(value.tax + value.price).toFixed(2)) + "</h3>" +
+                        "<div class='serveBox'><span class='per-serving-text'>" + "PER SERVING" + "</span>" +
+                        "<span class='per-serving-box'>" + "(2x SERVINGS PER BOX)" + "</span></div>" +
+                        "<div class='removeItemButton' data-id='" + value.id + "'>" + "&#8211" + "</div>" +
+                        "<span id='addMenuButton'><a class='btn btn-small-primary medium-green addItemButton' " + "data-id='" + value.id + "'>ADD</a></span>" + "</section></div>");
+            }
+            if (value.quantity < 2) {
+                $('.removeItemButton[data-id="' + value.id + '"]').hide();
+                $('.meal-overlay[data-id="' + value.id + '"]').hide();
+            } else {
+                $('.removeItemButton[data-id="' + value.id + '"]').show();
+                $('.meal-overlay[data-id="' + value.id + '"]').show();
+            }
+            if (value.quantity >= 10) {
+                $('.addItemButton[data-id="' + value.id + '"]').hide();
+            } else {
+                $('.addItemButton[data-id="' + value.id + '"]').show();
+            }
+            //Sold Out
+            if (value.sold_out == 0) {
+                $(".sold-overlay:last").hide();
+            } else {
+                $(".meal-overlay:last").hide();
+                $(".sold-overlay:last").show();
+                $(".removeItemButton:last").hide();
+                $(".addItemButton:last").addClass("button-disabled");
+            }
+        });
+        if (endOfList) {
+        } else {
+            //Removed for showing all data initially
+            // infiniteScrolling();
+        }
+    };
+
+    var elementScrolling = function (elem) {
+        var docViewTop = $(window).scrollTop();
+        var docViewBottom = docViewTop + $(window).height();
+        var elemTop = $(elem).offset().top;
+        var elemBottom = elemTop + $(elem).height();
+        return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    };
+    //add to cart call back
+    var addToCartCallback = {
+        success: function (data, textStatus, mealId) {
+            var meal_details = JSON.parse(data),
+                    status = meal_details.status;
+            if (status == -1) {
+                showPopup(meal_details);
+            } else {
+                var $removeButton = $('a[data-id="' + mealId + '"]').closest('.listItems').find('.removeItemButton'),
+                        $addButton = $('a[data-id="' + mealId + '"]').closest('.listItems').find('.addItemButton'),
+                        $showOverlay = $('.meal-overlay[data-id="' + mealId + '"]');
+                $showOverlay.find('.upper-line span').text(meal_details.quantity);
+                if (meal_details.quantity == 0) {
+                    $removeButton.hide();
+                    $showOverlay.hide();
+                } else {
+                    $removeButton.fadeIn();
+                    $showOverlay.show();
+                }
+                if (meal_details.quantity >= 10) {
+                    $addButton.hide();
+                    $showOverlay.find('.upper-line span').text(10);
+                } else {
+                    $addButton.show();
+                }
+                if (meal_details.session_key && (meal_details.session_key).length) {
+                    localStorage['session_key'] = meal_details.session_key;
+                    createCookie("SessionExpireTime", "true", sessionExpiryTime);
+                }
+                CartItemCount();
+            }
+        },
+        failure: function (XMLHttpRequest, textStatus, errorThrown) {
+        }
+    };
+
+    var addToCart = function (meal_id, quantity) {
+        var url = baseURL + 'add_to_cart/',
+                header = {
+                    "session-key": localStorage["session_key"]
+                },
+        params = {
+            "meal_id": meal_id,
+            "quantity": quantity
+        };
+        data = JSON.stringify(params);
+        var addToCartInstance = new AjaxHttpSender();
+        addToCartInstance.sendPost(url, header, data, addToCartCallback, meal_id);
+    };
+    return{
+        addToCart: addToCart,
+        getmealList: getmealList,
+        infiniteScrolling: infiniteScrolling,
+        getCategory: getCategory
+    };
+}();
+
+
 $(document).ready(function () {
+    var menuInstance = new MenuController();
     window.onbeforeunload = function (e) {
 //    setTimeout(function () {
         if (cartCount === 0 && cartCount < parseInt($(".count").text())) {
@@ -42,9 +251,9 @@ $(document).ready(function () {
         if (count <= 10) {
             $(this).closest('.listItemDetails').find('.hidden-field').val(count);
             if (localStorage['loggedIn'] == 'true') {
-                addToCart(meal_id);
+                menuInstance.addToCart(meal_id);
             } else if (localStorage['loggedIn'] == 'false' || localStorage.getItem('loggedIn') === null) {
-                addToCart(meal_id);
+                menuInstance.addToCart(meal_id);
             }
         } else {
             // $(this).hide();
@@ -57,7 +266,7 @@ $(document).ready(function () {
         count = parseInt($(this).closest('.listItemDetails').find('.hidden-field').val()) - 2;
         if (count >= 0) {
             $(this).closest('.listItemDetails').find('.hidden-field').val(count);
-            addToCart(mealId, quantity);
+            menuInstance.addToCart(mealId, quantity);
         } else {
             // removeCartItems(mealId);
         }
@@ -70,8 +279,8 @@ $(document).ready(function () {
     $(document).on('click', '.menu-categories-list', function () {
         nextPage = 1;
         categoryId = $(this).find("a").data().id;
-        getmealList('', categoryId, mealTypeFilter, perPage, 1);
-        infiniteScrolling();
+        menuInstance.getmealList('', categoryId, mealTypeFilter, perPage, 1);
+        menuInstance.infiniteScrolling();
     });
     //Mobile category header
     $(".category-header").on('click', function () {
@@ -89,22 +298,22 @@ $(document).ready(function () {
         } else {
             return;
         }
-    })
+    });
     //Filters
     $(document).on('change', '.filter-drop-down input[type=checkbox]', function (e) {
         currentCategory = $(".activeOption a").attr("data-id");
         nextPage = 1;
         if ($(this).is(":checked")) {
             mealTypeFilter.push(parseInt($(this).val()));
-            getmealList('', currentCategory, mealTypeFilter, perPage, 1);
+            menuInstance.getmealList('', currentCategory, mealTypeFilter, perPage, 1);
         } else {
             index = mealTypeFilter.indexOf(parseInt($(this).val()));
             if (index > -1) {
                 mealTypeFilter.splice(index, 1);
             }
-            getmealList('', currentCategory, mealTypeFilter, perPage, 1);
+            menuInstance.getmealList('', currentCategory, mealTypeFilter, perPage, 1);
         }
-        infiniteScrolling();
+        menuInstance.infiniteScrolling();
     });
     $(window).on('scroll', function (e) {
         var menuNavHeight = 100,
@@ -122,204 +331,8 @@ $(document).ready(function () {
     });
 
     CartItemCount(setCartCount);
-    getCategory();
-    getmealList('', '', '', '', '');
+    menuInstance.getCategory();
+    menuInstance.getmealList('', '', '', '', '');
     //Removed for showing all data initially
     // infiniteScrolling();
 });
-//Infinite Scrolling
-function infiniteScrolling() {
-    console.log("infiniteScrolling")
-    var stickyMenuOffset = $('.subMenu').offset().top;
-    $(document).unbind('scroll');
-    $(document).on('scroll', function (e) {
-        if ($('.listItems').length && endOfList == false) {
-            if (elementScrolling(".listItems:last")) {
-                $(document).unbind('scroll');
-                mealData = JSON.parse(localStorage['meal_details']);
-                getmealList(mealData.search, mealData.category_id, mealData.type_ids, mealData.perPage, mealData.nextPage + 1, true)
-            }
-            ;
-        }
-    });
-}
-//Get Category list of food items.
-var getCategoryCallback = {
-    success: function (data, textStatus) {
-        userDetails = JSON.parse(data);
-        if (userDetails.status == 1) {
-            $.each(userDetails.categories, function (key, value) {
-                $('.category-wrapper .category-menu').append("<li class='menu-categories-list'><a '" + " class='menu-categories' data-id='" + value.id + "'>" + value.name + "</a></li>");
-            });
-            $.each(userDetails.meal_types, function (key, value) {
-                $(".filter-drop-down ul").append("<li><div><input id='mealtype" + key + "' type='checkbox' " + "name='mealtype" + key + "' value='" + value.id + "'>" + "<label for='mealtype" + key + "'>" + value.name + "</label></div></li>");
-            });
-        } else {
-            console.log("somthing wrong with categories");
-        }
-    },
-    failure: function (XMLHttpRequest, textStatus, errorThrown) {
-    }
-}
-
-function getCategory() {
-    var url = baseURL + 'get_categories/',
-            header = {
-                "session-key": localStorage["session_key"]
-            },
-    userInfo = {
-        "get": 1
-    },
-    data = JSON.stringify(userInfo);
-    var getCategoryInstance = new AjaxHttpSender();
-    getCategoryInstance.sendPost(url, header, data, getCategoryCallback);
-}
-//Get meal list
-var getmealListCallback = {
-    success: function (data, textStatus, isInfinteScrolling) {
-        var mealList = JSON.parse(data);
-        if (mealList.status == 1) {
-            endOfList = (mealList.current_page == mealList.page_range[mealList.page_range.length - 1]);
-            if (endOfList == true) {
-                // $(document).unbind('scroll');
-            } else {
-            }
-            populateMealList(mealList, isInfinteScrolling);
-        } else {
-            console.log("Something wrong with meals list");
-        }
-        $(".menu-loading-gif").hide();
-    },
-    failure: function (XMLHttpRequest, textStatus, errorThrown) {
-    }
-}
-
-function getmealList(search_name, category, mealtype, perPage, nextPage, isInfinteScrolling) {
-    if (isInfinteScrolling) {
-        $(".menu-loading-gif").show();
-    }
-    var url = baseURL + "get_meals/";
-    header = {
-        "session-key": localStorage['session_key']
-    }
-    params = {
-        // "search": search_name,
-        // "category_id": category,
-        // "type_ids": mealtype,
-        // "perPage": perPage,
-        // "nextPage": nextPage
-    }
-    data = JSON.stringify(params);
-    localStorage['meal_details'] = data;
-    var getmeallistInstance = new AjaxHttpSender();
-    getmeallistInstance.sendPost(url, header, data, getmealListCallback, isInfinteScrolling);
-}
-
-function populateMealList(mealList, isInfinteScrolling) {
-    if (!isInfinteScrolling) {
-        $(".listContainer").empty();
-    } else {
-    }
-    $.each(mealList.aaData, function (key, value) {
-        if (value.available) {
-            $(".listContainer").append("<div class='listItems'>" + "<div class='meal-image-wrapper'>" +
-                    "<img src='" + value.main_image + "' data-id='" + value.id + "' class='thumbnail'>" +
-                    "<div class='meal-overlay' data-id='" + value.id + "'>" + "<p class='upper-line'>" +
-                    "<span>" + value.quantity + "</span>" + " " + "SERVINGS" + "</p>" +
-                    "<p class='lower-line'>" + "Added to cart" + "</p>" + "</div>" +
-                    " <div class='sold-overlay'  data-id='" + value.id + "'>" + "<p class='upper-line' style='top:44%;'>SOLD OUT</p>" + "</div>" + "</div>" +
-                    "<section class='listItemDetails'>" + "<h4 class='pullLeft menuItemName'>" + value.name + "</h4>" +
-                    "<div class='menuItemDetails'>" + value.sub + "</div>" +
-                    "<hr class='mealList-hr'>" + "</section><section class='listItemDetails tableDisplay'>" +
-                    "<input type='hidden' class='hidden-field' value='" + value.quantity + "'>" +
-                    "<h3 class='pullLeft itemCost'>" + dollarConvert(parseFloat(value.tax + value.price).toFixed(2)) + "</h3>" +
-                    "<div class='serveBox'><span class='per-serving-text'>" + "PER SERVING" + "</span>" +
-                    "<span class='per-serving-box'>" + "(2x SERVINGS PER BOX)" + "</span></div>" +
-                    "<div class='removeItemButton' data-id='" + value.id + "'>" + "&#8211" + "</div>" +
-                    "<span id='addMenuButton'><a class='btn btn-small-primary medium-green addItemButton' " + "data-id='" + value.id + "'>ADD</a></span>" + "</section></div>");
-        }
-        if (value.quantity < 2) {
-            $('.removeItemButton[data-id="' + value.id + '"]').hide();
-            $('.meal-overlay[data-id="' + value.id + '"]').hide();
-        } else {
-            $('.removeItemButton[data-id="' + value.id + '"]').show();
-            $('.meal-overlay[data-id="' + value.id + '"]').show();
-        }
-        if (value.quantity >= 10) {
-            $('.addItemButton[data-id="' + value.id + '"]').hide();
-        } else {
-            $('.addItemButton[data-id="' + value.id + '"]').show();
-        }
-        //Sold Out
-        if (value.sold_out == 0) {
-            $(".sold-overlay:last").hide();
-        } else {
-            $(".meal-overlay:last").hide();
-            $(".sold-overlay:last").show();
-            $(".removeItemButton:last").hide();
-            $(".addItemButton:last").addClass("button-disabled");
-        }
-    });
-    if (endOfList) {
-    } else {
-        //Removed for showing all data initially
-        // infiniteScrolling();
-    }
-}
-
-function elementScrolling(elem) {
-    var docViewTop = $(window).scrollTop();
-    var docViewBottom = docViewTop + $(window).height();
-    var elemTop = $(elem).offset().top;
-    var elemBottom = elemTop + $(elem).height();
-    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-}
-//add to cart call back
-var addToCartCallback = {
-    success: function (data, textStatus, mealId) {
-        var meal_details = JSON.parse(data),
-                status = meal_details.status;
-        if (status == -1) {
-            showPopup(meal_details);
-        } else {
-            var $removeButton = $('a[data-id="' + mealId + '"]').closest('.listItems').find('.removeItemButton'),
-                    $addButton = $('a[data-id="' + mealId + '"]').closest('.listItems').find('.addItemButton'),
-                    $showOverlay = $('.meal-overlay[data-id="' + mealId + '"]');
-            $showOverlay.find('.upper-line span').text(meal_details.quantity);
-            if (meal_details.quantity == 0) {
-                $removeButton.hide();
-                $showOverlay.hide();
-            } else {
-                $removeButton.fadeIn();
-                $showOverlay.show();
-            }
-            if (meal_details.quantity >= 10) {
-                $addButton.hide();
-                $showOverlay.find('.upper-line span').text(10);
-            } else {
-                $addButton.show();
-            }
-            if (meal_details.session_key && (meal_details.session_key).length) {
-                localStorage['session_key'] = meal_details.session_key;
-                createCookie("SessionExpireTime", "true", sessionExpiryTime);
-            }
-            CartItemCount();
-        }
-    },
-    failure: function (XMLHttpRequest, textStatus, errorThrown) {
-    }
-}
-
-function addToCart(meal_id, quantity) {
-    var url = baseURL + 'add_to_cart/',
-            header = {
-                "session-key": localStorage["session_key"]
-            },
-    params = {
-        "meal_id": meal_id,
-        "quantity": quantity
-    };
-    data = JSON.stringify(params);
-    var addToCartInstance = new AjaxHttpSender();
-    addToCartInstance.sendPost(url, header, data, addToCartCallback, meal_id);
-}
