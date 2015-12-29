@@ -164,7 +164,7 @@ class User(models.Model):
     full_name = models.CharField(db_index=True, max_length=55, default="")
     zipcode = models.CharField(
         db_index=True, max_length=6, null=True, blank=True)
-    email = models.EmailField(db_index=True, max_length=30, null=True)
+    email = models.EmailField(db_index=True, max_length=255, null=True)
     mobile = models.CharField(max_length=15, null=True)
     profile_image = models.ForeignKey(Image, null=True, blank=True)
 
@@ -231,7 +231,7 @@ class Address(models.Model):
     city = models.CharField(max_length=50)
     zip = models.CharField(max_length=10)
     phone = models.CharField(max_length=15)
-    email = models.CharField(max_length=50, null=True, blank=True)
+    email = models.CharField(max_length=255, null=True, blank=True)
 
     def __unicode__(self):
         return str(self.user.email) + " : " + self.first_name +\
@@ -470,7 +470,7 @@ class Order(models.Model):
     billing_address = models.ForeignKey(
         Address, related_name="billing_address", null=True, blank=True)
 
-    email = models.CharField(db_index=True, max_length=50, null=True)
+    email = models.CharField(db_index=True, max_length=255, null=True)
     phone = models.CharField(db_index=True, max_length=15, null=True)
 
     delivery_time = models.DateTimeField()
@@ -524,7 +524,7 @@ class GiftCard(models.Model):
     user = models.ForeignKey(User)
     code = models.CharField(max_length=10)
     name = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
+    email = models.CharField(max_length=255)
     message = models.TextField(max_length=1000)
     amount = models.FloatField(
         validators=[MinValueValidator(0), MaxValueValidator(100)])
@@ -598,5 +598,5 @@ class Configuration(models.Model):
 
 
 class ZipUnavailable(models.Model):
-    email = models.CharField(max_length=25)
+    email = models.CharField(max_length=255)
     zipcode = models.CharField(max_length=10)
