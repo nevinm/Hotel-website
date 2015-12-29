@@ -16,7 +16,6 @@ $(document).ready(function() {
             addCategories();
         }            
     });
-
     $("#update-confirm").on('click', function(e) {
         e.preventDefault();
         var newCategory = $(".update-category-container .new-category").val(),
