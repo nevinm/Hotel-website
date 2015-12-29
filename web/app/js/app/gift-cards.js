@@ -260,7 +260,7 @@ function populateEditCardDetails() {
     $("#recipient-name").val($(".recepient-name").text());
     $("#recipient-email").val($(".recepient-email").text());
     $("#recipient-message").val($(".recepient-message").text());
-    $("#recipient-amount").val($($(".recepient-amount")[0]).data("amount"));
+    $("#recipient-amount").val($(".recepient-amount")[0].attr("data-amount"));
 }
 
 function updateRecipientGiftCard() {
