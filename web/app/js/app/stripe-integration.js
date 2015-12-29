@@ -35,7 +35,7 @@ function stripeResponseHandler(status, response) {
         } else if (currentPage == "checkout") {
             cardNotSavedCreateOrder(token);
         } else if (currentPage == "giftcard-payment") {
-            fetchGiftCardData(token);
+            new GiftCardsController().fetchGiftCardData(token);
         }
     }
 }
