@@ -564,6 +564,7 @@ input.popup-input {
 #recipient-name-error,
 #recipient-email-error,
 #recipient-message-error,
+#recipient-amount-error,
 #giftcard-custom-amount-error {
     background-color: #F9FAF7
 }
