@@ -1,5 +1,77 @@
+var HowItWorksController = function () {
+};
+HowItWorksController.prototype = function () {
 
+//Get reviews API process
+    var locationCheckCallback = {
+        success: function (data, textStatus) {
+            var userDetails = JSON.parse(data);
+            if (userDetails.status == 1) {
+                $('#close').remove();
+                $('#see-menu').remove();
+                $('.popup .header').append('<img src="../images/cross-black.png" id="close">');
+                $('.popup .button').append("<a href='menu.html' class='btn btn-large-secondary' id='see-menu'>" + "SEE MENU" + "</a>");
+                showPopup(userDetails);
+            } else {
+                showLocationCheckPopup(userDetails);
+            }
+        },
+        failure: function (XMLHttpRequest, textStatus, errorThrown) {
+        }
+    };
+
+    var locationCheck = function (zipcode) {
+        var url = baseURL + "check_delivery/",
+                header = {
+                    "session-key": localStorage["session_key"]
+                },
+        userData = {
+            'zip': zipcode
+        };
+        data = JSON.stringify(userData);
+        var locationCheckInstance = new AjaxHttpSender();
+        locationCheckInstance.sendPost(url, header, data, locationCheckCallback);
+    };
+
+    var showLocationCheckPopup = function (userDetails) {
+        var message = userDetails.message;
+        $('.delivery-area-check-popup .deliver-message span').text(message);
+        $('.delivery-area-check-popup').show();
+        $('form#validate-email').validate().resetForm();
+
+    };
+
+    var saveEmailCallback = {
+        success: function (data, textStatus) {
+            var userDetails = JSON.parse(data);
+            $('.delivery-area-check-popup').hide();
+            showPopup(userDetails);
+        },
+        failure: function (XMLHttpRequest, textStatus, errorThrown) {
+        }
+    };
+
+    var saveEmail = function (email, zipcode) {
+        var url = baseURL + "save_email/",
+                header = {
+                    "session-key": localStorage["session_key"]
+                },
+        userData = {
+            'email': email,
+            'zipcode': zipcode
+        };
+        data = JSON.stringify(userData);
+        var saveEmailInstance = new AjaxHttpSender();
+        saveEmailInstance.sendPost(url, header, data, saveEmailCallback);
+    };
+
+    return {
+        locationCheck: locationCheck,
+        saveEmail: saveEmail
+    };
+}();
 $(document).ready(function () {
+    var howItWorks = new HowItWorksController();
     tabRendering();
     CartItemCount();
 
@@ -103,7 +175,7 @@ $(document).ready(function () {
         e.preventDefault();
         var zip = $('#zip-code').val();
         if ($('form.button-container').valid()) {
-            locationCheck(zip);
+            howItWorks.locationCheck(zip);
         }
     });
     $('#submit-email').on("click", function (e) {
@@ -111,7 +183,7 @@ $(document).ready(function () {
         var email = $('input[type=email]').val(),
                 zipcode = $('#zip-code').val();
         if ($('form#validate-email').valid()) {
-            saveEmail(email, zipcode);
+            howItWorks.saveEmail(email, zipcode);
         }
     });
 
@@ -182,66 +254,3 @@ $(document).ready(function () {
     }
 });
 
-
-//Get reviews API process
-var locationCheckCallback = {
-    success: function (data, textStatus) {
-        var userDetails = JSON.parse(data);
-        if (userDetails.status == 1) {
-            $('#close').remove();
-            $('#see-menu').remove();
-            $('.popup .header').append('<img src="../images/cross-black.png" id="close">');
-            $('.popup .button').append("<a href='menu.html' class='btn btn-large-secondary' id='see-menu'>" + "SEE MENU" + "</a>");
-            showPopup(userDetails);
-        } else {
-            showLocationCheckPopup(userDetails);
-        }
-    },
-    failure: function (XMLHttpRequest, textStatus, errorThrown) {
-    }
-}
-
-function locationCheck(zipcode) {
-    var url = baseURL + "check_delivery/",
-            header = {
-                "session-key": localStorage["session_key"]
-            },
-    userData = {
-        'zip': zipcode
-    };
-    data = JSON.stringify(userData);
-    var locationCheckInstance = new AjaxHttpSender();
-    locationCheckInstance.sendPost(url, header, data, locationCheckCallback);
-}
-
-function showLocationCheckPopup(userDetails) {
-    var message = userDetails.message;
-    $('.delivery-area-check-popup .deliver-message span').text(message);
-    $('.delivery-area-check-popup').show();
-    $('form#validate-email').validate().resetForm();
-
-}
-
-var saveEmailCallback = {
-    success: function (data, textStatus) {
-        var userDetails = JSON.parse(data);
-        $('.delivery-area-check-popup').hide();
-        showPopup(userDetails);
-    },
-    failure: function (XMLHttpRequest, textStatus, errorThrown) {
-    }
-}
-
-function saveEmail(email, zipcode) {
-    var url = baseURL + "save_email/",
-            header = {
-                "session-key": localStorage["session_key"]
-            },
-    userData = {
-        'email': email,
-        'zipcode': zipcode
-    };
-    data = JSON.stringify(userData);
-    var saveEmailInstance = new AjaxHttpSender();
-    saveEmailInstance.sendPost(url, header, data, saveEmailCallback);
-}
