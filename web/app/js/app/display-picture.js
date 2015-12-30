@@ -1,10 +1,12 @@
-function setProfileImage() {
-    var profileId = "display-pic";
-    getProfile(profileId);
-}
+//function setProfileImage() {
+//    var profileId = "display-pic";
+//    account = new AccountController();
+//    account.getProfile(profileId);
+//}
 
-$(document).ready(function() {
-    setProfileImage();
+$(document).ready(function () {
+//    setProfileImage();
+    new AccountController().getProfile("display-pic");
     CartItemCount();
 
     $("#profile_picture_id").attr("data-url", baseURL + "upload_picture/");
@@ -13,9 +15,9 @@ $(document).ready(function() {
     }
     data = JSON.stringify(dummyData);
     $('#profile_picture_id').fileupload({
-        add: function(e, data) {
+        add: function (e, data) {
             var acceptFileTypes = /^image\/(gif|jpe?g|png)$/i,
-                error = [];
+                    error = [];
             if (data.originalFiles[0]['type'] && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
                 error.message = 'Not an accepted file type';
                 showPopup(error);
@@ -37,17 +39,17 @@ $(document).ready(function() {
         formData: {
             example: 'test'
         },
-        done: function(e, data) {
+        done: function (e, data) {
             $("#display-pic").attr('src', data.result.thumbnail_url);
         },
-        fail: function(e, data) {
-            $.each(data.messages, function(index, error) {
+        fail: function (e, data) {
+            $.each(data.messages, function (index, error) {
                 console.log(error);
             });
         },
     });
 
-    $(".choose-pic-overlay").on('click', function() {
+    $(".choose-pic-overlay").on('click', function () {
         $('#profile_picture_id').trigger('click');
     });
 });

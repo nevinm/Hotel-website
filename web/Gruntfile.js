@@ -27,7 +27,7 @@ module.exports = function (grunt) {
         },
         clean: {
             js: {
-                src: ["js/", "css/", "views/", "images/", "fonts/"]
+                src: ["index.html", "js/", "css/", "views/", "images/", "fonts/"]
             }
         },
         cssmin: {
@@ -52,7 +52,7 @@ module.exports = function (grunt) {
         },
         watch: {
             js: {
-                files: ['app/js/app/*', 'app/views/admin/js/app/*', 'app/css/*', 'app/views/admin/css/*'],
+                files: ['app/*'],
                 tasks: ['dev']
             }
         },
