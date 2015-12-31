@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Meisterdish - Admin</title>
+        <script type="text/javascript" src='js/app/redirect-admin.js'></script>
+        <link rel="stylesheet" type="text/css" href="../../css/reset.css">
+        <link rel="stylesheet" type="text/css" href="css/simplePagination.css">
+        <link rel="stylesheet" type="text/css" href="../../css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/admin.css">
+        <script type="text/javascript" src='../../js/app/validate-session.js'></script>
+    </head>
+    <body>
+        <div id="admin-mainWrapper">
+            <header id="header">
+                <div class="contentArea adminContentArea">
+                    <a href="#"><img class="pullLeft logo" src="../../images/logo.png" alt="MeisterDish">
+                    </a>
+                    <ul id="menu" class="pullRight">
+                        <li class="admin-links">
+                            <a href="manage-delivery-areas.html">DELIVERY AREA</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="promocode.html">PROMOCODES</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="giftcards.html">GIFTCARDS</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="orderlist.html">ORDERS</a>
+                        </li>
+                        <li class="kitchen-links">
+                            <a href="#">KITCHEN</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="meallist.html">MEALS</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="mealtype.html">MEAL TYPE</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="userlist.html">USERS</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="categories.html">CATEGORIES</a>
+                        </li>
+                        <li class='admin-links'>
+                            <a href="ingredients.html">INGREDIENTS</a>
+                        </li>
+                        <li class='bold admin-links'>
+                            <a href="delivery-slots.html">DELIVERY SLOTS</a>
+                        </li>
+                       <li class='admin-links'>
+                            <a href="meals-review.html">REVIEWS</a>
+                        </li>
+                        <li id="navbar-username_hidden" class="bold green">
+                            <a href='../account.html'></a>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <div id="page-container">
+                <div class='admin-inner-wrapper'>
+                    <div class="accountNav">
+                        <div class="logout body-text-bold">
+                            <a id='logout'>LOG OUT</a>
+                        </div>
+                    </div>
+                    <div class="admin-page-container">
+                        <section class="slot-section-header">
+                            <h2>DELIVERY SLOTS</h2>
+                        </section>
+                        <div class="manage-area-container" id='deliverySlotContainer'>
+                            <div class="week-section-wrapper">
+                                <section class="week-section">
+                                    <div class="week-header">THIS WEEK</div>
+                                    <table id="thisWeek">
+                                        <thead>
+                                            <tr><th></th><th>4PM</th><th>5PM</th><th>6PM</th><th>7PM</th><th>8PM</th></tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    <tfooter></tfooter></table>
+                                </section>
+                                <section class="week-section" id="nextWeekSection">
+                                    <div class="week-header">NEXT WEEK</div>
+                                    <table id="nextWeek">
+                                        <thead>
+                                            <tr><th></th><th>4PM</th><th>5PM</th><th>6PM</th><th>7PM</th><th>8PM</th></tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    <tfooter></tfooter></table>
+                                </section>
+                            </div>
+                            <section class="apply-slot-section">
+                                <input class="btn btn-large-primary medium-green" type="submit" id="applySlots" value="APPLY">
+                            </section>
+                            <div class="admin-nav">
+                                <div class='pagination'></div>
+                            </div>
+                            <div class="popup-wrapper">
+                                <div class="bk-overlay"></div>
+                                <div class="popup">
+                                    <div class="header"></div>
+                                    <form class="popup-container">
+                                        <div class="content">
+                                            <span class='callback-status'></span>
+                                        </div>
+                                        <div class="button">
+                                            <a href="#!" class="btn btn-small-secondary" id="close">CLOSE</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="confirm-popup-wrapper">
+                                <div class="bk-overlay"></div>
+                                <div class="popup">
+                                    <div class="header">CONFIRM</div>
+                                    <div class="popup-container">
+                                        <div class="content">
+                                            <span>Are you sure want to delete this?</span>
+                                        </div>
+                                        <div class="button">
+                                            <a href="#!" class="btn btn-small-secondary" id="yes-button">YES
+                                            </a>
+                                            <a href="#!" class="btn btn-small-secondary" id="no-button">NO</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-message">
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src='../../js/libs/jquery.min.js'></script>
+        <script type="text/javascript" src='js/libs/jquery.simplePagination.js'></script>
+        <script type="text/javascript" src='../../js/libs/jquery.validate.min.js'></script>
+        <script type="text/javascript" src='../../js/libs/jquery-ui.min.js'></script>
+        <script type="text/javascript" src='../../js/libs/jquery.fileupload.js'></script>
+        <script type="text/javascript" src='../../js/app/ajax-reusable.js'></script>
+        <script type="text/javascript" src='../../js/app/common.js'></script>
+        <script type="text/javascript" src='js/app/admin.js'></script>
+        <script type="text/javascript" src='js/app/deliverySlots.js'></script>
+    </body>
+</html>

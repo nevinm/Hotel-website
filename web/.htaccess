@@ -7,3 +7,4 @@ RewriteRule    ^share(.*)$  /backend/share/$1    [L]
 RewriteRule    ^verify-email(.*)$  /backend/verify-email/$1    [L]
 RewriteRule    ^verify-user(.*)$  /backend/verify-user/$1    [L]
 RewriteRule    ^unsubscribe_from_emails(.*)$  /backend/unsubscribe_from_emails/$1    [L]
+#AddType text/cache-manifest .manifest
