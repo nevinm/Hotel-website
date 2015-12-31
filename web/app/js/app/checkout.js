@@ -104,11 +104,10 @@ $(document).ready(function () {
                 qty = newVal,
                 $priceSpanElement = $(this).parents().eq(1).find(".price-container"),
                 price = $priceSpanElement.data("price"),
-                tax = $priceSpanElement.data("tax");
-        if (newVal <= $(this).data("max")) {
+                tax = $priceSpanElement.data("tax"),
+                maxQty = $(this).data("max");
+        if (qty <= maxQty) {
             $(this).parent().find('.quantity').val(newVal);
-        }
-        if (qty <= 10) {
             $(this).parents().eq(1).find(".price-container").text(dollarConvert(((price + tax) * qty).toFixed(2)));
             updateCartItems(meal_id, qty);
             updateReciept();
@@ -610,11 +609,12 @@ function populateCartItems(data) {
     }
 //    var element = "";
     $.each(data.aaData, function (key, value) {
+        var maxQty = ((value.available >= 10) ? 10 : value.available );
         $('.order-list-container').append("<div class='order-list-items' data-id='" + value.id + "'>" +
                 "<img src='" + value.image + "'>" + "<span class='body-text-small'>" + value.name + "</span>" +
                 "<div class='quantity-container'>" + "<span class='operator-minus' data-min='2'>" + '-' + "</span>" +
                 "<input type='text' disabled='disabled' class='quantity' value='" + value.quantity + "'>" +
-                "<span class='operator-plus' data-max='10'>" + '+' + "</span>" + "</div>" +
+                "<span class='operator-plus' data-max='" + maxQty + "'>" + '+' + "</span>" + "</div>" +
                 "<span class='price-container' data-tax='" + value.tax + "' data-price='" + value.price + "'>" +
                 dollarConvert(parseFloat((value.tax + value.price) * value.quantity).toFixed(2)) + "</span>" +
                 "<img src='../images/hamburger-menu-close.png' id='remove-cart-item'>" + "</div>");
