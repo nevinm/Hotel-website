@@ -684,8 +684,8 @@ $("form").each(function () {
                 required: "Please provide email."
             },
             giftcardcustomamount: {
-                required: "Please enter an amount.",
-                minAmount: "Enter a min amount of 25",
+                required: "Enter minimum amount of 25",
+                minAmount: "Enter minimum amount of 25",
                 decimal: "Please enter a whole number.",
                 maxAmount: "Please enter a lower amount"
             },
