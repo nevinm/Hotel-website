@@ -1,0 +1,66 @@
+/*==============================*\
+                      &LOGIN
+\*==============================*/
+
+#verification-container{
+    width: 100%;
+    float: left;
+    min-height: 100%;
+    background-color: #819373;
+}
+.verification-wrapper{
+    margin: 0 auto;
+    width: 90%;
+    overflow: auto;
+    background-color: #fff;
+    margin-top: 150px;
+    max-width: 470px;
+}
+#page-container {
+    background-color: #819373;
+}
+.header-small{
+    border: none;
+    color: #454545;
+    padding: 10px 0px;
+    font-family: 'BrandonGrotesque-Regular';
+    background-color: white;
+    text-align: center;
+    height: auto;
+}
+.verify-account {
+    font-weight: bold;
+    font-size: 25px;
+    padding: 10px 0px;
+    
+}
+.verification-desc {
+    padding-top: 10px 0px;
+    font-size: 15px;
+}
+.btn-go-to-menu {
+    margin-top: 20px;
+}
+.go-to-menu {
+    text-transform: none;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    font-family: 'BrandonGrotesque-Regular';
+}
+
+/*==============================*\
+            &MOBILE
+\*==============================*/
+hr{
+    display: none;
+}
+@media (min-width: 320px)and (max-width:767px){
+    .header-small{
+        text-align: center;
+        padding-left: 0;
+    }
+    .verification-wrapper{
+        margin-bottom: 20px;
+    }
+}
