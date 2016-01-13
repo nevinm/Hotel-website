@@ -29,7 +29,7 @@ $(document).ready(function () {
 //    $(".footer-list li.footer-non-social:nth-child(3)").hide();
 //    $("#footer-navMenu ul").not('.social-media-icons').find('li:nth-child(3)').hide();
     //hide social media icons
-    $("ul.social-media-icons").find(".sml_sprite").not(".facebook").hide();
+    $("ul.social-media-icons").find(".sml_sprite").not(".facebook, .instagram").hide();
     //FOOTER UPDATIONS /****END****/
     $('.icon-menu').on("click", function () {
         clicked = 1, leftMargin = 0;
