@@ -159,6 +159,9 @@ GiftCardsController.prototype = function () {
                 recipientEmail = $("#recipient-email").val(),
                 recipientMessage = $("#recipient-message").val(),
                 recipientAmount = $("#recipient-amount").val();
+        if(recipientAmount < 25){
+            return false;
+        }
         giftcardDetails = {};
         giftcardDetails = {
             "giftcardAmount": recipientAmount,
