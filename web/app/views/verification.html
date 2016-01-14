@@ -11,13 +11,14 @@
         <meta property="og:image" content="http://www.meisterdish.com/images/fb_banner_meister_30-11-15.jpg" />
         <meta property="og:description" content="A gift from me to you. For a limited time only, all first-time customers receive $20 towards their first two orders." /> 
         <meta property="og:url" content="http://www.meisterdish.com" /> 
-        <title>Meisterdish - Order History</title>
-        <script type="text/javascript" src='../js/app/redirect.js'></script>
+        <title>Meisterdish - Verification</title>
+
         <link rel="stylesheet" type="text/css" href="../css/reset.css">
         <link rel="stylesheet" type="text/css" href="../css/fontello.css">
         <link rel="stylesheet" type="text/css" href="../css/common.css">
-        <link rel="stylesheet" type="text/css" href="../css/account.css">
+        <link rel="stylesheet" type="text/css" href="../css/verification.css">
         <script type="text/javascript" src='../js/app/validate-session.js'></script>
+
 
         <script>
             (function (i, s, o, g, r, a, m) {
@@ -38,18 +39,10 @@
     </head>
 
     <body>
-        <div id="account-mainWrapper">
+        <div id="verification-container">
             <header id="header">
                 <div class="contentArea">
                     <a href="../index.html"><img class="pullLeft logo" src="../images/logo.png" alt="MeisterDish"></a>
-                    <div class="backNav-mobile">
-                        <span>
-                            <a href="account.html">
-                                <img src="../images/back-arrow-mobile.png">
-                            </a>
-                        </span>
-                        <span><a href="account.html">BACK TO ACCOUNT</a></span>
-                    </div>
                     <div class="cart pullRight">
                         <a href="checkout.html">
                             <span class="count"></span>
@@ -131,54 +124,30 @@
                 </div>
             </header>
             <div id="page-container">
-                <div class="accountNav">
-                    <div class="backNav">
-                        <a href="account.html">
-                            <img src="../images/back-arrow.png">
-                        </a>
-                        <span><a href="account.html">BACK TO ACCOUNT</a></span>
-                    </div>
-                    <div class="logout body-text-bold">
-                        <a id='logout'>LOG OUT</a>
-                    </div>
-                    <div class="admin-button body-text-bold">
-                        <a href='admin/categories.html' id="admin-redirect">Admin Page</a>
-                    </div>
-                </div>
-                <div class="account-wrapper">
-                    <div class="account-container">
-                        <div class="account-header">
-                            <h3 style="color:#000">ORDER HISTORY</h3></div>
-                        <div id="accordion">
-                            <div class="message">
-                                <span>There is no order in history</span>
-                            </div>
-                            <ul></ul>
+                <div class='verification-wrapper'>
+                    <div class="header-small">
+                        <div class="verify-account">
+                            Please verify your account
+                        </div>
+                        <div class="verification-desc">
+                            <span>A verification email has been sent to</span>
+                            <span></span>
+                            <span>.</span>
+                            <div>Please follow the instructions to activate your account</div>
+                        </div> 
+                        <div class="btn-go-to-menu">
+                            <a href="menu.html" class="btn btn-large-primary medium-green menu-button go-to-menu">Got it. Take me to the menu!</a>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="popup-wrapper">
-                <div class="bk-overlay"></div>
-                <div class="popup">
-                    <div class="header"></div>
-                    <div class="popup-container">
-                        <div class="content">
-                            <span>SOMTHING WENT WRONG</span>
-                        </div>
-                        <div class="button">
-                            <a class="btn btn-small-secondary" id="close">CLOSE</a>
-                        </div>
-                    </div>
-                </div>
+                </div> 
             </div>
         </div>
         <script type="text/javascript" src='../js/libs/jquery.min.js'></script>
-        <script type="text/javascript" src='../js/libs/jquery.validate.min.js'></script>
         <script type="text/javascript" src='../js/app/ajax-reusable.js'></script>
-        <script type="text/javascript" src='../js/app/common.js'></script>
-        <script type="text/javascript" src='../js/app/account.js'></script>
-        <script type="text/javascript" src='../js/app/order-history.js'></script>
+        <script type="text/javascript" src='../js/libs/jquery.validate.min.js'></script>
+        <script type="text/javascript" src='../js/app/common.js'></script> 
+        <script type="text/javascript" src='../js/app/login.js'></script>
+        <script type="text/javascript" src='../js/app/fb-access.js'></script>
     </body>
 
 </html>
