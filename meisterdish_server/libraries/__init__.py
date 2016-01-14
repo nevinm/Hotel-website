@@ -53,7 +53,8 @@ def mail(to_list, subject, message, sender=None, headers=None, design=True):
         imgs = {
             "meisterdish_logo": os.path.join(
                 settings.STATIC_ROOT, "default", "logo_email.png"),
-            "fb": os.path.join(settings.STATIC_ROOT, "default", "fb_icon.png")}
+            "fb": os.path.join(settings.STATIC_ROOT, "default", "fb_icon.png"),
+            "in": os.path.join(settings.STATIC_ROOT, "default", "in_icon.png")}
         for cid, img in imgs.items():
             fp = open(img, 'rb')
             msg_image = MIMEImage(fp.read())
