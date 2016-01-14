@@ -497,6 +497,10 @@ img#cancel, .edit-meal-available-popup .cancel {
     float: left;
     padding-right: 116px;
 }
+.email-id {
+    float: left;
+    padding-right: 116px;
+}
 
 .accordion-content .row {
     display: table;
