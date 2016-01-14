@@ -304,6 +304,17 @@ def create_order(request, data, user):
                     dis = (total_price + total_tax) / 2
                 order.total_payable -= dis
                 order.credits = dis
+            elif user.credits > 0:
+                log.info("User has credits : " + str(user.credits))
+
+                if user.credits > order.total_payable:
+                    user.credits = user.credits - order.total_payable
+                    order.credits = order.total_payable
+                    order.total_payable = 0
+                else:
+                    order.total_payable = order.total_payable - user.credits
+                    order.credits = user.credits
+                    user.credits = 0
         else:
             if order.cart.promo_code:
                 if order.cart.promo_code.amount > order.total_payable:

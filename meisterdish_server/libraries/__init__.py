@@ -53,7 +53,8 @@ def mail(to_list, subject, message, sender=None, headers=None, design=True):
         imgs = {
             "meisterdish_logo": os.path.join(
                 settings.STATIC_ROOT, "default", "logo_email.png"),
-            "fb": os.path.join(settings.STATIC_ROOT, "default", "fb_icon.png")}
+            "fb": os.path.join(settings.STATIC_ROOT, "default", "fb_icon.png"),
+            "in": os.path.join(settings.STATIC_ROOT, "default", "in_icon.png")}
         for cid, img in imgs.items():
             fp = open(img, 'rb')
             msg_image = MIMEImage(fp.read())
@@ -439,7 +440,7 @@ def export_csv(export_list, filename):
     response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
     writer = csv.writer(response)
     for row in export_list:
-        writer.writerow(row)
+        writer.writerow([s.encode("utf-8") for s in row])
     return response
 
 
