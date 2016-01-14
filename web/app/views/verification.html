@@ -13,7 +13,16 @@
               Use promo code MEISTER20 on our landing page." /> 
         <meta property="og:url" content="http://www.meisterdish.com" /> 
         <title>Meisterdish - Verification</title>
+        <script type="text/javascript">
+            (function(){
+                if (localStorage.getItem('signup') == null){
+                    window.location.href = '../index.html';
+                } else {
+                    localStorage.removeItem('signup');
+                }
 
+            })();
+        </script>
         <link rel="stylesheet" type="text/css" href="../css/reset.css">
         <link rel="stylesheet" type="text/css" href="../css/fontello.css">
         <link rel="stylesheet" type="text/css" href="../css/common.css">
@@ -147,7 +156,6 @@
         <script type="text/javascript" src='../js/app/ajax-reusable.js'></script>
         <script type="text/javascript" src='../js/libs/jquery.validate.min.js'></script>
         <script type="text/javascript" src='../js/app/common.js'></script> 
-        <script type="text/javascript" src='../js/app/login.js'></script>
         <script type="text/javascript" src='../js/app/fb-access.js'></script>
     </body>
 
