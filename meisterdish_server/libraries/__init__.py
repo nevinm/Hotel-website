@@ -440,7 +440,7 @@ def export_csv(export_list, filename):
     response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
     writer = csv.writer(response)
     for row in export_list:
-        writer.writerow(row)
+        writer.writerow([s.encode("utf-8") for s in row])
     return response
 
 
