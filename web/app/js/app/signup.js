@@ -6,7 +6,8 @@ var signupCallback = {
             showPopup(userDetails);
         } else {
             $('.signup-formcontainer')[0].reset();
-            showPopup(userDetails);
+            window.location.href = 'verification.html';
+            //showPopup(userDetails);
             var splitter = "Please note that a guest user account already exists with your email";
             if (userDetails.message.match(splitter)) {
                 var dataArray = userDetails.message.split(splitter);
