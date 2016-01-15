@@ -22,7 +22,7 @@ var signupCallback = {
                 'eventValue': 4
             });
             SessionController.fbTrackConversionEvent(SessionController.getSignUpPixel(), '0.00', 'USD');
-            localStorage['signup'] = true;
+            localStorage['signupEmail'] = userDetails.user.email;
             window.location.href = 'verification.html';
         }
     },
