@@ -131,7 +131,7 @@ $(document).ready(function () {
         var charCode = (evt.which) ? evt.which : evt.keyCode;
         if ((charCode != 190 || $(this).val().indexOf('.') != -1)
                 && (charCode != 110 || $(this).val().indexOf('.') != -1)
-                && ((charCode < 48 && charCode != 8)
+                && ((charCode < 48 && charCode > 9)
                         || (charCode > 57 && charCode < 96)
                         || charCode > 105)) {
             return false;
