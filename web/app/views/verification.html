@@ -14,13 +14,11 @@
         <meta property="og:url" content="http://www.meisterdish.com" /> 
         <title>Meisterdish - Verification</title>
         <script type="text/javascript">
+            var userEmail = localStorage.getItem('signupEmail');
             (function(){
-                if (localStorage.getItem('signup') == null){
+                if (userEmail == null){
                     window.location.href = '../index.html';
-                } else {
-                    localStorage.removeItem('signup');
-                }
-
+                } 
             })();
         </script>
         <link rel="stylesheet" type="text/css" href="../css/reset.css">
@@ -141,7 +139,7 @@
                         </div>
                         <div class="verification-desc">
                             <span>A verification email has been sent to</span>
-                            <span></span>
+                            <span id="signupEmail"></span>
                             <span>.</span>
                             <div>Please follow the instructions to activate your account</div>
                         </div> 
@@ -156,6 +154,7 @@
         <script type="text/javascript" src='../js/app/ajax-reusable.js'></script>
         <script type="text/javascript" src='../js/libs/jquery.validate.min.js'></script>
         <script type="text/javascript" src='../js/app/common.js'></script> 
+        <script type="text/javascript" src='../js/app/verification.js'></script> 
         <script type="text/javascript" src='../js/app/fb-access.js'></script>
     </body>
 
