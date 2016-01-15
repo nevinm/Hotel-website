@@ -496,7 +496,7 @@ def send_text_reminder(context):
             to receive your meal"
         client = TwilioRestClient(
             settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-        country_code = "+1" if settings.Live else "+1"
+        country_code = "+1"
         number = country_code + str(context["mobile"]).strip()
         message = client.messages.create(
             body=txt, to=number,
