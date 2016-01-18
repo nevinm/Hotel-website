@@ -8,13 +8,14 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http.response import HttpResponse, HttpResponseRedirect
 import logging
-import md5
 
 from cms.views.decorators import check_input
 from libraries import custom_error, json_response, export_csv,\
     manage_image_upload
+import md5
 from meisterdish_server.models import User, Category, Meal, MealType, Image,\
-    Address, ZipUnavailable, Referral, AmbassadorReferral
+    Address, ZipUnavailable, Referral, AmbassadorReferral, NotificationSetting,\
+    Configuration
 
 
 log = logging.getLogger(__name__)
@@ -723,3 +724,26 @@ def export_zips_unsupported(request, data):
         log.error("Export zips zip_unsupported_users : " + error.message)
         return HttpResponseRedirect(
             settings.SITE_URL + "views/admin/manage-delivery-areas.html")
+
+
+@check_input('POST', settings.ROLE_ADMIN)
+def notification_settings(request, data):
+    '''
+    API to create additional notification parameters.
+    :param request:
+    :param data:
+    '''
+    try:
+        phone_number = data["mobile_number"]
+        notify_settings = Configuration.objects.get('NOTIFICATION_NUMBER')
+        notify_settings.value = phone_number
+        notify_settings.save()
+        resp = {'status': 1,
+                'mobile_number': phone_number,
+                'message': 'Phone Number added Successfully'}
+        return json_response(resp)
+    except Exception as error:
+        log.error("Unable to add settings phone number " +
+                  str(error.message))
+        return custom_error("Unable to create Phone number" +
+                            str(error.message))

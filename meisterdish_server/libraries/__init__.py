@@ -14,7 +14,7 @@ import re
 
 import json as simplejson
 from meisterdish_server.models import Image, User, Role, DeliveryArea, Payment,\
-    Address, ZipUnavailable
+    Address, ZipUnavailable, NotificationSetting, Configuration
 from twilio.rest import TwilioRestClient
 
 
@@ -498,6 +498,36 @@ def send_text_reminder(context):
             settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
         country_code = "+1" if settings.Live else "+1"
         number = country_code + str(context["mobile"]).strip()
+        message = client.messages.create(
+            body=txt, to=number,
+            from_=settings.TWILIO_NUMBER)
+        log.info(message)
+        if message:
+            log.info("Sent SMS to " + number)
+            return True
+        else:
+            log.error("Failed to send SMS to " + number)
+            return False
+    except Exception as error:
+        log.error(
+            "Failed to send order SMS to : " + number + " : " + error.message)
+        return False
+
+
+def send_order_notification_sms(order):
+    '''
+    Function to send reminder when a new order comes.
+    :param context:
+    '''
+    try:
+        txt = "Meisterdish order Recieved \
+        " + order.order_num + ""
+        number = str(
+            Configuration.objects.get(key='NOTIFICATION_NUMBER').value).split()
+        client = TwilioRestClient(
+            settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+        country_code = "+1" if number not in settings.INDIAN_NUMBERS else "+91"
+        number = country_code + number
         message = client.messages.create(
             body=txt, to=number,
             from_=settings.TWILIO_NUMBER)
