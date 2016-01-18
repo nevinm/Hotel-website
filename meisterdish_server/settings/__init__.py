@@ -13,6 +13,7 @@ BASE_DIR = BASE_DIR
 
 ADMINS = (
     ('Abdul Nasar', 'nasarp@qburst.com'),
+    ('Thushar M Prakash', 'thushar@qburst.com'),
 )
 
 MANAGERS = ADMINS
@@ -257,7 +258,8 @@ EMAIL_IMAGES = {
     "meisterdish_logo": os.path.join(STATIC_ROOT, "default", "logo_email.png"),
 }
 
-INDIAN_NUMBERS = ["7034088806", '9961963746', '9995381338']
+INDIAN_NUMBERS = ["7034088806", '9961963746',
+                  '9995381338', '7736194093', '8089149455', ]
 
 PROMOCODES = {
     "MEISTER20": ("You've been invited to start cooking with $20 towards " +

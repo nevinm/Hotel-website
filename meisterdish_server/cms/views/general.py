@@ -8,11 +8,11 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http.response import HttpResponse, HttpResponseRedirect
 import logging
-import md5
 
 from cms.views.decorators import check_input
 from libraries import custom_error, json_response, export_csv,\
     manage_image_upload
+import md5
 from meisterdish_server.models import User, Category, Meal, MealType, Image,\
     Address, ZipUnavailable, Referral, AmbassadorReferral
 
