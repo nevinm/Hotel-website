@@ -14,7 +14,7 @@ import re
 
 import json as simplejson
 from meisterdish_server.models import Image, User, Role, DeliveryArea, Payment,\
-    Address, ZipUnavailable, NotificationSetting, Configuration
+    Address, ZipUnavailable, Configuration
 from twilio.rest import TwilioRestClient
 
 
@@ -521,9 +521,8 @@ def send_order_notification_sms(order):
     '''
     try:
         txt = "Meisterdish order Recieved \
-        " + order.order_num + ""
-        number = str(
-            Configuration.objects.get(key='NOTIFICATION_NUMBER').value).split()
+        " + str(order.order_num) + ""
+        number = Configuration.objects.get(key='NOTIFICATION_NUMBER').value
         client = TwilioRestClient(
             settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
         country_code = "+1" if number not in settings.INDIAN_NUMBERS else "+91"
