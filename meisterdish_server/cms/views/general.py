@@ -113,6 +113,7 @@ def logout(request, data):
         session.flush()
         log.info("API:logout, success")
         response = {'status': 1, "message": "Successfully logged out"}
+        raise Exception
     return json_response(response)
 
 
