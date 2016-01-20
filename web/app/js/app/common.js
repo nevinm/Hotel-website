@@ -414,13 +414,13 @@ $("form").each(function () {
             firstname: {
                 required: true,
                 minlength: 2,
-                maxlength: 30,
+                maxlength: 32,
                 letters: true
             },
             lastname: {
                 required: true,
                 minlength: 1,
-                maxlength: 30,
+                maxlength: 32,
                 letters: true
             },
             fullname: {
@@ -432,7 +432,7 @@ $("form").each(function () {
             username: {
                 required: true,
                 minlength: 3,
-                maxlength: 30,
+                maxlength: 32,
             },
             mealname: {
                 required: true,
