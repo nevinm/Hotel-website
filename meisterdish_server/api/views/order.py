@@ -428,7 +428,7 @@ def create_order(request, data, user):
 
     except Exception as error:
         log.error("Failed to create order." + str(error.message))
-        send_failure_mail('thushar@qburst.com', 'Checkout Failure',
+        send_failure_mail(settings.FAILURE_MAIL, 'Checkout Failure',
                           error.message, request)
         return custom_error(error.message + "is missing.")
 
@@ -651,7 +651,7 @@ def make_payment(order, user, request):
         exc_type, exc_obj, exc_tb = sys.exc_info()
         log.error(
             "Failed to make payment." + error.message + str(exc_tb.tb_lineno))
-        send_failure_mail('thushar@qburst.com', 'Payment Failure',
+        send_failure_mail(settings.FAILURE_MAIL, 'Payment Failure',
                           error.message + str(exc_tb.tb_lineno), request)
         return False
 

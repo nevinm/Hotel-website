@@ -330,18 +330,18 @@ def signup(request, data):
                 verification mail. Please try later.")
         except Exception as error:
             log.error(email + " : Failed to sign up " + error.message)
-            send_failure_mail('thushar@qburst.com', 'Signup Failure',
+            send_failure_mail(settings.FAILURE_MAIL, 'Signup Failure',
                               error.message, request)
             return custom_error("Failed to sign up. Please try again later")
     except KeyError as field:
         log.error("failed to signup " + str(field) + "missing")
-        send_failure_mail('thushar@qburst.com', 'Signup Failure',
+        send_failure_mail(settings.FAILURE_MAIL, 'Signup Failure',
                           'Failed to signup :' + str(field) + 'is missing',
                           request)
         return custom_error("Invalid input")
     except Exception as error:
         log.error("Failed to signup " + error.message)
-        send_failure_mail('thushar@qburst.com', 'Signup Failure',
+        send_failure_mail(settings.FAILURE_MAIL, 'Signup Failure',
                           error.message, request)
         return custom_error("Failed to signup. Please check all the fields.")
 
