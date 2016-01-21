@@ -619,16 +619,6 @@ def export_kitchen_orders(equest, data, user):
         orders = orders.order_by("delivery_time", "created")
 
         actual_count = orders.count()
-
-        try:
-            paginator = Paginator(orders, limit)
-            if page < 1 or page > paginator.page_range:
-                page = 1
-            orders = paginator.page(page)
-        except Exception as error:
-            log.error("order list pagination : " + error.message)
-            custom_error("There was an error listing orders.")
-
         # Format response
         for order in orders:
             meals = []
