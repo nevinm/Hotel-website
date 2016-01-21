@@ -429,7 +429,7 @@ def create_order(request, data, user):
     except Exception as error:
         log.error("Failed to create order." + str(error.message))
         send_failure_mail(settings.FAILURE_MAIL, 'Checkout Failure',
-                          error.message, request)
+                          error.message, request, user)
         return custom_error(error.message + "is missing.")
 
 
@@ -652,7 +652,7 @@ def make_payment(order, user, request):
         log.error(
             "Failed to make payment." + error.message + str(exc_tb.tb_lineno))
         send_failure_mail(settings.FAILURE_MAIL, 'Payment Failure',
-                          error.message + str(exc_tb.tb_lineno), request)
+                          error.message + str(exc_tb.tb_lineno), request, user)
         return False
 
 
