@@ -540,7 +540,7 @@ def send_failure_mail(to_list, subject,
                      if get_client_ip(req) is not None
                      else 'Not Available'
                      )
-        user = (req.user.full_name if req is not None
+        user = (req.user if req is not None
                 else 'Not Available')
 
         dic = {
@@ -551,6 +551,7 @@ def send_failure_mail(to_list, subject,
             'user': user,
         }
         log.info("data is " + str(dic))
+        log.info("User is : " + str(user))
         message_html = render_to_string('failure_alert_email.html', dic)
         msg = EmailMessage(
             subject, message_html, sender, [to_list, ], headers=headers)
