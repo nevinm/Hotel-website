@@ -7,28 +7,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Meisterdish - Email Template</title>
+    <title>Meisterdish - Error Alerts</title>
+
 </head>
 
 <body style="margin: 0; font-family: sans-serif; padding: 0;">
     <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;margin-top:30px;box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);">
         <tr>
-        	<td> Failure Alert for {{sub}} </td>
+            <td align="center" style="padding: 30px 0 0 0;">
+                <img src="cid:meisterdish_logo" width="262" height="30" style="display: block; padding-bottom : 20px;max-width:100%; " />
+            </td>
         </tr>
         <tr>
-       <td> Time </td> <td> {{error_time}} </td>
-       </tr> <tr>
-       <td> Source IP</td> <td> {{error_ip}} </td>
-        </tr> 
-        {% if user %}
-        <tr>
-        <td> User </td> <td> {{ error_user }} </td>
-        </tr>
-        {% endif %}
-      <tr>
-        <td> Reason </td> <td> {{ error_reason }} </td>
-        </tr>
-        </table>
+         <td align="center">
+             <hr style="width:90%;height:1px;border:0;background-color:#A9D77B;">
+         </td> 
+     </tr>
+     <tr>
+        <td align="center" style="padding-top: 15px;color:#5A5A5A;font-size:21px;text-transform:uppercase">
+            <p>Failure Alert for {{sub}} </p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center"  style="padding: 5px 0 10px 0;font-size:14px;color:#6b6b6b;text-align:center">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border:1px solid;border-collapse: collapse;margin-top:30px;box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);">
+             <tr>
+                 <td align="left"  style="padding: 5px 0 10px 0;font-size:14px;color:#6b6b6b;text-align:center">
+                     Time
+                 </td>
+                 <td align="right"  style="padding: 5px 0 10px 0;font-size:14px;color:#6b6b6b;text-align:center">
+                     {{error_time}}
+                 </td>
+             </tr>
+             <tr>
+                 <td align="left"  style="padding: 5px 0 10px 0;font-size:14px;color:#6b6b6b;text-align:center">
+                     Source IP    
+                 </td>
+                 <td align="right"  style="padding: 5px 0 10px 0;font-size:14px;color:#6b6b6b;text-align:center">
+                     {{error_ip}}
+                 </td>
+             </tr>
+             <tr>
+                 <td align="left"  style="padding: 5px 0 10px 0;font-size:14px;color:#6b6b6b;text-align:center">
+                  {% if user %}
+                  User 
+                  {% endif %}    
+              </td>
+              <td align="right"  style="padding: 5px 0 10px 0;font-size:14px;color:#6b6b6b;text-align:center">
+                 {{ error_user }}
+             </td>
+         </tr>
+         <tr>
+             <td align="left"  style="padding: 5px 0 10px 0;font-size:14px;color:#6b6b6b;text-align:center">
+              Reason    
+          </td>
+          <td align="right"  style="padding: 5px 0 10px 0;font-size:14px;color:#6b6b6b;text-align:center">
+            {{ error_reason }}
+        </td>
+    </tr>
+</table>
+<p>
+    Meisterdish | Error Alerts
+</p>
+</td>
+</tr>
+
+</table>
 </body>
 
 </html>
