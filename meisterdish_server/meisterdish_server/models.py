@@ -600,3 +600,5 @@ class Configuration(models.Model):
 class ZipUnavailable(models.Model):
     email = models.CharField(max_length=255)
     zipcode = models.CharField(max_length=10)
+
+
