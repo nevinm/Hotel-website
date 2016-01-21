@@ -28,10 +28,6 @@ def get_meals(request, data, user):
     '''
     try:
         user = get_request_user(request)
-
-        limit = data.get('perPage', settings.PER_PAGE)
-        page = data.get("nextPage", 1)
-
         meal_list = []
         meals = Meal.objects.filter(is_deleted=False)
         total_count = meals.count()
@@ -52,15 +48,6 @@ def get_meals(request, data, user):
         meals = meals.order_by("order", 'name')
 
         actual_count = meals.count()
-        try:
-            paginator = Paginator(meals, limit)
-            if page < 1 or page > paginator.page_range:
-                page = 1
-            meals = paginator.page(page)
-        except Exception as error:
-            log.error("meal list pagination : " + error.message)
-            custom_error("There was an error listing meals.")
-
         try:
             home_meal = Configuration.objects.get(key='home_meal_id').value
         except Configuration.DoesNotExist:
@@ -111,10 +98,6 @@ def get_meals(request, data, user):
                               "aaData": meal_list,
                               "total_count": total_count,
                               "actual_count": actual_count,
-                              "num_pages": paginator.num_pages,
-                              "page_range": paginator.page_range,
-                              "current_page": page,
-                              "per_page": limit,
                               })
     except Exception as error:
         log.error("Failed to list meals : " + error.message)
