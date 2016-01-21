@@ -405,7 +405,7 @@ def verify_user(request, data, token):
     :param token:
     '''
     login_url = settings.SITE_URL + "views/login.html"
-    fail_url = settings.SITE_URL + "views/signup-fail.html"
+    fail_url = settings.SITE_URL + "views/signup/coming-soon.html"
     try:
         token = token.strip()
         user = User.objects.get(user_verify_token=token, deleted=False)
