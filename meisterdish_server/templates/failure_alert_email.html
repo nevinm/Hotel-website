@@ -47,16 +47,16 @@
                      {{error_ip}}
                  </td>
              </tr>
+                  {% if user %}
              <tr>
                  <td align="left"  style="padding: 5px 0 10px 0;font-size:14px;color:#6b6b6b;text-align:center">
-                  {% if user %}
                   User 
-                  {% endif %}    
               </td>
               <td align="right"  style="padding: 5px 0 10px 0;font-size:14px;color:#6b6b6b;text-align:center">
-                 {{ error_user }}
+                 {{ user }}
              </td>
          </tr>
+         {% endif %}  
          <tr>
              <td align="left"  style="padding: 5px 0 10px 0;font-size:14px;color:#6b6b6b;text-align:center">
               Reason    
