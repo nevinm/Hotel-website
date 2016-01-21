@@ -558,6 +558,16 @@ def send_failure_mail(to_list, subject,
         msg.content_subtype = "html"
         msg.mixed_subtype = 'related'
         log.info('Sending message')
+        imgs = {
+            "meisterdish_logo": os.path.join(
+                settings.STATIC_ROOT, "default", "logo_email.png"),
+        }
+        for cid, img in imgs.items():
+            fp = open(img, 'rb')
+            msg_image = MIMEImage(fp.read())
+            fp.close()
+            msg_image.add_header('Content-ID', '<' + cid + '>')
+            msg.attach(msg_image)
 
         return msg.send()
     except Exception as error:
