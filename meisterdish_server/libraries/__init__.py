@@ -540,7 +540,7 @@ def send_failure_mail(to_list, subject,
                      if get_client_ip(req) is not None
                      else 'Not Available'
                      )
-        user = (req.user if req is not None
+        user = (req.user.full_name if req is not None
                 else 'Not Available')
 
         dic = {
