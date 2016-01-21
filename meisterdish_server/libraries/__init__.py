@@ -517,7 +517,8 @@ def send_text_reminder(context):
 
 
 def send_failure_mail(to_list, subject,
-                      message, req, sender=None,
+                      message, req,
+                      user=None, sender=None,
                       headers=None):
     '''
     Function to send mail
@@ -540,15 +541,15 @@ def send_failure_mail(to_list, subject,
                      if get_client_ip(req) is not None
                      else 'Not Available'
                      )
-        user = (req.user if req is not None
-                else 'Not Available')
+        usr = (user.full_nameame if user is not None
+               else 'Not Applicable')
 
         dic = {
             'error_reason': message,
             'sub': subject,
             'error_time': timezone.now(),
             'error_ip': source_ip,
-            'user': user,
+            'user': usr,
         }
         log.info("data is " + str(dic))
         log.info("User is : " + str(user))
