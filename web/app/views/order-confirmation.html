@@ -9,16 +9,39 @@
         <meta name="author" content="">
         <meta property="og:title" content="Meisterdish – New York's first on-demand delivery service that lets you cook in 15 minutes" />
         <meta property="og:image" content="http://www.meisterdish.com/images/fb_banner_meister_30-11-15.jpg" />
-        <meta property="og:description" content="A gift from me to you. For a limited time only, all first-time customers receive $20 towards their first two orders." /> 
+        <meta property="og:description" content="A gift from me to you. For a limited time only, all first-time customers receive $20 towards their first two orders." />
         <meta property="og:url" content="http://www.meisterdish.com" /> 
-        <title>Meisterdish - Order History</title>
-        <script type="text/javascript" src='../js/app/redirect.js'></script>
+        <title>Meisterdish - Order Confirmation</title>
+        <script type="text/javascript">
+            var cartValue = localStorage.getItem('orderConfirm');
+            (function(){
+                if (cartValue == null){
+                    window.location.href = '../index.html';
+                } 
+            })();
+        </script>
+
         <link rel="stylesheet" type="text/css" href="../css/reset.css">
         <link rel="stylesheet" type="text/css" href="../css/fontello.css">
         <link rel="stylesheet" type="text/css" href="../css/common.css">
-        <link rel="stylesheet" type="text/css" href="../css/account.css">
+        <link rel="stylesheet" type="text/css" href="../css/order-confirmation.css">
         <script type="text/javascript" src='../js/app/validate-session.js'></script>
 
+        <!-- Facebook Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+            n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+            document,'script','//connect.facebook.net/en_US/fbevents.js');
+
+            fbq('init', '852428648204526');
+            fbq('track', "PageView");
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=852428648204526&ev=PageView&noscript=1"
+        /></noscript>
+        <!-- End Facebook Pixel Code -->
         <script>
             (function (i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r;
@@ -38,18 +61,10 @@
     </head>
 
     <body>
-        <div id="account-mainWrapper">
+        <div id="order-container">
             <header id="header">
                 <div class="contentArea">
                     <a href="../index.html"><img class="pullLeft logo" src="../images/logo.png" alt="MeisterDish"></a>
-                    <div class="backNav-mobile">
-                        <span>
-                            <a href="account.html">
-                                <img src="../images/back-arrow-mobile.png">
-                            </a>
-                        </span>
-                        <span><a href="account.html">BACK TO ACCOUNT</a></span>
-                    </div>
                     <div class="cart pullRight">
                         <a href="checkout.html">
                             <span class="count"></span>
@@ -131,54 +146,34 @@
                 </div>
             </header>
             <div id="page-container">
-                <div class="accountNav">
-                    <div class="backNav">
-                        <a href="account.html">
-                            <img src="../images/back-arrow.png">
-                        </a>
-                        <span><a href="account.html">BACK TO ACCOUNT</a></span>
-                    </div>
-                    <div class="logout body-text-bold">
-                        <a id='logout'>LOG OUT</a>
-                    </div>
-                    <div class="admin-button body-text-bold">
-                        <a href='admin/categories.html' id="admin-redirect">Admin Page</a>
-                    </div>
-                </div>
-                <div class="account-wrapper">
-                    <div class="account-container">
-                        <div class="account-header">
-                            <h3 style="color:#000">ORDER HISTORY</h3></div>
-                        <div id="accordion">
-                            <div class="message">
-                                <span>There is no order in history</span>
-                            </div>
-                            <ul></ul>
+                <div class='order-wrapper'>
+                    <div class="header-small">
+                        <div class="order-head">
+                            Thanks! Order received.
+                        </div>
+                        <div class="order-desc">
+                            <div>
+                                Your receipt has been emailed to you.
+                            </div> 
+                            <div>
+                                We'll text you when we're on our way.
+                            </div>  
+                        </div> 
+                        <div class="btn-go-to-menu">
+                            <a href="menu.html" class="btn btn-large-primary medium-green menu-button go-to-menu">
+                                Take me to the menu
+                            </a>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="popup-wrapper">
-                <div class="bk-overlay"></div>
-                <div class="popup">
-                    <div class="header"></div>
-                    <div class="popup-container">
-                        <div class="content">
-                            <span>SOMTHING WENT WRONG</span>
-                        </div>
-                        <div class="button">
-                            <a class="btn btn-small-secondary" id="close">CLOSE</a>
-                        </div>
-                    </div>
-                </div>
+                </div> 
             </div>
         </div>
         <script type="text/javascript" src='../js/libs/jquery.min.js'></script>
-        <script type="text/javascript" src='../js/libs/jquery.validate.min.js'></script>
         <script type="text/javascript" src='../js/app/ajax-reusable.js'></script>
-        <script type="text/javascript" src='../js/app/common.js'></script>
-        <script type="text/javascript" src='../js/app/account.js'></script>
-        <script type="text/javascript" src='../js/app/order-history.js'></script>
+        <script type="text/javascript" src='../js/libs/jquery.validate.min.js'></script>
+        <script type="text/javascript" src='../js/app/common.js'></script> 
+        <script type="text/javascript" src='../js/app/fb-access.js'></script>
+        <script type="text/javascript" src='../js/app/order-confirmation.js'></script>
     </body>
 
 </html>

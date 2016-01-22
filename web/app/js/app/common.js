@@ -414,25 +414,25 @@ $("form").each(function () {
             firstname: {
                 required: true,
                 minlength: 2,
-                maxlength: 15,
+                maxlength: 32,
                 letters: true
             },
             lastname: {
                 required: true,
                 minlength: 1,
-                maxlength: 15,
+                maxlength: 32,
                 letters: true
             },
             fullname: {
                 required: true,
                 minlength: 3,
-                maxlength: 20,
+                maxlength: 50,
                 letters: true
             },
             username: {
                 required: true,
                 minlength: 3,
-                maxlength: 15,
+                maxlength: 32,
             },
             mealname: {
                 required: true,
@@ -638,20 +638,20 @@ $("form").each(function () {
                 required: "Please enter your first name.",
                 letters: "Name should contain only alphabets.",
                 minlength: "Name should contain at least 2 characters.",
-                maxlength: "Name should not contain more than 15 charcters."
+                maxlength: "Name should not contain more than 30 charcters."
             },
             lastname: {
                 required: "Please enter your last name.",
                 letters: "Name should contain only alphabets.",
                 minlength: "Name should contain at least 2 characters.",
-                maxlength: "Name should not contain more than 15 charcters."
+                maxlength: "Name should not contain more than 30 charcters."
             },
             phonenumber: "Please enter as xxxxxxxxxx",
             fullname: {
                 required: "Please enter your full name.",
                 letters: "Name should contain only alphabets.",
                 minlength: "Name should contain at least 2 characters.",
-                maxlength: "Name should not contain more than 15 charcters."
+                maxlength: "Name should not contain more than 50 charcters."
             },
             password: {
                 required: "Please provide a password.",
@@ -664,7 +664,7 @@ $("form").each(function () {
             username: {
                 required: "Please enter username.",
                 minlength: "Name should contain at least 2 characters.",
-                maxlength: "Name should not contain more than 15 charcters."
+                maxlength: "Name should not contain more than 30 charcters."
             },
             confirmpassword: {
                 required: "Please provide a password.",
