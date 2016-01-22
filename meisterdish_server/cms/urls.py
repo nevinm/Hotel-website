@@ -4,6 +4,7 @@ URL patterns for cms admin: /api/cms/
 from django.conf.urls import patterns, include, url
 
 from cms.views import general, order, promotions, meals, delivery
+from cms.views.order import export_kitchen_orders
 
 
 urlpatterns = patterns(
@@ -101,6 +102,8 @@ urlpatterns = patterns(
 
     url(r'^get_kitchen_orders/$', order.get_kitchen_orders,
         name='get_kitchen_orders'),
+    url(r'^export_kitchen_orders',
+        order.export_kitchen_orders, name='export_kitchen_orders'),
     url(r'^get_delivery_orders/$',
         order.get_delivery_orders,
         name='get_delivery_orders'),

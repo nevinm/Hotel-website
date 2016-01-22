@@ -603,6 +603,70 @@ def get_kitchen_orders(request, data, user):
         return custom_error("Failed to get orders list.")
 
 
+@check_input('POST', settings.ROLE_KITCHEN)
+def export_kitchen_orders(equest, data, user):
+    '''
+    API to export  kitchen orders as CSV
+    :param request:
+    :param data:
+    :param user:
+    '''
+    try:
+        if "status_limit" in data and str(data["status_limit"]) != "":
+            status = int(data["status"])
+        else:
+            status = 3
+        export_list = [[
+            'Order Number',
+                       'Quantity',
+                       'Meal',
+                       'Delivery Time',
+                       'Zip',
+                       'Name',
+                       'Phone',
+                       'Status',
+                       ]]
+        orders = Order.objects.filter(is_deleted=False, status__lte=status)
+
+        orders = orders.order_by("delivery_time", "created")
+
+        # Format response
+        for order in orders:
+            for cart_item in CartItem.objects.filter(cart__order=order,
+                                                     cart__completed=True):
+                export_list.append([
+                                   str(order.order_num),
+                                   str(cart_item.quantity),
+                                   cart_item.meal.name,
+                                   order.delivery_time.strftime(
+                                       "%m-%d-%Y %H:%M:%S"),
+                                   (order.delivery_address.zip
+                                    if order.delivery_address
+                                       else "Pick up"),
+                                   (order.cart.user.first_name.title() + " " +
+                                    order.cart.user.last_name.title(
+                                   ) if order.cart.user.role.id == ROLE_USER
+                                       else "Guest"),
+                                   str(order.phone),
+                                   dict(settings.ORDER_STATUS)[order.status],
+                                   ])
+            export_list.append([
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ])
+        # End format response
+        return export_csv(export_list, 'kitchen-orders.csv')
+    except Exception as error:
+        log.error("Failed to list orders." + error.message)
+        return custom_error("Failed to get orders list.")
+
+
 @check_input('POST', settings.ROLE_DELIVERY)
 def get_delivery_orders(request, data, user):
     '''
