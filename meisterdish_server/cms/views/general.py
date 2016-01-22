@@ -8,11 +8,11 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http.response import HttpResponse, HttpResponseRedirect
 import logging
-import md5
 
 from cms.views.decorators import check_input
 from libraries import custom_error, json_response, export_csv,\
     manage_image_upload
+import md5
 from meisterdish_server.models import User, Category, Meal, MealType, Image,\
     Address, ZipUnavailable, Referral, AmbassadorReferral
 
@@ -292,12 +292,16 @@ def get_users(request, data, user):
         users = User.objects.exclude(
             role__pk=settings.ROLE_GUEST).filter(deleted=False)
         total_count = users.count()
-
+        q = Q()
         if "search" in data:
             search = data["search"]
-            users = users.filter(
-                Q(first_name__istartswith=search) | Q(
-                    last_name__istartswith=search))
+            q &= Q(first_name__istartswith=search) | Q(
+                last_name__istartswith=search)
+        if "email" in data:
+            email_search = data["email"]
+            q &= Q(email__istartswith=email_search)
+
+        users = users.filter(q)
 
         users = users.order_by('-id')
         actual_count = users.count()
