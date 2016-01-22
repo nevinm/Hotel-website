@@ -613,7 +613,7 @@ def export_kitchen_orders(equest, data, user):
     '''
     try:
         if "status_limit" in data and str(data["status_limit"]) != "":
-            status = int(data["status"])
+            status = int(data["status_limit"])
         else:
             status = 3
         export_list = [[
