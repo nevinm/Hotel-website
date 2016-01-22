@@ -604,12 +604,12 @@ def get_kitchen_orders(request, data, user):
 
 
 @check_input('POST')
-def export_kitchen_orders(equest, data, user):
+def export_kitchen_orders(equest, data):
     '''
     API to export  kitchen orders as CSV
     :param request:
     :param data:
-    :param user:
+
     '''
     try:
         session_key = data.get('session_key', None)
