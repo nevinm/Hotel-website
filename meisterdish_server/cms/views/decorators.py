@@ -26,7 +26,8 @@ def check_input(method, role=False):
                 if func.__name__ in ['export_users',
                                      'export_orders',
                                      'export_users_for_promotion',
-                                     'export_zips_unsupported', ]:
+                                     'export_zips_unsupported',
+                                     'export_kitchen_orders']:
                     req = nvp_request(request)
                 else:
                     req = json_request(request)
@@ -39,6 +40,7 @@ def check_input(method, role=False):
                                              'export_orders',
                                              'export_users_for_promotion',
                                              'export_zips_unsupported',
+                                             'export_kitchen_orders'
                                              ]:
 
                         session_key = request.META.get(
