@@ -664,7 +664,8 @@ def export_kitchen_orders(equest, data, user):
         return export_csv(export_list, 'kitchen-orders.csv')
     except Exception as error:
         log.error("Failed to list orders." + error.message)
-        return custom_error("Failed to get orders list.")
+        return HttpResponseRedirect(
+            settings.SITE_URL + "views/admin/kitchen-order.html")
 
 
 @check_input('POST', settings.ROLE_DELIVERY)
