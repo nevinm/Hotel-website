@@ -631,7 +631,7 @@ def export_kitchen_orders(equest, data):
                            'Status',
                            ]]
             orders = Order.objects.filter(is_deleted=False, status__lte=status)
-            orders = orders.order_by("delivery_time", "created")
+            orders = orders.order_by("-delivery_time", "created")
             # Format response
             for order in orders:
                 for cart_item in CartItem.objects.filter(cart__order=order,
