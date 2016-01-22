@@ -612,82 +612,56 @@ def export_kitchen_orders(equest, data, user):
     :param user:
     '''
     try:
-        order_list = []
-        orders = Order.objects.filter(is_deleted=False, status__lt=4)
+        if "status_limit" in data and str(data["status_limit"]) != "":
+            status = int(data["status"])
+        else:
+            status = 3
+        export_list = [[
+            'Order Number',
+                       'Quantity',
+                       'Meal',
+                       'Delivery Time',
+                       'Zip',
+                       'Name',
+                       'Phone',
+                       'Status',
+                       ]]
+        orders = Order.objects.filter(is_deleted=False, status__lte=status)
 
-        total_count = orders.count()
         orders = orders.order_by("delivery_time", "created")
 
-        actual_count = orders.count()
         # Format response
         for order in orders:
-            meals = []
             for cart_item in CartItem.objects.filter(cart__order=order,
                                                      cart__completed=True):
-                meals.append(
-                    {
-                        "id": cart_item.meal.id,
-                        "name": cart_item.meal.name,
-                        "description": cart_item.meal.description,
-                        "image": (
-                            settings.DEFAULT_MEAL_IMAGE
-                            if cart_item.meal.main_image is None
-                            else cart_item.meal.main_image.thumb.url),
-                        "available": 1 if cart_item.meal.available else 0,
-                        "category": (cart_item.meal.category.name.title()
-                                     if cart_item.meal.category else ""),
-                        "price": cart_item.meal.price,
-                        "tax": cart_item.meal.price * cart_item.meal.tax / 100,
-                        "quantity": cart_item.quantity,
-                        "status_id": int(cart_item.status),
-                    })
-
-            order_list.append({
-                "id": order.id,
-                "order_num": order.order_num,
-                "minutes": get_time_past(order.created),
-                "zip": (order.delivery_address.zip
-                        if order.delivery_address else ""),
-                "grand_total": order.grand_total,
-                "user_first_name": (
-                    order.cart.user.first_name
-                    if order.cart.user.role.pk == settings.ROLE_USER
-                    else 'Guest(' + str(order.email) + ')'),
-                "user_last_name": order.cart.user.last_name,
-                "status": dict(settings.ORDER_STATUS)[order.status],
-                "status_id": order.status,
-                "delivery_time": order.delivery_time.strftime(
-                    "%m-%d-%Y %H:%M:%S"),
-                "meals": meals,
-                "delivery_type": order.delivery_type.title(),
-                "phone": order.phone,
-                "email": order.email,
-                "delivery_address": {
-                    "id": order.delivery_address.id,
-                    "first_name": order.delivery_address.first_name,
-                    "last_name": order.delivery_address.last_name,
-                    "street": order.delivery_address.street,
-                    "is_business": (
-                        1 if order.delivery_address.is_business else 0),
-                    "company": order.delivery_address.company,
-                    "building": order.delivery_address.building,
-                    "city": order.delivery_address.city.title(),
-                    "state": order.delivery_address.state.name,
-                    "zip": order.delivery_address.zip,
-                    "phone": order.delivery_address.phone,
-                } if order.delivery_address else "",
-            })
-
+                export_list.append([
+                                   str(order.order_num),
+                                   str(cart_item.quantity),
+                                   cart_item.meal.name,
+                                   order.delivery_time.strftime(
+                                       "%m-%d-%Y %H:%M:%S"),
+                                   (order.delivery_address.zip
+                                    if order.delivery_address
+                                       else "Pick up"),
+                                   (order.cart.user.first_name.title() + " " +
+                                    order.cart.user.last_name.title(
+                                   ) if order.cart.user.role.id == ROLE_USER
+                                       else "Guest"),
+                                   str(order.phone),
+                                   dict(settings.ORDER_STATUS)[order.status],
+                                   ])
+            export_list.append([
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ])
         # End format response
-        return json_response({"status": 1,
-                              "aaData": order_list,
-                              "total_count": total_count,
-                              "actual_count": actual_count,
-                              "num_pages": paginator.num_pages,
-                              "page_range": paginator.page_range,
-                              "current_page": page,
-                              "per_page": limit,
-                              })
+        return export_csv(export_list, 'kitchen-orders.csv')
     except Exception as error:
         log.error("Failed to list orders." + error.message)
         return custom_error("Failed to get orders list.")
