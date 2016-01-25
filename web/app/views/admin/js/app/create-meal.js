@@ -4,6 +4,7 @@ var nutrient_sub_category = 0,
         tipsAndTricksData = [],
         createMealParams = {},
         mealId,
+        dropdownIngredients,
         ingredientsList = {};
 $(document).ready(function () {
     $('#create-meal-button').on("click", function (e) {
@@ -593,10 +594,11 @@ var ingredientsListCallback = {
         var response = JSON.parse(data);
         if (response.status == 1) {
             ingredientsList = new Object();
+            dropdownIngredients = response.aaData;
             $.each(response.aaData, function (key, value) {
                 ingredientsList[value.id] = value;
             });
-            populateIngredientsDropdown(ingredientsList)
+            populateIngredientsDropdown(dropdownIngredients);
         }
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
