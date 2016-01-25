@@ -83,6 +83,7 @@ def get_meals(request, data):
                 "id": meal.id,
                 "name": meal.name,
                 "sub": meal.sub,
+                "code": meal.code,
                 "description": meal.description,
                 "main_image": (
                     settings.DEFAULT_MEAL_IMAGE if not meal.main_image
@@ -195,6 +196,7 @@ def get_meal_details(request, data, meal_id):
             "id": meal.id,
             "name": meal.name,
             "sub": meal.sub,
+            "code": meal.code,
             "description": meal.description,
             "price": meal.price,
             "need_boiling_water": meal.need_boiling_water,
