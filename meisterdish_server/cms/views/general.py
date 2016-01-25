@@ -549,6 +549,8 @@ def export_users(request, data):
                         state = primary_address.state.name
 
                     else:
+                        business = ""
+                        company = ""
                         building = ""
                         street = ""
                         city = ""
@@ -654,6 +656,8 @@ def export_users_for_promotion(request, data):
                         state = primary_address.state.name
 
                     else:
+                        business = ""
+                        company = ""
                         building = ""
                         street = ""
                         city = ""
