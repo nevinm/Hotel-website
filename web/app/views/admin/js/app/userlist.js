@@ -8,13 +8,15 @@ var getUserlistCallback = {
     }
 }
 
-function getUserlist(nextPage) {
+function getUserlist(nextPage, userName, emailId) {
     var url = baseURL + 'cms/get_users/';
     header = {
         "session-key": localStorage['session_key']
     },
     params = {
-        "nextPage": nextPage
+        "nextPage": nextPage,
+        "search" : userName,
+        "email" :emailId
     },
     data = JSON.stringify(params);
 
@@ -234,6 +236,22 @@ var manageCreditsCallback = {
     }
 }
 
+//Search Functions
+function returnSearchParams() {
+    var userName = $("#user-name").val(),
+            emailId = $("#email-id").val(),
+            searchParams = {};
+    searchParams = {
+        "userName": userName,
+        "emailId": emailId
+    }
+    return searchParams;
+}
+function doSearch() {
+    searchParams = returnSearchParams();
+    getUserlist(1, searchParams.userName, searchParams.emailId);
+}
+
 function manageCredits(id, credits) {
     var url = baseURL + 'cms/manage_credits/';
     header = {
@@ -269,7 +287,12 @@ $(document).ready(function () {
         } else {
         }
     });
-
+    $("#search-users").on('click', doSearch);
+    $(document).keypress(function(e) {
+        if(e.which == 13) {
+            doSearch();
+        }
+    });
     downloadOrderCSV("cms/export_users/", "download-users-form");
     downloadOrderCSV("cms/export_users_for_promotion/", "download-users-promotion-form");
 });
