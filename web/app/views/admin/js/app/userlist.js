@@ -94,7 +94,7 @@ function populateUserlist(userListData) {
         currentPage: userListData.current_page,
         cssStyle: 'light-theme',
         onPageClick: function (pageNumber, event) {
-            getUserlist(pageNumber);
+            getUserlist(pageNumber, searchParams.userName, searchParams.emailId);
         },
         onInit: function () {
             if (getStringAfterHash(location.href, "#")) {
@@ -194,7 +194,7 @@ var removeUsersCallback = {
         var usersData = JSON.parse(data);
         if (usersData.status == 1) {
             currentPage = $('.pagination').pagination('getCurrentPage');
-            getUserlist(currentPage);
+            getUserlist(currentPage, searchParams.userName, searchParams.emailId);
         } else {
             showUserCreditPoup(usersData);
         }
@@ -226,7 +226,7 @@ var manageCreditsCallback = {
         var creditsData = JSON.parse(data);
         if (creditsData.status == 1) {
             currentPage = $('.pagination').pagination('getCurrentPage');
-            getUserlist(currentPage);
+            getUserlist(currentPage, searchParams.userName, searchParams.emailId);
             $('.popup-wrapper').hide();
         } else {
             showUserCreditPoup(creditsData);
