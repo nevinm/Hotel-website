@@ -1,7 +1,10 @@
 /*==============================*\
                       &LOGIN
 \*==============================*/
-
+#page-container {
+    background-image: url("../images/CheckoutBG.jpg");
+    height: 1000px;
+}
 #login-container{
     width: 100%;
     border-right: 10px solid #fff;
@@ -9,6 +12,9 @@
     float: left;
     min-height: 100%;
     background-color: #F9FAF7;
+}
+.clear {
+    clear: both;
 }
 .login-wrapper{
     margin: 0 auto;
@@ -83,29 +89,31 @@ span.facebook-login-text {
     width: 90%;
     margin: 0 auto;
     margin-top: 120px;
-    max-width: 900px;
+    max-width: 800px;
     text-align: center;
     font-family: "BrandonGrotesque-Black";
 }
 .signup-container{
     background-color: #FDFBFA;
-    border: 1px solid #C7C7C7;
+    border: 10px solid #F0F0F0;
     border-radius: 3px;
     float: left;
     width: 100%;
+    margin-top: 5%;
 }
 .signup-container .header-small {
     text-align: center;
-    padding-right: 35px;
+    /* padding-right: 35px; */
     color: #6B6B6B;
     font-weight: normal;
-    height: 46px;
-    padding-left: 35px;
+    height: auto;
+    /* padding-left: 0px; */
     background-color: #FDFBFA;
     color: #454545;
-    padding-top: 10px;
+    /* padding-top: 10px; */
     font-family: 'BrandonGrotesque-Regular';
     border: none;
+    padding: 2% 0px 2% 0px;
 }
 .signup-container .header-small h3 {
     text-transform: none;
@@ -166,13 +174,17 @@ form.signup-formcontainer {
     padding-left: 35px;
     width: 100%;
     float: left;
-    padding-top: 20px;
+    padding-top: 30px;
     padding-right: 35px;
 }
 .signup-input {
     width: 48%;
     float: left;
     position: relative;
+}
+.signup-input input {
+    border-radius: 8px;
+    border-color: #E5E5E5;
 }
 .email-wrapper {
     padding:10px 0px; 
@@ -220,37 +232,37 @@ form.signup-formcontainer {
 .signup-details {
     font-family: "BrandonGrotesque-Light";
     float: left;
-    width: 50%;
+    width: 52%;
     background-color: #FDFCFB;
+    margin: 20px 0px 15px 0px;
 }
 .signup-desc {  
     font-family: "BrandonGrotesque-Light";
     float:left;
-    width: 50%;    
+    width: 48%;    
     background-color: #FDFCFB;
     text-align: left;
-    padding: 0px 5%;
-    margin: 5% 0px;
+    padding: 0px 0px 0px 5%;
+    margin: 50px 0px;
     border-left:  1px solid #DCDBDB;
 
 }
 .signup-container .desc-head {
     text-align: left;
-}
-.signup-container .desc-head {
-    line-height: 1.5px;
-    padding-left: 0px;
+    height: auto;
 }
 .desc-desc {
-    margin: 7% 0px;
+    margin: 0px 12% 0px 0px;
+    font-weight: bold;
 }
 ul.ul-type {
-    margin-left: 8%;
+    margin: 6% 0px 3% 8%;
+
 }
 ul.ul-type li {
     list-style-type: disc;
     text-align: left;
-    font-size: 15px;
+    font-size: 13px;
 }
 .privacy-policy {
     font-size: 10px;    
@@ -259,9 +271,14 @@ ul.ul-type li {
 }
 .btn-crt-acc {
     text-transform: none;
+    border-radius: 10px;
+    font-size: 14px;
+    height: 35px;
+    padding: 4%;
+    line-height: 3px;
 }
 .signup-button {
-    width: 50%;
+    margin-top: 2%;
 }
 ::-webkit-input-placeholder {
     font-family: "BrandonGrotesque-Light";
@@ -352,6 +369,57 @@ form#resetpassword-form {
 hr{
     display: none;
 }
+@media (min-width: 320px)and (max-width:480px) {
+    .signup-details {
+        width: 100%;
+    }
+    .signup-desc {
+        display: none;
+    }
+}
+@media (min-width: 481px)and (max-width:550px) {
+    .signup-container .desc-head h4{
+        font-size: 14px;
+    }
+    .desc-desc {
+        font-size: 12px;
+    }
+    ul.ul-type li {
+        font-size: 9px;
+    }
+    .signup-container .header-small h3 {
+        font-size: 20px;
+    }
+
+}
+@media (min-width: 551px)and (max-width:700px) {
+    .signup-container .desc-head h4{
+        font-size: 15px;
+    }
+    .desc-desc {
+        font-size: 13px;
+    }
+    ul.ul-type li {
+        font-size: 10px;
+    }
+    .signup-container .header-small h3 {
+        font-size: 22px;
+    }
+}
+@media (min-width: 700px)and (max-width:790px) {
+    .signup-container .desc-head h4{
+        font-size: 16px;
+    }
+    .desc-desc {
+        font-size: 14px;
+    }
+    ul.ul-type li {
+        font-size: 11px;
+    }
+    .signup-container .header-small h3 {
+        font-size: 23px;
+    }
+}
 @media (min-width: 320px)and (max-width:767px){
     #login-container,#account-mainWrapper{
         background-image: none;
@@ -361,6 +429,7 @@ hr{
         text-align: center;
         padding-left: 0;
     }
+    
     .header-small h4{
         font-family: "BrandonGrotesque-Bold";
     }
