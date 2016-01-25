@@ -149,6 +149,11 @@ def create_meal(request, data, user):
         else:
             locked = "0"
 
+        if 'code' in data:
+            code = data['code']
+        else:
+            code = ""
+
         if len(name) < 3 or len(desc) < 5 or \
                 float(price) <= 0 or float(tax) < 0:
             log.error("name, desc, price or tax invalid")
@@ -168,6 +173,7 @@ def create_meal(request, data, user):
 
         meal.name = name
         meal.sub = sub
+        meal.code = code
         meal.description = desc
 
         if "need_boiling_water" in data and data['need_boiling_water'] != '':
