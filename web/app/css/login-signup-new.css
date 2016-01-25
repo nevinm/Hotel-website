@@ -1,9 +1,13 @@
 /*==============================*\
                       &LOGIN
 \*==============================*/
+
+#account-mainWrapper {
+    background-image: url("../images/CheckoutBG.jpg");   
+    z-index: 100px;
+}
 #page-container {
-    background-image: url("../images/CheckoutBG.jpg");
-    height: 1000px;
+    background-color: transparent;
 }
 #login-container{
     width: 100%;
@@ -88,6 +92,7 @@ span.facebook-login-text {
 .signup-wrapper{
     width: 90%;
     margin: 0 auto;
+    /*margin-top: 120px;*/
     margin-top: 120px;
     max-width: 800px;
     text-align: center;
@@ -99,7 +104,7 @@ span.facebook-login-text {
     border-radius: 3px;
     float: left;
     width: 100%;
-    margin-top: 5%;
+    margin: 5% 0px;
 }
 .signup-container .header-small {
     text-align: center;
@@ -186,9 +191,17 @@ form.signup-formcontainer {
     border-radius: 8px;
     border-color: #E5E5E5;
 }
+.signup-input a {
+    color: #9B9B9B;
+    font-size: 10px;
+    text-decoration: underline;
+}
 .email-wrapper {
     padding:10px 0px; 
     float: left;
+}
+.invitation-code {
+    display: none;
 }
 .login-button{
     width: 100%;
@@ -201,9 +214,14 @@ form.signup-formcontainer {
 .email-wrapper .signup-input{
     width: 100%;
 }
+.email-wrapper .full-length {
+    margin-top: 10px;
+    margin-right: 4%;
+}
 .email-wrapper .fifty-percent-first{
     margin-top: 10px;
     margin-right: 4%;
+    width: 48%;
 }
 .email-wrapper .fifty-percent-second{
     margin-top: 10px;
@@ -243,7 +261,7 @@ form.signup-formcontainer {
     background-color: #FDFCFB;
     text-align: left;
     padding: 0px 0px 0px 5%;
-    margin: 50px 0px;
+    margin: 50px 0px 0px 0px;
     border-left:  1px solid #DCDBDB;
 
 }
@@ -292,7 +310,43 @@ ul.ul-type li {
 .signup-input input {
     background-color: #fff;
 }
-
+.mobile-login {
+    display: none;
+}
+.login-mobile-view {
+    font-weight: bold;
+    font-size: 11px; 
+    font-family: 'BrandonGrotesque-Regular';
+    padding-top: 10px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    text-align: center;
+}
+.login-mobile-view:before, .login-mobile-view:after {
+    position: absolute;
+    top: 62%;
+    overflow: hidden;
+    width: 15%;
+    height: 2px;
+    content: '\a0';
+    background-color: #9B9B9B;
+}
+.login-mobile-view:before {
+    margin-left: -18%;
+    text-align: right;
+}
+.login-mobile-view:after{
+    margin-left: 3%;
+}
+.mobile-login-btn {
+    margin: 10px;
+    background-color: #5DA0A0;
+    border-radius: 5px;
+    padding: 2% 18%;
+    color: #fff;
+    font-family: 'BrandonGrotesque-Regular';
+}
 /*==================================*\
       &RESET PASSWORD
 \*==================================*/
@@ -370,11 +424,23 @@ hr{
     display: none;
 }
 @media (min-width: 320px)and (max-width:480px) {
+    .signup-container{
+        border: 1px solid #D0D0D0;
+    }
+    .signup-wrapper {
+        margin-top: 80px;
+    }
     .signup-details {
         width: 100%;
     }
     .signup-desc {
         display: none;
+    }
+    .mobile-login {
+    display: block;
+    }
+    .privacy-policy {
+        font-size: 8px;
     }
 }
 @media (min-width: 481px)and (max-width:550px) {
@@ -422,7 +488,8 @@ hr{
 }
 @media (min-width: 320px)and (max-width:767px){
     #login-container,#account-mainWrapper{
-        background-image: none;
+       /* background-image: none;*/
+        background-image: url("../images/CheckoutBG.jpg");
         border:none;
     }
     .header-small{
@@ -474,7 +541,6 @@ hr{
         float: none;
     }
     .email-wrapper .signup-input {
-        width: 100%;
         padding: 0;
     }
     .signup-input {
@@ -521,7 +587,7 @@ hr{
     }
 }
 @media (min-width: 320px)and (max-width:420px){
-    .signup-input {
+    /*.signup-input {
         width: 100%;
     }
     form.signup-formcontainer .signup-input:nth-child(2){
@@ -529,6 +595,9 @@ hr{
     }
     .email-wrapper .signup-input:nth-child(2){
         margin-top: 0px;
+    }*/
+    .email-wrapper .full-length {
+        margin-top: 10px;
     }
     .btn-wrapper{
         width: 93% !important;
