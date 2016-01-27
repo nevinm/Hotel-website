@@ -314,7 +314,7 @@ def get_users(request, data, user):
             log.error("user list pagination : " + error.message)
             custom_error("There was an error listing users.")
 
-        for user in users.object_list:
+        for user in users:
             user_list.append({
                 "id": user.id,
                 "name": (user.last_name + " " + user.first_name).title(),
