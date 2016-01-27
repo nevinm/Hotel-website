@@ -678,8 +678,7 @@ def export_users_for_promotion(request, data):
                         user.email,
                         "Not Available" if not user.mobile or str(
                             user.mobile).strip() == "" else user.mobile,
-                        (user.zipcode
-                         if user.zipcode is not None
+                        (user.zipcode if user.zipcode is not None
                          else "Not Available"),
                         "Yes" if user.facebook_login else "No",
                         user.fb_user_id,
