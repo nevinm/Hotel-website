@@ -663,9 +663,13 @@ img#cancel, .edit-meal-available-popup .cancel {
      &MEAL - LIST and ORDER - LIST
 \*====================================*/
 
-.meal-list-container, .order-list-container, .manage-area-container {
+.order-list-container, .manage-area-container {
     width: 90%;
     margin: 0 auto;
+}
+.meal-list-container {
+   width: 95%;
+margin: 0 auto; 
 }
 
 .create-meal-wrapper {
