@@ -682,7 +682,9 @@ def export_users_for_promotion(request, data):
                         user.email,
                         "Not Available" if not user.mobile or str(
                             user.mobile).strip() == "" else user.mobile,
-                        user.zipcode,
+                        (user.zipcode
+                         if user.zipcode is not None
+                         else "Not Available"),
                         "Yes" if user.facebook_login else "No",
                         user.fb_user_id,
                         user.created.strftime('%m-%d-%Y %H:%M:%S'),
@@ -699,6 +701,7 @@ def export_users_for_promotion(request, data):
                         city,
                         state,
                     ])
+
                 return export_csv(users_list, "users_promotions_list.csv")
         log.error("Export User promotions list : Invalid session key")
         return HttpResponseRedirect(
