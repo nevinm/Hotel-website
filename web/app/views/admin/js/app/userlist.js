@@ -1,3 +1,6 @@
+//Global variable
+var searchParams = {};
+
 //Get UserList
 var getUserlistCallback = {
     success: function (data, textStatus) {
@@ -89,7 +92,8 @@ function populateUserlist(userListData) {
     });
 
     $(".pagination").pagination({
-        items: userListData.total_count,
+
+        items: userListData.actual_count,
         itemsOnPage: userListData.per_page,
         currentPage: userListData.current_page,
         cssStyle: 'light-theme',
