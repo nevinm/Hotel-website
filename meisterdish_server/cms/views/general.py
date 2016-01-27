@@ -695,6 +695,8 @@ def export_users_for_promotion(request, data):
                         city,
                         state,
                     ])
+                    log.info("User added :" + user.full_name +
+                             " with ZIP code : " + str(user.zipcode))
                 return export_csv(users_list, "users_promotions_list.csv")
         log.error("Export User promotions list : Invalid session key")
         return HttpResponseRedirect(
