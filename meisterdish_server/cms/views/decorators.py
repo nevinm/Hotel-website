@@ -88,7 +88,7 @@ def check_input(method, role=False):
                     return custom_error('Please enter a valid JSON input')
             else:
                 log.error(
-                    'API : Got a ' + method.upper() + ' request, Rejected.')
+                    'API : Got a ' + request.method.upper() + ' request, Rejected.')
                 return custom_error('The Requested method is not allowed')
         return wraps(func)(inner_decorator)
     return wrapper
