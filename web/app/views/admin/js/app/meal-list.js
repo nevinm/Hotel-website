@@ -77,8 +77,7 @@ var deleteMealCallback = {
     success: function (data, textStatus) {
         var deleteMealResponse = JSON.parse(data);
         var searchParams = returnMealSearchParams();
-        // currentPage = $('.pagination').pagination('getCurrentPage');
-        getmealList(searchParams.search_name, searchParams.category, searchParams.mealtype/*, currentPage*/);
+        getmealList(searchParams.search_name, searchParams.category, searchParams.mealtype);
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
     }
@@ -103,10 +102,6 @@ var getmealListCallback = {
             populateMealList(mealLIst);
         } else {
             $(".meal-list-empty").show();
-            // $(".pagination").pagination({
-            //     pages: 0,
-            //     cssStyle: 'light-theme',
-            // });
         }
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -125,7 +120,6 @@ function getmealList(search_name, category, mealtype/*, pageNumber*/) {
         "search": search_name,
         "category_id": category,
         "type_ids": mealtype,
-        // "nextPage": pageNumber
     }
     data = JSON.stringify(params);
     var getmeallistInstance = new AjaxHttpSender();
@@ -135,7 +129,6 @@ function getmealList(search_name, category, mealtype/*, pageNumber*/) {
 var getFilterContentCallback = {
     success: function (data, textStatus) {
         var filterContent = JSON.parse(data);
-        // console.log(filterContent);
         populateFilterData(filterContent);
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -170,7 +163,6 @@ var updateMealOrderCallback = {
     success: function (data, textStatus) {
         var updateMealResponse = JSON.parse(data);
         if (updateMealResponse.status == 1) {
-            // currentPage = $('.pagination').pagination('getCurrentPage');
             getmealList();
         } else {
             $("#viewPopup .content span").text(updateMealResponse.message);
@@ -227,7 +219,6 @@ var updateAvailableMealsCallback = {
     success: function (data, textStatus) {
         var updateMealResponse = JSON.parse(data);
         if (updateMealResponse.status == 1) {
-            // currentPage = $('.pagination').pagination('getCurrentPage');
             getmealList();
         } else {
             $("#viewPopup .content span").text(updateMealResponse.message);
@@ -257,7 +248,7 @@ function populateMealList(data) {
     $.each(fullMealList.aaData, function (key, value) {
         $('#meal-list tbody').append("<tr>" +
                 "<td>" + "<img class='meal-list-img'src = '" + value.main_image + "'>" + "</td>" +
-                "<td>" + value.name + "</td>" + "<td>" + value.description + "</td>" +
+                "<td>" + value.name + "</td>" + "<td>" + value.sub + "</td>" +
                 "<td><span class = 'each-meal-order'>" + value.order + "</span>" + "<span  data-id = '" + value.id + "' class = 'edit-meal-order'>" + "EDIT" + "</span>" + "</td>" +
                 "<td><span class = 'each-meal-available'>" + value.available + "</span>" + "<span  data-id = '" + value.id + "' class = 'edit-meal-available'>" + "EDIT" + "</span>" + "</td>" +
                 "<td>" + value.category + "</td>" +
@@ -293,28 +284,6 @@ function populateMealList(data) {
             updateSoldOut(this);
         });
     });
-    // $(".pagination").pagination({
-    //     pages: fullMealList.num_pages,
-    //     currentPage: fullMealList.current_page,
-    //     cssStyle: 'light-theme',
-    //     onPageClick: function (pageNumber, event) {
-    //         var searchParams = returnMealSearchParams();
-    //         getmealList(searchParams.search_name, searchParams.category, searchParams.mealtype, pageNumber);
-    //     },
-    //     onInit: function () {
-    //         if (getStringAfterHash(location.href, "#")) {
-    //             var pageString = getStringAfterHash(location.href, "#");
-    //             if (pageString.indexOf('page') != -1) {
-    //                 pageNumber = getStringAfterHash(pageString, "-");
-    //                 if ($(".pagination").pagination('getCurrentPage') == pageNumber) {
-    //                 } else {
-    //                     $(".pagination").pagination('selectPage', pageNumber);
-    //                 }
-    //             }
-    //         } else {
-    //         }
-    //     }
-    // });
     $(".non-primary-meal").on("click", function () {
         currentMealId = $(this).data("id");
         updatePrimaryMeal(currentMealId, $(this));
