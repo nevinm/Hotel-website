@@ -92,6 +92,9 @@ urlpatterns = patterns(
 
     url(r'^upload_image/$', general.upload_image,
         name='upload_image'),
+    url(r'^notification_settings/$',
+        general.notification_settings,
+        name='notification_settings'),
 
     url(r'^get_orders/$', order.get_orders,
         name='get_orders'),

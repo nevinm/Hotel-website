@@ -14,7 +14,7 @@ from libraries import custom_error, json_response, export_csv,\
     manage_image_upload
 import md5
 from meisterdish_server.models import User, Category, Meal, MealType, Image,\
-    Address, ZipUnavailable, Referral, AmbassadorReferral
+    Address, ZipUnavailable, Referral, AmbassadorReferral, Configuration
 
 
 log = logging.getLogger(__name__)
@@ -732,3 +732,33 @@ def export_zips_unsupported(request, data):
         log.error("Export zips zip_unsupported_users : " + error.message)
         return HttpResponseRedirect(
             settings.SITE_URL + "views/admin/manage-delivery-areas.html")
+
+
+@check_input('POST', settings.ROLE_ADMIN)
+def notification_settings(request, data, session_user):
+    '''
+    API to create additional notification parameters.
+    :param request:
+    :param data:
+    '''
+
+    try:
+        phone_number = (data["mobile_number"] if "mobile_number"
+                        in data else Configuration.
+                        objects.get(key='NOTIFICATION_NUMBER').value)
+        log.info('Setting Phone Number :' + phone_number)
+        notify_settings, _ = Configuration.objects.get_or_create(
+            key='NOTIFICATION_NUMBER')
+        log.info(notify_settings)
+        notify_settings.value = phone_number
+        notify_settings.save()
+        resp = {'status': 1,
+                'mobile_number': phone_number,
+                'message': 'Phone Number added Successfully'}
+        return json_response(resp)
+    except Exception as error:
+        raise error
+        log.error("Unable to add settings phone number " +
+                  str(error.message))
+        return custom_error("Unable to create Phone number" +
+                            str(error.message))
