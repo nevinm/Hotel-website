@@ -108,9 +108,13 @@ li#navbar-username a {
 li#navbar-username {
     padding: 0;
 }
+#menu {
+    width: 99%;
+}
 
 #menu li {
     display: none;
+    padding-right: 4px;
 }
 
 .showLi {
@@ -147,7 +151,7 @@ li#navbar-username {
     cursor: pointer;
 }
 
-#userlist, #userlist th, #userlist td, #giftcards-list, #giftcards-list th, #giftcards-list td, #promocodes-list, #promocodes-list th, #promocodes-list td, #categories, #categories th, #categories td, #meal-list, #meal-list th, #meal-list td, #delivery-area, #delivery-area th, #delivery-area td, #mealtype-area, #mealtype-area th, #mealtype-area td, #ingredients-area, #ingredientsArea th, #ingredientsArea td, #reviewsArea th, #reviewsArea td {
+#userlist, #userlist th, #userlist td, #giftcards-list, #giftcards-list th, #giftcards-list td, #promocodes-list, #promocodes-list th, #promocodes-list td, #categories, #categories th, #categories td, #meal-list, #meal-list th, #meal-list td, #delivery-area, #delivery-area th, #delivery-area td, #mealtype-area, #mealtype-area th, #mealtype-area td, #ingredients-area, #ingredientsArea th, #ingredientsArea td, #reviewsArea th, #reviewsArea td, #alerts, #alerts th, #alerts td {
     border: 1px solid #d0d0d0;
     padding: 10px;
     border-collapse: collapse;
@@ -1286,11 +1290,11 @@ table#tips-and-tricks-table {
     width: 170px;
 }
 
-.giftcard-list-empty, .promocodes-list-empty {
+.giftcard-list-empty, .promocodes-list-empty, .phone-no-list-empty{
     display: none;
 }
 
-input#add-gift-card, input#add-new-promo {
+input#add-gift-card, input#add-new-promo, input#add-new-number{
     margin-top: 20px;
 }
 
@@ -1495,6 +1499,9 @@ form.edit-gift-card #new-name-error {
 #reviewsArea td:first-child {
     text-align: left;
 }
+#alerts {
+    margin-top: 50px;
+}
 #ingredientImageHolder img{
     width: 50px;
     max-width: 50px;
@@ -1586,4 +1593,31 @@ input[type=number]{
 }
 #meal-list .btn-small-primary{
     min-width: 85px;
+}
+
+
+/*=======================*\
+       &ALERTS
+\*=======================*/
+
+.alert-number {
+    padding: 50px 10px;
+}
+.alert-number input[type="number"] {
+    width: 200px;
+    height: 33px;
+    border: 1px solid #d0d0d0;
+    border-radius: 5px;
+    font-size: 20px;
+    color: #656464;
+    font-family: 'BrandonGrotesque-Regular';
+    padding-left: 5px;
+}
+.alert-no-label {
+    padding: 0px 10px 0px 50px;
+    font-size: 20px;
+    font-family: BrandonGrotesque-Bold;
+}
+.alert-btn {
+    margin: 0px 50px;
 }
