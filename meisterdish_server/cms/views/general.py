@@ -734,7 +734,9 @@ def notification_settings(request, data, session_user):
     '''
 
     try:
-        phone_number = data["mobile_number"]
+        phone_number = (data["mobile_number"] if "mobile_number"
+                        in data else Configuration.
+                        objects.get(key='NOTIFICATION_NUMBER').value)
         log.info('Setting Phone Number :' + phone_number)
         notify_settings, _ = Configuration.objects.get_or_create(
             key='NOTIFICATION_NUMBER')
