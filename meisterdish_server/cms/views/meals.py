@@ -84,6 +84,7 @@ def get_meals(request, data, user):
                 "id": meal.id,
                 "name": meal.name,
                 "sub": meal.sub,
+                "code": meal.code,
                 "description": meal.description,
                 "main_image": (
                     settings.DEFAULT_MEAL_IMAGE
@@ -148,6 +149,11 @@ def create_meal(request, data, user):
         else:
             locked = "0"
 
+        if 'code' in data:
+            code = data['code']
+        else:
+            code = ""
+
         if len(name) < 3 or len(desc) < 5 or \
                 float(price) <= 0 or float(tax) < 0:
             log.error("name, desc, price or tax invalid")
@@ -167,6 +173,7 @@ def create_meal(request, data, user):
 
         meal.name = name
         meal.sub = sub
+        meal.code = code
         meal.description = desc
 
         if "need_boiling_water" in data and data['need_boiling_water'] != '':
@@ -274,6 +281,8 @@ def create_meal(request, data, user):
 
         if "calories" in data:
             meal.calories = data["calories"]
+        if "code" in data:
+            meal.code = data["code"]
 
         my_tip_ids = []
         if "tips" in data and len(data['tips']) > 0:
@@ -419,6 +428,7 @@ def get_meal_details(request, data, user, meal_id):
             "id": meal.id,
             "name": meal.name,
             "sub": meal.sub,
+            "code": meal.code,
             "description": meal.description,
             "price": meal.price,
             "tax": meal.price * meal.tax / 100,

@@ -12,7 +12,14 @@
         <meta property="og:description" content="A gift from me to you. For a limited time only, all first-time customers receive $20 towards their first two orders." />
         <meta property="og:url" content="http://www.meisterdish.com" /> 
         <title>Meisterdish - Verification</title>
-
+        <script type="text/javascript">
+            var userEmail = localStorage.getItem('signupEmail');
+            (function(){
+                if (userEmail == null){
+                    window.location.href = '../index.html';
+                } 
+            })();
+        </script>
         <link rel="stylesheet" type="text/css" href="../css/reset.css">
         <link rel="stylesheet" type="text/css" href="../css/fontello.css">
         <link rel="stylesheet" type="text/css" href="../css/common.css">
@@ -131,7 +138,7 @@
                         </div>
                         <div class="verification-desc">
                             <span>A verification email has been sent to</span>
-                            <span></span>
+                            <span id="signupEmail"></span>
                             <span>.</span>
                             <div>Please follow the instructions to activate your account</div>
                         </div> 
@@ -146,7 +153,7 @@
         <script type="text/javascript" src='../js/app/ajax-reusable.js'></script>
         <script type="text/javascript" src='../js/libs/jquery.validate.min.js'></script>
         <script type="text/javascript" src='../js/app/common.js'></script> 
-        <script type="text/javascript" src='../js/app/login.js'></script>
+        <script type="text/javascript" src='../js/app/verification.js'></script> 
         <script type="text/javascript" src='../js/app/fb-access.js'></script>
     </body>
 
