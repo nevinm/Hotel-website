@@ -7,13 +7,13 @@ var signupCallback = {
         } else {
             $('.signup-formcontainer')[0].reset();
             showPopup(userDetails);
-            var splitter = "Please note that a guest user account already exists with your email";
-            if (userDetails.message.match(splitter)) {
-                var dataArray = userDetails.message.split(splitter);
-                var element = dataArray[0] + "<br>" + splitter + dataArray[1];
-                $('.popup-container .content span').html(element);
-                $('.popup-container').attr("style", "padding:0px");
-            }
+            // var splitter = "Please note that a guest user account already exists with your email";
+            // if (userDetails.message.match(splitter)) {
+            //     var dataArray = userDetails.message.split(splitter);
+            //     var element = dataArray[0] + "<br>" + splitter + dataArray[1];
+            //     $('.popup-container .content span').html(element);
+            //     $('.popup-container').attr("style", "padding:0px");
+            // }
             ga('send', {
                 'hitType': 'event', // Required.
                 'eventCategory': 'button', // Required.
@@ -23,8 +23,7 @@ var signupCallback = {
             });
             fbq('track', 'CompleteRegistration');
             //SessionController.fbTrackConversionEvent(SessionController.getSignUpPixel(), '0.00', 'USD');
-            // localStorage['signupEmail'] = userDetails.user.email;
-            // window.location.href = 'verification.html';
+            localStorage['signupEmail'] = userDetails.user.email;
         }
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -114,6 +113,12 @@ $(document).ready(function () {
         if ($('form').valid()) {
             signingup();
         }
+    });
+    $('#close').on('click', function (e) {
+        if (localStorage.getItem('signupEmail') != null){
+            localStorage.removeItem('signupEmail');
+            window.location.href = 'verification.html';
+        }        
     });
     $('#invite-code-wrap').on('click', function (e) {
         e.preventDefault();
