@@ -751,7 +751,9 @@ input#searchBy-name {
     cursor: pointer;
     color: red;
 }
-
+.email-validate input:invalid {
+    border: 1px solid red;
+}
 
 /*=======================*\
      &CREATE -MEAL
