@@ -252,7 +252,7 @@ def signup(request, data):
             user.profile_image = profile_image
             user.zipcode = zipcode
             user.deleted = False
-            user.is_active = False
+            user.is_active = True
             user.save()
 
             if referral_code:
