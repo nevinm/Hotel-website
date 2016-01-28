@@ -3,11 +3,19 @@ $(document).ready(function() {
     $("#update-number").on("click", function (e) {
         e.preventDefault();
         var newNumber =  $("#alertNumber").val();
-        //if ($("#alertNumber").valid()) {
+        if (newNumber.length >= 8 && newNumber.length <= 14) {
             updateAlertNumber(newNumber);
-        // } else {
-        // }
+        } else {
+        	var errMsg = {
+        		"message" : "Enter a valid number"
+        	};
+        	showPopup(errMsg);
+        }
     });
+    $("#alertNumber").keypress(function (e) {
+	    if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57))
+	        return false;
+   })
 });
 //Initiate Allocated slots API call
 function loadAlertNumber() {
@@ -15,8 +23,9 @@ function loadAlertNumber() {
     var header = {
         "session-key": localStorage['session_key']
     };
+    var data = {};
     var getAlertNumber = new AjaxHttpSender();
-    getAlertNumber.sendPost(url, header, {}, loadAlertNumberCallback);
+    getAlertNumber.sendPost(url, header, data, loadAlertNumberCallback);
 }
 var loadAlertNumberCallback = {
     success: function(data, textStatus) {
@@ -28,12 +37,9 @@ var loadAlertNumberCallback = {
 var updateAlertNumberCallback = {
     success: function (data, textStatus) {
         var numberData = JSON.parse(data);
-        if (numberData.status == 1) {
+        if (numberData.status == 1)
         	$('#alertNumber').val(numberData.mobile_number);
-        }
-        // } else {
-        //     showUserCreditPoup(creditsData);
-        // }
+        showPopup(numberData);
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
     }
