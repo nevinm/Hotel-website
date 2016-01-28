@@ -516,7 +516,6 @@ def send_text_reminder(context):
         return False
 
 
-
 def send_failure_mail(to_list, subject,
                       message, req,
                       user=None, sender=None,
@@ -588,6 +587,7 @@ def get_client_ip(request):
     else:
         return 'Not Available'
 
+
 def send_order_notification_sms(order):
     '''
     Function to send reminder when a new order comes.
@@ -595,7 +595,7 @@ def send_order_notification_sms(order):
     '''
     try:
         txt = "Meisterdish order  \
-        " + str(order.order_num) + "recieved"
+        " + str(order.order_num) + " recieved"
         number = Configuration.objects.get(key='NOTIFICATION_NUMBER').value
         client = TwilioRestClient(
             settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
@@ -615,4 +615,3 @@ def send_order_notification_sms(order):
         log.error(
             "Failed to send order SMS to : " + number + " : " + error.message)
         return False
-
