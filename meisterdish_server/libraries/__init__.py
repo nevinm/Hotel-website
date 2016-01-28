@@ -595,7 +595,7 @@ def send_order_notification_sms(order):
     '''
     try:
         txt = "Meisterdish order  \
-        " + str(order.order_num) + "recieved"
+        " + str(order.order_num) + " recieved"
         number = Configuration.objects.get(key='NOTIFICATION_NUMBER').value
         client = TwilioRestClient(
             settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
