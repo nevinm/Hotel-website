@@ -6,7 +6,7 @@ var signupCallback = {
             showPopup(userDetails);
         } else {
             $('.signup-formcontainer')[0].reset();
-            //showPopup(userDetails);
+            showPopup(userDetails);
             var splitter = "Please note that a guest user account already exists with your email";
             if (userDetails.message.match(splitter)) {
                 var dataArray = userDetails.message.split(splitter);
@@ -21,9 +21,10 @@ var signupCallback = {
                 'eventLabel': 'Account Creation',
                 'eventValue': 4
             });
+            fbq('track', 'CompleteRegistration');
             //SessionController.fbTrackConversionEvent(SessionController.getSignUpPixel(), '0.00', 'USD');
-            localStorage['signupEmail'] = userDetails.user.email;
-            window.location.href = 'verification.html';
+            // localStorage['signupEmail'] = userDetails.user.email;
+            // window.location.href = 'verification.html';
         }
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
