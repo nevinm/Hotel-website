@@ -117,7 +117,7 @@ $(document).ready(function () {
     $('#close').on('click', function (e) {
         if (localStorage.getItem('signupEmail') != null){
             localStorage.removeItem('signupEmail');
-            window.location.href = 'verification.html';
+            window.location.href = 'login.html';
         }        
     });
     $('#invite-code-wrap').on('click', function (e) {
