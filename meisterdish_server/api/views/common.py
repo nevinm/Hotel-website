@@ -252,7 +252,7 @@ def signup(request, data):
             user.profile_image = profile_image
             user.zipcode = zipcode
             user.deleted = False
-            user.is_active = False
+            user.is_active = True
             user.save()
 
             if referral_code:
@@ -311,23 +311,14 @@ def signup(request, data):
             session.save()
 
             log.info(email + " : Signed up ")
-            if send_user_verification_mail(user):
-                log.info("Sent verification mail to " + user.email)
-                message = "A verification email has been sent to your email ("\
-                    + email + \
-                    "). Please follow the instructions to \
-                    activate your account."
-                if merge_flag:
-                    message += " Please note that a guest user account already\
-                     exists with your email, It will be merged automatically."
-                return json_response({
-                    "status": 1,
-                    "message": message,
-                    "user": user_dic, "session_key": session.session_key})
-            else:
-                log.error("Failed to send user verification mail : ")
-                return custom_error("An error has occurred in sending \
-                verification mail. Please try later.")
+            message = "Signup successful for  ("\
+                + email + \
+                ")."
+            return json_response({
+                "status": 1,
+                "message": message,
+                "user": user_dic, "session_key": session.session_key})
+
         except Exception as error:
             log.error(email + " : Failed to sign up " + error.message)
             send_failure_mail(settings.FAILURE_MAIL, 'Signup Failure',
