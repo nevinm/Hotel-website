@@ -17,7 +17,6 @@ from libraries import custom_error, json_response, validate_email,\
     validate_phone, check_delivery_area, mail_order_confirmation,\
     save_payment_data, validate_date, send_order_notification_sms,\
     send_failure_mail
-
 from meisterdish_server.models import Order, CartItem, DeliveryTimeSlot,\
     Configuration, Referral, CreditCardDetails, Meal, Address,\
     AmbassadorReferral
