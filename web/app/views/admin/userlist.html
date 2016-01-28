@@ -89,12 +89,13 @@
                                     <label for="user-name">Name</label>
                                     <input type="text" id="user-name">
                                 </div>
-                                <div class="search-filters">
-                                    <label for="user-name">Email</label>
-                                    <input type="email" id="email-id">
+                                <div class="search-filters email-validate">
+                                    <label for="email-id">EMAIL</label>
+                                    <input name="email" type="email" id="email-id" aria-required="true" aria-invalid="true">
                                 </div>
-                                <input type="button" class="btn btn-small-primary medium-green search-orders-modify" id="search-users" value="SEARCH">
-                            </div>
+                                <input type="button" class="btn btn-small-primary medium-green search-orders-modify" id="search-orders" value="SEARCH">
+                            </div>       
+                        </div>
                             <table id="userlist" class="display" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
