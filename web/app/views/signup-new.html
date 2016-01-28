@@ -141,11 +141,6 @@
                             <div class="header-small">
                                 <h3>Create your account</h3>
                             </div>
-                            <div class='referral-message-container'>
-                                <p class='header'>Welcome!</p>
-                                <span class='message'>You've been invited to start cooking with $20 towards your first two orders.
-                                    Sign up for free below to claim your credit.</span>
-                            </div>
                             <!--                        <div class="fb-signupButton">
                                                         <div class="fb-login-signup-btn" onclick="checkLoginState();">
                                                             <div class="btn-wrapper">
@@ -186,8 +181,8 @@
                                         <input class="arrange" type="text" id="zip-code" name="zip" placeholder="ZIP code"></input>
                                     </div>
                                     <div class="signup-input zipcode-container fifty-percent-second">
-                                        <a href="#">Do you have an invite code?</a>
-                                        <input class="arrange invitation-code" type="password" id="signup-password" name="password" placeholder="Invitation Code"></input>
+                                        <a href="#" id="invite-code-wrap">Do you have an invite code?</a>
+                                        <input class="arrange invitation-code" type="text" id="invite-code" name="invite-code" placeholder="Invitation Code"></input>
                                     </div>
                                     <div class="clear"></div>
                                 </div>
@@ -210,8 +205,8 @@
                         </div>
                         <div class="signup-desc">
                             <div>
-                               <div class="header-small desc-head">
-                                    <h4>Meistersish is the easiest way to cook a delicious meal in 15 minutes!</h4>
+                                <div class="header-small desc-head referral-message-container">
+                                    <h4 class='message'>Meistersish is the easiest way to cook a delicious meal in 15 minutes!</h4>
                                 </div> 
                                 <div class="desc-desc">
                                     Join now for free. No subscription, just order what you want - when you want it
@@ -262,7 +257,7 @@
         <script type="text/javascript" src='../js/app/ajax-reusable.js'></script>
         <script type="text/javascript" src='../js/libs/jquery.validate.min.js'></script>
         <script type="text/javascript" src='../js/app/common.js'></script>
-        <script type="text/javascript" src='../js/app/signup.js'></script>
+        <script type="text/javascript" src='../js/app/signup-new.js'></script>
         <script type="text/javascript" src='../js/app/fb-access.js'></script>
     </body>
 
