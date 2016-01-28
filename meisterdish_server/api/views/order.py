@@ -15,8 +15,8 @@ from thread import start_new_thread
 from api.views.decorators import check_input
 from libraries import custom_error, json_response, validate_email,\
     validate_phone, check_delivery_area, mail_order_confirmation,\
-    save_payment_data, validate_date, send_order_notification_sms,\
-    send_failure_mail
+    save_payment_data, validate_date, send_failure_mail,\
+    send_order_notification_sms
 from meisterdish_server.models import Order, CartItem, DeliveryTimeSlot,\
     Configuration, Referral, CreditCardDetails, Meal, Address,\
     AmbassadorReferral

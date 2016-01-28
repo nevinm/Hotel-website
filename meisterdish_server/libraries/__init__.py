@@ -516,6 +516,7 @@ def send_text_reminder(context):
         return False
 
 
+
 def send_failure_mail(to_list, subject,
                       message, req,
                       user=None, sender=None,
@@ -586,6 +587,7 @@ def get_client_ip(request):
         return ip
     else:
         return 'Not Available'
+
 
 def send_order_notification_sms(order):
     '''
