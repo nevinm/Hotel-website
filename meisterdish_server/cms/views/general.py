@@ -292,12 +292,16 @@ def get_users(request, data, user):
         users = User.objects.exclude(
             role__pk=settings.ROLE_GUEST).filter(deleted=False)
         total_count = users.count()
-
+        q = Q()
         if "search" in data:
             search = data["search"]
-            users = users.filter(
-                Q(first_name__istartswith=search) | Q(
-                    last_name__istartswith=search))
+            q &= Q(first_name__istartswith=search) | Q(
+                last_name__istartswith=search)
+        if "email" in data:
+            email_search = data["email"]
+            q &= Q(email__istartswith=email_search)
+
+        users = users.filter(q)
 
         users = users.order_by('-id')
         actual_count = users.count()
@@ -310,7 +314,7 @@ def get_users(request, data, user):
             log.error("user list pagination : " + error.message)
             custom_error("There was an error listing users.")
 
-        for user in users.object_list:
+        for user in users:
             user_list.append({
                 "id": user.id,
                 "name": (user.last_name + " " + user.first_name).title(),
@@ -524,7 +528,13 @@ def export_users(request, data):
                     'Signup Promocode',
                     'Credits',
                     'Activation Status',
-                    'Primary Address',
+                    'Is Business',
+                    'Company',
+                    'Building',
+                    'Street',
+                    'City',
+                    'State',
+
                 ]]
                 for user in users:
                     primary_address = Address.objects.filter(
@@ -537,28 +547,18 @@ def export_users(request, data):
                         business = (
                             "No" if not primary_address.is_business
                             else "Yes")
-                        address = '''Name          : %s %s
-Is Business ? :%s
-Company       :%s
-Building      :%s
-Street        :%s
-City          :%s
-State         :%s
-Zip code      :%s
-Phone         :%s
-Email         :%s
-''' % (primary_address.first_name, primary_address.last_name,
-                            business,
-                            company,
-                            primary_address.building,
-                            primary_address.street,
-                            primary_address.city,
-                            primary_address.state.name,
-                            primary_address.zip,
-                            primary_address.phone,
-                            primary_address.email)
+                        building = primary_address.building
+                        street = primary_address.street
+                        city = primary_address.city
+                        state = primary_address.state.name
+
                     else:
-                        address = ""
+                        business = ""
+                        company = ""
+                        building = ""
+                        street = ""
+                        city = ""
+                        state = ""
 
                     if Referral.objects.filter(referree=user).exists():
                         referrel = Referral.objects.get(
@@ -585,7 +585,14 @@ Email         :%s
                         referrel,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
-                        address,
+                        business,
+                        company,
+                        building,
+                        street,
+                        city,
+                        state,
+
+
                     ])
                 return export_csv(users_list, "users_list.csv")
         log.error("Export User list :Invalid session")
@@ -629,7 +636,12 @@ def export_users_for_promotion(request, data):
                     'Signup Promocode',
                     'Credits',
                     'Activation Status',
-                    'Primary Address',
+                    'Is Business',
+                    'Company',
+                    'Building',
+                    'Street',
+                    'City',
+                    'State',
                 ]]
                 for user in users:
                     primary_address = Address.objects.filter(
@@ -639,30 +651,22 @@ def export_users_for_promotion(request, data):
                         company = (
                             primary_address.company if primary_address.company
                             else "")
-                        is_business_flag = (
+                        business = (
                             'Yes' if primary_address.is_business
                             else "No")
-                        address = '''Name          : %s %s
-Is Business ? :%s
-Company       :%s
-Building      :%s
-Street        :%s
-City          :%s
-State         :%s
-Zip code      :%s
-Phone         :%s
-Email         :%s
-''' % (primary_address.first_name, primary_address.last_name,
-                            is_business_flag, company,
-                            primary_address.building,
-                            primary_address.street,
-                            primary_address.city,
-                            primary_address.state.name,
-                            primary_address.zip,
-                            primary_address.phone,
-                            primary_address.email)
+                        building = primary_address.building
+                        street = primary_address.street
+                        city = primary_address.city
+                        state = primary_address.state.name
+
                     else:
-                        address = ""
+                        business = ""
+                        company = ""
+                        building = ""
+                        street = ""
+                        city = ""
+                        state = ""
+
                     if Referral.objects.filter(referree=user).exists():
                         referrel = Referral.objects.get(
                             referree=user).referrer.referral_code
@@ -688,7 +692,12 @@ Email         :%s
                         referrel,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
-                        address
+                        business,
+                        company,
+                        building,
+                        street,
+                        city,
+                        state,
                     ])
                 return export_csv(users_list, "users_promotions_list.csv")
         log.error("Export User promotions list : Invalid session key")

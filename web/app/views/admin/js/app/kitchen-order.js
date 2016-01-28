@@ -1,6 +1,6 @@
 $(document).ready(function () {
     getOrders();
-
+    downloadOrderCSV("cms/export_kitchen_orders/", "download-orders-form");
     setInterval(function () {
         getOrders();
     }, 60000);

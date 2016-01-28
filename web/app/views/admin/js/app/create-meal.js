@@ -4,6 +4,7 @@ var nutrient_sub_category = 0,
         tipsAndTricksData = [],
         createMealParams = {},
         mealId,
+        dropdownIngredients,
         ingredientsList = {};
 $(document).ready(function () {
     $('#create-meal-button').on("click", function (e) {
@@ -131,7 +132,7 @@ $(document).ready(function () {
         var charCode = (evt.which) ? evt.which : evt.keyCode;
         if ((charCode != 190 || $(this).val().indexOf('.') != -1)
                 && (charCode != 110 || $(this).val().indexOf('.') != -1)
-                && ((charCode < 48 && charCode != 8)
+                && ((charCode < 48 && charCode > 9)
                         || (charCode > 57 && charCode < 96)
                         || charCode > 105)) {
             return false;
@@ -593,10 +594,11 @@ var ingredientsListCallback = {
         var response = JSON.parse(data);
         if (response.status == 1) {
             ingredientsList = new Object();
+            dropdownIngredients = response.aaData;
             $.each(response.aaData, function (key, value) {
                 ingredientsList[value.id] = value;
             });
-            populateIngredientsDropdown(ingredientsList)
+            populateIngredientsDropdown(dropdownIngredients);
         }
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {

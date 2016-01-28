@@ -15,7 +15,8 @@ from thread import start_new_thread
 from api.views.decorators import check_input
 from libraries import custom_error, json_response, validate_email,\
     validate_phone, check_delivery_area, mail_order_confirmation,\
-    save_payment_data, validate_date, send_order_notification_sms
+    save_payment_data, validate_date, send_failure_mail,\
+    send_order_notification_sms
 from meisterdish_server.models import Order, CartItem, DeliveryTimeSlot,\
     Configuration, Referral, CreditCardDetails, Meal, Address,\
     AmbassadorReferral
@@ -360,7 +361,7 @@ def create_order(request, data, user):
                 order.token = data["stripeToken"].strip()
             order.status = 4
             order.save()
-            payment = make_payment(order, user)
+            payment = make_payment(order, user, request)
 
             if not payment:
                 return custom_error(
@@ -429,7 +430,9 @@ def create_order(request, data, user):
             "cart_items": cart_items})
 
     except Exception as error:
-        log.error("Failed to create order." + error.message)
+        log.error("Failed to create order." + str(error.message))
+        send_failure_mail(settings.FAILURE_MAIL, 'Checkout Failure',
+                          error.message, request, user)
         return custom_error(error.message + "is missing.")
 
 
@@ -586,7 +589,7 @@ def get_order_cart_items(order):
         return False
 
 
-def make_payment(order, user):
+def make_payment(order, user, request):
     '''
     Function to make payment using stripe API.
     :param order:
@@ -651,6 +654,8 @@ def make_payment(order, user):
         exc_type, exc_obj, exc_tb = sys.exc_info()
         log.error(
             "Failed to make payment." + error.message + str(exc_tb.tb_lineno))
+        send_failure_mail(settings.FAILURE_MAIL, 'Payment Failure',
+                          error.message + str(exc_tb.tb_lineno), request, user)
         return False
 
 

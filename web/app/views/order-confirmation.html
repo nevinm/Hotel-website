@@ -11,20 +11,22 @@
         <meta property="og:image" content="http://www.meisterdish.com/images/fb_banner_meister_30-11-15.jpg" />
         <meta property="og:description" content="A gift from me to you. For a limited time only, all first-time customers receive $20 towards their first two orders." />
         <meta property="og:url" content="http://www.meisterdish.com" /> 
-        <title>Meisterdish - Verification</title>
+        <title>Meisterdish - Order Confirmation</title>
         <script type="text/javascript">
-            var userEmail = localStorage.getItem('signupEmail');
+            var cartValue = localStorage.getItem('orderConfirm');
             (function(){
-                if (userEmail == null){
+                if (cartValue == null){
                     window.location.href = '../index.html';
                 } 
             })();
         </script>
+
         <link rel="stylesheet" type="text/css" href="../css/reset.css">
         <link rel="stylesheet" type="text/css" href="../css/fontello.css">
         <link rel="stylesheet" type="text/css" href="../css/common.css">
-        <link rel="stylesheet" type="text/css" href="../css/verification.css">
+        <link rel="stylesheet" type="text/css" href="../css/order-confirmation.css">
         <script type="text/javascript" src='../js/app/validate-session.js'></script>
+
         <!-- Facebook Pixel Code -->
         <script>
             !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -59,7 +61,7 @@
     </head>
 
     <body>
-        <div id="verification-container">
+        <div id="order-container">
             <header id="header">
                 <div class="contentArea">
                     <a href="../index.html"><img class="pullLeft logo" src="../images/logo.png" alt="MeisterDish"></a>
@@ -144,19 +146,23 @@
                 </div>
             </header>
             <div id="page-container">
-                <div class='verification-wrapper'>
+                <div class='order-wrapper'>
                     <div class="header-small">
-                        <div class="verify-account">
-                            Please verify your account
+                        <div class="order-head">
+                            Thanks! Order received.
                         </div>
-                        <div class="verification-desc">
-                            <span>A verification email has been sent to</span>
-                            <span id="signupEmail"></span>
-                            <span>.</span>
-                            <div>Please follow the instructions to activate your account</div>
+                        <div class="order-desc">
+                            <div>
+                                Your receipt has been emailed to you.
+                            </div> 
+                            <div>
+                                We'll text you when we're on our way.
+                            </div>  
                         </div> 
                         <div class="btn-go-to-menu">
-                            <a href="menu.html" class="btn btn-large-primary medium-green menu-button go-to-menu">Got it. Take me to the menu!</a>
+                            <a href="menu.html" class="btn btn-large-primary medium-green menu-button go-to-menu">
+                                Take me to the menu
+                            </a>
                         </div>
                     </div>
                 </div> 
@@ -166,8 +172,8 @@
         <script type="text/javascript" src='../js/app/ajax-reusable.js'></script>
         <script type="text/javascript" src='../js/libs/jquery.validate.min.js'></script>
         <script type="text/javascript" src='../js/app/common.js'></script> 
-        <script type="text/javascript" src='../js/app/verification.js'></script> 
         <script type="text/javascript" src='../js/app/fb-access.js'></script>
+        <script type="text/javascript" src='../js/app/order-confirmation.js'></script>
     </body>
 
 </html>
