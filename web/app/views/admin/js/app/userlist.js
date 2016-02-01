@@ -1,3 +1,6 @@
+//Global variable
+var searchParams = {};
+
 //Get UserList
 var getUserlistCallback = {
     success: function (data, textStatus) {
@@ -8,13 +11,15 @@ var getUserlistCallback = {
     }
 }
 
-function getUserlist(nextPage) {
+function getUserlist(nextPage, userName, emailId) {
     var url = baseURL + 'cms/get_users/';
     header = {
         "session-key": localStorage['session_key']
     },
     params = {
-        "nextPage": nextPage
+        "nextPage": nextPage,
+        "search" : userName,
+        "email" :emailId
     },
     data = JSON.stringify(params);
 
@@ -87,12 +92,13 @@ function populateUserlist(userListData) {
     });
 
     $(".pagination").pagination({
-        items: userListData.total_count,
+
+        items: userListData.actual_count,
         itemsOnPage: userListData.per_page,
         currentPage: userListData.current_page,
         cssStyle: 'light-theme',
         onPageClick: function (pageNumber, event) {
-            getUserlist(pageNumber);
+            getUserlist(pageNumber, searchParams.userName, searchParams.emailId);
         },
         onInit: function () {
             if (getStringAfterHash(location.href, "#")) {
@@ -192,7 +198,7 @@ var removeUsersCallback = {
         var usersData = JSON.parse(data);
         if (usersData.status == 1) {
             currentPage = $('.pagination').pagination('getCurrentPage');
-            getUserlist(currentPage);
+            getUserlist(currentPage, searchParams.userName, searchParams.emailId);
         } else {
             showUserCreditPoup(usersData);
         }
@@ -224,7 +230,7 @@ var manageCreditsCallback = {
         var creditsData = JSON.parse(data);
         if (creditsData.status == 1) {
             currentPage = $('.pagination').pagination('getCurrentPage');
-            getUserlist(currentPage);
+            getUserlist(currentPage, searchParams.userName, searchParams.emailId);
             $('.popup-wrapper').hide();
         } else {
             showUserCreditPoup(creditsData);
@@ -232,6 +238,22 @@ var manageCreditsCallback = {
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
     }
+}
+
+//Search Functions
+function returnSearchParams() {
+    var userName = $("#user-name").val(),
+            emailId = $("#email-id").val(),
+            searchParams = {};
+    searchParams = {
+        "userName": userName,
+        "emailId": emailId
+    }
+    return searchParams;
+}
+function doSearch() {
+    searchParams = returnSearchParams();
+    getUserlist(1, searchParams.userName, searchParams.emailId);
 }
 
 function manageCredits(id, credits) {
@@ -269,7 +291,12 @@ $(document).ready(function () {
         } else {
         }
     });
-
+    $("#search-users").on('click', doSearch);
+    $(document).keypress(function(e) {
+        if(e.which == 13) {
+            doSearch();
+        }
+    });
     downloadOrderCSV("cms/export_users/", "download-users-form");
     downloadOrderCSV("cms/export_users_for_promotion/", "download-users-promotion-form");
 });

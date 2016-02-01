@@ -505,6 +505,10 @@ img#cancel, .edit-meal-available-popup .cancel {
     float: left;
     padding-right: 116px;
 }
+.email-id {
+    float: left;
+    padding-right: 116px;
+}
 
 .accordion-content .row {
     display: table;
@@ -640,6 +644,10 @@ img#cancel, .edit-meal-available-popup .cancel {
     margin-top: 28px;
 }
 
+.search-orders-modify {
+    margin-top: 26px;
+}
+
 .order-list-empty, .meal-list-empty {
     display: none;
     margin-top: 50px;
@@ -689,6 +697,11 @@ table#promocodes-list, table#meal-list, table#delivery-area, table#giftcards-lis
 .filter-container {
     padding: 21px 0px;
 }
+
+.filter-container-modify {
+    padding: 10px 16px;
+}
+
 
 select.meallist-select {
     margin-right: 30px;
@@ -750,7 +763,9 @@ input#searchBy-name {
     cursor: pointer;
     color: red;
 }
-
+.email-validate input:invalid {
+    border: 1px solid red;
+}
 
 /*=======================*\
      &CREATE -MEAL

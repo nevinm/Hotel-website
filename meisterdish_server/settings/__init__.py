@@ -13,6 +13,7 @@ BASE_DIR = BASE_DIR
 
 ADMINS = (
     ('Abdul Nasar', 'nasarp@qburst.com'),
+    ('Thushar M Prakash', 'thushar@qburst.com'),
 )
 
 MANAGERS = ADMINS
@@ -31,7 +32,7 @@ ROLE_DIC = {
     ROLE_DELIVERY: "Delivery Staff",
 }
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -257,7 +258,8 @@ EMAIL_IMAGES = {
     "meisterdish_logo": os.path.join(STATIC_ROOT, "default", "logo_email.png"),
 }
 
-INDIAN_NUMBERS = ["7034088806", '9961963746', '9995381338']
+INDIAN_NUMBERS = ["7034088806", '9961963746',
+                  '9995381338', '7736194093', '8089149455', ]
 
 PROMOCODES = {
     "MEISTER20": ("You've been invited to start cooking with $20 towards " +
@@ -265,6 +267,10 @@ PROMOCODES = {
                   "your credit."),
     "HOLIDAY50": ("You've been invited to start cooking with 50% off your " +
                   "first order. Sign up for free below."),
+    "MEISTER50": ("You've been invited to start cooking with 50% off your " +
+                  "first order. Sign up for free below."),
+    "OFFICE50": ("You've been invited to start cooking with 50% off your " +
+                 "first order. Sign up for free below."),
     "HOLIDAY20": ("You've been invited to start cooking with $20 towards " +
                   "your first two orders. Sign up for free below to claim " +
                   "your credit."),
