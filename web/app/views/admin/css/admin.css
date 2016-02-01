@@ -444,6 +444,10 @@ img#cancel, .edit-meal-available-popup .cancel {
     text-align: left;
 }
 
+.float-meal {
+    float:left;
+}
+
 #new-order-error,#newAvailable-error {
     width: 150px;
     bottom: 24px;
