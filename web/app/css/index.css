@@ -194,7 +194,7 @@ SLIDER
     box-shadow: 0 3px 14px 0px rgba(211, 207, 207, 0.8);
 }
 #section-what-is .outer-slide-description{
-    margin: 0 10%;
+    margin: 0 auto;
     /*max-width: 518px;*/
     max-width: 600px;
 }
