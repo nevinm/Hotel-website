@@ -7,6 +7,8 @@ from django.conf import settings
 from django.contrib.sessions.backends.db import SessionStore
 from django.core.mail.message import EmailMessage
 from django.http.response import HttpResponse
+from django.template.loader import render_to_string
+from django.utils import timezone
 from email.mime.image import MIMEImage
 import logging
 import os
@@ -14,7 +16,7 @@ import re
 
 import json as simplejson
 from meisterdish_server.models import Image, User, Role, DeliveryArea, Payment,\
-    Address, ZipUnavailable
+    Address, ZipUnavailable, Configuration
 from twilio.rest import TwilioRestClient
 
 
@@ -498,6 +500,108 @@ def send_text_reminder(context):
             settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
         country_code = "+1"
         number = country_code + str(context["mobile"]).strip()
+        message = client.messages.create(
+            body=txt, to=number,
+            from_=settings.TWILIO_NUMBER)
+        log.info(message)
+        if message:
+            log.info("Sent SMS to " + number)
+            return True
+        else:
+            log.error("Failed to send SMS to " + number)
+            return False
+    except Exception as error:
+        log.error(
+            "Failed to send order SMS to : " + number + " : " + error.message)
+        return False
+
+
+
+def send_failure_mail(to_list, subject,
+                      message, req,
+                      user=None, sender=None,
+                      headers=None):
+    '''
+    Function to send mail
+    :param to_list:
+    :param subject:
+    :param message:
+    :param sender:
+    :param headers:
+    :param design:
+    '''
+    try:
+        if not sender:
+            sender = "Meisterdish<error@meisterdish.com>"
+        if not headers:
+            headers = {
+                'Reply-To': "Meisterdish<contact@meisterdish.com>",
+                'From': "Meisterdish<error@meisterdish.com>",
+            }
+        source_ip = (get_client_ip(req)
+                     if get_client_ip(req) is not None
+                     else 'Not Available'
+                     )
+        usr = (user.full_name if user is not None
+               else 'Not Applicable')
+
+        dic = {
+            'error_reason': message,
+            'sub': subject,
+            'error_time': timezone.now(),
+            'error_ip': source_ip,
+            'user': usr,
+        }
+        log.info("data is " + str(dic))
+        log.info("User is : " + str(user))
+        message_html = render_to_string('failure_alert_email.html', dic)
+        msg = EmailMessage(
+            subject, message_html, sender, [to_list, ], headers=headers)
+        log.info('Message Details :' + str(msg))
+        msg.content_subtype = "html"
+        msg.mixed_subtype = 'related'
+        log.info('Sending message')
+        imgs = {
+            "meisterdish_logo": os.path.join(
+                settings.STATIC_ROOT, "default", "logo_email.png"),
+        }
+        for cid, img in imgs.items():
+            fp = open(img, 'rb')
+            msg_image = MIMEImage(fp.read())
+            fp.close()
+            msg_image.add_header('Content-ID', '<' + cid + '>')
+            msg.attach(msg_image)
+
+        return msg.send()
+    except Exception as error:
+        log.error("Failure Message failed due to:  " + error.message)
+
+
+def get_client_ip(request):
+    if request is not None:
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+    else:
+        return 'Not Available'
+
+
+def send_order_notification_sms(order):
+    '''
+    Function to send reminder when a new order comes.
+    :param context:
+    '''
+    try:
+        txt = "Meisterdish order Recieved \
+        " + str(order.order_num) + ""
+        number = Configuration.objects.get(key='NOTIFICATION_NUMBER').value
+        client = TwilioRestClient(
+            settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+        country_code = "+1" if number not in settings.INDIAN_NUMBERS else "+91"
+        number = country_code + number
         message = client.messages.create(
             body=txt, to=number,
             from_=settings.TWILIO_NUMBER)

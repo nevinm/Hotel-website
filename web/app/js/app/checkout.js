@@ -1263,16 +1263,9 @@ var placeOrderCallback = {
             var userLoggedin = localStorage["loggedIn"] ? JSON.parse(localStorage["loggedIn"]) : null,
                     adminLoggedin = localStorage["admin_loggedIn"] ? JSON.parse(localStorage['admin_loggedIn']) : null,
                     loggedIn = (userLoggedin || adminLoggedin);
-            $(".ok-container").show();
-            $(".close-container").hide();
-            if (loggedIn) {
-                $(".ok-container a").attr("href", "orderhistory.html");
-                showPopup(response);
-            } else {
-                $(".ok-container a").attr("href", "../index.html");
-                showPopup(response);
-            }
-            SessionController.fbTrackConversionEvent(SessionController.getPlaceOrderPixel(), response.cart_items.grand_total, 'USD');
+            localStorage['orderConfirm'] = response.cart_items.grand_total;
+            window.location.href = 'order-confirmation.html';
+            // SessionController.fbTrackConversionEvent(SessionController.getPlaceOrderPixel(), response.cart_items.grand_total, 'USD');
         } else {
             showPopup(response);
         }

@@ -8,13 +8,13 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http.response import HttpResponse, HttpResponseRedirect
 import logging
-import md5
 
 from cms.views.decorators import check_input
 from libraries import custom_error, json_response, export_csv,\
     manage_image_upload
+import md5
 from meisterdish_server.models import User, Category, Meal, MealType, Image,\
-    Address, ZipUnavailable, Referral, AmbassadorReferral
+    Address, ZipUnavailable, Referral, AmbassadorReferral, Configuration
 
 
 log = logging.getLogger(__name__)
@@ -292,12 +292,16 @@ def get_users(request, data, user):
         users = User.objects.exclude(
             role__pk=settings.ROLE_GUEST).filter(deleted=False)
         total_count = users.count()
-
+        q = Q()
         if "search" in data:
             search = data["search"]
-            users = users.filter(
-                Q(first_name__istartswith=search) | Q(
-                    last_name__istartswith=search))
+            q &= Q(first_name__istartswith=search) | Q(
+                last_name__istartswith=search)
+        if "email" in data:
+            email_search = data["email"]
+            q &= Q(email__istartswith=email_search)
+
+        users = users.filter(q)
 
         users = users.order_by('-id')
         actual_count = users.count()
@@ -310,7 +314,7 @@ def get_users(request, data, user):
             log.error("user list pagination : " + error.message)
             custom_error("There was an error listing users.")
 
-        for user in users.object_list:
+        for user in users:
             user_list.append({
                 "id": user.id,
                 "name": (user.last_name + " " + user.first_name).title(),
@@ -524,7 +528,13 @@ def export_users(request, data):
                     'Signup Promocode',
                     'Credits',
                     'Activation Status',
-                    'Primary Address',
+                    'Is Business',
+                    'Company',
+                    'Building',
+                    'Street',
+                    'City',
+                    'State',
+
                 ]]
                 for user in users:
                     primary_address = Address.objects.filter(
@@ -537,28 +547,18 @@ def export_users(request, data):
                         business = (
                             "No" if not primary_address.is_business
                             else "Yes")
-                        address = '''Name          : %s %s
-Is Business ? :%s
-Company       :%s
-Building      :%s
-Street        :%s
-City          :%s
-State         :%s
-Zip code      :%s
-Phone         :%s
-Email         :%s
-''' % (primary_address.first_name, primary_address.last_name,
-                            business,
-                            company,
-                            primary_address.building,
-                            primary_address.street,
-                            primary_address.city,
-                            primary_address.state.name,
-                            primary_address.zip,
-                            primary_address.phone,
-                            primary_address.email)
+                        building = primary_address.building
+                        street = primary_address.street
+                        city = primary_address.city
+                        state = primary_address.state.name
+
                     else:
-                        address = ""
+                        business = ""
+                        company = ""
+                        building = ""
+                        street = ""
+                        city = ""
+                        state = ""
 
                     if Referral.objects.filter(referree=user).exists():
                         referrel = Referral.objects.get(
@@ -585,7 +585,14 @@ Email         :%s
                         referrel,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
-                        address,
+                        business,
+                        company,
+                        building,
+                        street,
+                        city,
+                        state,
+
+
                     ])
                 return export_csv(users_list, "users_list.csv")
         log.error("Export User list :Invalid session")
@@ -629,7 +636,12 @@ def export_users_for_promotion(request, data):
                     'Signup Promocode',
                     'Credits',
                     'Activation Status',
-                    'Primary Address',
+                    'Is Business',
+                    'Company',
+                    'Building',
+                    'Street',
+                    'City',
+                    'State',
                 ]]
                 for user in users:
                     primary_address = Address.objects.filter(
@@ -639,30 +651,22 @@ def export_users_for_promotion(request, data):
                         company = (
                             primary_address.company if primary_address.company
                             else "")
-                        is_business_flag = (
+                        business = (
                             'Yes' if primary_address.is_business
                             else "No")
-                        address = '''Name          : %s %s
-Is Business ? :%s
-Company       :%s
-Building      :%s
-Street        :%s
-City          :%s
-State         :%s
-Zip code      :%s
-Phone         :%s
-Email         :%s
-''' % (primary_address.first_name, primary_address.last_name,
-                            is_business_flag, company,
-                            primary_address.building,
-                            primary_address.street,
-                            primary_address.city,
-                            primary_address.state.name,
-                            primary_address.zip,
-                            primary_address.phone,
-                            primary_address.email)
+                        building = primary_address.building
+                        street = primary_address.street
+                        city = primary_address.city
+                        state = primary_address.state.name
+
                     else:
-                        address = ""
+                        business = ""
+                        company = ""
+                        building = ""
+                        street = ""
+                        city = ""
+                        state = ""
+
                     if Referral.objects.filter(referree=user).exists():
                         referrel = Referral.objects.get(
                             referree=user).referrer.referral_code
@@ -678,7 +682,8 @@ Email         :%s
                         user.email,
                         "Not Available" if not user.mobile or str(
                             user.mobile).strip() == "" else user.mobile,
-                        user.zipcode,
+                        (user.zipcode if user.zipcode is not None
+                         else "Not Available"),
                         "Yes" if user.facebook_login else "No",
                         user.fb_user_id,
                         user.created.strftime('%m-%d-%Y %H:%M:%S'),
@@ -688,8 +693,14 @@ Email         :%s
                         referrel,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
-                        address
+                        business,
+                        company,
+                        building,
+                        street,
+                        city,
+                        state,
                     ])
+
                 return export_csv(users_list, "users_promotions_list.csv")
         log.error("Export User promotions list : Invalid session key")
         return HttpResponseRedirect(
@@ -723,3 +734,33 @@ def export_zips_unsupported(request, data):
         log.error("Export zips zip_unsupported_users : " + error.message)
         return HttpResponseRedirect(
             settings.SITE_URL + "views/admin/manage-delivery-areas.html")
+
+
+@check_input('POST', settings.ROLE_ADMIN)
+def notification_settings(request, data, session_user):
+    '''
+    API to create additional notification parameters.
+    :param request:
+    :param data:
+    '''
+
+    try:
+        phone_number = (data["mobile_number"] if "mobile_number"
+                        in data else Configuration.
+                        objects.get(key='NOTIFICATION_NUMBER').value)
+        log.info('Setting Phone Number :' + phone_number)
+        notify_settings, _ = Configuration.objects.get_or_create(
+            key='NOTIFICATION_NUMBER')
+        log.info(notify_settings)
+        notify_settings.value = phone_number
+        notify_settings.save()
+        resp = {'status': 1,
+                'mobile_number': phone_number,
+                'message': 'Phone Number added Successfully'}
+        return json_response(resp)
+    except Exception as error:
+        raise error
+        log.error("Unable to add settings phone number " +
+                  str(error.message))
+        return custom_error("Unable to create Phone number" +
+                            str(error.message))
