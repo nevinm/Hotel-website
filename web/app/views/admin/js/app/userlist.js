@@ -28,33 +28,33 @@ function getUserlist(nextPage, userName, emailId) {
 }
 
 // Activate User 
-var updateUserStatusCallback = {
-    success: function (data, textStatus) {
-        var updateUserStatusData = JSON.parse(data);
-        if (updateUserStatusData.is_active == false) {
-            userActive = false;
-        } else {
-            userActive = true;
-        }
-    },
-    failure: function (XMLHttpRequest, textStatus, errorThrown) {
-    }
-}
+// var updateUserStatusCallback = {
+//     success: function (data, textStatus) {
+//         var updateUserStatusData = JSON.parse(data);
+//         if (updateUserStatusData.is_active == false) {
+//             userActive = false;
+//         } else {
+//             userActive = true;
+//         }
+//     },
+//     failure: function (XMLHttpRequest, textStatus, errorThrown) {
+//     }
+// }
 
-function updateUserStatus(id, status) {
-    var url = baseURL + 'cms/change_user_status/';
-    header = {
-        "session-key": localStorage['session_key']
-    },
-    params = {
-        "id": id,
-        'is_active': status
-    },
-    data = JSON.stringify(params);
+// function updateUserStatus(id, status) {
+//     var url = baseURL + 'cms/change_user_status/';
+//     header = {
+//         "session-key": localStorage['session_key']
+//     },
+//     params = {
+//         "id": id,
+//         'is_active': status
+//     },
+//     data = JSON.stringify(params);
 
-    var getUserlistInstance = new AjaxHttpSender();
-    getUserlistInstance.sendPost(url, header, data, updateUserStatusCallback);
-}
+//     var getUserlistInstance = new AjaxHttpSender();
+//     getUserlistInstance.sendPost(url, header, data, updateUserStatusCallback);
+// }
 
 function populateUserlist(userListData) {
     $("#userlist tbody").empty();
@@ -70,17 +70,17 @@ function populateUserlist(userListData) {
 //        element += value.is_ambassador
 //                ? "<a href='#' class='ambassador' data-id='" + value.id + "' id='ambassador-" + value.ambassador_code + "'>YES</a>"
 //                : "<a href='#' class='not-ambassador' data-id='" + value.id + "' id='ambassador-" + value.ambassador_code + "'>NO</a>";
-        element += "<div>" + value.ambassador_code + "</div></td>" +
+                element += "<div>" + value.ambassador_code + "</div></td>" +
                 "<td class='mobile'>" + value.mobile + "</td>" +
                 "<td class='profile_image'><img src='" + value.profile_image + "'/></td>" +
                 "<td align='center' class='delete-user'><a data-id='" + value.id + "'class='cross'></a></td>" +
                 "</tr>";
         $("#userlist tbody").append(element);
-        if (value.is_active) {
-            $("tbody .row:last").append("<td><button data-id='" + value.id + "' class='status down'>Active</button></td>");
-        } else {
-            $("tbody .row:last").append("<td><button data-id='" + value.id + "' class='status'>Inactive</button></td>")
-        }
+        // if (value.is_active) {
+        //     $("tbody .row:last").append("<td><button data-id='" + value.id + "' class='status down'>Active</button></td>");
+        // } else {
+        //     $("tbody .row:last").append("<td><button data-id='" + value.id + "' class='status'>Inactive</button></td>")
+        // }
         if (value.profile_image == "Not Available") {
             $(".profile_image img:last").remove();
             $(".profile_image:last").html("Not Available");
@@ -115,22 +115,22 @@ function populateUserlist(userListData) {
         }
     });
 
-    $(".status").click(function () {
-        var id, status;
-        if ($(this).hasClass("down")) {
-            id = $(this).data().id;
-            status = false;
-            updateUserStatus(id, status);
-            $(this).removeClass("down");
-            $(this).text("Inactive");
-        } else {
-            id = $(this).data().id;
-            status = true;
-            updateUserStatus(id, status);
-            $(this).addClass("down");
-            $(this).text("Active");
-        }
-    });
+    // $(".status").click(function () {
+    //     var id, status;
+    //     if ($(this).hasClass("down")) {
+    //         id = $(this).data().id;
+    //         status = false;
+    //         updateUserStatus(id, status);
+    //         $(this).removeClass("down");
+    //         $(this).text("Inactive");
+    //     } else {
+    //         id = $(this).data().id;
+    //         status = true;
+    //         updateUserStatus(id, status);
+    //         $(this).addClass("down");
+    //         $(this).text("Active");
+    //     }
+    // });
 
     $("a[id^=ambassador-]").on("click", function (e) {
         e.preventDefault();
@@ -272,7 +272,7 @@ function manageCredits(id, credits) {
 }
 
 $(document).ready(function () {
-    var userActive;
+    //var userActive;
     //By default call 1 as starting.
     getUserlist(1);
 
