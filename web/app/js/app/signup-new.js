@@ -6,14 +6,6 @@ var signupCallback = {
             showPopup(userDetails);
         } else {
             $('.signup-formcontainer')[0].reset();
-            showPopup(userDetails);
-            // var splitter = "Please note that a guest user account already exists with your email";
-            // if (userDetails.message.match(splitter)) {
-            //     var dataArray = userDetails.message.split(splitter);
-            //     var element = dataArray[0] + "<br>" + splitter + dataArray[1];
-            //     $('.popup-container .content span').html(element);
-            //     $('.popup-container').attr("style", "padding:0px");
-            // }
             ga('send', {
                 'hitType': 'event', // Required.
                 'eventCategory': 'button', // Required.
@@ -22,8 +14,17 @@ var signupCallback = {
                 'eventValue': 4
             });
             fbq('track', 'CompleteRegistration');
-            //SessionController.fbTrackConversionEvent(SessionController.getSignUpPixel(), '0.00', 'USD');
-            localStorage['signupEmail'] = userDetails.user.email;
+
+            //login code
+            ClearLocalStorage();
+            var user_name = userDetails.user.first_name;
+            localStorage['username'] = user_name;
+            localStorage['session_key'] = userDetails.session_key;
+            localStorage['loggedIn'] = true;
+            localStorage['admin_loggedIn'] = false;
+            localStorage['signupMessage'] = userDetails.message;
+            createCookie("SessionExpireTime", "true", sessionExpiryTime);
+            window.location.href = 'menu.html';
         }
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
