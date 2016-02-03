@@ -681,6 +681,7 @@ label {
     display: inline-block;
     letter-spacing: 1px;
     font-size: 13px;
+    font-weight: bold;
     font-family: 'BrandonGrotesque-Regular';
     color: #C4C4C4;
     padding-right: 10px;
