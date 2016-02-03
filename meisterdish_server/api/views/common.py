@@ -669,7 +669,7 @@ def get_profile(request, data, user):
         return custom_error("Invalid input.")
     except Exception as error:
         log.error("Get profile :Exception: " +
-                  e.message + str(traceback.tb_lineno(sys.exc_info()[2])))
+                  error.message)
         return custom_error("Failed to retrieve profile details.")
 
 
