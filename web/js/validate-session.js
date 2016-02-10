@@ -10,8 +10,8 @@ var sessionExpiryTime = 30,
 (function () {
     if (window.location.href.indexOf("meisterdish.com") > 0) {
         //------ LIVE ----
-        baseURL = 'http://meisterdish.com/backend/api/';
-        homeUrl = "http://www.meisterdish.com";
+        baseURL = 'https://meisterdish.com/backend/api/';
+        homeUrl = "https://www.meisterdish.com";
         PROMO_CODE = "MEISTER20";
         GLOBAL = {
             APP_ID: '1412578365736463'
