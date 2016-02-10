@@ -280,4 +280,9 @@ PROMOCODES = {
     "COOK20": ("You've been invited to start cooking with $20 towards " +
                "your first two orders. Sign up for free below to claim " +
                "your credit."),
+    "MEISTER50": ("You've been invited to start cooking with 50% off your " +
+                  "first order. Sign up for free below."),
+    "OFFICE50": ("You've been invited to start cooking with 50% off your " +
+                 "first order. Sign up for free below."),
+
 }
