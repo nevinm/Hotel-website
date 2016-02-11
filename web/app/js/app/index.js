@@ -30,12 +30,12 @@ Bootstrap.prototype = {
         } else {
             this.fullPageRender();
         }
-        if ($(window).width() > ipadWidth) {
-            var marginLeft = $(".contentArea").offset().left - 10;
-            $("#section-what-is .outer-slide-description").css("margin-left", marginLeft + "px");
-        } else {
-            $("#section-what-is .outer-slide-description").css("margin-left", "");
-        }
+        // if ($(window).width() > ipadWidth) {
+        //     var marginLeft = $(".contentArea").offset().left - 10;
+        //     $("#section-what-is .outer-slide-description").css("margin-left", marginLeft + "px");
+        // } else {
+        //     $("#section-what-is .outer-slide-description").css("margin-left", "");
+        // }
     },
     fullPageRender: function () {
         var headerHeight = $("#header").innerHeight(),
