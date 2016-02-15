@@ -46,8 +46,9 @@ Bootstrap.prototype = {
                 footerHeight = $("#slider-footer").innerHeight(),
                 reqOffset = screenHeight - section1Height - section2HeadingHeight;
         $("#section-what-is").css({
-            "height": section1Height + reqOffset - section2Padding
+            "height": parseInt( window.innerHeight * 0.8)+"px" /*section1Height + reqOffset - section2Padding*/
         });
+        console.log(parseInt(0.8*window.innerHeight) + " " + window.innerHeight);
         $("#section-zipcode").css({
             "height": screenHeight - footerHeight
         });
