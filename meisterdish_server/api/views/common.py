@@ -301,9 +301,8 @@ def signup(request, data):
             session.save()
 
             log.info(email + " : Signed up ")
-            message = "Signup successful for  ("\
-                + email + \
-                ")."
+            message = "Thanks for signing up, you're logged \
+            in and ready to order!"
             return json_response({
                 "status": 1,
                 "message": message,
