@@ -21,7 +21,7 @@ from libraries import custom_error, json_response, check_delivery_area,\
 import md5
 from meisterdish_server.models import User, Cart, CartItem, Image, Role,\
     Configuration, Referral, Meal, Address, City, State, Order,\
-    AmbassadorReferral
+    AmbassadorReferral, DeliveryArea
 
 
 log = logging.getLogger(__name__)
@@ -254,6 +254,10 @@ def signup(request, data):
             user.deleted = False
             user.is_active = True
             user.save()
+            if DeliveryArea.objects.filter(zip=zipcode).exists():
+                delivery_zip = True
+            else:
+                delivery_zip = False
 
             if referral_code:
                 try:
@@ -306,6 +310,7 @@ def signup(request, data):
             return json_response({
                 "status": 1,
                 "message": message,
+                "zip_delivery": 1 if delivery_zip else 0,
                 "user": user_dic, "session_key": session.session_key})
 
         except Exception as error:
