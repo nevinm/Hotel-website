@@ -229,11 +229,6 @@ $(document).ready(function () {
         $('.menu-offer').append(signupMessage);
         $('.menu-offer').show();
         localStorage.removeItem('signupMessage');
-        setTimeout(function(){ 
-                signupMessage.hide();
-                $('.menu-offer :first-child').show();
-                $('.menu-offer').css("background-color", "");
-            }, 3000);
     } else if (localStorage['loggedIn'] == 'true') {
         $('.menu-offer').show();
     } else {
