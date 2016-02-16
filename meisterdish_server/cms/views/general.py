@@ -510,7 +510,9 @@ def export_users(request, data):
                             last_name__istartswith=search))
                 users = users.order_by('-id')
                 users_list = [[
-                    'Name',
+                    'Firstname',
+                    'Lastname',
+                    'Fullname',
                     "Role",
                     'Email',
                     'Mobile',
@@ -526,7 +528,7 @@ def export_users(request, data):
                     'Activation Status',
                     'Is Business',
                     'Company',
-                    'Building',
+                    'Suit/Apt',
                     'Street',
                     'City',
                     'State',
@@ -566,6 +568,8 @@ def export_users(request, data):
                     else:
                         referrel = ""
                     users_list.append([
+                        user.first_name,
+                        user.last_name,
                         user.full_name.title(),
                         settings.ROLE_DIC[user.role.pk],
                         user.email,
@@ -618,6 +622,8 @@ def export_users_for_promotion(request, data):
 
                 users = users.order_by('first_name')
                 users_list = [[
+                    'Firstname',
+                    'Lastname',
                     'Name',
                     "Role",
                     'Email',
@@ -634,7 +640,7 @@ def export_users_for_promotion(request, data):
                     'Activation Status',
                     'Is Business',
                     'Company',
-                    'Building',
+                    'Suit/Apt',
                     'Street',
                     'City',
                     'State',
@@ -673,6 +679,8 @@ def export_users_for_promotion(request, data):
                     else:
                         referrel = ""
                     users_list.append([
+                        user.first_name,
+                        user.last_name,
                         user.full_name.title(),
                         settings.ROLE_DIC[user.role.pk],
                         user.email,
