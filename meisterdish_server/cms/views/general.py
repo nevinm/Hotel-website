@@ -549,6 +549,12 @@ def export_users(request, data):
                         street = primary_address.street
                         city = primary_address.city
                         state = primary_address.state.name
+                        first_name = primary_address.first_name
+                        last_name = primary_address.last_name
+                        mobile = "Not Available" if not primary_address.phone \
+                            or str(
+                                primary_address.phone).strip(
+                            ) == "" else primary_address.phone,
 
                     else:
                         business = ""
@@ -557,6 +563,11 @@ def export_users(request, data):
                         street = ""
                         city = ""
                         state = ""
+                        first_name = user.first_name
+                        last_name = user.last_name
+                        mobile = "Not Available" if not user.mobile or str(
+                            user.mobile).strip(
+                        ) == "" else str(user.mobile),
 
                     if Referral.objects.filter(referree=user).exists():
                         referrel = Referral.objects.get(
@@ -571,9 +582,7 @@ def export_users(request, data):
                         user.full_name.title(),
                         settings.ROLE_DIC[user.role.pk],
                         user.email,
-                        "Not Available" if not primary_address.phone or str(
-                            primary_address.phone).strip(
-                        ) == "" else primary_address.phone,
+                        mobile,
                         user.zipcode,
                         "Yes" if user.facebook_login else "No",
                         user.fb_user_id,
@@ -584,8 +593,8 @@ def export_users(request, data):
                         referrel,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
-                        primary_address.first_name,
-                        primary_address.last_name,
+                        first_name,
+                        last_name,
                         business,
                         company,
                         building,
@@ -661,6 +670,12 @@ def export_users_for_promotion(request, data):
                         street = primary_address.street
                         city = primary_address.city
                         state = primary_address.state.name
+                        first_name = primary_address.first_name
+                        last_name = primary_address.last_name
+                        mobile = "Not Available" if not primary_address.phone \
+                            or str(
+                                primary_address.phone).strip(
+                            ) == "" else primary_address.phone,
 
                     else:
                         business = ""
@@ -669,6 +684,11 @@ def export_users_for_promotion(request, data):
                         street = ""
                         city = ""
                         state = ""
+                        first_name = user.first_name
+                        last_name = user.last_name
+                        mobile = "Not Available" if not user.mobile or str(
+                            user.mobile).strip(
+                        ) == "" else str(user.mobile),
 
                     if Referral.objects.filter(referree=user).exists():
                         referrel = Referral.objects.get(
@@ -683,9 +703,7 @@ def export_users_for_promotion(request, data):
                         user.full_name.title(),
                         settings.ROLE_DIC[user.role.pk],
                         user.email,
-                        "Not Available" if not primary_address.phone or str(
-                            primary_address.phone).strip(
-                        ) == "" else primary_address.phone,
+                        mobile,
                         (user.zipcode if user.zipcode is not None
                          else "Not Available"),
                         "Yes" if user.facebook_login else "No",
@@ -697,8 +715,8 @@ def export_users_for_promotion(request, data):
                         referrel,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
-                        primary_address.first_name,
-                        primary_address.last_name,
+                        first_name,
+                        last_name,
                         business,
                         company,
                         building,
