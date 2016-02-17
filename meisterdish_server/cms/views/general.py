@@ -510,8 +510,6 @@ def export_users(request, data):
                             last_name__istartswith=search))
                 users = users.order_by('-id')
                 users_list = [[
-                    'Firstname',
-                    'Lastname',
                     'Fullname',
                     "Role",
                     'Email',
@@ -526,6 +524,8 @@ def export_users(request, data):
                     'Signup Promocode',
                     'Credits',
                     'Activation Status',
+                    'Firstname',
+                    'Lastname',
                     'Is Business',
                     'Company',
                     'Suit/Apt',
@@ -568,13 +568,12 @@ def export_users(request, data):
                     else:
                         referrel = ""
                     users_list.append([
-                        user.first_name,
-                        user.last_name,
                         user.full_name.title(),
                         settings.ROLE_DIC[user.role.pk],
                         user.email,
-                        "Not Available" if not user.mobile or str(
-                            user.mobile).strip() == "" else user.mobile,
+                        "Not Available" if not primary_address.phone or str(
+                            primary_address.phone).strip(
+                        ) == "" else primary_address.phone,
                         user.zipcode,
                         "Yes" if user.facebook_login else "No",
                         user.fb_user_id,
@@ -585,6 +584,8 @@ def export_users(request, data):
                         referrel,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
+                        primary_address.first_name,
+                        primary_address.last_name,
                         business,
                         company,
                         building,
@@ -622,8 +623,6 @@ def export_users_for_promotion(request, data):
 
                 users = users.order_by('first_name')
                 users_list = [[
-                    'Firstname',
-                    'Lastname',
                     'Name',
                     "Role",
                     'Email',
@@ -638,6 +637,8 @@ def export_users_for_promotion(request, data):
                     'Signup Promocode',
                     'Credits',
                     'Activation Status',
+                    'Firstname',
+                    'Lastname',
                     'Is Business',
                     'Company',
                     'Suit/Apt',
@@ -679,13 +680,12 @@ def export_users_for_promotion(request, data):
                     else:
                         referrel = ""
                     users_list.append([
-                        user.first_name,
-                        user.last_name,
                         user.full_name.title(),
                         settings.ROLE_DIC[user.role.pk],
                         user.email,
-                        "Not Available" if not user.mobile or str(
-                            user.mobile).strip() == "" else user.mobile,
+                        "Not Available" if not primary_address.phone or str(
+                            primary_address.phone).strip(
+                        ) == "" else primary_address.phone,
                         (user.zipcode if user.zipcode is not None
                          else "Not Available"),
                         "Yes" if user.facebook_login else "No",
@@ -697,6 +697,8 @@ def export_users_for_promotion(request, data):
                         referrel,
                         "$ " + "{0:.2f}".format(user.credits),
                         "Active" if user.is_active else "Inactive",
+                        primary_address.first_name,
+                        primary_address.last_name,
                         business,
                         company,
                         building,
