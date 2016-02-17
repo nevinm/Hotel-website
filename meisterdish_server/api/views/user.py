@@ -55,8 +55,9 @@ def add_address(request, data, user):
 
         is_business = False
         if "is_business" in data and str(data["is_business"]) != '':
-            is_business = True
-            company = data['company'].strip()
+            if int(data["is_business"]):
+                is_business = True
+                company = data['company'].strip()
 
         if not validate_zipcode(zip):
             return custom_error("Please provide a valid zip code.")
