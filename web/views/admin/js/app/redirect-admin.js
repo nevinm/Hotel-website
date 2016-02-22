@@ -1,1 +1,0 @@
-function redirectIfAdminLoggedIn(){"true"==localStorage.admin_loggedIn||(window.location.href="index.html")}redirectIfAdminLoggedIn();
