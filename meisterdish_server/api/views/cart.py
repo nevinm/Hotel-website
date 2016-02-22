@@ -208,8 +208,15 @@ def update_cart(request, data, user):
 
         try:
             cart_item = CartItem.objects.get(cart=cart, meal__pk=meal_id)
+
             if qty == 0:
                 cart_item.delete()
+            elif meal.available < qty:
+                log.error("meals avail: " + str(
+                    meal.available) + "quantity:" + str(qty) + "citm:" + str(
+                    cart_item.quantity))
+                return custom_error(
+                    "Sorry, the required quantity is not available")
             else:
                 cart_item.quantity = qty
                 cart_item.save()

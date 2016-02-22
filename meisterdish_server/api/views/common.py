@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.sessions.backends.db import SessionStore
 from django.db.models import Q
 from django.http.response import HttpResponse, HttpResponseRedirect
+from django.template.base import libraries
 from django.template.loader import render_to_string
 import logging
 import random
@@ -15,7 +16,8 @@ import traceback
 
 from api.views.decorators import check_input
 from libraries import custom_error, json_response, check_delivery_area,\
-    add_to_mailing_list, mail, validate_email, manage_image_upload
+    add_to_mailing_list, mail, validate_email, manage_image_upload,\
+    send_failure_mail, get_client_ip
 import md5
 from meisterdish_server.models import User, Cart, CartItem, Image, Role,\
     Configuration, Referral, Meal, Address, City, State, Order,\
@@ -328,12 +330,19 @@ def signup(request, data):
                 verification mail. Please try later.")
         except Exception as error:
             log.error(email + " : Failed to sign up " + error.message)
+            send_failure_mail(settings.FAILURE_MAIL, 'Signup Failure',
+                              error.message, request)
             return custom_error("Failed to sign up. Please try again later")
     except KeyError as field:
         log.error("failed to signup " + str(field) + "missing")
+        send_failure_mail(settings.FAILURE_MAIL, 'Signup Failure',
+                          'Failed to signup :' + str(field) + 'is missing',
+                          request)
         return custom_error("Invalid input")
     except Exception as error:
         log.error("Failed to signup " + error.message)
+        send_failure_mail(settings.FAILURE_MAIL, 'Signup Failure',
+                          error.message, request)
         return custom_error("Failed to signup. Please check all the fields.")
 
 
@@ -396,7 +405,7 @@ def verify_user(request, data, token):
     :param token:
     '''
     login_url = settings.SITE_URL + "views/login.html"
-    fail_url = settings.SITE_URL + "views/signup-fail.html"
+    fail_url = settings.SITE_URL + "views/signup/coming-soon.html"
     try:
         token = token.strip()
         user = User.objects.get(user_verify_token=token, deleted=False)
@@ -660,7 +669,7 @@ def get_profile(request, data, user):
         return custom_error("Invalid input.")
     except Exception as error:
         log.error("Get profile :Exception: " +
-                  e.message + str(traceback.tb_lineno(sys.exc_info()[2])))
+                  error.message)
         return custom_error("Failed to retrieve profile details.")
 
 
