@@ -15,7 +15,8 @@ from thread import start_new_thread
 from api.views.decorators import check_input
 from libraries import custom_error, json_response, validate_email,\
     validate_phone, check_delivery_area, mail_order_confirmation,\
-    save_payment_data, validate_date, send_failure_mail
+    save_payment_data, validate_date, send_failure_mail,\
+    send_order_notification_sms
 from meisterdish_server.models import Order, CartItem, DeliveryTimeSlot,\
     Configuration, Referral, CreditCardDetails, Meal, Address,\
     AmbassadorReferral
@@ -416,6 +417,8 @@ def create_order(request, data, user):
 
         if not send_order_placed_notification(order):
             log.error("Failed to send order notification")
+        if not send_order_notification_sms(order):
+            log.error("Failed to send order notification SMS")
         cart_items = get_order_cart_items(order)
 
         start_new_thread(print_order, (order,))
@@ -429,7 +432,7 @@ def create_order(request, data, user):
     except Exception as error:
         log.error("Failed to create order." + str(error.message))
         send_failure_mail(settings.FAILURE_MAIL, 'Checkout Failure',
-                          error.message, request)
+                          error.message, request, user)
         return custom_error(error.message + "is missing.")
 
 
@@ -652,7 +655,7 @@ def make_payment(order, user, request):
         log.error(
             "Failed to make payment." + error.message + str(exc_tb.tb_lineno))
         send_failure_mail(settings.FAILURE_MAIL, 'Payment Failure',
-                          error.message + str(exc_tb.tb_lineno), request)
+                          error.message + str(exc_tb.tb_lineno), request, user)
         return False
 
 

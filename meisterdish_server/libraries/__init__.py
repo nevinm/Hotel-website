@@ -16,7 +16,7 @@ import re
 
 import json as simplejson
 from meisterdish_server.models import Image, User, Role, DeliveryArea, Payment,\
-    Address, ZipUnavailable
+    Address, ZipUnavailable, Configuration
 from twilio.rest import TwilioRestClient
 
 
@@ -517,7 +517,8 @@ def send_text_reminder(context):
 
 
 def send_failure_mail(to_list, subject,
-                      message, req, sender=None,
+                      message, req,
+                      user=None, sender=None,
                       headers=None):
     '''
     Function to send mail
@@ -540,17 +541,18 @@ def send_failure_mail(to_list, subject,
                      if get_client_ip(req) is not None
                      else 'Not Available'
                      )
-        user = (req.user if req is not None
-                else 'Not Available')
+        usr = (user.full_name if user is not None
+               else 'Not Applicable')
 
         dic = {
             'error_reason': message,
             'sub': subject,
             'error_time': timezone.now(),
             'error_ip': source_ip,
-            'user': user,
+            'user': usr,
         }
         log.info("data is " + str(dic))
+        log.info("User is : " + str(user))
         message_html = render_to_string('failure_alert_email.html', dic)
         msg = EmailMessage(
             subject, message_html, sender, [to_list, ], headers=headers)
@@ -558,6 +560,16 @@ def send_failure_mail(to_list, subject,
         msg.content_subtype = "html"
         msg.mixed_subtype = 'related'
         log.info('Sending message')
+        imgs = {
+            "meisterdish_logo": os.path.join(
+                settings.STATIC_ROOT, "default", "logo_email.png"),
+        }
+        for cid, img in imgs.items():
+            fp = open(img, 'rb')
+            msg_image = MIMEImage(fp.read())
+            fp.close()
+            msg_image.add_header('Content-ID', '<' + cid + '>')
+            msg.attach(msg_image)
 
         return msg.send()
     except Exception as error:
@@ -574,3 +586,31 @@ def get_client_ip(request):
         return ip
     else:
         return 'Not Available'
+
+
+def send_order_notification_sms(order):
+    '''
+    Function to send reminder when a new order comes.
+    :param context:
+    '''
+    try:
+        txt = "Meisterdish order " + str(order.order_num) + " recieved"
+        number = Configuration.objects.get(key='NOTIFICATION_NUMBER').value
+        client = TwilioRestClient(
+            settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+        country_code = "+1" if number not in settings.INDIAN_NUMBERS else "+91"
+        number = country_code + number
+        message = client.messages.create(
+            body=txt, to=number,
+            from_=settings.TWILIO_NUMBER)
+        log.info(message)
+        if message:
+            log.info("Sent SMS to " + number)
+            return True
+        else:
+            log.error("Failed to send SMS to " + number)
+            return False
+    except Exception as error:
+        log.error(
+            "Failed to send order SMS to : " + number + " : " + error.message)
+        return False

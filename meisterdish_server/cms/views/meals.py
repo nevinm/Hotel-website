@@ -28,10 +28,6 @@ def get_meals(request, data, user):
     '''
     try:
         user = get_request_user(request)
-
-        limit = data.get('perPage', settings.PER_PAGE)
-        page = data.get("nextPage", 1)
-
         meal_list = []
         meals = Meal.objects.filter(is_deleted=False)
         total_count = meals.count()
@@ -52,15 +48,6 @@ def get_meals(request, data, user):
         meals = meals.order_by("order", 'name')
 
         actual_count = meals.count()
-        try:
-            paginator = Paginator(meals, limit)
-            if page < 1 or page > paginator.page_range:
-                page = 1
-            meals = paginator.page(page)
-        except Exception as error:
-            log.error("meal list pagination : " + error.message)
-            custom_error("There was an error listing meals.")
-
         try:
             home_meal = Configuration.objects.get(key='home_meal_id').value
         except Configuration.DoesNotExist:
@@ -84,6 +71,7 @@ def get_meals(request, data, user):
                 "id": meal.id,
                 "name": meal.name,
                 "sub": meal.sub,
+                "code": meal.code,
                 "description": meal.description,
                 "main_image": (
                     settings.DEFAULT_MEAL_IMAGE
@@ -111,10 +99,6 @@ def get_meals(request, data, user):
                               "aaData": meal_list,
                               "total_count": total_count,
                               "actual_count": actual_count,
-                              "num_pages": paginator.num_pages,
-                              "page_range": paginator.page_range,
-                              "current_page": page,
-                              "per_page": limit,
                               })
     except Exception as error:
         log.error("Failed to list meals : " + error.message)
@@ -148,6 +132,11 @@ def create_meal(request, data, user):
         else:
             locked = "0"
 
+        if 'code' in data:
+            code = data['code']
+        else:
+            code = ""
+
         if len(name) < 3 or len(desc) < 5 or \
                 float(price) <= 0 or float(tax) < 0:
             log.error("name, desc, price or tax invalid")
@@ -167,6 +156,7 @@ def create_meal(request, data, user):
 
         meal.name = name
         meal.sub = sub
+        meal.code = code
         meal.description = desc
 
         if "need_boiling_water" in data and data['need_boiling_water'] != '':
@@ -274,6 +264,8 @@ def create_meal(request, data, user):
 
         if "calories" in data:
             meal.calories = data["calories"]
+        if "code" in data:
+            meal.code = data["code"]
 
         my_tip_ids = []
         if "tips" in data and len(data['tips']) > 0:
@@ -419,6 +411,7 @@ def get_meal_details(request, data, user, meal_id):
             "id": meal.id,
             "name": meal.name,
             "sub": meal.sub,
+            "code": meal.code,
             "description": meal.description,
             "price": meal.price,
             "tax": meal.price * meal.tax / 100,

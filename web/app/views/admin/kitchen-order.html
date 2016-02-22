@@ -59,6 +59,9 @@
                         <li class='admin-links'>
                             <a href="meals-review.html">REVIEWS</a>
                         </li>
+                        <li class='admin-links'>
+                            <a href="alerts.html">ALERTS</a>
+                        </li>
                         <li id="navbar-username_hidden" class="bold green">
                             <a href='../account.html'></a>
                         </li>
@@ -69,6 +72,10 @@
                 <div class='admin-inner-wrapper'>
                     <div class="accountNav">
                         <div class="logout body-text-bold">
+                            <form id='download-orders-form' action="" method="post">
+                                <input type='hidden' name='session_key' />
+                                <input type="submit" class="btn btn-small-primary medium-green download-csv" id="download-orders-csv" value="DOWNLOAD ORDERS CSV">
+                            </form>
                             <a id='logout'>LOG OUT</a>
                         </div>
                     </div>
