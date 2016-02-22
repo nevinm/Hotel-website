@@ -352,7 +352,7 @@ def send_sms_notification(dic):
         client = TwilioRestClient(
             settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
 
-        country_code = "+1" if settings.Live else "+1"
+        country_code = "+1"
         if str(dic["mobile"]).strip() in settings.INDIAN_NUMBERS:
             country_code = "+91"
         number = country_code + str(dic["mobile"]).strip()

@@ -53,7 +53,8 @@ def mail(to_list, subject, message, sender=None, headers=None, design=True):
         imgs = {
             "meisterdish_logo": os.path.join(
                 settings.STATIC_ROOT, "default", "logo_email.png"),
-            "fb": os.path.join(settings.STATIC_ROOT, "default", "fb_icon.png")}
+            "fb": os.path.join(settings.STATIC_ROOT, "default", "fb_icon.png"),
+            "in": os.path.join(settings.STATIC_ROOT, "default", "in_icon.png")}
         for cid, img in imgs.items():
             fp = open(img, 'rb')
             msg_image = MIMEImage(fp.read())
@@ -439,7 +440,7 @@ def export_csv(export_list, filename):
     response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
     writer = csv.writer(response)
     for row in export_list:
-        writer.writerow(row)
+        writer.writerow([s.encode("utf-8") for s in row if s is not None])
     return response
 
 
@@ -495,7 +496,7 @@ def send_text_reminder(context):
             to receive your meal"
         client = TwilioRestClient(
             settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-        country_code = "+1" if settings.Live else "+1"
+        country_code = "+1"
         number = country_code + str(context["mobile"]).strip()
         message = client.messages.create(
             body=txt, to=number,
