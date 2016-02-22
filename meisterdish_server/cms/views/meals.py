@@ -71,7 +71,8 @@ def get_meals(request, data, user):
                 "id": meal.id,
                 "name": meal.name,
                 "sub": meal.sub,
-                "code": meal.code,
+                "code": (meal.code if meal.code is not None
+                         else ""),
                 "description": meal.description,
                 "main_image": (
                     settings.DEFAULT_MEAL_IMAGE
@@ -411,7 +412,8 @@ def get_meal_details(request, data, user, meal_id):
             "id": meal.id,
             "name": meal.name,
             "sub": meal.sub,
-            "code": meal.code,
+            "code": (meal.code if meal.code is not None
+                     else ""),
             "description": meal.description,
             "price": meal.price,
             "tax": meal.price * meal.tax / 100,

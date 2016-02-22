@@ -414,13 +414,13 @@ $("form").each(function () {
             firstname: {
                 required: true,
                 minlength: 2,
-                maxlength: 32,
+                maxlength: 30,
                 letters: true
             },
             lastname: {
                 required: true,
                 minlength: 1,
-                maxlength: 32,
+                maxlength: 30,
                 letters: true
             },
             fullname: {
@@ -432,11 +432,14 @@ $("form").each(function () {
             username: {
                 required: true,
                 minlength: 3,
-                maxlength: 32,
+                maxlength: 30,
             },
             mealname: {
                 required: true,
                 minlength: 3,
+            },
+            mealcode: {
+                maxlength: 4
             },
             mealsubHeader: {
                 required: true,
@@ -723,6 +726,7 @@ $("form").each(function () {
             mealprice: "Enter a valid meal price.",
             mealtax: "Enter a valid meal tax.",
             mealname: "Enter a valid meal name.",
+            mealcode:"Enter a valid Meal Code(Maximum 4 characters).",
             mealsubHeader: "Enter valid meal sub header.",
             message: "Enter a message.",
                     chef_name: "Enter a valid chef name.",

@@ -324,6 +324,7 @@ var createMealCallback = {
 
 function createMeal() {
     var name = $('#meal-name').val(),
+            code = $('#meal-code').val(),
             price = $('#meal-price').val(),
             tax = $('#meal-tax').val(),
             calories = $('#meal-calories').val(),
@@ -338,8 +339,8 @@ function createMeal() {
             ingredients_image = $('#ingredients-image').attr("data-id"),
             chef_comments = $("#chef-comments").val(),
             chef_name = $("#chef-name").val(),
-            sold_out = $('#soldOut option:selected').attr('value');
-    meal_sub = $("#meal-sub-name").val();
+            sold_out = $('#soldOut option:selected').attr('value'),
+            meal_sub = $("#meal-sub-name").val();
     var ingredients = [], // ingredient array
             temp = '',
             pre_requesties = [],
@@ -380,6 +381,7 @@ function createMeal() {
     }
     createMealFields = {
         "name": name,
+        "code": code,
         "description": descptn,
         "price": price,
         "tax": tax,
@@ -520,6 +522,7 @@ function getMeals(mealId) {
 
 function populateMealDetails(mealDetails) {
     $("#meal-name").val(mealDetails.name);
+    $("#meal-code").val(mealDetails.code);
     $("#description").val(mealDetails.description);
     $("#chef-image").attr("src", mealDetails.chef_image.url);
     $("#chef-image").attr("data-id", mealDetails.chef_image.id);
@@ -672,7 +675,6 @@ function getNutrients() {
     }
     return nutrients;
     function getData($selector, classSelector) {
-        console.log($selector.find(classSelector + " input").val());
         return ($selector.find(classSelector + " input").val() !== undefined && $selector.find(classSelector + " input").val().length > 0)
                 ? $selector.find(classSelector + ' input').val() + " " + $selector.find(classSelector + ' span').text().trim()
                 : "";
