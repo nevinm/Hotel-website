@@ -4,3 +4,8 @@
 test/
 nbproject/
 web/node_modules/
+web/css/
+web/js/
+web/views/
+web/index.html
+
