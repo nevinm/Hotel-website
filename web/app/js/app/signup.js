@@ -22,8 +22,8 @@ var signupCallback = {
                 'eventValue': 4
             });
             fbq('track', 'CompleteRegistration');
-            //SessionController.fbTrackConversionEvent(SessionController.getSignUpPixel(), '0.00', 'USD');
             localStorage['signupEmail'] = userDetails.user.email;
+            window.location = "verification.html";
         }
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {

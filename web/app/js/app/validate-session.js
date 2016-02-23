@@ -1,8 +1,8 @@
 /* global SessionController */
 var sessionExpiryTime = 30,
 //------ QA ----
-        baseURL = 'http://meisterdish.qburst.com/backend/api/',
-        homeUrl = "http://meisterdish.qburst.com",
+        baseURL = 'https://meisterdish.qburst.com/backend/api/',
+        homeUrl = "https://meisterdish.qburst.com",
         PROMO_CODE = "MEISTER20",
         GLOBAL = {
             APP_ID: '736537916455826'

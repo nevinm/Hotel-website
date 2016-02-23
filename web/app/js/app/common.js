@@ -485,6 +485,11 @@ $("form").each(function () {
                 email: true,
                 equalTo: "#new-email"
             },
+            confirm_email: {
+                required: true,
+                email: true,
+                equalTo: "#signup-email"
+            },
             phonenumber: {
                 required: true,
                 minlength: 10,
@@ -683,6 +688,10 @@ $("form").each(function () {
                 required: "Please enter a message",
             },
             confirmEmail: {
+                equalTo: "Email doesn't match.",
+                required: "Please provide email."
+            },
+            confirm_email: {
                 equalTo: "Email doesn't match.",
                 required: "Please provide email."
             },
