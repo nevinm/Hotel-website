@@ -2,6 +2,14 @@
                       &LOGIN
 \*==============================*/
 
+#account-mainWrapper {
+    background-image: url("../images/CheckoutBG.jpg");   
+    z-index: 100px;
+    background-size: cover;
+}
+#page-container {
+    background-color: transparent;
+}
 #login-container{
     width: 100%;
     border-right: 10px solid #fff;
@@ -9,6 +17,9 @@
     float: left;
     min-height: 100%;
     background-color: #F9FAF7;
+}
+.clear {
+    clear: both;
 }
 .login-wrapper{
     margin: 0 auto;
@@ -38,6 +49,17 @@
     float: left;
     padding-top: 20px;
     padding-right: 35px;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    font-family: "Brandon Grotesque";
+    opacity: 0.38; 
+    color: #3b3b3b; 
+    font-family: "Brandon Grotesque"; 
+    font-size: 20px; 
+    font-weight: 500; 
+    letter-spacing: 0.96px; 
+    line-height: 25px;
 }
 .username-wrapper, .password-wrapper{
     width: 100%;
@@ -80,27 +102,55 @@ span.facebook-login-text {
       &SIGNUP
 \*==================================*/
 .signup-wrapper{
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
+    /*margin-top: 120px;*/
     margin-top: 120px;
-    max-width: 470px;
+    max-width: 1100px;
+    text-align: center;
+    font-family: "BrandonGrotesque-Black";
 }
 .signup-container{
-    background-color: #ffffff;
-    border: 1px solid #C7C7C7;
+    background-color: #FDFBFA;
+    border: 10px solid #F0F0F0;
     border-radius: 3px;
     float: left;
     width: 100%;
+    max-width: 1280px;
+    margin: 5% 0px;
 }
-.signup-container .header-small,.login-wrapper .header-small {
+.signup-container .header-small {
+    text-align: center;
+    height: auto;
+    background-color: #FDFBFA;
+    border: none;
+    padding: 10px 0px 20px 0px;
+    color: #394543; 
+    font-family: "Brandon Grotesque"; 
+    font-size: 27px; 
+    font-weight: 700; 
+    letter-spacing: 1px; 
+    line-height: 50px;
+}
+.signup-container .header-small h3 {
+    text-transform: none;
+    color: #000;
+    font-size: 30px;
+}
+
+.login-wrapper .header-small {
     text-align: center;
     padding-right: 35px;
     color: #6B6B6B;
-    font-weight: normal
+    font-weight: normal;
 }
 .signup-container .header-small h4,.login-wrapper .header-small h4{
     font-family: 'BrandonGrotesque-Bold';
 }
+h4.message {
+    padding: 5px 10px 5px 0px;
+}
+
 .fb-signupButton{
     text-align: center;
     padding: 20px 35px;
@@ -115,6 +165,12 @@ span.facebook-login-text {
     width: 100%;
     float: left;
     padding-bottom: 0;
+}
+.facebook-signup {
+    text-align: left;
+    color: #000;
+    font-size: 15px;
+    padding-left: 0px;
 }
 .facebook-login{
     padding-bottom: 20px;
@@ -136,20 +192,43 @@ span.or p{
     text-align: center;
 }
 form.signup-formcontainer {
-    padding-left: 35px;
+    padding-left: 20px;
     width: 100%;
     float: left;
-    padding-top: 20px;
-    padding-right: 35px;
+    padding-top: 30px;
+    padding-right: 20px;
 }
 .signup-input {
     width: 48%;
     float: left;
     position: relative;
 }
+.signup-input input {
+    border-radius: 10px;
+    border-color: #E5E5E5;
+    background-color: white; 
+    border: 1px solid #d5d5d5;
+    height:45px;
+    background-color: #fff;
+}
+
+.signup-input input {
+    
+    /*height: 35px;*/ 
+}
+
+.signup-input a {
+    color: #9B9B9B;
+    font-size: 16px;
+    text-decoration: underline;
+}
 .email-wrapper {
     padding:10px 0px; 
     float: left;
+    width: 100%;
+}
+.invitation-code {
+    display: none;
 }
 .login-button{
     width: 100%;
@@ -161,35 +240,166 @@ form.signup-formcontainer {
 }
 .email-wrapper .signup-input{
     width: 100%;
-}
-.email-wrapper .fifty-percent-first{
     margin-top: 10px;
-    width: 48%;
+}
+.email-wrapper .full-length {
+    margin-top: 20px;
     margin-right: 4%;
 }
+.email-wrapper .fifty-percent-first{
+    margin-top: 20px;
+    margin-right: 4%;
+    width: 48%;
+}
 .email-wrapper .fifty-percent-second{
-    margin-top: 10px;
+    margin-top: 20px;
     width: 48%;
 }
 .signup-formcontainer .marginRight{
     margin-right: 4%;
 }
-.referral-message-container{
-    display: none;
-    text-align: center;
-}
-.referral-message-container .header{
-    font-family: "BrandonGrotesque-Medium";
-    letter-spacing: 0.75px;
-    text-align: center;
-    color: #5A5555;
-}
-.referral-message-container .message{
+.signup-details {
     font-family: "BrandonGrotesque-Light";
+    float: left;
+    width: 52%;
+    background-color: #FDFCFB;
+    margin: 0px 0px 0px 0px;
+    padding-top:20px;
+    padding-bottom: 15px;
+}
+.signup-desc {  
+    font-family: "BrandonGrotesque-Light";
+    float: left;
+    width: 48%;
+    background-color: #FDFCFB;
+    text-align: left;
+    padding: 0px 0px 25px 25px;
+    margin: 52px 0px 0px 0px;
+    border-left: 1px solid #DCDBDB;
+
+}
+.signup-container .desc-head {
+    text-align: left;
+    height: auto;
+}
+.desc-desc {
+        margin: 0px 15px 0px 0px;
+    font-weight: bold;
+    color: #394543;
+}
+.center-align {
+    padding: 5px;
+}
+
+ul.ul-type {
+    margin: 10px 0px 7px 10px;
+
+}
+ul.ul-type li {
+    list-style-type: disc;
+    text-align: left;
+    font-size: 12px;
+}
+.privacy-policy {   
+    font-family: "BrandonGrotesque-Light";
+    opacity: 0.38;
+    color: #3b3b3b;
+    font-family: "Brandon Grotesque";
+    font-size: 12px;
+    font-weight: 500; letter-spacing: 0.65px;
+    line-height: 25px;
+}
+.btn-crt-acc {
+    text-transform: none;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 0px 40px;
+    line-height: 5px;
+    height: 50px;
+    background-color: #a9d77b;
+    border-radius: 10px;
+}
+.signup-button {
+    margin-top: 10px;
+}
+#signup-firstname-error, 
+#signup-lastname-error, 
+#signup-email-error, 
+#signup-password-error, 
+#zip-code-error,
+#confirm_email-error {
+    bottom: 35px;
+}
+::-webkit-input-placeholder {
+    opacity: 0.38; 
+    color: #3b3b3b; 
+    font-family: "Brandon Grotesque"; 
+    font-size: 12px; 
+    font-weight: 500; 
+    line-height: 25px; 
+    letter-spacing: 0.5px;
+}
+:-moz-placeholder {
+    opacity: 0.38; 
+    color: #3b3b3b; 
+    font-family: "Brandon Grotesque"; 
+    font-size: 12px; 
+    font-weight: 500; 
+    line-height: 25px; 
+    letter-spacing: 0.5px;
+}
+:-ms-input-placeholder {
+    opacity: 0.38; 
+    color: #3b3b3b; 
+    font-family: "Brandon Grotesque"; 
+    font-size: 12px; 
+    font-weight: 500; 
+    line-height: 25px; 
+    letter-spacing: 0.5px;
+}
+
+.mobile-login {
+    display: none;
+}
+.login-mobile-view {
+    font-weight: bold;
+    font-size: 11px; 
+    font-family: 'BrandonGrotesque-Regular';
+    padding-top: 10px;
+    padding-bottom: 5px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
     text-align: center;
-    width: 80%;
-    margin: 0 auto;
-    padding: 4px;
+    height:70px;
+}
+.login-mobile-view:before, .login-mobile-view:after {
+    position: absolute;
+    top: 16px;
+    overflow: hidden;
+    width: 15%;
+    height: 2px;
+    content: '\a0';
+    background-color: #9B9B9B;
+}
+.login-mobile-view:before {
+    margin-left: -18%;
+    text-align: right;
+}
+.login-mobile-view:after{
+    margin-left: 3%;
+}
+.mobile-login-btn {
+    margin: 10px;
+    background-color: #5DA0A0;
+    border-radius: 5px;
+    padding: 0px;
+    color: #fff;
+    font-family: 'BrandonGrotesque-Regular';
+    display: inline-block;
+    width: 170px;
+    height: 35px;
+    line-height: 35px;
 }
 /*==================================*\
       &RESET PASSWORD
@@ -267,20 +477,144 @@ form#resetpassword-form {
 hr{
     display: none;
 }
+@media (min-width: 320px)and (max-width:700px) {
+    .signup-container{
+        border: 1px solid rgba(150, 150, 150, 0.42);
+        border-radius: 7px;
+    }
+    .signup-wrapper {
+        margin-top: 50px;
+    }
+    #signup-firstname-error, 
+    #signup-lastname-error, 
+    #signup-email-error, 
+    #signup-password-error, 
+    #zip-code-error, 
+    #confirm_email-error {
+       font-size: 7px;
+    }
+    .signup-details {
+        width: 100%;
+        background-color: #fdfdfd; 
+        border: 1px solid rgba(150, 150, 150, 0.42);
+        border-radius: 7px;
+    }
+    .signup-desc {
+        display: none;
+    }
+    .mobile-login {
+    display: block;
+    margin-bottom: 40px;
+    }
+    .privacy-policy {
+        font-size: 8px;
+    }
+    .signup-input a {
+        font-size: 12px;
+    }
+    .btn-crt-acc {
+        margin: 10px;
+        border-radius: 5px;
+        padding: 0px;
+        color: #fff;
+        width: 170px;
+        height: 40px;
+        line-height: 35px;
+    }
+    .email-wrapper {
+        padding:5px 0px 10px 0px;
+    }
+    .signup-button {
+        margin-top: 0px;
+    }
+}
+/*@media (min-width: 481px)and (max-width:550px) {
+    .signup-container .desc-head h4{
+        font-size: 14px;
+    }
+    .signup-desc {
+        display: none;
+    }
+    .signup-details {
+        width: 100%;
+    }
+    .desc-desc {
+        font-size: 12px;
+    }
+    ul.ul-type li {
+        font-size: 9px;
+    }
+    .signup-container .header-small h3 {
+        font-size: 20px;
+    }
+
+}
+@media (min-width: 551px)and (max-width:700px) {
+    .signup-container .desc-head h4{
+        font-size: 15px;
+    }
+    .desc-desc {
+        font-size: 13px;
+    }
+    .signup-details {
+        width: 100%;
+    }
+    .signup-desc {
+        display: none;
+    }
+    ul.ul-type li {
+        font-size: 11px;
+    }
+    .signup-container .header-small h3 {
+        font-size: 22px;
+    }
+}*/
+@media (min-width: 701px)and (max-width:1280px) {
+    .signup-container .desc-head h4{
+        font-size: 16px;
+    }
+    .signup-desc {
+        margin: 100px 0px 0px 0px;
+    }
+    .desc-desc {
+        font-size: 14px;
+    }
+    ul.ul-type li {
+        font-size: 12px;
+    }
+    .signup-container .header-small h3 {
+        font-size: 24px;
+    }
+    .signup-input a {
+        font-size: 11px;
+    }
+    form.signup-formcontainer {
+        padding-top: 0px;
+    }
+    .privacy-policy {
+        font-size: 9px;
+    }
+}
+
 @media (min-width: 320px)and (max-width:767px){
     #login-container,#account-mainWrapper{
-        background-image: none;
+       /* background-image: none;*/
+        background-image: url("../images/CheckoutBG.jpg");
         border:none;
     }
     .header-small{
         text-align: center;
         padding-left: 0;
     }
+    
     .header-small h4{
         font-family: "BrandonGrotesque-Bold";
     }
-    .facebook-signup, .facebook-login{
+    .facebook-login{
         text-align: center;
+    }
+    .facebook-signup {
+        text-align: left;
     }
     .fb-signupButton{
         padding: 20px 20px;
@@ -317,11 +651,10 @@ hr{
         float: none;
     }
     .email-wrapper .signup-input {
-        width: 100%;
         padding: 0;
     }
     .signup-input {
-        width: 47%;
+        width: 48%;
         padding-right: 0;
     }
     .username-wrapper input, .password-wrapper input {
@@ -334,9 +667,9 @@ hr{
     .login-button{
         text-align: center;
     }
-    input.arrange{
+   /* input.arrange{
         height: 36px;
-    }
+    }*/
     .resetpassword-container  span.heading{
         width: 100%;
         text-align: center;
@@ -363,8 +696,16 @@ hr{
         margin-bottom: 20px;
     }
 }
+@media (min-width: 701px)and (max-width:767px) {
+    .signup-desc {
+        margin: 80px 0px 0px 0px;
+    }
+    .privacy-policy {
+        font-size: 8px;
+    }
+}
 @media (min-width: 320px)and (max-width:420px){
-    .signup-input {
+    /*.signup-input {
         width: 100%;
     }
     form.signup-formcontainer .signup-input:nth-child(2){
@@ -372,12 +713,25 @@ hr{
     }
     .email-wrapper .signup-input:nth-child(2){
         margin-top: 0px;
+    }*/
+    .email-wrapper .full-length {
+        margin-top: 15px;
     }
     .btn-wrapper{
         width: 93% !important;
     }
     span.facebook-login-text{
         font-size: 14px;
+    }
+
+    .signup-container .header-small {
+        padding-bottom: 10px;
+    }
+    .signup-input a {
+        font-size: 10px;
+    }
+    .signup-wrapper {
+        width: 90%;
     }
 }
 
@@ -389,4 +743,164 @@ hr{
         font-size: 15px;
         letter-spacing: .3px;
     }
+}
+
+@media (min-width: 1500px)and (max-width:1900px){
+    .signup-container {
+        margin: 9% 0px;
+    }
+}
+
+@media (min-width: 1281px)and (max-width:1900px){
+    .signup-container {
+        margin: 3% 0px;
+    }
+    .signup-container .header-small {
+        padding: 2% 5% 2% 0px;
+    }
+    .signup-container .header-small h3 {
+        height: 45px;
+        color: #394543;
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        line-height: 35px;
+
+    }
+
+    .signup-desc {
+        padding: 0px 0px 3% 5%;
+        margin: 60px 0px 0px 0px;
+    }
+
+    form.signup-formcontainer {
+        padding: 2% 5% 0% 5%;
+        width: 100%;
+        float: left;
+    }
+    input.arrange {
+        height: 35px;
+        line-height: 25px;
+        font-size: 15px;
+    }
+    .btn-crt-acc {
+        font-size: 17px;
+        padding: 0px 20px;
+        height: 44px;
+    }
+    h4 {
+        color: #394543; 
+        font-size: 28px; 
+        font-weight: 900; 
+        letter-spacing: 0.61px; 
+        line-height: 40px;
+    }
+    /*.signup-input {
+        margin-bottom: 2%;
+    }*/
+    .desc-desc {
+        font-size: 18px;
+        font-weight: 400;
+    }
+    ul.ul-type li {
+        font-size: 14px;
+    }
+    .facebook-signup {
+        font-size: 1.2rem;  
+    }
+    .arrange input::-webkit-input-placeholder {
+      color: blue;
+    }
+    .arrange input:-moz-placeholder {
+      color: blue;
+    }
+    .arrange input:-ms-input-placeholder {
+      color: blue;
+    }
+     h4.message {
+        padding: 0px;
+        font-size: 22px;
+        line-height: 30px;
+    }
+    #signup-firstname-error, 
+    #signup-lastname-error, 
+    #signup-email-error, 
+    #signup-password-error, 
+    #zip-code-error,
+    #confirm_email-error {
+        bottom: 35px;
+}
+
+}
+
+@media (min-width:1901px){
+
+    .signup-wrapper {
+        max-width: 1100px;    
+        font-family: "Brandon Grotesque";
+    } 
+     .signup-container .header-small {
+        padding: 8% 5% 2% 0px;
+    }
+    .signup-container .header-small h3 {
+        font-size: 3rem;
+
+    }
+    form.signup-formcontainer {
+        padding: 6% 5% 0% 5%;
+        width: 100%;
+        float: left;
+    }
+    input.arrange {
+        height: 45px;
+        font-size: 1rem;
+    }
+    .btn-crt-acc {
+        font-size: 1.5rem;
+    }
+    h4 {
+        color: #394543; 
+        font-size: 28px; 
+        font-weight: 900; 
+        letter-spacing: 0.61px; 
+        line-height: 40px;
+    }
+    .signup-input {
+        margin-bottom: 2%;
+    }
+    
+    .signup-desc {
+        margin: 115px 0px 0px 0px;
+    }
+    .desc-desc {
+        font-size: 24px;
+        font-weight: 400;
+    }
+    ul.ul-type li {
+        font-size: 18px;
+    }
+    .facebook-signup {
+        font-size: 1.2rem;  
+    }
+    .arrange input::-webkit-input-placeholder {
+      color: blue;
+    }
+    .arrange input:-moz-placeholder {
+      color: blue;
+    }
+    .arrange input:-ms-input-placeholder {
+      color: blue;
+    }
+    h4.message {
+        padding: 0px;
+    }
+    #signup-firstname-error, 
+    #signup-lastname-error, 
+    #signup-email-error, 
+    #signup-password-error, 
+    #zip-code-error,
+    #confirm_email-error {
+        bottom: 50px;
+}
+
 }

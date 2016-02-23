@@ -24,7 +24,7 @@
         <link rel="stylesheet" type="text/css" href="../css/reset.css">
         <link rel="stylesheet" type="text/css" href="../css/fontello.css">
         <link rel="stylesheet" type="text/css" href="../css/common.css">
-        <link rel="stylesheet" type="text/css" href="../css/login-signup-new.css">
+        <link rel="stylesheet" type="text/css" href="../css/login-signup.css">
         <script type="text/javascript" src='../js/app/validate-session.js'></script>
 
         <script>
@@ -43,10 +43,20 @@
             ga('create', 'UA-63283790-1', 'auto');
             ga('send', 'pageview');
         </script>
-        <!-- Facebook Conversion Code for Registrations (sign-up) -->
+        <!-- Facebook Pixel Code -->
         <script>
-            SessionController.includePixel();
+            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+            n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+            document,'script','//connect.facebook.net/en_US/fbevents.js');
+
+            fbq('init', '852428648204526');
+            fbq('track', "PageView");
         </script>
+        <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=852428648204526&ev=PageView&noscript=1"
+        /></noscript>
         <!-- End Facebook Pixel Code -->
     </head>
     <body>
@@ -122,10 +132,10 @@
                         <li>
                             <a href="gift-cards-select.html">GIFTS</a>
                         </li>
-                        <li class="bold login-signup">
+                        <li class="bold login-signup login-bold-gray">
                             <a href="login.html">LOG IN</a>
                         </li>
-                        <li class='login-signup'>
+                        <li class='login-signup signup-bold-green'>
                             <a href="signup.html" class="btn btn-small-secondary">SIGN UP</a>
                         </li>
                         <li id="navbar-username" class="bold green">
@@ -156,39 +166,41 @@
                                                     </span>-->
 
                             <form class="signup-formcontainer">
-                                <div class="signup-input marginRight">
+                                <div class="signup-input marginRight signup-border">
                                     <!-- <label class="body-text-small">First Name</label> -->
-                                    <input class="arrange" type="text" name="firstname" id="signup-firstname" autofocus placeholder="First Name"></input>
+                                    <input class="arrange" type="text" name="firstname" id="signup-firstname" autofocus placeholder="First Name">
 
                                 </div>
-                                <div class="signup-input">
+                                <div class="signup-input signup-border">
                                     <!-- <label class="body-text-small">Last Name</label> -->
-                                    <input class="arrange" type="text" name="lastname" id="signup-lastname" placeholder="Last Name"></input>
-
+                                    <input class="arrange" type="text" name="lastname" id="signup-lastname" placeholder="Last Name">
                                 </div>
                                 <div class="email-wrapper">
-                                    <div class="signup-input">
+                                    <div class="signup-input signup-border">
                                         <!-- <label class="body-text-small" >Email</label> -->
-                                        <input class="arrange" type="email" id="signup-email" name="email" placeholder="Email"></input>
+                                        <input class="arrange" type="email" id="signup-email" name="email" placeholder="Email">
                                     </div>
-                                    <div class="signup-input password-container full-length">
+                                    <div class="signup-input full-length signup-border">
+                                        <!-- <label class="body-text-small" >Email</label> -->
+                                        <input class="arrange" type="email" name="confirm_email" placeholder="Confirm Email">
+                                    </div>
+                                    <div class="signup-input password-container full-length signup-border">
                                         <!-- <label class="body-text-small" >Password</label> -->
-                                        <input class="arrange" type="password" id="signup-password" name="password" placeholder="Password (Minimum 6 characters)"></input>
+                                        <input class="arrange" type="password" id="signup-password" name="password" placeholder="Password (Minimum 6 characters)">
                                     </div>
-                                    <div class="signup-input password-container fifty-percent-first">
-                                        
+                                    <div class="signup-input password-container fifty-percent-first signup-border">    
                                         <!-- <label class="body-text-small" >ZIP code</label> -->
-                                        <input class="arrange" type="text" id="zip-code" name="zip" placeholder="ZIP code"></input>
+                                        <input class="arrange" type="text" id="zip-code" name="zip" placeholder="ZIP code">
                                     </div>
-                                    <div class="signup-input zipcode-container fifty-percent-second">
+                                    <div class="signup-input zipcode-container fifty-percent-second signup-border">
                                         <a href="#" id="invite-code-wrap">Do you have an invite code?</a>
-                                        <input class="arrange invitation-code" type="text" id="invite-code" name="invite-code" placeholder="Invitation Code"></input>
+                                        <input class="arrange invitation-code" type="text" id="invite-code" name="invite-code" placeholder="Invitation Code">
                                     </div>
                                     <div class="clear"></div>
                                 </div>
                                 <div class="clear"></div>
                                 <div class="signup-button">
-                                    <input type="submit" class="btn btn-large-primary medium-green btn-crt-acc" id="signup-button" value="Create my acccount!">
+                                    <input type="submit" class="btn btn-large-primary medium-green btn-crt-acc" id="signup-button" value="Create my account!">
                                 </div>
                             </form>
                             <span class="body-text-small privacy-policy">
@@ -199,12 +211,12 @@
                                 ALREADY HAVE AN ACCOUNT?   
                             </div>
                             <div>
-                                <button class="mobile-login-btn">Log in</button>
+                                <a href="login.html" class="mobile-login-btn">Log in</a>  
                             </div>
                             </div>
                         </div>
                         <div class="signup-desc">
-                            <div>
+                            <div class="center-align">
                                 <div class="header-small desc-head referral-message-container">
                                     <h4 class='message'>Meistersish is the easiest way to cook a delicious meal in 15 minutes!</h4>
                                 </div> 
@@ -218,8 +230,6 @@
                                     <li>Triple-washed, chopped and generously portioned</li>
                                     <li>Each recipe comes with easy to follow nutritions</li>
                                 </ul>
-                            </div>
-                            
                             <div class="facebook-signup">
                                 <span class="signup-message">Already have an account?</span>
                                 <span class="login-link">
@@ -228,6 +238,7 @@
                                     </a>
                                 </span>    
                                 
+                            </div>
                             </div>
                         </div>
                         <div class="clear"></div>
@@ -257,8 +268,7 @@
         <script type="text/javascript" src='../js/app/ajax-reusable.js'></script>
         <script type="text/javascript" src='../js/libs/jquery.validate.min.js'></script>
         <script type="text/javascript" src='../js/app/common.js'></script>
-        <script type="text/javascript" src='../js/app/signup-new.js'></script>
+        <script type="text/javascript" src='../js/app/signup.js'></script>
         <script type="text/javascript" src='../js/app/fb-access.js'></script>
     </body>
-
 </html>
