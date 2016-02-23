@@ -51,7 +51,7 @@
     padding-right: 35px;
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
+.signup-container input[type="text"],.signup-container input[type="email"], .signup-container input[type="password"] {
     font-family: "Brandon Grotesque";
     opacity: 0.38; 
     color: #3b3b3b; 
@@ -136,6 +136,7 @@ span.facebook-login-text {
     text-transform: none;
     color: #000;
     font-size: 30px;
+
 }
 
 .login-wrapper .header-small {
@@ -147,6 +148,11 @@ span.facebook-login-text {
 .signup-container .header-small h4,.login-wrapper .header-small h4{
     font-family: 'BrandonGrotesque-Bold';
 }
+
+.signup-container .header-small h4 {
+    font-family: 'BrandonGrotesque-Medium';
+}
+
 h4.message {
     padding: 5px 10px 5px 0px;
 }
@@ -226,6 +232,9 @@ form.signup-formcontainer {
     padding:10px 0px; 
     float: left;
     width: 100%;
+}
+.invitation-code {
+    display: none;
 }
 .invitation-code {
     display: none;
@@ -324,8 +333,7 @@ ul.ul-type li {
 }
 #signup-firstname-error, 
 #signup-lastname-error, 
-#signup-email-error,
-#confirm_email-error,
+#signup-email-error, 
 #signup-password-error, 
 #zip-code-error,
 #confirm_email-error {
@@ -357,6 +365,11 @@ ul.ul-type li {
     font-weight: 500; 
     line-height: 25px; 
     letter-spacing: 0.5px;
+    font-family: "Brandon Grotesque";
+}
+
+.signup-input input {
+    background-color: #fff;
 }
 
 .mobile-login {
@@ -372,7 +385,7 @@ ul.ul-type li {
     z-index: 1;
     overflow: hidden;
     text-align: center;
-    height:70px;
+    letter-spacing: 1px;
 }
 .login-mobile-view:before, .login-mobile-view:after {
     position: absolute;
@@ -488,8 +501,7 @@ hr{
     }
     #signup-firstname-error, 
     #signup-lastname-error, 
-    #signup-email-error,
-    #confirm_email-error,
+    #signup-email-error, 
     #signup-password-error, 
     #zip-code-error, 
     #confirm_email-error {
@@ -580,6 +592,9 @@ hr{
     }
     .desc-desc {
         font-size: 14px;
+    }
+    ul.ul-type {
+        padding-left: 12px;
     }
     ul.ul-type li {
         font-size: 12px;
@@ -804,6 +819,9 @@ hr{
         font-size: 18px;
         font-weight: 400;
     }
+    ul.ul-type {
+        padding-left: 16px;
+    }
     ul.ul-type li {
         font-size: 14px;
     }
@@ -826,8 +844,7 @@ hr{
     }
     #signup-firstname-error, 
     #signup-lastname-error, 
-    #signup-email-error,
-    #confirm_email-error,
+    #signup-email-error, 
     #signup-password-error, 
     #zip-code-error,
     #confirm_email-error {
@@ -879,6 +896,9 @@ hr{
         font-size: 24px;
         font-weight: 400;
     }
+    ul.ul-type {
+        padding-left: 16px;
+    }
     ul.ul-type li {
         font-size: 18px;
     }
@@ -900,7 +920,6 @@ hr{
     #signup-firstname-error, 
     #signup-lastname-error, 
     #signup-email-error,
-    #confirm_email-error,
     #signup-password-error, 
     #zip-code-error,
     #confirm_email-error {
