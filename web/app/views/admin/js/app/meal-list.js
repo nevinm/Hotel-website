@@ -248,7 +248,7 @@ function populateMealList(data) {
     $.each(fullMealList.aaData, function (key, value) {
         $('#meal-list tbody').append("<tr>" +
                 "<td>" + "<img class='meal-list-img'src = '" + value.main_image + "'>" + "</td>" +
-                "<td>" + value.name + "</td>" + "<td>" + value.sub + "<td>" + value.code + "</td>" +
+                "<td>" + value.name + "</td>" + "<td>" + value.sub + /*"<td>" + value.code + "</td>" +*/
                 "<td><span class = 'each-meal-order'>" + value.order + "</span>" + "<span  data-id = '" + value.id + "' class = 'edit-meal-order'>" + "EDIT" + "</span>" + "</td>" +
                 "<td><span class = 'each-meal-available'>" + value.available + "</span>" + "<span  data-id = '" + value.id + "' class = 'edit-meal-available'>" + "EDIT" + "</span>" + "</td>" +
                 "<td>" + value.category + "</td>" +
