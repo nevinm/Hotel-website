@@ -324,7 +324,7 @@ var createMealCallback = {
 
 function createMeal() {
     var name = $('#meal-name').val(),
-            code = $('#meal-code').val(),
+            // code = $('#meal-code').val(),
             price = $('#meal-price').val(),
             tax = $('#meal-tax').val(),
             calories = $('#meal-calories').val(),
@@ -381,7 +381,7 @@ function createMeal() {
     }
     createMealFields = {
         "name": name,
-        "code": code,
+        // "code": code,
         "description": descptn,
         "price": price,
         "tax": tax,
@@ -522,7 +522,7 @@ function getMeals(mealId) {
 
 function populateMealDetails(mealDetails) {
     $("#meal-name").val(mealDetails.name);
-    $("#meal-code").val(mealDetails.code);
+    // $("#meal-code").val(mealDetails.code);
     $("#description").val(mealDetails.description);
     $("#chef-image").attr("src", mealDetails.chef_image.url);
     $("#chef-image").attr("data-id", mealDetails.chef_image.id);
