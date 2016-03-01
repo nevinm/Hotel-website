@@ -6,14 +6,6 @@ var signupCallback = {
             showPopup(userDetails);
         } else {
             $('.signup-formcontainer')[0].reset();
-            //showPopup(userDetails);
-            var splitter = "Please note that a guest user account already exists with your email";
-            if (userDetails.message.match(splitter)) {
-                var dataArray = userDetails.message.split(splitter);
-                var element = dataArray[0] + "<br>" + splitter + dataArray[1];
-                $('.popup-container .content span').html(element);
-                $('.popup-container').attr("style", "padding:0px");
-            }
             ga('send', {
                 'hitType': 'event', // Required.
                 'eventCategory': 'button', // Required.
@@ -21,9 +13,21 @@ var signupCallback = {
                 'eventLabel': 'Account Creation',
                 'eventValue': 4
             });
-            //SessionController.fbTrackConversionEvent(SessionController.getSignUpPixel(), '0.00', 'USD');
-            localStorage['signupEmail'] = userDetails.user.email;
-            window.location.href = 'verification.html';
+            fbq('track', 'CompleteRegistration');
+
+            //login code
+            ClearLocalStorage();
+            var user_name = userDetails.user.first_name;
+            localStorage['username'] = user_name;
+            localStorage['session_key'] = userDetails.session_key;
+            localStorage['loggedIn'] = true;
+            localStorage['admin_loggedIn'] = false;
+            localStorage['signupMessage'] = userDetails.message;
+            createCookie("SessionExpireTime", "true", sessionExpiryTime);
+            if(userDetails.zip_delivery === 0)
+                window.location.href = 'signup/coming-soon.html';
+            else
+                window.location.href = 'menu.html';
         }
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -59,17 +63,6 @@ function signingup() {
     signupInstance.sendPost(url, header, data, signupCallback);
 }
 
-function referralUIIntegrate() {
-    $(".email-wrapper").append("<div class='signup-input invitecode-container'>" +
-            "<label class='body-text-small' >Invite Code</label>" +
-            "<input class='arrange' type='text' id='invite-code' name='invitecode'></input>" +
-            "</div>");
-    $(".password-container").removeClass("fifty-percent-first");
-    $(".zipcode-container").removeClass("fifty-percent-second");
-    $(".zipcode-container").addClass("fifty-percent-first");
-    $(".invitecode-container").addClass("fifty-percent-second");
-}
-
 function signupInit() {
 //    redirectIfLoggedIn();
     if (localStorage['loggedIn'] == 'true') {
@@ -88,7 +81,8 @@ function signupInit() {
     referralCode = getParameterFromUrl('ref');
     checkPromocode(referralCode);
     if (referralCode.length) {
-        referralUIIntegrate();
+        $('#invite-code-wrap').hide();
+        $('#invite-code').show();
         $("#invite-code").val(referralCode);
     }
 }
@@ -106,8 +100,7 @@ var checkPromocodeCallback = {
     success: function (data, textStatus, promoCode) {
         var promoCodeDetails = JSON.parse(data);
         if (promoCodeDetails.status == 1) {
-            $(".referral-message-container .message").text(promoCodeDetails.label);
-            $(".referral-message-container").show();
+            $(".referral-message-container .message").text("Welcome! "+promoCodeDetails.label);
         }
     },
     failure: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -124,5 +117,16 @@ $(document).ready(function () {
         if ($('form').valid()) {
             signingup();
         }
+    });
+    $('#close').on('click', function (e) {
+        if (localStorage.getItem('signupEmail') != null){
+            localStorage.removeItem('signupEmail');
+            window.location.href = 'login.html';
+        }        
+    });
+    $('#invite-code-wrap').on('click', function (e) {
+        e.preventDefault();
+        $('#invite-code-wrap').hide();
+        $('#invite-code').show();
     });
 });
