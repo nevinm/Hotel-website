@@ -25,18 +25,18 @@ Bootstrap.prototype = {
         failure: function (XMLHttpRequest, textStatus, errorThrown) {
         }
     },
-    shouldFullpageRender: function () {
-        if ($("#section-what-is .fp-tableCell").innerHeight() > window.innerHeight) {
-        } else {
-            this.fullPageRender();
-        }
-        if ($(window).width() > ipadWidth) {
-            var marginLeft = $(".contentArea").offset().left - 10;
-            $("#section-what-is .outer-slide-description").css("margin-left", marginLeft + "px");
-        } else {
-            $("#section-what-is .outer-slide-description").css("margin-left", "");
-        }
-    },
+    // shouldFullpageRender: function () {
+    //     if ($("#section-what-is .fp-tableCell").innerHeight() > window.innerHeight) {
+    //     } else {
+    //         this.fullPageRender();
+    //     }
+    //     if ($(window).width() > ipadWidth) {
+    //         var marginLeft = $(".contentArea").offset().left - 10;
+    //         $("#section-what-is .outer-slide-description").css("margin-left", marginLeft + "px");
+    //     } else {
+    //         $("#section-what-is .outer-slide-description").css("margin-left", "");
+    //     }
+    // },
     fullPageRender: function () {
         var headerHeight = $("#header").innerHeight(),
                 screenHeight = (window.innerHeight - headerHeight),
@@ -313,7 +313,7 @@ $(document).ready(function () {
     CartItemCount(setCartCount);
     bootstrap.getMainMealId();
     // getHomePageMeal();
-    bootstrap.shouldFullpageRender();
+    // bootstrap.shouldFullpageRender();
     if (localStorage['loggedIn'] == 'true') {
         $("#sectionPromocode").hide();
     }
@@ -368,7 +368,7 @@ $(document).ready(function () {
         } else {
         }
     });
-    $(window).resize(function () {
-        bootstrap.shouldFullpageRender();
-    });
+    // $(window).resize(function () {
+    //     bootstrap.shouldFullpageRender();
+    // });
 });
