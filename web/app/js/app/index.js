@@ -314,7 +314,7 @@ $(document).ready(function () {
     CartItemCount(setCartCount);
     bootstrap.getMainMealId();
     // getHomePageMeal();
-    // bootstrap.shouldFullpageRender();
+    bootstrap.shouldFullpageRender();
     if (localStorage['loggedIn'] == 'true') {
         $("#sectionPromocode").hide();
     }
@@ -369,7 +369,7 @@ $(document).ready(function () {
         } else {
         }
     });
-    // $(window).resize(function () {
-    //     bootstrap.shouldFullpageRender();
-    // });
+    $(window).resize(function () {
+        bootstrap.shouldFullpageRender();
+    });
 });
