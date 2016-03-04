@@ -21,7 +21,7 @@ from libraries import custom_error, json_response, check_delivery_area,\
 import md5
 from meisterdish_server.models import User, Cart, CartItem, Image, Role,\
     Configuration, Referral, Meal, Address, City, State, Order,\
-    AmbassadorReferral
+    AmbassadorReferral, DeliveryArea
 
 
 log = logging.getLogger(__name__)
@@ -252,8 +252,12 @@ def signup(request, data):
             user.profile_image = profile_image
             user.zipcode = zipcode
             user.deleted = False
-            user.is_active = False
+            user.is_active = True
             user.save()
+            if DeliveryArea.objects.filter(zip=zipcode).exists():
+                delivery_zip = True
+            else:
+                delivery_zip = False
 
             if referral_code:
                 try:
@@ -293,41 +297,22 @@ def signup(request, data):
 
             log.info(user.email + " signed up")
 
-            session_key = request.META.get('HTTP_SESSION_KEY', None)
-            if session_key:
-                session = SessionStore(session_key=session_key)
-                log.info("Logging in to guest session")
-                if 'user' in session and session["user"]["id"] != user.id:
-                    log.error("User " + email +
-                              "logging in to the session for " +
-                              session["user"]["email"] + ": REJECTED")
-                    return custom_error("Invalid session.")
-            else:
-                session = SessionStore()
-                session.create()
+            session = SessionStore()
+            session.create()
 
             session["user"] = user_dic
             session.set_expiry = settings.SESSION_EXPIRY
             session.save()
 
             log.info(email + " : Signed up ")
-            if send_user_verification_mail(user):
-                log.info("Sent verification mail to " + user.email)
-                message = "A verification email has been sent to your email ("\
-                    + email + \
-                    "). Please follow the instructions to \
-                    activate your account."
-                if merge_flag:
-                    message += " Please note that a guest user account already\
-                     exists with your email, It will be merged automatically."
-                return json_response({
-                    "status": 1,
-                    "message": message,
-                    "user": user_dic, "session_key": session.session_key})
-            else:
-                log.error("Failed to send user verification mail : ")
-                return custom_error("An error has occurred in sending \
-                verification mail. Please try later.")
+            message = "Thanks for signing up, you're logged \
+            in and ready to order!"
+            return json_response({
+                "status": 1,
+                "message": message,
+                "zip_delivery": 1 if delivery_zip else 0,
+                "user": user_dic, "session_key": session.session_key})
+
         except Exception as error:
             log.error(email + " : Failed to sign up " + error.message)
             send_failure_mail(settings.FAILURE_MAIL, 'Signup Failure',

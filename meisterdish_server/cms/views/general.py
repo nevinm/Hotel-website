@@ -331,7 +331,6 @@ def get_users(request, data, user):
                     else user.profile_image.thumb.url),
                 "is_admin": "Yes" if user.role.id == 1 else "No",
                 "credits": "$ " + "{0:.2f}".format(user.credits),
-                "is_active": user.is_active,
                 "is_ambassador": user.is_ambassador,
                 "ambassador_code": user.ambassador_code
             })

@@ -30,12 +30,12 @@ Bootstrap.prototype = {
         } else {
             this.fullPageRender();
         }
-        if ($(window).width() > ipadWidth) {
-            var marginLeft = $(".contentArea").offset().left - 10;
-            $("#section-what-is .outer-slide-description").css("margin-left", marginLeft + "px");
-        } else {
-            $("#section-what-is .outer-slide-description").css("margin-left", "");
-        }
+        // if ($(window).width() > ipadWidth) {
+        //     var marginLeft = $(".contentArea").offset().left - 10;
+        //     $("#section-what-is .outer-slide-description").css("margin-left", marginLeft + "px");
+        // } else {
+        //     $("#section-what-is .outer-slide-description").css("margin-left", "");
+        // }
     },
     fullPageRender: function () {
         var headerHeight = $("#header").innerHeight(),
@@ -46,8 +46,9 @@ Bootstrap.prototype = {
                 footerHeight = $("#slider-footer").innerHeight(),
                 reqOffset = screenHeight - section1Height - section2HeadingHeight;
         $("#section-what-is").css({
-            "height": section1Height + reqOffset - section2Padding
+            "height": parseInt( window.innerHeight * 0.8)+"px" /*section1Height + reqOffset - section2Padding*/
         });
+        console.log(parseInt(0.8*window.innerHeight) + " " + window.innerHeight);
         $("#section-zipcode").css({
             "height": screenHeight - footerHeight
         });
@@ -313,7 +314,7 @@ $(document).ready(function () {
     CartItemCount(setCartCount);
     bootstrap.getMainMealId();
     // getHomePageMeal();
-    bootstrap.shouldFullpageRender();
+    // bootstrap.shouldFullpageRender();
     if (localStorage['loggedIn'] == 'true') {
         $("#sectionPromocode").hide();
     }
@@ -368,7 +369,7 @@ $(document).ready(function () {
         } else {
         }
     });
-    $(window).resize(function () {
-        bootstrap.shouldFullpageRender();
-    });
+    // $(window).resize(function () {
+    //     bootstrap.shouldFullpageRender();
+    // });
 });

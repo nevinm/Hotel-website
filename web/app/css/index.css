@@ -129,7 +129,7 @@ SLIDER
 
 
 .section.fp-table {
-    padding: 50px 10px;
+    padding: 10vh 10px;
 }
 
 
@@ -194,7 +194,7 @@ SLIDER
     box-shadow: 0 3px 14px 0px rgba(211, 207, 207, 0.8);
 }
 #section-what-is .outer-slide-description{
-    margin: 0 10%;
+    margin: 0 auto;
     /*max-width: 518px;*/
     max-width: 600px;
 }
@@ -329,7 +329,10 @@ p.lower-line {
 \*====================================*/
 
 #section-what-is-meisterdish {
-    padding: 50px 10px 80px 10px;
+    padding: 140px 10px 80px 10px;
+    background: url('../images/featured-meal-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #section-what-is-meisterdish .meisterdish-details-icon {
