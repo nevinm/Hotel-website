@@ -221,7 +221,15 @@ $(document).ready(function () {
             mealTypeFilter = [],
             endOfList = false,
             ipadWidth = 767;
-    if (localStorage['loggedIn'] == 'true') {
+    if (localStorage['loggedIn'] == 'true' && localStorage['signupMessage']) {
+        //In case of new signup
+        $('.menu-offer').children().hide();
+        $('.menu-offer').css("background-color", "#3D4C4C");
+        var signupMessage = $('<span>' + localStorage['signupMessage'] + '</span>');
+        $('.menu-offer').append(signupMessage);
+        $('.menu-offer').show();
+        localStorage.removeItem('signupMessage');
+    } else if (localStorage['loggedIn'] == 'true') {
         $('.menu-offer').show();
     } else {
         $('.menu-offer').hide();
