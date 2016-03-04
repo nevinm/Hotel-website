@@ -329,7 +329,10 @@ p.lower-line {
 \*====================================*/
 
 #section-what-is-meisterdish {
-    padding: 50px 10px 80px 10px;
+    padding: 140px 10px 80px 10px;
+    background: url('../images/featured-meal-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #section-what-is-meisterdish .meisterdish-details-icon {
