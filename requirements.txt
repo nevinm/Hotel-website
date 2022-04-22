@@ -14,7 +14,7 @@ psycopg2==2.6
 pyasn1==0.1.7
 pycparser==2.12
 pyOpenSSL==0.15.1
-PyPDF2==1.25
+PyPDF2==1.27.5
 pytz==2015.4
 reportlab==3.2.0
 requests==2.7.0
